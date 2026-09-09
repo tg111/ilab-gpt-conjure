@@ -18083,11 +18083,16 @@
     void call2(methods, "refreshGenerationCatalog");
     call2(methods, "refreshGallery");
     call2(methods, "refreshRecentAssets");
-    const realtimeStarted = window.startRealtimeUpdates?.({ migrateLegacyArchives: true });
-    if (!realtimeStarted) {
-      void window.refreshQueue?.();
-      void call2(methods, "refreshTasks", { migrateLegacyArchives: true });
-    }
+    window.startRealtimeUpdates?.({ migrateLegacyArchives: true });
+    void window.refreshQueue?.();
+    void Promise.resolve(call2(methods, "refreshTasks", { migrateLegacyArchives: true })).then(
+      () => {
+        state5.realtimeSnapshotNeedsArchiveMigration = false;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
     call2(methods, "startUiClock");
     call2(methods, "updateRequestPreview");
     call2(methods, "openSystemSettingsFromUrl");
@@ -23848,6 +23853,7 @@
   async function handleRealtimePayload(payload) {
     const bridge7 = getLegacyBridge();
     const state5 = bridge7.state;
+    state5.tasksRequestSeq += 1;
     if (payload?.type === "snapshot") {
       applyQueueState(payload.queue);
       await bridge7.methods.applyTasksSnapshot(payload.tasks || [], {

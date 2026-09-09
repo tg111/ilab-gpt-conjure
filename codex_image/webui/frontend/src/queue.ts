@@ -131,6 +131,8 @@ export async function handleRealtimeMessage(event: MessageEvent): Promise<void> 
 export async function handleRealtimePayload(payload: RealtimePayload | null | undefined): Promise<void> {
   const bridge = getLegacyBridge();
   const state = bridge.state;
+  // Invalidate any older in-flight HTTP task refresh before applying newer SSE data.
+  state.tasksRequestSeq += 1;
   if (payload?.type === "snapshot") {
     applyQueueState(payload.queue);
     await bridge.methods.applyTasksSnapshot(payload.tasks || [], {
