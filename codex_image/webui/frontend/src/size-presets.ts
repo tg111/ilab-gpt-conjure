@@ -7,7 +7,7 @@ import { translate } from "./i18n";
 
 export const DEFAULT_RESOLUTION = "standard";
 export const DEFAULT_RATIO = "1:1";
-export const DEFAULT_ORIENTATION = "square";
+export const DEFAULT_ORIENTATION = "auto";
 
 export const RATIO_ORIENTATION: Record<string, string> = {
   "1:1": "square",
@@ -169,6 +169,7 @@ export function findPresetForSize(size: any): any {
 }
 
 export function currentSize(): string {
+  if (els.size.value !== "custom" && els.orientation?.value !== "manual") return "auto";
   if (els.size.value !== "custom") return els.size.value;
   return `${els.customWidth.value}x${els.customHeight.value}`;
 }
@@ -205,6 +206,10 @@ export function currentTaskParams(): any {
   }
   if (currentWebSearchEnabled()) {
     params.web_search = true;
+  }
+  if (params.size === "auto") {
+    params.ratio = "auto";
+    params.orientation = "auto";
   }
   const presetMatch = findPresetForSize(params.size);
   if (presetMatch) {

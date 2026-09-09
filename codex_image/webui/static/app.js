@@ -1166,6 +1166,7 @@
     "output.sizePreset": "Preset",
     "output.sizeCustom": "Custom",
     "output.orientation": "Orientation",
+    "output.manual": "Manual",
     "output.square": "Square",
     "output.portrait": "Portrait",
     "output.landscape": "Landscape",
@@ -2452,6 +2453,7 @@
     "output.sizePreset": "Voreingestellt",
     "output.sizeCustom": "Benutzerdefiniert",
     "output.orientation": "Orientierung",
+    "output.manual": "Manuell",
     "output.square": "Quadratisch",
     "output.portrait": "Portr\xE4t",
     "output.landscape": "Landschaft",
@@ -3679,6 +3681,7 @@
     "output.sizePreset": "Preestablecido",
     "output.sizeCustom": "personalizado",
     "output.orientation": "Orientaci\xF3n",
+    "output.manual": "Manual",
     "output.square": "cuadrado",
     "output.portrait": "retrato",
     "output.landscape": "paisaje",
@@ -4906,6 +4909,7 @@
     "output.sizePreset": "Pr\xE9r\xE9glage",
     "output.sizeCustom": "Personnalis\xE9",
     "output.orientation": "Orientation",
+    "output.manual": "Manuel",
     "output.square": "Carr\xE9",
     "output.portrait": "Portrait",
     "output.landscape": "Paysage",
@@ -6133,6 +6137,7 @@
     "output.sizePreset": "\u30D7\u30EA\u30BB\u30C3\u30C8",
     "output.sizeCustom": "\u30AB\u30B9\u30BF\u30E0",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u6B63\u65B9\u5F62",
     "output.portrait": "\u306E\u8096\u50CF\u753B",
     "output.landscape": "\u98A8\u666F",
@@ -7360,6 +7365,7 @@
     "output.sizePreset": "\uC0AC\uC804 \uC124\uC815",
     "output.sizeCustom": "\uC0AC\uC6A9\uC790 \uC815\uC758",
     "output.orientation": "\uBC29\uD5A5",
+    "output.manual": "\uC218\uB3D9",
     "output.square": "\uC815\uC0AC\uAC01\uD615",
     "output.portrait": "\uCD08\uC0C1\uD654",
     "output.landscape": "\uD48D\uACBD",
@@ -8587,6 +8593,7 @@
     "output.sizePreset": "Predefinido",
     "output.sizeCustom": "Personalizado",
     "output.orientation": "Orienta\xE7\xE3o",
+    "output.manual": "Manual",
     "output.square": "Quadrado",
     "output.portrait": "Retrato",
     "output.landscape": "Paisagem",
@@ -9814,6 +9821,7 @@
     "output.sizePreset": "\u041F\u0440\u0435\u0434\u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430",
     "output.sizeCustom": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439",
     "output.orientation": "\u041E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044F",
+    "output.manual": "\u0412\u0440\u0443\u0447\u043D\u0443\u044E",
     "output.square": "\u041F\u043B\u043E\u0449\u0430\u0434\u044C",
     "output.portrait": "\u041F\u043E\u0440\u0442\u0440\u0435\u0442",
     "output.landscape": "\u041F\u0435\u0439\u0437\u0430\u0436",
@@ -11041,6 +11049,7 @@
     "output.sizePreset": "Preimpostato",
     "output.sizeCustom": "Personalizzato",
     "output.orientation": "Orientamento",
+    "output.manual": "Manuale",
     "output.square": "Quadrato",
     "output.portrait": "Ritratto",
     "output.landscape": "Paesaggio",
@@ -12268,6 +12277,7 @@
     "output.sizePreset": "\u092A\u094D\u0930\u0940\u0938\u0947\u091F",
     "output.sizeCustom": "\u0915\u0938\u094D\u091F\u092E",
     "output.orientation": "\u0905\u092D\u093F\u092E\u0941\u0916\u0940\u0915\u0930\u0923",
+    "output.manual": "\u092E\u0948\u0928\u094D\u092F\u0941\u0905\u0932",
     "output.square": "\u091A\u094C\u0915\u094B\u0930",
     "output.portrait": "\u092A\u094B\u0930\u094D\u091F\u094D\u0930\u0947\u091F",
     "output.landscape": "\u0932\u0948\u0902\u0921\u0938\u094D\u0915\u0947\u092A",
@@ -13505,6 +13515,7 @@
     "output.sizePreset": "C\xF3 s\u1EB5n",
     "output.sizeCustom": "T\xF9y ch\u1EC9nh",
     "output.orientation": "H\u01B0\u1EDBng",
+    "output.manual": "Th\u1EE7 c\xF4ng",
     "output.square": "Vu\xF4ng",
     "output.portrait": "D\u1ECDc",
     "output.landscape": "Ngang",
@@ -14801,6 +14812,7 @@
     "output.sizePreset": "\u9884\u8BBE\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u5B9A\u4E49\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52A8",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u7AD6\u56FE",
     "output.landscape": "\u6A2A\u56FE",
@@ -16097,6 +16109,7 @@
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u5782\u76F4\u5716",
     "output.landscape": "\u6A6B\u5716",
@@ -17334,6 +17347,7 @@
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u5782\u76F4\u5716",
     "output.landscape": "\u6A6B\u5716",
@@ -36919,7 +36933,6 @@ ${hint}` : hint;
       els44.sizeModeGroup?.closest(".custom-size-control"),
       els44.orientation?.closest(".orientation-field"),
       els44.resolution?.closest(".resolution-field"),
-      els44.ratio?.closest(".ratio-field"),
       els44.quality?.closest(".quantity-quality-row"),
       els44.pixelPreview,
       els44.outputFormatField,
@@ -36928,6 +36941,12 @@ ${hint}` : hint;
     legacyElements.forEach((element2) => {
       element2.classList.toggle("hidden", !legacyGpt);
     });
+    const ratioField = els44.ratio?.closest(".ratio-field");
+    if (ratioField) {
+      const ratioVisible = legacyGpt && !visibility.customSize && els44.orientation?.value === "manual";
+      ratioField.classList.toggle("hidden", !ratioVisible);
+      ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
+    }
     if (els44.customSize) {
       els44.customSize.classList.toggle("hidden", !visibility.customSize);
       els44.customSize.classList.toggle("custom-size-collapsed", !visibility.customSize);
@@ -45943,7 +45962,7 @@ ${galleryText}`;
   // codex_image/webui/frontend/src/size-presets.ts
   var DEFAULT_RESOLUTION = "standard";
   var DEFAULT_RATIO = "1:1";
-  var DEFAULT_ORIENTATION = "square";
+  var DEFAULT_ORIENTATION = "auto";
   var RATIO_ORIENTATION = {
     "1:1": "square",
     "4:5": "portrait",
@@ -45956,24 +45975,6 @@ ${galleryText}`;
     "16:9": "landscape",
     "9:21": "portrait",
     "21:9": "landscape"
-  };
-  var RATIO_COUNTERPARTS = {
-    "1:1": "1:1",
-    "4:5": "5:4",
-    "5:4": "4:5",
-    "3:4": "4:3",
-    "4:3": "3:4",
-    "2:3": "3:2",
-    "3:2": "2:3",
-    "9:16": "16:9",
-    "16:9": "9:16",
-    "9:21": "21:9",
-    "21:9": "9:21"
-  };
-  var ORIENTATION_DEFAULT_RATIOS = {
-    square: "1:1",
-    portrait: "2:3",
-    landscape: "3:2"
   };
   var GPT_IMAGE_2_SIZE_PRESETS = {
     standard: {
@@ -46084,6 +46085,7 @@ ${galleryText}`;
     return null;
   }
   function currentSize() {
+    if (els25.size.value !== "custom" && els25.orientation?.value !== "manual") return "auto";
     if (els25.size.value !== "custom") return els25.size.value;
     return `${els25.customWidth.value}x${els25.customHeight.value}`;
   }
@@ -46116,6 +46118,10 @@ ${galleryText}`;
     }
     if (currentWebSearchEnabled()) {
       params.web_search = true;
+    }
+    if (params.size === "auto") {
+      params.ratio = "auto";
+      params.orientation = "auto";
     }
     const presetMatch = findPresetForSize(params.size);
     if (presetMatch) {
@@ -46363,7 +46369,7 @@ ${galleryText}`;
       updateRequestPreview10();
       return;
     }
-    const size = sizeForPreset(els26.resolution?.value, els26.ratio?.value);
+    const size = els26.orientation?.value === "manual" ? sizeForPreset(els26.resolution?.value, els26.ratio?.value) : "auto";
     els26.size.value = size;
     updatePixelPreview(size);
     updateCustomSize();
@@ -46390,32 +46396,17 @@ ${galleryText}`;
     if (!RATIO_ORIENTATION[els26.ratio.value]) {
       setSizeControlValue(els26.ratio, DEFAULT_RATIO);
     }
-    if (!ORIENTATION_DEFAULT_RATIOS[els26.orientation.value]) {
-      setSizeControlValue(els26.orientation, RATIO_ORIENTATION[els26.ratio.value] || DEFAULT_ORIENTATION);
+    if (els26.orientation.value !== "auto" && els26.orientation.value !== "manual") {
+      setSizeControlValue(els26.orientation, "manual");
     }
-    if (changedControl === "orientation") {
-      syncRatioFromOrientation();
-      return;
-    }
-    syncOrientationFromRatio();
+    updatePresetRatioVisibility();
   }
-  function syncOrientationFromRatio() {
-    const nextOrientation = RATIO_ORIENTATION[els26.ratio.value] || DEFAULT_ORIENTATION;
-    setSizeControlValue(els26.orientation, nextOrientation);
-  }
-  function syncRatioFromOrientation() {
-    const orientation = els26.orientation.value;
-    if (orientation === "square") {
-      setSizeControlValue(els26.ratio, DEFAULT_RATIO);
-      return;
-    }
-    if (RATIO_ORIENTATION[els26.ratio.value] === orientation) return;
-    const counterpart = RATIO_COUNTERPARTS[els26.ratio.value];
-    if (counterpart && RATIO_ORIENTATION[counterpart] === orientation) {
-      setSizeControlValue(els26.ratio, counterpart);
-      return;
-    }
-    setSizeControlValue(els26.ratio, ORIENTATION_DEFAULT_RATIOS[orientation] || DEFAULT_RATIO);
+  function updatePresetRatioVisibility() {
+    const ratioField = els26.ratio?.closest?.(".ratio-field");
+    if (!ratioField) return;
+    const visible = els26.orientation?.value === "manual" && !els26.customSizeToggle?.checked;
+    ratioField.classList.toggle("hidden", !visible);
+    ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
   }
   function setSizeControlValue(select, value) {
     if (!select || select.value === value) return false;
@@ -46459,7 +46450,7 @@ ${galleryText}`;
       if (els26.customSizeToggle) els26.customSizeToggle.checked = false;
       els26.resolution.value = presetMatch.resolution;
       els26.ratio.value = presetMatch.ratio;
-      els26.orientation.value = presetMatch.orientation;
+      els26.orientation.value = "manual";
       updateSizeFromPreset();
       syncRadioButtons(els26.resolution, els26.ratio, els26.orientation);
       return;
@@ -55963,7 +55954,7 @@ ${galleryText}`;
       if (els42.nInput) els42.nInput.value = "1";
       if (els42.resolution) els42.resolution.value = "standard";
       if (els42.ratio) els42.ratio.value = "1:1";
-      if (els42.orientation) els42.orientation.value = "square";
+      if (els42.orientation) els42.orientation.value = "auto";
       els42.size.value = "1024x1024";
       els42.quality.value = "auto";
       els42.outputFormat.value = "png";

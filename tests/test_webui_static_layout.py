@@ -2838,7 +2838,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertRegex(html, r'<div class="field full-width ratio-field">[\s\S]*id="ratioGroup"')
+        self.assertRegex(html, r'<div class="field full-width ratio-field hidden" aria-hidden="true">[\s\S]*id="ratioGroup"')
         self.assertRegex(styles, r"\.ratio-group\s*\{[^}]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)")
         self.assertRegex(styles, r"\.ratio-group\s*\{[^}]*grid-template-rows:\s*repeat\(2,\s*30px\)")
         self.assertRegex(styles, r"\.ratio-group\s+\.radio-btn\s*\{[^}]*transform:\s*scale\(0\.985\)")
@@ -2868,7 +2868,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             r'<div class="field orientation-field">[\s\S]*id="orientationGroup"[\s\S]*</div>\s*'
             r'<div class="field resolution-field">[\s\S]*id="resolutionGroup"[\s\S]*</div>\s*'
             r'<div id="customSize" class="custom-size hidden"[\s\S]*id="customWidth"[\s\S]*id="customHeight"[\s\S]*</div>\s*'
-            r'<div class="field full-width ratio-field">[\s\S]*id="ratioGroup"',
+            r'<div class="field full-width ratio-field hidden" aria-hidden="true">[\s\S]*id="ratioGroup"',
         )
         self.assertRegex(
             html,
@@ -2898,20 +2898,21 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('data-val="2k"', html)
         self.assertIn('data-val="4k"', html)
         self.assertRegex(html, r'<select id="resolution" class="hidden">')
-        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="square"[\s\S]*orientation-option-icon-square[\s\S]*data-i18n="output\.square"[\s\S]*方形')
-        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="portrait"[\s\S]*orientation-option-icon-portrait[\s\S]*data-i18n="output\.portrait"[\s\S]*竖图')
-        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="landscape"[\s\S]*orientation-option-icon-landscape[\s\S]*data-i18n="output\.landscape"[\s\S]*横图')
-        self.assertIn('class="orientation-option-icon orientation-option-icon-square"', html)
+        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="auto"[^>]*data-i18n="output\.auto"[\s\S]*自动')
+        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="manual"[^>]*data-i18n="output\.manual"[\s\S]*手动')
         orientation_controls = re.search(r'id="orientationGroup"[\s\S]*?<select id="orientation" class="hidden">[\s\S]*?</select>', html)
         self.assertIsNotNone(orientation_controls)
-        self.assertNotIn('data-val="auto"', orientation_controls.group(0))
-        self.assertNotIn('<option value="auto"', orientation_controls.group(0))
-        self.assertRegex(styles, r"#orientationGroup \.radio-btn\s*\{[^}]*gap:\s*4px")
-        self.assertRegex(styles, r"\.orientation-option-icon\s*\{[^}]*width:\s*12px")
-        self.assertRegex(styles, r"\.orientation-option-icon\s*\{[^}]*stroke:\s*currentColor")
+        self.assertIn('data-val="auto"', orientation_controls.group(0))
+        self.assertIn('data-val="manual"', orientation_controls.group(0))
+        self.assertIn('<option value="auto" selected', orientation_controls.group(0))
+        self.assertIn('<option value="manual"', orientation_controls.group(0))
+        self.assertNotIn('data-val="square"', orientation_controls.group(0))
+        self.assertRegex(html, r'<div class="field full-width ratio-field hidden" aria-hidden="true">')
+        self.assertIn('els.orientation?.value === "manual"', script)
+        self.assertIn('ratioField.classList.toggle("hidden", !visible)', script)
         self.assertIn('DEFAULT_RESOLUTION = "standard"', script)
         self.assertIn('DEFAULT_RATIO = "1:1"', script)
-        self.assertIn('DEFAULT_ORIENTATION = "square"', script)
+        self.assertIn('DEFAULT_ORIENTATION = "auto"', script)
         self.assertIn("syncRatioAndOrientation", script)
     def test_background_control_is_removed_and_quantity_sits_with_quality(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
@@ -2954,7 +2955,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn('placeholder="宽"', custom_ratio_markup.group(0))
         self.assertNotIn('placeholder="高"', custom_ratio_markup.group(0))
         self.assertRegex(custom_ratio_markup.group(0), r'id="customRatioHint" class="custom-ratio-hint"[\s\S]*留空则自由宽高 · 填满后同步')
-        custom_size_markup = re.search(r'<div id="customSize" class="custom-size hidden"[\s\S]*?</div>\s*<div class="field full-width ratio-field">', html)
+        custom_size_markup = re.search(r'<div id="customSize" class="custom-size hidden"[\s\S]*?</div>\s*<div class="field full-width ratio-field hidden" aria-hidden="true">', html)
         self.assertIsNotNone(custom_size_markup)
         self.assertRegex(custom_size_markup.group(0), r'class="custom-size-main"[\s\S]*class="custom-size-header"[\s\S]*<span[^>]*>像素尺寸</span>')
         self.assertRegex(custom_size_markup.group(0), r'class="custom-measure-row custom-size-row"')
@@ -3345,7 +3346,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 """
                 const DEFAULT_RESOLUTION = "standard";
                 const DEFAULT_RATIO = "1:1";
-                const DEFAULT_ORIENTATION = "square";
+                const DEFAULT_ORIENTATION = "auto";
                 const RATIO_ORIENTATION = { "1:1": "square", "2:3": "portrait", "3:2": "landscape" };
                 const RATIO_COUNTERPARTS = { "1:1": "1:1", "2:3": "3:2", "3:2": "2:3" };
                 const ORIENTATION_DEFAULT_RATIOS = { square: "1:1", portrait: "2:3", landscape: "3:2" };
@@ -3372,6 +3373,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 function updatePixelPreview(size) { pixelPreviewArg = size; }
                 function updateRequestPreview() { requestPreviewUpdated += 1; }
                 function saveCurrentModelParameterDraft() { modelDraftSaved += 1; }
+                function updatePresetRatioVisibility() {}
                 """,
                 self._extract_javascript_function(custom_size_source, "setCustomSizeMode"),
                 self._extract_javascript_function(custom_size_source, "updateSizeFromPreset"),

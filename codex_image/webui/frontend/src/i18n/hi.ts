@@ -614,6 +614,7 @@ export const HI_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "प्रीसेट",
     "output.sizeCustom": "कस्टम",
     "output.orientation": "अभिमुखीकरण",
+    "output.manual": "मैन्युअल",
     "output.square": "चौकोर",
     "output.portrait": "पोर्ट्रेट",
     "output.landscape": "लैंडस्केप",

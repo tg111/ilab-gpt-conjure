@@ -322,7 +322,7 @@ function resetForm() {
     if (els.nInput) els.nInput.value = "1";
     if (els.resolution) els.resolution.value = "standard";
     if (els.ratio) els.ratio.value = "1:1";
-    if (els.orientation) els.orientation.value = "square";
+    if (els.orientation) els.orientation.value = "auto";
     els.size.value = "1024x1024";
     els.quality.value = "auto";
     els.outputFormat.value = "png";
