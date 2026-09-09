@@ -46,7 +46,6 @@ function referenceAssetInputs(...args: any[]) { return legacyMethod("referenceAs
 function currentCodexMode(...args: any[]) { return legacyMethod("currentCodexMode", ...args); }
 function getPromptText(...args: any[]) { return legacyMethod("getPromptText", ...args); }
 function currentPromptForModel(...args: any[]) { return legacyMethod("currentPromptForModel", ...args); }
-function currentPromptFidelity(...args: any[]) { return legacyMethod("currentPromptFidelity", ...args); }
 function currentMainModel(...args: any[]) { return legacyMethod("currentMainModel", ...args); }
 function sourcePreviewUrl(...args: any[]) { return legacyMethod("sourcePreviewUrl", ...args); }
 function syncPromptFromEditor(...args: any[]) { return legacyMethod("syncPromptFromEditor", ...args); }
@@ -135,11 +134,6 @@ export function applyTaskOutputParams(task: any): void {
     els.mainModel.value = mainModel;
     persistMainModel();
   }
-  if (els.promptFidelity) {
-    const fidelity = ["strict", "original", "off"].includes(params.prompt_fidelity) ? params.prompt_fidelity : "strict";
-    els.promptFidelity.value = fidelity;
-    els.promptFidelity.dispatchEvent(new Event("change"));
-  }
   if (els.webSearch) {
     els.webSearch.checked = Boolean(output.web_search);
     els.webSearch.dispatchEvent(new Event("input"));
@@ -207,7 +201,6 @@ function buildPreviewRequest() {
     reference_file_ids: storedFiles.map((source: any) => source.id),
   };
   const usesGptPromptProcessing = !state.generationCatalog || state.selectedModelId === "gpt-image-2";
-  if (usesGptPromptProcessing) payload.prompt_fidelity = currentPromptFidelity();
   if (isApi) {
     payload.api_provider_id = state.selectedProviderId;
     payload.api_provider_name = state.generationCatalog?.providers.find((provider: any) => provider.id === state.selectedProviderId)?.name || "";
@@ -307,7 +300,6 @@ async function runTask() {
   appendCanonicalGenerationFields(form, currentGenerationSelection());
   if (!state.generationCatalog || state.selectedModelId === "gpt-image-2") {
     form.append("main_model", currentMainModel());
-    form.append("prompt_fidelity", currentPromptFidelity());
   }
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));
   assets.forEach((source: any) => form.append("reference_asset_ids", source.id));

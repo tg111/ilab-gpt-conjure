@@ -61,7 +61,6 @@ import {
 } from "./prompt-editor-events";
 import {
   buildPromptForModel,
-  currentPromptFidelity,
   currentPromptForModel,
   galleryPromptText,
   galleryReferenceInstruction,
@@ -115,7 +114,6 @@ void buildPromptForModel;
 void clearPromptChipDropClasses;
 void clearPromptEditorIfEmpty;
 void createGalleryChip;
-void currentPromptFidelity;
 void currentPromptForModel;
 void currentPromptGalleryIds;
 void ensurePromptChipLeadingBoundary;

@@ -36,6 +36,8 @@ import {
   swapCustomSizeDimensions,
   syncSizeControlsFromSize,
   updateCustomSize,
+  currentSizeMode,
+  setSizeMode,
   updatePixelPreview,
   updateSizeFromPreset,
   updateCustomRatioFieldState,
@@ -78,7 +80,6 @@ export function bindFormControlEvents(): void {
     els.moderation,
     els.compression,
     els.nInput,
-    els.promptFidelity,
   ].filter(Boolean).forEach((element: any) => {
     const handleParameterChange = () => {
     persistMainModel();

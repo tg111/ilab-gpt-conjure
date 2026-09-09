@@ -803,9 +803,13 @@ export function renderModelParameters(
   legacyElements.forEach((element) => {
     element.classList.toggle("hidden", !legacyGpt);
   });
+  const automaticSize = els.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
+  [els.orientation?.closest(".orientation-field"), els.resolution?.closest(".resolution-field")]
+    .filter(Boolean)
+    .forEach((element) => element?.classList.toggle("hidden", !legacyGpt || automaticSize));
   const ratioField = els.ratio?.closest(".ratio-field") as HTMLElement | null;
   if (ratioField) {
-    const ratioVisible = legacyGpt && !visibility.customSize && els.orientation?.value === "manual";
+    const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
     ratioField.classList.toggle("hidden", !ratioVisible);
     ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
   }

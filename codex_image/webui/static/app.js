@@ -461,8 +461,6 @@
       mainModelOptions: document.querySelector("#mainModelOptions"),
       webSearchField: document.querySelector("#webSearchField"),
       webSearch: document.querySelector("#webSearch"),
-      promptFidelityField: document.querySelector("#promptFidelityField"),
-      promptFidelity: document.querySelector("#promptFidelity"),
       apiDirectSettingsNotice: document.querySelector("#apiDirectSettingsNotice"),
       settingsGrid: document.querySelector("#settingsGrid"),
       model: document.querySelector("#model"),
@@ -1163,6 +1161,7 @@
     "output.promptHelp.images.automatic": "Uses the image endpoint's default handling; required gallery-reference notes are still included.",
     "output.size": "Output size",
     "output.sizeMode": "Size mode",
+    "output.sizeAuto": "Automatic size",
     "output.sizePreset": "Preset",
     "output.sizeCustom": "Custom",
     "output.orientation": "Orientation",
@@ -14809,6 +14808,7 @@
     "output.promptHelp.images.automatic": "\u6309\u56FE\u50CF\u63A5\u53E3\u9ED8\u8BA4\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u56FE\u5E93\u5F15\u7528\u7B49\u5FC5\u8981\u8BF4\u660E\u4ECD\u4F1A\u968F\u63D0\u793A\u8BCD\u53D1\u9001\u3002",
     "output.size": "\u8F93\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52A8\u5C3A\u5BF8",
     "output.sizePreset": "\u9884\u8BBE\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u5B9A\u4E49\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -16106,6 +16106,7 @@
     "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -17344,6 +17345,7 @@
     "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -18950,7 +18952,6 @@
     currentAuthSource: proxy("currentAuthSource"),
     currentCodexMode: proxy("currentCodexMode"),
     currentMainModel: proxy("currentMainModel"),
-    currentPromptFidelity: proxy("currentPromptFidelity"),
     currentPromptForModel: proxy("currentPromptForModel"),
     currentSize: proxy("currentSize"),
     currentTaskParams: proxy("currentTaskParams"),
@@ -20088,7 +20089,7 @@
     });
   }
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Global.js
+  // node_modules/konva/lib/Global.js
   var PI_OVER_180 = Math.PI / 180;
   function detectBrowser() {
     return typeof window !== "undefined" && ({}.toString.call(window) === "[object Window]" || {}.toString.call(window) === "[object global]");
@@ -20149,7 +20150,7 @@
   };
   Konva._injectGlobal(Konva);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Util.js
+  // node_modules/konva/lib/Util.js
   var NODE_ERROR = `Konva.js unsupported environment.
 
 Looks like you are trying to use Konva.js in Node.js environment. because "document" object is undefined.
@@ -21031,7 +21032,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Context.js
+  // node_modules/konva/lib/Context.js
   function simplifyArray(arr) {
     const retArr = [], len = arr.length, util = Util;
     for (let n = 0; n < len; n++) {
@@ -21580,7 +21581,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Canvas.js
+  // node_modules/konva/lib/Canvas.js
   var _pixelRatio;
   function getDevicePixelRatio() {
     if (_pixelRatio) {
@@ -21677,7 +21678,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/DragAndDrop.js
+  // node_modules/konva/lib/DragAndDrop.js
   var DD = {
     get isDragging() {
       let flag = false;
@@ -21789,7 +21790,7 @@ js: import "konva/skia-backend";
     window.addEventListener("touchcancel", DD._endDragAfter, false);
   }
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Validators.js
+  // node_modules/konva/lib/Validators.js
   function _formatValue(val) {
     if (Util._isString(val)) {
       return '"' + val + '"';
@@ -21911,7 +21912,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Factory.js
+  // node_modules/konva/lib/Factory.js
   var GET = "get";
   var SET = "set";
   var Factory = {
@@ -22027,7 +22028,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Node.js
+  // node_modules/konva/lib/Node.js
   function parseCSSFilters(cssFilter) {
     const filterRegex = /(\w+)\(([^)]+)\)/g;
     let match;
@@ -23532,7 +23533,7 @@ js: import "konva/skia-backend";
     getRotationDeg: "getRotation"
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Container.js
+  // node_modules/konva/lib/Container.js
   var Container = class extends Node2 {
     constructor() {
       super(...arguments);
@@ -23839,7 +23840,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Container, "clipHeight", void 0, getNumberValidator());
   Factory.addGetterSetter(Container, "clipFunc");
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/PointerEvents.js
+  // node_modules/konva/lib/PointerEvents.js
   var Captures = /* @__PURE__ */ new Map();
   var SUPPORT_POINTER_EVENTS = Konva._global["PointerEvent"] !== void 0;
   function getCapturedShape(pointerId) {
@@ -23877,7 +23878,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Stage.js
+  // node_modules/konva/lib/Stage.js
   var STAGE2 = "Stage";
   var STRING = "string";
   var PX = "px";
@@ -24591,7 +24592,7 @@ js: import "konva/skia-backend";
     });
   }
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Shape.js
+  // node_modules/konva/lib/Shape.js
   var HAS_SHADOW = "hasShadow";
   var SHADOW_RGBA = "shadowRGBA";
   var patternImage = "patternImage";
@@ -25116,7 +25117,7 @@ js: import "konva/skia-backend";
     setDrawHitFunc: "setHitFunc"
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Layer.js
+  // node_modules/konva/lib/Layer.js
   var BEFORE_DRAW = "beforeDraw";
   var DRAW = "draw";
   var INTERSECTION_OFFSETS = [
@@ -25411,7 +25412,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Layer, "clearBeforeDraw", true);
   Factory.addGetterSetter(Layer, "hitGraphEnabled", true, getBooleanValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/FastLayer.js
+  // node_modules/konva/lib/FastLayer.js
   var FastLayer = class extends Layer {
     constructor(attrs) {
       super(attrs);
@@ -25422,7 +25423,7 @@ js: import "konva/skia-backend";
   FastLayer.prototype.nodeType = "FastLayer";
   _registerNode(FastLayer);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Group.js
+  // node_modules/konva/lib/Group.js
   var Group = class extends Container {
     _validateAdd(child) {
       const type = child.getType();
@@ -25434,7 +25435,7 @@ js: import "konva/skia-backend";
   Group.prototype.nodeType = "Group";
   _registerNode(Group);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Animation.js
+  // node_modules/konva/lib/Animation.js
   var now = (function() {
     if (glob.performance && glob.performance.now) {
       return function() {
@@ -25574,7 +25575,7 @@ js: import "konva/skia-backend";
   Animation.animIdCounter = 0;
   Animation.animRunning = false;
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Tween.js
+  // node_modules/konva/lib/Tween.js
   var blacklist = {
     node: 1,
     duration: 1,
@@ -26053,7 +26054,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/_CoreInternals.js
+  // node_modules/konva/lib/_CoreInternals.js
   var Konva2 = Util._assign(Konva, {
     Util,
     Transform,
@@ -26074,7 +26075,7 @@ js: import "konva/skia-backend";
     Canvas
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arc.js
+  // node_modules/konva/lib/shapes/Arc.js
   var Arc = class extends Shape {
     _sceneFunc(context) {
       const angle = Konva.getAngle(this.angle()), clockwise = this.clockwise();
@@ -26131,7 +26132,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arc, "angle", 0, getNumberValidator());
   Factory.addGetterSetter(Arc, "clockwise", false, getBooleanValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Line.js
+  // node_modules/konva/lib/shapes/Line.js
   function getControlPoints(x0, y0, x1, y1, x2, y2, t) {
     const d01 = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)), d12 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)), fa = t * d01 / (d01 + d12), fb = t * d12 / (d01 + d12), p1x = x1 - fa * (x2 - x0), p1y = y1 - fa * (y2 - y0), p2x = x1 + fb * (x2 - x0), p2y = y1 + fb * (y2 - y0);
     return [p1x, p1y, p2x, p2y];
@@ -26310,7 +26311,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Line, "tension", 0, getNumberValidator());
   Factory.addGetterSetter(Line, "points", [], getNumberArrayValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/BezierFunctions.js
+  // node_modules/konva/lib/BezierFunctions.js
   var tValues = [
     [],
     [],
@@ -27098,7 +27099,7 @@ js: import "konva/skia-backend";
     return t;
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Path.js
+  // node_modules/konva/lib/shapes/Path.js
   var Path = class _Path extends Shape {
     constructor(config) {
       super(config);
@@ -27754,7 +27755,7 @@ js: import "konva/skia-backend";
   _registerNode(Path);
   Factory.addGetterSetter(Path, "data");
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arrow.js
+  // node_modules/konva/lib/shapes/Arrow.js
   var Arrow = class extends Line {
     _sceneFunc(ctx) {
       super._sceneFunc(ctx);
@@ -27848,7 +27849,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arrow, "pointerAtBeginning", false);
   Factory.addGetterSetter(Arrow, "pointerAtEnding", true);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Circle.js
+  // node_modules/konva/lib/shapes/Circle.js
   var Circle = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -27879,7 +27880,7 @@ js: import "konva/skia-backend";
   _registerNode(Circle);
   Factory.addGetterSetter(Circle, "radius", 0, getNumberValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ellipse.js
+  // node_modules/konva/lib/shapes/Ellipse.js
   var Ellipse = class extends Shape {
     _sceneFunc(context) {
       const rx = this.radiusX(), ry = this.radiusY();
@@ -27914,7 +27915,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ellipse, "radiusX", 0, getNumberValidator());
   Factory.addGetterSetter(Ellipse, "radiusY", 0, getNumberValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Image.js
+  // node_modules/konva/lib/shapes/Image.js
   var Image2 = class _Image extends Shape {
     constructor(attrs) {
       super(attrs);
@@ -28038,7 +28039,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Image2, "cropWidth", 0, getNumberValidator());
   Factory.addGetterSetter(Image2, "cropHeight", 0, getNumberValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Label.js
+  // node_modules/konva/lib/shapes/Label.js
   var ATTR_CHANGE_LIST = [
     "fontFamily",
     "fontSize",
@@ -28207,7 +28208,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Tag, "pointerHeight", 0, getNumberValidator());
   Factory.addGetterSetter(Tag, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Rect.js
+  // node_modules/konva/lib/shapes/Rect.js
   var Rect = class extends Shape {
     _sceneFunc(context) {
       const cornerRadius = this.cornerRadius(), width = this.width(), height = this.height();
@@ -28225,7 +28226,7 @@ js: import "konva/skia-backend";
   _registerNode(Rect);
   Factory.addGetterSetter(Rect, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/RegularPolygon.js
+  // node_modules/konva/lib/shapes/RegularPolygon.js
   var RegularPolygon = class extends Shape {
     _sceneFunc(context) {
       const points = this._getPoints(), radius = this.radius(), sides = this.sides(), cornerRadius = this.cornerRadius();
@@ -28293,7 +28294,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(RegularPolygon, "sides", 0, getNumberValidator());
   Factory.addGetterSetter(RegularPolygon, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ring.js
+  // node_modules/konva/lib/shapes/Ring.js
   var PIx2 = Math.PI * 2;
   var Ring = class extends Shape {
     _sceneFunc(context) {
@@ -28324,7 +28325,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ring, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Ring, "outerRadius", 0, getNumberValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Sprite.js
+  // node_modules/konva/lib/shapes/Sprite.js
   var Sprite = class extends Shape {
     constructor(config) {
       super(config);
@@ -28426,7 +28427,7 @@ js: import "konva/skia-backend";
     setIndex: "setFrameIndex"
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Star.js
+  // node_modules/konva/lib/shapes/Star.js
   var Star = class extends Shape {
     _sceneFunc(context) {
       const innerRadius = this.innerRadius(), outerRadius = this.outerRadius(), numPoints = this.numPoints();
@@ -28462,7 +28463,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Star, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Star, "outerRadius", 0, getNumberValidator());
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Text.js
+  // node_modules/konva/lib/shapes/Text.js
   function stringToArray(string) {
     return [...string].reduce((acc, char, index, array) => {
       if (/\p{Emoji}/u.test(char)) {
@@ -28937,7 +28938,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Text, "underlineOffset", void 0, getNumberValidator());
   Factory.addGetterSetter(Text, "charRenderFunc", void 0);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/TextPath.js
+  // node_modules/konva/lib/shapes/TextPath.js
   var EMPTY_STRING2 = "";
   var NORMAL2 = "normal";
   function _fillFunc3(context) {
@@ -29206,7 +29207,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(TextPath, "kerningFunc", void 0);
   Factory.addGetterSetter(TextPath, "direction", "inherit");
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Transformer.js
+  // node_modules/konva/lib/shapes/Transformer.js
   var EVENTS_NAME = "tr-konva";
   var ATTR_CHANGE_LIST3 = [
     "resizeEnabledChange",
@@ -30199,7 +30200,7 @@ js: import "konva/skia-backend";
     enabledHandlers: "enabledAnchors"
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Wedge.js
+  // node_modules/konva/lib/shapes/Wedge.js
   var Wedge = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -30234,7 +30235,7 @@ js: import "konva/skia-backend";
     setAngleDeg: "setAngle"
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Blur.js
+  // node_modules/konva/lib/filters/Blur.js
   function BlurStack() {
     this.r = 0;
     this.g = 0;
@@ -30926,7 +30927,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "blurRadius", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Brighten.js
+  // node_modules/konva/lib/filters/Brighten.js
   var Brighten = function(imageData) {
     const brightness = this.brightness() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -30937,7 +30938,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "brightness", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Brightness.js
+  // node_modules/konva/lib/filters/Brightness.js
   var Brightness = function(imageData) {
     const brightness = this.brightness(), data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -30947,7 +30948,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Contrast.js
+  // node_modules/konva/lib/filters/Contrast.js
   var Contrast = function(imageData) {
     const adjust = Math.pow((this.contrast() + 100) / 100, 2);
     const data = imageData.data, nPixels = data.length;
@@ -30981,7 +30982,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "contrast", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Emboss.js
+  // node_modules/konva/lib/filters/Emboss.js
   var Emboss = function(imageData) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
     const data = imageData.data;
@@ -31080,7 +31081,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "embossDirection", "top-left", void 0, Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "embossBlend", false, void 0, Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Enhance.js
+  // node_modules/konva/lib/filters/Enhance.js
   function remap(fromValue, fromMin, fromMax, toMin, toMax) {
     const fromRange = fromMax - fromMin, toRange = toMax - toMin;
     if (fromRange === 0) {
@@ -31159,7 +31160,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "enhance", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Grayscale.js
+  // node_modules/konva/lib/filters/Grayscale.js
   var Grayscale = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -31170,7 +31171,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/HSL.js
+  // node_modules/konva/lib/filters/HSL.js
   Factory.addGetterSetter(Node2, "hue", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "luminance", 0, getNumberValidator(), Factory.afterSetFilter);
@@ -31193,7 +31194,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/HSV.js
+  // node_modules/konva/lib/filters/HSV.js
   var HSV = function(imageData) {
     const data = imageData.data, nPixels = data.length, v = Math.pow(2, this.value()), s = Math.pow(2, this.saturation()), h = Math.abs(this.hue() + 360) % 360;
     const vsu = v * s * Math.cos(h * Math.PI / 180), vsw = v * s * Math.sin(h * Math.PI / 180);
@@ -31215,7 +31216,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "value", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Invert.js
+  // node_modules/konva/lib/filters/Invert.js
   var Invert = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -31225,7 +31226,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Kaleidoscope.js
+  // node_modules/konva/lib/filters/Kaleidoscope.js
   var ToPolar = function(src, dst, opt) {
     const srcPixels = src.data, dstPixels = dst.data, xSize = src.width, ySize = src.height, xMid = opt.polarCenterX || xSize / 2, yMid = opt.polarCenterY || ySize / 2;
     let rMax = Math.sqrt(xMid * xMid + yMid * yMid);
@@ -31354,7 +31355,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "kaleidoscopePower", 2, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "kaleidoscopeAngle", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Mask.js
+  // node_modules/konva/lib/filters/Mask.js
   function pixelAt(idata, x, y) {
     let idx = (y * idata.width + x) * 4;
     const d = [];
@@ -31499,7 +31500,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Noise.js
+  // node_modules/konva/lib/filters/Noise.js
   var Noise = function(imageData) {
     const amount = this.noise() * 255, data = imageData.data, nPixels = data.length, half = amount / 2;
     for (let i = 0; i < nPixels; i += 4) {
@@ -31510,7 +31511,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "noise", 0.2, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Pixelate.js
+  // node_modules/konva/lib/filters/Pixelate.js
   var Pixelate = function(imageData) {
     let pixelSize = Math.ceil(this.pixelSize()), width = imageData.width, height = imageData.height, nBinsX = Math.ceil(width / pixelSize), nBinsY = Math.ceil(height / pixelSize), data = imageData.data;
     if (pixelSize <= 0) {
@@ -31568,7 +31569,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "pixelSize", 8, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Posterize.js
+  // node_modules/konva/lib/filters/Posterize.js
   var Posterize = function(imageData) {
     const levels = Math.round(this.levels() * 254) + 1, data = imageData.data, len = data.length, scale = 255 / levels;
     for (let i = 0; i < len; i += 1) {
@@ -31577,7 +31578,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "levels", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/RGB.js
+  // node_modules/konva/lib/filters/RGB.js
   var RGB = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue();
     for (let i = 0; i < nPixels; i += 4) {
@@ -31610,7 +31611,7 @@ js: import "konva/skia-backend";
   });
   Factory.addGetterSetter(Node2, "blue", 0, RGBComponent, Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/RGBA.js
+  // node_modules/konva/lib/filters/RGBA.js
   var RGBA = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue(), alpha = this.alpha();
     for (let i = 0; i < nPixels; i += 4) {
@@ -31652,7 +31653,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Sepia.js
+  // node_modules/konva/lib/filters/Sepia.js
   var Sepia = function(imageData) {
     const data = imageData.data, nPixels = data.length;
     for (let i = 0; i < nPixels; i += 4) {
@@ -31665,7 +31666,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Solarize.js
+  // node_modules/konva/lib/filters/Solarize.js
   var Solarize = function(imageData) {
     const threshold = 128;
     const d = imageData.data;
@@ -31681,7 +31682,7 @@ js: import "konva/skia-backend";
     return imageData;
   };
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Threshold.js
+  // node_modules/konva/lib/filters/Threshold.js
   var Threshold = function(imageData) {
     const level = this.threshold() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 1) {
@@ -31690,7 +31691,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/_FullInternals.js
+  // node_modules/konva/lib/_FullInternals.js
   var Konva3 = Konva2.Util._assign(Konva2, {
     Arc,
     Arrow,
@@ -31734,7 +31735,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/index.js
+  // node_modules/konva/lib/index.js
   var lib_default = Konva3;
 
   // codex_image/webui/frontend/src/image-editor.ts
@@ -35906,12 +35907,11 @@ ${hint}` : hint;
     element2.classList.add("hidden");
   }
   function applyModeSettingsVisibility(visibility) {
-    const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice || visibility.showPromptFidelity;
+    const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice;
     setModeSpecificElementVisibility(els8.modeSettingsSlot, showModeSettings);
     setModeSpecificElementVisibility(els8.modeSpecificSettings, showModeSettings);
     setModeSpecificElementVisibility(els8.mainModelField, visibility.showMainModel);
     setModeSpecificElementVisibility(els8.apiDirectSettingsNotice, visibility.showApiDirectNotice);
-    setModeSpecificElementVisibility(els8.promptFidelityField, visibility.showPromptFidelity);
   }
   function updateWebSearchAvailability(authSource = currentAuthSource()) {
     const binding = selectedProviderBinding();
@@ -36941,9 +36941,11 @@ ${hint}` : hint;
     legacyElements.forEach((element2) => {
       element2.classList.toggle("hidden", !legacyGpt);
     });
+    const automaticSize = els44.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
+    [els44.orientation?.closest(".orientation-field"), els44.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element2) => element2?.classList.toggle("hidden", !legacyGpt || automaticSize));
     const ratioField = els44.ratio?.closest(".ratio-field");
     if (ratioField) {
-      const ratioVisible = legacyGpt && !visibility.customSize && els44.orientation?.value === "manual";
+      const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
       ratioField.classList.toggle("hidden", !ratioVisible);
       ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
     }
@@ -45347,17 +45349,7 @@ ${galleryText}`;
     });
   }
   function currentPromptForModel() {
-    if (!supportsGptPromptProcessing()) return buildPromptForModel();
-    return currentPromptFidelity() === "original" ? expandPromptSnippets2(getPromptText8()) : buildPromptForModel();
-  }
-  function currentPromptFidelity() {
-    if (!supportsGptPromptProcessing()) return "off";
-    const value = els20.promptFidelity?.value || "off";
-    return ["strict", "original", "off"].includes(value) ? value : "off";
-  }
-  function supportsGptPromptProcessing() {
-    const { state: state33 } = getLegacyBridge();
-    return !state33.generationCatalog || state33.selectedModelId === "gpt-image-2";
+    return getPromptText8();
   }
   function initPromptModelFeature() {
     Object.assign(getLegacyBridge().methods, {
@@ -45365,9 +45357,7 @@ ${galleryText}`;
       galleryPromptText,
       buildPromptForModel,
       galleryReferenceInstruction,
-      currentPromptForModel,
-      currentPromptFidelity,
-      supportsGptPromptProcessing
+      currentPromptForModel
     });
   }
 
@@ -45410,157 +45400,6 @@ ${galleryText}`;
       handlePromptDocumentClick
     });
     bindPromptEditorEvents();
-  }
-
-  // codex_image/webui/frontend/src/prompt-fidelity-help.ts
-  var HELP_MARGIN = 12;
-  var HELP_GAP = 8;
-  var promptFidelityHelpInitialized = false;
-  var promptFidelityHelpPopover = null;
-  var promptFidelityHelpPinned = false;
-  var promptFidelityHelpCloseTimer = null;
-  function promptTransport() {
-    const authSource = currentAuthSource2();
-    if (authSource === "api") return currentApiMode3() === "responses" ? "responses" : "images";
-    if (authSource === "codex") return currentCodexMode3() === "responses" ? "responses" : "images";
-    return "images";
-  }
-  function currentPromptFidelity2() {
-    const value = document.querySelector("#promptFidelity")?.value;
-    return value === "original" || value === "strict" ? value : "off";
-  }
-  function ensurePromptFidelityHelpPopover() {
-    if (promptFidelityHelpPopover?.isConnected) return promptFidelityHelpPopover;
-    promptFidelityHelpPopover = document.createElement("div");
-    promptFidelityHelpPopover.id = "promptFidelityHelpPopover";
-    promptFidelityHelpPopover.className = "prompt-fidelity-help-popover hidden";
-    promptFidelityHelpPopover.setAttribute("role", "tooltip");
-    promptFidelityHelpPopover.setAttribute("aria-hidden", "true");
-    document.body.appendChild(promptFidelityHelpPopover);
-    return promptFidelityHelpPopover;
-  }
-  function promptFidelityDescriptionKey(transport, mode) {
-    const modeKey = mode === "off" ? "automatic" : mode;
-    return `output.promptHelp.${transport}.${modeKey}`;
-  }
-  function renderPromptFidelityHelp() {
-    const popover = ensurePromptFidelityHelpPopover();
-    const transport = promptTransport();
-    const activeMode = currentPromptFidelity2();
-    const modes = [
-      { value: "original", label: translate("output.modeOriginal") },
-      { value: "strict", label: translate("output.modeStrict") },
-      { value: "off", label: translate("output.modeCreative") }
-    ];
-    const rows = modes.map(({ value, label }) => {
-      const activeClass = value === activeMode ? " is-active" : "";
-      return `
-      <div class="prompt-fidelity-help-row${activeClass}" data-prompt-fidelity-help-mode="${value}">
-        <dt>${escapeHtml(label)}</dt>
-        <dd>${escapeHtml(translate(promptFidelityDescriptionKey(transport, value)))}</dd>
-      </div>
-    `;
-    }).join("");
-    popover.innerHTML = `
-    <div class="prompt-fidelity-help-header">
-      <strong>${escapeHtml(translate("output.promptHelpTitle"))}</strong>
-      <span>${escapeHtml(translate(`output.promptHelp.${transport}Channel`))}</span>
-    </div>
-    <dl class="prompt-fidelity-help-list">${rows}</dl>
-  `;
-  }
-  function positionPromptFidelityHelp(trigger, popover) {
-    const triggerRect = trigger.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const width = Math.min(440, Math.max(280, viewportWidth - HELP_MARGIN * 2));
-    popover.style.width = `${width}px`;
-    popover.style.left = "0px";
-    popover.style.top = "0px";
-    const height = popover.offsetHeight;
-    const left = Math.min(
-      viewportWidth - width - HELP_MARGIN,
-      Math.max(HELP_MARGIN, triggerRect.left)
-    );
-    const below = triggerRect.bottom + HELP_GAP;
-    const above = triggerRect.top - height - HELP_GAP;
-    const top = below + height <= viewportHeight - HELP_MARGIN ? below : Math.max(HELP_MARGIN, above);
-    popover.style.left = `${left}px`;
-    popover.style.top = `${top}px`;
-  }
-  function cancelPromptFidelityHelpClose() {
-    if (promptFidelityHelpCloseTimer === null) return;
-    window.clearTimeout(promptFidelityHelpCloseTimer);
-    promptFidelityHelpCloseTimer = null;
-  }
-  function openPromptFidelityHelp(trigger, pinned = promptFidelityHelpPinned) {
-    cancelPromptFidelityHelpClose();
-    promptFidelityHelpPinned = pinned;
-    const popover = ensurePromptFidelityHelpPopover();
-    renderPromptFidelityHelp();
-    popover.classList.remove("hidden");
-    popover.setAttribute("aria-hidden", "false");
-    trigger.setAttribute("aria-expanded", String(promptFidelityHelpPinned));
-    positionPromptFidelityHelp(trigger, popover);
-  }
-  function closePromptFidelityHelp(trigger) {
-    cancelPromptFidelityHelpClose();
-    promptFidelityHelpPinned = false;
-    const popover = ensurePromptFidelityHelpPopover();
-    popover.classList.add("hidden");
-    popover.setAttribute("aria-hidden", "true");
-    trigger.setAttribute("aria-expanded", "false");
-  }
-  function schedulePromptFidelityHelpClose(trigger) {
-    cancelPromptFidelityHelpClose();
-    promptFidelityHelpCloseTimer = window.setTimeout(() => {
-      promptFidelityHelpCloseTimer = null;
-      if (promptFidelityHelpPinned || trigger.matches(":hover, :focus-visible") || promptFidelityHelpPopover?.matches(":hover")) return;
-      closePromptFidelityHelp(trigger);
-    }, 90);
-  }
-  function initPromptFidelityHelpFeature() {
-    if (promptFidelityHelpInitialized) return;
-    const trigger = document.querySelector("#promptFidelityHelpButton");
-    if (!trigger) return;
-    promptFidelityHelpInitialized = true;
-    const popover = ensurePromptFidelityHelpPopover();
-    trigger.addEventListener("pointerenter", () => openPromptFidelityHelp(trigger));
-    trigger.addEventListener("pointerleave", () => schedulePromptFidelityHelpClose(trigger));
-    trigger.addEventListener("focus", () => openPromptFidelityHelp(trigger));
-    trigger.addEventListener("blur", () => schedulePromptFidelityHelpClose(trigger));
-    trigger.addEventListener("click", (event) => {
-      event.stopPropagation();
-      if (promptFidelityHelpPinned) {
-        closePromptFidelityHelp(trigger);
-        return;
-      }
-      openPromptFidelityHelp(trigger, true);
-    });
-    popover.addEventListener("pointerenter", cancelPromptFidelityHelpClose);
-    popover.addEventListener("pointerleave", () => schedulePromptFidelityHelpClose(trigger));
-    document.querySelector("#promptFidelity")?.addEventListener("change", () => {
-      if (!popover.classList.contains("hidden")) openPromptFidelityHelp(trigger);
-    });
-    document.addEventListener(LOCALE_CHANGE_EVENT, () => {
-      if (!popover.classList.contains("hidden")) openPromptFidelityHelp(trigger);
-    });
-    document.addEventListener("pointerdown", (event) => {
-      const target = event.target;
-      if (!promptFidelityHelpPinned || !target || trigger.contains(target) || popover.contains(target)) return;
-      closePromptFidelityHelp(trigger);
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape" || popover.classList.contains("hidden")) return;
-      closePromptFidelityHelp(trigger);
-      trigger.focus({ preventScroll: true });
-    });
-    window.addEventListener("resize", () => {
-      if (!popover.classList.contains("hidden")) positionPromptFidelityHelp(trigger, popover);
-    });
-    document.addEventListener("scroll", () => {
-      if (!popover.classList.contains("hidden")) positionPromptFidelityHelp(trigger, popover);
-    }, true);
   }
 
   // codex_image/webui/frontend/src/prompt-find-replace.ts
@@ -45962,7 +45801,7 @@ ${galleryText}`;
   // codex_image/webui/frontend/src/size-presets.ts
   var DEFAULT_RESOLUTION = "standard";
   var DEFAULT_RATIO = "1:1";
-  var DEFAULT_ORIENTATION = "auto";
+  var DEFAULT_ORIENTATION = "square";
   var RATIO_ORIENTATION = {
     "1:1": "square",
     "4:5": "portrait",
@@ -45975,6 +45814,24 @@ ${galleryText}`;
     "16:9": "landscape",
     "9:21": "portrait",
     "21:9": "landscape"
+  };
+  var RATIO_COUNTERPARTS = {
+    "1:1": "1:1",
+    "4:5": "5:4",
+    "5:4": "4:5",
+    "3:4": "4:3",
+    "4:3": "3:4",
+    "2:3": "3:2",
+    "3:2": "2:3",
+    "9:16": "16:9",
+    "16:9": "9:16",
+    "9:21": "21:9",
+    "21:9": "9:21"
+  };
+  var ORIENTATION_DEFAULT_RATIOS = {
+    square: "1:1",
+    portrait: "2:3",
+    landscape: "3:2"
   };
   var GPT_IMAGE_2_SIZE_PRESETS = {
     standard: {
@@ -46021,16 +45878,6 @@ ${galleryText}`;
   var GPT_IMAGE_2_MAX_PIXELS = 8294400;
   var GPT_IMAGE_2_MAX_LONG_SHORT_RATIO = 3;
   var { els: els25 } = getLegacyBridge();
-  function legacyMethod29(name, ...args) {
-    const method = getLegacyBridge().methods[name];
-    if (typeof method !== "function") {
-      throw new Error("Legacy method " + name + " is not initialized");
-    }
-    return method(...args);
-  }
-  function currentPromptFidelity3() {
-    return legacyMethod29("currentPromptFidelity");
-  }
   function currentCustomRatio() {
     const width = String(els25.customRatioWidth?.value || "").trim();
     const height = String(els25.customRatioHeight?.value || "").trim();
@@ -46085,6 +45932,7 @@ ${galleryText}`;
     return null;
   }
   function currentSize() {
+    if (els25.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto") return "auto";
     if (els25.size.value !== "custom" && els25.orientation?.value !== "manual") return "auto";
     if (els25.size.value !== "custom") return els25.size.value;
     return `${els25.customWidth.value}x${els25.customHeight.value}`;
@@ -46114,21 +45962,22 @@ ${galleryText}`;
     const { state: state33 } = getLegacyBridge();
     if (!state33.generationCatalog || state33.selectedModelId === "gpt-image-2") {
       params.main_model = currentMainModel();
-      params.prompt_fidelity = currentPromptFidelity3();
     }
     if (currentWebSearchEnabled()) {
       params.web_search = true;
     }
-    if (params.size === "auto") {
-      params.ratio = "auto";
-      params.orientation = "auto";
+    const automaticSize = !params.size || params.size === "auto";
+    if (automaticSize) {
+      params.size = "auto";
+      delete params.ratio;
+      delete params.orientation;
     }
-    const presetMatch = findPresetForSize(params.size);
+    const presetMatch = automaticSize ? null : findPresetForSize(params.size);
     if (presetMatch) {
       params.resolution = presetMatch.resolution;
       params.ratio = presetMatch.ratio;
       params.orientation = presetMatch.orientation;
-    } else {
+    } else if (!automaticSize) {
       const customRatio = currentCustomRatio();
       if (customRatio) {
         params.ratio = customRatio;
@@ -46165,11 +46014,22 @@ ${galleryText}`;
   function handleSizeModeEvent(event) {
     const button = event.target.closest?.("[data-custom-size-mode]");
     if (!button || !els26.sizeModeGroup?.contains(button)) return;
-    setCustomSizeMode(button.dataset.customSizeMode === "custom");
+    setSizeMode(button.dataset.customSizeMode || "auto");
   }
-  function setCustomSizeMode(isCustom) {
-    if (els26.customSizeToggle) els26.customSizeToggle.checked = Boolean(isCustom);
-    updateSizeFromPreset();
+  function currentSizeMode() {
+    const active = els26.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active");
+    if (active?.dataset?.customSizeMode) return active.dataset.customSizeMode;
+    return els26.size?.value === "custom" ? "custom" : els26.size?.value === "auto" ? "auto" : "preset";
+  }
+  function setSizeMode(mode) {
+    const normalizedMode2 = mode === "custom" || mode === "preset" ? mode : "auto";
+    if (els26.customSizeToggle) els26.customSizeToggle.checked = normalizedMode2 === "custom";
+    els26.sizeModeGroup?.querySelectorAll("[data-custom-size-mode]").forEach((button) => {
+      const active = button.dataset.customSizeMode === normalizedMode2;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    updateSizeFromPreset(normalizedMode2);
     saveCurrentModelParameterDraft2();
   }
   function swapCustomSizeDimensions(event) {
@@ -46357,7 +46217,9 @@ ${galleryText}`;
   function updateSizeFromPreset(event = null) {
     const changedControl = sizeControlName(event?.target);
     syncRatioAndOrientation(changedControl);
-    if (els26.customSizeToggle?.checked) {
+    const requestedMode = typeof event === "string" ? event : currentSizeMode();
+    const mode = requestedMode === "custom" || els26.customSizeToggle?.checked ? "custom" : requestedMode === "preset" ? "preset" : "auto";
+    if (mode === "custom") {
       if (els26.size?.value !== "custom") {
         populateCustomSizeFromCurrentPreset();
       }
@@ -46369,7 +46231,7 @@ ${galleryText}`;
       updateRequestPreview10();
       return;
     }
-    const size = els26.orientation?.value === "manual" ? sizeForPreset(els26.resolution?.value, els26.ratio?.value) : "auto";
+    const size = mode === "preset" ? sizeForPreset(els26.resolution?.value, els26.ratio?.value) : "auto";
     els26.size.value = size;
     updatePixelPreview(size);
     updateCustomSize();
@@ -46396,15 +46258,37 @@ ${galleryText}`;
     if (!RATIO_ORIENTATION[els26.ratio.value]) {
       setSizeControlValue(els26.ratio, DEFAULT_RATIO);
     }
-    if (els26.orientation.value !== "auto" && els26.orientation.value !== "manual") {
-      setSizeControlValue(els26.orientation, "manual");
+    if (!ORIENTATION_DEFAULT_RATIOS[els26.orientation.value]) {
+      setSizeControlValue(els26.orientation, RATIO_ORIENTATION[els26.ratio.value] || DEFAULT_ORIENTATION);
     }
-    updatePresetRatioVisibility();
+    if (changedControl === "orientation") {
+      syncRatioFromOrientation();
+      return;
+    }
+    syncOrientationFromRatio();
+  }
+  function syncOrientationFromRatio() {
+    const nextOrientation = RATIO_ORIENTATION[els26.ratio.value] || DEFAULT_ORIENTATION;
+    setSizeControlValue(els26.orientation, nextOrientation);
+  }
+  function syncRatioFromOrientation() {
+    const orientation = els26.orientation.value;
+    if (orientation === "square") {
+      setSizeControlValue(els26.ratio, DEFAULT_RATIO);
+      return;
+    }
+    if (RATIO_ORIENTATION[els26.ratio.value] === orientation) return;
+    const counterpart = RATIO_COUNTERPARTS[els26.ratio.value];
+    if (counterpart && RATIO_ORIENTATION[counterpart] === orientation) {
+      setSizeControlValue(els26.ratio, counterpart);
+      return;
+    }
+    setSizeControlValue(els26.ratio, ORIENTATION_DEFAULT_RATIOS[orientation] || DEFAULT_RATIO);
   }
   function updatePresetRatioVisibility() {
     const ratioField = els26.ratio?.closest?.(".ratio-field");
     if (!ratioField) return;
-    const visible = els26.orientation?.value === "manual" && !els26.customSizeToggle?.checked;
+    const visible = currentSizeMode() === "preset" && !els26.customSizeToggle?.checked;
     ratioField.classList.toggle("hidden", !visible);
     ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
   }
@@ -46451,7 +46335,7 @@ ${galleryText}`;
       if (els26.resolution) els26.resolution.value = DEFAULT_RESOLUTION;
       if (els26.ratio) els26.ratio.value = DEFAULT_RATIO;
       if (els26.orientation) els26.orientation.value = DEFAULT_ORIENTATION;
-      updateSizeFromPreset();
+      setSizeMode("auto");
       syncRadioButtons(els26.resolution, els26.ratio, els26.orientation);
       return;
     }
@@ -46460,14 +46344,15 @@ ${galleryText}`;
       if (els26.customSizeToggle) els26.customSizeToggle.checked = false;
       els26.resolution.value = presetMatch.resolution;
       els26.ratio.value = presetMatch.ratio;
-      els26.orientation.value = "manual";
-      updateSizeFromPreset();
+      els26.orientation.value = presetMatch.orientation;
+      setSizeMode("preset");
       syncRadioButtons(els26.resolution, els26.ratio, els26.orientation);
       return;
     }
     const [width, height] = String(size).split("x");
     if (width && height) {
       if (els26.customSizeToggle) els26.customSizeToggle.checked = true;
+      setSizeMode("custom");
       els26.size.value = "custom";
       els26.customWidth.value = width;
       els26.customHeight.value = height;
@@ -46593,11 +46478,12 @@ ${galleryText}`;
     customSizeTransitionTimers.set(grid, timerId);
   }
   function updateCustomSize() {
-    const isCustom = els26.size?.value === "custom";
+    const isCustom = currentSizeMode() === "custom" || els26.size?.value === "custom";
+    const isAuto = currentSizeMode() === "auto";
     transitionCustomSizeMode(isCustom);
     if (els26.customSizeToggle) els26.customSizeToggle.checked = isCustom;
     els26.sizeModeGroup?.querySelectorAll("[data-custom-size-mode]").forEach((button) => {
-      const active = button.dataset.customSizeMode === (isCustom ? "custom" : "preset");
+      const active = button.dataset.customSizeMode === (isCustom ? "custom" : isAuto ? "auto" : "preset");
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
     });
@@ -46607,6 +46493,11 @@ ${galleryText}`;
       els26.customSizeHint.textContent = message || formatTranslation("output.customSizeHint");
     }
     updateCustomRatioFieldState();
+    [els26.orientation?.closest?.(".orientation-field"), els26.resolution?.closest?.(".resolution-field")].filter(Boolean).forEach((field) => {
+      field.classList.toggle("hidden", isAuto);
+      field.setAttribute("aria-hidden", isAuto ? "true" : "false");
+    });
+    updatePresetRatioVisibility();
   }
 
   // codex_image/webui/frontend/src/form-controls.ts
@@ -46638,8 +46529,7 @@ ${galleryText}`;
       els27.outputFormat,
       els27.moderation,
       els27.compression,
-      els27.nInput,
-      els27.promptFidelity
+      els27.nInput
     ].filter(Boolean).forEach((element2) => {
       const handleParameterChange = () => {
         persistMainModel();
@@ -46773,7 +46663,7 @@ ${galleryText}`;
   var lockedSnapshot = null;
   var taskSnapshot = null;
   var taskContext = null;
-  function legacyMethod30(name, ...args) {
+  function legacyMethod29(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error(`Legacy method ${name} is not initialized`);
@@ -46905,9 +46795,9 @@ ${galleryText}`;
     };
   }
   function currentSummaryContext() {
-    const authSource = String(legacyMethod30("currentAuthSource") || "codex");
-    const currentCodexMode5 = authSource === "codex" ? String(legacyMethod30("currentCodexMode") || "image") : "";
-    const currentApiMode4 = authSource === "api" ? String(legacyMethod30("currentApiMode") || "images") : "";
+    const authSource = String(legacyMethod29("currentAuthSource") || "codex");
+    const currentCodexMode5 = authSource === "codex" ? String(legacyMethod29("currentCodexMode") || "image") : "";
+    const currentApiMode4 = authSource === "api" ? String(legacyMethod29("currentApiMode") || "images") : "";
     const responses = authSource === "api" ? currentApiMode4 === "responses" : currentCodexMode5 === "responses";
     const callLabel = authSource === "api" ? "Images API" : "Codex Image";
     return { responses, task: false, callLabel };
@@ -46939,7 +46829,7 @@ ${galleryText}`;
   }
   function snapshotFromCurrentSelection() {
     const bridge40 = getLegacyBridge();
-    const legacy = legacyMethod30("currentTaskParams");
+    const legacy = legacyMethod29("currentTaskParams");
     const model = bridge40.state.generationCatalog?.models.find((item) => item.id === bridge40.state.selectedModelId);
     const parameters = model && model.id !== "gpt-image-2" && typeof bridge40.methods.activeParameterValues === "function" ? bridge40.methods.activeParameterValues(model) : typeof bridge40.methods.currentCanonicalParameters === "function" ? bridge40.methods.currentCanonicalParameters() : {};
     return normalizeOutputSettingsSnapshot({
@@ -47076,7 +46966,7 @@ ${galleryText}`;
     }
   }
   function applySnapshot(snapshot) {
-    legacyMethod30("applyTaskOutputParams", { params: snapshot });
+    legacyMethod29("applyTaskOutputParams", { params: snapshot });
   }
   function isOutputSettingsLocked() {
     return locked;
@@ -47111,7 +47001,7 @@ ${galleryText}`;
     if (!locked || !taskSnapshot) return;
     const state33 = getLegacyBridge().state;
     const task = state33.tasks.find((item) => String(item.task_id) === String(state33.selectedTaskId));
-    if (task) legacyMethod30("adoptTaskParameters", task);
+    if (task) legacyMethod29("adoptTaskParameters", task);
     applySnapshot(taskSnapshot);
     lockedSnapshot = snapshotFromCurrentSelection();
     taskSnapshot = null;
@@ -47612,7 +47502,7 @@ ${galleryText}`;
   var queueTaskIdsCacheKey = "";
   var queueTaskIdsCache = null;
   var deferredActiveTaskHtml = null;
-  function legacyMethod31(name, ...args) {
+  function legacyMethod30(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -47620,85 +47510,85 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml14(...args) {
-    return legacyMethod31("escapeHtml", ...args);
+    return legacyMethod30("escapeHtml", ...args);
   }
   function updateDocumentTitle(...args) {
-    return legacyMethod31("updateDocumentTitle", ...args);
+    return legacyMethod30("updateDocumentTitle", ...args);
   }
   function isTaskArchived(...args) {
-    return legacyMethod31("isTaskArchived", ...args);
+    return legacyMethod30("isTaskArchived", ...args);
   }
   function taskArchived(...args) {
-    return legacyMethod31("taskArchived", ...args);
+    return legacyMethod30("taskArchived", ...args);
   }
   function renderBatchToolbar(...args) {
-    return legacyMethod31("renderBatchToolbar", ...args);
+    return legacyMethod30("renderBatchToolbar", ...args);
   }
   function updateTaskElapsedDisplays2(...args) {
-    return legacyMethod31("updateTaskElapsedDisplays", ...args);
+    return legacyMethod30("updateTaskElapsedDisplays", ...args);
   }
   function taskBackendLabel2(...args) {
-    return legacyMethod31("taskBackendLabel", ...args);
+    return legacyMethod30("taskBackendLabel", ...args);
   }
   function taskApiProviderId2(...args) {
-    return legacyMethod31("taskApiProviderId", ...args);
+    return legacyMethod30("taskApiProviderId", ...args);
   }
   function taskApiProviderLabel2(...args) {
-    return legacyMethod31("taskApiProviderLabel", ...args);
+    return legacyMethod30("taskApiProviderLabel", ...args);
   }
   function formatTaskCardStatus2(...args) {
-    return legacyMethod31("formatTaskCardStatus", ...args);
+    return legacyMethod30("formatTaskCardStatus", ...args);
   }
   function formatTaskStatus2(...args) {
-    return legacyMethod31("formatTaskStatus", ...args);
+    return legacyMethod30("formatTaskStatus", ...args);
   }
   function ensureExpandedTaskGroupKey(...args) {
-    return legacyMethod31("ensureExpandedTaskGroupKey", ...args);
+    return legacyMethod30("ensureExpandedTaskGroupKey", ...args);
   }
   function renderTaskHistoryAnchors(...args) {
-    return legacyMethod31("renderTaskHistoryAnchors", ...args);
+    return legacyMethod30("renderTaskHistoryAnchors", ...args);
   }
   function scrollExpandedTaskGroupToTop(...args) {
-    return legacyMethod31("scrollExpandedTaskGroupToTop", ...args);
+    return legacyMethod30("scrollExpandedTaskGroupToTop", ...args);
   }
   function captureTaskHistoryLayout(...args) {
-    return legacyMethod31("captureTaskHistoryLayout", ...args);
+    return legacyMethod30("captureTaskHistoryLayout", ...args);
   }
   function animateTaskHistoryLayout(...args) {
-    return legacyMethod31("animateTaskHistoryLayout", ...args);
+    return legacyMethod30("animateTaskHistoryLayout", ...args);
   }
   function scheduleLatestTaskNavigationRefresh(...args) {
-    return legacyMethod31("scheduleLatestTaskNavigationRefresh", ...args);
+    return legacyMethod30("scheduleLatestTaskNavigationRefresh", ...args);
   }
   function scheduleSidebarTaskGroupAutoLoad(...args) {
     const method = getLegacyBridge().methods.scheduleSidebarTaskGroupAutoLoad;
     return typeof method === "function" ? method(...args) : void 0;
   }
   function consumeLatestTaskNavigationScrollAnchor(...args) {
-    return legacyMethod31("consumeLatestTaskNavigationScrollAnchor", ...args);
+    return legacyMethod30("consumeLatestTaskNavigationScrollAnchor", ...args);
   }
   function rememberLatestTaskNavigationBeforeRender(...args) {
-    return legacyMethod31("rememberLatestTaskNavigationBeforeRender", ...args);
+    return legacyMethod30("rememberLatestTaskNavigationBeforeRender", ...args);
   }
-  var taskRatio = (...args) => legacyMethod31("taskRatio", ...args);
-  var taskOrientation = (...args) => legacyMethod31("taskOrientation", ...args);
-  var taskPromptFidelity = (...args) => legacyMethod31("taskPromptFidelity", ...args);
-  var taskResolution = (...args) => legacyMethod31("taskResolution", ...args);
-  var taskInputPreviewUrls = (...args) => legacyMethod31("taskInputPreviewUrls", ...args);
-  var taskThumbnailUrls = (...args) => legacyMethod31("taskThumbnailUrls", ...args);
-  var taskOutputUrls = (...args) => legacyMethod31("taskOutputUrls", ...args);
-  var taskImageBlockStates = (...args) => legacyMethod31("taskImageBlockStates", ...args);
-  var compressTaskImageBlockStates = (...args) => legacyMethod31("compressTaskImageBlockStates", ...args);
-  var taskImageStatusCounts = (...args) => legacyMethod31("taskImageStatusCounts", ...args);
-  var taskRetryStateText2 = (...args) => legacyMethod31("taskRetryStateText", ...args);
-  var taskCardRetryStateText = (...args) => legacyMethod31("taskCardRetryStateText", ...args);
-  var taskDurationText = (...args) => legacyMethod31("taskDurationText", ...args);
-  var taskRuntimeText = (...args) => legacyMethod31("taskRuntimeText", ...args);
-  var taskProgressStartValue2 = (...args) => legacyMethod31("taskProgressStartValue", ...args);
-  var elapsedTimerSpan = (...args) => legacyMethod31("elapsedTimerSpan", ...args);
-  var taskCompletionTimestampText = (...args) => legacyMethod31("taskCompletionTimestampText", ...args);
-  var taskCompletionTimestampTitle = (...args) => legacyMethod31("taskCompletionTimestampTitle", ...args);
-  var timestampMs2 = (...args) => legacyMethod31("timestampMs", ...args);
+  var taskRatio = (...args) => legacyMethod30("taskRatio", ...args);
+  var taskOrientation = (...args) => legacyMethod30("taskOrientation", ...args);
+  var taskPromptFidelity = (...args) => legacyMethod30("taskPromptFidelity", ...args);
+  var taskResolution = (...args) => legacyMethod30("taskResolution", ...args);
+  var taskInputPreviewUrls = (...args) => legacyMethod30("taskInputPreviewUrls", ...args);
+  var taskThumbnailUrls = (...args) => legacyMethod30("taskThumbnailUrls", ...args);
+  var taskOutputUrls = (...args) => legacyMethod30("taskOutputUrls", ...args);
+  var taskImageBlockStates = (...args) => legacyMethod30("taskImageBlockStates", ...args);
+  var compressTaskImageBlockStates = (...args) => legacyMethod30("compressTaskImageBlockStates", ...args);
+  var taskImageStatusCounts = (...args) => legacyMethod30("taskImageStatusCounts", ...args);
+  var taskRetryStateText2 = (...args) => legacyMethod30("taskRetryStateText", ...args);
+  var taskCardRetryStateText = (...args) => legacyMethod30("taskCardRetryStateText", ...args);
+  var taskDurationText = (...args) => legacyMethod30("taskDurationText", ...args);
+  var taskRuntimeText = (...args) => legacyMethod30("taskRuntimeText", ...args);
+  var taskProgressStartValue2 = (...args) => legacyMethod30("taskProgressStartValue", ...args);
+  var elapsedTimerSpan = (...args) => legacyMethod30("elapsedTimerSpan", ...args);
+  var taskCompletionTimestampText = (...args) => legacyMethod30("taskCompletionTimestampText", ...args);
+  var taskCompletionTimestampTitle = (...args) => legacyMethod30("taskCompletionTimestampTitle", ...args);
+  var timestampMs2 = (...args) => legacyMethod30("timestampMs", ...args);
   function renderTasks2(options = {}) {
     if (options.preserveScroll) rememberLatestTaskNavigationBeforeRender();
     const scrollAnchors = options.preserveScroll ? captureTaskListScrollAnchors() : [];
@@ -48124,7 +48014,7 @@ ${galleryText}`;
     }
     scrollExpandedTaskGroupToTop("smooth");
     if (clearedControls) {
-      legacyMethod31("setStatus", translate("status.shownActiveTasks"), "ok");
+      legacyMethod30("setStatus", translate("status.shownActiveTasks"), "ok");
     }
   }
   function expandedTaskGroupHeaderHtml(group, options = {}) {
@@ -48240,7 +48130,7 @@ ${galleryText}`;
   function activeTaskGroupHtml(group) {
     const groupKey = escapeHtml14(group.key);
     const sections = activeTaskSections(group.tasks || []);
-    const dispatchPending = Boolean(legacyMethod31("isQueueDispatchPending"));
+    const dispatchPending = Boolean(legacyMethod30("isQueueDispatchPending"));
     const collapsed = Boolean(state19.activeTaskGroupCollapsed);
     const body = [
       activeTaskSectionHtml("running", translate("taskGroup.running"), sections.running),
@@ -48888,7 +48778,7 @@ ${galleryText}`;
   var TASK_HISTORY_LAYOUT_DURATION_MS = 180;
   var TASK_GROUP_ORDER = ["active", "current", "today", "yesterday", "last7", "older", "search"];
   var TASK_HISTORY_ALL_COLLAPSED_SENTINEL = "__all_collapsed__";
-  function legacyMethod32(name, ...args) {
+  function legacyMethod31(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -48896,10 +48786,10 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml15(...args) {
-    return legacyMethod32("escapeHtml", ...args);
+    return legacyMethod31("escapeHtml", ...args);
   }
   function taskGroupCount2(...args) {
-    return legacyMethod32("taskGroupCount", ...args);
+    return legacyMethod31("taskGroupCount", ...args);
   }
   function element(node) {
     return node instanceof HTMLElement ? node : null;
@@ -49145,7 +49035,7 @@ ${galleryText}`;
     });
   }
   function notifyLatestTaskAvailable(task) {
-    const incomingGroupKey = String(legacyMethod32("taskDateBucket", task) || "");
+    const incomingGroupKey = String(legacyMethod31("taskDateBucket", task) || "");
     const viewModel = latestTaskNavigationCurrentViewModel();
     const atIncomingTask = Boolean(
       incomingGroupKey && viewModel.latestGroupKey === incomingGroupKey && viewModel.atLatest
@@ -49167,7 +49057,7 @@ ${galleryText}`;
     state20.latestTaskNoticeCount = 0;
     const changed = setExpandedTaskGroupKey(viewModel.latestGroupKey, { immediate: true });
     if (changed) {
-      legacyMethod32("renderTasks");
+      legacyMethod31("renderTasks");
     }
     requestAnimationFrame(() => {
       focusExpandedTaskGroupHeader();
@@ -49322,7 +49212,7 @@ ${galleryText}`;
   var bridge27 = getLegacyBridge();
   var state21 = bridge27.state;
   var els30 = bridge27.els;
-  function legacyMethod33(name, ...args) {
+  function legacyMethod32(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -49334,25 +49224,25 @@ ${galleryText}`;
     return error instanceof Error ? error.message || fallback : fallback;
   }
   function setStatus16(...args) {
-    return legacyMethod33("setStatus", ...args);
+    return legacyMethod32("setStatus", ...args);
   }
   function renderTasks3(...args) {
-    return legacyMethod33("renderTasks", ...args);
+    return legacyMethod32("renderTasks", ...args);
   }
   function closePromptPopover4(...args) {
-    return legacyMethod33("closePromptPopover", ...args);
+    return legacyMethod32("closePromptPopover", ...args);
   }
   function taskThumbHtml2(...args) {
-    return legacyMethod33("taskThumbHtml", ...args);
+    return legacyMethod32("taskThumbHtml", ...args);
   }
   function escapeHtml16(...args) {
-    return legacyMethod33("escapeHtml", ...args);
+    return legacyMethod32("escapeHtml", ...args);
   }
   function formatTaskStatus3(...args) {
-    return legacyMethod33("formatTaskStatus", ...args);
+    return legacyMethod32("formatTaskStatus", ...args);
   }
   function openTaskDeleteConfirm(...args) {
-    return legacyMethod33("openTaskDeleteConfirm", ...args);
+    return legacyMethod32("openTaskDeleteConfirm", ...args);
   }
   function taskArchived2(task) {
     return Boolean(task?.archived_at);
@@ -49462,7 +49352,7 @@ ${galleryText}`;
       const title = escapeHtml16(task.prompt || task.mode || "Untitled");
       const status = escapeHtml16(formatTaskStatus3(task));
       const size = escapeHtml16(task.output_size || task.params?.size || "");
-      const provider = escapeHtml16(legacyMethod33("taskCardProviderLabel", task) || "");
+      const provider = escapeHtml16(legacyMethod32("taskCardProviderLabel", task) || "");
       const meta = [status, size, provider].filter(Boolean).join(" \xB7 ");
       const taskId = escapeHtml16(task.task_id);
       return `
@@ -49481,7 +49371,7 @@ ${galleryText}`;
     }).join("");
     els30.archiveList.querySelectorAll("[data-archive-select-task-id]").forEach((card) => {
       card.addEventListener("click", () => {
-        legacyMethod33("selectTask", card.dataset.archiveSelectTaskId);
+        legacyMethod32("selectTask", card.dataset.archiveSelectTaskId);
         closeArchiveModal();
       });
     });
@@ -49531,7 +49421,7 @@ ${galleryText}`;
   var bridge28 = getLegacyBridge();
   var state22 = bridge28.state;
   var els31 = bridge28.els;
-  function legacyMethod34(name, ...args) {
+  function legacyMethod33(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -49543,43 +49433,43 @@ ${galleryText}`;
     return error instanceof Error ? error.message || fallback : fallback;
   }
   function setStatus17(...args) {
-    return legacyMethod34("setStatus", ...args);
+    return legacyMethod33("setStatus", ...args);
   }
   function isTaskArchived3(...args) {
-    return legacyMethod34("isTaskArchived", ...args);
+    return legacyMethod33("isTaskArchived", ...args);
   }
   function renderTasks4(...args) {
-    return legacyMethod34("renderTasks", ...args);
+    return legacyMethod33("renderTasks", ...args);
   }
   function setTaskArchiveState2(...args) {
-    return legacyMethod34("setTaskArchiveState", ...args);
+    return legacyMethod33("setTaskArchiveState", ...args);
   }
   function replaceTask2(...args) {
-    return legacyMethod34("replaceTask", ...args);
+    return legacyMethod33("replaceTask", ...args);
   }
   function firstVisibleTaskId2(...args) {
-    return legacyMethod34("firstVisibleTaskId", ...args);
+    return legacyMethod33("firstVisibleTaskId", ...args);
   }
   function renderArchiveButton2(...args) {
-    return legacyMethod34("renderArchiveButton", ...args);
+    return legacyMethod33("renderArchiveButton", ...args);
   }
   function renderArchiveModal2(...args) {
-    return legacyMethod34("renderArchiveModal", ...args);
+    return legacyMethod33("renderArchiveModal", ...args);
   }
   function renderPreview2(...args) {
-    return legacyMethod34("renderPreview", ...args);
+    return legacyMethod33("renderPreview", ...args);
   }
   function openConfirmPopover5(...args) {
-    return legacyMethod34("openConfirmPopover", ...args);
+    return legacyMethod33("openConfirmPopover", ...args);
   }
   function runTaskCardRemovalTransition(...args) {
-    return legacyMethod34("runTaskCardRemovalTransition", ...args);
+    return legacyMethod33("runTaskCardRemovalTransition", ...args);
   }
   function refreshTasksAfterDeletion(...args) {
-    return legacyMethod34("refreshTasksAfterDeletion", ...args);
+    return legacyMethod33("refreshTasksAfterDeletion", ...args);
   }
   function taskFilterValues2(...args) {
-    return legacyMethod34("taskFilterValues", ...args);
+    return legacyMethod33("taskFilterValues", ...args);
   }
   function activeTaskIds() {
     return [...state22.queue.running || [], ...state22.queue.waiting || []].map((task) => String(task?.task_id || "")).filter(Boolean);
@@ -49781,7 +49671,7 @@ ${galleryText}`;
       state22.batchSelectionIncludesUnloaded = false;
       state22.batchMode = false;
       await window.refreshQueue?.();
-      await legacyMethod34("refreshTasks");
+      await legacyMethod33("refreshTasks");
       renderPreview2();
       const summary = data.summary || {};
       const statusType = Number(summary.failed || 0) > 0 ? "error" : "ok";
@@ -50034,7 +49924,7 @@ ${galleryText}`;
   var TASK_CARD_REMOVAL_FALLBACK_MS = 320;
   var TASK_CARD_REFLOW_DURATION_MS = 180;
   var TASK_CARD_REFLOW_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
-  function legacyMethod35(name, ...args) {
+  function legacyMethod34(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -50056,61 +49946,61 @@ ${galleryText}`;
     return error instanceof TaskActionHttpError && error.status === 409;
   }
   function setStatus18(...args) {
-    return legacyMethod35("setStatus", ...args);
+    return legacyMethod34("setStatus", ...args);
   }
   function closePromptPopover5(...args) {
-    return legacyMethod35("closePromptPopover", ...args);
+    return legacyMethod34("closePromptPopover", ...args);
   }
   function setTaskArchiveState3(...args) {
-    return legacyMethod35("setTaskArchiveState", ...args);
+    return legacyMethod34("setTaskArchiveState", ...args);
   }
   function replaceTask3(...args) {
-    return legacyMethod35("replaceTask", ...args);
+    return legacyMethod34("replaceTask", ...args);
   }
   function removeBatchSelectedTaskId2(...args) {
-    return legacyMethod35("removeBatchSelectedTaskId", ...args);
+    return legacyMethod34("removeBatchSelectedTaskId", ...args);
   }
   function firstVisibleTaskId3(...args) {
-    return legacyMethod35("firstVisibleTaskId", ...args);
+    return legacyMethod34("firstVisibleTaskId", ...args);
   }
   function renderTasks5(...args) {
-    return legacyMethod35("renderTasks", ...args);
+    return legacyMethod34("renderTasks", ...args);
   }
   function updateTaskSelectionVisuals2(...args) {
-    return legacyMethod35("updateTaskSelectionVisuals", ...args);
+    return legacyMethod34("updateTaskSelectionVisuals", ...args);
   }
   function renderArchiveButton3(...args) {
-    return legacyMethod35("renderArchiveButton", ...args);
+    return legacyMethod34("renderArchiveButton", ...args);
   }
   function renderArchiveModal3(...args) {
-    return legacyMethod35("renderArchiveModal", ...args);
+    return legacyMethod34("renderArchiveModal", ...args);
   }
   function renderPreview3(...args) {
-    return legacyMethod35("renderPreview", ...args);
+    return legacyMethod34("renderPreview", ...args);
   }
   function openConfirmPopover6(...args) {
-    return legacyMethod35("openConfirmPopover", ...args);
+    return legacyMethod34("openConfirmPopover", ...args);
   }
   function canRetryFailedTask(...args) {
-    return legacyMethod35("canRetryFailedTask", ...args);
+    return legacyMethod34("canRetryFailedTask", ...args);
   }
   function canAcceptTaskSuccesses(...args) {
-    return legacyMethod35("canAcceptTaskSuccesses", ...args);
+    return legacyMethod34("canAcceptTaskSuccesses", ...args);
   }
   function currentApiProviderId2(...args) {
-    return legacyMethod35("currentApiProviderId", ...args);
+    return legacyMethod34("currentApiProviderId", ...args);
   }
   function updateTaskInState2(...args) {
-    return legacyMethod35("updateTaskInState", ...args);
+    return legacyMethod34("updateTaskInState", ...args);
   }
   function captureTaskHistoryLayout3(...args) {
-    return legacyMethod35("captureTaskHistoryLayout", ...args);
+    return legacyMethod34("captureTaskHistoryLayout", ...args);
   }
   function animateTaskHistoryLayout3(...args) {
-    return legacyMethod35("animateTaskHistoryLayout", ...args);
+    return legacyMethod34("animateTaskHistoryLayout", ...args);
   }
   function refreshTasksAfterDeletion2(...args) {
-    return legacyMethod35("refreshTasksAfterDeletion", ...args);
+    return legacyMethod34("refreshTasksAfterDeletion", ...args);
   }
   function taskCardElements() {
     return Array.from(document.querySelectorAll(".task-card[data-task-id]"));
@@ -50440,7 +50330,7 @@ ${galleryText}`;
   var bridge30 = getLegacyBridge();
   var state24 = bridge30.state;
   var els33 = bridge30.els;
-  function legacyMethod36(name, ...args) {
+  function legacyMethod35(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -50453,115 +50343,112 @@ ${galleryText}`;
     return error instanceof Error ? error.message || fallback : fallback;
   }
   function setStatus19(...args) {
-    return legacyMethod36("setStatus", ...args);
+    return legacyMethod35("setStatus", ...args);
   }
   function setMode5(...args) {
-    return legacyMethod36("setMode", ...args);
+    return legacyMethod35("setMode", ...args);
   }
   function setPromptWithGalleryRefs2(...args) {
-    return legacyMethod36("setPromptWithGalleryRefs", ...args);
+    return legacyMethod35("setPromptWithGalleryRefs", ...args);
   }
   function persistMainModel2(...args) {
-    return legacyMethod36("persistMainModel", ...args);
+    return legacyMethod35("persistMainModel", ...args);
   }
   function syncSizeControlsFromSize2(...args) {
-    return legacyMethod36("syncSizeControlsFromSize", ...args);
+    return legacyMethod35("syncSizeControlsFromSize", ...args);
   }
   function updatePromptCount6(...args) {
-    return legacyMethod36("updatePromptCount", ...args);
+    return legacyMethod35("updatePromptCount", ...args);
   }
   function updateQuantity2(...args) {
-    return legacyMethod36("updateQuantity", ...args);
+    return legacyMethod35("updateQuantity", ...args);
   }
   function syncRadioButtons2(...args) {
-    return legacyMethod36("syncRadioButtons", ...args);
+    return legacyMethod35("syncRadioButtons", ...args);
   }
   function updateCompression2(...args) {
-    return legacyMethod36("updateCompression", ...args);
+    return legacyMethod35("updateCompression", ...args);
   }
   function updateCustomSize2(...args) {
-    return legacyMethod36("updateCustomSize", ...args);
+    return legacyMethod35("updateCustomSize", ...args);
   }
   function updateRequestPreview11(...args) {
-    return legacyMethod36("updateRequestPreview", ...args);
+    return legacyMethod35("updateRequestPreview", ...args);
   }
   function currentTaskParams2(...args) {
-    return legacyMethod36("currentTaskParams", ...args);
+    return legacyMethod35("currentTaskParams", ...args);
   }
   function uploadInputs3(...args) {
-    return legacyMethod36("uploadInputs", ...args);
+    return legacyMethod35("uploadInputs", ...args);
   }
   function galleryInputs4(...args) {
-    return legacyMethod36("galleryInputs", ...args);
+    return legacyMethod35("galleryInputs", ...args);
   }
   function referenceAssetInputs3(...args) {
-    return legacyMethod36("referenceAssetInputs", ...args);
+    return legacyMethod35("referenceAssetInputs", ...args);
   }
   function currentCodexMode4(...args) {
-    return legacyMethod36("currentCodexMode", ...args);
+    return legacyMethod35("currentCodexMode", ...args);
   }
   function getPromptText9(...args) {
-    return legacyMethod36("getPromptText", ...args);
+    return legacyMethod35("getPromptText", ...args);
   }
   function currentPromptForModel2(...args) {
-    return legacyMethod36("currentPromptForModel", ...args);
-  }
-  function currentPromptFidelity4(...args) {
-    return legacyMethod36("currentPromptFidelity", ...args);
+    return legacyMethod35("currentPromptForModel", ...args);
   }
   function currentMainModel2(...args) {
-    return legacyMethod36("currentMainModel", ...args);
+    return legacyMethod35("currentMainModel", ...args);
   }
   function sourcePreviewUrl3(...args) {
-    return legacyMethod36("sourcePreviewUrl", ...args);
+    return legacyMethod35("sourcePreviewUrl", ...args);
   }
   function syncPromptFromEditor6(...args) {
-    return legacyMethod36("syncPromptFromEditor", ...args);
+    return legacyMethod35("syncPromptFromEditor", ...args);
   }
   function syncGalleryInputsFromPrompt3(...args) {
-    return legacyMethod36("syncGalleryInputsFromPrompt", ...args);
+    return legacyMethod35("syncGalleryInputsFromPrompt", ...args);
   }
   function missingGalleryInputs2(...args) {
-    return legacyMethod36("missingGalleryInputs", ...args);
+    return legacyMethod35("missingGalleryInputs", ...args);
   }
   function missingReferenceAssetInputs2(...args) {
-    return legacyMethod36("missingReferenceAssetInputs", ...args);
+    return legacyMethod35("missingReferenceAssetInputs", ...args);
   }
   function customSizeValidationMessage2(...args) {
-    return legacyMethod36("customSizeValidationMessage", ...args);
+    return legacyMethod35("customSizeValidationMessage", ...args);
   }
   function updatePixelPreview2(...args) {
-    return legacyMethod36("updatePixelPreview", ...args);
+    return legacyMethod35("updatePixelPreview", ...args);
   }
   function addPendingTask2(...args) {
-    return legacyMethod36("addPendingTask", ...args);
+    return legacyMethod35("addPendingTask", ...args);
   }
   function replacePendingTask2(...args) {
-    return legacyMethod36("replacePendingTask", ...args);
+    return legacyMethod35("replacePendingTask", ...args);
   }
   function startRunFeedback2(...args) {
-    return legacyMethod36("startRunFeedback", ...args);
+    return legacyMethod35("startRunFeedback", ...args);
   }
   function stopRunFeedback2(...args) {
-    return legacyMethod36("stopRunFeedback", ...args);
+    return legacyMethod35("stopRunFeedback", ...args);
   }
   function markPendingTaskFailed2(...args) {
-    return legacyMethod36("markPendingTaskFailed", ...args);
+    return legacyMethod35("markPendingTaskFailed", ...args);
   }
   function refreshRecentAssets2(...args) {
-    return legacyMethod36("refreshRecentAssets", ...args);
+    return legacyMethod35("refreshRecentAssets", ...args);
   }
   function referenceFileUploads2(...args) {
-    return legacyMethod36("referenceFileUploads", ...args);
+    return legacyMethod35("referenceFileUploads", ...args);
   }
   function storedReferenceFileInputs2(...args) {
-    return legacyMethod36("storedReferenceFileInputs", ...args);
+    return legacyMethod35("storedReferenceFileInputs", ...args);
   }
   function missingReferenceFileInputs2(...args) {
-    return legacyMethod36("missingReferenceFileInputs", ...args);
+    return legacyMethod35("missingReferenceFileInputs", ...args);
   }
   function renderPreview4(...args) {
-    return legacyMethod36("renderPreview", ...args);
+    return legacyMethod35("renderPreview", ...args);
   }
   function currentCanonicalParameters() {
     return currentGenerationSelection().parameters;
@@ -50616,11 +50503,6 @@ ${galleryText}`;
     if (mainModel && els33.mainModel) {
       els33.mainModel.value = mainModel;
       persistMainModel2();
-    }
-    if (els33.promptFidelity) {
-      const fidelity = ["strict", "original", "off"].includes(params.prompt_fidelity) ? params.prompt_fidelity : "strict";
-      els33.promptFidelity.value = fidelity;
-      els33.promptFidelity.dispatchEvent(new Event("change"));
     }
     if (els33.webSearch) {
       els33.webSearch.checked = Boolean(output.web_search);
@@ -50687,7 +50569,6 @@ ${galleryText}`;
       reference_file_ids: storedFiles.map((source) => source.id)
     };
     const usesGptPromptProcessing = !state24.generationCatalog || state24.selectedModelId === "gpt-image-2";
-    if (usesGptPromptProcessing) payload2.prompt_fidelity = currentPromptFidelity4();
     if (isApi) {
       payload2.api_provider_id = state24.selectedProviderId;
       payload2.api_provider_name = state24.generationCatalog?.providers.find((provider) => provider.id === state24.selectedProviderId)?.name || "";
@@ -50783,7 +50664,6 @@ ${galleryText}`;
     appendCanonicalGenerationFields(form, currentGenerationSelection());
     if (!state24.generationCatalog || state24.selectedModelId === "gpt-image-2") {
       form.append("main_model", currentMainModel2());
-      form.append("prompt_fidelity", currentPromptFidelity4());
     }
     galleries.forEach((source) => form.append("gallery_image_ids", source.id));
     assets.forEach((source) => form.append("reference_asset_ids", source.id));
@@ -50849,33 +50729,33 @@ ${galleryText}`;
   var bridge31 = getLegacyBridge();
   var state25 = bridge31.state;
   var els34 = bridge31.els;
-  function legacyMethod37(name, ...args) {
+  function legacyMethod36(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
     }
     return method(...args);
   }
-  var renderTasks6 = () => legacyMethod37("renderTasks");
-  var syncTaskSearchHistoryResults = () => legacyMethod37("syncTaskSearchHistoryResults");
-  var setExpandedTaskGroupKey2 = (...args) => legacyMethod37("setExpandedTaskGroupKey", ...args);
-  var scrollExpandedTaskGroupToTop3 = (...args) => legacyMethod37("scrollExpandedTaskGroupToTop", ...args);
-  var captureTaskHistoryLayout4 = (...args) => legacyMethod37("captureTaskHistoryLayout", ...args);
-  var animateTaskHistoryLayout4 = (...args) => legacyMethod37("animateTaskHistoryLayout", ...args);
-  var revealTaskCardAction = (...args) => legacyMethod37("revealTaskCardAction", ...args);
-  var closeOpenTaskCardDrawer = (...args) => legacyMethod37("closeOpenTaskCardDrawer", ...args);
-  var toggleBatchMode2 = (...args) => legacyMethod37("toggleBatchMode", ...args);
-  var toggleBatchTaskSelection2 = (...args) => legacyMethod37("toggleBatchTaskSelection", ...args);
-  var handleBatchTaskShortcutSelection2 = (...args) => legacyMethod37("handleBatchTaskShortcutSelection", ...args);
-  var archiveSelectedTasks2 = (...args) => legacyMethod37("archiveSelectedTasks", ...args);
-  var selectActiveTasksForBatchCancel2 = (...args) => legacyMethod37("selectActiveTasksForBatchCancel", ...args);
-  var selectWaitingTasksForBatch2 = (...args) => legacyMethod37("selectWaitingTasksForBatch", ...args);
-  var openBatchCancelConfirm2 = (...args) => legacyMethod37("openBatchCancelConfirm", ...args);
-  var openBatchDeleteConfirm2 = (...args) => legacyMethod37("openBatchDeleteConfirm", ...args);
-  var selectAllMatchingTasksInExpandedGroup2 = (...args) => legacyMethod37("selectAllMatchingTasksInExpandedGroup", ...args);
-  var handleTaskListPointerDown2 = (...args) => legacyMethod37("handleTaskListPointerDown", ...args);
-  var loadMoreSidebarTaskGroup = (...args) => legacyMethod37("loadMoreSidebarTaskGroup", ...args);
-  var closeArchiveModal2 = (...args) => legacyMethod37("closeArchiveModal", ...args);
+  var renderTasks6 = () => legacyMethod36("renderTasks");
+  var syncTaskSearchHistoryResults = () => legacyMethod36("syncTaskSearchHistoryResults");
+  var setExpandedTaskGroupKey2 = (...args) => legacyMethod36("setExpandedTaskGroupKey", ...args);
+  var scrollExpandedTaskGroupToTop3 = (...args) => legacyMethod36("scrollExpandedTaskGroupToTop", ...args);
+  var captureTaskHistoryLayout4 = (...args) => legacyMethod36("captureTaskHistoryLayout", ...args);
+  var animateTaskHistoryLayout4 = (...args) => legacyMethod36("animateTaskHistoryLayout", ...args);
+  var revealTaskCardAction = (...args) => legacyMethod36("revealTaskCardAction", ...args);
+  var closeOpenTaskCardDrawer = (...args) => legacyMethod36("closeOpenTaskCardDrawer", ...args);
+  var toggleBatchMode2 = (...args) => legacyMethod36("toggleBatchMode", ...args);
+  var toggleBatchTaskSelection2 = (...args) => legacyMethod36("toggleBatchTaskSelection", ...args);
+  var handleBatchTaskShortcutSelection2 = (...args) => legacyMethod36("handleBatchTaskShortcutSelection", ...args);
+  var archiveSelectedTasks2 = (...args) => legacyMethod36("archiveSelectedTasks", ...args);
+  var selectActiveTasksForBatchCancel2 = (...args) => legacyMethod36("selectActiveTasksForBatchCancel", ...args);
+  var selectWaitingTasksForBatch2 = (...args) => legacyMethod36("selectWaitingTasksForBatch", ...args);
+  var openBatchCancelConfirm2 = (...args) => legacyMethod36("openBatchCancelConfirm", ...args);
+  var openBatchDeleteConfirm2 = (...args) => legacyMethod36("openBatchDeleteConfirm", ...args);
+  var selectAllMatchingTasksInExpandedGroup2 = (...args) => legacyMethod36("selectAllMatchingTasksInExpandedGroup", ...args);
+  var handleTaskListPointerDown2 = (...args) => legacyMethod36("handleTaskListPointerDown", ...args);
+  var loadMoreSidebarTaskGroup = (...args) => legacyMethod36("loadMoreSidebarTaskGroup", ...args);
+  var closeArchiveModal2 = (...args) => legacyMethod36("closeArchiveModal", ...args);
   var TASK_SIDEBAR_AUTO_LOAD_THRESHOLD_PX = 320;
   var taskListControlsInitialized = false;
   var taskListControlEventsBound = false;
@@ -51116,7 +50996,7 @@ ${galleryText}`;
     if (!nextCard) return true;
     focusTaskNavigationCard(nextCard);
     if (!state25.batchMode) {
-      void legacyMethod37("selectTask", nextCard.dataset.taskId);
+      void legacyMethod36("selectTask", nextCard.dataset.taskId);
     }
     return true;
   }
@@ -51187,7 +51067,7 @@ ${galleryText}`;
       toggleBatchTaskSelection2(card.dataset.taskId);
       return;
     }
-    legacyMethod37("selectTask", card.dataset.taskId);
+    legacyMethod36("selectTask", card.dataset.taskId);
   }
   function handleTaskListKeydown(event) {
     if (isTaskListKeyboardInputTarget(event.target)) return;
@@ -51209,7 +51089,7 @@ ${galleryText}`;
     if (state25.batchMode) {
       toggleBatchTaskSelection2(card.dataset.taskId);
     } else {
-      legacyMethod37("selectTask", card.dataset.taskId);
+      legacyMethod36("selectTask", card.dataset.taskId);
     }
   }
   function initTaskListControlsFeature() {
@@ -51707,7 +51587,7 @@ ${galleryText}`;
   var taskCardSwipeInitialized = false;
   var activeSwipe = null;
   var openTaskCard = null;
-  function legacyMethod38(name, ...args) {
+  function legacyMethod37(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -51900,7 +51780,7 @@ ${galleryText}`;
     setTaskCardActionAvailability(card, null);
     if (openTaskCard === card) openTaskCard = null;
     try {
-      const succeeded = action === "archive" ? await legacyMethod38("archiveTask", taskId) : action === "delete" ? await legacyMethod38("deleteTask", taskId) : action === "promote" ? await promoteQueueTask(taskId) : action === "cancel" ? await performCancelWaitingTask(taskId) : false;
+      const succeeded = action === "archive" ? await legacyMethod37("archiveTask", taskId) : action === "delete" ? await legacyMethod37("deleteTask", taskId) : action === "promote" ? await promoteQueueTask(taskId) : action === "cancel" ? await performCancelWaitingTask(taskId) : false;
       if (succeeded === false && card.isConnected) {
         card.classList.remove("task-card-action-pending");
         card.removeAttribute("data-task-action-pending");
@@ -52507,7 +52387,7 @@ ${galleryText}`;
   var taskContextMenuEventsBound = false;
   var taskContextMenuEl = null;
   var taskListMutationObserver = null;
-  function legacyMethod39(name, ...args) {
+  function legacyMethod38(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -52515,19 +52395,19 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml17(...args) {
-    return legacyMethod39("escapeHtml", ...args);
+    return legacyMethod38("escapeHtml", ...args);
   }
   function setStatus20(...args) {
-    return legacyMethod39("setStatus", ...args);
+    return legacyMethod38("setStatus", ...args);
   }
   function closePromptPopover6(...args) {
-    return legacyMethod39("closePromptPopover", ...args);
+    return legacyMethod38("closePromptPopover", ...args);
   }
   function selectTask(...args) {
-    return legacyMethod39("selectTask", ...args);
+    return legacyMethod38("selectTask", ...args);
   }
   function revealTaskCardAction3(...args) {
-    return legacyMethod39("revealTaskCardAction", ...args);
+    return legacyMethod38("revealTaskCardAction", ...args);
   }
   function bindTaskContextMenuEvents() {
     if (taskContextMenuEventsBound) return;
@@ -52853,7 +52733,7 @@ ${galleryText}`;
       "21:9": [3808, 1632]
     }
   };
-  function legacyMethod40(name, ...args) {
+  function legacyMethod39(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -52861,7 +52741,7 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml18(...args) {
-    return legacyMethod40("escapeHtml", ...args);
+    return legacyMethod39("escapeHtml", ...args);
   }
   function taskRatio2(task) {
     const dimensions2 = taskSizeDimensions(task);
@@ -53527,7 +53407,7 @@ ${galleryText}`;
   var els38 = bridge35.els;
   var previewGridEventsBound = false;
   var pendingPreviewRenderToken = 0;
-  function legacyMethod41(name, ...args) {
+  function legacyMethod40(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -53535,66 +53415,66 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml19(...args) {
-    return legacyMethod41("escapeHtml", ...args);
+    return legacyMethod40("escapeHtml", ...args);
   }
   function isTaskArchived4(...args) {
-    return legacyMethod41("isTaskArchived", ...args);
+    return legacyMethod40("isTaskArchived", ...args);
   }
   function updatePreviewElapsedDisplay2(...args) {
-    return legacyMethod41("updatePreviewElapsedDisplay", ...args);
+    return legacyMethod40("updatePreviewElapsedDisplay", ...args);
   }
   function closePromptPopover7(...args) {
-    return legacyMethod41("closePromptPopover", ...args);
+    return legacyMethod40("closePromptPopover", ...args);
   }
   function currentSize2(...args) {
-    return legacyMethod41("currentSize", ...args);
+    return legacyMethod40("currentSize", ...args);
   }
   function syncActiveLightboxUrls2(...args) {
-    return legacyMethod41("syncActiveLightboxUrls", ...args);
+    return legacyMethod40("syncActiveLightboxUrls", ...args);
   }
   function collectReferenceOutput2(...args) {
-    return legacyMethod41("collectReferenceOutput", ...args);
+    return legacyMethod40("collectReferenceOutput", ...args);
   }
   function openPromptPopover(...args) {
-    return legacyMethod41("openPromptPopover", ...args);
+    return legacyMethod40("openPromptPopover", ...args);
   }
   function retryFailedTask2(...args) {
-    return legacyMethod41("retryFailedTask", ...args);
+    return legacyMethod40("retryFailedTask", ...args);
   }
   function acceptTaskSuccesses2(...args) {
-    return legacyMethod41("acceptTaskSuccesses", ...args);
+    return legacyMethod40("acceptTaskSuccesses", ...args);
   }
   function openConfirmPopover7(...args) {
-    return legacyMethod41("openConfirmPopover", ...args);
+    return legacyMethod40("openConfirmPopover", ...args);
   }
   function setStatus21(...args) {
-    return legacyMethod41("setStatus", ...args);
+    return legacyMethod40("setStatus", ...args);
   }
   function updateTaskInState3(...args) {
-    return legacyMethod41("updateTaskInState", ...args);
+    return legacyMethod40("updateTaskInState", ...args);
   }
   function renderTasks7(...args) {
-    return legacyMethod41("renderTasks", ...args);
+    return legacyMethod40("renderTasks", ...args);
   }
   function taskApiProviderId3(...args) {
-    return legacyMethod41("taskApiProviderId", ...args);
+    return legacyMethod40("taskApiProviderId", ...args);
   }
   function taskApiProviderLabel3(...args) {
-    return legacyMethod41("taskApiProviderLabel", ...args);
+    return legacyMethod40("taskApiProviderLabel", ...args);
   }
-  var taskOutputUrls3 = (...args) => legacyMethod41("taskOutputUrls", ...args);
-  var taskSelectedOutputIndexes2 = (...args) => legacyMethod41("taskSelectedOutputIndexes", ...args);
-  var taskOutputSelected2 = (...args) => legacyMethod41("taskOutputSelected", ...args);
-  var positiveInt2 = (...args) => legacyMethod41("positiveInt", ...args);
-  var taskFailureMessage2 = (...args) => legacyMethod41("taskFailureMessage", ...args);
-  var canRetryFailedTask3 = (...args) => legacyMethod41("canRetryFailedTask", ...args);
-  var canAcceptTaskSuccesses3 = (...args) => legacyMethod41("canAcceptTaskSuccesses", ...args);
-  var taskRetryStateText4 = (...args) => legacyMethod41("taskRetryStateText", ...args);
-  var elapsedTimerSpan3 = (...args) => legacyMethod41("elapsedTimerSpan", ...args);
-  var taskGeneratedCount2 = (...args) => legacyMethod41("taskGeneratedCount", ...args);
-  var taskTotalCount2 = (...args) => legacyMethod41("taskTotalCount", ...args);
-  var taskOutputIndex2 = (...args) => legacyMethod41("taskOutputIndex", ...args);
-  var taskProgressStartValue4 = (...args) => legacyMethod41("taskProgressStartValue", ...args);
+  var taskOutputUrls3 = (...args) => legacyMethod40("taskOutputUrls", ...args);
+  var taskSelectedOutputIndexes2 = (...args) => legacyMethod40("taskSelectedOutputIndexes", ...args);
+  var taskOutputSelected2 = (...args) => legacyMethod40("taskOutputSelected", ...args);
+  var positiveInt2 = (...args) => legacyMethod40("positiveInt", ...args);
+  var taskFailureMessage2 = (...args) => legacyMethod40("taskFailureMessage", ...args);
+  var canRetryFailedTask3 = (...args) => legacyMethod40("canRetryFailedTask", ...args);
+  var canAcceptTaskSuccesses3 = (...args) => legacyMethod40("canAcceptTaskSuccesses", ...args);
+  var taskRetryStateText4 = (...args) => legacyMethod40("taskRetryStateText", ...args);
+  var elapsedTimerSpan3 = (...args) => legacyMethod40("elapsedTimerSpan", ...args);
+  var taskGeneratedCount2 = (...args) => legacyMethod40("taskGeneratedCount", ...args);
+  var taskTotalCount2 = (...args) => legacyMethod40("taskTotalCount", ...args);
+  var taskOutputIndex2 = (...args) => legacyMethod40("taskOutputIndex", ...args);
+  var taskProgressStartValue4 = (...args) => legacyMethod40("taskProgressStartValue", ...args);
   function taskRequestPreviewPayload(task) {
     if (!task?.request) return null;
     const request = { ...task.request };
@@ -54055,7 +53935,7 @@ ${galleryText}`;
     if (!currentUrl) return;
     window.openLightbox?.(currentUrl, urls, Math.max(0, images.indexOf(image)), {
       taskId: String(state29.previewTask?.task_id || state29.selectedTaskId || ""),
-      onTaskNavigate: (direction, context) => legacyMethod41("openMainTaskLightboxByDirection", direction, context)
+      onTaskNavigate: (direction, context) => legacyMethod40("openMainTaskLightboxByDirection", direction, context)
     });
   }
   function bindPreviewRetryButtons() {
@@ -54404,24 +54284,24 @@ ${galleryText}`;
   var bridge36 = getLegacyBridge();
   var state30 = bridge36.state;
   var els39 = bridge36.els;
-  function legacyMethod42(name, ...args) {
+  function legacyMethod41(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
     }
     return method(...args);
   }
-  var updateTaskInState4 = (...args) => legacyMethod42("updateTaskInState", ...args);
-  var cleanupSessionSelections2 = (...args) => legacyMethod42("cleanupSessionSelections", ...args);
-  var renderTasks8 = (...args) => legacyMethod42("renderTasks", ...args);
-  var renderArchiveButton4 = (...args) => legacyMethod42("renderArchiveButton", ...args);
-  var renderArchiveModal4 = (...args) => legacyMethod42("renderArchiveModal", ...args);
-  var renderPreview6 = (...args) => legacyMethod42("renderPreview", ...args);
-  var migrateLegacyArchivedTasks2 = (...args) => legacyMethod42("migrateLegacyArchivedTasks", ...args);
-  var revokeTaskUploadPreviewUrls3 = (...args) => legacyMethod42("revokeTaskUploadPreviewUrls", ...args);
-  var taskHasViewableUpdate2 = (...args) => legacyMethod42("taskHasViewableUpdate", ...args);
-  var markTaskViewed2 = (...args) => legacyMethod42("markTaskViewed", ...args);
-  var ensureSelectedTaskDetail = (...args) => legacyMethod42("ensureSelectedTaskDetail", ...args);
+  var updateTaskInState4 = (...args) => legacyMethod41("updateTaskInState", ...args);
+  var cleanupSessionSelections2 = (...args) => legacyMethod41("cleanupSessionSelections", ...args);
+  var renderTasks8 = (...args) => legacyMethod41("renderTasks", ...args);
+  var renderArchiveButton4 = (...args) => legacyMethod41("renderArchiveButton", ...args);
+  var renderArchiveModal4 = (...args) => legacyMethod41("renderArchiveModal", ...args);
+  var renderPreview6 = (...args) => legacyMethod41("renderPreview", ...args);
+  var migrateLegacyArchivedTasks2 = (...args) => legacyMethod41("migrateLegacyArchivedTasks", ...args);
+  var revokeTaskUploadPreviewUrls3 = (...args) => legacyMethod41("revokeTaskUploadPreviewUrls", ...args);
+  var taskHasViewableUpdate2 = (...args) => legacyMethod41("taskHasViewableUpdate", ...args);
+  var markTaskViewed2 = (...args) => legacyMethod41("markTaskViewed", ...args);
+  var ensureSelectedTaskDetail = (...args) => legacyMethod41("ensureSelectedTaskDetail", ...args);
   var TASK_SEARCH_HISTORY_LIMIT = 100;
   var TASK_SEARCH_HISTORY_DEBOUNCE_MS = 180;
   var TASK_SIDEBAR_GROUP_PAGE_SIZE = 50;
@@ -54688,7 +54568,7 @@ ${galleryText}`;
       activateTransientHistoryTaskReveal(reveal);
     }
     if (sequence !== state30.historyTaskRevealSeq || state30.historyTaskReveal !== reveal) return false;
-    legacyMethod42("setExpandedTaskGroupKey", reveal.groupKey, { immediate: true });
+    legacyMethod41("setExpandedTaskGroupKey", reveal.groupKey, { immediate: true });
     state30.expandedTaskGroupAnimationPending = false;
     state30.tasksRenderKey = null;
     renderTasks8();
@@ -54859,7 +54739,7 @@ ${galleryText}`;
   var taskSelectionInitialized = false;
   var HISTORY_TASK_REUSE_HANDOFF_KEY = "codex-image-history-task-reuse-handoff";
   var selectedTaskDetailRequestSeq = 0;
-  function legacyMethod43(name, ...args) {
+  function legacyMethod42(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy method " + name + " is not initialized");
@@ -54867,67 +54747,67 @@ ${galleryText}`;
     return method(...args);
   }
   function setStatus22(message, type) {
-    legacyMethod43("setStatus", message, type);
+    legacyMethod42("setStatus", message, type);
   }
   function closePromptPopover8() {
-    legacyMethod43("closePromptPopover");
+    legacyMethod42("closePromptPopover");
   }
   function markTaskViewed3(taskId) {
-    return legacyMethod43("markTaskViewed", taskId);
+    return legacyMethod42("markTaskViewed", taskId);
   }
   function applyTaskToForm2(task, options = {}) {
-    legacyMethod43("applyTaskToForm", task, options);
+    legacyMethod42("applyTaskToForm", task, options);
   }
   function updateTaskSelectionVisuals3(taskId) {
-    legacyMethod43("updateTaskSelectionVisuals", taskId);
+    legacyMethod42("updateTaskSelectionVisuals", taskId);
   }
   function renderPreview7(task) {
-    legacyMethod43("renderPreview", task);
+    legacyMethod42("renderPreview", task);
   }
   function taskFailureMessage3(task) {
-    return legacyMethod43("taskFailureMessage", task);
+    return legacyMethod42("taskFailureMessage", task);
   }
   function taskRequestPreviewPayload2(task) {
-    return legacyMethod43("taskRequestPreviewPayload", task);
+    return legacyMethod42("taskRequestPreviewPayload", task);
   }
   function revokeUploadPreviewUrls2(sources) {
-    legacyMethod43("revokeUploadPreviewUrls", sources);
+    legacyMethod42("revokeUploadPreviewUrls", sources);
   }
   function renderImageStrip6() {
-    legacyMethod43("renderImageStrip");
+    legacyMethod42("renderImageStrip");
   }
   function updateRequestPreview12() {
-    legacyMethod43("updateRequestPreview");
+    legacyMethod42("updateRequestPreview");
   }
   function taskInputUrls2(task) {
-    return legacyMethod43("taskInputUrls", task);
+    return legacyMethod42("taskInputUrls", task);
   }
   function taskOutputUrls4(task) {
-    return legacyMethod43("taskOutputUrls", task);
+    return legacyMethod42("taskOutputUrls", task);
   }
   function uploadSource3(file) {
-    return legacyMethod43("uploadSource", file);
+    return legacyMethod42("uploadSource", file);
   }
   function gallerySource4(item) {
-    return legacyMethod43("gallerySource", item);
+    return legacyMethod42("gallerySource", item);
   }
   function assetSource2(item) {
-    return legacyMethod43("assetSource", item);
+    return legacyMethod42("assetSource", item);
   }
   function inspectTaskParameters(task) {
-    legacyMethod43("inspectTaskParameters", task);
+    legacyMethod42("inspectTaskParameters", task);
   }
   function clearTaskParameterInspection() {
-    legacyMethod43("clearTaskParameterInspection");
+    legacyMethod42("clearTaskParameterInspection");
   }
   function renderTasks9(options = {}) {
-    legacyMethod43("renderTasks", options);
+    legacyMethod42("renderTasks", options);
   }
   function revealHistoryTaskInSidebar2(task) {
-    return legacyMethod43("revealHistoryTaskInSidebar", task);
+    return legacyMethod42("revealHistoryTaskInSidebar", task);
   }
   function applyTaskToFormWithOutputLock(task) {
-    const outputSettingsLocked = Boolean(legacyMethod43("isOutputSettingsLocked"));
+    const outputSettingsLocked = Boolean(legacyMethod42("isOutputSettingsLocked"));
     const outputView = taskOutputSettingsView(task, String(state31.selectedModelId || ""), outputSettingsLocked);
     applyTaskToForm2(task, {
       preserveOutputSettings: outputView !== "editor",
@@ -54935,7 +54815,7 @@ ${galleryText}`;
     });
     if (outputView === "locked-summary") {
       clearTaskParameterInspection();
-      legacyMethod43("showTaskOutputSettings", task);
+      legacyMethod42("showTaskOutputSettings", task);
       return;
     }
     if (outputView === "parameter-inspector") {
@@ -54943,7 +54823,7 @@ ${galleryText}`;
       return;
     }
     clearTaskParameterInspection();
-    legacyMethod43("showLockedOutputSettings");
+    legacyMethod42("showLockedOutputSettings");
   }
   function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
     if (restoreSeq == null) return true;
@@ -55027,7 +54907,7 @@ ${galleryText}`;
     const referenceFiles = Array.isArray(task?.reference_files) ? task.reference_files : [];
     if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return false;
     state31.referenceFiles = [];
-    legacyMethod43("renderReferenceFiles");
+    legacyMethod42("renderReferenceFiles");
     if (!referenceFiles.length) {
       updateRequestPreview12();
       return true;
@@ -55041,7 +54921,7 @@ ${galleryText}`;
       family: item?.family,
       missing: Boolean(item?.missing)
     })).filter((item) => item.id && ["pdf", "spreadsheet", "document", "text"].includes(item.family));
-    legacyMethod43("renderReferenceFiles");
+    legacyMethod42("renderReferenceFiles");
     updateRequestPreview12();
     return true;
   }
@@ -55275,7 +55155,7 @@ ${galleryText}`;
     optimizedPrompt: "",
     copyTimerId: null
   };
-  function legacyMethod44(name, ...args) {
+  function legacyMethod43(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy method " + name + " is not initialized");
@@ -55283,52 +55163,52 @@ ${galleryText}`;
     return method(...args);
   }
   function escapeHtml20(value) {
-    return legacyMethod44("escapeHtml", value);
+    return legacyMethod43("escapeHtml", value);
   }
   function closeGalleryEditPopover4() {
-    legacyMethod44("closeGalleryEditPopover");
+    legacyMethod43("closeGalleryEditPopover");
   }
   function handlePromptDocumentClick2(event) {
-    legacyMethod44("handlePromptDocumentClick", event);
+    legacyMethod43("handlePromptDocumentClick", event);
   }
   function handleGalleryDocumentClick2(event) {
-    legacyMethod44("handleGalleryDocumentClick", event);
+    legacyMethod43("handleGalleryDocumentClick", event);
   }
   function closeCompressionPopover2() {
-    legacyMethod44("closeCompressionPopover");
+    legacyMethod43("closeCompressionPopover");
   }
   function handleImageEditorHistoryShortcut2(event) {
-    return legacyMethod44("handleImageEditorHistoryShortcut", event);
+    return legacyMethod43("handleImageEditorHistoryShortcut", event);
   }
   function hideMentionSuggest4() {
-    legacyMethod44("hideMentionSuggest");
+    legacyMethod43("hideMentionSuggest");
   }
   function hideColorSuggest5() {
-    legacyMethod44("hideColorSuggest");
+    legacyMethod43("hideColorSuggest");
   }
   function hidePromptSnippetSuggest4() {
-    legacyMethod44("hidePromptSnippetSuggest");
+    legacyMethod43("hidePromptSnippetSuggest");
   }
   function hidePromptSnippetSelectionButton4() {
-    legacyMethod44("hidePromptSnippetSelectionButton");
+    legacyMethod43("hidePromptSnippetSelectionButton");
   }
   function closePromptSnippetPopover4() {
-    legacyMethod44("closePromptSnippetPopover");
+    legacyMethod43("closePromptSnippetPopover");
   }
   function closeArchiveModal3() {
-    legacyMethod44("closeArchiveModal");
+    legacyMethod43("closeArchiveModal");
   }
   function closeImageEditor2() {
-    legacyMethod44("closeImageEditor");
+    legacyMethod43("closeImageEditor");
   }
   function closeGallery3() {
-    legacyMethod44("closeGallery");
+    legacyMethod43("closeGallery");
   }
   function closeApiSettingsModal2() {
-    legacyMethod44("closeApiSettingsModal");
+    legacyMethod43("closeApiSettingsModal");
   }
   function closePromptTemplateDrawer2() {
-    legacyMethod44("closePromptTemplateDrawer");
+    legacyMethod43("closePromptTemplateDrawer");
   }
   function bindOverlayPopoverEvents() {
     if (overlayPopoverEventsBound) return;
@@ -55664,7 +55544,7 @@ ${galleryText}`;
   var shellUiEventsBound = false;
   var sidebarResizeFrameId = null;
   var sidebarResizePendingWidth = null;
-  function legacyMethod45(name, ...args) {
+  function legacyMethod44(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy method " + name + " is not initialized");
@@ -55672,61 +55552,61 @@ ${galleryText}`;
     return method(...args);
   }
   function formatTaskStatus4(task) {
-    return legacyMethod45("formatTaskStatus", task);
+    return legacyMethod44("formatTaskStatus", task);
   }
   function closePromptPopover10() {
-    legacyMethod45("closePromptPopover");
+    legacyMethod44("closePromptPopover");
   }
   function closePromptSnippetPopover5() {
-    legacyMethod45("closePromptSnippetPopover");
+    legacyMethod44("closePromptSnippetPopover");
   }
   function closeArchiveModal4() {
-    legacyMethod45("closeArchiveModal");
+    legacyMethod44("closeArchiveModal");
   }
   function closeGallery4() {
-    legacyMethod45("closeGallery");
+    legacyMethod44("closeGallery");
   }
   function closeImageEditor3() {
-    legacyMethod45("closeImageEditor");
+    legacyMethod44("closeImageEditor");
   }
   function revokeUploadPreviewUrls3(sources) {
-    legacyMethod45("revokeUploadPreviewUrls", sources);
+    legacyMethod44("revokeUploadPreviewUrls", sources);
   }
   function finishBatchMarqueeSelection2() {
-    legacyMethod45("finishBatchMarqueeSelection");
+    legacyMethod44("finishBatchMarqueeSelection");
   }
   function setPromptText3(value) {
-    legacyMethod45("setPromptText", value);
+    legacyMethod44("setPromptText", value);
   }
   function setMode6(mode) {
-    legacyMethod45("setMode", mode);
+    legacyMethod44("setMode", mode);
   }
   function updateSizeFromPreset2() {
-    legacyMethod45("updateSizeFromPreset");
+    legacyMethod44("updateSizeFromPreset");
   }
   function updatePromptCount7() {
-    legacyMethod45("updatePromptCount");
+    legacyMethod44("updatePromptCount");
   }
   function updateQuantity3() {
-    legacyMethod45("updateQuantity");
+    legacyMethod44("updateQuantity");
   }
   function updateCompression3() {
-    legacyMethod45("updateCompression");
+    legacyMethod44("updateCompression");
   }
   function renderImageStrip7() {
-    legacyMethod45("renderImageStrip");
+    legacyMethod44("renderImageStrip");
   }
   function renderTasks10() {
-    legacyMethod45("renderTasks");
+    legacyMethod44("renderTasks");
   }
   function renderPreview8() {
-    legacyMethod45("renderPreview");
+    legacyMethod44("renderPreview");
   }
   function updateRequestPreview13() {
-    legacyMethod45("updateRequestPreview");
+    legacyMethod44("updateRequestPreview");
   }
   function clearTaskParameterInspection2() {
-    legacyMethod45("clearTaskParameterInspection");
+    legacyMethod44("clearTaskParameterInspection");
   }
   function handleShellLocaleChange() {
     if (!els42.statusText) return;
@@ -55940,7 +55820,7 @@ ${galleryText}`;
     els42.statusText.className = `status-text ${type || ""}`;
   }
   function resetForm() {
-    const outputSettingsLocked = Boolean(legacyMethod45("isOutputSettingsLocked"));
+    const outputSettingsLocked = Boolean(legacyMethod44("isOutputSettingsLocked"));
     closePromptPopover10();
     closePromptSnippetPopover5();
     closeArchiveModal4();
@@ -55953,7 +55833,7 @@ ${galleryText}`;
     state32.mode = "generate";
     revokeUploadPreviewUrls3(state32.images);
     state32.images = [];
-    legacyMethod45("clearReferenceFiles", { silent: true });
+    legacyMethod44("clearReferenceFiles", { silent: true });
     state32.batchMode = false;
     state32.batchSelectedTaskIds = [];
     state32.batchSelectionAnchorTaskId = null;
@@ -55970,9 +55850,8 @@ ${galleryText}`;
       els42.outputFormat.value = "png";
       els42.moderation.value = "auto";
       els42.compression.value = "80";
-      if (els42.promptFidelity) els42.promptFidelity.value = "off";
       if (els42.webSearch) els42.webSearch.checked = false;
-      [els42.nInput, els42.resolution, els42.ratio, els42.orientation, els42.quality, els42.outputFormat, els42.moderation, els42.promptFidelity, els42.webSearch].forEach((sel) => {
+      [els42.nInput, els42.resolution, els42.ratio, els42.orientation, els42.quality, els42.outputFormat, els42.moderation, els42.webSearch].forEach((sel) => {
         if (sel) sel.dispatchEvent(new Event("change"));
       });
       updateSizeFromPreset2();
@@ -55985,7 +55864,7 @@ ${galleryText}`;
     renderTasks10();
     renderPreview8();
     updateRequestPreview13();
-    if (outputSettingsLocked) legacyMethod45("showLockedOutputSettings");
+    if (outputSettingsLocked) legacyMethod44("showLockedOutputSettings");
     setStatus23(translate("status.waiting"), "");
   }
   async function copyJson() {
@@ -56826,7 +56705,7 @@ ${galleryText}`;
 
   // codex_image/webui/frontend/src/lightbox.ts
   var lightboxFeatureInitialized = false;
-  function legacyMethod46(name, ...args) {
+  function legacyMethod45(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
       throw new Error("Legacy bridge method " + name + " is not available");
@@ -56845,8 +56724,8 @@ ${galleryText}`;
   }
   async function addToInput(url) {
     try {
-      const file = await legacyMethod46("imageFileFromUrl", url, "preview-" + Date.now());
-      legacyMethod46("addImageFiles", [file]);
+      const file = await legacyMethod45("imageFileFromUrl", url, "preview-" + Date.now());
+      legacyMethod45("addImageFiles", [file]);
     } catch (error) {
       console.error("Failed to add image to input", error);
     }
@@ -57130,7 +57009,6 @@ ${galleryText}`;
   initPromptSnippetsFeature();
   initPromptTemplatesFeature();
   initPromptFeature();
-  initPromptFidelityHelpFeature();
   initPromptFindReplaceFeature();
   initFormControlsFeature();
   initOutputSettingsLockFeature();

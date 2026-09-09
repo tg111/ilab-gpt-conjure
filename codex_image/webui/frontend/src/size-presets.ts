@@ -7,7 +7,7 @@ import { translate } from "./i18n";
 
 export const DEFAULT_RESOLUTION = "standard";
 export const DEFAULT_RATIO = "1:1";
-export const DEFAULT_ORIENTATION = "auto";
+export const DEFAULT_ORIENTATION = "square";
 
 export const RATIO_ORIENTATION: Record<string, string> = {
   "1:1": "square",
@@ -101,7 +101,6 @@ function legacyMethod(name: string, ...args: any[]): any {
   return method(...args);
 }
 
-function currentPromptFidelity(): string { return legacyMethod("currentPromptFidelity"); }
 
 function currentCustomRatio(): string {
   const width = String(els.customRatioWidth?.value || "").trim();
@@ -169,6 +168,7 @@ export function findPresetForSize(size: any): any {
 }
 
 export function currentSize(): string {
+  if (els.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto") return "auto";
   if (els.size.value !== "custom" && els.orientation?.value !== "manual") return "auto";
   if (els.size.value !== "custom") return els.size.value;
   return `${els.customWidth.value}x${els.customHeight.value}`;
@@ -202,21 +202,22 @@ export function currentTaskParams(): any {
   const { state } = getLegacyBridge();
   if (!state.generationCatalog || state.selectedModelId === "gpt-image-2") {
     params.main_model = currentMainModel();
-    params.prompt_fidelity = currentPromptFidelity();
   }
   if (currentWebSearchEnabled()) {
     params.web_search = true;
   }
-  if (params.size === "auto") {
-    params.ratio = "auto";
-    params.orientation = "auto";
+  const automaticSize = !params.size || params.size === "auto";
+  if (automaticSize) {
+    params.size = "auto";
+    delete params.ratio;
+    delete params.orientation;
   }
-  const presetMatch = findPresetForSize(params.size);
+  const presetMatch = automaticSize ? null : findPresetForSize(params.size);
   if (presetMatch) {
     params.resolution = presetMatch.resolution;
     params.ratio = presetMatch.ratio;
     params.orientation = presetMatch.orientation;
-  } else {
+  } else if (!automaticSize) {
     const customRatio = currentCustomRatio();
     if (customRatio) {
       params.ratio = customRatio;

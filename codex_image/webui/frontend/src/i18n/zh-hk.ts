@@ -621,6 +621,7 @@ export const ZH_HK_DICTIONARY: TranslationDictionary = {
     "output.promptHelp.images.automatic": "按圖像介面的預設方式提交；圖庫引用等必要說明仍會隨提示詞傳送。",
     "output.size": "輸出尺寸",
     "output.sizeMode": "尺寸模式",
+    "output.sizeAuto": "自動尺寸",
     "output.sizePreset": "預設尺寸",
     "output.sizeCustom": "自訂尺寸",
     "output.orientation": "方向",

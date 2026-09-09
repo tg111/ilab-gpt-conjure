@@ -49,19 +49,7 @@ export function galleryReferenceInstruction(source: any, number: any): string {
 }
 
 export function currentPromptForModel(): string {
-  if (!supportsGptPromptProcessing()) return buildPromptForModel();
-  return currentPromptFidelity() === "original" ? expandPromptSnippets(getPromptText()) : buildPromptForModel();
-}
-
-export function currentPromptFidelity(): string {
-  if (!supportsGptPromptProcessing()) return "off";
-  const value = els.promptFidelity?.value || "off";
-  return ["strict", "original", "off"].includes(value) ? value : "off";
-}
-
-export function supportsGptPromptProcessing(): boolean {
-  const { state } = getLegacyBridge();
-  return !state.generationCatalog || state.selectedModelId === "gpt-image-2";
+  return getPromptText();
 }
 
 export function initPromptModelFeature(): void {
@@ -71,7 +59,5 @@ export function initPromptModelFeature(): void {
     buildPromptForModel,
     galleryReferenceInstruction,
     currentPromptForModel,
-    currentPromptFidelity,
-    supportsGptPromptProcessing,
   });
 }

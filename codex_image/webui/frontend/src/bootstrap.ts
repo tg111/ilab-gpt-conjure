@@ -63,7 +63,6 @@ const bridgeMethods: LegacyMethods = {
   currentAuthSource: proxy("currentAuthSource"),
   currentCodexMode: proxy("currentCodexMode"),
   currentMainModel: proxy("currentMainModel"),
-  currentPromptFidelity: proxy("currentPromptFidelity"),
   currentPromptForModel: proxy("currentPromptForModel"),
   currentSize: proxy("currentSize"),
   currentTaskParams: proxy("currentTaskParams"),

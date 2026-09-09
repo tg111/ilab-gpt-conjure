@@ -6,7 +6,6 @@ import time
 from typing import Any, AsyncContextManager, Callable
 
 from codex_image.client import DEFAULT_MAIN_MODEL, CodexImagesImageClient, ImageResult, OpenAIImagesImageClient
-from codex_image.prompt_guard import build_prompt_guard_instructions
 
 from .executor_inputs import (
     _file_to_data_url,
@@ -34,17 +33,13 @@ from .executor_transport import (
     _direct_images_concurrent_enabled,
     _image_request_attempts,
     _image_request_timeout_seconds,
-    _instructions_for_transport,
     _is_usage_limit_error,
     _noop_request_context,
     _normalize_api_images_concurrency,
     _normalize_api_mode,
     _normalize_compression,
-    _normalize_prompt_fidelity,
     _parse_optional_int,
-    _prompt_for_transport,
 )
-from .prompt_ratio import append_ratio_prompt_instruction
 from .reference_file_capabilities import effective_reference_file_main_model, is_explicit_file_input_rejection
 from .reference_files import ReferenceFileStorage
 from .storage import GalleryStorage, ReferenceAssetStorage, TaskStorage, utc_now
@@ -97,10 +92,6 @@ async def _execute_stored_task(
     params["main_model"] = effective_reference_file_main_model(params.get("main_model"))
     mode = str(metadata["mode"])
     prompt = str(metadata["prompt"])
-    prompt_fidelity = _normalize_prompt_fidelity(params.get("prompt_fidelity") or "off")
-    prompt_locale = str(metadata.get("prompt_locale") or "zh-CN")
-    raw_constraints = metadata.get("prompt_constraints")
-    prompt_constraints = [str(item) for item in raw_constraints] if isinstance(raw_constraints, list) else []
     assigned_auth_source = str(metadata.get("assigned_auth_source") or "")
     resolved_backend = str(metadata.get("backend") or metadata.get("requested_backend") or "")
     if resolved_backend in {"codex_responses", "openai_responses"}:
@@ -112,47 +103,10 @@ async def _execute_stored_task(
     else:
         effective_api_mode = _normalize_api_mode(params.get("api_mode"))
     web_search_enabled = bool(params.get("web_search")) and effective_api_mode == "responses"
-    if "execution_prompt" in metadata:
-        model_prompt = str(
-            metadata.get("execution_model_prompt")
-            or metadata.get("prompt_for_model")
-            or prompt
-        )
-        transport_prompt = str(metadata.get("execution_prompt") or "")
-        transport_instructions = (
-            str(metadata.get("execution_instructions") or "") or None
-        )
-    else:
-        if prompt_fidelity == "original":
-            model_prompt = prompt
-            guard_instructions = ""
-        else:
-            model_prompt = append_ratio_prompt_instruction(
-                str(metadata.get("prompt_for_model") or prompt),
-                params.get("ratio"),
-                locale=prompt_locale,
-            )
-            guard_instructions = (
-                build_prompt_guard_instructions(
-                    prompt_constraints,
-                    locale=prompt_locale,
-                )
-                if prompt_fidelity == "strict"
-                else ""
-            )
-        transport_prompt = _prompt_for_transport(
-            model_prompt,
-            auth_source=assigned_auth_source,
-            api_mode=effective_api_mode,
-            prompt_fidelity=prompt_fidelity,
-            instructions=guard_instructions,
-            locale=prompt_locale,
-        )
-        transport_instructions = _instructions_for_transport(
-            auth_source=assigned_auth_source,
-            api_mode=effective_api_mode,
-            instructions=guard_instructions,
-        )
+    # Prompt processing is disabled: retries and recovery use the original text too.
+    model_prompt = prompt
+    transport_prompt = prompt
+    transport_instructions = None
     input_paths = [storage.input_path(str(name)) for name in metadata.get("input_files", [])]
 
     mask_name = metadata.get("mask_file")

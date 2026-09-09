@@ -621,6 +621,7 @@ export const EN_DICTIONARY: TranslationDictionary = {
     "output.promptHelp.images.automatic": "Uses the image endpoint's default handling; required gallery-reference notes are still included.",
     "output.size": "Output size",
     "output.sizeMode": "Size mode",
+    "output.sizeAuto": "Automatic size",
     "output.sizePreset": "Preset",
     "output.sizeCustom": "Custom",
     "output.orientation": "Orientation",

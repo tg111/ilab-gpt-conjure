@@ -18,7 +18,6 @@ from codex_image.generation.errors import (
 )
 from codex_image.generation.snapshot import execution_plan_from_snapshot
 from codex_image.generation.types import GenerationCommand, ImageInput
-from codex_image.prompt_guard import build_prompt_guard_instructions
 from codex_image.providers.registry import ProviderRegistry, default_registry
 
 from .auth_routing import (
@@ -69,7 +68,6 @@ from .reference_file_capabilities import (
     is_explicit_file_input_rejection,
     reference_file_capability_key_for_resolved_backend,
 )
-from .prompt_ratio import append_ratio_prompt_instruction
 from .provider_validation import provider_url_origin
 from .storage import utc_now
 
@@ -453,53 +451,9 @@ def _validated_snapshot_plan(
             )
         api_key = str(configured["api_key"])
     params = metadata.get("params") if isinstance(metadata.get("params"), dict) else {}
-    raw_constraints = metadata.get("prompt_constraints")
-    constraints = [str(item) for item in raw_constraints] if isinstance(raw_constraints, list) else []
-    fidelity = _normalize_prompt_fidelity(params.get("prompt_fidelity") or "off")
-    prompt_locale = str(metadata.get("prompt_locale") or "zh-CN")
-    profile = str(snapshot.get("protocol_profile") or "")
-    auth_source = "codex" if provider_id == "codex" else "api"
-    api_mode = "responses" if profile.endswith("responses") else "images"
-    if "execution_prompt" in metadata:
-        transport_prompt = str(metadata.get("execution_prompt") or "")
-        transport_instructions = (
-            str(metadata.get("execution_instructions") or "") or None
-        )
-    else:
-        if fidelity == "original":
-            model_prompt = str(metadata.get("prompt") or "")
-            guard_instructions = ""
-        else:
-            model_prompt = append_ratio_prompt_instruction(
-                str(
-                    metadata.get("prompt_for_model")
-                    or metadata.get("prompt")
-                    or ""
-                ),
-                params.get("ratio"),
-                locale=prompt_locale,
-            )
-            guard_instructions = (
-                build_prompt_guard_instructions(
-                    constraints,
-                    locale=prompt_locale,
-                )
-                if fidelity == "strict"
-                else ""
-            )
-        transport_prompt = _prompt_for_transport(
-            model_prompt,
-            auth_source=auth_source,
-            api_mode=api_mode,
-            prompt_fidelity=fidelity,
-            instructions=guard_instructions,
-            locale=prompt_locale,
-        )
-        transport_instructions = _instructions_for_transport(
-            auth_source=auth_source,
-            api_mode=api_mode,
-            instructions=guard_instructions,
-        )
+    # Prompt processing is intentionally disabled: use the stored original text verbatim.
+    transport_prompt = str(metadata.get("prompt") or "")
+    transport_instructions = None
     input_paths = [ctx.storage.input_path(str(name)) for name in metadata.get("input_files") or ()]
     raw_assets = metadata.get("reference_assets")
     asset_ids = [

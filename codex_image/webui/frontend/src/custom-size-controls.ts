@@ -2,6 +2,8 @@ import { getLegacyBridge } from "./state";
 import {
   DEFAULT_ORIENTATION,
   DEFAULT_RATIO,
+  ORIENTATION_DEFAULT_RATIOS,
+  RATIO_COUNTERPARTS,
   DEFAULT_RESOLUTION,
   GPT_IMAGE_2_MAX_LONG_SHORT_RATIO,
   GPT_IMAGE_2_MAX_PIXELS,
@@ -37,13 +39,29 @@ function measuredElementHeight(element: any): number {
 export function handleSizeModeEvent(event: any): void {
   const button = event.target.closest?.("[data-custom-size-mode]");
   if (!button || !els.sizeModeGroup?.contains(button)) return;
-  setCustomSizeMode(button.dataset.customSizeMode === "custom");
+  setSizeMode(button.dataset.customSizeMode || "auto");
+}
+
+export function currentSizeMode(): string {
+  const active = els.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active");
+  if (active?.dataset?.customSizeMode) return active.dataset.customSizeMode;
+  return els.size?.value === "custom" ? "custom" : els.size?.value === "auto" ? "auto" : "preset";
+}
+
+export function setSizeMode(mode: string): void {
+  const normalizedMode = mode === "custom" || mode === "preset" ? mode : "auto";
+  if (els.customSizeToggle) els.customSizeToggle.checked = normalizedMode === "custom";
+  els.sizeModeGroup?.querySelectorAll("[data-custom-size-mode]").forEach((button: any) => {
+    const active = button.dataset.customSizeMode === normalizedMode;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+  updateSizeFromPreset(normalizedMode);
+  saveCurrentModelParameterDraft();
 }
 
 export function setCustomSizeMode(isCustom: any): void {
-  if (els.customSizeToggle) els.customSizeToggle.checked = Boolean(isCustom);
-  updateSizeFromPreset();
-  saveCurrentModelParameterDraft();
+  setSizeMode(isCustom ? "custom" : "preset");
 }
 
 export function swapCustomSizeDimensions(event?: any): void {
@@ -262,8 +280,10 @@ function swapCustomRatioDigits(): void {
 export function updateSizeFromPreset(event: any = null): void {
   const changedControl = sizeControlName(event?.target);
   syncRatioAndOrientation(changedControl);
+  const requestedMode = typeof event === "string" ? event : currentSizeMode();
+  const mode = requestedMode === "custom" || els.customSizeToggle?.checked ? "custom" : requestedMode === "preset" ? "preset" : "auto";
 
-  if (els.customSizeToggle?.checked) {
+  if (mode === "custom") {
     if (els.size?.value !== "custom") {
       populateCustomSizeFromCurrentPreset();
     }
@@ -276,7 +296,7 @@ export function updateSizeFromPreset(event: any = null): void {
     return;
   }
 
-  const size = els.orientation?.value === "manual"
+  const size = mode === "preset"
     ? sizeForPreset(els.resolution?.value, els.ratio?.value)
     : "auto";
   els.size.value = size;
@@ -309,26 +329,40 @@ export function syncRatioAndOrientation(changedControl: any): void {
   if (!RATIO_ORIENTATION[els.ratio.value]) {
     setSizeControlValue(els.ratio, DEFAULT_RATIO);
   }
-  if (els.orientation.value !== "auto" && els.orientation.value !== "manual") {
-    // Older saved drafts used square/portrait/landscape. Preserve their ratio,
-    // but migrate the UI mode to the new manual option.
-    setSizeControlValue(els.orientation, "manual");
+  if (!ORIENTATION_DEFAULT_RATIOS[els.orientation.value]) {
+    setSizeControlValue(els.orientation, RATIO_ORIENTATION[els.ratio.value] || DEFAULT_ORIENTATION);
   }
-  updatePresetRatioVisibility();
+  if (changedControl === "orientation") {
+    syncRatioFromOrientation();
+    return;
+  }
+  syncOrientationFromRatio();
 }
 
 export function syncOrientationFromRatio(): void {
-  updatePresetRatioVisibility();
+  const nextOrientation = RATIO_ORIENTATION[els.ratio.value] || DEFAULT_ORIENTATION;
+  setSizeControlValue(els.orientation, nextOrientation);
 }
 
 export function syncRatioFromOrientation(): void {
-  updatePresetRatioVisibility();
+  const orientation = els.orientation.value;
+  if (orientation === "square") {
+    setSizeControlValue(els.ratio, DEFAULT_RATIO);
+    return;
+  }
+  if (RATIO_ORIENTATION[els.ratio.value] === orientation) return;
+  const counterpart = RATIO_COUNTERPARTS[els.ratio.value];
+  if (counterpart && RATIO_ORIENTATION[counterpart] === orientation) {
+    setSizeControlValue(els.ratio, counterpart);
+    return;
+  }
+  setSizeControlValue(els.ratio, ORIENTATION_DEFAULT_RATIOS[orientation] || DEFAULT_RATIO);
 }
 
 export function updatePresetRatioVisibility(): void {
   const ratioField = els.ratio?.closest?.(".ratio-field");
   if (!ratioField) return;
-  const visible = els.orientation?.value === "manual" && !els.customSizeToggle?.checked;
+  const visible = currentSizeMode() === "preset" && !els.customSizeToggle?.checked;
   ratioField.classList.toggle("hidden", !visible);
   ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
 }
@@ -381,7 +415,7 @@ export function syncSizeControlsFromSize(size: any): void {
     if (els.resolution) els.resolution.value = DEFAULT_RESOLUTION;
     if (els.ratio) els.ratio.value = DEFAULT_RATIO;
     if (els.orientation) els.orientation.value = DEFAULT_ORIENTATION;
-    updateSizeFromPreset();
+    setSizeMode("auto");
     syncRadioButtons(els.resolution, els.ratio, els.orientation);
     return;
   }
@@ -391,8 +425,8 @@ export function syncSizeControlsFromSize(size: any): void {
     if (els.customSizeToggle) els.customSizeToggle.checked = false;
     els.resolution.value = presetMatch.resolution;
     els.ratio.value = presetMatch.ratio;
-    els.orientation.value = "manual";
-    updateSizeFromPreset();
+    els.orientation.value = presetMatch.orientation;
+    setSizeMode("preset");
     syncRadioButtons(els.resolution, els.ratio, els.orientation);
     return;
   }
@@ -400,6 +434,7 @@ export function syncSizeControlsFromSize(size: any): void {
   const [width, height] = String(size).split("x");
   if (width && height) {
     if (els.customSizeToggle) els.customSizeToggle.checked = true;
+    setSizeMode("custom");
     els.size.value = "custom";
     els.customWidth.value = width;
     els.customHeight.value = height;
@@ -543,11 +578,12 @@ function transitionCustomSizeMode(isCustom: any): void {
 }
 
 export function updateCustomSize(): void {
-  const isCustom = els.size?.value === "custom";
+  const isCustom = currentSizeMode() === "custom" || els.size?.value === "custom";
+  const isAuto = currentSizeMode() === "auto";
   transitionCustomSizeMode(isCustom);
   if (els.customSizeToggle) els.customSizeToggle.checked = isCustom;
   els.sizeModeGroup?.querySelectorAll("[data-custom-size-mode]").forEach((button: any) => {
-    const active = button.dataset.customSizeMode === (isCustom ? "custom" : "preset");
+    const active = button.dataset.customSizeMode === (isCustom ? "custom" : isAuto ? "auto" : "preset");
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", active ? "true" : "false");
   });
@@ -557,4 +593,9 @@ export function updateCustomSize(): void {
     els.customSizeHint.textContent = message || formatTranslation("output.customSizeHint");
   }
   updateCustomRatioFieldState();
+  [els.orientation?.closest?.(".orientation-field"), els.resolution?.closest?.(".resolution-field")].filter(Boolean).forEach((field: any) => {
+    field.classList.toggle("hidden", isAuto);
+    field.setAttribute("aria-hidden", isAuto ? "true" : "false");
+  });
+  updatePresetRatioVisibility();
 }

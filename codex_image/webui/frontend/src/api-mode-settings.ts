@@ -31,13 +31,11 @@ export function setModeSpecificElementVisibility(element: any, visible: any): vo
 
 function applyModeSettingsVisibility(visibility: ModeSettingsVisibility): void {
   const showModeSettings = visibility.showMainModel
-    || visibility.showApiDirectNotice
-    || visibility.showPromptFidelity;
+    || visibility.showApiDirectNotice;
   setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);
   setModeSpecificElementVisibility(els.modeSpecificSettings, showModeSettings);
   setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);
   setModeSpecificElementVisibility(els.apiDirectSettingsNotice, visibility.showApiDirectNotice);
-  setModeSpecificElementVisibility(els.promptFidelityField, visibility.showPromptFidelity);
 }
 
 function updateWebSearchAvailability(authSource: any = currentAuthSource()): void {

@@ -625,6 +625,7 @@
     "output.promptHelp.images.automatic": "Uses the image endpoint's default handling; required gallery-reference notes are still included.",
     "output.size": "Output size",
     "output.sizeMode": "Size mode",
+    "output.sizeAuto": "Automatic size",
     "output.sizePreset": "Preset",
     "output.sizeCustom": "Custom",
     "output.orientation": "Orientation",
@@ -14271,6 +14272,7 @@
     "output.promptHelp.images.automatic": "\u6309\u56FE\u50CF\u63A5\u53E3\u9ED8\u8BA4\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u56FE\u5E93\u5F15\u7528\u7B49\u5FC5\u8981\u8BF4\u660E\u4ECD\u4F1A\u968F\u63D0\u793A\u8BCD\u53D1\u9001\u3002",
     "output.size": "\u8F93\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52A8\u5C3A\u5BF8",
     "output.sizePreset": "\u9884\u8BBE\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u5B9A\u4E49\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -15568,6 +15570,7 @@
     "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -16806,6 +16809,7 @@
     "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
+    "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
@@ -18406,8 +18410,6 @@
       mainModelOptions: document.querySelector("#mainModelOptions"),
       webSearchField: document.querySelector("#webSearchField"),
       webSearch: document.querySelector("#webSearch"),
-      promptFidelityField: document.querySelector("#promptFidelityField"),
-      promptFidelity: document.querySelector("#promptFidelity"),
       apiDirectSettingsNotice: document.querySelector("#apiDirectSettingsNotice"),
       settingsGrid: document.querySelector("#settingsGrid"),
       model: document.querySelector("#model"),
@@ -18943,7 +18945,6 @@
     currentAuthSource: proxy("currentAuthSource"),
     currentCodexMode: proxy("currentCodexMode"),
     currentMainModel: proxy("currentMainModel"),
-    currentPromptFidelity: proxy("currentPromptFidelity"),
     currentPromptForModel: proxy("currentPromptForModel"),
     currentSize: proxy("currentSize"),
     currentTaskParams: proxy("currentTaskParams"),
@@ -19364,12 +19365,11 @@
     element.classList.add("hidden");
   }
   function applyModeSettingsVisibility(visibility) {
-    const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice || visibility.showPromptFidelity;
+    const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice;
     setModeSpecificElementVisibility(els2.modeSettingsSlot, showModeSettings);
     setModeSpecificElementVisibility(els2.modeSpecificSettings, showModeSettings);
     setModeSpecificElementVisibility(els2.mainModelField, visibility.showMainModel);
     setModeSpecificElementVisibility(els2.apiDirectSettingsNotice, visibility.showApiDirectNotice);
-    setModeSpecificElementVisibility(els2.promptFidelityField, visibility.showPromptFidelity);
   }
   function updateWebSearchAvailability(authSource = currentAuthSource()) {
     const binding = selectedProviderBinding();
@@ -20366,9 +20366,11 @@
     legacyElements.forEach((element) => {
       element.classList.toggle("hidden", !legacyGpt);
     });
+    const automaticSize = els9.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
+    [els9.orientation?.closest(".orientation-field"), els9.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element) => element?.classList.toggle("hidden", !legacyGpt || automaticSize));
     const ratioField = els9.ratio?.closest(".ratio-field");
     if (ratioField) {
-      const ratioVisible = legacyGpt && !visibility.customSize && els9.orientation?.value === "manual";
+      const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
       ratioField.classList.toggle("hidden", !ratioVisible);
       ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
     }
@@ -24540,9 +24542,8 @@
       els6.outputFormat.value = "png";
       els6.moderation.value = "auto";
       els6.compression.value = "80";
-      if (els6.promptFidelity) els6.promptFidelity.value = "off";
       if (els6.webSearch) els6.webSearch.checked = false;
-      [els6.nInput, els6.resolution, els6.ratio, els6.orientation, els6.quality, els6.outputFormat, els6.moderation, els6.promptFidelity, els6.webSearch].forEach((sel) => {
+      [els6.nInput, els6.resolution, els6.ratio, els6.orientation, els6.quality, els6.outputFormat, els6.moderation, els6.webSearch].forEach((sel) => {
         if (sel) sel.dispatchEvent(new Event("change"));
       });
       updateSizeFromPreset();

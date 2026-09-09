@@ -43,7 +43,6 @@ from codex_image.webui.executor_inputs import (
     _resolve_reference_files,
 )
 from codex_image.webui.prompt_ratio import (
-    append_ratio_prompt_instruction,
     normalize_prompt_ratio,
     orientation_from_ratio,
     ratio_from_size,
@@ -308,52 +307,11 @@ def _prepare_generation_submission(
             effective_ratio = ratio_from_size(effective_size) or None
         if not effective_orientation:
             effective_orientation = orientation_from_ratio(effective_ratio) or None
-    base_model_prompt = h["model_prompt_for_fidelity"](prompt, prompt_for_model, fidelity)
-    if fidelity == "original":
-        model_prompt = base_model_prompt
-    elif auth_source == "api" and canonical_model_id:
-        model_prompt = base_model_prompt
-        if canonical_parameters is not None and _api_binding_appends_aspect_ratio_prompt(
-            ctx,
-            provider_id=effective_api_provider_id,
-            binding_id=binding_id,
-            canonical_model_id=canonical_model_id,
-            operation=operation,
-        ):
-            prompt_ratio = normalize_prompt_ratio(
-                canonical_parameters.get("canvas.aspect_ratio")
-            ) or ratio_from_size(canonical_parameters.get("canvas.size"))
-            model_prompt = append_ratio_prompt_instruction(
-                model_prompt,
-                prompt_ratio,
-                locale=ui_language,
-            )
-    else:
-        model_prompt = append_ratio_prompt_instruction(
-            base_model_prompt,
-            effective_ratio,
-            locale=ui_language,
-        )
-    prompt_constraints, guard_instructions = h["prompt_guard_context"](
-        prompt,
-        fidelity,
-        ui_language,
-    )
-    transport_mode = effective_api_mode or effective_codex_mode
-    web_search_enabled = bool(web_search) and requested_backend.endswith("_responses")
-    request_model_prompt = _prompt_for_transport(
-        model_prompt,
-        auth_source=auth_source,
-        api_mode=transport_mode,
-        prompt_fidelity=fidelity,
-        instructions=guard_instructions,
-        locale=ui_language,
-    )
-    request_instructions = _instructions_for_transport(
-        auth_source=auth_source,
-        api_mode=transport_mode,
-        instructions=guard_instructions,
-    )
+    # Prompt processing is intentionally disabled: submit the user's exact text.
+    model_prompt = str(prompt or "")
+    request_model_prompt = model_prompt
+    request_instructions = None
+    prompt_constraints: list[str] = []
     resolved_provider_id = effective_api_provider_id if auth_source == "api" else "codex"
     plan = _preview_form_generation(
         ctx,
@@ -429,8 +387,6 @@ def _prepare_generation_submission(
     ):
         if value:
             params[key] = value
-    if uses_gpt_prompt_processing:
-        params["prompt_fidelity"] = fidelity
     if input_fidelity:
         params["input_fidelity"] = input_fidelity
     if web_search_enabled:
@@ -449,7 +405,7 @@ def _prepare_generation_submission(
         plan=plan,
         request_payload=request_payload,
         model_prompt=model_prompt,
-        prompt_constraints=prompt_constraints,
+        prompt_constraints=[],
         params=params,
         prompt_locale=str(ui_language or "zh-CN"),
     )

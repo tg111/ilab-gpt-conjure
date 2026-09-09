@@ -328,9 +328,8 @@ function resetForm() {
     els.outputFormat.value = "png";
     els.moderation.value = "auto";
     els.compression.value = "80";
-    if (els.promptFidelity) els.promptFidelity.value = "off";
     if (els.webSearch) els.webSearch.checked = false;
-    [els.nInput, els.resolution, els.ratio, els.orientation, els.quality, els.outputFormat, els.moderation, els.promptFidelity, els.webSearch].forEach((sel) => {
+    [els.nInput, els.resolution, els.ratio, els.orientation, els.quality, els.outputFormat, els.moderation, els.webSearch].forEach((sel) => {
       if (sel) sel.dispatchEvent(new Event("change"));
     });
     updateSizeFromPreset();

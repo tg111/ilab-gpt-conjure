@@ -295,8 +295,6 @@ export function createWebUIElements(): WebUIElements {
   mainModelOptions: document.querySelector("#mainModelOptions"),
   webSearchField: document.querySelector("#webSearchField"),
   webSearch: document.querySelector("#webSearch"),
-  promptFidelityField: document.querySelector("#promptFidelityField"),
-  promptFidelity: document.querySelector("#promptFidelity"),
   apiDirectSettingsNotice: document.querySelector("#apiDirectSettingsNotice"),
   settingsGrid: document.querySelector("#settingsGrid"),
   model: document.querySelector("#model"),
