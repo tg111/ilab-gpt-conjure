@@ -614,7 +614,6 @@ export const KO_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "사전 설정",
     "output.sizeCustom": "사용자 정의",
     "output.orientation": "방향",
-    "output.manual": "수동",
     "output.square": "정사각형",
     "output.portrait": "초상화",
     "output.landscape": "풍경",

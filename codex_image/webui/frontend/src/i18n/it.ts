@@ -614,7 +614,6 @@ export const IT_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "Preimpostato",
     "output.sizeCustom": "Personalizzato",
     "output.orientation": "Orientamento",
-    "output.manual": "Manuale",
     "output.square": "Quadrato",
     "output.portrait": "Ritratto",
     "output.landscape": "Paesaggio",

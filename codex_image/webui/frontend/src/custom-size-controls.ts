@@ -7,6 +7,8 @@ import {
   GPT_IMAGE_2_MAX_PIXELS,
   GPT_IMAGE_2_MIN_PIXELS,
   GPT_IMAGE_2_SIZE_PRESETS,
+  ORIENTATION_DEFAULT_RATIOS,
+  RATIO_COUNTERPARTS,
   RATIO_ORIENTATION,
   customDimensionValue,
   customSizeValidationMessage,
@@ -276,9 +278,7 @@ export function updateSizeFromPreset(event: any = null): void {
     return;
   }
 
-  const size = els.orientation?.value === "manual"
-    ? sizeForPreset(els.resolution?.value, els.ratio?.value)
-    : "auto";
+  const size = sizeForPreset(els.resolution?.value, els.ratio?.value);
   els.size.value = size;
   updatePixelPreview(size);
   updateCustomSize();
@@ -309,28 +309,36 @@ export function syncRatioAndOrientation(changedControl: any): void {
   if (!RATIO_ORIENTATION[els.ratio.value]) {
     setSizeControlValue(els.ratio, DEFAULT_RATIO);
   }
-  if (els.orientation.value !== "auto" && els.orientation.value !== "manual") {
-    // Older saved drafts used square/portrait/landscape. Preserve their ratio,
-    // but migrate the UI mode to the new manual option.
-    setSizeControlValue(els.orientation, "manual");
+  if (!ORIENTATION_DEFAULT_RATIOS[els.orientation.value]) {
+    setSizeControlValue(els.orientation, RATIO_ORIENTATION[els.ratio.value] || DEFAULT_ORIENTATION);
   }
-  updatePresetRatioVisibility();
+
+  if (changedControl === "orientation") {
+    syncRatioFromOrientation();
+    return;
+  }
+  syncOrientationFromRatio();
 }
 
 export function syncOrientationFromRatio(): void {
-  updatePresetRatioVisibility();
+  const nextOrientation = RATIO_ORIENTATION[els.ratio.value] || DEFAULT_ORIENTATION;
+  setSizeControlValue(els.orientation, nextOrientation);
 }
 
 export function syncRatioFromOrientation(): void {
-  updatePresetRatioVisibility();
-}
+  const orientation = els.orientation.value;
+  if (orientation === "square") {
+    setSizeControlValue(els.ratio, DEFAULT_RATIO);
+    return;
+  }
+  if (RATIO_ORIENTATION[els.ratio.value] === orientation) return;
 
-export function updatePresetRatioVisibility(): void {
-  const ratioField = els.ratio?.closest?.(".ratio-field");
-  if (!ratioField) return;
-  const visible = els.orientation?.value === "manual" && !els.customSizeToggle?.checked;
-  ratioField.classList.toggle("hidden", !visible);
-  ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
+  const counterpart = RATIO_COUNTERPARTS[els.ratio.value];
+  if (counterpart && RATIO_ORIENTATION[counterpart] === orientation) {
+    setSizeControlValue(els.ratio, counterpart);
+    return;
+  }
+  setSizeControlValue(els.ratio, ORIENTATION_DEFAULT_RATIOS[orientation] || DEFAULT_RATIO);
 }
 
 export function setSizeControlValue(select: any, value: any): boolean {
@@ -379,7 +387,7 @@ export function syncSizeControlsFromSize(size: any): void {
     if (els.customSizeToggle) els.customSizeToggle.checked = false;
     els.resolution.value = presetMatch.resolution;
     els.ratio.value = presetMatch.ratio;
-    els.orientation.value = "manual";
+    els.orientation.value = presetMatch.orientation;
     updateSizeFromPreset();
     syncRadioButtons(els.resolution, els.ratio, els.orientation);
     return;

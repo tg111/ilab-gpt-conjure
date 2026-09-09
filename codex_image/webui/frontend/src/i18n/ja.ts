@@ -614,7 +614,6 @@ export const JA_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "プリセット",
     "output.sizeCustom": "カスタム",
     "output.orientation": "方向",
-    "output.manual": "手動",
     "output.square": "正方形",
     "output.portrait": "の肖像画",
     "output.landscape": "風景",

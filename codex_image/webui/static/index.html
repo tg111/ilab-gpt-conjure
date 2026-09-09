@@ -711,12 +711,29 @@
                 <div class="field orientation-field">
                   <span data-i18n="output.orientation">方向</span>
                   <div class="radio-group" id="orientationGroup" role="group" aria-label="方向" data-i18n-attr="aria-label:output.orientation">
-                    <button class="radio-btn active" data-val="auto" type="button" data-i18n="output.auto">自动</button>
-                    <button class="radio-btn" data-val="manual" type="button" data-i18n="output.manual">手动</button>
+                    <button class="radio-btn active" data-val="square" type="button">
+                      <svg class="orientation-option-icon orientation-option-icon-square" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                        <rect x="5" y="5" width="10" height="10" rx="2"></rect>
+                      </svg>
+                      <span data-i18n="output.square">方形</span>
+                    </button>
+                    <button class="radio-btn" data-val="portrait" type="button">
+                      <svg class="orientation-option-icon orientation-option-icon-portrait" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                        <rect x="6.5" y="3" width="7" height="14" rx="2"></rect>
+                      </svg>
+                      <span data-i18n="output.portrait">竖图</span>
+                    </button>
+                    <button class="radio-btn" data-val="landscape" type="button">
+                      <svg class="orientation-option-icon orientation-option-icon-landscape" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                        <rect x="3" y="6.5" width="14" height="7" rx="2"></rect>
+                      </svg>
+                      <span data-i18n="output.landscape">横图</span>
+                    </button>
                   </div>
                   <select id="orientation" class="hidden">
-                    <option value="auto" selected data-i18n="output.auto">自动</option>
-                    <option value="manual" data-i18n="output.manual">手动</option>
+                    <option value="square" selected data-i18n="output.square">方形</option>
+                    <option value="portrait" data-i18n="output.portrait">竖图</option>
+                    <option value="landscape" data-i18n="output.landscape">横图</option>
                   </select>
                 </div>
 
@@ -794,7 +811,7 @@
                   </div>
                 </div>
 
-                <div class="field full-width ratio-field hidden" aria-hidden="true">
+                <div class="field full-width ratio-field">
                   <span data-i18n="output.ratio">比例</span>
                   <div class="radio-group ratio-group" id="ratioGroup" role="group" aria-label="比例" data-i18n-attr="aria-label:output.ratio">
                     <button class="radio-btn active" data-val="1:1" type="button">1:1</button>

@@ -795,6 +795,7 @@ export function renderModelParameters(
     els.sizeModeGroup?.closest(".custom-size-control"),
     els.orientation?.closest(".orientation-field"),
     els.resolution?.closest(".resolution-field"),
+    els.ratio?.closest(".ratio-field"),
     els.quality?.closest(".quantity-quality-row"),
     els.pixelPreview,
     els.outputFormatField,
@@ -803,12 +804,6 @@ export function renderModelParameters(
   legacyElements.forEach((element) => {
     element.classList.toggle("hidden", !legacyGpt);
   });
-  const ratioField = els.ratio?.closest(".ratio-field") as HTMLElement | null;
-  if (ratioField) {
-    const ratioVisible = legacyGpt && !visibility.customSize && els.orientation?.value === "manual";
-    ratioField.classList.toggle("hidden", !ratioVisible);
-    ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
-  }
   if (els.customSize) {
     els.customSize.classList.toggle("hidden", !visibility.customSize);
     els.customSize.classList.toggle("custom-size-collapsed", !visibility.customSize);

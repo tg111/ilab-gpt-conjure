@@ -624,7 +624,6 @@ export const VI_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "Có sẵn",
     "output.sizeCustom": "Tùy chỉnh",
     "output.orientation": "Hướng",
-    "output.manual": "Thủ công",
     "output.square": "Vuông",
     "output.portrait": "Dọc",
     "output.landscape": "Ngang",
