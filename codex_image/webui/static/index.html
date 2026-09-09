@@ -717,6 +717,10 @@
                   <select id="orientation" class="hidden">
                     <option value="auto" selected data-i18n="output.auto">自动</option>
                     <option value="manual" data-i18n="output.manual">手动</option>
+                    <!-- Legacy values keep cached older bundles from entering a change-event loop. -->
+                    <option value="square" hidden>square</option>
+                    <option value="portrait" hidden>portrait</option>
+                    <option value="landscape" hidden>landscape</option>
                   </select>
                 </div>
 
@@ -1590,7 +1594,7 @@
     </div>
 
     <div id="taskNotificationToastRegion" class="task-notification-toast-region" aria-live="polite"></div>
-  <script src="/static/app.js?v=runtime-788"></script>
+  <script src="/static/app.js?v=runtime-790"></script>
     <script>
       (() => {
         document.querySelectorAll(".radio-group").forEach((group) => {

@@ -335,7 +335,19 @@ export function updatePresetRatioVisibility(): void {
 
 export function setSizeControlValue(select: any, value: any): boolean {
   if (!select || select.value === value) return false;
+  const options = select.options || [];
+  let valueSupported = !options.length;
+  for (let index = 0; index < options.length; index += 1) {
+    if (options[index]?.value === value) {
+      valueSupported = true;
+      break;
+    }
+  }
+  if (!valueSupported) return false;
   select.value = value;
+  // A cached HTML shell can expose a different option set than the new bundle.
+  // Never dispatch a recursive change when the browser rejected the value.
+  if (select.value !== value) return false;
   select.dispatchEvent(new Event("change", { bubbles: true }));
   return true;
 }

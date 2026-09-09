@@ -704,7 +704,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn('/static/app.js?v=runtime-788', html)
+        self.assertIn('/static/app.js?v=runtime-790', html)
         self.assertIn('/static/styles.css?v=runtime-789', html)
         self.assertIn('id="recentAssetDock"', html)
         self.assertIn('id="recentAssetVisibilityToggle"', html)
@@ -3335,6 +3335,48 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
 
         self.assertEqual(result.returncode, 0, result.stderr)
+    def test_size_control_value_guard_rejects_cached_html_option_mismatches(self) -> None:
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("node is required for frontend behavior checks")
+        source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
+        harness = "\n".join(
+            [
+                """
+                function Event(type) { this.type = type; }
+                let legacyDispatches = 0;
+                const legacySelect = {
+                  value: "square",
+                  options: [{ value: "square" }, { value: "portrait" }, { value: "landscape" }],
+                  dispatchEvent() { legacyDispatches += 1; },
+                };
+                let currentDispatches = 0;
+                const currentSelect = {
+                  value: "auto",
+                  options: [{ value: "auto" }, { value: "manual" }],
+                  dispatchEvent() { currentDispatches += 1; },
+                };
+                """,
+                self._extract_javascript_function(source, "setSizeControlValue"),
+                """
+                if (setSizeControlValue(legacySelect, "manual") !== false) {
+                  throw new Error("cached legacy HTML must reject an unavailable manual option");
+                }
+                if (legacySelect.value !== "square" || legacyDispatches !== 0) {
+                  throw new Error("rejected values must not mutate or dispatch change events");
+                }
+                if (setSizeControlValue(currentSelect, "manual") !== true) {
+                  throw new Error("current HTML must accept the manual option");
+                }
+                if (currentSelect.value !== "manual" || currentDispatches !== 1) {
+                  throw new Error("accepted values must dispatch exactly one change event");
+                }
+                """,
+            ]
+        )
+        result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_custom_size_mode_prefills_current_preset_dimensions(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -3740,7 +3782,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn('/static/app.js?v=runtime-788', html)
+        self.assertIn('/static/app.js?v=runtime-790', html)
         self.assertIn('/static/styles.css?v=runtime-789', html)
         self.assertIn('id="pasteClipboardButton"', html)
         self.assertIn('id="statusText"', html)
@@ -4192,7 +4234,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         ).read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn("/static/app.js?v=runtime-788", html)
+        self.assertIn("/static/app.js?v=runtime-790", html)
         self.assertIn("/static/styles.css?v=runtime-789", html)
         self.assertIn('"codex-image-theme-preference"', theme_source)
         self.assertIn('themePreference: "system"', script)

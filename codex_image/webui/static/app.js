@@ -20088,7 +20088,7 @@
     });
   }
 
-  // node_modules/konva/lib/Global.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Global.js
   var PI_OVER_180 = Math.PI / 180;
   function detectBrowser() {
     return typeof window !== "undefined" && ({}.toString.call(window) === "[object Window]" || {}.toString.call(window) === "[object global]");
@@ -20149,7 +20149,7 @@
   };
   Konva._injectGlobal(Konva);
 
-  // node_modules/konva/lib/Util.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Util.js
   var NODE_ERROR = `Konva.js unsupported environment.
 
 Looks like you are trying to use Konva.js in Node.js environment. because "document" object is undefined.
@@ -21031,7 +21031,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/Context.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Context.js
   function simplifyArray(arr) {
     const retArr = [], len = arr.length, util = Util;
     for (let n = 0; n < len; n++) {
@@ -21580,7 +21580,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/Canvas.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Canvas.js
   var _pixelRatio;
   function getDevicePixelRatio() {
     if (_pixelRatio) {
@@ -21677,7 +21677,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/DragAndDrop.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/DragAndDrop.js
   var DD = {
     get isDragging() {
       let flag = false;
@@ -21789,7 +21789,7 @@ js: import "konva/skia-backend";
     window.addEventListener("touchcancel", DD._endDragAfter, false);
   }
 
-  // node_modules/konva/lib/Validators.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Validators.js
   function _formatValue(val) {
     if (Util._isString(val)) {
       return '"' + val + '"';
@@ -21911,7 +21911,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // node_modules/konva/lib/Factory.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Factory.js
   var GET = "get";
   var SET = "set";
   var Factory = {
@@ -22027,7 +22027,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/Node.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Node.js
   function parseCSSFilters(cssFilter) {
     const filterRegex = /(\w+)\(([^)]+)\)/g;
     let match;
@@ -23532,7 +23532,7 @@ js: import "konva/skia-backend";
     getRotationDeg: "getRotation"
   });
 
-  // node_modules/konva/lib/Container.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Container.js
   var Container = class extends Node2 {
     constructor() {
       super(...arguments);
@@ -23839,7 +23839,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Container, "clipHeight", void 0, getNumberValidator());
   Factory.addGetterSetter(Container, "clipFunc");
 
-  // node_modules/konva/lib/PointerEvents.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/PointerEvents.js
   var Captures = /* @__PURE__ */ new Map();
   var SUPPORT_POINTER_EVENTS = Konva._global["PointerEvent"] !== void 0;
   function getCapturedShape(pointerId) {
@@ -23877,7 +23877,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // node_modules/konva/lib/Stage.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Stage.js
   var STAGE2 = "Stage";
   var STRING = "string";
   var PX = "px";
@@ -24591,7 +24591,7 @@ js: import "konva/skia-backend";
     });
   }
 
-  // node_modules/konva/lib/Shape.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Shape.js
   var HAS_SHADOW = "hasShadow";
   var SHADOW_RGBA = "shadowRGBA";
   var patternImage = "patternImage";
@@ -25116,7 +25116,7 @@ js: import "konva/skia-backend";
     setDrawHitFunc: "setHitFunc"
   });
 
-  // node_modules/konva/lib/Layer.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Layer.js
   var BEFORE_DRAW = "beforeDraw";
   var DRAW = "draw";
   var INTERSECTION_OFFSETS = [
@@ -25411,7 +25411,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Layer, "clearBeforeDraw", true);
   Factory.addGetterSetter(Layer, "hitGraphEnabled", true, getBooleanValidator());
 
-  // node_modules/konva/lib/FastLayer.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/FastLayer.js
   var FastLayer = class extends Layer {
     constructor(attrs) {
       super(attrs);
@@ -25422,7 +25422,7 @@ js: import "konva/skia-backend";
   FastLayer.prototype.nodeType = "FastLayer";
   _registerNode(FastLayer);
 
-  // node_modules/konva/lib/Group.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Group.js
   var Group = class extends Container {
     _validateAdd(child) {
       const type = child.getType();
@@ -25434,7 +25434,7 @@ js: import "konva/skia-backend";
   Group.prototype.nodeType = "Group";
   _registerNode(Group);
 
-  // node_modules/konva/lib/Animation.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Animation.js
   var now = (function() {
     if (glob.performance && glob.performance.now) {
       return function() {
@@ -25574,7 +25574,7 @@ js: import "konva/skia-backend";
   Animation.animIdCounter = 0;
   Animation.animRunning = false;
 
-  // node_modules/konva/lib/Tween.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/Tween.js
   var blacklist = {
     node: 1,
     duration: 1,
@@ -26053,7 +26053,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/_CoreInternals.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/_CoreInternals.js
   var Konva2 = Util._assign(Konva, {
     Util,
     Transform,
@@ -26074,7 +26074,7 @@ js: import "konva/skia-backend";
     Canvas
   });
 
-  // node_modules/konva/lib/shapes/Arc.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arc.js
   var Arc = class extends Shape {
     _sceneFunc(context) {
       const angle = Konva.getAngle(this.angle()), clockwise = this.clockwise();
@@ -26131,7 +26131,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arc, "angle", 0, getNumberValidator());
   Factory.addGetterSetter(Arc, "clockwise", false, getBooleanValidator());
 
-  // node_modules/konva/lib/shapes/Line.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Line.js
   function getControlPoints(x0, y0, x1, y1, x2, y2, t) {
     const d01 = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)), d12 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)), fa = t * d01 / (d01 + d12), fb = t * d12 / (d01 + d12), p1x = x1 - fa * (x2 - x0), p1y = y1 - fa * (y2 - y0), p2x = x1 + fb * (x2 - x0), p2y = y1 + fb * (y2 - y0);
     return [p1x, p1y, p2x, p2y];
@@ -26310,7 +26310,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Line, "tension", 0, getNumberValidator());
   Factory.addGetterSetter(Line, "points", [], getNumberArrayValidator());
 
-  // node_modules/konva/lib/BezierFunctions.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/BezierFunctions.js
   var tValues = [
     [],
     [],
@@ -27098,7 +27098,7 @@ js: import "konva/skia-backend";
     return t;
   };
 
-  // node_modules/konva/lib/shapes/Path.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Path.js
   var Path = class _Path extends Shape {
     constructor(config) {
       super(config);
@@ -27754,7 +27754,7 @@ js: import "konva/skia-backend";
   _registerNode(Path);
   Factory.addGetterSetter(Path, "data");
 
-  // node_modules/konva/lib/shapes/Arrow.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arrow.js
   var Arrow = class extends Line {
     _sceneFunc(ctx) {
       super._sceneFunc(ctx);
@@ -27848,7 +27848,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arrow, "pointerAtBeginning", false);
   Factory.addGetterSetter(Arrow, "pointerAtEnding", true);
 
-  // node_modules/konva/lib/shapes/Circle.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Circle.js
   var Circle = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -27879,7 +27879,7 @@ js: import "konva/skia-backend";
   _registerNode(Circle);
   Factory.addGetterSetter(Circle, "radius", 0, getNumberValidator());
 
-  // node_modules/konva/lib/shapes/Ellipse.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ellipse.js
   var Ellipse = class extends Shape {
     _sceneFunc(context) {
       const rx = this.radiusX(), ry = this.radiusY();
@@ -27914,7 +27914,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ellipse, "radiusX", 0, getNumberValidator());
   Factory.addGetterSetter(Ellipse, "radiusY", 0, getNumberValidator());
 
-  // node_modules/konva/lib/shapes/Image.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Image.js
   var Image2 = class _Image extends Shape {
     constructor(attrs) {
       super(attrs);
@@ -28038,7 +28038,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Image2, "cropWidth", 0, getNumberValidator());
   Factory.addGetterSetter(Image2, "cropHeight", 0, getNumberValidator());
 
-  // node_modules/konva/lib/shapes/Label.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Label.js
   var ATTR_CHANGE_LIST = [
     "fontFamily",
     "fontSize",
@@ -28207,7 +28207,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Tag, "pointerHeight", 0, getNumberValidator());
   Factory.addGetterSetter(Tag, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // node_modules/konva/lib/shapes/Rect.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Rect.js
   var Rect = class extends Shape {
     _sceneFunc(context) {
       const cornerRadius = this.cornerRadius(), width = this.width(), height = this.height();
@@ -28225,7 +28225,7 @@ js: import "konva/skia-backend";
   _registerNode(Rect);
   Factory.addGetterSetter(Rect, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // node_modules/konva/lib/shapes/RegularPolygon.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/RegularPolygon.js
   var RegularPolygon = class extends Shape {
     _sceneFunc(context) {
       const points = this._getPoints(), radius = this.radius(), sides = this.sides(), cornerRadius = this.cornerRadius();
@@ -28293,7 +28293,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(RegularPolygon, "sides", 0, getNumberValidator());
   Factory.addGetterSetter(RegularPolygon, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // node_modules/konva/lib/shapes/Ring.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ring.js
   var PIx2 = Math.PI * 2;
   var Ring = class extends Shape {
     _sceneFunc(context) {
@@ -28324,7 +28324,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ring, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Ring, "outerRadius", 0, getNumberValidator());
 
-  // node_modules/konva/lib/shapes/Sprite.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Sprite.js
   var Sprite = class extends Shape {
     constructor(config) {
       super(config);
@@ -28426,7 +28426,7 @@ js: import "konva/skia-backend";
     setIndex: "setFrameIndex"
   });
 
-  // node_modules/konva/lib/shapes/Star.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Star.js
   var Star = class extends Shape {
     _sceneFunc(context) {
       const innerRadius = this.innerRadius(), outerRadius = this.outerRadius(), numPoints = this.numPoints();
@@ -28462,7 +28462,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Star, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Star, "outerRadius", 0, getNumberValidator());
 
-  // node_modules/konva/lib/shapes/Text.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Text.js
   function stringToArray(string) {
     return [...string].reduce((acc, char, index, array) => {
       if (/\p{Emoji}/u.test(char)) {
@@ -28937,7 +28937,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Text, "underlineOffset", void 0, getNumberValidator());
   Factory.addGetterSetter(Text, "charRenderFunc", void 0);
 
-  // node_modules/konva/lib/shapes/TextPath.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/TextPath.js
   var EMPTY_STRING2 = "";
   var NORMAL2 = "normal";
   function _fillFunc3(context) {
@@ -29206,7 +29206,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(TextPath, "kerningFunc", void 0);
   Factory.addGetterSetter(TextPath, "direction", "inherit");
 
-  // node_modules/konva/lib/shapes/Transformer.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Transformer.js
   var EVENTS_NAME = "tr-konva";
   var ATTR_CHANGE_LIST3 = [
     "resizeEnabledChange",
@@ -30199,7 +30199,7 @@ js: import "konva/skia-backend";
     enabledHandlers: "enabledAnchors"
   });
 
-  // node_modules/konva/lib/shapes/Wedge.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/shapes/Wedge.js
   var Wedge = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -30234,7 +30234,7 @@ js: import "konva/skia-backend";
     setAngleDeg: "setAngle"
   });
 
-  // node_modules/konva/lib/filters/Blur.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Blur.js
   function BlurStack() {
     this.r = 0;
     this.g = 0;
@@ -30926,7 +30926,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "blurRadius", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Brighten.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Brighten.js
   var Brighten = function(imageData) {
     const brightness = this.brightness() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -30937,7 +30937,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "brightness", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Brightness.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Brightness.js
   var Brightness = function(imageData) {
     const brightness = this.brightness(), data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -30947,7 +30947,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/filters/Contrast.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Contrast.js
   var Contrast = function(imageData) {
     const adjust = Math.pow((this.contrast() + 100) / 100, 2);
     const data = imageData.data, nPixels = data.length;
@@ -30981,7 +30981,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "contrast", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Emboss.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Emboss.js
   var Emboss = function(imageData) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
     const data = imageData.data;
@@ -31080,7 +31080,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "embossDirection", "top-left", void 0, Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "embossBlend", false, void 0, Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Enhance.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Enhance.js
   function remap(fromValue, fromMin, fromMax, toMin, toMax) {
     const fromRange = fromMax - fromMin, toRange = toMax - toMin;
     if (fromRange === 0) {
@@ -31159,7 +31159,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "enhance", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Grayscale.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Grayscale.js
   var Grayscale = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -31170,7 +31170,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/filters/HSL.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/HSL.js
   Factory.addGetterSetter(Node2, "hue", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "luminance", 0, getNumberValidator(), Factory.afterSetFilter);
@@ -31193,7 +31193,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/filters/HSV.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/HSV.js
   var HSV = function(imageData) {
     const data = imageData.data, nPixels = data.length, v = Math.pow(2, this.value()), s = Math.pow(2, this.saturation()), h = Math.abs(this.hue() + 360) % 360;
     const vsu = v * s * Math.cos(h * Math.PI / 180), vsw = v * s * Math.sin(h * Math.PI / 180);
@@ -31215,7 +31215,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "value", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Invert.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Invert.js
   var Invert = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -31225,7 +31225,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/filters/Kaleidoscope.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Kaleidoscope.js
   var ToPolar = function(src, dst, opt) {
     const srcPixels = src.data, dstPixels = dst.data, xSize = src.width, ySize = src.height, xMid = opt.polarCenterX || xSize / 2, yMid = opt.polarCenterY || ySize / 2;
     let rMax = Math.sqrt(xMid * xMid + yMid * yMid);
@@ -31354,7 +31354,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "kaleidoscopePower", 2, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "kaleidoscopeAngle", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Mask.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Mask.js
   function pixelAt(idata, x, y) {
     let idx = (y * idata.width + x) * 4;
     const d = [];
@@ -31499,7 +31499,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Noise.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Noise.js
   var Noise = function(imageData) {
     const amount = this.noise() * 255, data = imageData.data, nPixels = data.length, half = amount / 2;
     for (let i = 0; i < nPixels; i += 4) {
@@ -31510,7 +31510,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "noise", 0.2, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Pixelate.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Pixelate.js
   var Pixelate = function(imageData) {
     let pixelSize = Math.ceil(this.pixelSize()), width = imageData.width, height = imageData.height, nBinsX = Math.ceil(width / pixelSize), nBinsY = Math.ceil(height / pixelSize), data = imageData.data;
     if (pixelSize <= 0) {
@@ -31568,7 +31568,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "pixelSize", 8, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/Posterize.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Posterize.js
   var Posterize = function(imageData) {
     const levels = Math.round(this.levels() * 254) + 1, data = imageData.data, len = data.length, scale = 255 / levels;
     for (let i = 0; i < len; i += 1) {
@@ -31577,7 +31577,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "levels", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/RGB.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/RGB.js
   var RGB = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue();
     for (let i = 0; i < nPixels; i += 4) {
@@ -31610,7 +31610,7 @@ js: import "konva/skia-backend";
   });
   Factory.addGetterSetter(Node2, "blue", 0, RGBComponent, Factory.afterSetFilter);
 
-  // node_modules/konva/lib/filters/RGBA.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/RGBA.js
   var RGBA = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue(), alpha = this.alpha();
     for (let i = 0; i < nPixels; i += 4) {
@@ -31652,7 +31652,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // node_modules/konva/lib/filters/Sepia.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Sepia.js
   var Sepia = function(imageData) {
     const data = imageData.data, nPixels = data.length;
     for (let i = 0; i < nPixels; i += 4) {
@@ -31665,7 +31665,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // node_modules/konva/lib/filters/Solarize.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Solarize.js
   var Solarize = function(imageData) {
     const threshold = 128;
     const d = imageData.data;
@@ -31681,7 +31681,7 @@ js: import "konva/skia-backend";
     return imageData;
   };
 
-  // node_modules/konva/lib/filters/Threshold.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/filters/Threshold.js
   var Threshold = function(imageData) {
     const level = this.threshold() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 1) {
@@ -31690,7 +31690,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // node_modules/konva/lib/_FullInternals.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/_FullInternals.js
   var Konva3 = Konva2.Util._assign(Konva2, {
     Arc,
     Arrow,
@@ -31734,7 +31734,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // node_modules/konva/lib/index.js
+  // ../../www/wwwroot/ilab-gpt-conjure/node_modules/konva/lib/index.js
   var lib_default = Konva3;
 
   // codex_image/webui/frontend/src/image-editor.ts
@@ -46410,7 +46410,17 @@ ${galleryText}`;
   }
   function setSizeControlValue(select, value) {
     if (!select || select.value === value) return false;
+    const options = select.options || [];
+    let valueSupported = !options.length;
+    for (let index = 0; index < options.length; index += 1) {
+      if (options[index]?.value === value) {
+        valueSupported = true;
+        break;
+      }
+    }
+    if (!valueSupported) return false;
     select.value = value;
+    if (select.value !== value) return false;
     select.dispatchEvent(new Event("change", { bubbles: true }));
     return true;
   }
