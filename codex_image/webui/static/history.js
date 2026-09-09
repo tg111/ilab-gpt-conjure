@@ -628,6 +628,7 @@
     "output.sizePreset": "Preset",
     "output.sizeCustom": "Custom",
     "output.orientation": "Orientation",
+    "output.manual": "Manual",
     "output.square": "Square",
     "output.portrait": "Portrait",
     "output.landscape": "Landscape",
@@ -1914,6 +1915,7 @@
     "output.sizePreset": "Voreingestellt",
     "output.sizeCustom": "Benutzerdefiniert",
     "output.orientation": "Orientierung",
+    "output.manual": "Manuell",
     "output.square": "Quadratisch",
     "output.portrait": "Portr\xE4t",
     "output.landscape": "Landschaft",
@@ -3141,6 +3143,7 @@
     "output.sizePreset": "Preestablecido",
     "output.sizeCustom": "personalizado",
     "output.orientation": "Orientaci\xF3n",
+    "output.manual": "Manual",
     "output.square": "cuadrado",
     "output.portrait": "retrato",
     "output.landscape": "paisaje",
@@ -4368,6 +4371,7 @@
     "output.sizePreset": "Pr\xE9r\xE9glage",
     "output.sizeCustom": "Personnalis\xE9",
     "output.orientation": "Orientation",
+    "output.manual": "Manuel",
     "output.square": "Carr\xE9",
     "output.portrait": "Portrait",
     "output.landscape": "Paysage",
@@ -5595,6 +5599,7 @@
     "output.sizePreset": "\u30D7\u30EA\u30BB\u30C3\u30C8",
     "output.sizeCustom": "\u30AB\u30B9\u30BF\u30E0",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u6B63\u65B9\u5F62",
     "output.portrait": "\u306E\u8096\u50CF\u753B",
     "output.landscape": "\u98A8\u666F",
@@ -6822,6 +6827,7 @@
     "output.sizePreset": "\uC0AC\uC804 \uC124\uC815",
     "output.sizeCustom": "\uC0AC\uC6A9\uC790 \uC815\uC758",
     "output.orientation": "\uBC29\uD5A5",
+    "output.manual": "\uC218\uB3D9",
     "output.square": "\uC815\uC0AC\uAC01\uD615",
     "output.portrait": "\uCD08\uC0C1\uD654",
     "output.landscape": "\uD48D\uACBD",
@@ -8049,6 +8055,7 @@
     "output.sizePreset": "Predefinido",
     "output.sizeCustom": "Personalizado",
     "output.orientation": "Orienta\xE7\xE3o",
+    "output.manual": "Manual",
     "output.square": "Quadrado",
     "output.portrait": "Retrato",
     "output.landscape": "Paisagem",
@@ -9276,6 +9283,7 @@
     "output.sizePreset": "\u041F\u0440\u0435\u0434\u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430",
     "output.sizeCustom": "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439",
     "output.orientation": "\u041E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044F",
+    "output.manual": "\u0412\u0440\u0443\u0447\u043D\u0443\u044E",
     "output.square": "\u041F\u043B\u043E\u0449\u0430\u0434\u044C",
     "output.portrait": "\u041F\u043E\u0440\u0442\u0440\u0435\u0442",
     "output.landscape": "\u041F\u0435\u0439\u0437\u0430\u0436",
@@ -10503,6 +10511,7 @@
     "output.sizePreset": "Preimpostato",
     "output.sizeCustom": "Personalizzato",
     "output.orientation": "Orientamento",
+    "output.manual": "Manuale",
     "output.square": "Quadrato",
     "output.portrait": "Ritratto",
     "output.landscape": "Paesaggio",
@@ -11730,6 +11739,7 @@
     "output.sizePreset": "\u092A\u094D\u0930\u0940\u0938\u0947\u091F",
     "output.sizeCustom": "\u0915\u0938\u094D\u091F\u092E",
     "output.orientation": "\u0905\u092D\u093F\u092E\u0941\u0916\u0940\u0915\u0930\u0923",
+    "output.manual": "\u092E\u0948\u0928\u094D\u092F\u0941\u0905\u0932",
     "output.square": "\u091A\u094C\u0915\u094B\u0930",
     "output.portrait": "\u092A\u094B\u0930\u094D\u091F\u094D\u0930\u0947\u091F",
     "output.landscape": "\u0932\u0948\u0902\u0921\u0938\u094D\u0915\u0947\u092A",
@@ -12967,6 +12977,7 @@
     "output.sizePreset": "C\xF3 s\u1EB5n",
     "output.sizeCustom": "T\xF9y ch\u1EC9nh",
     "output.orientation": "H\u01B0\u1EDBng",
+    "output.manual": "Th\u1EE7 c\xF4ng",
     "output.square": "Vu\xF4ng",
     "output.portrait": "D\u1ECDc",
     "output.landscape": "Ngang",
@@ -14263,6 +14274,7 @@
     "output.sizePreset": "\u9884\u8BBE\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u5B9A\u4E49\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52A8",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u7AD6\u56FE",
     "output.landscape": "\u6A2A\u56FE",
@@ -15559,6 +15571,7 @@
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u5782\u76F4\u5716",
     "output.landscape": "\u6A6B\u5716",
@@ -16796,6 +16809,7 @@
     "output.sizePreset": "\u9810\u8A2D\u5C3A\u5BF8",
     "output.sizeCustom": "\u81EA\u8A02\u5C3A\u5BF8",
     "output.orientation": "\u65B9\u5411",
+    "output.manual": "\u624B\u52D5",
     "output.square": "\u65B9\u5F62",
     "output.portrait": "\u5782\u76F4\u5716",
     "output.landscape": "\u6A6B\u5716",
@@ -20344,7 +20358,6 @@
       els9.sizeModeGroup?.closest(".custom-size-control"),
       els9.orientation?.closest(".orientation-field"),
       els9.resolution?.closest(".resolution-field"),
-      els9.ratio?.closest(".ratio-field"),
       els9.quality?.closest(".quantity-quality-row"),
       els9.pixelPreview,
       els9.outputFormatField,
@@ -20353,6 +20366,12 @@
     legacyElements.forEach((element) => {
       element.classList.toggle("hidden", !legacyGpt);
     });
+    const ratioField = els9.ratio?.closest(".ratio-field");
+    if (ratioField) {
+      const ratioVisible = legacyGpt && !visibility.customSize && els9.orientation?.value === "manual";
+      ratioField.classList.toggle("hidden", !ratioVisible);
+      ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
+    }
     if (els9.customSize) {
       els9.customSize.classList.toggle("hidden", !visibility.customSize);
       els9.customSize.classList.toggle("custom-size-collapsed", !visibility.customSize);
@@ -24515,7 +24534,7 @@
       if (els6.nInput) els6.nInput.value = "1";
       if (els6.resolution) els6.resolution.value = "standard";
       if (els6.ratio) els6.ratio.value = "1:1";
-      if (els6.orientation) els6.orientation.value = "square";
+      if (els6.orientation) els6.orientation.value = "auto";
       els6.size.value = "1024x1024";
       els6.quality.value = "auto";
       els6.outputFormat.value = "png";

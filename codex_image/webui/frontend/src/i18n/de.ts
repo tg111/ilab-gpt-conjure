@@ -614,6 +614,7 @@ export const DE_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "Voreingestellt",
     "output.sizeCustom": "Benutzerdefiniert",
     "output.orientation": "Orientierung",
+    "output.manual": "Manuell",
     "output.square": "Quadratisch",
     "output.portrait": "Porträt",
     "output.landscape": "Landschaft",

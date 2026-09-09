@@ -624,6 +624,7 @@ export const ZH_HK_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "預設尺寸",
     "output.sizeCustom": "自訂尺寸",
     "output.orientation": "方向",
+    "output.manual": "手動",
     "output.square": "方形",
     "output.portrait": "垂直圖",
     "output.landscape": "橫圖",

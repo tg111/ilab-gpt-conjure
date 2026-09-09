@@ -614,6 +614,7 @@ export const RU_DICTIONARY: TranslationDictionary = {
     "output.sizePreset": "Предустановка",
     "output.sizeCustom": "Пользовательский",
     "output.orientation": "Ориентация",
+    "output.manual": "Вручную",
     "output.square": "Площадь",
     "output.portrait": "Портрет",
     "output.landscape": "Пейзаж",
