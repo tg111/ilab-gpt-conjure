@@ -121,7 +121,7 @@
         });
       })();
     </script>
-    <link rel="stylesheet" href="/static/styles.css?v=runtime-789" />
+    <link rel="stylesheet" href="/static/styles.css?v=runtime-790" />
   </head>
   <body>
     <div class="layout-container">
@@ -871,12 +871,12 @@
                 <div class="field moderation-field">
                   <span data-i18n="output.moderation">审核</span>
                   <div class="radio-group" id="moderationGroup" role="group" aria-label="审核" data-i18n-attr="aria-label:output.moderation">
-                    <button class="radio-btn active" data-val="auto" type="button">auto</button>
-                    <button class="radio-btn" data-val="low" type="button">low</button>
+                    <button class="radio-btn" data-val="auto" type="button">auto</button>
+                    <button class="radio-btn active" data-val="low" type="button">low</button>
                   </div>
                   <select id="moderation" class="hidden">
                     <option value="auto">auto</option>
-                    <option value="low">low</option>
+                    <option value="low" selected>low</option>
                   </select>
                 </div>
                 </div>
@@ -1571,7 +1571,7 @@
     </div>
 
     <div id="taskNotificationToastRegion" class="task-notification-toast-region" aria-live="polite"></div>
-  <script src="/static/app.js?v=runtime-792"></script>
+  <script src="/static/app.js?v=runtime-797"></script>
     <script>
       (() => {
         document.querySelectorAll(".radio-group").forEach((group) => {

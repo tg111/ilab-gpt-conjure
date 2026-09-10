@@ -1,4 +1,5 @@
 import type { GenerationCatalog } from "./types";
+import { isGptImageModelId } from "./model-identifiers";
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value)
@@ -84,7 +85,7 @@ export function taskModelFamilyId(
   const modelId = taskCanonicalModelId(task);
   const familyId = catalog?.models.find((model) => model.id === modelId)?.family_id;
   if (familyId === "gpt-image" || familyId === "gemini-image") return familyId;
-  if (modelId === "gpt-image-2") return "gpt-image";
+  if (isGptImageModelId(modelId)) return "gpt-image";
   if (modelId.startsWith("nano-banana")) return "gemini-image";
   return "unknown";
 }
@@ -129,7 +130,7 @@ export function taskCanvasSummaryParts(task: unknown): string[] {
     ? `${size[0] / greatestCommonDivisor(size[0], size[1])}:${size[1] / greatestCommonDivisor(size[0], size[1])}`
     : "");
   const explicitResolution = String(parameters["canvas.resolution"] || params.resolution || "").trim();
-  const resolution = taskCanonicalModelId(task) === "gpt-image-2"
+  const resolution = isGptImageModelId(taskCanonicalModelId(task))
     ? normalizedGptResolution(explicitResolution)
     : explicitResolution;
   const honestResolution = resolution && resolution.toLowerCase() !== "custom"

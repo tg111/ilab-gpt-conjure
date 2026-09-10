@@ -9,6 +9,7 @@ import type {
   GenerationOperation,
   ParameterMigrationReport,
 } from "./types";
+import { isGptImageModelId } from "./model-identifiers";
 
 interface RenderContext {
   readOnly: boolean;
@@ -33,6 +34,7 @@ function cloneValue(value: unknown): unknown {
 
 function gptSizeValid(value: unknown): boolean {
   if (typeof value !== "string") return false;
+  if (value === "auto") return true;
   const match = value.match(/^(\d+)x(\d+)$/i);
   if (!match) return false;
   const width = Number(match[1]);
@@ -217,6 +219,40 @@ function interactiveModel(context: RenderContext): CatalogModel {
   if (context.readOnly) return context.model;
   const { state } = getLegacyBridge();
   return state.generationCatalog?.models.find((model) => model.id === state.selectedModelId) || context.model;
+}
+
+function syncLegacyQualityControls(model: CatalogModel): void {
+  const { els } = getLegacyBridge();
+  const definition = model.parameters.find((item) => item.id === "gpt.quality");
+  const select = els.quality as HTMLSelectElement | null;
+  const group = document.querySelector("#qualityGroup") as HTMLElement | null;
+  if (!definition || !select || !group) return;
+  const labels: Record<string, string> = {
+    auto: translate("output.qualityAuto"),
+    low: translate("output.qualityLow"),
+    medium: translate("output.qualityMedium"),
+    high: translate("output.qualityHigh"),
+    xhigh: "XHigh",
+    max: "Max",
+  };
+  const allowed = definition.allowed_values.map(String);
+  const current = allowed.includes(select.value) ? select.value : String(definition.default);
+  select.replaceChildren(...allowed.map((value) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = labels[value] || value;
+    return option;
+  }));
+  select.value = current;
+  group.replaceChildren(...allowed.map((value) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `radio-btn${value === current ? " active" : ""}`;
+    button.dataset.val = value;
+    button.textContent = labels[value] || value;
+    button.setAttribute("aria-pressed", value === current ? "true" : "false");
+    return button;
+  }));
 }
 
 function commitValue(context: RenderContext, definition: CatalogParameterDefinition, value: unknown, rerender = false): void {
@@ -655,7 +691,7 @@ export function legacyParameterVisibility(modelId: string, sizeMode: unknown): {
   legacyGpt: boolean;
   customSize: boolean;
 } {
-  const legacyGpt = modelId === "gpt-image-2";
+  const legacyGpt = isGptImageModelId(modelId);
   return {
     legacyGpt,
     customSize: legacyGpt && sizeMode === "custom",
@@ -789,6 +825,7 @@ export function renderModelParameters(
   ensureModelDraft(model);
   const visibility = legacyParameterVisibility(model.id, els.size?.value);
   const legacyGpt = visibility.legacyGpt;
+  if (legacyGpt) syncLegacyQualityControls(model);
   state.customSizeTransitionSeq += 1;
   state.customSizeMode = visibility.customSize;
   const legacyElements = [

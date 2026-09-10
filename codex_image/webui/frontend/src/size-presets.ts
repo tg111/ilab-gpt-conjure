@@ -1,4 +1,5 @@
 import { getLegacyBridge } from "./state";
+import { isGptImageModelId } from "./model-identifiers";
 import { currentAuthSource } from "./auth-source";
 import { currentApiImageModel, currentApiImagesConcurrency, currentApiMode, currentApiProviderId, currentCodexMode } from "./api-provider-settings";
 import { currentMainModel } from "./main-model-combobox";
@@ -169,7 +170,6 @@ export function findPresetForSize(size: any): any {
 
 export function currentSize(): string {
   if (els.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto") return "auto";
-  if (els.size.value !== "custom" && els.orientation?.value !== "manual") return "auto";
   if (els.size.value !== "custom") return els.size.value;
   return `${els.customWidth.value}x${els.customHeight.value}`;
 }
@@ -200,7 +200,7 @@ export function currentTaskParams(): any {
     output_compression: els.outputFormat.value === "png" ? null : Number(els.compression.value),
   };
   const { state } = getLegacyBridge();
-  if (!state.generationCatalog || state.selectedModelId === "gpt-image-2") {
+  if (!state.generationCatalog || isGptImageModelId(state.selectedModelId)) {
     params.main_model = currentMainModel();
   }
   if (currentWebSearchEnabled()) {

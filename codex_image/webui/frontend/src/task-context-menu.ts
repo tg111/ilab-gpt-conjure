@@ -198,7 +198,13 @@ async function handleTaskContextMenuAction(button: HTMLButtonElement) {
     return;
   }
 
-  if (["archive", "delete", "stop", "promote", "cancel"].includes(action)) {
+  if (action === "delete") {
+    closeTaskContextMenu();
+    await legacyMethod("deleteTask", taskId);
+    return;
+  }
+
+  if (["archive", "stop", "promote", "cancel"].includes(action)) {
     closeTaskContextMenu();
     revealTaskCardAction(taskId, action, true);
     return;

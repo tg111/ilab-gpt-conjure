@@ -4,6 +4,7 @@ import { selectConcreteModel } from "./model-selection";
 import { eligibleProviders, selectGenerationProvider } from "./provider-selection";
 import { getLegacyBridge } from "./state";
 import { taskCanonicalModelId } from "./task-model-summary";
+import { isGptImageModelId } from "./model-identifiers";
 import type { CatalogModel, GenerationCatalog, GenerationSnapshotView, ParameterMigrationReport, WebUITask } from "./types";
 
 function record(value: unknown): Record<string, unknown> {
@@ -133,7 +134,7 @@ export function taskParameterInspectorModel(
   model: CatalogModel | undefined,
 ): CatalogModel | undefined {
   if (!model) return undefined;
-  const gptImage = snapshot.canonical_model_id === "gpt-image-2";
+  const gptImage = isGptImageModelId(snapshot.canonical_model_id);
   const parameters = model.parameters
     .filter((definition) => taskParameterVisibleInInspector(snapshot, definition.id))
     .map((definition) => {

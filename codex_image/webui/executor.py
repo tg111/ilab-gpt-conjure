@@ -33,12 +33,15 @@ from .executor_transport import (
     _direct_images_concurrent_enabled,
     _image_request_attempts,
     _image_request_timeout_seconds,
+    _instructions_for_transport,
     _is_usage_limit_error,
     _noop_request_context,
     _normalize_api_images_concurrency,
     _normalize_api_mode,
     _normalize_compression,
+    _normalize_prompt_fidelity,
     _parse_optional_int,
+    _prompt_for_transport,
 )
 from .reference_file_capabilities import effective_reference_file_main_model, is_explicit_file_input_rejection
 from .reference_files import ReferenceFileStorage

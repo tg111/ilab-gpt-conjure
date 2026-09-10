@@ -41,6 +41,7 @@ import {
 } from "./provider-model-bindings";
 import type { BindingProtocol } from "./provider-model-bindings";
 import type { BindingCompatibility } from "./provider-model-bindings";
+import { GPT_IMAGE_MODEL_IDS } from "./model-identifiers";
 import {
   clearProviderApiKeyInputs,
   evaluateProviderCredentialSave,
@@ -68,6 +69,19 @@ function updateRequestPreview(): void { legacyMethod("updateRequestPreview"); }
 function closePromptPopover(): void { legacyMethod("closePromptPopover"); }
 function openConfirmPopover(...args: any[]): void { legacyMethod("openConfirmPopover", ...args); }
 
+function defaultGptImageBindings(
+  providerId: string,
+  protocol: BindingProtocol,
+  legacyRemoteModelId: string = DEFAULT_API_IMAGE_MODEL,
+): any[] {
+  return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
+    `${providerId}-${modelId}`,
+    modelId,
+    modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
+    protocol,
+  ));
+}
+
 export function normalizeApiProvider(provider: any = {}, index: any = 0): any {
   const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
   const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
@@ -75,14 +89,11 @@ export function normalizeApiProvider(provider: any = {}, index: any = 0): any {
   const bindings = normalizeProviderBindings(
     Array.isArray(provider.bindings) && provider.bindings.length
       ? provider.bindings
-      : [{
-        id: `${id}-gpt-image-2`,
-        canonical_model_id: "gpt-image-2",
-        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
-        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
-        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
-        operations: ["generate", "edit"],
-      }],
+      : defaultGptImageBindings(
+        id,
+        legacyMode === "responses" ? "openai_responses" : "openai_images",
+        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
+      ),
     id,
   );
   const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -486,11 +497,25 @@ export function normalizeApiSettings(settings: any = {}): any {
   if (!providers.length) providers.push(normalizeApiProvider({}, 0));
   const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
   const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
+  const defaultProviderByModel = { ...(settings.default_provider_by_model || {}) };
+  const supportedModelIds = new Set(
+    providers.flatMap((provider) => provider.bindings.map((binding: any) => binding.canonical_model_id)),
+  );
+  supportedModelIds.forEach((modelId) => {
+    const supportingProviders = providers.filter((provider) => (
+      provider.bindings.some((binding: any) => binding.canonical_model_id === modelId)
+    ));
+    if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
+      defaultProviderByModel[modelId] = supportingProviders.find(
+        (provider) => provider.id === activeProvider.id,
+      )?.id || supportingProviders[0]?.id;
+    }
+  });
   return {
     schema_version: 2,
     codex_mode: normalizeCodexMode(settings.codex_mode),
     active_provider_id: activeProvider.id,
-    default_provider_by_model: { ...(settings.default_provider_by_model || { "gpt-image-2": activeProvider.id }) },
+    default_provider_by_model: defaultProviderByModel,
     providers,
   };
 }
@@ -614,7 +639,7 @@ export function addApiProvider(): void {
     name: translate("apiSettings.newProvider"),
     base_url: DEFAULT_API_BASE_URL,
     concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-    bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")],
+    bindings: defaultGptImageBindings(id, "openai_images"),
   }, state.apiSettings.providers.length);
   populateApiSettingsForm();
   setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");

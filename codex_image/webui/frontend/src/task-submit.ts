@@ -3,6 +3,7 @@ import { currentLocaleCode, translate } from "./i18n";
 import { selectedProviderBinding } from "./provider-selection";
 import { appendCanonicalGenerationFields, currentGenerationSelection } from "./generation-request";
 import { taskOutputControlValues } from "./task-model-summary";
+import { isGptImageModelId } from "./model-identifiers";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -200,7 +201,7 @@ function buildPreviewRequest() {
     reference_files: fileUploads.map((source: any) => source.filename),
     reference_file_ids: storedFiles.map((source: any) => source.id),
   };
-  const usesGptPromptProcessing = !state.generationCatalog || state.selectedModelId === "gpt-image-2";
+  const usesGptPromptProcessing = !state.generationCatalog || isGptImageModelId(state.selectedModelId);
   if (isApi) {
     payload.api_provider_id = state.selectedProviderId;
     payload.api_provider_name = state.generationCatalog?.providers.find((provider: any) => provider.id === state.selectedProviderId)?.name || "";
@@ -298,7 +299,7 @@ async function runTask() {
   form.append("prompt_for_model", promptForModel);
   form.append("ui_language", currentLocaleCode());
   appendCanonicalGenerationFields(form, currentGenerationSelection());
-  if (!state.generationCatalog || state.selectedModelId === "gpt-image-2") {
+  if (!state.generationCatalog || isGptImageModelId(state.selectedModelId)) {
     form.append("main_model", currentMainModel());
   }
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));

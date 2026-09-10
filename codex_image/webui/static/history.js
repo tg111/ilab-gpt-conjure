@@ -19298,6 +19298,17 @@
     });
   }
 
+  // codex_image/webui/frontend/src/model-identifiers.ts
+  var DEFAULT_GPT_IMAGE_MODEL_ID = "gpt-image-2";
+  var GPT_IMAGE_MODEL_IDS = [
+    DEFAULT_GPT_IMAGE_MODEL_ID,
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.5-flare"
+  ];
+  function isGptImageModelId(value) {
+    return typeof value === "string" && value.startsWith("gpt-image-");
+  }
+
   // codex_image/webui/frontend/src/mode-settings-visibility.ts
   function resolveModeSettingsVisibility({
     catalogAvailable,
@@ -19312,7 +19323,7 @@
         showPromptFidelity: true
       };
     }
-    if (modelId !== "gpt-image-2") {
+    if (!isGptImageModelId(modelId)) {
       return {
         showMainModel: false,
         showApiDirectNotice: false,
@@ -19366,6 +19377,10 @@
   }
   function applyModeSettingsVisibility(visibility) {
     const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice;
+    els2.modeSettingsSlot?.classList.toggle(
+      "api-direct-mode",
+      visibility.showApiDirectNotice && !visibility.showMainModel
+    );
     setModeSpecificElementVisibility(els2.modeSettingsSlot, showModeSettings);
     setModeSpecificElementVisibility(els2.modeSpecificSettings, showModeSettings);
     setModeSpecificElementVisibility(els2.mainModelField, visibility.showMainModel);
@@ -19766,6 +19781,7 @@
   }
   function gptSizeValid(value) {
     if (typeof value !== "string") return false;
+    if (value === "auto") return true;
     const match = value.match(/^(\d+)x(\d+)$/i);
     if (!match) return false;
     const width = Number(match[1]);
@@ -19881,6 +19897,39 @@
     if (context.readOnly) return context.model;
     const { state: state5 } = getLegacyBridge();
     return state5.generationCatalog?.models.find((model) => model.id === state5.selectedModelId) || context.model;
+  }
+  function syncLegacyQualityControls(model) {
+    const { els: els9 } = getLegacyBridge();
+    const definition = model.parameters.find((item) => item.id === "gpt.quality");
+    const select = els9.quality;
+    const group = document.querySelector("#qualityGroup");
+    if (!definition || !select || !group) return;
+    const labels = {
+      auto: translate("output.qualityAuto"),
+      low: translate("output.qualityLow"),
+      medium: translate("output.qualityMedium"),
+      high: translate("output.qualityHigh"),
+      xhigh: "XHigh",
+      max: "Max"
+    };
+    const allowed = definition.allowed_values.map(String);
+    const current = allowed.includes(select.value) ? select.value : String(definition.default);
+    select.replaceChildren(...allowed.map((value) => {
+      const option2 = document.createElement("option");
+      option2.value = value;
+      option2.textContent = labels[value] || value;
+      return option2;
+    }));
+    select.value = current;
+    group.replaceChildren(...allowed.map((value) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `radio-btn${value === current ? " active" : ""}`;
+      button.dataset.val = value;
+      button.textContent = labels[value] || value;
+      button.setAttribute("aria-pressed", value === current ? "true" : "false");
+      return button;
+    }));
   }
   function commitValue(context, definition, value, rerender = false) {
     if (context.readOnly) return;
@@ -20254,7 +20303,7 @@
     return readOnly || model.expand_advanced_parameters === true;
   }
   function legacyParameterVisibility(modelId, sizeMode) {
-    const legacyGpt = modelId === "gpt-image-2";
+    const legacyGpt = isGptImageModelId(modelId);
     return {
       legacyGpt,
       customSize: legacyGpt && sizeMode === "custom"
@@ -20352,6 +20401,7 @@
     ensureModelDraft(model);
     const visibility = legacyParameterVisibility(model.id, els9.size?.value);
     const legacyGpt = visibility.legacyGpt;
+    if (legacyGpt) syncLegacyQualityControls(model);
     state5.customSizeTransitionSeq += 1;
     state5.customSizeMode = visibility.customSize;
     const legacyElements = [
@@ -20478,7 +20528,7 @@
     const { state: state5, methods } = getLegacyBridge();
     const model = state5.generationCatalog?.models.find((item) => item.id === state5.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
-    if (model.id !== "gpt-image-2") {
+    if (!isGptImageModelId(model.id)) {
       methods.persistModelSelection?.();
       return;
     }
@@ -20495,10 +20545,11 @@
     const modelId = state5.selectedModelId || "";
     const model = state5.generationCatalog?.models.find((item) => item.id === modelId);
     if (!model) return;
-    if (model.id !== "gpt-image-2") {
+    if (!isGptImageModelId(model.id)) {
       renderCurrentModelParameters();
       return;
     }
+    renderCurrentModelParameters();
     const draft = {
       ...Object.fromEntries(model.parameters.map((parameter) => [parameter.id, parameter.default])),
       ...state5.parameterDraftsByModel[modelId] || {}
@@ -20781,7 +20832,7 @@
     return true;
   }
   function initialCatalogSelection(catalog, storedModelId, lastProviderByModel, operation, lastProviderSelectionByModel = {}) {
-    const model = catalog.models.find((item) => item.id === storedModelId) || catalog.models.find((item) => item.id === "gpt-image-2") || catalog.models[0];
+    const model = catalog.models.find((item) => item.id === storedModelId) || catalog.models.find((item) => isGptImageModelId(item.id)) || catalog.models[0];
     if (!model) return { familyId: null, modelId: null, providerId: null, bindingId: null };
     const entries = eligibleProviderBindings(catalog, model.id, operation);
     const selected = resolveProviderSelection(
@@ -21520,7 +21571,7 @@
   }
   function availableProtocolsForModel(modelId) {
     if (modelId.startsWith("nano-banana")) return ["gemini", "openai_images"];
-    if (modelId === "gpt-image-2") return ["openai_images", "openai_responses"];
+    if (isGptImageModelId(modelId)) return ["openai_images", "openai_responses"];
     return [];
   }
   function availableCompatibilityLayers(modelId, protocol) {
@@ -21552,7 +21603,7 @@
     if (modelId.startsWith("nano-banana")) {
       return protocol === "gemini" ? "gemini_generate_content" : "gemini_openai_images";
     }
-    if (modelId === "gpt-image-2") {
+    if (isGptImageModelId(modelId)) {
       return protocol === "openai_responses" ? "gpt_openai_responses" : "gpt_openai_images";
     }
     throw new Error("unsupported_binding_protocol");
@@ -21886,19 +21937,24 @@
   function openConfirmPopover(...args) {
     legacyMethod4("openConfirmPopover", ...args);
   }
+  function defaultGptImageBindings(providerId, protocol, legacyRemoteModelId = DEFAULT_API_IMAGE_MODEL) {
+    return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
+      `${providerId}-${modelId}`,
+      modelId,
+      modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
+      protocol
+    ));
+  }
   function normalizeApiProvider(provider = {}, index = 0) {
     const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
     const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
     const legacyMode = provider.api_mode === "responses" ? "responses" : DEFAULT_API_MODE;
     const bindings = normalizeProviderBindings(
-      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : [{
-        id: `${id}-gpt-image-2`,
-        canonical_model_id: "gpt-image-2",
-        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
-        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
-        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
-        operations: ["generate", "edit"]
-      }],
+      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : defaultGptImageBindings(
+        id,
+        legacyMode === "responses" ? "openai_responses" : "openai_images",
+        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL
+      ),
       id
     );
     const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -22261,11 +22317,23 @@
     if (!providers.length) providers.push(normalizeApiProvider({}, 0));
     const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
     const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
+    const defaultProviderByModel = { ...settings.default_provider_by_model || {} };
+    const supportedModelIds = new Set(
+      providers.flatMap((provider) => provider.bindings.map((binding) => binding.canonical_model_id))
+    );
+    supportedModelIds.forEach((modelId) => {
+      const supportingProviders = providers.filter((provider) => provider.bindings.some((binding) => binding.canonical_model_id === modelId));
+      if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
+        defaultProviderByModel[modelId] = supportingProviders.find(
+          (provider) => provider.id === activeProvider.id
+        )?.id || supportingProviders[0]?.id;
+      }
+    });
     return {
       schema_version: 2,
       codex_mode: normalizeCodexMode(settings.codex_mode),
       active_provider_id: activeProvider.id,
-      default_provider_by_model: { ...settings.default_provider_by_model || { "gpt-image-2": activeProvider.id } },
+      default_provider_by_model: defaultProviderByModel,
       providers
     };
   }
@@ -22378,7 +22446,7 @@
       name: translate("apiSettings.newProvider"),
       base_url: DEFAULT_API_BASE_URL,
       concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-      bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")]
+      bindings: defaultGptImageBindings(id, "openai_images")
     }, state3.apiSettings.providers.length);
     populateApiSettingsForm();
     setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");
@@ -24540,7 +24608,7 @@
       els6.size.value = "1024x1024";
       els6.quality.value = "auto";
       els6.outputFormat.value = "png";
-      els6.moderation.value = "auto";
+      els6.moderation.value = "low";
       els6.compression.value = "80";
       if (els6.webSearch) els6.webSearch.checked = false;
       [els6.nInput, els6.resolution, els6.ratio, els6.orientation, els6.quality, els6.outputFormat, els6.moderation, els6.webSearch].forEach((sel) => {

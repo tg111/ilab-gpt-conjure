@@ -7545,6 +7545,10 @@ select.themed-select-native {
   min-width: 0;
 }
 
+.mode-settings-slot.api-direct-mode {
+  min-height: 0;
+}
+
 .mode-specific-settings {
   display: grid;
   gap: 16px;

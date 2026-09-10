@@ -6,6 +6,7 @@ import {
   renderProviderSelection,
   resolveProviderSelection,
 } from "./provider-selection";
+import { isGptImageModelId } from "./model-identifiers";
 
 export const MODEL_SELECTION_STORAGE_KEY = "codex-image-model-selection-v1";
 
@@ -203,7 +204,7 @@ export function initialCatalogSelection(
   lastProviderSelectionByModel: Record<string, string> = {},
 ): { familyId: string | null; modelId: string | null; providerId: string | null; bindingId: string | null } {
   const model = catalog.models.find((item) => item.id === storedModelId)
-    || catalog.models.find((item) => item.id === "gpt-image-2")
+    || catalog.models.find((item) => isGptImageModelId(item.id))
     || catalog.models[0];
   if (!model) return { familyId: null, modelId: null, providerId: null, bindingId: null };
   const entries = eligibleProviderBindings(catalog, model.id, operation);

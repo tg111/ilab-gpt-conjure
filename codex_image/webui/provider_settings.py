@@ -11,6 +11,7 @@ from codex_image.client_types import (
     DEFAULT_OPENAI_API_BASE_URL,
     normalize_openai_base_url,
 )
+from codex_image.generation.catalog import GPT_IMAGE_MODEL_IDS
 from codex_image.providers import ProviderConnection, ProviderModelBinding
 
 from .atomic_files import atomic_write_text
@@ -25,6 +26,10 @@ from .store_locks import StoreLockMixin, store_locked
 
 
 _CODEX_MODES = frozenset({"images", "responses"})
+_PROVIDER_CATALOG_BINDING_VERSION = 1
+_GPT_IMAGE_25_MODEL_IDS = GPT_IMAGE_MODEL_IDS[1:]
+
+
 def _mask_api_key(api_key: str) -> str:
     clean = str(api_key or "").strip()
     if not clean:
@@ -70,11 +75,11 @@ def migrate_legacy_provider(raw: Mapping[str, Any]) -> dict[str, Any]:
         "concurrency": _normalize_legacy_concurrency(raw.get("images_concurrency")),
         "bindings": [
             {
-                "id": f"{provider_id}-gpt-image-2",
-                "canonical_model_id": "gpt-image-2",
+                "id": f"{provider_id}-{model_id}",
+                "canonical_model_id": model_id,
                 "remote_model_id": _normalize_remote_model_id(
                     raw.get("image_model") or DEFAULT_IMAGE_MODEL
-                ),
+                ) if model_id == DEFAULT_IMAGE_MODEL else model_id,
                 "protocol_profile": (
                     "openai_responses" if api_mode == "responses" else "openai_images"
                 ),
@@ -83,6 +88,7 @@ def migrate_legacy_provider(raw: Mapping[str, Any]) -> dict[str, Any]:
                 ),
                 "operations": ["generate", "edit"],
             }
+            for model_id in GPT_IMAGE_MODEL_IDS
         ],
     }
     icon_emoji = _normalize_provider_icon_emoji(raw.get("icon_emoji"))
@@ -117,7 +123,15 @@ class ProviderSettings(StoreLockMixin):
         if not isinstance(payload, dict):
             return self._default_settings()
         if payload.get("schema_version") == 2:
-            return self._validate_v2(payload)
+            upgraded, changed = self._upgrade_catalog_bindings(payload)
+            settings = self._validate_v2(upgraded)
+            if changed:
+                atomic_write_text(
+                    self.path,
+                    json.dumps(self._persisted(settings), indent=2, ensure_ascii=False),
+                    mode=0o600,
+                )
+            return settings
         if "schema_version" in payload:
             raise ValueError("unsupported_schema_version")
         return self._validate_v2(self._migrate_v1(payload))
@@ -242,7 +256,9 @@ class ProviderSettings(StoreLockMixin):
                 "schema_version": 2,
                 "codex_mode": "images",
                 "active_provider_id": "default",
-                "default_provider_by_model": {"gpt-image-2": "default"},
+                "default_provider_by_model": {
+                    model_id: "default" for model_id in GPT_IMAGE_MODEL_IDS
+                },
                 "providers": [cls.default_provider()],
             }
         )
@@ -278,14 +294,87 @@ class ProviderSettings(StoreLockMixin):
             "schema_version": 2,
             "codex_mode": _normalize_codex_mode(payload.get("codex_mode")),
             "active_provider_id": active_id,
-            "default_provider_by_model": {"gpt-image-2": active_id},
+            "default_provider_by_model": {
+                model_id: active_id for model_id in GPT_IMAGE_MODEL_IDS
+            },
             "providers": providers,
         }
+
+    @staticmethod
+    def _upgrade_catalog_bindings(payload: Mapping[str, Any]) -> tuple[dict[str, Any], bool]:
+        candidate = deepcopy(dict(payload))
+        try:
+            version = int(candidate.get("catalog_binding_version") or 0)
+        except (TypeError, ValueError):
+            version = 0
+        if version >= _PROVIDER_CATALOG_BINDING_VERSION:
+            return candidate, False
+
+        defaults = dict(candidate.get("default_provider_by_model") or {})
+        providers = candidate.get("providers")
+        if isinstance(providers, list):
+            for provider in providers:
+                if not isinstance(provider, dict):
+                    continue
+                bindings = provider.get("bindings")
+                if not isinstance(bindings, list):
+                    continue
+                base = next(
+                    (
+                        binding for binding in bindings
+                        if isinstance(binding, dict)
+                        and binding.get("canonical_model_id") == DEFAULT_IMAGE_MODEL
+                    ),
+                    None,
+                )
+                if base is None:
+                    continue
+                existing_model_ids = {
+                    str(binding.get("canonical_model_id") or "")
+                    for binding in bindings
+                    if isinstance(binding, dict)
+                }
+                provider_id = _normalize_slug(provider.get("id"), fallback="default")
+                for model_id in _GPT_IMAGE_25_MODEL_IDS:
+                    if model_id in existing_model_ids:
+                        continue
+                    binding = {
+                        "id": f"{provider_id}-{model_id}",
+                        "canonical_model_id": model_id,
+                        "remote_model_id": model_id,
+                        "protocol_profile": base.get("protocol_profile"),
+                        "parameter_codec": base.get("parameter_codec"),
+                        "operations": list(base.get("operations") or ["generate", "edit"]),
+                    }
+                    if base.get("append_aspect_ratio_prompt") is True:
+                        binding["append_aspect_ratio_prompt"] = True
+                    bindings.append(binding)
+
+        preferred_provider = defaults.get(DEFAULT_IMAGE_MODEL)
+        for model_id in _GPT_IMAGE_25_MODEL_IDS:
+            supporters = [
+                str(provider.get("id") or "")
+                for provider in providers or []
+                if isinstance(provider, dict)
+                and any(
+                    isinstance(binding, dict)
+                    and binding.get("canonical_model_id") == model_id
+                    for binding in provider.get("bindings") or []
+                )
+            ]
+            if supporters:
+                defaults[model_id] = (
+                    preferred_provider if preferred_provider in supporters else supporters[0]
+                )
+        candidate["default_provider_by_model"] = defaults
+        candidate["catalog_binding_version"] = _PROVIDER_CATALOG_BINDING_VERSION
+        return candidate, True
 
     def _prepare_v2_write(
         self, payload: Mapping[str, Any], current: Mapping[str, Any]
     ) -> dict[str, Any]:
         candidate = deepcopy(dict(payload))
+        candidate, _changed = self._upgrade_catalog_bindings(candidate)
         candidate["schema_version"] = 2
         candidate.setdefault("codex_mode", current.get("codex_mode", "images"))
         candidate.setdefault("active_provider_id", current.get("active_provider_id", "default"))
@@ -613,6 +702,7 @@ class ProviderSettings(StoreLockMixin):
         legacy = ProviderSettings._legacy_provider_projection(active)
         return {
             "schema_version": 2,
+            "catalog_binding_version": _PROVIDER_CATALOG_BINDING_VERSION,
             "codex_mode": settings["codex_mode"],
             "active_provider_id": settings["active_provider_id"],
             "default_provider_by_model": deepcopy(settings["default_provider_by_model"]),

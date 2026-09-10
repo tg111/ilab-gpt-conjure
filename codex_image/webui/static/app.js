@@ -35840,6 +35840,17 @@ ${hint}` : hint;
     });
   }
 
+  // codex_image/webui/frontend/src/model-identifiers.ts
+  var DEFAULT_GPT_IMAGE_MODEL_ID = "gpt-image-2";
+  var GPT_IMAGE_MODEL_IDS = [
+    DEFAULT_GPT_IMAGE_MODEL_ID,
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.5-flare"
+  ];
+  function isGptImageModelId(value) {
+    return typeof value === "string" && value.startsWith("gpt-image-");
+  }
+
   // codex_image/webui/frontend/src/mode-settings-visibility.ts
   function resolveModeSettingsVisibility({
     catalogAvailable,
@@ -35854,7 +35865,7 @@ ${hint}` : hint;
         showPromptFidelity: true
       };
     }
-    if (modelId !== "gpt-image-2") {
+    if (!isGptImageModelId(modelId)) {
       return {
         showMainModel: false,
         showApiDirectNotice: false,
@@ -35908,6 +35919,10 @@ ${hint}` : hint;
   }
   function applyModeSettingsVisibility(visibility) {
     const showModeSettings = visibility.showMainModel || visibility.showApiDirectNotice;
+    els8.modeSettingsSlot?.classList.toggle(
+      "api-direct-mode",
+      visibility.showApiDirectNotice && !visibility.showMainModel
+    );
     setModeSpecificElementVisibility(els8.modeSettingsSlot, showModeSettings);
     setModeSpecificElementVisibility(els8.modeSpecificSettings, showModeSettings);
     setModeSpecificElementVisibility(els8.mainModelField, visibility.showMainModel);
@@ -36323,6 +36338,7 @@ ${hint}` : hint;
   }
   function gptSizeValid(value) {
     if (typeof value !== "string") return false;
+    if (value === "auto") return true;
     const match = value.match(/^(\d+)x(\d+)$/i);
     if (!match) return false;
     const width = Number(match[1]);
@@ -36456,6 +36472,39 @@ ${hint}` : hint;
     if (context.readOnly) return context.model;
     const { state: state33 } = getLegacyBridge();
     return state33.generationCatalog?.models.find((model) => model.id === state33.selectedModelId) || context.model;
+  }
+  function syncLegacyQualityControls(model) {
+    const { els: els44 } = getLegacyBridge();
+    const definition = model.parameters.find((item) => item.id === "gpt.quality");
+    const select = els44.quality;
+    const group = document.querySelector("#qualityGroup");
+    if (!definition || !select || !group) return;
+    const labels = {
+      auto: translate("output.qualityAuto"),
+      low: translate("output.qualityLow"),
+      medium: translate("output.qualityMedium"),
+      high: translate("output.qualityHigh"),
+      xhigh: "XHigh",
+      max: "Max"
+    };
+    const allowed = definition.allowed_values.map(String);
+    const current = allowed.includes(select.value) ? select.value : String(definition.default);
+    select.replaceChildren(...allowed.map((value) => {
+      const option2 = document.createElement("option");
+      option2.value = value;
+      option2.textContent = labels[value] || value;
+      return option2;
+    }));
+    select.value = current;
+    group.replaceChildren(...allowed.map((value) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `radio-btn${value === current ? " active" : ""}`;
+      button.dataset.val = value;
+      button.textContent = labels[value] || value;
+      button.setAttribute("aria-pressed", value === current ? "true" : "false");
+      return button;
+    }));
   }
   function commitValue(context, definition, value, rerender = false) {
     if (context.readOnly) return;
@@ -36829,7 +36878,7 @@ ${hint}` : hint;
     return readOnly || model.expand_advanced_parameters === true;
   }
   function legacyParameterVisibility(modelId, sizeMode) {
-    const legacyGpt = modelId === "gpt-image-2";
+    const legacyGpt = isGptImageModelId(modelId);
     return {
       legacyGpt,
       customSize: legacyGpt && sizeMode === "custom"
@@ -36927,6 +36976,7 @@ ${hint}` : hint;
     ensureModelDraft(model);
     const visibility = legacyParameterVisibility(model.id, els44.size?.value);
     const legacyGpt = visibility.legacyGpt;
+    if (legacyGpt) syncLegacyQualityControls(model);
     state33.customSizeTransitionSeq += 1;
     state33.customSizeMode = visibility.customSize;
     const legacyElements = [
@@ -37062,7 +37112,7 @@ ${hint}` : hint;
     const { state: state33, methods } = getLegacyBridge();
     const model = state33.generationCatalog?.models.find((item) => item.id === state33.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
-    if (model.id !== "gpt-image-2") {
+    if (!isGptImageModelId(model.id)) {
       methods.persistModelSelection?.();
       return;
     }
@@ -37079,10 +37129,11 @@ ${hint}` : hint;
     const modelId = state33.selectedModelId || "";
     const model = state33.generationCatalog?.models.find((item) => item.id === modelId);
     if (!model) return;
-    if (model.id !== "gpt-image-2") {
+    if (!isGptImageModelId(model.id)) {
       renderCurrentModelParameters();
       return;
     }
+    renderCurrentModelParameters();
     const draft = {
       ...Object.fromEntries(model.parameters.map((parameter) => [parameter.id, parameter.default])),
       ...state33.parameterDraftsByModel[modelId] || {}
@@ -37425,7 +37476,7 @@ ${hint}` : hint;
     return true;
   }
   function initialCatalogSelection(catalog, storedModelId, lastProviderByModel, operation, lastProviderSelectionByModel = {}) {
-    const model = catalog.models.find((item) => item.id === storedModelId) || catalog.models.find((item) => item.id === "gpt-image-2") || catalog.models[0];
+    const model = catalog.models.find((item) => item.id === storedModelId) || catalog.models.find((item) => isGptImageModelId(item.id)) || catalog.models[0];
     if (!model) return { familyId: null, modelId: null, providerId: null, bindingId: null };
     const entries = eligibleProviderBindings(catalog, model.id, operation);
     const selected = resolveProviderSelection(
@@ -38200,7 +38251,7 @@ ${hint}` : hint;
   }
   function availableProtocolsForModel(modelId) {
     if (modelId.startsWith("nano-banana")) return ["gemini", "openai_images"];
-    if (modelId === "gpt-image-2") return ["openai_images", "openai_responses"];
+    if (isGptImageModelId(modelId)) return ["openai_images", "openai_responses"];
     return [];
   }
   function availableCompatibilityLayers(modelId, protocol) {
@@ -38232,7 +38283,7 @@ ${hint}` : hint;
     if (modelId.startsWith("nano-banana")) {
       return protocol === "gemini" ? "gemini_generate_content" : "gemini_openai_images";
     }
-    if (modelId === "gpt-image-2") {
+    if (isGptImageModelId(modelId)) {
       return protocol === "openai_responses" ? "gpt_openai_responses" : "gpt_openai_images";
     }
     throw new Error("unsupported_binding_protocol");
@@ -38566,19 +38617,24 @@ ${hint}` : hint;
   function openConfirmPopover4(...args) {
     legacyMethod14("openConfirmPopover", ...args);
   }
+  function defaultGptImageBindings(providerId, protocol, legacyRemoteModelId = DEFAULT_API_IMAGE_MODEL) {
+    return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
+      `${providerId}-${modelId}`,
+      modelId,
+      modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
+      protocol
+    ));
+  }
   function normalizeApiProvider(provider = {}, index = 0) {
     const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
     const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
     const legacyMode = provider.api_mode === "responses" ? "responses" : DEFAULT_API_MODE;
     const bindings = normalizeProviderBindings(
-      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : [{
-        id: `${id}-gpt-image-2`,
-        canonical_model_id: "gpt-image-2",
-        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
-        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
-        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
-        operations: ["generate", "edit"]
-      }],
+      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : defaultGptImageBindings(
+        id,
+        legacyMode === "responses" ? "openai_responses" : "openai_images",
+        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL
+      ),
       id
     );
     const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -38941,11 +38997,23 @@ ${hint}` : hint;
     if (!providers.length) providers.push(normalizeApiProvider({}, 0));
     const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
     const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
+    const defaultProviderByModel = { ...settings.default_provider_by_model || {} };
+    const supportedModelIds = new Set(
+      providers.flatMap((provider) => provider.bindings.map((binding) => binding.canonical_model_id))
+    );
+    supportedModelIds.forEach((modelId) => {
+      const supportingProviders = providers.filter((provider) => provider.bindings.some((binding) => binding.canonical_model_id === modelId));
+      if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
+        defaultProviderByModel[modelId] = supportingProviders.find(
+          (provider) => provider.id === activeProvider.id
+        )?.id || supportingProviders[0]?.id;
+      }
+    });
     return {
       schema_version: 2,
       codex_mode: normalizeCodexMode(settings.codex_mode),
       active_provider_id: activeProvider.id,
-      default_provider_by_model: { ...settings.default_provider_by_model || { "gpt-image-2": activeProvider.id } },
+      default_provider_by_model: defaultProviderByModel,
       providers
     };
   }
@@ -39058,7 +39126,7 @@ ${hint}` : hint;
       name: translate("apiSettings.newProvider"),
       base_url: DEFAULT_API_BASE_URL,
       concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-      bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")]
+      bindings: defaultGptImageBindings(id, "openai_images")
     }, state9.apiSettings.providers.length);
     populateApiSettingsForm();
     setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");
@@ -45933,7 +46001,6 @@ ${galleryText}`;
   }
   function currentSize() {
     if (els25.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto") return "auto";
-    if (els25.size.value !== "custom" && els25.orientation?.value !== "manual") return "auto";
     if (els25.size.value !== "custom") return els25.size.value;
     return `${els25.customWidth.value}x${els25.customHeight.value}`;
   }
@@ -45960,7 +46027,7 @@ ${galleryText}`;
       output_compression: els25.outputFormat.value === "png" ? null : Number(els25.compression.value)
     };
     const { state: state33 } = getLegacyBridge();
-    if (!state33.generationCatalog || state33.selectedModelId === "gpt-image-2") {
+    if (!state33.generationCatalog || isGptImageModelId(state33.selectedModelId)) {
       params.main_model = currentMainModel();
     }
     if (currentWebSearchEnabled()) {
@@ -46722,6 +46789,8 @@ ${galleryText}`;
     return translate(value === "original" ? "output.modeOriginal" : value === "off" ? "output.modeCreative" : "output.modeStrict");
   }
   function qualityLabel(value) {
+    if (value === "xhigh") return "XHigh";
+    if (value === "max") return "Max";
     const key = value === "low" ? "output.qualityLow" : value === "medium" ? "output.qualityMedium" : value === "high" ? "output.qualityHigh" : "output.qualityAuto";
     return translate(key);
   }
@@ -46742,7 +46811,7 @@ ${galleryText}`;
     return count === 4 && outputCountCardRatio(ratioValue) >= 16 / 9;
   }
   function buildOutputSettingsSummaryModel(snapshot, context) {
-    const gptImage = snapshot.canonical_model_id === "gpt-image-2";
+    const gptImage = isGptImageModelId(snapshot.canonical_model_id);
     const geminiImage = snapshot.canonical_model_id.startsWith("nano-banana");
     const details = [];
     if (gptImage) {
@@ -46831,7 +46900,7 @@ ${galleryText}`;
     const bridge40 = getLegacyBridge();
     const legacy = legacyMethod29("currentTaskParams");
     const model = bridge40.state.generationCatalog?.models.find((item) => item.id === bridge40.state.selectedModelId);
-    const parameters = model && model.id !== "gpt-image-2" && typeof bridge40.methods.activeParameterValues === "function" ? bridge40.methods.activeParameterValues(model) : typeof bridge40.methods.currentCanonicalParameters === "function" ? bridge40.methods.currentCanonicalParameters() : {};
+    const parameters = model && !isGptImageModelId(model.id) && typeof bridge40.methods.activeParameterValues === "function" ? bridge40.methods.activeParameterValues(model) : typeof bridge40.methods.currentCanonicalParameters === "function" ? bridge40.methods.currentCanonicalParameters() : {};
     return normalizeOutputSettingsSnapshot({
       ...legacy,
       canonical_model_id: model?.id || "gpt-image-2",
@@ -47273,7 +47342,7 @@ ${galleryText}`;
     const modelId = taskCanonicalModelId(task);
     const familyId = catalog?.models.find((model) => model.id === modelId)?.family_id;
     if (familyId === "gpt-image" || familyId === "gemini-image") return familyId;
-    if (modelId === "gpt-image-2") return "gpt-image";
+    if (isGptImageModelId(modelId)) return "gpt-image";
     if (modelId.startsWith("nano-banana")) return "gemini-image";
     return "unknown";
   }
@@ -47311,7 +47380,7 @@ ${galleryText}`;
     const explicitRatio = String(parameters["canvas.aspect_ratio"] || params.ratio || "").trim();
     const ratio = explicitRatio || (size ? `${size[0] / greatestCommonDivisor2(size[0], size[1])}:${size[1] / greatestCommonDivisor2(size[0], size[1])}` : "");
     const explicitResolution = String(parameters["canvas.resolution"] || params.resolution || "").trim();
-    const resolution = taskCanonicalModelId(task) === "gpt-image-2" ? normalizedGptResolution(explicitResolution) : explicitResolution;
+    const resolution = isGptImageModelId(taskCanonicalModelId(task)) ? normalizedGptResolution(explicitResolution) : explicitResolution;
     const honestResolution = resolution && resolution.toLowerCase() !== "custom" ? resolution : compactDimensions(size);
     return [ratio, honestResolution].filter(Boolean);
   }
@@ -50305,7 +50374,7 @@ ${galleryText}`;
       return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
     }
     let draft = state33.parameterDraftsByModel[model.id] || {};
-    if (model.id === "gpt-image-2" && typeof methods.currentTaskParams === "function") {
+    if (isGptImageModelId(model.id) && typeof methods.currentTaskParams === "function") {
       draft = {
         ...draft,
         ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || "")
@@ -50568,7 +50637,7 @@ ${galleryText}`;
       reference_files: fileUploads.map((source) => source.filename),
       reference_file_ids: storedFiles.map((source) => source.id)
     };
-    const usesGptPromptProcessing = !state24.generationCatalog || state24.selectedModelId === "gpt-image-2";
+    const usesGptPromptProcessing = !state24.generationCatalog || isGptImageModelId(state24.selectedModelId);
     if (isApi) {
       payload2.api_provider_id = state24.selectedProviderId;
       payload2.api_provider_name = state24.generationCatalog?.providers.find((provider) => provider.id === state24.selectedProviderId)?.name || "";
@@ -50662,7 +50731,7 @@ ${galleryText}`;
     form.append("prompt_for_model", promptForModel);
     form.append("ui_language", currentLocaleCode());
     appendCanonicalGenerationFields(form, currentGenerationSelection());
-    if (!state24.generationCatalog || state24.selectedModelId === "gpt-image-2") {
+    if (!state24.generationCatalog || isGptImageModelId(state24.selectedModelId)) {
       form.append("main_model", currentMainModel2());
     }
     galleries.forEach((source) => form.append("gallery_image_ids", source.id));
@@ -52559,7 +52628,12 @@ ${galleryText}`;
       closeTaskContextMenu();
       return;
     }
-    if (["archive", "delete", "stop", "promote", "cancel"].includes(action)) {
+    if (action === "delete") {
+      closeTaskContextMenu();
+      await legacyMethod38("deleteTask", taskId);
+      return;
+    }
+    if (["archive", "stop", "promote", "cancel"].includes(action)) {
       closeTaskContextMenu();
       revealTaskCardAction3(taskId, action, true);
       return;
@@ -55848,7 +55922,7 @@ ${galleryText}`;
       els42.size.value = "1024x1024";
       els42.quality.value = "auto";
       els42.outputFormat.value = "png";
-      els42.moderation.value = "auto";
+      els42.moderation.value = "low";
       els42.compression.value = "80";
       if (els42.webSearch) els42.webSearch.checked = false;
       [els42.nInput, els42.resolution, els42.ratio, els42.orientation, els42.quality, els42.outputFormat, els42.moderation, els42.webSearch].forEach((sel) => {
@@ -56848,7 +56922,7 @@ ${galleryText}`;
   }
   function taskParameterInspectorModel(snapshot, model) {
     if (!model) return void 0;
-    const gptImage = snapshot.canonical_model_id === "gpt-image-2";
+    const gptImage = isGptImageModelId(snapshot.canonical_model_id);
     const parameters = model.parameters.filter((definition) => taskParameterVisibleInInspector(snapshot, definition.id)).map((definition) => {
       if (gptImage && definition.id === "gpt.moderation") {
         return { ...definition, group: "generation" };

@@ -326,7 +326,7 @@ function resetForm() {
     els.size.value = "1024x1024";
     els.quality.value = "auto";
     els.outputFormat.value = "png";
-    els.moderation.value = "auto";
+    els.moderation.value = "low";
     els.compression.value = "80";
     if (els.webSearch) els.webSearch.checked = false;
     [els.nInput, els.resolution, els.ratio, els.orientation, els.quality, els.outputFormat, els.moderation, els.webSearch].forEach((sel) => {

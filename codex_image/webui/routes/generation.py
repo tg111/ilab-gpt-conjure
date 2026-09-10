@@ -7,6 +7,7 @@ from typing import Any
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 
 from codex_image.client import DEFAULT_MAIN_MODEL, image_model_supports_input_fidelity
+from codex_image.generation.catalog import GPT_IMAGE_MODEL_IDS
 from codex_image.generation.snapshot import generation_snapshot
 from codex_image.generation.service import redacted_protocol_request
 from codex_image.client_types import ResponsesInputFile
@@ -282,7 +283,7 @@ def _prepare_generation_submission(
 ) -> PreparedGenerationSubmission:
     h = ctx.route_helpers
     compression = _normalize_compression(output_format, output_compression)
-    uses_gpt_prompt_processing = canonical_model_id in {None, "gpt-image-2"}
+    uses_gpt_prompt_processing = canonical_model_id is None or canonical_model_id in GPT_IMAGE_MODEL_IDS
     effective_main_model = main_model if uses_gpt_prompt_processing else ""
     fidelity = _normalize_prompt_fidelity(prompt_fidelity) if uses_gpt_prompt_processing else "off"
     effective_size = size
@@ -307,6 +308,7 @@ def _prepare_generation_submission(
             effective_ratio = ratio_from_size(effective_size) or None
         if not effective_orientation:
             effective_orientation = orientation_from_ratio(effective_ratio) or None
+    web_search_enabled = bool(web_search) and requested_backend.endswith("_responses")
     # Prompt processing is intentionally disabled: submit the user's exact text.
     model_prompt = str(prompt or "")
     request_model_prompt = model_prompt

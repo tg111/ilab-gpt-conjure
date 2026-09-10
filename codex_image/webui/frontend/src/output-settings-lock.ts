@@ -1,5 +1,6 @@
 import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { getLegacyBridge } from "./state";
+import { isGptImageModelId } from "./model-identifiers";
 
 const STORAGE_KEY = "codex-image-output-settings-lock-v1";
 
@@ -130,6 +131,8 @@ function promptFidelityLabel(value: OutputSettingsSnapshot["prompt_fidelity"]): 
 }
 
 function qualityLabel(value: string): string {
+  if (value === "xhigh") return "XHigh";
+  if (value === "max") return "Max";
   const key = value === "low"
     ? "output.qualityLow"
     : value === "medium"
@@ -163,7 +166,7 @@ export function buildOutputSettingsSummaryModel(
   snapshot: OutputSettingsSnapshot,
   context: OutputSettingsSummaryContext,
 ): OutputSettingsSummaryModel {
-  const gptImage = snapshot.canonical_model_id === "gpt-image-2";
+  const gptImage = isGptImageModelId(snapshot.canonical_model_id);
   const geminiImage = snapshot.canonical_model_id.startsWith("nano-banana");
   const details: SummaryDetail[] = [];
   if (gptImage) {
@@ -274,7 +277,7 @@ function snapshotFromCurrentSelection(): OutputSettingsSnapshot {
   const bridge = getLegacyBridge();
   const legacy = legacyMethod("currentTaskParams");
   const model = bridge.state.generationCatalog?.models.find((item: any) => item.id === bridge.state.selectedModelId);
-    const parameters = model && model.id !== "gpt-image-2" && typeof bridge.methods.activeParameterValues === "function"
+    const parameters = model && !isGptImageModelId(model.id) && typeof bridge.methods.activeParameterValues === "function"
     ? bridge.methods.activeParameterValues(model)
     : typeof bridge.methods.currentCanonicalParameters === "function"
       ? bridge.methods.currentCanonicalParameters()

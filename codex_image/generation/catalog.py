@@ -84,6 +84,12 @@ MODEL_FAMILIES = (
     ModelFamily("gemini-image", "Gemini", "Gemini", "modelFamily.gemini"),
 )
 
+GPT_IMAGE_MODEL_IDS = (
+    "gpt-image-2",
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.5-flare",
+)
+
 
 def _output_count(maximum: int = 4, *, control: str = "number") -> ParameterDefinition:
     return ParameterDefinition(
@@ -219,6 +225,72 @@ def _nano_parameters(
     return tuple(parameters)
 
 
+def _gpt_image_parameters(
+    quality_values: tuple[str, ...],
+    *,
+    default_size: str,
+) -> tuple[ParameterDefinition, ...]:
+    return (
+        # Empty allowed_values permits custom sizes only after the GPT-specific
+        # size validator applies the compound dimension rules (Task 9 boundary).
+        ParameterDefinition(
+            id="canvas.size",
+            label_key="output.size",
+            group="canvas",
+            control="text",
+            value_type="string",
+            default=default_size,
+            full_width=True,
+        ),
+        _select(
+            "gpt.quality",
+            "output.quality",
+            "generation",
+            "auto",
+            quality_values,
+            control="segmented",
+        ),
+        _select(
+            "gpt.background",
+            "output.background",
+            "generation",
+            "auto",
+            ("auto", "transparent", "opaque"),
+            control="segmented",
+        ),
+        _select(
+            "output.format",
+            "output.format",
+            "generation",
+            "png",
+            ("png", "jpeg", "webp"),
+            control="segmented",
+        ),
+        _select(
+            "gpt.moderation",
+            "output.moderation",
+            "advanced",
+            "low",
+            ("auto", "low"),
+            control="segmented",
+        ),
+        ParameterDefinition(
+            id="gpt.output_compression",
+            label_key="output.compression",
+            group="advanced",
+            control="slider",
+            value_type="integer",
+            default=80,
+            minimum=0,
+            maximum=100,
+            step=1,
+            visible_when=(ParameterCondition("output.format", "in", ("jpeg", "webp")),),
+        ),
+        _toggle("gpt.web_search", "output.webSearch"),
+        _output_count(),
+    )
+
+
 MODEL_MANIFESTS = (
     ModelManifest(
         id="gpt-image-2",
@@ -227,64 +299,43 @@ MODEL_MANIFESTS = (
         official_model_id="gpt-image-2",
         version=MODEL_MANIFEST_VERSION,
         operations=_ALL_OPERATIONS,
-        parameters=(
-            # Empty allowed_values permits custom sizes only after the GPT-specific
-            # size validator applies the compound dimension rules (Task 9 boundary).
-            ParameterDefinition(
-                id="canvas.size",
-                label_key="output.size",
-                group="canvas",
-                control="text",
-                value_type="string",
-                default="1024x1024",
-                full_width=True,
-            ),
-            _select(
-                "gpt.quality",
-                "output.quality",
-                "generation",
-                "auto",
-                ("auto", "low", "medium", "high"),
-                control="segmented",
-            ),
-            _select(
-                "gpt.background",
-                "output.background",
-                "generation",
-                "auto",
-                ("auto", "transparent", "opaque"),
-                control="segmented",
-            ),
-            _select(
-                "output.format",
-                "output.format",
-                "generation",
-                "png",
-                ("png", "jpeg", "webp"),
-                control="segmented",
-            ),
-            _select(
-                "gpt.moderation",
-                "output.moderation",
-                "advanced",
-                "auto",
-                ("auto", "low"),
-                control="segmented",
-            ),
-            ParameterDefinition(
-                id="gpt.output_compression",
-                label_key="output.compression",
-                group="advanced",
-                control="slider",
-                value_type="integer",
-                default=80,
-                minimum=0,
-                maximum=100,
-                step=1,
-                visible_when=(ParameterCondition("output.format", "in", ("jpeg", "webp")),),
-            ),
-            _toggle("gpt.web_search", "output.webSearch"),
-            _output_count(),
+        parameters=_gpt_image_parameters(
+            ("auto", "low", "medium", "high"),
+            default_size="1024x1024",
+        ),
+        input_constraints=InputConstraints(
+            max_images=16,
+            supports_mask=True,
+            supports_reference_files=True,
+        ),
+    ),
+    ModelManifest(
+        id="gpt-image-2.5-sunburst",
+        family_id="gpt-image",
+        display_name="GPT Image 2.5 Sunburst",
+        official_model_id="gpt-image-2.5-sunburst",
+        version=MODEL_MANIFEST_VERSION,
+        operations=_ALL_OPERATIONS,
+        parameters=_gpt_image_parameters(
+            ("auto", "low", "medium", "high", "xhigh", "max"),
+            default_size="auto",
+        ),
+        input_constraints=InputConstraints(
+            max_images=16,
+            supports_mask=True,
+            supports_reference_files=True,
+        ),
+    ),
+    ModelManifest(
+        id="gpt-image-2.5-flare",
+        family_id="gpt-image",
+        display_name="GPT Image 2.5 Flare",
+        official_model_id="gpt-image-2.5-flare",
+        version=MODEL_MANIFEST_VERSION,
+        operations=_ALL_OPERATIONS,
+        parameters=_gpt_image_parameters(
+            ("auto", "low", "medium", "high"),
+            default_size="auto",
         ),
         input_constraints=InputConstraints(
             max_images=16,

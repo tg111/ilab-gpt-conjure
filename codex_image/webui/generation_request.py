@@ -52,7 +52,7 @@ def legacy_gpt_request(legacy_fields: Mapping[str, Any]) -> tuple[str, str, dict
         "gpt.quality": str(legacy_fields.get("quality") or "low"),
         "gpt.background": str(legacy_fields.get("background") or "auto"),
         "output.format": str(legacy_fields.get("output_format") or "png"),
-        "gpt.moderation": str(legacy_fields.get("moderation") or "auto"),
+        "gpt.moderation": str(legacy_fields.get("moderation") or "low"),
         "output.count": int(legacy_fields.get("n") or 1),
     }
     return (
