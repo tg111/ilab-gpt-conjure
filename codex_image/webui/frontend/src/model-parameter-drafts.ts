@@ -72,11 +72,22 @@ export function migratePortableModelDraft(
 ): Record<string, unknown> {
   const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
   return Object.fromEntries(targetModel.parameters.map((definition) => {
+    // Canonical legacy controls can expose portable values (for example
+    // aspect ratio and resolution) even when the source manifest names those
+    // controls differently. Carry a valid portable value before falling back
+    // to the target model's saved draft.
+    const rawSourceValue = sourceDraft[definition.id];
+    const sourceValue = definition.id === "canvas.resolution" && typeof rawSourceValue === "string"
+      ? rawSourceValue.toLowerCase() === "standard" || rawSourceValue === "1k"
+        ? "1K"
+        : rawSourceValue.toLowerCase() === "2k" ? "2K"
+          : rawSourceValue.toLowerCase() === "4k" ? "4K" : rawSourceValue
+      : rawSourceValue;
+    if (sourceValue !== undefined && parameterValueValid(definition, sourceValue)) {
+      return [definition.id, cloneValue(sourceValue)];
+    }
     if (sourceIds.has(definition.id)) {
-      const sourceValue = sourceDraft[definition.id];
-      return [definition.id, cloneValue(
-        parameterValueValid(definition, sourceValue) ? sourceValue : definition.default,
-      )];
+      return [definition.id, cloneValue(definition.default)];
     }
     const targetValue = targetDraft[definition.id];
     return [definition.id, cloneValue(
@@ -103,8 +114,24 @@ export function canonicalParametersForSubmission(
     .map((parameter) => [parameter.id, values[parameter.id] ?? parameter.default]));
 }
 
-export function saveCurrentModelParameterDraft(): void {
+function selectedTaskIsCompleted(state: any): boolean {
+  const selectedTask = state.tasks?.find((task: any) => (
+    String(task?.task_id) === String(state.selectedTaskId)
+  ));
+  return selectedTask?.status === "completed";
+}
+
+export function saveCurrentModelParameterDraft(
+  options: { preserveCompletedTaskDraft?: boolean } = {},
+): void {
   const { state, methods } = getLegacyBridge();
+  // Applying a completed task dispatches normal form events.  Those events
+  // must not turn the task's historical values into a saved model draft.
+  if (state.applyingCompletedTaskOutputSettings) return;
+  // A model switch is not an explicit edit to the completed task.  Preserve
+  // the existing draft for the model being left, while normal user edits keep
+  // saving as usual.
+  if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state)) return;
   const model = state.generationCatalog?.models.find((item) => item.id === state.selectedModelId);
   if (!model || typeof methods.currentTaskParams !== "function") return;
   if (!isGptImageModelId(model.id)) {

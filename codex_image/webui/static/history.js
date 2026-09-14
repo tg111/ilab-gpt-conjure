@@ -18869,6 +18869,8 @@
       parameterDraftVersionsByModel: {},
       parameterValidationErrorsByModel: {},
       inspectedGenerationSnapshot: null,
+      taskParameterEditingTaskId: null,
+      applyingCompletedTaskOutputSettings: false,
       draggedPromptChip: null,
       legacyArchivedTaskIds: [],
       batchMode: false,
@@ -20512,11 +20514,13 @@
   function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
     const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
     return Object.fromEntries(targetModel.parameters.map((definition) => {
+      const rawSourceValue = sourceDraft[definition.id];
+      const sourceValue = definition.id === "canvas.resolution" && typeof rawSourceValue === "string" ? rawSourceValue.toLowerCase() === "standard" || rawSourceValue === "1k" ? "1K" : rawSourceValue.toLowerCase() === "2k" ? "2K" : rawSourceValue.toLowerCase() === "4k" ? "4K" : rawSourceValue : rawSourceValue;
+      if (sourceValue !== void 0 && parameterValueValid2(definition, sourceValue)) {
+        return [definition.id, cloneValue2(sourceValue)];
+      }
       if (sourceIds.has(definition.id)) {
-        const sourceValue = sourceDraft[definition.id];
-        return [definition.id, cloneValue2(
-          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
-        )];
+        return [definition.id, cloneValue2(definition.default)];
       }
       const targetValue = targetDraft[definition.id];
       return [definition.id, cloneValue2(
@@ -20524,8 +20528,14 @@
       )];
     }));
   }
-  function saveCurrentModelParameterDraft() {
+  function selectedTaskIsCompleted(state5) {
+    const selectedTask = state5.tasks?.find((task) => String(task?.task_id) === String(state5.selectedTaskId));
+    return selectedTask?.status === "completed";
+  }
+  function saveCurrentModelParameterDraft(options = {}) {
     const { state: state5, methods } = getLegacyBridge();
+    if (state5.applyingCompletedTaskOutputSettings) return;
+    if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state5)) return;
     const model = state5.generationCatalog?.models.find((item) => item.id === state5.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
     if (!isGptImageModelId(model.id)) {
@@ -20604,18 +20614,34 @@
   function usesExpandedConcreteModelOptions(models) {
     return models.length > 1;
   }
+  function editingSelectedTask(state5) {
+    return Boolean(
+      state5.taskParameterEditingTaskId && String(state5.taskParameterEditingTaskId) === String(state5.selectedTaskId)
+    );
+  }
+  function currentDraftForModel(sourceModel, preserveTaskParameters) {
+    const { state: state5, methods } = getLegacyBridge();
+    if (!preserveTaskParameters || !isGptImageModelId(sourceModel.id) || typeof methods.currentTaskParams !== "function") {
+      return state5.parameterDraftsByModel[sourceModel.id] || {};
+    }
+    return canonicalControlValues(
+      methods.currentTaskParams(),
+      selectedProviderBinding()?.protocol_profile || ""
+    );
+  }
   function selectConcreteModel(modelId) {
     const { state: state5 } = getLegacyBridge();
     const model = state5.generationCatalog?.models.find((item) => item.id === modelId);
     if (!model) return;
     const sourceModel = state5.generationCatalog?.models.find((item) => item.id === state5.selectedModelId);
     const familyChanged = sourceModel?.family_id !== model.family_id;
-    saveCurrentModelParameterDraft();
-    if (sourceModel?.family_id === model.family_id) {
+    const preserveTaskParameters = editingSelectedTask(state5);
+    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
+    if (sourceModel && (sourceModel.family_id === model.family_id || preserveTaskParameters)) {
       state5.parameterDraftsByModel[model.id] = migratePortableModelDraft(
         sourceModel,
         model,
-        state5.parameterDraftsByModel[sourceModel.id] || {},
+        currentDraftForModel(sourceModel, preserveTaskParameters),
         state5.parameterDraftsByModel[model.id] || {}
       );
     }
@@ -24589,6 +24615,8 @@
     state4.historyTaskReveal = null;
     state4.historyTaskRevealSeq += 1;
     state4.selectedTaskId = null;
+    state4.taskParameterEditingTaskId = null;
+    state4.applyingCompletedTaskOutputSettings = false;
     clearTaskParameterInspection();
     state4.mode = "generate";
     revokeUploadPreviewUrls(state4.images);

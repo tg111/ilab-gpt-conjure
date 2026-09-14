@@ -28,7 +28,8 @@ import {
   taskParameterInspectorTitle,
   taskParameterInspectorParameters,
 } from "../../codex_image/webui/frontend/src/task-parameter-inspector";
-import { appendCanonicalGenerationFields } from "../../codex_image/webui/frontend/src/generation-request";
+import { saveCurrentModelParameterDraft } from "../../codex_image/webui/frontend/src/model-parameter-drafts";
+import { appendCanonicalGenerationFields, currentGenerationSelection } from "../../codex_image/webui/frontend/src/generation-request";
 import { translate } from "../../codex_image/webui/frontend/src/i18n";
 
 const parameters: CatalogModel["parameters"] = [
@@ -432,6 +433,84 @@ test("history inspection closes when the selected model catches up with the task
   assert.equal(taskParameterInspectionAction(task, "nano-banana-2", false), "inspect");
   assert.equal(taskParameterInspectionAction(task, "gpt-image-2", false), "clear");
   assert.equal(taskParameterInspectionAction(task, "nano-banana-2", true), "preserve");
+  assert.equal(taskParameterInspectionAction(task, "nano-banana-2", false, true), "clear");
+});
+
+test("model switches do not save completed task values as an editable draft", () => {
+  const gptSize = {
+    ...parameters[0],
+    id: "canvas.size",
+    label_key: "output.size",
+    default: "1024x1024",
+    allowed_values: [],
+  } as any;
+  const gptModel = { ...model, id: "gpt-image-2", parameters: [gptSize] } as any;
+  const state: any = {
+    generationCatalog: { ...catalog, models: [gptModel] },
+    selectedModelId: gptModel.id,
+    selectedTaskId: "completed-task",
+    tasks: [{ task_id: "completed-task", status: "completed" }],
+    parameterDraftsByModel: { [gptModel.id]: { "canvas.size": "1024x1024" } },
+  };
+  const previousWindow = (globalThis as any).window;
+  (globalThis as any).window = {
+    __codexImageWebUI: {
+      state,
+      els: {},
+      methods: {
+        currentTaskParams: () => ({ size: "1536x1024" }),
+        persistModelSelection() {},
+      },
+    },
+  };
+  try {
+    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
+    assert.deepEqual(state.parameterDraftsByModel[gptModel.id], { "canvas.size": "1024x1024" });
+
+    saveCurrentModelParameterDraft();
+    assert.deepEqual(state.parameterDraftsByModel[gptModel.id], { "canvas.size": "1536x1024" });
+  } finally {
+    (globalThis as any).window = previousWindow;
+  }
+});
+
+test("history preview refreshes do not persist loaded values during task application", () => {
+  const gptSize = {
+    ...parameters[0],
+    id: "canvas.size",
+    label_key: "output.size",
+    default: "1024x1024",
+    allowed_values: [],
+  } as any;
+  const gptModel = { ...model, id: "gpt-image-2", parameters: [gptSize] } as any;
+  const state: any = {
+    generationCatalog: { ...catalog, models: [gptModel] },
+    selectedModelId: gptModel.id,
+    selectedProviderId: "provider-a",
+    selectedProviderBindingId: null,
+    mode: "generate",
+    parameterDraftsByModel: { [gptModel.id]: { "canvas.size": "1024x1024" } },
+    applyingCompletedTaskOutputSettings: true,
+  };
+  const previousWindow = (globalThis as any).window;
+  (globalThis as any).window = {
+    __codexImageWebUI: {
+      state,
+      els: {},
+      methods: {
+        currentTaskParams: () => ({ size: "1536x1024" }),
+      },
+    },
+  };
+  try {
+    currentGenerationSelection();
+    assert.deepEqual(state.parameterDraftsByModel[gptModel.id], { "canvas.size": "1024x1024" });
+    state.applyingCompletedTaskOutputSettings = false;
+    currentGenerationSelection();
+    assert.equal(state.parameterDraftsByModel[gptModel.id]["canvas.size"], "1536x1024");
+  } finally {
+    (globalThis as any).window = previousWindow;
+  }
 });
 
 test("history title shows the canonical model once and does not present the remote image model as a main model", () => {

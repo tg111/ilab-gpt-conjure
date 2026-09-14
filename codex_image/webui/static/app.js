@@ -18876,6 +18876,8 @@
       parameterDraftVersionsByModel: {},
       parameterValidationErrorsByModel: {},
       inspectedGenerationSnapshot: null,
+      taskParameterEditingTaskId: null,
+      applyingCompletedTaskOutputSettings: false,
       draggedPromptChip: null,
       legacyArchivedTaskIds: [],
       batchMode: false,
@@ -37096,11 +37098,13 @@ ${hint}` : hint;
   function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
     const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
     return Object.fromEntries(targetModel.parameters.map((definition) => {
+      const rawSourceValue = sourceDraft[definition.id];
+      const sourceValue = definition.id === "canvas.resolution" && typeof rawSourceValue === "string" ? rawSourceValue.toLowerCase() === "standard" || rawSourceValue === "1k" ? "1K" : rawSourceValue.toLowerCase() === "2k" ? "2K" : rawSourceValue.toLowerCase() === "4k" ? "4K" : rawSourceValue : rawSourceValue;
+      if (sourceValue !== void 0 && parameterValueValid2(definition, sourceValue)) {
+        return [definition.id, cloneValue2(sourceValue)];
+      }
       if (sourceIds.has(definition.id)) {
-        const sourceValue = sourceDraft[definition.id];
-        return [definition.id, cloneValue2(
-          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
-        )];
+        return [definition.id, cloneValue2(definition.default)];
       }
       const targetValue = targetDraft[definition.id];
       return [definition.id, cloneValue2(
@@ -37108,8 +37112,14 @@ ${hint}` : hint;
       )];
     }));
   }
-  function saveCurrentModelParameterDraft() {
+  function selectedTaskIsCompleted(state33) {
+    const selectedTask = state33.tasks?.find((task) => String(task?.task_id) === String(state33.selectedTaskId));
+    return selectedTask?.status === "completed";
+  }
+  function saveCurrentModelParameterDraft(options = {}) {
     const { state: state33, methods } = getLegacyBridge();
+    if (state33.applyingCompletedTaskOutputSettings) return;
+    if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state33)) return;
     const model = state33.generationCatalog?.models.find((item) => item.id === state33.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
     if (!isGptImageModelId(model.id)) {
@@ -37203,6 +37213,31 @@ ${hint}` : hint;
       familyOptionButtons().find((button) => button.dataset.familyId === familyId)?.focus();
     });
   }
+  function editingSelectedTask(state33) {
+    return Boolean(
+      state33.taskParameterEditingTaskId && String(state33.taskParameterEditingTaskId) === String(state33.selectedTaskId)
+    );
+  }
+  function currentDraftForModel(sourceModel, preserveTaskParameters) {
+    const { state: state33, methods } = getLegacyBridge();
+    if (!preserveTaskParameters || !isGptImageModelId(sourceModel.id) || typeof methods.currentTaskParams !== "function") {
+      return state33.parameterDraftsByModel[sourceModel.id] || {};
+    }
+    return canonicalControlValues(
+      methods.currentTaskParams(),
+      selectedProviderBinding()?.protocol_profile || ""
+    );
+  }
+  function migrateCurrentTaskParameters(sourceModel, targetModel, preserveTaskParameters) {
+    if (!sourceModel || sourceModel.id === targetModel.id || !preserveTaskParameters) return;
+    const { state: state33 } = getLegacyBridge();
+    state33.parameterDraftsByModel[targetModel.id] = migratePortableModelDraft(
+      sourceModel,
+      targetModel,
+      currentDraftForModel(sourceModel, true),
+      state33.parameterDraftsByModel[targetModel.id] || {}
+    );
+  }
   function selectModelFamily(familyId) {
     const { state: state33 } = getLegacyBridge();
     const catalog = state33.generationCatalog;
@@ -37212,7 +37247,10 @@ ${hint}` : hint;
     const remembered = state33.lastModelByFamily[familyId];
     const model = models.find((item) => item.id === remembered) || models[0];
     if (!model) return;
-    saveCurrentModelParameterDraft();
+    const sourceModel = catalog.models.find((item) => item.id === state33.selectedModelId);
+    const preserveTaskParameters = editingSelectedTask(state33);
+    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
+    migrateCurrentTaskParameters(sourceModel, model, preserveTaskParameters);
     state33.selectedFamilyId = familyId;
     state33.selectedModelId = model.id;
     state33.lastModelByFamily[familyId] = model.id;
@@ -37232,12 +37270,13 @@ ${hint}` : hint;
     if (!model) return;
     const sourceModel = state33.generationCatalog?.models.find((item) => item.id === state33.selectedModelId);
     const familyChanged = sourceModel?.family_id !== model.family_id;
-    saveCurrentModelParameterDraft();
-    if (sourceModel?.family_id === model.family_id) {
+    const preserveTaskParameters = editingSelectedTask(state33);
+    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
+    if (sourceModel && (sourceModel.family_id === model.family_id || preserveTaskParameters)) {
       state33.parameterDraftsByModel[model.id] = migratePortableModelDraft(
         sourceModel,
         model,
-        state33.parameterDraftsByModel[sourceModel.id] || {},
+        currentDraftForModel(sourceModel, preserveTaskParameters),
         state33.parameterDraftsByModel[model.id] || {}
       );
     }
@@ -47041,7 +47080,11 @@ ${galleryText}`;
     return locked;
   }
   function showLockedOutputSettings() {
-    if (!locked) return;
+    if (!locked) {
+      setLockedViewVisible(false);
+      updateLockButton();
+      return;
+    }
     taskSnapshot = null;
     taskContext = null;
     lockedSnapshot = snapshotFromCurrentSelection();
@@ -47059,7 +47102,11 @@ ${galleryText}`;
     updateLockButton();
   }
   function refreshOutputSettingsLock() {
-    if (!locked) return;
+    if (!locked) {
+      setLockedViewVisible(false);
+      updateLockButton();
+      return;
+    }
     if (taskSnapshot && taskContext) {
       renderSummary(taskSnapshot, taskContext);
       return;
@@ -47295,7 +47342,7 @@ ${galleryText}`;
   }
   function taskOutputSettingsView(task, selectedModelId, outputSettingsLocked) {
     if (outputSettingsLocked) return "locked-summary";
-    return taskCanonicalModelId(task) === selectedModelId ? "editor" : "parameter-inspector";
+    return "editor";
   }
   function taskRequestedParameters(task) {
     const source = record3(task);
@@ -50375,11 +50422,14 @@ ${galleryText}`;
     }
     let draft = state33.parameterDraftsByModel[model.id] || {};
     if (isGptImageModelId(model.id) && typeof methods.currentTaskParams === "function") {
-      draft = {
-        ...draft,
-        ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || "")
-      };
-      state33.parameterDraftsByModel[model.id] = draft;
+      const currentValues = canonicalControlValues(
+        methods.currentTaskParams(),
+        selectedProviderBinding()?.protocol_profile || ""
+      );
+      draft = { ...draft, ...currentValues };
+      if (!state33.applyingCompletedTaskOutputSettings) {
+        state33.parameterDraftsByModel[model.id] = draft;
+      }
     }
     return {
       canonicalModelId: model.id,
@@ -54883,6 +54933,9 @@ ${galleryText}`;
   function applyTaskToFormWithOutputLock(task) {
     const outputSettingsLocked = Boolean(legacyMethod42("isOutputSettingsLocked"));
     const outputView = taskOutputSettingsView(task, String(state31.selectedModelId || ""), outputSettingsLocked);
+    const applyingCompletedTaskOutputSettings = task?.status === "completed" && outputView === "editor";
+    state31.taskParameterEditingTaskId = applyingCompletedTaskOutputSettings ? task.task_id : null;
+    state31.applyingCompletedTaskOutputSettings = applyingCompletedTaskOutputSettings;
     applyTaskToForm2(task, {
       preserveOutputSettings: outputView !== "editor",
       preserveComposer: false
@@ -54898,6 +54951,11 @@ ${galleryText}`;
     }
     clearTaskParameterInspection();
     legacyMethod42("showLockedOutputSettings");
+  }
+  function finishCompletedTaskOutputSettingsApplication(task) {
+    if (task?.status === "completed" && String(state31.taskParameterEditingTaskId || "") === String(task.task_id || "")) {
+      state31.applyingCompletedTaskOutputSettings = false;
+    }
   }
   function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
     if (restoreSeq == null) return true;
@@ -55112,10 +55170,10 @@ ${galleryText}`;
     const restoreSeq = ++state31.taskInputRestoreSeq;
     void markTaskViewed3(taskId);
     applyTaskToFormWithOutputLock(task);
-    await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-    if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-    renderSelectedTask(task, taskId);
     try {
+      await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+      if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+      renderSelectedTask(task, taskId);
       await restoreTaskInputs(task, { taskId, restoreSeq });
     } catch (error) {
       if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -55124,6 +55182,8 @@ ${galleryText}`;
       renderImageStrip6();
       setStatus22(error.message, "error");
       return;
+    } finally {
+      finishCompletedTaskOutputSettingsApplication(task);
     }
     if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
     applySelectedTaskRequestPreview(task);
@@ -55179,10 +55239,10 @@ ${galleryText}`;
       await revealHistoryTaskInSidebar2(task);
       const restoreSeq = ++state31.taskInputRestoreSeq;
       applyTaskToFormWithOutputLock(task);
-      await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-      if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-      renderSelectedTask(task, taskId);
       try {
+        await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+        if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+        renderSelectedTask(task, taskId);
         await restoreTaskInputs(task, { taskId, restoreSeq });
       } catch (error) {
         if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -55191,6 +55251,8 @@ ${galleryText}`;
         renderImageStrip6();
         setStatus22(error.message || translate("referenceCollector.addFailed"), "error");
         return;
+      } finally {
+        finishCompletedTaskOutputSettingsApplication(task);
       }
       if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
       applySelectedTaskRequestPreview(task);
@@ -55903,6 +55965,8 @@ ${galleryText}`;
     state32.historyTaskReveal = null;
     state32.historyTaskRevealSeq += 1;
     state32.selectedTaskId = null;
+    state32.taskParameterEditingTaskId = null;
+    state32.applyingCompletedTaskOutputSettings = false;
     clearTaskParameterInspection2();
     state32.mode = "generate";
     revokeUploadPreviewUrls3(state32.images);
@@ -56952,9 +57016,10 @@ ${galleryText}`;
       Object.entries(snapshot.requested_parameters).filter(([id]) => taskParameterVisibleInInspector(snapshot, id))
     );
   }
-  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked) {
+  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked, taskParametersEditing = false) {
     if (outputSettingsLocked) return "preserve";
     if (!task) return "clear";
+    if (taskParametersEditing) return "clear";
     return taskCanonicalModelId(task) === selectedModelId ? "clear" : "inspect";
   }
   function reconcileTaskParameterInspection() {
@@ -56963,7 +57028,10 @@ ${galleryText}`;
     const action = taskParameterInspectionAction(
       task,
       String(state33.selectedModelId || ""),
-      Boolean(methods.isOutputSettingsLocked?.())
+      Boolean(methods.isOutputSettingsLocked?.()),
+      Boolean(
+        state33.taskParameterEditingTaskId && String(state33.taskParameterEditingTaskId) === String(task?.task_id)
+      )
     );
     if (action === "inspect" && task) inspectTaskParameters2(task);
     else if (action === "clear" && state33.inspectedGenerationSnapshot) clearTaskParameterInspection3();
@@ -57044,6 +57112,7 @@ ${galleryText}`;
       selectGenerationProvider(snapshot.provider_id);
     }
     methods.persistModelSelection?.();
+    state33.taskParameterEditingTaskId = task.task_id;
     state33.inspectedGenerationSnapshot = null;
     renderTaskParameterInspector();
     renderCurrentModelParameters();

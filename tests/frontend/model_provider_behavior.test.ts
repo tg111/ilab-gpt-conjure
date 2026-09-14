@@ -348,6 +348,44 @@ test("Gemini model switches carry valid shared values and default unsupported ch
   })["gemini.google_search"], "on", "target-only search keeps its prior draft");
 });
 
+test("cross-family history migration carries canonical legacy canvas values", () => {
+  const gpt = {
+    ...catalog.models[0],
+    id: "gpt-image-2",
+    parameters: [{
+      id: "canvas.size",
+      label_key: "output.size",
+      group: "canvas",
+      control: "text",
+      value_type: "string",
+      default: "1024x1024",
+      allowed_values: [],
+      scope: "model",
+      minimum: null,
+      maximum: null,
+      step: null,
+      visible_when: [],
+      operations: ["generate"],
+      full_width: true,
+    }],
+  } as any;
+  const gemini = {
+    ...catalog.models[1],
+    id: "nano-banana-2",
+    parameters: [
+      { id: "canvas.aspect_ratio", label_key: "ratio", group: "canvas", control: "segmented", value_type: "string", default: "1:1", allowed_values: ["1:1", "16:9"], scope: "model", minimum: null, maximum: null, step: null, visible_when: [], operations: ["generate"], full_width: false },
+      { id: "canvas.resolution", label_key: "resolution", group: "canvas", control: "segmented", value_type: "string", default: "1K", allowed_values: ["1K", "2K"], scope: "model", minimum: null, maximum: null, step: null, visible_when: [], operations: ["generate"], full_width: false },
+    ],
+  } as any;
+  assert.deepEqual(migratePortableModelDraft(gpt, gemini, {
+    "canvas.aspect_ratio": "16:9",
+    "canvas.resolution": "2k",
+  }, {}), {
+    "canvas.aspect_ratio": "16:9",
+    "canvas.resolution": "2K",
+  });
+});
+
 test("GPT-only controls stay hidden for Gemini even without an eligible provider", () => {
   const legacy = { catalogAvailable: false, modelId: null, protocolProfile: null };
   assert.deepEqual(resolveModeSettingsVisibility({ ...legacy, legacyDirectApi: false }), {

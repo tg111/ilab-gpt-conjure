@@ -187,9 +187,11 @@ export function taskParameterInspectionAction(
   task: WebUITask | null | undefined,
   selectedModelId: string,
   outputSettingsLocked: boolean,
+  taskParametersEditing = false,
 ): TaskParameterInspectionAction {
   if (outputSettingsLocked) return "preserve";
   if (!task) return "clear";
+  if (taskParametersEditing) return "clear";
   return taskCanonicalModelId(task) === selectedModelId ? "clear" : "inspect";
 }
 
@@ -200,6 +202,10 @@ export function reconcileTaskParameterInspection(): void {
     task,
     String(state.selectedModelId || ""),
     Boolean(methods.isOutputSettingsLocked?.()),
+    Boolean(
+      state.taskParameterEditingTaskId
+      && String(state.taskParameterEditingTaskId) === String(task?.task_id),
+    ),
   );
   if (action === "inspect" && task) inspectTaskParameters(task);
   else if (action === "clear" && state.inspectedGenerationSnapshot) clearTaskParameterInspection();
@@ -282,6 +288,7 @@ export function adoptTaskParameters(task: WebUITask): ParameterMigrationReport {
     selectGenerationProvider(snapshot.provider_id);
   }
   methods.persistModelSelection?.();
+  state.taskParameterEditingTaskId = task.task_id;
   state.inspectedGenerationSnapshot = null;
   renderTaskParameterInspector();
   renderCurrentModelParameters();

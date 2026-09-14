@@ -26,7 +26,10 @@ export function taskOutputSettingsView(
   outputSettingsLocked: boolean,
 ): TaskOutputSettingsView {
   if (outputSettingsLocked) return "locked-summary";
-  return taskCanonicalModelId(task) === selectedModelId ? "editor" : "parameter-inspector";
+  // History selection loads a reusable configuration into the composer. The
+  // model and canvas controls remain editable; the task snapshot is only
+  // shown in the locked view or when the user explicitly inspects it.
+  return "editor";
 }
 
 export function taskRequestedParameters(task: unknown): Record<string, unknown> {

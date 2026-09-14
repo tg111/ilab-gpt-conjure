@@ -141,13 +141,13 @@ test("unknown canonical model IDs remain truthful instead of being guessed", () 
   assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
-test("locked task selection keeps the visual summary while unlocked cross-model history uses the inspector", () => {
+test("unlocked history selection keeps the composer editable across models", () => {
   const geminiTask = {
     generation_snapshot: { canonical_model_id: "nano-banana-2-lite" },
   };
 
   assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", true), "locked-summary");
-  assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", false), "parameter-inspector");
+  assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", false), "editor");
   assert.equal(taskOutputSettingsView(geminiTask, "nano-banana-2-lite", false), "editor");
 });
 

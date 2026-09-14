@@ -49,6 +49,8 @@ export interface WebUIState {
   parameterDraftVersionsByModel: Record<string, number>;
   parameterValidationErrorsByModel: Record<string, Record<string, string>>;
   inspectedGenerationSnapshot: GenerationSnapshotView | null;
+  taskParameterEditingTaskId: string | null;
+  applyingCompletedTaskOutputSettings: boolean;
 }
 
 export type LegacyBridge = WebUIBridge;
