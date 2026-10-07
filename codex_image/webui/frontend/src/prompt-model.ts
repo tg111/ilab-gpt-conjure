@@ -46,7 +46,9 @@ export function galleryReferenceInstruction(source: any, number: any): string {
 }
 
 export function currentPromptForModel(): string {
-  return getPromptText();
+  // Prompt processing is disabled, but snippets and gallery reference notes are
+  // user content and stay in the prompt sent to every model.
+  return buildPromptForModel();
 }
 
 export function initPromptModelFeature(): void {

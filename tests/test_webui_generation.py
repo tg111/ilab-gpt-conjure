@@ -456,7 +456,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(metadata["prompt"], prompt)
         self.assertEqual(metadata["prompt_for_model"], expected_model_prompt)
         self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expected_model_prompt)
-    def test_generate_route_uses_raw_prompt_for_any_prompt_fidelity(self) -> None:
+    def test_generate_route_keeps_gallery_notes_for_any_prompt_fidelity(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "让 @小美 做产品模特，文案标题设计偏儿童Q版卡通化"
@@ -480,14 +480,14 @@ class WebUIGenerationTests(unittest.TestCase):
             task = body["task"]
 
         self.assertEqual(response.status_code, 200)
+        # Prompt processing is disabled, but gallery reference notes are kept.
         self.assertNotIn("prompt_fidelity", task["params"])
-        self.assertEqual(task["prompt_for_model"], prompt)
+        self.assertEqual(task["prompt_for_model"], prompt_for_model)
         self.assertFalse(task.get("prompt_constraints"))
-        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt)
+        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt_for_model)
         self.assertFalse(body["request"].get("instructions"))
-        self.assertNotIn("参考图 1", body["request"]["input"][0]["content"][0]["text"])
 
-    def test_generate_route_submits_prompt_text_without_server_side_rewrites(self) -> None:
+    def test_generate_route_sends_expanded_snippets_without_instructions(self) -> None:
         from codex_image.webui.app import create_app
         from codex_image.webui.prompt_snippets import PromptSnippetSettings
 
@@ -527,12 +527,51 @@ class WebUIGenerationTests(unittest.TestCase):
             task = body["task"]
             metadata = json.loads(metadata_path(root / "tasks", task["task_id"]).read_text(encoding="utf-8"))
 
-        # Prompt processing is disabled: the submitted prompt text is sent as-is.
         self.assertEqual(response.status_code, 200)
         self.assertEqual(task["prompt"], prompt)
-        self.assertEqual(task["prompt_for_model"], prompt)
-        self.assertEqual(metadata["execution_prompt"], prompt)
-        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt)
+        self.assertEqual(task["prompt_for_model"], expanded_prompt)
+        self.assertEqual(metadata["execution_prompt"], expanded_prompt)
+        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expanded_prompt)
+        self.assertFalse(body["request"].get("instructions"))
+
+    def test_generate_route_expands_snippets_when_prompt_for_model_is_missing(self) -> None:
+        from codex_image.webui.app import create_app
+        from codex_image.webui.prompt_snippets import PromptSnippetSettings
+
+        prompt = "人像摄影。~柔光+净背景"
+        expanded_prompt = "人像摄影。使用柔和主光与干净背景"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snippets_path = root / "prompt-snippets.json"
+            PromptSnippetSettings(snippets_path).create(
+                {"tag": "柔光+净背景", "title": "柔光+净背景", "content": "使用柔和主光与干净背景"}
+            )
+            app = create_app(
+                output_root=root / "tasks",
+                prompt_snippets_path=snippets_path,
+                client_factory=lambda: FakeImageClient(),
+                auth_checker=lambda: True,
+                auto_start_queue=False,
+            )
+            response = TestClient(app).post(
+                "/api/generate",
+                data={
+                    "prompt": prompt,
+                    "model": "gpt-image-2",
+                    "size": "1536x864",
+                    "ratio": "16:9",
+                    "quality": "low",
+                    "output_format": "png",
+                    "codex_mode": "responses",
+                },
+            )
+            body = response.json()
+            task = body["task"]
+
+        # Direct API callers get snippets expanded but no ratio instruction.
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(task["prompt_for_model"], expanded_prompt)
+        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expanded_prompt)
         self.assertFalse(body["request"].get("instructions"))
 
     def test_edit_route_enqueues_without_calling_client_inline(self) -> None:

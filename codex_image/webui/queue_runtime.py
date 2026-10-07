@@ -452,8 +452,9 @@ def _validated_snapshot_plan(
             )
         api_key = str(configured["api_key"])
     params = metadata.get("params") if isinstance(metadata.get("params"), dict) else {}
-    # Prompt processing is intentionally disabled: use the stored original text verbatim.
-    transport_prompt = str(metadata.get("prompt") or "")
+    # Prompt processing is disabled: send the stored model prompt (expanded snippets
+    # and gallery notes) without ratio or guard instructions.
+    transport_prompt = str(metadata.get("prompt_for_model") or metadata.get("prompt") or "")
     transport_instructions = None
     input_paths = [ctx.storage.input_path(str(name)) for name in metadata.get("input_files") or ()]
     raw_assets = metadata.get("reference_assets")

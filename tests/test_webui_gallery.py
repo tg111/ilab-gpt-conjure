@@ -603,8 +603,7 @@ class WebUIGalleryTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(task["prompt"], "让 @小美 做产品模特")
-        # Prompt processing is disabled, so the model receives the raw prompt.
-        self.assertEqual(task["prompt_for_model"], "让 @小美 做产品模特")
+        self.assertIn("参考图 1", task["prompt_for_model"])
         self.assertEqual(task["input_files"], [])
         self.assertEqual(input_dir_files, [])
         self.assertEqual(task["gallery_refs"][0]["id"], gallery_item["id"])
@@ -612,7 +611,7 @@ class WebUIGalleryTests(unittest.TestCase):
         self.assertTrue(input_content[1]["image_url"].startswith("<redacted image data url, "))
         self.assertEqual(body["request"]["webui_image_refs"]["gallery_refs"][0]["id"], gallery_item["id"])
         self.assertEqual(fake.generate_calls, [])
-    def test_generate_route_keeps_gallery_metadata_while_sending_raw_prompt(self) -> None:
+    def test_generate_route_keeps_gallery_prompt_layer_separate_from_raw_prompt(self) -> None:
         from codex_image.webui.app import create_app
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -661,7 +660,7 @@ class WebUIGalleryTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(task["prompt"], prompt)
-        self.assertEqual(task["prompt_for_model"], prompt)
+        self.assertEqual(task["prompt_for_model"], prompt_for_model)
         self.assertEqual(task["gallery_refs"][0]["prompt_note"], "只参考色调和光影，不参考构图。")
         self.assertEqual(task["gallery_refs"][0]["category_prompt_role"], "风格方向")
     def test_queue_worker_uses_gallery_mime_for_extensionless_image(self) -> None:

@@ -312,8 +312,12 @@ def _prepare_generation_submission(
         if not effective_orientation:
             effective_orientation = orientation_from_ratio(effective_ratio) or None
     web_search_enabled = bool(web_search) and requested_backend.endswith("_responses")
-    # Prompt processing is intentionally disabled: submit the user's exact text.
-    model_prompt = str(prompt or "")
+    # Prompt processing is disabled: no ratio or guard instructions are added.
+    # The model still gets expanded snippets and gallery reference notes, either
+    # from the WebUI composer or by expanding snippets for direct API callers.
+    model_prompt = str(
+        prompt_for_model or h["model_prompt_for_fidelity"](prompt, None, "original") or ""
+    )
     request_model_prompt = model_prompt
     request_instructions = None
     prompt_constraints: list[str] = []
