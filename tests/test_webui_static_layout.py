@@ -336,7 +336,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
 
     def test_model_family_marks_are_shared_by_selector_and_history_cards(self) -> None:
         selection = Path("codex_image/webui/frontend/src/model-selection.ts").read_text(encoding="utf-8")
-        task_list = Path("codex_image/webui/frontend/src/task-list-render.ts").read_text(encoding="utf-8")
+        task_list = Path("codex_image/webui/frontend/src/task-card-view.ts").read_text(encoding="utf-8")
         marks = Path("codex_image/webui/frontend/src/model-family-icons.ts").read_text(encoding="utf-8")
         sidebar = Path("codex_image/webui/static/styles/10-sidebar.css").read_text(encoding="utf-8")
         tasks = Path("codex_image/webui/static/styles/20-tasks.css").read_text(encoding="utf-8")
@@ -674,7 +674,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.image-input-main\s*\{[^}]*border-color var\(--motion-base\)")
         self.assertRegex(styles, r"\.quick-gallery-item\s*\{[^}]*opacity var\(--motion-base\)")
         self.assertRegex(styles, r"\.resource-sheet\s*\{[^}]*transform var\(--motion-fast\)")
-        self.assertRegex(styles, r"\.settings-grid\s*\{[^}]*transition:\s*height var\(--motion-height\)")
+        self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*transition:\s*none")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*max-height var\(--motion-height\)")
         self.assertRegex(styles, r"\.gallery-grid\s*\{[^}]*transition:\s*height var\(--motion-height\)")
         self.assertRegex(styles, r"\.preview-overlay\s*\{[^}]*transition:\s*opacity var\(--motion-base\)")
@@ -704,8 +704,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn('/static/app.js?v=runtime-790', html)
-        self.assertIn('/static/styles.css?v=runtime-789', html)
+        self.assertIn('/static/app.js?v=runtime-855', html)
+        self.assertIn('/static/styles.css?v=runtime-855', html)
         self.assertIn('id="recentAssetDock"', html)
         self.assertIn('id="recentAssetVisibilityToggle"', html)
         self.assertIn('aria-controls="recentAssetList"', html)
@@ -717,7 +717,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("recentAssetVisibilityToggle: document.querySelector(\"#recentAssetVisibilityToggle\")", script)
         self.assertIn("refreshRecentAssets();", script)
         self.assertIn("function refreshRecentAssets()", script)
-        self.assertIn("function renderRecentAssets()", script)
+        self.assertIn("function renderRecentAssets(appendFrom = 0)", script)
         self.assertIn("function toggleRecentAssetPreviews()", script)
         self.assertIn('classList.toggle("previews-hidden", recentAssetPreviewsHidden)', script)
         self.assertIn('toggleAttribute("inert", recentAssetPreviewsHidden)', script)
@@ -754,7 +754,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('detail?.code === "reference_asset_in_use"', script)
         self.assertIn("danger: false", script)
         self.assertIn('options.danger === false', script)
-        self.assertIn('document.addEventListener(LOCALE_CHANGE_EVENT, renderRecentAssets);', script)
+        self.assertIn('document.addEventListener(LOCALE_CHANGE_EVENT, () => renderRecentAssets());', script)
         self.assertNotIn("不会影响公用图库或历史任务。", script)
         self.assertNotIn("已加入图像输入的同一图片也会移除", script)
         self.assertIn('translate("imageInput.recentBadge")', script)
@@ -916,8 +916,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             self.assertNotRegex(gallery_source, rf"\n(?:async\s+)?function {function_name}\(")
         self.assertIn('fetch("/api/reference-assets/recent?limit=50")', source)
         self.assertIn("const RECENT_ASSET_RENDER_BATCH_SIZE = 12", source)
-        self.assertIn('loading="eager"', source)
-        self.assertNotIn('loading="lazy"', source)
+        self.assertIn('loading="lazy" decoding="async"', source)
         self.assertIn("addReferenceAssetInput(item)", source)
         self.assertIn("Object.assign(getLegacyBridge().methods", source)
     def test_quick_gallery_feature_has_typescript_source_contract(self) -> None:
@@ -1036,7 +1035,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("export function renderAuthSource(auth", auth_source)
         self.assertIn("export function currentAuthSource()", auth_source)
         self.assertIn("export function updateModeSpecificSettings(authSource", mode_source)
-        self.assertIn("export function normalizeApiSettings(settings", provider_source)
+        self.assertIn("export function normalizeApiSettings(settings", Path("codex_image/webui/frontend/src/api-provider-model.ts").read_text(encoding="utf-8"))
         self.assertIn("export function openApiSettingsModal()", provider_source)
         self.assertIn("export function openGenerationProviderSettings()", provider_source)
         self.assertIn("export function backendForAuthSource(authSource", provider_source)
@@ -1130,7 +1129,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("export function syncSizeControlsFromSize(size", custom_size_source)
         self.assertIn("export function customSizeValidationMessage(width", size_source)
         self.assertIn("export function currentTaskParams()", size_source)
-        self.assertIn("const presetMatch = findPresetForSize(params.size)", size_source)
+        self.assertIn("const presetMatch = automaticSize ? null : findPresetForSize(params.size)", size_source)
         self.assertIn("params.resolution = presetMatch.resolution", size_source)
         self.assertIn("params.ratio = presetMatch.ratio", size_source)
         self.assertIn("params.orientation = presetMatch.orientation", size_source)
@@ -1486,7 +1485,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         for title in ("参考输入（可选）", "提示词", "输出设置"):
             self.assertIn(title, html)
         self.assertIn("justify-content: space-between", self._extract_css_block(layout, ".panel-heading"))
-        self.assertIn("justify-content: space-between", self._extract_css_block(prompt, ".prompt-heading-main"))
+        self.assertIn("justify-content: flex-start", self._extract_css_block(prompt, ".prompt-heading-main"))
         self.assertIn("position: relative", self._extract_css_block(output, ".output-settings-header"))
         self.assertNotIn("@media (max-height: 860px)", responsive)
         self.assertNotRegex(
@@ -1524,7 +1523,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(
             compact,
             r"\.controls-col\s+\.image-panel\s*\{[^}]*"
-            r"flex:\s*1\s+1\s+var\(--compact-image-panel-height\)",
+            r"flex:\s*1\s+0\s+auto",
         )
         self.assertRegex(
             compact,
@@ -1544,7 +1543,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             r"\.controls-col\s+\.output-settings-header\s+h2\s*\{[^}]*clip:",
         )
         self.assertIn(
-            ".controls-col .image-input-workspace {\n    flex: 1 1 auto;",
+            ".controls-col .image-input-workspace {\n    flex: 1 0 auto;",
             compact,
         )
         self.assertIn(
@@ -1694,7 +1693,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn('id="gallerySearch"', html)
         self.assertNotIn('id="galleryButtons"', html)
         self.assertNotIn("gallery-picker-row", html)
-        self.assertRegex(html, r'<div class="panel-heading">\s*<h2[^>]*>参考输入（可选）</h2>\s*</div>')
+        self.assertRegex(html, r'<div class="panel-heading">\s*<h2[^>]*>参考输入（可选）</h2>\s*<button id="compactReferencesButton"[^>]*>[^<]*</button>\s*</div>')
         self.assertRegex(html, r'<div class="image-input-footer">[\s\S]*<div class="image-input-actions">[\s\S]*<button id="clearImagesButton"')
         self.assertRegex(html, r'<div class="image-input-footer">[\s\S]*id="recentAssetDock"[\s\S]*id="recentAssetList"')
         self.assertRegex(html, r'<div class="image-gallery-column">[\s\S]*id="quickGalleryDock"[\s\S]*id="galleryManagePanel"')
@@ -1917,7 +1916,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(
             compact,
             r"\.image-input-workspace\s*\{[^}]*--image-input-main-height:\s*clamp\("
-            r"[\s\S]*60px,[\s\S]*150px",
+            r"[\s\S]*102px,[\s\S]*150px",
         )
         self.assertRegex(
             compact,
@@ -1947,18 +1946,17 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         )
         self.assertRegex(
             compact,
-            r"\.controls-col\s+\.prompt-compose\s+\.run-button\s*\{[^}]*"
-            r"min-height:\s*0[^}]*height:\s*100%",
+            r"\.controls-col\s+\.prompt-compose\s+\.run-button\s*\{[^}]*min-height:\s*0[^}]*height:\s*100%",
         )
         self.assertRegex(
             compact,
-            r"\.settings-grid\s*\{[^}]*--compact-settings-control-height:\s*clamp\("
-            r"[\s\S]*--compact-settings-segment-height:\s*clamp\("
+            r"\.settings-grid\s*\{[^}]*--compact-settings-control-height:\s*36px"
+            r"[\s\S]*--compact-settings-segment-height:\s*30px"
             r"[\s\S]*gap:\s*var\(--compact-settings-gap\)",
         )
         self.assertRegex(
             compact,
-            r"\.controls-col\s+\.output-settings-header\s*\{[^}]*min-height:\s*18px"
+            r"\.controls-col\s+\.output-settings-header\s*\{[^}]*min-height:\s*clamp\(24px,[^;]*32px\)"
             r"[^}]*margin-bottom:\s*clamp\(",
         )
         self.assertRegex(
@@ -1966,11 +1964,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             r"\.ratio-group\s*\{[^}]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)"
             r"[^}]*grid-template-rows:\s*repeat\(2,\s*var\(--compact-settings-segment-height\)\)",
         )
-        self.assertRegex(
-            top_level,
-            r"\.mode-settings-slot\s*\{[^}]*--mode-settings-stable-height:\s*clamp\("
-            r"[\s\S]*77px,[\s\S]*144px",
-        )
+        self.assertNotIn("--mode-settings-stable-height", responsive)
         self.assertNotRegex(
             top_level,
             r"\.(?:orientation|resolution|ratio|quantity|quality|moderation)-field\s*\{[^}]*grid-row",
@@ -1983,10 +1977,9 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             top_level,
             r"\.quantity-quality-row\s*\{[^}]*display:\s*contents",
         )
-        self.assertRegex(
+        self.assertNotRegex(
             narrow,
-            r"\.mode-specific-settings\s*\{[^}]*grid-template-columns:\s*"
-            r"minmax\(0,\s*1fr\)\s+minmax\(0,\s*1fr\)",
+            r"#promptFidelityField\s*\{[^}]*grid-column:\s*2\s*/\s*3",
         )
         self.assertRegex(
             narrow,
@@ -1996,10 +1989,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(
             narrow,
             r"--custom-size-mode-card-height:\s*clamp\(\s*105px,\s*calc\(14\.76dvh\s*-\s*8\.4px\),\s*154px",
-        )
-        self.assertRegex(
-            narrow,
-            r"--mode-settings-stable-height:\s*clamp\(\s*48px,\s*calc\(15\.96dvh\s*-\s*74\.6px\),\s*102px",
         )
         self.assertRegex(
             compact,
@@ -2023,7 +2012,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(
             responsive,
             r"\.controls-col\s+\.image-panel\s*\{[^}]*"
-            r"flex:\s*1\s+1\s+var\(--compact-image-panel-height\)",
+            r"flex:\s*1\s+0\s+auto",
         )
         self.assertRegex(output, r"\.output-settings-locked-summary\s*\{[^}]*position:\s*absolute[^}]*inset:\s*0")
         self.assertNotIn("--output-settings-editor-height", responsive + output + lock_source)
@@ -2392,7 +2381,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('class="settings-modal-actions settings-status-only"', html)
         self.assertNotIn('id="apiMode"', html)
         self.assertIn('id="generationProviderSettingsButton"', html)
-        self.assertIn('id="apiDirectSettingsButton"', html)
+        self.assertNotIn('id="apiDirectSettingsButton"', html)
         self.assertIn('class="model-tool-row"', html)
         self.assertIn('id="webSearchField"', html)
         self.assertIn('id="webSearch"', html)
@@ -2477,10 +2466,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn("apiMode: document.querySelector", script)
         self.assertIn("apiProvider: document.querySelector", script)
         self.assertIn("generationProviderSelect: document.querySelector", script)
-        self.assertIn("apiDirectSettingsButton: document.querySelector", script)
         self.assertIn("webSearch: document.querySelector", script)
         self.assertIn("webSearchField: document.querySelector", script)
-        self.assertIn('apiDirectSettingsButton?.addEventListener("click", () => call(methods, "openApiSettingsModal"))', script)
         self.assertIn("apiProviderName: document.querySelector", script)
         self.assertIn("apiProviderSection: document.querySelector", script)
         self.assertIn("apiProviderSearch: document.querySelector", script)
@@ -2512,8 +2499,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('classList.toggle("hidden", !searchVisible)', provider_list_source)
         self.assertIn("apiProviderMatchesSearch", provider_list_source)
         self.assertIn("scrollActiveApiProviderCardIntoView", provider_list_source)
-        self.assertIn("grid.scrollTo", provider_list_source)
-        self.assertIn("Math.floor(maxScrollTop / rowStep) * rowStep", provider_list_source)
+        self.assertIn("panel.scrollTo", provider_list_source)
+        self.assertIn('closest<HTMLElement>(".system-settings-section")', provider_list_source)
         self.assertNotIn("scrollIntoView", provider_list_source)
         self.assertIn("apiProviderMatchesSearch(provider, searchQuery)", provider_source)
         self.assertIn('translate("apiSettings.noProviderSearchResults")', provider_source)
@@ -2550,11 +2537,11 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function selectCodexMode", script)
         self.assertIn("function queueApiSettingsAutosave", script)
         self.assertRegex(provider_source, r"function deleteApiProvider\(\)[\s\S]*queueApiSettingsAutosave\(\);[\s\S]*function confirmDeleteApiProvider")
-        self.assertRegex(provider_source, r"function selectApiProvider\(providerId[^)]*\)[\s\S]*queueApiSettingsAutosave\(\);[\s\S]*function editApiProvider")
+        self.assertRegex(provider_source, r"function selectApiProvider\(providerId[^)]*\)[\s\S]*queueApiSettingsAutosave\(\{ silent: true \}\);[\s\S]*function editApiProvider")
         self.assertRegex(provider_source, r"function reorderApiProviders\(orderedIds[^)]*\)[\s\S]*queueApiSettingsAutosave\(\);[\s\S]*async function saveApiProviderEdit")
         self.assertIn("const sortFocusId = autoSave ? focusedApiProviderSortId()", provider_source)
         self.assertRegex(provider_source, r"populateApiSettingsForm\(\);\s*focusApiProviderSortHandle\(sortFocusId\);")
-        self.assertIn('void saveApiSettings({ auto: true })', script)
+        self.assertIn('void saveApiSettings({ auto: true, silent: options.silent })', script)
         self.assertIn('translate("apiSettings.autoSaving")', script)
         self.assertIn('translate("apiSettings.autoSaved")', script)
         self.assertIn("codexModeLabel(currentCodexMode())", script)
@@ -2665,11 +2652,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.api-provider-detail-actions \.ghost-button,\s*\.api-provider-detail-actions \.danger-button,[\s\S]*height:\s*40px")
         self.assertRegex(styles, r"\.api-provider-editor-actions \.ghost-button,\s*\.api-provider-editor-actions \.run-button\s*\{[^}]*border-radius:\s*8px")
         self.assertRegex(styles, r"\.api-provider-choice-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)")
-        self.assertNotRegex(styles, r"\.api-provider-choice-grid\s*\{[^}]*max-height:")
-        self.assertRegex(styles, r"\.api-provider-choice-grid\.is-long-list\s*\{[^}]*max-height:\s*min\(320px,\s*38vh\)")
-        self.assertRegex(styles, r"\.api-provider-choice-grid\.is-long-list\s*\{[^}]*overflow-y:\s*auto")
-        self.assertRegex(styles, r"\.api-provider-choice-grid\.is-long-list\s*\{[^}]*overflow-x:\s*hidden")
-        self.assertRegex(styles, r"\.api-provider-choice-grid\.is-long-list\s*\{[^}]*overscroll-behavior:\s*contain")
+        self.assertNotRegex(styles, r"\.api-provider-choice-grid(?:\.is-long-list)?\s*\{[^}]*(?:max-height:|overflow-y:\s*auto)")
         self.assertRegex(styles, r"\.api-provider-search-empty\s*\{[^}]*grid-column:\s*1\s*/\s*-1")
         self.assertRegex(styles, r"\.api-provider-section\.editing\s*\{[^}]*display:\s*none")
         self.assertRegex(styles, r"\.compact-api-settings-grid\s*\{[^}]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)")
@@ -2755,9 +2738,20 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.api-provider-sort-drag-preview\s*\{[^}]*will-change:\s*transform")
         self.assertRegex(styles, r"@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.api-provider-sort-row\.is-dragging")
         self.assertNotIn(".api-provider-sort-button", styles)
-        self.assertRegex(styles, r"\.model-tool-row\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)\s+minmax\(104px,\s*max-content\)")
+        self.assertRegex(styles, r"\.model-tool-row\s*\{[^}]*flex-wrap:\s*wrap")
         self.assertIn(".web-search-toggle", styles)
         self.assertIn(".web-search-field.is-disabled", styles)
+        for control_id, label_id in (("webSearch", "webSearchLabel"), ("transparentBackground", "transparentBackgroundLabel")):
+            self.assertRegex(
+                html,
+                rf'<label class="web-search-toggle"[^>]*>\s*'
+                rf'<input id="{control_id}"[^>]*aria-labelledby="{label_id}"[^>]*>\s*'
+                r'<span class="web-search-toggle-track" aria-hidden="true"></span>\s*'
+                rf'<span id="{label_id}"[^>]*>[^<]+</span>\s*</label>',
+            )
+        self.assertNotIn('data-i18n="output.webSearchToggle"', html)
+        self.assertIn(".web-search-toggle:has(input:focus-visible)", styles)
+        self.assertRegex(styles, r"\.api-direct-settings-notice\s*\{[^}]*border:\s*0")
         self.assertIn(".api-settings-feedback.ok", styles)
         self.assertIn(".api-settings-feedback.error", styles)
         self.assertIn(".api-settings-feedback.running", styles)
@@ -2838,7 +2832,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertRegex(html, r'<div class="field full-width ratio-field hidden" aria-hidden="true">[\s\S]*id="ratioGroup"')
+        self.assertRegex(html, r'<div class="field full-width ratio-field">[\s\S]*id="ratioGroup"')
         self.assertRegex(styles, r"\.ratio-group\s*\{[^}]*grid-template-columns:\s*repeat\(6,\s*minmax\(0,\s*1fr\)\)")
         self.assertRegex(styles, r"\.ratio-group\s*\{[^}]*grid-template-rows:\s*repeat\(2,\s*30px\)")
         self.assertRegex(styles, r"\.ratio-group\s+\.radio-btn\s*\{[^}]*transform:\s*scale\(0\.985\)")
@@ -2867,8 +2861,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             html,
             r'<div class="field orientation-field">[\s\S]*id="orientationGroup"[\s\S]*</div>\s*'
             r'<div class="field resolution-field">[\s\S]*id="resolutionGroup"[\s\S]*</div>\s*'
-            r'<div id="customSize" class="custom-size hidden"[\s\S]*id="customWidth"[\s\S]*id="customHeight"[\s\S]*</div>\s*'
-            r'<div class="field full-width ratio-field hidden" aria-hidden="true">[\s\S]*id="ratioGroup"',
+            r'<div class="field full-width ratio-field">[\s\S]*id="ratioGroup"[\s\S]*'
+            r'<div id="customSize" class="custom-size"[^>]*inert[^>]*aria-hidden="true"[\s\S]*id="customWidth"[\s\S]*id="customHeight"',
         )
         self.assertRegex(
             html,
@@ -2882,6 +2876,51 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         for label_html in re.findall(r"<label\b[\s\S]*?</label>", html):
             self.assertNotIn('class="radio-group"', label_html)
             self.assertNotIn('class="radio-btn"', label_html)
+    def test_orientation_events_preserve_requested_direction(self) -> None:
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("node is required")
+        controls = Path("codex_image/webui/frontend/src/form-controls.ts").read_text()
+        start = controls.index("  [els.resolution, els.ratio, els.orientation]")
+        end = controls.index("  [els.customRatioWidth", start)
+        listeners = controls[start:end].replace(": any", "").replace(": Event", "")
+        source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text()
+        functions = [self._extract_javascript_function(source, name) for name in (
+            "updateSizeFromPreset", "currentSizeMode", "sizeControlName", "syncRatioAndOrientation",
+            "syncOrientationFromRatio", "syncRatioFromOrientation", "setSizeControlValue",
+        )]
+        harness = """
+        class Control extends EventTarget { constructor(value) { super(); this.value = value; } }
+        const els = {resolution:new Control('1K'), ratio:new Control('9:16'),
+          orientation:new Control('portrait'), size:new Control('864x1536')};
+        const DEFAULT_RESOLUTION='1K', DEFAULT_RATIO='1:1', DEFAULT_ORIENTATION='square';
+        const GPT_IMAGE_2_SIZE_PRESETS={'1K':{},'2K':{}};
+        const RATIO_ORIENTATION={'1:1':'square','9:16':'portrait','16:9':'landscape'};
+        const RATIO_COUNTERPARTS={'9:16':'16:9','16:9':'9:16'};
+        const ORIENTATION_DEFAULT_RATIOS={square:'1:1',portrait:'9:16',landscape:'16:9'};
+        function sizeForPreset(res,ratio) { return res + '/' + ratio; }
+        function updatePixelPreview() {} function updateCustomSize() {}
+        function updateRequestPreview() {} function saveCurrentModelParameterDraft() {}
+        """ + "\n".join(functions) + listeners + """
+        for (const type of ['input','change']) {
+          for (const direction of ['landscape','portrait','square','landscape']) {
+            els.orientation.value=direction;
+            els.orientation.dispatchEvent(new Event(type));
+            if (els.orientation.value !== direction || RATIO_ORIENTATION[els.ratio.value] !== direction)
+              throw new Error(type + ': orientation reverted from ' + direction);
+            if (els.size.value !== sizeForPreset(els.resolution.value,els.ratio.value))
+              throw new Error('size is stale');
+          }
+          els.ratio.value='9:16'; els.ratio.dispatchEvent(new Event(type));
+          if (els.orientation.value !== 'portrait') throw new Error('ratio must set orientation');
+          els.resolution.value='2K'; els.resolution.dispatchEvent(new Event(type));
+          if (els.orientation.value !== 'portrait' || els.ratio.value !== '9:16')
+            throw new Error('resolution must preserve direction and ratio');
+        }
+        """
+        result = subprocess.run([node, "-e", harness], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_resolution_and_orientation_use_button_groups(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -2898,33 +2937,88 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('data-val="2k"', html)
         self.assertIn('data-val="4k"', html)
         self.assertRegex(html, r'<select id="resolution" class="hidden">')
-        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="auto"[^>]*data-i18n="output\.auto"[\s\S]*自动')
-        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="manual"[^>]*data-i18n="output\.manual"[\s\S]*手动')
+        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="square"[\s\S]*orientation-option-icon-square[\s\S]*data-i18n="output\.square"[\s\S]*方形')
+        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="portrait"[\s\S]*orientation-option-icon-portrait[\s\S]*data-i18n="output\.portrait"[\s\S]*竖图')
+        self.assertRegex(html, r'id="orientationGroup"[\s\S]*data-val="landscape"[\s\S]*orientation-option-icon-landscape[\s\S]*data-i18n="output\.landscape"[\s\S]*横图')
+        self.assertIn('class="orientation-option-icon orientation-option-icon-square"', html)
         orientation_controls = re.search(r'id="orientationGroup"[\s\S]*?<select id="orientation" class="hidden">[\s\S]*?</select>', html)
         self.assertIsNotNone(orientation_controls)
-        self.assertIn('data-val="auto"', orientation_controls.group(0))
-        self.assertIn('data-val="manual"', orientation_controls.group(0))
-        self.assertIn('<option value="auto" selected', orientation_controls.group(0))
-        self.assertIn('<option value="manual"', orientation_controls.group(0))
-        self.assertNotIn('data-val="square"', orientation_controls.group(0))
-        self.assertRegex(html, r'<div class="field full-width ratio-field hidden" aria-hidden="true">')
-        self.assertIn('els.orientation?.value === "manual"', script)
-        self.assertIn('ratioField.classList.toggle("hidden", !visible)', script)
+        self.assertNotIn('data-val="auto"', orientation_controls.group(0))
+        self.assertNotIn('<option value="auto"', orientation_controls.group(0))
+        self.assertRegex(styles, r"#orientationGroup \.radio-btn\s*\{[^}]*gap:\s*4px")
+        self.assertRegex(styles, r"\.orientation-option-icon\s*\{[^}]*width:\s*12px")
+        self.assertRegex(styles, r"\.orientation-option-icon\s*\{[^}]*stroke:\s*currentColor")
         self.assertIn('DEFAULT_RESOLUTION = "standard"', script)
         self.assertIn('DEFAULT_RATIO = "1:1"', script)
-        self.assertIn('DEFAULT_ORIENTATION = "auto"', script)
+        self.assertIn('DEFAULT_ORIENTATION = "square"', script)
         self.assertIn("syncRatioAndOrientation", script)
-    def test_background_control_is_removed_and_quantity_sits_with_quality(self) -> None:
+    def test_transparent_background_toggle_is_with_format_and_quantity_stays_with_quality(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertNotIn('id="background"', html)
+        self.assertIn('id="background" type="hidden" value="auto"', html)
+        self.assertNotIn("transparencyHint", html)
         self.assertNotIn("<span>背景</span>", html)
-        self.assertNotIn("els.background", script)
+        self.assertIn("els.background", script)
+        self.assertRegex(html, r'id="mainModelField"[\s\S]*id="webSearchField"[\s\S]*id="mainModelCombobox"')
+        self.assertRegex(html, r'id="outputFormatField"[\s\S]*id="transparentBackground"[\s\S]*id="outputFormatGroup"')
+        self.assertLess(html.index('id="pixelPreview"'), html.index('id="outputFileSettings"'))
         self.assertNotIn('form.append("background"', script)
         self.assertRegex(html, r'class="field-pair full-width quantity-quality-row"[\s\S]*id="quality"[\s\S]*id="quantityGroup"')
         self.assertRegex(styles, r"\.field-pair\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\) minmax\(0,\s*1fr\)")
+    def test_custom_size_mode_preserves_preset_height_across_layouts(self) -> None:
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("node is required for frontend behavior checks")
+        script = self._frontend_script_source()
+        styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
+        self.assertRegex(styles, r"\.size-editors\s*\{[^}]*position:\s*relative")
+        self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*position:\s*absolute[^}]*inset:\s*0")
+        self.assertRegex(styles, r'#presetSizeFields\[aria-hidden="true"\][^{]*\{[^}]*visibility:\s*hidden')
+        self.assertNotRegex(styles, r'#presetSizeFields\[aria-hidden="true"\][^{]*\{[^}]*display:\s*none')
+        harness = "\n".join([
+            """
+            const assert = require('node:assert/strict');
+            const state = { customSizeMode: false };
+            const element = () => {
+              const values = new Set();
+              const attrs = new Map();
+              return {
+                inert: false,
+                classList: {
+                  contains: name => values.has(name),
+                  remove: (...names) => names.forEach(name => values.delete(name)),
+                  toggle(name, active) { if (active) values.add(name); else values.delete(name); },
+                },
+                setAttribute: (name, value) => attrs.set(name, value),
+                getAttribute: name => attrs.get(name),
+                getBoundingClientRect() { throw Error('mode changes must not measure layout'); },
+              };
+            };
+            const preset = element();
+            const els = { customSize: element(), settingsGrid: element() };
+            const getLegacyBridge = () => ({ els, state });
+            const document = { getElementById: id => id === 'presetSizeFields' ? preset : null };
+            """,
+            self._extract_javascript_function(script, "setCustomSizeModeLayout"),
+            """
+            for (const mode of [false, true, true, false, true, false]) {
+              setCustomSizeModeLayout(mode);
+              assert.equal(preset.inert, mode);
+              assert.equal(preset.getAttribute('aria-hidden'), String(mode));
+              assert.equal(preset.classList.contains('hidden'), false, 'preset remains the layout height source');
+              assert.equal(els.customSize.inert, !mode);
+              assert.equal(els.customSize.getAttribute('aria-hidden'), String(!mode));
+              assert.equal(els.customSize.classList.contains('hidden'), false);
+              assert.equal(els.settingsGrid.classList.contains('custom-size-mode'), mode);
+              assert.equal(state.customSizeMode, mode);
+            }
+            """,
+        ])
+        result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_custom_size_panel_is_inline_mode_with_validation(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -2934,10 +3028,11 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(html, r'class="field-group full-width custom-size-control"[\s\S]*id="sizeModeGroup"[\s\S]*data-custom-size-mode="preset"[\s\S]*data-custom-size-mode="custom"')
         self.assertRegex(
             html,
-            r'class="field-group full-width custom-size-control"[\s\S]*id="customSizeToggle"[\s\S]*</div>\s*'
+            r'class="field-group full-width custom-size-control"[\s\S]*id="customSizeToggle"[\s\S]*id="sizeEditors"[\s\S]*id="presetSizeFields"[\s\S]*'
             r'<div class="field orientation-field">[\s\S]*id="orientationGroup"[\s\S]*</div>\s*'
             r'<div class="field resolution-field">[\s\S]*id="resolutionGroup"[\s\S]*</div>\s*'
-            r'<div id="customSize" class="custom-size hidden"[\s\S]*class="custom-size-main"[\s\S]*class="field custom-ratio-field"',
+            r'<div class="field full-width ratio-field">[\s\S]*id="ratioGroup"[\s\S]*'
+            r'<div id="customSize" class="custom-size"[\s\S]*class="custom-size-main"[\s\S]*class="field custom-ratio-field"',
         )
         self.assertRegex(html, r'id="customSizeToggle" class="hidden"')
         custom_ratio_markup = re.search(r'<div class="field custom-ratio-field">[\s\S]*?<p id="customRatioHint"[^>]*>[^<]*</p>\s*</div>', html)
@@ -2955,7 +3050,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn('placeholder="宽"', custom_ratio_markup.group(0))
         self.assertNotIn('placeholder="高"', custom_ratio_markup.group(0))
         self.assertRegex(custom_ratio_markup.group(0), r'id="customRatioHint" class="custom-ratio-hint"[\s\S]*留空则自由宽高 · 填满后同步')
-        custom_size_markup = re.search(r'<div id="customSize" class="custom-size hidden"[\s\S]*?</div>\s*<div class="field full-width ratio-field hidden" aria-hidden="true">', html)
+        custom_size_markup = re.search(r'<div id="customSize" class="custom-size"[\s\S]*?<div id="pixelPreview"', html)
         self.assertIsNotNone(custom_size_markup)
         self.assertRegex(custom_size_markup.group(0), r'class="custom-size-main"[\s\S]*class="custom-size-header"[\s\S]*<span[^>]*>像素尺寸</span>')
         self.assertRegex(custom_size_markup.group(0), r'class="custom-measure-row custom-size-row"')
@@ -2989,27 +3084,27 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function swapCustomSizeDimensions", script)
         self.assertIn("function populateCustomSizeFromCurrentPreset", script)
         self.assertIn("function customSizeValidationMessage", script)
-        self.assertIn("const CUSTOM_SIZE_TRANSITION_MS = 220", script)
-        self.assertIn("const CUSTOM_SIZE_HEIGHT_SNAP_TOLERANCE = 4", script)
-        self.assertIn("const customSizeTransitionTimers = new WeakMap", script)
+        self.assertIn("preset.inert = isCustom", script)
+        self.assertIn("els.customSize.inert = !isCustom", script)
+        self.assertNotIn("customSizeTransitionTimers", script)
         self.assertIn("customSizeTransitionSeq: 0", script)
         self.assertIn("customSizeMode: null", script)
         self.assertIn("customAspectRatioLocked: false", script)
         self.assertIn("customAspectRatioValue: null", script)
         self.assertIn('customAspectRatioSource: "manual"', script)
         self.assertIn("function setCustomSizeModeLayout", script)
-        self.assertIn("function measureCustomSizeModeHeight", script)
-        self.assertIn("function transitionCustomSizeMode", script)
-        self.assertIn("transitionCustomSizeMode(isCustom)", script)
-        self.assertIn("Math.abs(targetHeight - fromHeight) <= CUSTOM_SIZE_HEIGHT_SNAP_TOLERANCE", script)
+        self.assertNotIn("function measureCustomSizeModeHeight", script)
+        self.assertNotIn("function transitionCustomSizeMode", script)
+        self.assertIn("setCustomSizeModeLayout(isCustom)", script)
+        self.assertNotIn("CUSTOM_SIZE_HEIGHT_SNAP_TOLERANCE", script)
         self.assertIn("setStatus(customSizeError", script)
         self.assertRegex(styles, r"\.custom-size-control\s*\{[^}]*display:\s*grid")
-        self.assertRegex(styles, r"\.settings-grid\s*\{[^}]*transition:\s*height var\(--motion-height\)")
+        self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*transition:\s*none")
         self.assertRegex(styles, r"\.settings-grid\.is-size-transitioning\s*\{[^}]*overflow:\s*hidden")
         self.assertRegex(styles, r"\.settings-grid\.is-size-transitioning\s*\{[^}]*will-change:\s*height")
-        self.assertNotRegex(styles, r"\.custom-size\s*\{[^}]*position:\s*absolute")
+        self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*position:\s*absolute[^}]*inset:\s*0")
         self.assertNotRegex(styles, r"\.custom-size::before\s*\{")
-        self.assertRegex(styles, r"\.settings-grid\s*\{[^}]*--custom-size-mode-card-height:\s*175px")
+        self.assertRegex(styles, r"\.size-editors\s*\{[^}]*position:\s*relative")
         self.assertRegex(styles, r"\.custom-ratio-field\s*\{[^}]*display:\s*none")
         self.assertRegex(styles, r"\.custom-ratio-field\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)")
         self.assertRegex(styles, r"\.custom-ratio-field\s*\{[^}]*align-content:\s*center")
@@ -3048,8 +3143,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.settings-grid\.custom-size-mode\s+\.custom-ratio-field\s*\{[^}]*display:\s*grid")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1\.08fr\)\s+minmax\(242px,\s*0\.92fr\)")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*align-items:\s*center")
-        self.assertRegex(styles, r"\.custom-size\s*\{[^}]*min-height:\s*var\(--custom-size-mode-card-height\)")
-        self.assertRegex(styles, r"\.custom-size\s*\{[^}]*max-height:\s*var\(--custom-size-mode-card-height\)")
+        self.assertRegex(styles, r"\.custom-size\s*\{[^}]*min-height:\s*0")
+        self.assertRegex(styles, r"\.custom-size\s*\{[^}]*max-height:\s*none")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*padding:\s*18px 20px")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*transition:[^}]*max-height var\(--motion-height\)")
         self.assertRegex(styles, r"\.custom-size\.custom-size-collapsed\s*\{[^}]*max-height:\s*0")
@@ -3065,7 +3160,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.custom-size-input\s*\{[^}]*width:\s*var\(--measure-input-width\)")
         self.assertRegex(styles, r"\.custom-size-input\s*\{[^}]*text-align:\s*center")
         self.assertRegex(styles, r"\.custom-size-input\s*\{[^}]*font-variant-numeric:\s*tabular-nums")
-        self.assertRegex(styles, r"\.settings-grid\.custom-size-mode\s+\.resolution-field\s*,\s*\.settings-grid\.custom-size-mode\s+\.ratio-field\s*,\s*\.settings-grid\.custom-size-mode\s+\.orientation-field\s*\{[^}]*display:\s*none")
+        self.assertRegex(styles, r'#presetSizeFields\[aria-hidden="true"\][^{]*\{[^}]*visibility:\s*hidden')
         self.assertRegex(styles, r"\.settings-grid\.custom-size-mode\s+\.custom-size\s*\{[^}]*grid-column:\s*1\s*/\s*-1")
         self.assertNotRegex(styles, r"\.settings-grid\.custom-size-mode\s+\.quantity-field\s*\{[^}]*grid-column:\s*1\s*/\s*-1")
         self.assertRegex(styles, r"@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*\.settings-grid\s*,\s*[\s\S]*\.custom-size\s*\{[\s\S]*transition:\s*none")
@@ -3335,46 +3430,89 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
 
         self.assertEqual(result.returncode, 0, result.stderr)
-    def test_size_control_value_guard_rejects_cached_html_option_mismatches(self) -> None:
+    def test_automatic_size_mode_submits_auto_and_restores_preset_sizes(self) -> None:
         node = shutil.which("node")
         if node is None:
             self.skipTest("node is required for frontend behavior checks")
-        source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
+        html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
+        self.assertRegex(
+            html,
+            r'id="sizeModeGroup"[^>]*>\s*<button class="radio-btn active" data-custom-size-mode="auto"[^>]*data-i18n="output.sizeAuto"',
+        )
+        custom_size_source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
+        size_source = Path("codex_image/webui/frontend/src/size-presets.ts").read_text(encoding="utf-8")
         harness = "\n".join(
             [
                 """
+                const DEFAULT_RESOLUTION = "standard";
+                const DEFAULT_RATIO = "1:1";
+                const DEFAULT_ORIENTATION = "square";
+                const RATIO_ORIENTATION = { "1:1": "square", "2:3": "portrait", "3:2": "landscape" };
+                const RATIO_COUNTERPARTS = { "1:1": "1:1", "2:3": "3:2", "3:2": "2:3" };
+                const ORIENTATION_DEFAULT_RATIOS = { square: "1:1", portrait: "2:3", landscape: "3:2" };
+                const GPT_IMAGE_2_SIZE_PRESETS = {
+                  standard: { "1:1": [1024, 1024], "2:3": [1024, 1536], "3:2": [1536, 1024] },
+                };
                 function Event(type) { this.type = type; }
-                let legacyDispatches = 0;
-                const legacySelect = {
-                  value: "square",
-                  options: [{ value: "square" }, { value: "portrait" }, { value: "landscape" }],
-                  dispatchEvent() { legacyDispatches += 1; },
+                class Button {
+                  constructor(mode) { this.dataset = { customSizeMode: mode }; this.active = false; this.classList = { toggle: (_name, on) => { this.active = on; } }; }
+                  setAttribute() {}
+                }
+                const buttons = ["auto", "preset", "custom"].map((mode) => new Button(mode));
+                const els = {
+                  sizeModeGroup: {
+                    querySelector: () => buttons.find((button) => button.active) || null,
+                    querySelectorAll: () => buttons,
+                  },
+                  customSizeToggle: { checked: false },
+                  size: { value: "1024x1536" },
+                  resolution: { value: "standard", dispatchEvent() {} },
+                  ratio: { value: "2:3", dispatchEvent() {} },
+                  orientation: { value: "portrait", dispatchEvent() {} },
+                  customWidth: { value: "1024" },
+                  customHeight: { value: "1536" },
                 };
-                let currentDispatches = 0;
-                const currentSelect = {
-                  value: "auto",
-                  options: [{ value: "auto" }, { value: "manual" }],
-                  dispatchEvent() { currentDispatches += 1; },
-                };
+                function updateCustomSize() {}
+                function updatePixelPreview() {}
+                function updateRequestPreview() {}
+                function saveCurrentModelParameterDraft() {}
+                function syncRadioButtons() {}
+                function findPresetForSize(size) { return size === "1024x1536" ? { resolution: "standard", ratio: "2:3", orientation: "portrait" } : null; }
                 """,
-                self._extract_javascript_function(source, "setSizeControlValue"),
+                self._extract_javascript_function(custom_size_source, "setSizeMode"),
+                self._extract_javascript_function(custom_size_source, "currentSizeMode"),
+                self._extract_javascript_function(custom_size_source, "updateSizeFromPreset"),
+                self._extract_javascript_function(custom_size_source, "syncSizeControlsFromSize"),
+                self._extract_javascript_function(custom_size_source, "populateCustomSizeFromCurrentPreset"),
+                self._extract_javascript_function(custom_size_source, "sizeControlName"),
+                self._extract_javascript_function(custom_size_source, "syncRatioAndOrientation"),
+                self._extract_javascript_function(custom_size_source, "syncOrientationFromRatio"),
+                self._extract_javascript_function(custom_size_source, "syncRatioFromOrientation"),
+                self._extract_javascript_function(custom_size_source, "setSizeControlValue"),
+                self._extract_javascript_function(size_source, "currentSize"),
+                self._extract_javascript_function(size_source, "sizeForPreset"),
+                self._extract_javascript_function(size_source, "presetDimensions"),
                 """
-                if (setSizeControlValue(legacySelect, "manual") !== false) {
-                  throw new Error("cached legacy HTML must reject an unavailable manual option");
+                setSizeMode("auto");
+                if (els.size.value !== "auto" || currentSize() !== "auto") {
+                  throw new Error(`automatic mode must submit auto, got ${els.size.value}/${currentSize()}`);
                 }
-                if (legacySelect.value !== "square" || legacyDispatches !== 0) {
-                  throw new Error("rejected values must not mutate or dispatch change events");
+                if (currentSizeMode() !== "auto") throw new Error("auto button must be active");
+                setSizeMode("preset");
+                if (currentSize() !== "1024x1536") throw new Error(`preset mode must restore the preset size, got ${currentSize()}`);
+                syncSizeControlsFromSize("auto");
+                if (currentSizeMode() !== "auto" || currentSize() !== "auto") {
+                  throw new Error("history tasks with an auto size must reopen in automatic mode");
                 }
-                if (setSizeControlValue(currentSelect, "manual") !== true) {
-                  throw new Error("current HTML must accept the manual option");
-                }
-                if (currentSelect.value !== "manual" || currentDispatches !== 1) {
-                  throw new Error("accepted values must dispatch exactly one change event");
+                syncSizeControlsFromSize("1024x1536");
+                if (currentSizeMode() !== "preset" || currentSize() !== "1024x1536") {
+                  throw new Error("history tasks with a preset size must reopen in preset mode");
                 }
                 """,
             ]
         )
         result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
+
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_custom_size_mode_prefills_current_preset_dimensions(self) -> None:
@@ -3388,7 +3526,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 """
                 const DEFAULT_RESOLUTION = "standard";
                 const DEFAULT_RATIO = "1:1";
-                const DEFAULT_ORIENTATION = "auto";
+                const DEFAULT_ORIENTATION = "square";
                 const RATIO_ORIENTATION = { "1:1": "square", "2:3": "portrait", "3:2": "landscape" };
                 const RATIO_COUNTERPARTS = { "1:1": "1:1", "2:3": "3:2", "3:2": "2:3" };
                 const ORIENTATION_DEFAULT_RATIOS = { square: "1:1", portrait: "2:3", landscape: "3:2" };
@@ -3415,9 +3553,10 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 function updatePixelPreview(size) { pixelPreviewArg = size; }
                 function updateRequestPreview() { requestPreviewUpdated += 1; }
                 function saveCurrentModelParameterDraft() { modelDraftSaved += 1; }
-                function updatePresetRatioVisibility() {}
                 """,
                 self._extract_javascript_function(custom_size_source, "setCustomSizeMode"),
+                self._extract_javascript_function(custom_size_source, "setSizeMode"),
+                self._extract_javascript_function(custom_size_source, "currentSizeMode"),
                 self._extract_javascript_function(custom_size_source, "updateSizeFromPreset"),
                 self._extract_javascript_function(custom_size_source, "populateCustomSizeFromCurrentPreset"),
                 self._extract_javascript_function(custom_size_source, "sizeControlName"),
@@ -3578,7 +3717,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("shouldCloseLightboxFromClick(event.target, historyLightboxEl!)", shared_source)
         self.assertIn("showLightboxShortcutHint", shared_source)
         self.assertIn("const wasActive = isHistoryLightboxActive();", shared_source)
-        self.assertRegex(shared_source, r"if \(!wasActive\) \{\s*showLightboxShortcutHint")
+        self.assertRegex(shared_source, r"if \(!wasActive\) \{\s*if \(!window.matchMedia\([^\n]+\)\.matches\) \{\s*showLightboxShortcutHint")
         self.assertIn("openMainTaskLightboxByDirection", selection_source)
         self.assertIn("onTaskNavigate: openMainTaskLightboxByDirection", selection_source)
         self.assertIn('onTaskNavigate: (direction, context) => legacyMethod("openMainTaskLightboxByDirection", direction, context)', preview_source)
@@ -3782,8 +3921,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn('/static/app.js?v=runtime-790', html)
-        self.assertIn('/static/styles.css?v=runtime-789', html)
+        self.assertIn('/static/app.js?v=runtime-855', html)
+        self.assertIn('/static/styles.css?v=runtime-855', html)
         self.assertIn('id="pasteClipboardButton"', html)
         self.assertIn('id="statusText"', html)
         self.assertRegex(
@@ -3988,8 +4127,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function redoImageEdit()", script)
         self.assertIn("function resetImageEdit()", script)
         self.assertIn("function saveImageEdit()", script)
-        self.assertIn("function paintBucketFillRegion(point)", script)
-        self.assertIn("function imageEditorBucketFillColor()", script)
+        self.assertIn("function paintBucketFillRegion(point:", image_editor_source)
+        self.assertIn("function imageEditorBucketFillColor(color)", script)
         self.assertIn("function imageEditorBrushBoundaryContext()", script)
         self.assertIn("function imageEditorBrushOverlayContext()", script)
         self.assertIn("function drawEditorBrushBoundarySegment(from, to)", script)
@@ -4021,15 +4160,15 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('imageEditorState.tool = "crop";', script)
         self.assertNotIn('imageEditorState.tool = "brush";', script)
         self.assertIn('configureImageEditorStroke(ctx, { lineCap: "butt", lineJoin: "miter" })', script)
-        self.assertIn("function imageEditorArrowGeometry(start, end)", script)
+        self.assertIn("function imageEditorArrowGeometry(start, end, strokeWidthValue)", script)
         self.assertIn("const headWidth = Math.max(18, strokeWidth * 2.2);", script)
         self.assertIn("ctx.lineTo(geometry.shaftEnd.x, geometry.shaftEnd.y);", script)
         self.assertRegex(
             script,
             r"function drawEditorArrowOnContext\(ctx, start, end\)[\s\S]*ctx\.lineTo\(geometry\.shaftEnd\.x, geometry\.shaftEnd\.y\);[\s\S]*ctx\.stroke\(\);",
         )
-        self.assertIn('els.imageEditorClose?.addEventListener("click", closeImageEditor)', script)
-        self.assertIn('els.imageEditorCancel?.addEventListener("click", closeImageEditor)', script)
+        self.assertIn('els.imageEditorClose?.addEventListener("click", () => closeImageEditor())', script)
+        self.assertIn('els.imageEditorCancel?.addEventListener("click", () => closeImageEditor())', script)
         self.assertIn('els.imageEditorSave?.addEventListener("click", saveImageEdit)', script)
         self.assertIn('els.imageEditorUndo?.addEventListener("click", undoImageEdit)', script)
         self.assertIn('els.imageEditorRedo?.addEventListener("click", redoImageEdit)', script)
@@ -4047,16 +4186,20 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("addEventListener(\"pointermove\", handleImageEditorPointerMove)", script)
         self.assertIn("addEventListener(\"pointerup\", handleImageEditorPointerUp)", script)
         self.assertIn("addEventListener(\"pointercancel\", handleImageEditorPointerCancel)", script)
-        self.assertIn('imageEditorState.tool === "fill"', script)
+        self.assertIn('getTool() === "fill"', script)
         self.assertIn("drawEditorBrushBoundarySegment(from, to);", script)
         self.assertIn("drawEditorBrushOverlaySegment(from, to);", script)
-        self.assertIn("redrawImageEditorBrushOverlay(ctx);", script)
+        self.assertIn("redrawOverlay(ctx);", script)
         self.assertIn("imageEditorState.brushBoundaryCanvas", script)
         self.assertIn("imageEditorState.brushOverlayCanvas", script)
-        self.assertIn("ctx.lineWidth = imageEditorState.strokeWidth;", script)
+        self.assertIn("ctx.lineWidth = getBrushSettings().strokeWidth;", script)
         self.assertNotIn("imageEditorState.strokeWidth + 2", script)
-        self.assertIn("if (!imageEditorBoundaryHasPixels(boundaryData)) return false;", script)
-        self.assertIn("if (imageEditorPixelTouchesCanvasEdge(index, width, height)) return false;", script)
+        fill_source = Path("codex_image/webui/frontend/src/image-editor-fill.ts").read_text(encoding="utf-8")
+        fill_client = Path("codex_image/webui/frontend/src/image-editor-fill-client.ts").read_text(encoding="utf-8")
+        self.assertIn("if (!spans.length) return null;", fill_source)
+        self.assertIn("if (left === 0 || right === width - 1 || row === 0 || row === height - 1) return null;", fill_source)
+        self.assertIn('new Worker("/static/image-editor-fill-worker.js?v=1")', fill_client)
+        self.assertIn("worker.terminate();", fill_client)
         self.assertIn('setImageEditorStatus(translate("imageEditor.closedRegionRequired"), "error");', script)
         self.assertIn("pushImageEditorHistory();", script)
         self.assertIn("event.metaKey || event.ctrlKey", script)
@@ -4066,6 +4209,11 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(script, r"function handleDocumentKeydown\(event\)\s*\{[\s\S]*event\.key === \"Escape\"[\s\S]*closeImageEditor\(\)")
 
     def test_input_image_editor_supports_layered_compositing(self) -> None:
+        canvas_source = Path("codex_image/webui/frontend/src/image-editor-canvas.ts").read_text(encoding="utf-8")
+        drawing_source = Path("codex_image/webui/frontend/src/image-editor-drawing.ts").read_text(encoding="utf-8")
+        geometry_source = Path("codex_image/webui/frontend/src/image-editor-geometry.ts").read_text(encoding="utf-8")
+        panel_source = Path("codex_image/webui/frontend/src/image-editor-panel.ts").read_text(encoding="utf-8")
+        pointer_source = Path("codex_image/webui/frontend/src/image-editor-pointer.ts").read_text(encoding="utf-8")
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -4107,19 +4255,19 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("konvaStage: null", image_editor_source)
         self.assertIn("konvaLayer: null", image_editor_source)
         self.assertIn("konvaTransformer: null", image_editor_source)
-        self.assertIn("previewNode: null", image_editor_source)
+        self.assertIn("let previewNode: Konva.Arrow | null = null", drawing_source)
         self.assertIn("layers: []", image_editor_source)
         self.assertIn("selectedLayerId: null", image_editor_source)
         self.assertIn('tool: "crop"', image_editor_source)
-        self.assertIn("function renderImageEditorInsertList()", image_editor_source)
-        self.assertIn("function renderImageEditorLayerList()", image_editor_source)
-        self.assertIn("function imageEditorLayerThumbnailUrl(layer: ImageEditorLayer)", image_editor_source)
-        self.assertIn("const thumbnailUrl = imageEditorLayerThumbnailUrl(layer);", image_editor_source)
-        self.assertIn("thumbnail.src = thumbnailUrl;", image_editor_source)
-        self.assertIn("thumb.append(thumbnail);", image_editor_source)
+        self.assertIn("function renderImageEditorInsertList()", panel_source)
+        self.assertIn("function renderImageEditorLayerList()", panel_source)
+        self.assertIn("function imageEditorLayerThumbnailUrl(layer: ImageEditorLayer)", canvas_source)
+        self.assertIn("const thumbnailUrl = imageEditorLayerThumbnailUrl(layer);", panel_source)
+        self.assertIn("thumbnail.src = thumbnailUrl;", panel_source)
+        self.assertIn("thumb.append(thumbnail);", panel_source)
         self.assertRegex(
-            image_editor_source,
-            r"if \(thumbnailUrl\) \{[\s\S]*thumb\.append\(thumbnail\);[\s\S]*\} else \{[\s\S]*thumb\.textContent = String\(imageEditorState\.layers\.indexOf\(layer\) \+ 1\);",
+            panel_source,
+            r"if \(thumbnailUrl\) \{[\s\S]*thumb\.append\(thumbnail\);[\s\S]*\} else \{[\s\S]*thumb\.textContent = String\(getEditorSnapshot\(\)\.layers\.indexOf\(layer\) \+ 1\);",
         )
         self.assertRegex(image_editor_source, r"async function insertImageEditorLayerFromSource\(source(?::\s*any)?\)")
         self.assertRegex(image_editor_source, r"function selectImageEditorLayer\(layerId(?::\s*[^,)]+)?")
@@ -4146,25 +4294,25 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(image_editor_source, r"function moveImageEditorLayer\(direction(?::\s*any)?\)")
         self.assertIn("function deleteSelectedImageEditorLayer()", image_editor_source)
         self.assertIn("function imageEditorCompositeCanvas()", image_editor_source)
-        self.assertRegex(image_editor_source, r"function applyImageEditorLayerEraseStroke\(layer(?::\s*[^,]+)?, points(?::\s*any\[\])?\)")
-        self.assertIn("function applyImageEditorLayerEraseSegment(layer: ImageEditorLayer, from: any, to: any)", image_editor_source)
-        self.assertIn("function applyImageEditorLayerEraseDot(layer: ImageEditorLayer, point: any)", image_editor_source)
-        self.assertIn("function imageEditorLayerCanvasPoint(layer: ImageEditorLayer, point: any)", image_editor_source)
-        self.assertIn("layer.canvas.width / Math.max(1, layer.node.width())", image_editor_source)
-        self.assertIn("layer.canvas.height / Math.max(1, layer.node.height())", image_editor_source)
-        self.assertIn("imageEditorLayerCanvasStrokeWidth(layer)", image_editor_source)
-        self.assertIn("drawing.changed = applyImageEditorLayerEraseSegment(layer, drawing.last, point) || drawing.changed;", image_editor_source)
-        self.assertIn("const changed = applyImageEditorLayerEraseDot(layer, point);", image_editor_source)
-        self.assertIn("new Konva.Arrow", image_editor_source)
-        self.assertIn('name: "image-editor-preview-arrow"', image_editor_source)
-        self.assertIn("function imageEditorArrowGeometry(start: any, end: any)", image_editor_source)
-        self.assertIn("const headWidth = Math.max(18, strokeWidth * 2.2);", image_editor_source)
-        self.assertIn("ctx.lineTo(geometry.shaftEnd.x, geometry.shaftEnd.y);", image_editor_source)
+        self.assertRegex(drawing_source, r"function applyImageEditorLayerEraseStroke\(layer(?::\s*[^,]+)?, points(?::\s*any\[\])?\)")
+        self.assertIn("function applyImageEditorLayerEraseSegment(layer: ImageEditorLayer, from: any, to: any)", drawing_source)
+        self.assertIn("function applyImageEditorLayerEraseDot(layer: ImageEditorLayer, point: any)", drawing_source)
+        self.assertIn("function imageEditorLayerCanvasPoint(layer: ImageEditorLayer, point: any)", drawing_source)
+        self.assertIn("layer.canvas.width / Math.max(1, layer.node.width())", drawing_source)
+        self.assertIn("layer.canvas.height / Math.max(1, layer.node.height())", drawing_source)
+        self.assertIn("imageEditorLayerCanvasStrokeWidth(layer)", drawing_source)
+        self.assertIn("drawing.changed = applyImageEditorLayerEraseSegment(layer, drawing.last, point) || drawing.changed;", pointer_source)
+        self.assertIn("const changed = applyImageEditorLayerEraseDot(layer, point);", pointer_source)
+        self.assertIn("new Konva.Arrow", drawing_source)
+        self.assertIn('name: "image-editor-preview-arrow"', drawing_source)
+        self.assertIn("function imageEditorArrowGeometry(start: any, end: any, strokeWidthValue: number)", geometry_source)
+        self.assertIn("const headWidth = Math.max(18, strokeWidth * 2.2);", geometry_source)
+        self.assertIn("ctx.lineTo(geometry.shaftEnd.x, geometry.shaftEnd.y);", drawing_source)
         self.assertRegex(
-            image_editor_source,
+            drawing_source,
             r"function drawEditorArrowOnContext\(ctx: any, start: any, end: any\)[\s\S]*ctx\.lineTo\(geometry\.shaftEnd\.x, geometry\.shaftEnd\.y\);[\s\S]*ctx\.stroke\(\);",
         )
-        self.assertIn("function clearImageEditorPreview()", image_editor_source)
+        self.assertIn("function clearImageEditorPreview()", drawing_source)
         self.assertIn("function updateImageEditorDisplayScale()", image_editor_source)
         self.assertIn("function updateImageEditorTransformerAffordance(displayScale: number)", image_editor_source)
         self.assertIn("transformer.anchorSize?.(Math.max(14, Math.round(14 / safeScale)))", image_editor_source)
@@ -4184,7 +4332,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("const scaleX = stageWidth / Math.max(1, rect.width);", image_editor_source)
         self.assertIn("const scaleY = stageHeight / Math.max(1, rect.height);", image_editor_source)
         self.assertIn("Math.min(stageWidth, (event.clientX - rect.left) * scaleX)", image_editor_source)
-        self.assertIn("captureImageEditorPointer(event)", image_editor_source)
+        self.assertIn("captureImageEditorPointer(event)", pointer_source)
         self.assertRegex(
             image_editor_source,
             r"if \(imageEditorState\.tool === \"select\"\) \{[\s\S]*if \(isImageEditorTransformerTarget\(event\.target\)\) return;[\s\S]*if \(event\.target === stage\) selectImageEditorLayer\(null, \{ updateTool: false \}\);[\s\S]*return;",
@@ -4199,7 +4347,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("rotateAnchorOffset: 28", image_editor_source)
         self.assertIn("imageEditorState.konvaTransformer?.moveToTop?.();", image_editor_source)
         self.assertIn("new Konva.Image", image_editor_source)
-        self.assertIn("globalCompositeOperation = \"destination-out\"", image_editor_source)
+        self.assertIn("globalCompositeOperation = \"destination-out\"", drawing_source)
         self.assertIn('if (!["select", "brush", "arrow", "crop", "fill", "eraser"].includes(tool)) return;', script)
         self.assertRegex(script, r"function resetForm\(\)\s*\{[\s\S]*closeGallery\(\);[\s\S]*closeImageEditor\(\);")
         self.assertIn("openImageEditor(index)", script)
@@ -4234,8 +4382,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         ).read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertIn("/static/app.js?v=runtime-790", html)
-        self.assertIn("/static/styles.css?v=runtime-789", html)
+        self.assertIn("/static/app.js?v=runtime-855", html)
+        self.assertIn("/static/styles.css?v=runtime-855", html)
         self.assertIn('"codex-image-theme-preference"', theme_source)
         self.assertIn('themePreference: "system"', script)
         self.assertIn('call(methods, "restoreThemePreference")', script)

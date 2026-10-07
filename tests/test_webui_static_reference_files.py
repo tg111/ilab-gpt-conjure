@@ -277,7 +277,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
 
     def test_history_renders_files_outside_image_lightbox(self) -> None:
         media = (ROOT / "codex_image/webui/frontend/src/history-detail-media.ts").read_text(encoding="utf-8")
-        history = (ROOT / "codex_image/webui/frontend/src/history.ts").read_text(encoding="utf-8")
+        history = (ROOT / "codex_image/webui/frontend/src/history-detail-controller.ts").read_text(encoding="utf-8")
         self.assertIn("historyReferenceFilesHtml", media)
         self.assertIn("task.reference_files", media)
         self.assertIn("data-history-reference-file-id", media)
@@ -312,6 +312,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
             const media = evaluate(transpile({str(module_path)!r}), (name) => {{
               if (name === "./i18n") return {{ translate: (key) => key, formatTranslation: (key) => key }};
               if (name === "./reference-file-icons") return icons;
+              if (name === "./transparency-status") return {{}}; // Not used by reference-file rendering.
               if (name === "./webui-utils") return utils;
               throw new Error(`unexpected require: ${{name}}`);
             }});
@@ -351,12 +352,11 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
         index = (ROOT / "codex_image/webui/static/index.html").read_text(encoding="utf-8")
         history = (ROOT / "codex_image/webui/static/history.html").read_text(encoding="utf-8")
         worker = (ROOT / "codex_image/webui/static/service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("runtime-789", index)
-        self.assertIn("runtime-789", history)
-        self.assertIn("history-114", history)
-        self.assertIn('ilab-conjure-shell-v269', worker)
-        self.assertIn('/static/app.js?v=runtime-790', worker)
-        self.assertIn('/static/styles.css?v=runtime-789', worker)
+        assets = set(re.findall(r'/static/(?:app|history)\.js\?v=[^"\s]+|/static/styles\.css\?v=[^"\s]+', index + history))
+        self.assertEqual(len(assets), 3)
+        for asset in assets:
+            self.assertIn(f'"{asset}"', worker)
+        self.assertRegex(worker, r'ilab-conjure-shell-v\d+')
 
     def test_design_system_documents_shared_input_rail_and_filename_summary_tiles(self) -> None:
         design_path = ROOT / "DESIGN.md"
@@ -571,6 +571,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
               require(name) {{
                 if (name === "./i18n") return {{ formatTranslation: (key) => key, translate: (key) => key }};
                 if (name === "./state") return {{ getLegacyBridge: () => bridge }};
+                if (name === "./composer-draft") return {{ preserveComposerDraft() {{}}, markComposerBaseline() {{}} }};
                 if (name === "./task-model-summary") return {{ taskOutputSettingsView: () => "locked-summary" }};
                 throw new Error(`unexpected require: ${{name}}`);
               }},
@@ -630,6 +631,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
               require(name) {{
                 if (name === "./i18n") return {{ formatTranslation: (key) => key, translate: (key) => key }};
                 if (name === "./state") return {{ getLegacyBridge: () => bridge }};
+                if (name === "./composer-draft") return {{ preserveComposerDraft() {{}}, markComposerBaseline() {{}} }};
                 if (name === "./task-model-summary") return {{ taskOutputSettingsView: () => "locked-summary" }};
                 throw new Error(`unexpected require: ${{name}}`);
               }},
@@ -942,7 +944,7 @@ class ReferenceFileFrontendBehaviorTests(unittest.TestCase):
               constructor(tag = "div") {{
                 this.tagName = tag.toUpperCase(); this.children = []; this.parentElement = null;
                 this.attributes = {{}}; this.listeners = {{}}; this.className = "";
-                this.classList = new FakeClassList(this); this.title = ""; this.tabIndex = -1;
+                this.classList = new FakeClassList(this); this.title = ""; this.tabIndex = -1; this.style = {{}};
                 this.textContent = ""; this.value = ""; this.clientWidth = 0;
                 this.scrollWidth = 0; this.scrollLeft = 0;
                 this._innerHTML = "";
@@ -1032,6 +1034,7 @@ class ReferenceFileFrontendBehaviorTests(unittest.TestCase):
               if (name === "./dom") return dom;
               if (name === "./i18n") return i18n;
               if (name === "./state") return stateModule;
+              if (name === "./upload-thumbnails") return {{ uploadThumbnailUrl: () => Promise.resolve("data:image/webp;base64,cA==") }};
               throw new Error(`unexpected image require: ${{name}}`);
             }});
             imageApi.initImageStripFeature();
@@ -1180,6 +1183,7 @@ class ReferenceFileFrontendBehaviorTests(unittest.TestCase):
               if (name === "./dom") return dom;
               if (name === "./i18n") return i18n;
               if (name === "./state") return stateModule;
+              if (name === "./upload-thumbnails") return {{ uploadThumbnailUrl: () => Promise.resolve("data:image/webp;base64,cA==") }};
               throw new Error(`unexpected strip require: ${{name}}`);
             }});
             referenceApi.initReferenceFileInputsFeature();

@@ -1,6 +1,7 @@
+import { isGptImageModel } from "./gpt-image-models";
+import { setBackgroundControl } from "./background-controls";
 import type { CatalogModel, CatalogParameterDefinition, GenerationOperation } from "./types";
 import { selectedProviderBinding } from "./provider-selection";
-import { isGptImageModelId } from "./model-identifiers";
 import { getLegacyBridge } from "./state";
 import { renderCurrentModelParameters } from "./model-parameters";
 
@@ -134,7 +135,7 @@ export function saveCurrentModelParameterDraft(
   if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state)) return;
   const model = state.generationCatalog?.models.find((item) => item.id === state.selectedModelId);
   if (!model || typeof methods.currentTaskParams !== "function") return;
-  if (!isGptImageModelId(model.id)) {
+  if (!isGptImageModel(model.id)) {
     methods.persistModelSelection?.();
     return;
   }
@@ -152,11 +153,10 @@ export function restoreCurrentModelParameterDraft(): void {
   const modelId = state.selectedModelId || "";
   const model = state.generationCatalog?.models.find((item) => item.id === modelId);
   if (!model) return;
-  if (!isGptImageModelId(model.id)) {
+  if (!isGptImageModel(model.id)) {
     renderCurrentModelParameters();
     return;
   }
-  renderCurrentModelParameters();
   const draft = {
     ...Object.fromEntries(model.parameters.map((parameter) => [parameter.id, parameter.default])),
     ...(state.parameterDraftsByModel[modelId] || {}),
@@ -169,13 +169,14 @@ export function restoreCurrentModelParameterDraft(): void {
   if (typeof draft["canvas.size"] === "string") methods.syncSizeControlsFromSize?.(draft["canvas.size"]);
   if (typeof draft["gpt.quality"] === "string" && els.quality) els.quality.value = draft["gpt.quality"];
   if (typeof draft["output.format"] === "string" && els.outputFormat) els.outputFormat.value = draft["output.format"];
+  setBackgroundControl(draft["gpt.background"]);
   if (typeof draft["gpt.moderation"] === "string" && els.moderation) els.moderation.value = draft["gpt.moderation"];
   if (typeof draft["gpt.output_compression"] === "number" && els.compression) els.compression.value = String(draft["gpt.output_compression"]);
   if (typeof draft["gpt.web_search"] === "boolean" && els.webSearch) {
     els.webSearch.checked = draft["gpt.web_search"] && (selectedProviderBinding()?.protocol_profile || "").endsWith("_responses");
   }
   if (typeof draft["output.count"] === "number" && els.nInput) els.nInput.value = String(draft["output.count"]);
-  methods.syncRadioButtons?.(els.quality, els.outputFormat, els.moderation);
+  methods.syncRadioButtons?.(els.quality, els.outputFormat, els.moderation, els.nInput);
   methods.updateQuantity?.();
   methods.updateCompression?.();
   renderCurrentModelParameters();

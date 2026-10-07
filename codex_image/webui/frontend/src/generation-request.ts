@@ -1,8 +1,8 @@
+import { isGptImageModel } from "./gpt-image-models";
 import { canonicalControlValues } from "./model-parameter-drafts";
 import { activeParameterValuesFor } from "./model-parameters";
 import { selectedProviderBinding } from "./provider-selection";
 import { getLegacyBridge } from "./state";
-import { isGptImageModelId } from "./model-identifiers";
 
 export interface CanonicalGenerationSelection {
   canonicalModelId: string;
@@ -22,7 +22,7 @@ export function currentGenerationSelection(): CanonicalGenerationSelection {
     return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
   }
   let draft = state.parameterDraftsByModel[model.id] || {};
-  if (isGptImageModelId(model.id) && typeof methods.currentTaskParams === "function") {
+  if (isGptImageModel(model.id) && typeof methods.currentTaskParams === "function") {
     const currentValues = canonicalControlValues(
       methods.currentTaskParams(),
       selectedProviderBinding()?.protocol_profile || "",

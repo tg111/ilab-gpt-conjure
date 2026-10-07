@@ -1,55 +1,46 @@
+import { resetApiAdvancedSettings } from "./api-advanced-settings";
+import { updateModeSpecificSettings } from "./api-mode-settings";
+import { handleProviderBindingEditorChange as updateBindingEditor } from "./api-provider-binding-editor";
+import type {
+  ProviderOriginChangeConfirmation,
+} from "./api-provider-credentials";
+import {
+  clearProviderApiKeyInputs,
+  evaluateProviderCredentialSave,
+  isConfirmedProviderOriginChange,
+} from "./api-provider-credentials";
+import {
+  apiProviderMatchesSearch,
+  scrollActiveApiProviderCardIntoView,
+  updateApiProviderListPresentation,
+} from "./api-provider-list-ui";
+import { applyProviderDraft, defaultGptImageBindings, normalizeApiImagesConcurrency, normalizeApiProvider, normalizeApiSettings, normalizeCodexMode } from "./api-provider-model";
+import { apiSettingsSavePayload, patchApiSettings } from "./api-provider-save";
+import {
+  cancelApiProviderSortInteraction,
+  isCompleteProviderOrder,
+} from "./api-provider-sort";
+import { refreshHealth } from "./auth-source";
+import { formatTranslation, translate } from "./i18n";
+import { refreshGenerationCatalog } from "./model-catalog";
+import {
+  availableProtocolsForModel,
+  bindingFromProtocol,
+  readProviderBindingCards,
+  renderProviderBindingCards,
+  validateProviderBindingOverlaps
+} from "./provider-model-bindings";
+import { providerBindingSelectionKey, selectedProviderBinding } from "./provider-selection";
 import { getLegacyBridge } from "./state";
 import {
   API_SETTINGS_STORAGE_KEY,
   DEFAULT_API_BASE_URL,
   DEFAULT_API_IMAGE_MODEL,
   DEFAULT_API_IMAGES_CONCURRENCY,
-  DEFAULT_API_MODE,
-  DEFAULT_CODEX_MODE,
+  DEFAULT_API_MODE
 } from "./state-defaults";
-import { refreshHealth } from "./auth-source";
-import { refreshGenerationCatalog } from "./model-catalog";
-import { providerBindingSelectionKey, selectedProviderBinding } from "./provider-selection";
-import { updateModeSpecificSettings } from "./api-mode-settings";
-import { formatTranslation, translate } from "./i18n";
 import { closeSystemSettingsModal, openSystemSettingsModal } from "./system-settings";
-import { resetApiAdvancedSettings } from "./api-advanced-settings";
-import { syncThemedSelect } from "./themed-select";
-import {
-  apiProviderMatchesSearch,
-  scrollActiveApiProviderCardIntoView,
-  updateApiProviderListPresentation,
-} from "./api-provider-list-ui";
-import {
-  cancelApiProviderSortInteraction,
-  isCompleteProviderOrder,
-} from "./api-provider-sort";
-import {
-  BINDING_PROTOCOL_LABELS,
-  BINDING_COMPATIBILITY_LABELS,
-  availableCompatibilityLayers,
-  availableProtocolsForModel,
-  bindingFromProtocol,
-  bindingTemplateForProtocol,
-  bindingTemplateForCompatibility,
-  bindingTemplateSuggestion,
-  isBindingTemplateBaseUrl,
-  normalizeProviderBindings,
-  readProviderBindingCards,
-  renderProviderBindingCards,
-  validateProviderBindingOverlaps,
-} from "./provider-model-bindings";
-import type { BindingProtocol } from "./provider-model-bindings";
-import type { BindingCompatibility } from "./provider-model-bindings";
-import { GPT_IMAGE_MODEL_IDS } from "./model-identifiers";
-import {
-  clearProviderApiKeyInputs,
-  evaluateProviderCredentialSave,
-  isConfirmedProviderOriginChange,
-} from "./api-provider-credentials";
-import type {
-  ProviderOriginChangeConfirmation,
-} from "./api-provider-credentials";
+export { normalizeApiImagesConcurrency, normalizeApiProvider, normalizeApiSettings } from "./api-provider-model";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -69,56 +60,6 @@ function updateRequestPreview(): void { legacyMethod("updateRequestPreview"); }
 function closePromptPopover(): void { legacyMethod("closePromptPopover"); }
 function openConfirmPopover(...args: any[]): void { legacyMethod("openConfirmPopover", ...args); }
 
-function defaultGptImageBindings(
-  providerId: string,
-  protocol: BindingProtocol,
-  legacyRemoteModelId: string = DEFAULT_API_IMAGE_MODEL,
-): any[] {
-  return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
-    `${providerId}-${modelId}`,
-    modelId,
-    modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
-    protocol,
-  ));
-}
-
-export function normalizeApiProvider(provider: any = {}, index: any = 0): any {
-  const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
-  const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
-  const legacyMode = provider.api_mode === "responses" ? "responses" : DEFAULT_API_MODE;
-  const bindings = normalizeProviderBindings(
-    Array.isArray(provider.bindings) && provider.bindings.length
-      ? provider.bindings
-      : defaultGptImageBindings(
-        id,
-        legacyMode === "responses" ? "openai_responses" : "openai_images",
-        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
-      ),
-    id,
-  );
-  const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
-  const apiMode = gptBinding?.protocol_profile === "openai_responses" ? "responses" : "images";
-  const concurrency = normalizeApiImagesConcurrency(provider.concurrency ?? provider.images_concurrency);
-  return {
-    id,
-    name: String(provider.name || (id === "default" ? "Default" : `Provider ${index + 1}`)).trim() || id,
-    base_url: String(provider.base_url || DEFAULT_API_BASE_URL).trim() || DEFAULT_API_BASE_URL,
-    api_key: String(provider.api_key || "").trim(),
-    concurrency,
-    bindings,
-    image_model: gptBinding?.remote_model_id || DEFAULT_API_IMAGE_MODEL,
-    api_mode: apiMode,
-    images_concurrency: concurrency,
-    api_key_set: Boolean(provider.api_key_set || provider.api_key),
-    api_key_masked: String(provider.api_key_masked || ""),
-    api_key_source_provider_id: String(provider.api_key_source_provider_id || "").trim(),
-    icon_emoji: String(provider.icon_emoji || "").trim(),
-    default_model_ids: Array.isArray(provider.default_model_ids)
-      ? provider.default_model_ids.map((value: any) => String(value || "").trim()).filter(Boolean)
-      : [],
-  };
-}
-
 function appendProviderIdentity(target: HTMLElement, provider: any, className: string): void {
   const icon = String(provider?.icon_emoji || "").trim();
   if (icon) {
@@ -132,16 +73,6 @@ function appendProviderIdentity(target: HTMLElement, provider: any, className: s
   label.className = className;
   label.textContent = provider?.name || provider?.id || "";
   target.append(label);
-}
-
-export function normalizeApiImagesConcurrency(value: any): number {
-  const parsed = Number.parseInt(value, 10);
-  if (Number.isNaN(parsed)) return DEFAULT_API_IMAGES_CONCURRENCY;
-  return Math.min(32, Math.max(1, parsed));
-}
-
-function normalizeCodexMode(value: any): string {
-  return value === "responses" ? "responses" : DEFAULT_CODEX_MODE;
 }
 
 function providerById(providerId: any, settings: any = state.apiSettings): any {
@@ -325,7 +256,7 @@ function writeProviderForm(provider: any): void {
     provider.bindings || [],
     state.generationCatalog?.models || [],
     provider.id,
-    state.apiSettings.default_provider_by_model || {},
+    defaultsForProviderDraft(provider),
   );
   updateApiRequestEndpointPreview();
   resetApiAdvancedSettings();
@@ -333,6 +264,9 @@ function writeProviderForm(provider: any): void {
 
 function defaultsForProviderDraft(provider: any): Record<string, string> {
   const defaults = { ...(state.apiSettings.default_provider_by_model || {}) };
+  Object.keys(defaults).forEach((modelId) => {
+    if (defaults[modelId] === provider.id) delete defaults[modelId];
+  });
   (provider.default_model_ids || []).forEach((modelId: string) => { defaults[modelId] = provider.id; });
   return defaults;
 }
@@ -441,83 +375,6 @@ function renderApiProviderEditor(): void {
   const isNew = Boolean(state.apiProviderDraftIsNew);
   setElementText(els.apiProviderEditorTitle, translate(isNew ? "apiSettings.newProviderTitle" : "apiSettings.editProvider"));
   writeProviderForm(state.apiProviderDraft);
-}
-
-function applyApiProviderDraft(settings: any): any {
-  if (!apiProviderEditorActive()) return normalizeApiSettings(settings);
-  const draft = draftProviderFromForm();
-  const normalized = normalizeApiSettings(settings);
-  const index = normalized.providers.findIndex((provider: any) => provider.id === draft.id);
-  if (index >= 0) {
-    normalized.providers[index] = normalizeApiProvider({ ...normalized.providers[index], ...draft }, index);
-  } else {
-    normalized.providers.push(normalizeApiProvider(draft, normalized.providers.length));
-  }
-  normalized.active_provider_id = draft.id;
-  const defaultModelIds = new Set(draft.default_model_ids || []);
-  for (const binding of draft.bindings || []) {
-    const modelId = binding.canonical_model_id;
-    if (defaultModelIds.has(modelId)) normalized.default_provider_by_model[modelId] = draft.id;
-    else if (normalized.default_provider_by_model[modelId] === draft.id) delete normalized.default_provider_by_model[modelId];
-  }
-  for (const modelId of Object.keys(normalized.default_provider_by_model)) {
-    if (normalized.default_provider_by_model[modelId] !== draft.id) continue;
-    if (!(draft.bindings || []).some((binding: any) => binding.canonical_model_id === modelId)) {
-      delete normalized.default_provider_by_model[modelId];
-    }
-  }
-  state.apiProviderEditingId = null;
-  state.apiProviderDraft = null;
-  state.apiProviderDraftIsNew = false;
-  return normalizeApiSettings(normalized);
-}
-
-export function normalizeApiSettings(settings: any = {}): any {
-  const rawProviders = Array.isArray(settings.providers) && settings.providers.length
-    ? settings.providers
-    : [{
-      id: settings.active_provider_id || "default",
-      name: settings.name || "Default",
-      base_url: settings.base_url,
-      api_key: settings.api_key,
-      image_model: settings.image_model,
-      api_mode: settings.api_mode,
-      images_concurrency: settings.images_concurrency,
-      api_key_set: settings.api_key_set,
-      api_key_masked: settings.api_key_masked,
-    }];
-  const providers: any[] = [];
-  const seen = new Set<string>();
-  rawProviders.forEach((provider: any, index: number) => {
-    const normalized = normalizeApiProvider(provider, index);
-    if (seen.has(normalized.id)) return;
-    seen.add(normalized.id);
-    providers.push(normalized);
-  });
-  if (!providers.length) providers.push(normalizeApiProvider({}, 0));
-  const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
-  const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
-  const defaultProviderByModel = { ...(settings.default_provider_by_model || {}) };
-  const supportedModelIds = new Set(
-    providers.flatMap((provider) => provider.bindings.map((binding: any) => binding.canonical_model_id)),
-  );
-  supportedModelIds.forEach((modelId) => {
-    const supportingProviders = providers.filter((provider) => (
-      provider.bindings.some((binding: any) => binding.canonical_model_id === modelId)
-    ));
-    if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
-      defaultProviderByModel[modelId] = supportingProviders.find(
-        (provider) => provider.id === activeProvider.id,
-      )?.id || supportingProviders[0]?.id;
-    }
-  });
-  return {
-    schema_version: 2,
-    codex_mode: normalizeCodexMode(settings.codex_mode),
-    active_provider_id: activeProvider.id,
-    default_provider_by_model: defaultProviderByModel,
-    providers,
-  };
 }
 
 export function activeApiProvider(): any {
@@ -716,6 +573,10 @@ export function confirmDeleteApiProvider(anchor: any = els.deleteApiProviderButt
 }
 
 export function openApiSettingsModal(): void {
+  if (apiProviderEditorActive()) {
+    openSystemSettingsModal("api");
+    return;
+  }
   closePromptPopover();
   state.apiProviderEditingId = null;
   state.apiProviderDraft = null;
@@ -744,6 +605,8 @@ export function selectApiProvider(providerId: any, anchor?: HTMLElement | null):
   }
   if (state.apiProviderSortMode) return;
   const provider = providerById(id);
+  const providerChanged = provider.id !== activeApiProvider().id;
+  if (!providerChanged && provider.id === currentApiProviderId()) return;
   const continueSwitch = () => {
     state.apiSettings = normalizeApiSettings({
       ...state.apiSettings,
@@ -754,12 +617,8 @@ export function selectApiProvider(providerId: any, anchor?: HTMLElement | null):
     persistApiSettings();
     legacyMethod("selectGenerationProvider", provider.id);
     renderAuthSourceAfterProviderChange();
-    queueApiSettingsAutosave();
+    if (providerChanged) queueApiSettingsAutosave({ silent: true });
   };
-  if (provider.id === currentApiProviderId()) {
-    continueSwitch();
-    return;
-  }
   void anchor;
   continueSwitch();
 }
@@ -770,7 +629,11 @@ export function editApiProvider(): void {
   const provider = activeApiProvider();
   state.apiProviderEditingId = provider.id;
   state.apiProviderDraftIsNew = false;
-  state.apiProviderDraft = normalizeApiProvider({ ...provider }, 0);
+  state.apiProviderDraft = normalizeApiProvider({
+    ...provider,
+    default_model_ids: Object.keys(state.apiSettings.default_provider_by_model || {})
+      .filter((modelId) => state.apiSettings.default_provider_by_model[modelId] === provider.id),
+  }, 0);
   populateApiSettingsForm();
   setApiSettingsFeedback(translate("apiSettings.editDraftStatus"), "running");
   scrollApiProviderEditorIntoView();
@@ -883,6 +746,9 @@ export function addProviderBinding(): void {
     draft.id,
     defaultsForProviderDraft(draft),
   );
+  const added = [...(els.apiProviderBindings as HTMLElement).querySelectorAll<HTMLDetailsElement>("details[data-binding-id]")]
+    .find(card => card.dataset.bindingId === bindingId);
+  if (added) { added.open = true; added.querySelector<HTMLElement>("summary")?.focus(); }
   updateApiRequestEndpointPreview();
 }
 
@@ -902,106 +768,6 @@ export function removeProviderBinding(bindingId: string): void {
     draft.id,
     defaultsForProviderDraft(draft),
   );
-  updateApiRequestEndpointPreview();
-}
-
-export function handleProviderBindingEditorChange(event: Event): void {
-  const target = event.target as HTMLInputElement | HTMLSelectElement | null;
-  const card = target?.closest<HTMLElement>("[data-binding-id]");
-  if (!target || !card) return;
-  if (target.matches("[data-binding-model]")) {
-    const modelId = target.value;
-    const protocols = availableProtocolsForModel(modelId);
-    const defaultProtocol = protocols[0];
-    const protocolSelect = card.querySelector<HTMLSelectElement>("[data-binding-protocol]");
-    if (protocolSelect) {
-      protocolSelect.replaceChildren(...protocols.map((protocol) => {
-        const option = document.createElement("option");
-        option.value = protocol;
-        option.textContent = BINDING_PROTOCOL_LABELS[protocol];
-        return option;
-      }));
-      protocolSelect.value = protocols[0] || "";
-      syncThemedSelect(protocolSelect);
-    }
-    const compatibilitySelect = card.querySelector<HTMLSelectElement>("[data-binding-compatibility]");
-    if (compatibilitySelect) {
-      compatibilitySelect.replaceChildren(...(defaultProtocol
-        ? availableCompatibilityLayers(modelId, defaultProtocol)
-        : []).map((compatibility) => {
-        const option = document.createElement("option");
-        option.value = compatibility;
-        option.textContent = BINDING_COMPATIBILITY_LABELS[compatibility];
-        return option;
-      }));
-      compatibilitySelect.value = "standard";
-      syncThemedSelect(compatibilitySelect);
-    }
-    card.dataset.bindingProtocolChanged = "true";
-    card.dataset.bindingCompatibilityChanged = "true";
-    if (state.apiProviderDraftIsNew && defaultProtocol) {
-      const suggestion = bindingTemplateSuggestion(bindingTemplateForProtocol(modelId, defaultProtocol));
-      const currentBase = String(els.apiBaseUrl?.value || "").trim();
-      if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els.apiBaseUrl.value = suggestion.base_url;
-    }
-    const remoteInput = card.querySelector<HTMLInputElement>("[data-binding-remote-model]");
-    const model = state.generationCatalog?.models.find((item: any) => item.id === modelId);
-    if (remoteInput && !remoteInput.value.trim()) remoteInput.value = model?.official_model_id || modelId;
-    const existingOperations = String(card.dataset.bindingModelOperations || "")
-      .split(",")
-      .filter(Boolean);
-    card.dataset.bindingModelOperations = (model?.operations || existingOperations).join(",");
-  }
-  if (target.matches("[data-binding-default]")) {
-    const modelId = card.querySelector<HTMLSelectElement>("[data-binding-model]")?.value;
-    if (modelId) {
-      (els.apiProviderBindings as HTMLElement | null)?.querySelectorAll<HTMLElement>("[data-binding-id]").forEach((item) => {
-        if (item === card) return;
-        if (item.querySelector<HTMLSelectElement>("[data-binding-model]")?.value !== modelId) return;
-        const checkbox = item.querySelector<HTMLInputElement>("[data-binding-default]");
-        if (checkbox) checkbox.checked = (target as HTMLInputElement).checked;
-      });
-    }
-  }
-  if (target.matches("[data-binding-protocol]")) {
-    card.dataset.bindingProtocolChanged = "true";
-    const modelId = card.querySelector<HTMLSelectElement>("[data-binding-model]")?.value || "";
-    const compatibilitySelect = card.querySelector<HTMLSelectElement>("[data-binding-compatibility]");
-    const protocol = target.value as BindingProtocol;
-    if (compatibilitySelect) {
-      compatibilitySelect.replaceChildren(...availableCompatibilityLayers(modelId, protocol).map((compatibility) => {
-        const option = document.createElement("option");
-        option.value = compatibility;
-        option.textContent = BINDING_COMPATIBILITY_LABELS[compatibility];
-        return option;
-      }));
-      compatibilitySelect.value = "standard";
-      syncThemedSelect(compatibilitySelect);
-    }
-    card.dataset.bindingCompatibilityChanged = "true";
-    if (state.apiProviderDraftIsNew) {
-      const templateId = bindingTemplateForProtocol(modelId, protocol);
-      const suggestion = bindingTemplateSuggestion(templateId);
-      const currentBase = String(els.apiBaseUrl?.value || "").trim();
-      if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els.apiBaseUrl.value = suggestion.base_url;
-    }
-  }
-  if (target.matches("[data-binding-compatibility]")) {
-    card.dataset.bindingCompatibilityChanged = "true";
-    if (state.apiProviderDraftIsNew) {
-      const modelId = card.querySelector<HTMLSelectElement>("[data-binding-model]")?.value || "";
-      const protocol = (card.querySelector<HTMLSelectElement>("[data-binding-protocol]")?.value
-        || availableProtocolsForModel(modelId)[0]) as BindingProtocol;
-      const templateId = bindingTemplateForCompatibility(
-        modelId,
-        protocol,
-        target.value as BindingCompatibility,
-      );
-      const suggestion = bindingTemplateSuggestion(templateId);
-      const currentBase = String(els.apiBaseUrl?.value || "").trim();
-      if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els.apiBaseUrl.value = suggestion.base_url;
-    }
-  }
   updateApiRequestEndpointPreview();
 }
 
@@ -1080,15 +846,15 @@ export function selectCodexMode(mode: any, anchor?: HTMLElement | null): boolean
   return true;
 }
 
-export function queueApiSettingsAutosave(): void {
+export function queueApiSettingsAutosave(options: { silent?: boolean } = {}): void {
   if (apiProviderEditorActive()) return;
   if (apiSettingsAutosaveTimerId !== null) {
     window.clearTimeout(apiSettingsAutosaveTimerId);
   }
-  setApiSettingsFeedback(translate("apiSettings.autoSaving"), "running");
+  setApiSettingsFeedback(options.silent ? "" : translate("apiSettings.autoSaving"), options.silent ? "" : "running");
   apiSettingsAutosaveTimerId = window.setTimeout(() => {
     apiSettingsAutosaveTimerId = null;
-    void saveApiSettings({ auto: true });
+    void saveApiSettings({ auto: true, silent: options.silent });
   }, 260);
 }
 
@@ -1167,6 +933,7 @@ function setSaveButtonText(stateName: "saving" | "saved" | "failed" | "default")
 
 export async function saveApiSettings(options: any = {}): Promise<boolean> {
   const autoSave = Boolean(options.auto);
+  const silent = autoSave && Boolean(options.silent);
   if (autoSave && apiProviderEditorActive()) return true;
   const sortFocusId = autoSave ? focusedApiProviderSortId() : "";
   if (state.apiSettingsSaveTimerId) {
@@ -1175,7 +942,7 @@ export async function saveApiSettings(options: any = {}): Promise<boolean> {
   }
   const previousSettings = normalizeApiSettings(state.apiSettings);
   const previousEditingId = state.apiProviderEditingId;
-  const previousDraft = state.apiProviderDraft ? structuredClone(state.apiProviderDraft) : null;
+  const previousDraft = apiProviderEditorActive() ? draftProviderFromForm() : null;
   const previousDraftIsNew = state.apiProviderDraftIsNew;
   let confirmedOriginChange: ProviderOriginChangeConfirmation | null = null;
   if (!autoSave && apiProviderEditorActive()) {
@@ -1235,50 +1002,14 @@ export async function saveApiSettings(options: any = {}): Promise<boolean> {
   }
   const settings = readApiSettingsForm({ applyProviderDraft: !autoSave });
   persistApiSettings();
-  const payload: any = {
-    schema_version: 2,
-    codex_mode: settings.codex_mode,
-    active_provider_id: settings.active_provider_id,
-    default_provider_by_model: settings.default_provider_by_model,
-    providers: settings.providers.map((provider: any) => {
-      const item: any = {
-        id: provider.id,
-        name: provider.name,
-        icon_emoji: provider.icon_emoji || "",
-        base_url: provider.base_url,
-        concurrency: provider.concurrency,
-        bindings: provider.bindings,
-      };
-      if (provider.api_key || !provider.api_key_set) item.api_key = provider.api_key;
-      if (!provider.api_key && provider.api_key_source_provider_id) {
-        item.api_key_source_provider_id = provider.api_key_source_provider_id;
-      }
-      if (provider.id === confirmedOriginChange?.providerId) {
-        item.preserve_api_key_on_origin_change = true;
-      }
-      return item;
-    }),
-  };
+  const payload = apiSettingsSavePayload(settings, confirmedOriginChange);
   if (!autoSave) {
     setSaveButtonsDisabled(true);
     setSaveButtonText("saving");
   }
-  setApiSettingsFeedback(translate(autoSave ? "apiSettings.autoSaving" : "apiSettings.savingStatus"), "running");
+  if (!silent) setApiSettingsFeedback(translate(autoSave ? "apiSettings.autoSaving" : "apiSettings.savingStatus"), "running");
   try {
-    const response = await fetch("/api/api-settings", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      const detail = String(data.detail || "");
-      if (detail === "api_key_required") throw new Error(translate("apiSettings.apiKeyRequired"));
-      if (detail === "api_key_origin_change_confirmation_required") {
-        throw new Error(translate("apiSettings.originChangeConfirmationRequired"));
-      }
-      throw new Error(detail || translate("apiSettings.saveFailed"));
-    }
+    const data = await patchApiSettings(payload);
     state.apiSettings = clearProviderApiKeyInputs(normalizeApiSettings(data.settings || {}));
     state.apiProviderEditingId = null;
     state.apiProviderDraft = null;
@@ -1286,7 +1017,7 @@ export async function saveApiSettings(options: any = {}): Promise<boolean> {
     persistApiSettings();
     populateApiSettingsForm();
     focusApiProviderSortHandle(sortFocusId);
-    setApiSettingsFeedback(autoSave ? translate("apiSettings.autoSaved") : formatTranslation("apiSettings.savedSummary", {
+    if (!silent) setApiSettingsFeedback(autoSave ? translate("apiSettings.autoSaved") : formatTranslation("apiSettings.savedSummary", {
       codex: codexModeLabel(currentCodexMode()),
       provider: activeApiProvider().name,
       mode: apiModeLabel(currentApiMode()),
@@ -1298,7 +1029,7 @@ export async function saveApiSettings(options: any = {}): Promise<boolean> {
       if (!autoSave) setSaveButtonText("default");
       state.apiSettingsSaveTimerId = null;
     }, 1600);
-    setStatus(translate("apiSettings.savedStatus"), "ok");
+    if (!silent) setStatus(translate("apiSettings.savedStatus"), "ok");
     await refreshGenerationCatalog();
     await refreshHealth();
     updateRequestPreview();
@@ -1324,4 +1055,21 @@ export async function saveApiSettings(options: any = {}): Promise<boolean> {
       }, 1600);
     }
   }
+}
+
+function applyApiProviderDraft(settings: any): any {
+  if (!apiProviderEditorActive()) return normalizeApiSettings(settings);
+  const result = applyProviderDraft(settings, draftProviderFromForm());
+  state.apiProviderEditingId = null;
+  state.apiProviderDraft = null;
+  state.apiProviderDraftIsNew = false;
+  return result;
+}
+
+export function handleProviderBindingEditorChange(event: Event): void {
+  updateBindingEditor(event, {
+    state: { apiProviderDraftIsNew: state.apiProviderDraftIsNew, generationCatalog: state.generationCatalog },
+    els: { apiBaseUrl: els.apiBaseUrl, apiProviderBindings: els.apiProviderBindings },
+    updateApiRequestEndpointPreview,
+  });
 }

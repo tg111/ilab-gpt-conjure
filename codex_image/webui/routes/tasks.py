@@ -155,7 +155,8 @@ def register_task_routes(app: FastAPI, ctx: WebUIContext) -> None:
 
     @app.get("/api/tasks/sidebar")
     def list_sidebar_tasks(limit: int = Query(50, ge=1, le=100)) -> dict[str, Any]:
-        return generation_page_payload(ctx, limit_per_group=limit)
+        with app.state.state_sync_clock.capture() as sync:
+            return {**generation_page_payload(ctx, limit_per_group=limit), "sync": sync}
 
     @app.get("/api/tasks/sidebar/groups/{group_key}")
     def list_sidebar_task_group(
@@ -223,6 +224,11 @@ def register_task_routes(app: FastAPI, ctx: WebUIContext) -> None:
             raise HTTPException(status_code=400, detail="At least one task id is required")
         if len(task_ids) > 5000:
             raise HTTPException(status_code=400, detail="At most 5000 tasks can be deleted at once")
+        try:
+            for task_id in task_ids:
+                ctx.storage._validate_task_id(task_id)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="Invalid task id") from exc
 
         deleted: list[str] = []
         skipped: list[str] = []
@@ -263,11 +269,11 @@ def register_task_routes(app: FastAPI, ctx: WebUIContext) -> None:
     @app.patch("/api/tasks/{task_id}/viewed")
     def mark_task_viewed(task_id: str) -> dict[str, Any]:
         try:
-            metadata = ctx.storage.read_metadata(task_id)
+            metadata = ctx.storage.mutate_metadata(
+                task_id, lambda current: current.update(viewed_at=utc_now()),
+            )
         except (FileNotFoundError, ValueError) as exc:
             raise HTTPException(status_code=404, detail="Task not found") from exc
-        metadata["viewed_at"] = utc_now()
-        ctx.storage.write_metadata(task_id, metadata)
         return {
             "task": _with_file_urls(
                 metadata,
@@ -397,7 +403,7 @@ def register_task_routes(app: FastAPI, ctx: WebUIContext) -> None:
         thumbnail_path = ctx.storage.output_path(thumbnail_file)
         return FileResponse(
             thumbnail_path,
-            media_type="image/jpeg",
+            media_type="image/webp" if thumbnail_path.suffix == ".webp" else "image/jpeg",
             headers={"Cache-Control": "public, max-age=31536000, immutable"},
         )
 

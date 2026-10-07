@@ -1,9 +1,6 @@
 import { getLegacyBridge } from "./state";
 import { formatTranslation, translate } from "./i18n";
 
-const bridge = getLegacyBridge();
-const els = bridge.els;
-
 function legacyMethod(name: string, ...args: any[]): any {
   const method = getLegacyBridge().methods[name];
   if (typeof method !== "function") {

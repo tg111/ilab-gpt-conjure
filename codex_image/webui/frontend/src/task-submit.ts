@@ -1,9 +1,11 @@
+import { composerFingerprint, markComposerSubmitted } from "./composer-draft";
+import { isGptImageModel } from "./gpt-image-models";
+import { setBackgroundControl } from "./background-controls";
 import { getLegacyBridge } from "./state";
 import { currentLocaleCode, translate } from "./i18n";
 import { selectedProviderBinding } from "./provider-selection";
 import { appendCanonicalGenerationFields, currentGenerationSelection } from "./generation-request";
 import { taskOutputControlValues } from "./task-model-summary";
-import { isGptImageModelId } from "./model-identifiers";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -146,6 +148,7 @@ export function applyTaskOutputParams(task: any): void {
   }
   if (output.quality && els.quality) els.quality.value = output.quality;
   if (output.output_format && els.outputFormat) els.outputFormat.value = output.output_format;
+  setBackgroundControl(output.background);
   if (output.moderation && els.moderation) els.moderation.value = output.moderation;
   if (output.output_compression !== null && output.output_compression !== undefined && els.compression) {
     els.compression.value = output.output_compression;
@@ -191,6 +194,7 @@ function buildPreviewRequest() {
     requested_backend: requestedBackend,
     canonical_model_id: selection.canonicalModelId,
     provider_id: selection.providerId,
+    binding_id: selection.bindingId,
     parameters,
     ui_language: currentLocaleCode(),
     prompt: getPromptText(),
@@ -201,7 +205,15 @@ function buildPreviewRequest() {
     reference_files: fileUploads.map((source: any) => source.filename),
     reference_file_ids: storedFiles.map((source: any) => source.id),
   };
-  const usesGptPromptProcessing = !state.generationCatalog || isGptImageModelId(state.selectedModelId);
+  const usesGptPromptProcessing = !state.generationCatalog || isGptImageModel(state.selectedModelId);
+  if (parameters["gpt.background"] === "transparent") {
+    const binding = selectedProviderBinding();
+    payload.output_requirements = {
+      background: "transparent",
+      method: binding?.transparency_mode || "native",
+      instruction: binding?.transparency_instruction || undefined,
+    };
+  }
   if (isApi) {
     payload.api_provider_id = state.selectedProviderId;
     payload.api_provider_name = state.generationCatalog?.providers.find((provider: any) => provider.id === state.selectedProviderId)?.name || "";
@@ -275,6 +287,11 @@ async function runTask() {
     return;
   }
   if (!prompt) {
+    const fieldError = document.getElementById("promptValidationError");
+    if (fieldError) { fieldError.hidden = false; fieldError.textContent = translate("status.emptyPrompt"); }
+    els.promptEditor?.setAttribute("aria-invalid", "true");
+    els.promptEditor?.setAttribute("aria-describedby", "promptValidationError");
+    els.promptEditor?.focus();
     setStatus(translate("status.emptyPrompt"), "error");
     return;
   }
@@ -290,6 +307,7 @@ async function runTask() {
   if (customSizeError) {
     updateCustomSize();
     updatePixelPreview("custom");
+    els.customWidth?.focus();
     setStatus(customSizeError, "error");
     return;
   }
@@ -299,7 +317,7 @@ async function runTask() {
   form.append("prompt_for_model", promptForModel);
   form.append("ui_language", currentLocaleCode());
   appendCanonicalGenerationFields(form, currentGenerationSelection());
-  if (!state.generationCatalog || isGptImageModelId(state.selectedModelId)) {
+  if (!state.generationCatalog || isGptImageModel(state.selectedModelId)) {
     form.append("main_model", currentMainModel());
   }
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));
@@ -313,6 +331,7 @@ async function runTask() {
     uploads.forEach((source: any) => form.append("images", source.file));
   }
 
+  const submittedComposer = composerFingerprint();
   const pendingTask = createPendingTask();
   addPendingTask(pendingTask);
   if (els.requestJson) {
@@ -334,14 +353,16 @@ async function runTask() {
       throw new Error(responseErrorMessage(data.detail));
     }
     addQueuedTask(data.task);
+    markComposerSubmitted(submittedComposer);
     if (els.requestJson) {
       els.requestJson.textContent = JSON.stringify(data.request || {}, null, 2);
     }
     stopRunFeedback();
     setStatus(translate("taskSubmit.queued"), "ok");
     await window.refreshQueue?.();
-    await refreshRecentAssets();
-    renderPreview(data.task);
+    if (uploads.length || assets.length) await refreshRecentAssets();
+    renderPreview();
+    getLegacyBridge().methods.showMobilePreview?.();
   } catch (error) {
     stopRunFeedback();
     const message = error instanceof DOMException && error.name === "AbortError"

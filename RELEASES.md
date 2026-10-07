@@ -1,68 +1,56 @@
 # 下载 / Releases
 
-当前正式版本：[v0.8.5](https://github.com/kadevin/ilab-conjure/releases/tag/v0.8.5)
+当前正式版本：[v0.9.5](https://github.com/kadevin/ilab-conjure/releases/tag/v0.9.5)
 
 ## 版本说明
 
-当前版本：`v0.8.5`。这是一次存储路径兼容与生成界面更新。建议使用自定义目录、从 portable 迁入 macOS 标准版，或在手机及竖屏窗口中使用 WebUI 的用户升级；需要 GPT-6 Astra 主模型选项的用户也可更新。
+当前版本：`v0.9.5`。本版更新主模型选项与默认值，整理输出设置布局，并修复尺寸切换和紧凑窗口中的显示问题。建议经常调整输出参数、使用键盘操作或在窄屏工作台生成图片的用户升级。
 
-受影响平台：macOS 与 Windows 的标准版和 portable 一键包。存储路径启动修复主要影响 macOS 标准版，其余 WebUI 改进适用于全部平台。升级前请退出旧实例；Windows 标准版仍需手动解压替换，portable 和支持更新助手的 macOS 标准版可使用现有更新入口。
+受影响平台：macOS 与 Windows 的标准版和 portable 一键包，以及桌面和手机 WebUI。
 
-必要操作与数据迁移：通常无需手动搬迁或重置数据，已有任务历史、输入图与输出图会保留。对于有可信 portable 复制迁移记录的标准版数据目录，首次启动会将配置中指向旧 portable 内部的路径一次性修正为已复制的新目录，并先备份原设置；外部自定义路径和旧源文件保留。本次修复不再次搬迁文件。手动修改存储目录仍需重启生效，且不会自动复制原目录中的文件。
-
-本版重点：macOS 标准版启动时保留已保存的存储目录；Responses 通道可选 GPT-6 Astra；新任务提示词处理默认“自动”；修复竖屏下公用图库、提示词和生成按钮重叠等布局问题。
+必要操作与数据迁移：升级前退出旧实例，升级后重启应用并刷新已打开的页面。无需迁移本地任务、图片或设置。未保存主模型选择时默认使用 GPT 6 Luna，已有保存值和自定义模型输入继续保留；Windows 标准 ZIP 仍需手动替换应用文件。
 
 本版详情：
 
-### P1 · 重要
-
-#### 修复
-
-- macOS 标准版启动时会读取并保留已保存的输入、输出、公用图库和任务数据目录，修复自定义路径被默认值覆盖、已有历史看似消失的问题。
-
-#### 兼容性/安装/打包/更新
-
-- 从 portable 复制数据到标准版后，原配置中的内部路径会依据迁移记录一次性修正，已经完成复制的旧安装也能补齐此修复。外部自定义目录不会被改写，原配置会备份到数据目录内的 `.migration/webui-settings-before-path-rebase.json`，旧 portable 数据继续保留。
-
 ### P2 · 常规
-
-#### 新增
-
-- Responses 通道的主模型列表新增 GPT-6 Astra（`gpt-6-astra`），支持搜索、选择与保存；实际可用性取决于所用账号或供应商的模型支持，默认主模型仍为 `gpt-5.4-mini`。
 
 #### 变更与优化
 
-- 新任务和未锁定参数重置后的提示词处理默认改为“自动”，API 请求省略该选项时也采用自动模式。明确选择的“原始”“保真”、已锁定参数和历史任务中的设置继续保留。
+- **更新主模型选项与默认值。** 新增 GPT 6.1 SOL、GPT 6 SOL 和 GPT 6 Luna，默认主模型改为 GPT 6 Luna；内置候选列表移除 GPT 5.5、5.4、5.4 mini、5.3 Codex 和 5.2，保留自定义模型输入及已有选择。
+- **透明背景与输出格式就近设置。** 透明开关移到输出格式标签旁。选择 JPEG 时显示“不支持透明”并关闭透明输出，当前页面切回 PNG 或 WebP 时恢复最近的透明偏好；用户主动关闭后保持关闭。
+- **输出选项支持完整的键盘单选操作。** Tab 进入每组当前选项，方向键在可用选项之间循环切换。JPEG 和 WebP 的压缩率增加可聚焦的图标入口，保留双击格式按钮的方式；Escape 关闭浮层并返回入口。
 
 #### 修复
 
-- 修复手机和竖屏窄窗口中公用图库撑出参考图面板、覆盖提示词与生成按钮的问题；面板会随内容自然展开，生成按钮可正常点击。
-- 修复窄屏 API 直连说明与设置按钮重叠的问题，相关控件在空间不足时分行排列。
-- 修复窄屏自定义像素与比例输入框被裁切的问题，输入框随可用空间缩放。
-- 修复紧凑页头把状态信息挤出屏幕的问题；新任务按钮收为图标并保留可访问名称。
-- 存储设置在当前路径与仍存在的原默认目录不同时提供“查看原默认目录”提示，方便定位旧数据，并明确说明改路径不会自动搬迁文件。
-
-#### 兼容性/安装/打包/更新
-
-- 不新增运行时依赖或数据库结构迁移，既有任务与图片格式保持兼容；存储路径修正仅在可信复制迁移记录下执行一次。
-
-#### 已知问题
-
-- macOS 标准 DMG 和 portable zip 仍未签名、未 notarize；如果系统拦截启动，请按下方说明使用右键或 Control-click 打开。Windows 标准 ZIP 仍需手动替换程序文件。
+- **尺寸模式切换保持等高。** 预设和自定义尺寸共用同一编辑区域，输入校验错误、手机布局及窗口变化时，下方控件的位置保持稳定；隐藏的尺寸控件不再参与键盘导航。
+- **公用库底部完整显示。** 修复紧凑桌面窗口下分类按钮和空状态边框被截断的问题，保持管理按钮完整可见。
 
 ### P3 · 低影响
 
+#### 变更与优化
+
+- **输出设置更易扫描。** 主模型与提示词处理在桌面并排，联网搜索紧邻主模型标签；通过字段标签、间距和轻量分隔线组织选项，减少重复分组标题。质量与数量保持并排，比例保留方图跨两行及竖横配对布局。
+- **手机参数面板减少重复标题。** 锁定入口合并到面板标题栏，保留原有锁定摘要和解锁操作。
+
+#### 修复
+
+- **输出像素提示与控件描边保持一致。** 输出像素文字水平、垂直居中；主模型默认描边与相邻选项保持相同视觉强度，悬停和键盘聚焦时提供清晰强调。
+
+#### 兼容性/安装/打包/更新
+
+- **离线应用缓存与本版界面同步。** 更新生成页、历史页和样式的资源版本，避免升级后继续使用旧界面缓存。
+
 #### 工程与文档
 
-- 补充存储路径兼容、主模型选择、提示词默认值和响应式布局的回归验证，同步用户文档、设计合同及前端缓存版本。
+- 补充格式与透明背景联动、方向键操作、尺寸区域等高和公用库布局的回归检查，并同步中英文使用说明与设计合同。
 
 ## 推荐下载
 
 | 平台 | 推荐给 | 下载 | SHA256 |
 | --- | --- | --- | --- |
-| macOS Apple Silicon | 新用户，M1/M2/M3/M4 | [iLab-GPT-CONJURE-macos-arm64-0.8.5.dmg](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-macos-arm64-0.8.5.dmg) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-macos-arm64-0.8.5.dmg.sha256.txt) |
-| macOS Intel | 新用户，Intel x64 | [iLab-GPT-CONJURE-macos-x64-0.8.5.dmg](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-macos-x64-0.8.5.dmg) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-macos-x64-0.8.5.dmg.sha256.txt) |
-| Windows x64 | 新用户，Windows 10/11 x64 | [iLab-GPT-CONJURE-windows-x64_0.8.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-windows-x64_0.8.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/iLab-GPT-CONJURE-windows-x64_0.8.5.zip.sha256.txt) |
+| macOS Apple Silicon | 新用户，M1/M2/M3/M4 | [iLab-GPT-CONJURE-macos-arm64-0.9.5.dmg](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-macos-arm64-0.9.5.dmg) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-macos-arm64-0.9.5.dmg.sha256.txt) |
+| macOS Intel | 新用户，Intel x64 | [iLab-GPT-CONJURE-macos-x64-0.9.5.dmg](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-macos-x64-0.9.5.dmg) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-macos-x64-0.9.5.dmg.sha256.txt) |
+| Windows x64 | 新用户，Windows 10/11 x64 | [iLab-GPT-CONJURE-windows-x64_0.9.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-windows-x64_0.9.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/iLab-GPT-CONJURE-windows-x64_0.9.5.zip.sha256.txt) |
 
 标准包数据目录：
 
@@ -75,13 +63,13 @@
 
 | 平台 | 适用设备 | 下载 | SHA256 |
 | --- | --- | --- | --- |
-| Windows x64 | Windows 10/11 x64 | [ilab-gpt-conjure_windows_portable_x64_0.8.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_windows_portable_x64_0.8.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_windows_portable_x64_0.8.5.zip.sha256.txt) |
-| macOS Apple Silicon | M1/M2/M3/M4 | [ilab-gpt-conjure_macos_portable_arm64_0.8.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_macos_portable_arm64_0.8.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_macos_portable_arm64_0.8.5.zip.sha256.txt) |
-| macOS Intel | Intel x64 | [ilab-gpt-conjure_macos_portable_x64_0.8.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_macos_portable_x64_0.8.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/ilab-gpt-conjure_macos_portable_x64_0.8.5.zip.sha256.txt) |
+| Windows x64 | Windows 10/11 x64 | [ilab-gpt-conjure_windows_portable_x64_0.9.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_windows_portable_x64_0.9.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_windows_portable_x64_0.9.5.zip.sha256.txt) |
+| macOS Apple Silicon | M1/M2/M3/M4 | [ilab-gpt-conjure_macos_portable_arm64_0.9.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_macos_portable_arm64_0.9.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_macos_portable_arm64_0.9.5.zip.sha256.txt) |
+| macOS Intel | Intel x64 | [ilab-gpt-conjure_macos_portable_x64_0.9.5.zip](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_macos_portable_x64_0.9.5.zip) | [sha256](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/ilab-gpt-conjure_macos_portable_x64_0.9.5.zip.sha256.txt) |
 
 portable 自动更新 manifest：
 
-- [latest.json](https://github.com/kadevin/ilab-conjure/releases/download/v0.8.5/latest.json)
+- [latest.json](https://github.com/kadevin/ilab-conjure/releases/download/v0.9.5/latest.json)
 
 使用方式：
 
@@ -100,7 +88,7 @@ manifest，先用启动器内置公钥校验 Ed25519 签名，再下载当前平
 GitHub Release 资产，执行前显示所选资产和 manifest SHA256，校验下载 zip 的
 SHA256，只替换一键包目录内由程序管理的文件，保留本地 `data/`，并把被替换文件备份到 `.backup/`。
 
-macOS 标准 DMG 和 portable zip 都暂未签名、未 notarize。如果 macOS
+macOS 标准 DMG 和 portable zip 都暂未使用 Apple Developer ID 签名，也未 notarize。如果 macOS
 拦截启动，可以右键或 Control-click App，选择 Open，并在系统安全提示中再次确认。
 portable zip 也可以对解压目录执行：
 

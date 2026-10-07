@@ -27,7 +27,13 @@ from .store_locks import StoreLockMixin, store_locked
 
 _CODEX_MODES = frozenset({"images", "responses"})
 _PROVIDER_CATALOG_BINDING_VERSION = 1
-_GPT_IMAGE_25_MODEL_IDS = GPT_IMAGE_MODEL_IDS[1:]
+# The catalog exposes an unordered set; bindings are created in a stable order
+# with the default GPT Image model first.
+_GPT_IMAGE_BINDING_MODEL_IDS = (
+    DEFAULT_IMAGE_MODEL,
+    *sorted(GPT_IMAGE_MODEL_IDS - {DEFAULT_IMAGE_MODEL}),
+)
+_GPT_IMAGE_25_MODEL_IDS = _GPT_IMAGE_BINDING_MODEL_IDS[1:]
 
 
 def _mask_api_key(api_key: str) -> str:
@@ -75,7 +81,8 @@ def migrate_legacy_provider(raw: Mapping[str, Any]) -> dict[str, Any]:
         "concurrency": _normalize_legacy_concurrency(raw.get("images_concurrency")),
         "bindings": [
             {
-                "id": f"{provider_id}-{model_id}",
+                # Match the slug the validator stores, e.g. "gpt-image-2.5" -> "gpt-image-2-5".
+                "id": _normalize_slug(f"{provider_id}-{model_id}", fallback=provider_id),
                 "canonical_model_id": model_id,
                 "remote_model_id": _normalize_remote_model_id(
                     raw.get("image_model") or DEFAULT_IMAGE_MODEL
@@ -88,7 +95,7 @@ def migrate_legacy_provider(raw: Mapping[str, Any]) -> dict[str, Any]:
                 ),
                 "operations": ["generate", "edit"],
             }
-            for model_id in GPT_IMAGE_MODEL_IDS
+            for model_id in _GPT_IMAGE_BINDING_MODEL_IDS
         ],
     }
     icon_emoji = _normalize_provider_icon_emoji(raw.get("icon_emoji"))
@@ -123,15 +130,10 @@ class ProviderSettings(StoreLockMixin):
         if not isinstance(payload, dict):
             return self._default_settings()
         if payload.get("schema_version") == 2:
-            upgraded, changed = self._upgrade_catalog_bindings(payload)
-            settings = self._validate_v2(upgraded)
-            if changed:
-                atomic_write_text(
-                    self.path,
-                    json.dumps(self._persisted(settings), indent=2, ensure_ascii=False),
-                    mode=0o600,
-                )
-            return settings
+            # Older files gain the GPT Image 2.5 bindings in memory; the next save
+            # persists them with the binding version, like other read migrations.
+            upgraded, _changed = self._upgrade_catalog_bindings(payload)
+            return self._validate_v2(upgraded)
         if "schema_version" in payload:
             raise ValueError("unsupported_schema_version")
         return self._validate_v2(self._migrate_v1(payload))
@@ -205,6 +207,7 @@ class ProviderSettings(StoreLockMixin):
                     append_aspect_ratio_prompt=bool(
                         binding.get("append_aspect_ratio_prompt", False)
                     ),
+                    transparency_mode=binding.get("transparency_mode", "native"),
                 )
                 for binding in provider["bindings"]
             )
@@ -257,7 +260,7 @@ class ProviderSettings(StoreLockMixin):
                 "codex_mode": "images",
                 "active_provider_id": "default",
                 "default_provider_by_model": {
-                    model_id: "default" for model_id in GPT_IMAGE_MODEL_IDS
+                    model_id: "default" for model_id in _GPT_IMAGE_BINDING_MODEL_IDS
                 },
                 "providers": [cls.default_provider()],
             }
@@ -295,7 +298,7 @@ class ProviderSettings(StoreLockMixin):
             "codex_mode": _normalize_codex_mode(payload.get("codex_mode")),
             "active_provider_id": active_id,
             "default_provider_by_model": {
-                model_id: active_id for model_id in GPT_IMAGE_MODEL_IDS
+                model_id: active_id for model_id in _GPT_IMAGE_BINDING_MODEL_IDS
             },
             "providers": providers,
         }
@@ -339,7 +342,7 @@ class ProviderSettings(StoreLockMixin):
                     if model_id in existing_model_ids:
                         continue
                     binding = {
-                        "id": f"{provider_id}-{model_id}",
+                        "id": _normalize_slug(f"{provider_id}-{model_id}", fallback=provider_id),
                         "canonical_model_id": model_id,
                         "remote_model_id": model_id,
                         "protocol_profile": base.get("protocol_profile"),
@@ -348,6 +351,8 @@ class ProviderSettings(StoreLockMixin):
                     }
                     if base.get("append_aspect_ratio_prompt") is True:
                         binding["append_aspect_ratio_prompt"] = True
+                    if base.get("transparency_mode") == "prompt":
+                        binding["transparency_mode"] = "prompt"
                     bindings.append(binding)
 
         preferred_provider = defaults.get(DEFAULT_IMAGE_MODEL)
@@ -362,7 +367,7 @@ class ProviderSettings(StoreLockMixin):
                     for binding in provider.get("bindings") or []
                 )
             ]
-            if supporters:
+            if supporters and defaults.get(model_id) not in supporters:
                 defaults[model_id] = (
                     preferred_provider if preferred_provider in supporters else supporters[0]
                 )
@@ -374,7 +379,6 @@ class ProviderSettings(StoreLockMixin):
         self, payload: Mapping[str, Any], current: Mapping[str, Any]
     ) -> dict[str, Any]:
         candidate = deepcopy(dict(payload))
-        candidate, _changed = self._upgrade_catalog_bindings(candidate)
         candidate["schema_version"] = 2
         candidate.setdefault("codex_mode", current.get("codex_mode", "images"))
         candidate.setdefault("active_provider_id", current.get("active_provider_id", "default"))

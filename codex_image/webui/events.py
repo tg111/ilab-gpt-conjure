@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from .context import WebUIContext
 from .storage_utils import utc_now
@@ -101,6 +101,9 @@ def queue_snapshot(ctx: WebUIContext) -> dict[str, Any]:
     return {
         "waiting": waiting,
         "running": running,
+        # Preserve queue mutations even when a task starts and finishes between
+        # SSE checks and both visible snapshots are empty.
+        "updated_at": state["updated_at"] if ctx.queue_storage.path.exists() else "",
         "summary": {
             "waiting_count": len(waiting),
             "running_count": len(running),
@@ -119,25 +122,30 @@ def generation_page_payload(
     current_queue = queue or queue_snapshot(ctx)
     task_groups = ctx.storage.generation_sidebar_groups(limit_per_group=limit_per_group)["groups"]
     tasks = [task for group in task_groups for task in group.get("tasks", [])]
-    task_ids = {str(task.get("task_id") or "") for task in tasks}
+    task_indexes = {str(task.get("task_id") or ""): index for index, task in enumerate(tasks)}
     for active_task in list(current_queue.get("waiting") or []) + list(current_queue.get("running") or []):
         task_id = str(active_task.get("task_id") or "") if isinstance(active_task, dict) else ""
-        if not task_id or task_id in task_ids:
+        if not task_id:
             continue
-        try:
-            task = ctx.storage.task_sidebar_card(task_id)
-        except (FileNotFoundError, ValueError):
-            continue
-        tasks.append(task)
-        task_ids.add(task_id)
+        # Active cards need the authoritative per-output states, including when
+        # a deletion refresh has a newer revision than the client's queue cache.
+        task = {**active_task, "summary_only": False}
+        index = task_indexes.get(task_id)
+        if index is None:
+            task_indexes[task_id] = len(tasks)
+            tasks.append(task)
+        else:
+            tasks[index] = task
     return {"tasks": tasks, "task_groups": task_groups}
 
 
-def event_snapshot(ctx: WebUIContext) -> dict[str, Any]:
-    queue = queue_snapshot(ctx)
-    page = generation_page_payload(ctx, queue)
+def event_snapshot(ctx: WebUIContext, *, queue_provider: Callable[[], dict[str, Any]] | None = None) -> dict[str, Any]:
+    with ctx.app.state.state_sync_clock.capture() as sync:
+        queue = queue_provider() if queue_provider is not None else queue_snapshot(ctx)
+        page = generation_page_payload(ctx, queue)
     return {
         "type": "snapshot",
+        "sync": sync,
         **page,
         "queue": queue,
         "gallery": [_gallery_item_response(item) for item in ctx.gallery_storage.list_items()],

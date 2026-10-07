@@ -1,8 +1,8 @@
 import { getLegacyBridge } from "./state";
 import { formatTranslation, translate } from "./i18n";
-import { cssEscape } from "./webui-utils";
 import type { WebUITask } from "./types";
 import { taskCancellationPending, taskWasCancelled } from "./task-cancellation";
+import { taskUpdateIsOlder } from "./state-sync";
 
 function legacyMethod(name: string, ...args: any[]): any {
   const method = getLegacyBridge().methods[name];
@@ -42,6 +42,7 @@ export function updateTaskInState(task: WebUITask | null | undefined): boolean {
     return true;
   }
   const previousTask = state.tasks[previousIndex];
+  if (taskUpdateIsOlder(previousTask, task)) return false;
   if (previousTask?.local_pending) {
     revokeTaskUploadPreviewUrls(previousTask);
   }
@@ -120,14 +121,6 @@ function setTextIfChanged(element: any, text: string): void {
   if (element.textContent !== text) element.textContent = text;
 }
 
-function activeElapsedTaskCards(els: any, taskId: string): HTMLElement[] {
-  const roots = [els.taskActiveList, els.taskList].filter((root): root is HTMLElement => root instanceof HTMLElement);
-  const cards = roots.flatMap((root) =>
-    Array.from(root.querySelectorAll(`.task-card[data-task-id="${cssEscape(taskId)}"]`)) as HTMLElement[],
-  );
-  return Array.from(new Set(cards));
-}
-
 function updateTaskElapsedCard(card: HTMLElement, task: any): void {
   const statusElement = card.querySelector("[data-task-status-id]");
   if (statusElement) {
@@ -159,11 +152,17 @@ export function updateTaskElapsedDisplays(): void {
   const { state, els } = getLegacyBridge();
   const activeTasks = state.tasks.filter((task: any) => taskNeedsElapsedTick(task));
   if (!activeTasks.length) return;
-  activeTasks.forEach((task: any) => {
-    const taskId = String(task.task_id || "");
-    if (!taskId) return;
-    activeElapsedTaskCards(els, taskId).forEach((card) => updateTaskElapsedCard(card, task));
-  });
+  const tasksById = new Map(activeTasks.map((task: any) => [String(task.task_id || ""), task]));
+  const visited = new Set<HTMLElement>();
+  for (const root of new Set([els.taskActiveList, els.taskList])) {
+    if (!(root instanceof HTMLElement)) continue;
+    root.querySelectorAll<HTMLElement>(".task-card[data-task-id]").forEach(card => {
+      if (visited.has(card)) return;
+      visited.add(card);
+      const task = tasksById.get(card.dataset.taskId || "");
+      if (task) updateTaskElapsedCard(card, task);
+    });
+  }
 }
 
 export function updatePreviewElapsedDisplay(): void {
@@ -210,7 +209,13 @@ function updateElapsedPartElement(element: any, text: string): void {
 export function updatePromptCount(): void {
   const { els } = getLegacyBridge();
   if (!els.charCount) return;
-  els.charCount.textContent = `${getPromptText().length} / 4000`;
+  els.charCount.textContent = `${getPromptText().length}`;
+  if (getPromptText().trim()) {
+    els.promptEditor?.removeAttribute("aria-invalid");
+    const fieldError = document.getElementById("promptValidationError");
+    if (fieldError) fieldError.hidden = true;
+    if (els.statusText?.textContent === translate("status.emptyPrompt")) { els.statusText.textContent = ""; els.statusText.classList.remove("error"); }
+  }
 }
 
 export function addPendingTask(task: WebUITask): void {
@@ -226,6 +231,8 @@ export function addPendingTask(task: WebUITask): void {
 
 export function replacePendingTask(pendingTaskId: string, completedTask: WebUITask): void {
   const state = getLegacyBridge().state;
+  const currentTask = state.tasks.find((task) => task.task_id === completedTask.task_id && !task.local_pending);
+  if (currentTask && taskUpdateIsOlder(currentTask, completedTask)) completedTask = currentTask;
   const removedPendingTasks = state.tasks.filter((task: any) => (
     task?.local_pending
     && (task.task_id === completedTask.task_id || task.task_id === pendingTaskId)

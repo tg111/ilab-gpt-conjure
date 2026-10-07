@@ -9,7 +9,7 @@ import {
 } from "./model-parameter-drafts";
 import { modelFamilyBrandMarkHtml } from "./model-family-icons";
 import { refreshSegmentedIndicators } from "./segmented-indicator";
-import { isGptImageModelId } from "./model-identifiers";
+import { isGptImageModel } from "./gpt-image-models";
 
 export function modelsForFamily(catalog: GenerationCatalog, familyId: ModelFamilyId): CatalogModel[] {
   return catalog.models.filter((model) => model.family_id === familyId);
@@ -42,7 +42,7 @@ function currentDraftForModel(
   preserveTaskParameters: boolean,
 ): Record<string, unknown> {
   const { state, methods } = getLegacyBridge();
-  if (!preserveTaskParameters || !isGptImageModelId(sourceModel.id)
+  if (!preserveTaskParameters || !isGptImageModel(sourceModel.id)
       || typeof methods.currentTaskParams !== "function") {
     return state.parameterDraftsByModel[sourceModel.id] || {};
   }
@@ -185,9 +185,16 @@ export function renderModelSelectors(): void {
     });
   }
   if (modelSelect && selectedFamily) {
-    const familyModels = modelsForFamily(catalog, selectedFamily.id);
-    const expanded = usesExpandedConcreteModelOptions(familyModels);
-    modelField?.classList.toggle("hidden", !expanded);
+    const familyModels = modelsForFamily(catalog, selectedFamily.id).filter((model) => (
+      selectedFamily.id !== "gpt-image" || model.id === "gpt-image-2"
+      || model.id === state.selectedModelId
+      || catalog.providers.some((provider) => provider.bindings.some((binding) => (
+        binding.canonical_model_id === model.id && binding.operations.includes(state.mode)
+      )))
+    ));
+    const gptVersions = selectedFamily.id === "gpt-image";
+    const expanded = !gptVersions && usesExpandedConcreteModelOptions(familyModels);
+    modelField?.classList.toggle("hidden", gptVersions || !expanded);
     modelSelect.replaceChildren();
     familyModels.forEach((model) => {
       const option = document.createElement("option");

@@ -300,7 +300,7 @@ class WebUIRefactorContractTests(unittest.TestCase):
         self.assertIs(client.OpenAIImagesImageClient, OpenAIImagesImageClient)
         self.assertIs(client.OpenAIResponsesImageClient, OpenAIResponsesImageClient)
         self.assertIs(client.image_model_supports_input_fidelity, image_model_supports_input_fidelity)
-        self.assertEqual("gpt-5.4-mini", client.DEFAULT_MAIN_MODEL)
+        self.assertEqual("gpt-6-luna", client.DEFAULT_MAIN_MODEL)
         self.assertEqual("gpt-image-2", client.DEFAULT_IMAGE_MODEL)
 
         probe = subprocess.run(
@@ -372,6 +372,8 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/api/app-version/dismiss-onboarding", "POST"),
                 ("/api/settings", "GET"),
                 ("/api/settings", "PATCH"),
+                ("/api/lan-access", "GET"),
+                ("/api/lan-access", "PATCH"),
                 ("/api/color-palette", "GET"),
                 ("/api/color-palette", "PATCH"),
                 ("/api/color-palette/export.css", "GET"),
@@ -395,6 +397,7 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/api/api-settings", "GET"),
                 ("/api/api-settings", "POST"),
                 ("/api/api-settings", "PATCH"),
+                ("/api/api-settings/models", "POST"),
                 ("/api/tasks", "GET"),
                 ("/api/tasks/recent", "GET"),
                 ("/api/tasks/sidebar", "GET"),
@@ -468,6 +471,7 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/api/gallery/{item_id}/image", "PUT"),
                 ("/api/prompt-template-assets/{asset_id}/image", "GET"),
                 ("/api/reference-assets/recent", "GET"),
+                ("/api/reference-assets/{asset_id}/thumbnail", "GET"),
                 ("/api/reference-assets/{asset_id}/hide", "POST"),
                 ("/api/reference-assets/{asset_id}", "DELETE"),
                 ("/api/reference-assets/{asset_id}/image", "GET"),

@@ -233,10 +233,10 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         submit_source = Path("codex_image/webui/frontend/src/task-submit.ts").read_text(encoding="utf-8")
         self.assertIn('form.append("ui_language", currentLocaleCode())', submit_source)
         simplified_default_labels = {
-            "zh-cn.ts": "设为默认供应商",
-            "zh-tw.ts": "設為預設供應商",
-            "zh-hk.ts": "設為預設供應商",
-            "en.ts": "Default provider",
+            "zh-cn.ts": "设为该型号默认供应商",
+            "zh-tw.ts": "設為此型號預設供應商",
+            "zh-hk.ts": "設為此型號預設供應商",
+            "en.ts": "Default provider for this model",
         }
         for filename, label in simplified_default_labels.items():
             source = (Path("codex_image/webui/frontend/src/i18n") / filename).read_text(encoding="utf-8")
@@ -710,7 +710,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "queue": Path("codex_image/webui/frontend/src/queue.ts").read_text(encoding="utf-8"),
             "notifications": Path("codex_image/webui/frontend/src/task-notifications.ts").read_text(encoding="utf-8"),
             "archive": Path("codex_image/webui/frontend/src/task-archive-controls.ts").read_text(encoding="utf-8"),
-            "task_groups": Path("codex_image/webui/frontend/src/task-list-render.ts").read_text(encoding="utf-8"),
+            "task_groups": Path("codex_image/webui/frontend/src/task-list-model.ts").read_text(encoding="utf-8"),
             "templates": Path("codex_image/webui/frontend/src/prompt-templates.ts").read_text(encoding="utf-8"),
             "gallery": Path("codex_image/webui/frontend/src/gallery-grid.ts").read_text(encoding="utf-8"),
             "gallery_categories": Path("codex_image/webui/frontend/src/gallery-categories.ts").read_text(encoding="utf-8"),
@@ -860,7 +860,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('translate(mode === "edit" ? "prompt.runEdit" : "prompt.run")', runtime_sources["form"])
         self.assertIn('formatTranslation("recentAssets.use"', runtime_sources["recent_assets"])
         self.assertIn('translate("recentAssets.deleteMessage")', runtime_sources["recent_assets"])
-        self.assertIn('document.addEventListener(LOCALE_CHANGE_EVENT, renderRecentAssets);', runtime_sources["recent_assets"])
+        self.assertIn('document.addEventListener(LOCALE_CHANGE_EVENT, () => renderRecentAssets());', runtime_sources["recent_assets"])
         self.assertIn('translate("inputSource.uploadFallback")', runtime_sources["input_sources"])
         self.assertIn('translate("status.missingRecentReference")', runtime_sources["task_submit"])
         self.assertIn('translate("status.emptyPrompt")', runtime_sources["task_submit"])

@@ -234,6 +234,7 @@ function openPromptTemplateDrawer() {
 }
 
 function closePromptTemplateDrawer(options: any = {}) {
+  if (!els.promptTemplateDrawer?.classList.contains("open")) return;
   const restoreFocus = options?.restoreFocus !== false;
   els.promptTemplateDrawer?.classList.remove("open");
   els.promptTemplateDrawer?.setAttribute("aria-hidden", "true");
@@ -455,7 +456,7 @@ async function afterPromptTemplateApplied(template: any) {
 async function copyPromptTemplateContent(template: any) {
   if (!template) return;
   try {
-    await navigator.clipboard.writeText(template.content);
+    if (!await copyTextToClipboard(template.content)) return;
     setStatus(translate("templates.copied"), "ok");
   } catch {
     setStatus(translate("templates.copyFailed"), "error");
@@ -611,7 +612,7 @@ async function savePromptTemplateFromDrawer() {
     notes: (form.querySelector("[data-prompt-template-notes]") as HTMLTextAreaElement | null)?.value || "",
     thumbnail_url: (form.querySelector("[data-prompt-template-thumbnail-url]") as HTMLInputElement | null)?.value || "",
     favorite: Boolean((form.querySelector("[data-prompt-template-favorite]") as HTMLInputElement | null)?.checked),
-    model_hint: "gpt-image-2",
+    ...(templateId ? {} : { model_hint: state.selectedModelId || "gpt-image-2" }),
   };
   try {
     const response = await fetch(templateId ? `${PROMPT_TEMPLATES_ENDPOINT}/${encodeURIComponent(templateId)}` : PROMPT_TEMPLATES_ENDPOINT, {
@@ -986,3 +987,4 @@ export function initPromptTemplatesFeature(): void {
   });
   bindPromptTemplateEvents();
 }
+import { copyTextToClipboard } from "./clipboard-text";
