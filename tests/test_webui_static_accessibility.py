@@ -67,16 +67,21 @@ class WebUIStaticAccessibilityTests(unittest.TestCase):
                 "codex_image/webui/static/styles"
             ).glob("*.css")
         )
-        self.assertNotIn("color: var(--muted);", component_styles)
+        for selector, declarations in re.findall(r"([^{}]+)\{([^{}]*)\}", component_styles):
+            if "color: var(--muted);" in declarations:
+                self.assertTrue(
+                    all(":disabled" in part for part in selector.split(",")),
+                    f"Low-contrast muted text must be limited to disabled controls: {selector}",
+                )
 
         html = Path(
             "codex_image/webui/static/index.html"
         ).read_text(encoding="utf-8")
-        pixel_preview = html[
-            html.index('id="pixelPreview"'):
-            html.index('id="size"', html.index('id="pixelPreview"'))
-        ]
-        self.assertIn("color: var(--primary-strong)", pixel_preview)
+        self.assertIn('id="pixelPreview" class="pixel-preview full-width"', html)
+        pixel_preview = re.search(r"\.pixel-preview\s*\{([^}]*)\}", component_styles)
+        self.assertIsNotNone(pixel_preview)
+        self.assertIn("color: var(--text-secondary)", pixel_preview.group(1))
+        self.assertIn("background: var(--surface-soft)", pixel_preview.group(1))
 
     def test_static_segmented_controls_announce_group_and_pressed_state(
         self,
@@ -85,7 +90,6 @@ class WebUIStaticAccessibilityTests(unittest.TestCase):
             "codex_image/webui/static/index.html"
         ).read_text(encoding="utf-8")
         for group_id in (
-            "promptFidelityGroup",
             "orientationGroup",
             "resolutionGroup",
             "ratioGroup",
@@ -122,14 +126,10 @@ class WebUIStaticAccessibilityTests(unittest.TestCase):
             "codex_image/webui/static/styles/50-image-input-gallery.css"
         ).read_text(encoding="utf-8")
 
-        self.assertRegex(
-            responsive,
-            r"--compact-settings-control-height:\s*clamp\(\s*24px,",
-        )
-        self.assertRegex(
-            responsive,
-            r"--compact-settings-segment-height:\s*clamp\(\s*24px,",
-        )
+        for token in ("control", "segment"):
+            height = re.search(rf"--compact-settings-{token}-height:\s*(\d+)px", responsive)
+            self.assertIsNotNone(height)
+            self.assertGreaterEqual(int(height.group(1)), 24)
         delete_button = re.search(
             r"\.recent-asset-delete\s*\{(?P<body>[^}]*)\}",
             image_input,
@@ -252,7 +252,7 @@ class WebUIStaticAccessibilityTests(unittest.TestCase):
             "codex_image/webui/static/history.html"
         ).read_text(encoding="utf-8")
         source = Path(
-            "codex_image/webui/frontend/src/history.ts"
+            "codex_image/webui/frontend/src/history-card-view.ts"
         ).read_text(encoding="utf-8")
 
         self.assertRegex(

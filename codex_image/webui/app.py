@@ -64,7 +64,6 @@ from .auth_routing import (
 )
 from .cancellation import (
     finalize_task_cancellation,
-    request_task_cancellation,
 )
 from .queue_runtime import (
     _client_for_queue_channel,
@@ -77,6 +76,7 @@ from .queue_runtime import (
     execute_task,
     install_queue_runtime,
     queue_lifespan,
+    request_running_task_cancellation,
 )
 from .recovery import (
     _disk_output_paths,
@@ -131,6 +131,9 @@ from .settings_store import (
     _parse_color_palette_import,
 )
 from .security import LocalWebUISecurityMiddleware
+from .lan_access import LanAccessRuntime
+from .state_sync import StateSyncClock
+from .routes.lan_access import register_lan_access_routes
 from .context import WebUIContext
 from .events import event_key, event_snapshot, queue_snapshot, queued_or_running_task_ids, sse_message, task_event
 from .history_export import HistoryExportService
@@ -212,6 +215,10 @@ DEFAULT_PROMPT_FIDELITY = "off"
 class NoCacheStaticFiles(StaticFiles):
     async def get_response(self, path: str, scope: dict[str, Any]) -> Response:
         response = await super().get_response(path, scope)
+        if isinstance(response, FileResponse) and Path(response.path).suffix.lower() == ".svg":
+            # Windows MIME registrations can map SVG files to a non-image type.
+            response.media_type = "image/svg+xml"
+            response.headers["Content-Type"] = response.media_type
         response.headers["Cache-Control"] = "no-store"
         return response
 
@@ -405,7 +412,9 @@ def create_app(
         openapi_url=None,
     )
     app.state.webui_shutdown_coordinator = ShutdownCoordinator()
-    app.add_middleware(LocalWebUISecurityMiddleware)
+    app.state.state_sync_clock = StateSyncClock()
+    app.state.lan_access = LanAccessRuntime(enabled=settings.read_lan_access_enabled())
+    app.add_middleware(LocalWebUISecurityMiddleware, lan_access=app.state.lan_access)
     ctx = WebUIContext(
         app=app,
         storage=storage,
@@ -514,8 +523,8 @@ def create_app(
             "running_channel_for_task": lambda task_id: _running_channel_for_task(queue_storage, task_id),
             "with_stored_request_payload": lambda task_id, metadata: _with_stored_request_payload(storage, task_id, metadata),
             "set_task_archived": lambda task_id, archived: _set_task_archived(storage, task_id, archived),
-            "request_task_cancellation": lambda task_id: request_task_cancellation(
-                storage,
+            "request_task_cancellation": lambda task_id: request_running_task_cancellation(
+                ctx,
                 task_id,
             ),
             "finalize_task_cancellation": lambda task_id: finalize_task_cancellation(
@@ -562,6 +571,7 @@ def create_app(
         }
     )
     register_webui_routes(app, ctx)
+    register_lan_access_routes(app, ctx)
 
     return app
 
@@ -833,13 +843,12 @@ def _dedupe_reference_assets(items: list[dict[str, Any]]) -> list[dict[str, Any]
 
 
 def _set_task_archived(storage: TaskStorage, task_id: str, archived: bool) -> dict[str, Any]:
-    metadata = storage.read_metadata(task_id)
-    if archived:
-        metadata["archived_at"] = str(metadata.get("archived_at") or utc_now())
-    else:
-        metadata.pop("archived_at", None)
-    storage.write_metadata(task_id, metadata)
-    return metadata
+    def mutate(metadata: dict[str, Any]) -> None:
+        if archived:
+            metadata["archived_at"] = str(metadata.get("archived_at") or utc_now())
+        else:
+            metadata.pop("archived_at", None)
+    return storage.mutate_metadata(task_id, mutate)
 
 
 _runtime_app: FastAPI | None = None

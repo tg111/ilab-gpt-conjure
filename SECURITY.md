@@ -1,12 +1,38 @@
 # Security Policy
 
-## Local-only assumptions
+## Local and trusted LAN access
 
-iLab CONJURE is designed for local personal workflows. Do not expose the
-WebUI directly to the public internet unless you have reviewed and hardened the
-deployment yourself.
+iLab CONJURE listens on loopback by default. The optional **Allow LAN access**
+setting binds to all IPv4 interfaces after the WebUI service restarts. Turning it
+off also takes effect after a restart; saving alone does not disconnect clients.
+
+LAN access has no login or user roles. Anyone who can reach the listener shares
+the same workspace and can generate images using the host's configured channels,
+view tasks and images, change settings, and delete shared data. Use it only on a
+trusted network. The setting does not limit access to a particular subnet; do not
+port-forward or expose this unauthenticated listener to the public internet.
+
+Same-origin write checks, request size limits, and file/parameter validation still
+apply. Host names are limited to loopback, the server's interface addresses,
+its system hostname/local name, and an explicitly configured listener host.
+Arbitrary DNS aliases are not accepted. LAN URLs use HTTP; browser features that require a secure context, such as
+system notifications, may be unavailable. Address copying falls back to selecting
+the address for manual copying when the browser cannot copy it automatically.
 
 ## Secrets and local data
+
+Generated image URLs are resolved and checked before download and on every
+redirect. Indirect assets must use public addresses; assets on the exact origin
+of a user-configured local provider remain supported. Connections use the checked
+IP while retaining the original HTTP Host and TLS hostname. Credentials are only
+retried on the configured provider origin and never follow a cross-origin redirect.
+
+The optional Fake-IP DNS compatibility setting applies only to indirect image
+assets whose system DNS answers are entirely in `198.18.0.0/15`. It queries
+Cloudflare DNS over HTTPS for the hostname only, then applies the same public
+address validation and pinned connections on every redirect. No API credentials,
+prompts, or complete image URLs are sent to the DNS resolver. The setting is off
+by default and does not change system or LAN DNS.
 
 Do not publish OAuth tokens, API keys, account files, `.env` files, input images,
 generated outputs, task metadata, SQLite databases, or debug logs.

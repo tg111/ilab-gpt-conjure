@@ -1,14 +1,16 @@
+import { suggestLegalSize } from "./size-suggestion";
 import { getLegacyBridge } from "./state";
+import { setCustomSizeModeLayout } from "./output-size-layout";
 import {
   DEFAULT_ORIENTATION,
   DEFAULT_RATIO,
-  ORIENTATION_DEFAULT_RATIOS,
-  RATIO_COUNTERPARTS,
   DEFAULT_RESOLUTION,
   GPT_IMAGE_2_MAX_LONG_SHORT_RATIO,
   GPT_IMAGE_2_MAX_PIXELS,
   GPT_IMAGE_2_MIN_PIXELS,
   GPT_IMAGE_2_SIZE_PRESETS,
+  ORIENTATION_DEFAULT_RATIOS,
+  RATIO_COUNTERPARTS,
   RATIO_ORIENTATION,
   customDimensionValue,
   customSizeValidationMessage,
@@ -19,21 +21,12 @@ import {
 import { syncRadioButtons, updateRequestPreview } from "./output-controls";
 import { formatTranslation, LOCALE_CHANGE_EVENT } from "./i18n";
 
-const CUSTOM_SIZE_TRANSITION_MS = 220;
-const CUSTOM_SIZE_HEIGHT_SNAP_TOLERANCE = 4;
-
 const bridge = getLegacyBridge();
 const state = bridge.state;
 const els = bridge.els;
-const customSizeTransitionTimers = new WeakMap<HTMLElement, number>();
 
 function saveCurrentModelParameterDraft(): void {
   bridge.methods.saveCurrentModelParameterDraft?.();
-}
-
-function measuredElementHeight(element: any): number {
-  if (!element) return 0;
-  return Math.ceil(element.getBoundingClientRect().height);
 }
 
 export function handleSizeModeEvent(event: any): void {
@@ -332,6 +325,7 @@ export function syncRatioAndOrientation(changedControl: any): void {
   if (!ORIENTATION_DEFAULT_RATIOS[els.orientation.value]) {
     setSizeControlValue(els.orientation, RATIO_ORIENTATION[els.ratio.value] || DEFAULT_ORIENTATION);
   }
+
   if (changedControl === "orientation") {
     syncRatioFromOrientation();
     return;
@@ -351,6 +345,7 @@ export function syncRatioFromOrientation(): void {
     return;
   }
   if (RATIO_ORIENTATION[els.ratio.value] === orientation) return;
+
   const counterpart = RATIO_COUNTERPARTS[els.ratio.value];
   if (counterpart && RATIO_ORIENTATION[counterpart] === orientation) {
     setSizeControlValue(els.ratio, counterpart);
@@ -446,141 +441,14 @@ export function syncSizeControlsFromSize(size: any): void {
 
 export { orientationForDimensions };
 
-function setCustomSizeModeLayout(isCustom: any): void {
-  els.customSize?.classList.toggle("hidden", !isCustom);
-  els.customSize?.classList.toggle("custom-size-collapsed", !isCustom);
-  els.customSize?.setAttribute("aria-hidden", isCustom ? "false" : "true");
-  els.settingsGrid?.classList.toggle("custom-size-mode", isCustom);
-}
-
-function measureCustomSizeModeHeight(isCustom: any): number {
-  const grid = els.settingsGrid;
-  const customSize = els.customSize;
-  if (!grid) return 0;
-
-  const originalHeight = grid.style.height;
-  const originalGridTransition = grid.style.transition;
-  const originalCustomTransition = customSize?.style.transition || "";
-  const originalCustomMode = grid.classList.contains("custom-size-mode");
-  const originalCustomHidden = customSize?.classList.contains("hidden") || false;
-  const originalCustomCollapsed = customSize?.classList.contains("custom-size-collapsed") || false;
-  const originalCustomAriaHidden = customSize?.getAttribute("aria-hidden");
-
-  grid.style.transition = "none";
-  grid.style.height = "";
-  if (customSize) customSize.style.transition = "none";
-  setCustomSizeModeLayout(isCustom);
-  const height = measuredElementHeight(grid);
-
-  grid.classList.toggle("custom-size-mode", originalCustomMode);
-  if (customSize) {
-    customSize.classList.toggle("hidden", originalCustomHidden);
-    customSize.classList.toggle("custom-size-collapsed", originalCustomCollapsed);
-    if (originalCustomAriaHidden === null) {
-      customSize.removeAttribute("aria-hidden");
-    } else {
-      customSize.setAttribute("aria-hidden", originalCustomAriaHidden);
-    }
-    customSize.style.transition = originalCustomTransition;
-  }
-  grid.style.height = originalHeight;
-  grid.style.transition = originalGridTransition;
-  return height;
-}
-
-function transitionCustomSizeMode(isCustom: any): void {
-  const grid = els.settingsGrid;
-  const customSize = els.customSize;
-  if (!grid || !customSize) {
-    setCustomSizeModeLayout(isCustom);
-    state.customSizeMode = isCustom;
-    return;
-  }
-
-  if (state.customSizeMode === null) {
-    state.customSizeMode = isCustom;
-    grid.style.height = "";
-    grid.classList.remove("is-size-transitioning");
-    setCustomSizeModeLayout(isCustom);
-    return;
-  }
-
-  const pendingTimerId = customSizeTransitionTimers.get(grid);
-  if (state.customSizeMode === isCustom && !pendingTimerId) {
-    grid.style.height = "";
-    grid.classList.remove("is-size-transitioning");
-    setCustomSizeModeLayout(isCustom);
-    return;
-  }
-
-  state.customSizeMode = isCustom;
-  state.customSizeTransitionSeq += 1;
-  const transitionSeq = state.customSizeTransitionSeq;
-  if (pendingTimerId) {
-    window.clearTimeout(pendingTimerId);
-    customSizeTransitionTimers.delete(grid);
-  }
-
-  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-  if (reduceMotion) {
-    grid.style.height = "";
-    grid.classList.remove("is-size-transitioning");
-    setCustomSizeModeLayout(isCustom);
-    return;
-  }
-
-  const fromHeight = measuredElementHeight(grid);
-  const targetHeight = measureCustomSizeModeHeight(isCustom);
-  if (Math.abs(targetHeight - fromHeight) <= CUSTOM_SIZE_HEIGHT_SNAP_TOLERANCE) {
-    grid.style.height = "";
-    grid.classList.remove("is-size-transitioning");
-    setCustomSizeModeLayout(isCustom);
-    return;
-  }
-
-  grid.style.height = `${fromHeight}px`;
-  grid.classList.add("is-size-transitioning");
-
-  if (isCustom) {
-    customSize.classList.remove("hidden");
-    customSize.classList.add("custom-size-collapsed");
-    customSize.setAttribute("aria-hidden", "false");
-    grid.classList.add("custom-size-mode");
-    void grid.offsetHeight;
-    window.requestAnimationFrame(() => {
-      if (transitionSeq !== state.customSizeTransitionSeq) return;
-      customSize.classList.remove("custom-size-collapsed");
-      grid.style.height = `${targetHeight}px`;
-    });
-  } else {
-    customSize.classList.remove("hidden");
-    customSize.classList.remove("custom-size-collapsed");
-    customSize.setAttribute("aria-hidden", "false");
-    grid.classList.add("custom-size-mode");
-
-    void grid.offsetHeight;
-    window.requestAnimationFrame(() => {
-      if (transitionSeq !== state.customSizeTransitionSeq) return;
-      customSize.classList.add("custom-size-collapsed");
-      grid.classList.remove("custom-size-mode");
-      grid.style.height = `${targetHeight}px`;
-    });
-  }
-
-  const timerId = window.setTimeout(() => {
-    if (transitionSeq !== state.customSizeTransitionSeq) return;
-    setCustomSizeModeLayout(isCustom);
-    grid.style.height = "";
-    grid.classList.remove("is-size-transitioning");
-    customSizeTransitionTimers.delete(grid);
-  }, CUSTOM_SIZE_TRANSITION_MS);
-  customSizeTransitionTimers.set(grid, timerId);
+export function initCustomSizeLayout(): void {
+  setCustomSizeModeLayout(els.size?.value === "custom");
 }
 
 export function updateCustomSize(): void {
   const isCustom = currentSizeMode() === "custom" || els.size?.value === "custom";
   const isAuto = currentSizeMode() === "auto";
-  transitionCustomSizeMode(isCustom);
+  setCustomSizeModeLayout(isCustom);
   if (els.customSizeToggle) els.customSizeToggle.checked = isCustom;
   els.sizeModeGroup?.querySelectorAll("[data-custom-size-mode]").forEach((button: any) => {
     const active = button.dataset.customSizeMode === (isCustom ? "custom" : isAuto ? "auto" : "preset");
@@ -588,6 +456,28 @@ export function updateCustomSize(): void {
     button.setAttribute("aria-pressed", active ? "true" : "false");
   });
   const message = isCustom ? customSizeValidationMessage() : "";
+  const previousError = els.customSizeHint?.textContent;
+  [els.customWidth, els.customHeight].forEach(input => {
+    input?.setAttribute("aria-invalid", String(Boolean(message)));
+    input?.setAttribute("aria-describedby", "customSizeHint");
+  });
+  if (!message && els.statusText?.textContent === previousError) { els.statusText.textContent = ""; els.statusText.classList.remove("error"); }
+  let suggestion = document.getElementById("customSizeSuggestion") as HTMLButtonElement | null;
+  if (!suggestion && els.customSizeHint) {
+    suggestion = document.createElement("button"); suggestion.id = "customSizeSuggestion"; suggestion.type = "button"; suggestion.className = "ghost-button text-sm";
+    els.customSizeHint.after(suggestion);
+  }
+  if (suggestion) {
+    suggestion.hidden = !message;
+    if (message) {
+      const next = suggestLegalSize(Number(els.customWidth?.value), Number(els.customHeight?.value));
+      suggestion.textContent = formatTranslation("ux.useSize", next);
+      suggestion.onclick = () => {
+        els.customWidth.value = String(next.width); els.customHeight.value = String(next.height);
+        updateCustomSize(); updatePixelPreview("custom"); updateRequestPreview(); saveCurrentModelParameterDraft();
+      };
+    }
+  }
   els.customSize?.classList.toggle("has-error", Boolean(message));
   if (els.customSizeHint) {
     els.customSizeHint.textContent = message || formatTranslation("output.customSizeHint");

@@ -367,7 +367,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(metadata["status"], "queued")
         self.assertEqual(queue_state["waiting"], [task["task_id"]])
         self.assertEqual(fake.generate_calls, [])
-    def test_generate_route_strict_prompt_fidelity_adds_guidance(self) -> None:
+    def test_generate_route_ignores_strict_prompt_fidelity(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "产品目标人群是宝妈为主，文案标题设计偏儿童Q版卡通化，色彩偏淡彩"
@@ -381,13 +381,14 @@ class WebUIGenerationTests(unittest.TestCase):
             task = body["task"]
             metadata = json.loads(metadata_path(Path(tmp), task["task_id"]).read_text(encoding="utf-8"))
 
+        # Prompt processing is disabled: no guard constraints or instructions are added.
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["params"]["prompt_fidelity"], "strict")
-        self.assertIn("标题字体/标题设计：文案标题设计偏儿童Q版卡通化", task["prompt_constraints"])
-        self.assertIn("标题字体/标题设计：文案标题设计偏儿童Q版卡通化", metadata["prompt_constraints"])
-        self.assertIn("只能扩写用户提示词", body["request"]["instructions"])
+        self.assertNotIn("prompt_fidelity", task["params"])
+        self.assertFalse(task.get("prompt_constraints"))
+        self.assertFalse(metadata.get("prompt_constraints"))
+        self.assertFalse(body["request"].get("instructions"))
         self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt)
-    def test_generate_and_edit_routes_default_to_automatic_prompt_fidelity(self) -> None:
+    def test_generate_and_edit_routes_submit_prompt_verbatim(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "文案标题设计偏儿童Q版卡通化"
@@ -415,18 +416,18 @@ class WebUIGenerationTests(unittest.TestCase):
                             task = body["task"]
                             metadata = json.loads(metadata_path(Path(tmp), task["task_id"]).read_text(encoding="utf-8"))
 
-                            self.assertEqual(task["params"]["prompt_fidelity"], "off")
-                            self.assertEqual(metadata["params"]["prompt_fidelity"], "off")
-                            self.assertNotIn("prompt_constraints", task)
-                            self.assertNotIn("prompt_constraints", metadata)
+                            self.assertNotIn("prompt_fidelity", task["params"])
+                            self.assertNotIn("prompt_fidelity", metadata["params"])
+                            self.assertFalse(task.get("prompt_constraints"))
+                            self.assertFalse(metadata.get("prompt_constraints"))
                             self.assertFalse(body["request"].get("instructions"))
                             request_prompt = body["request"]["prompt"] if mode == "images" else body["request"]["input"][0]["content"][0]["text"]
                             self.assertEqual(request_prompt, prompt)
-    def test_generate_route_appends_ratio_instruction_to_model_prompt(self) -> None:
+    def test_generate_route_does_not_append_ratio_instruction_to_model_prompt(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "生成一张极简电影海报"
-        expected_model_prompt = f"{prompt}\n\n将宽高比设为 16:9"
+        expected_model_prompt = prompt
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
@@ -455,7 +456,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(metadata["prompt"], prompt)
         self.assertEqual(metadata["prompt_for_model"], expected_model_prompt)
         self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expected_model_prompt)
-    def test_generate_route_original_prompt_fidelity_uses_raw_prompt(self) -> None:
+    def test_generate_route_uses_raw_prompt_for_any_prompt_fidelity(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "让 @小美 做产品模特，文案标题设计偏儿童Q版卡通化"
@@ -479,14 +480,14 @@ class WebUIGenerationTests(unittest.TestCase):
             task = body["task"]
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["params"]["prompt_fidelity"], "original")
+        self.assertNotIn("prompt_fidelity", task["params"])
         self.assertEqual(task["prompt_for_model"], prompt)
-        self.assertNotIn("prompt_constraints", task)
+        self.assertFalse(task.get("prompt_constraints"))
         self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt)
-        self.assertEqual(body["request"]["instructions"], "")
+        self.assertFalse(body["request"].get("instructions"))
         self.assertNotIn("参考图 1", body["request"]["input"][0]["content"][0]["text"])
 
-    def test_generate_route_original_prompt_fidelity_expands_prompt_snippets(self) -> None:
+    def test_generate_route_submits_prompt_text_without_server_side_rewrites(self) -> None:
         from codex_image.webui.app import create_app
         from codex_image.webui.prompt_snippets import PromptSnippetSettings
 
@@ -526,12 +527,13 @@ class WebUIGenerationTests(unittest.TestCase):
             task = body["task"]
             metadata = json.loads(metadata_path(root / "tasks", task["task_id"]).read_text(encoding="utf-8"))
 
+        # Prompt processing is disabled: the submitted prompt text is sent as-is.
         self.assertEqual(response.status_code, 200)
         self.assertEqual(task["prompt"], prompt)
-        self.assertEqual(task["prompt_for_model"], expanded_prompt)
-        self.assertEqual(metadata["execution_prompt"], expanded_prompt)
-        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expanded_prompt)
-        self.assertEqual(body["request"]["instructions"], "")
+        self.assertEqual(task["prompt_for_model"], prompt)
+        self.assertEqual(metadata["execution_prompt"], prompt)
+        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], prompt)
+        self.assertFalse(body["request"].get("instructions"))
 
     def test_edit_route_enqueues_without_calling_client_inline(self) -> None:
         from codex_image.webui.app import create_app
@@ -553,11 +555,11 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(metadata["status"], "queued")
         self.assertEqual(queue_state["waiting"], [task["task_id"]])
         self.assertEqual(fake.edit_calls, [])
-    def test_edit_route_appends_ratio_instruction_to_model_prompt(self) -> None:
+    def test_edit_route_does_not_append_ratio_instruction_to_model_prompt(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "把参考图改成横版电影海报"
-        expected_model_prompt = f"{prompt}\n\n将宽高比设为 16:9"
+        expected_model_prompt = prompt
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)

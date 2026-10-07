@@ -94,7 +94,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         self.assertEqual(snapshot["protocol_profile"], "codex_responses")
         self.assertEqual(metadata["requested_backend"], "codex_responses")
 
-    def test_canonical_codex_gpt_bindings_restore_ratio_prompt_from_canvas_size(self) -> None:
+    def test_canonical_codex_gpt_bindings_restore_ratio_params_without_prompt_instruction(self) -> None:
         for binding_id, protocol_profile in (
             ("codex-gpt-image-2-images", "codex_images"),
             ("codex-gpt-image-2-responses", "codex_responses"),
@@ -120,7 +120,8 @@ class WebUIProviderRoutingTests(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 200)
                 self.assertEqual(task["requested_backend"], protocol_profile)
-                expected_prompt = f"codex composition\n\n将宽高比设为 {ratio}"
+                # Prompt processing is disabled: the ratio is recorded but not appended.
+                expected_prompt = "codex composition"
                 request_prompt = (
                     body["request"]["prompt"]
                     if protocol_profile == "codex_images"
@@ -180,16 +181,13 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             self.assertNotIn("ratio", task["params"])
             self.assertNotIn("orientation", task["params"])
 
-    def test_canonical_api_gpt_bindings_add_localized_ratio_prompt_when_enabled(self) -> None:
+    def test_canonical_api_gpt_bindings_do_not_append_ratio_prompt(self) -> None:
         parameters = {"canvas.size": "864x1536", "output.count": 1}
         for binding_id, protocol_profile, parameter_codec in (
             ("relay-images", "openai_images", "gpt_openai_images"),
             ("relay-responses", "openai_responses", "gpt_openai_responses"),
         ):
-            for locale, instruction in (
-                ("en", "Set the aspect ratio to 9:16."),
-                ("zh-TW", "將寬高比設為 9:16"),
-            ):
+            for locale in ("en", "zh-TW"):
                 with self.subTest(binding_id=binding_id, locale=locale), tempfile.TemporaryDirectory() as tmp:
                     settings = {
                         "schema_version": 2,
@@ -222,7 +220,8 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     task = body["task"]
 
                 self.assertEqual(response.status_code, 200)
-                expected_prompt = f"api portrait\n\n{instruction}"
+                # Prompt processing is disabled, even when the binding opts in.
+                expected_prompt = "api portrait"
                 request_prompt = (
                     body["request"]["prompt"]
                     if protocol_profile == "openai_images"
@@ -447,12 +446,12 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         self.assertEqual(fake.generate_calls[0]["output_format"], "jpeg")
         self.assertEqual(fake.generate_calls[0]["background"], "opaque")
 
-    def test_queue_worker_uses_frozen_localized_prompt_without_retranslation(self) -> None:
+    def test_queue_worker_uses_frozen_prompt_verbatim(self) -> None:
         import asyncio
         from tests.webui_helpers import FakeImageClient
 
         prompt = "A quiet editorial portrait"
-        expected_prompt = f"{prompt}\n\nSet the aspect ratio to 9:16."
+        expected_prompt = prompt
         with tempfile.TemporaryDirectory() as tmp:
             app = self._app(Path(tmp))
             fake = FakeImageClient()
@@ -525,7 +524,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         self.assertEqual(fake.generate_calls[0]["prompt"], prompt)
         self.assertIsNone(fake.generate_calls[0]["instructions"])
 
-    def test_english_faithful_mode_uses_only_english_app_guidance(self) -> None:
+    def test_strict_prompt_fidelity_does_not_add_app_guidance(self) -> None:
         import asyncio
         from tests.webui_helpers import FakeImageClient
 
@@ -557,9 +556,8 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         actual_prompt = fake.generate_calls[0]["prompt"]
         self.assertEqual(response.status_code, 200)
         self.assertEqual(actual_prompt, preview_prompt)
-        self.assertIn("Prompt fidelity guidance:", actual_prompt)
-        self.assertIn("Original user prompt:", actual_prompt)
-        self.assertIn(prompt, actual_prompt)
+        self.assertEqual(actual_prompt, prompt)
+        self.assertNotIn("Prompt fidelity guidance:", actual_prompt)
         self.assertNotIn("提示词保真规则", actual_prompt)
         self.assertNotIn("用户原始提示词", actual_prompt)
 
@@ -681,8 +679,9 @@ class WebUIProviderRoutingTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         task = response.json()["task"]
-        self.assertEqual(task["prompt_for_model"], "expanded gallery prompt")
-        self.assertNotIn("prompt_constraints", task)
+        # Prompt processing is disabled for every model: the raw prompt is sent.
+        self.assertEqual(task["prompt_for_model"], "必须保留蓝色文字")
+        self.assertFalse(task.get("prompt_constraints"))
         self.assertNotIn("main_model", task["params"])
         self.assertNotIn("prompt_fidelity", task["params"])
 

@@ -124,7 +124,7 @@ function waitForTaskCardRemoval(card: HTMLElement, action: TaskCardRemovalAction
 
 async function runTaskCardRemovalTransition(
   taskIds: any[],
-  commit: () => void,
+  commit: (options?: any) => void,
   action: TaskCardRemovalAction = "default",
 ) {
   const removingIds = normalizedTaskIdSet(taskIds);
@@ -138,7 +138,7 @@ async function runTaskCardRemovalTransition(
     await Promise.all(removingCards.map((card) => waitForTaskCardRemoval(card, action)));
   }
 
-  commit();
+  commit({ preserveScroll: true });
   animateTaskCardReflow(previousCardLayout);
   animateTaskHistoryLayout(previousHistoryLayout);
 }
@@ -353,6 +353,7 @@ function openTaskDeleteConfirm(deleteButton: any, taskId: any) {
   const title = task.prompt || task.mode || taskId;
   openConfirmPopover(deleteButton, {
     title: translate("taskActions.deleteTitle"),
+    focusCancel: true,
     message: translate("taskActions.deleteMessage"),
     detail: title,
     confirmText: translate("action.delete"),

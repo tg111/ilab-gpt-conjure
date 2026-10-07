@@ -1,5 +1,5 @@
 import { getLegacyBridge } from "./state";
-import { isGptImageModelId } from "./model-identifiers";
+import { isGptImageModel } from "./gpt-image-models";
 import { currentAuthSource } from "./auth-source";
 import { currentApiImageModel, currentApiImagesConcurrency, currentApiMode, currentApiProviderId, currentCodexMode } from "./api-provider-settings";
 import { currentMainModel } from "./main-model-combobox";
@@ -102,7 +102,6 @@ function legacyMethod(name: string, ...args: any[]): any {
   return method(...args);
 }
 
-
 function currentCustomRatio(): string {
   const width = String(els.customRatioWidth?.value || "").trim();
   const height = String(els.customRatioHeight?.value || "").trim();
@@ -195,12 +194,13 @@ export function currentTaskParams(): any {
     size: currentSize(),
     n: currentQuantity(),
     quality: els.quality.value,
+    background: els.background?.value || "auto",
     output_format: els.outputFormat.value,
     moderation: els.moderation.value,
     output_compression: els.outputFormat.value === "png" ? null : Number(els.compression.value),
   };
   const { state } = getLegacyBridge();
-  if (!state.generationCatalog || isGptImageModelId(state.selectedModelId)) {
+  if (!state.generationCatalog || isGptImageModel(state.selectedModelId)) {
     params.main_model = currentMainModel();
   }
   if (currentWebSearchEnabled()) {

@@ -28,6 +28,15 @@ export function bootWebUI(state: WebUIState, els: WebUIElements, methods: Legacy
   call(methods, "updateSizeFromPreset");
   call(methods, "updateCustomSize");
   call(methods, "restoreOutputSettingsLock");
+  const restoringDraft = call(methods, "restoreComposerNavigationDraft");
+  if (restoringDraft) {
+    void Promise.resolve(restoringDraft).then(() => finishBoot(methods));
+    return;
+  }
+  finishBoot(methods);
+}
+
+function finishBoot(methods: LegacyMethods): void {
   call(methods, "renderImageStrip");
   call(methods, "restoreCollectedReferences");
   void call(methods, "restoreHistoryReferenceHandoff");
@@ -40,14 +49,10 @@ export function bootWebUI(state: WebUIState, els: WebUIElements, methods: Legacy
   call(methods, "refreshRecentAssets");
   window.startRealtimeUpdates?.({ migrateLegacyArchives: true });
   void window.refreshQueue?.();
-  void Promise.resolve(call(methods, "refreshTasks", { migrateLegacyArchives: true })).then(
-    () => {
-      state.realtimeSnapshotNeedsArchiveMigration = false;
-    },
-    (error) => {
-      console.error(error);
-    },
-  );
+  void Promise.resolve(call(methods, "refreshTasks", { migrateLegacyArchives: true })).catch((error) => {
+    console.error(error);
+    call(methods, "setStatus", String(error?.message || error), "error");
+  });
   call(methods, "startUiClock");
   call(methods, "updateRequestPreview");
   call(methods, "openSystemSettingsFromUrl");

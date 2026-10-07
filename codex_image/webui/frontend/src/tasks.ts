@@ -6,6 +6,7 @@ import {
   sidebarTaskRevealPagePlan,
 } from "./history-task-reveal-model";
 import { cssEscape } from "./webui-utils";
+import { queueSnapshotIsNewer, reconcileTaskSnapshot } from "./state-sync";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -84,15 +85,40 @@ function normalizedTaskSearchResultQuery(query: string): string {
   return String(query || "").trim().toLowerCase();
 }
 
-async function refreshTasks({ migrateLegacyArchives = false }: any = {}) {
+async function refreshTasks({ migrateLegacyArchives = false, preserveExpandedGroup = true }: any = {}) {
+  const groupKey = preserveExpandedGroup ? String(state.expandedTaskGroupKey || "") : "";
+  const loadedCount = Number(state.taskSidebarGroupLoadedCounts?.[groupKey] || 0);
   const requestSeq = ++state.tasksRequestSeq;
   const response = await fetch("/api/tasks/sidebar?limit=50");
   const data = await response.json();
-  if (requestSeq !== state.tasksRequestSeq) return;
-  await applyTasksSnapshot(data.tasks || [], {
+  if (requestSeq !== state.tasksRequestSeq) return false;
+  if (!response.ok) throw new Error(data.detail || "Task history loading failed");
+  const group = Array.isArray(data.task_groups)
+    ? data.task_groups.find((item: any) => String(item?.key || "") === groupKey)
+    : null;
+  if (group && Array.isArray(group.tasks)) {
+    let offset = group.tasks.length;
+    while (offset < Math.min(loadedCount, Number(group.count || 0))) {
+      const limit = Math.min(TASK_SIDEBAR_REVEAL_PAGE_SIZE, loadedCount - offset);
+      const pageResponse = await fetch(
+        `/api/tasks/sidebar/groups/${encodeURIComponent(groupKey)}?offset=${offset}&limit=${limit}`,
+      );
+      const page = await pageResponse.json();
+      if (requestSeq !== state.tasksRequestSeq) return false;
+      if (!pageResponse.ok) throw new Error(page.detail || "Task group loading failed");
+      const incoming = Array.isArray(page.tasks) ? page.tasks : [];
+      group.count = Number(page.count ?? group.count);
+      if (!incoming.length) break;
+      group.tasks = mergeSidebarTasks(group.tasks, incoming);
+      data.tasks = mergeSidebarTasks(data.tasks || [], incoming);
+      offset = Math.max(offset + incoming.length, Number(page.next_offset || 0));
+    }
+  }
+  return await applyTasksSnapshot(data.tasks || [], {
     migrateLegacyArchives,
     requestSeq,
     taskGroups: data.task_groups,
+    sync: data.sync,
   });
 }
 
@@ -102,11 +128,17 @@ async function applyTasksSnapshot(
     migrateLegacyArchives = false,
     requestSeq = state.tasksRequestSeq,
     taskGroups,
+    sync,
   }: any = {},
 ) {
+  const incoming = Array.isArray(tasks) ? tasks : [];
+  const snapshot = reconcileTaskSnapshot(
+    state, queueSnapshotIsNewer(state, sync) ? mergeActiveQueueTaskDetails(incoming) : incoming, sync,
+  );
+  if (snapshot === null) return false;
   const previousLocalPendingTasks = state.tasks.filter((task: any) => task?.local_pending);
   const pendingTask = state.pendingTaskId ? state.tasks.find((task: any) => task.task_id === state.pendingTaskId) : null;
-  state.tasks = mergeActiveQueueTaskDetails(Array.isArray(tasks) ? tasks : []);
+  state.tasks = snapshot;
   if (Array.isArray(taskGroups)) {
     state.taskSidebarGroupLoadError = null;
     state.taskSidebarGroupCounts = Object.fromEntries(
@@ -125,7 +157,8 @@ async function applyTasksSnapshot(
     if (!retainedTasks.has(task)) revokeTaskUploadPreviewUrls(task);
   });
   if (migrateLegacyArchives) {
-    await migrateLegacyArchivedTasks();
+    const migrated = await migrateLegacyArchivedTasks();
+    if (migrated !== false) state.realtimeSnapshotNeedsArchiveMigration = false;
     if (requestSeq !== state.tasksRequestSeq) return;
   }
   cleanupSessionSelections();
@@ -133,6 +166,7 @@ async function applyTasksSnapshot(
   renderArchiveButton();
   renderArchiveModal();
   await renderSelectedTaskPreview(requestSeq);
+  return true;
 }
 
 function mergeActiveQueueTaskDetails(tasks: any[]) {
@@ -328,7 +362,7 @@ async function revealHistoryTaskInSidebar(task: any): Promise<boolean> {
 }
 
 async function refreshTasksAfterDeletion() {
-  await refreshTasks();
+  await refreshTasks({ preserveExpandedGroup: true });
 }
 
 async function applyTaskUpdate(task: any) {

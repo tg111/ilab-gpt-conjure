@@ -1,5 +1,6 @@
 import { getLegacyBridge } from "./state";
 import { selectedProviderBinding } from "./provider-selection";
+import { updateTransparencyControls } from "./background-controls";
 import { resolveModeSettingsVisibility, type ModeSettingsVisibility } from "./mode-settings-visibility";
 
 const bridge = getLegacyBridge();
@@ -32,10 +33,6 @@ export function setModeSpecificElementVisibility(element: any, visible: any): vo
 function applyModeSettingsVisibility(visibility: ModeSettingsVisibility): void {
   const showModeSettings = visibility.showMainModel
     || visibility.showApiDirectNotice;
-  els.modeSettingsSlot?.classList.toggle(
-    "api-direct-mode",
-    visibility.showApiDirectNotice && !visibility.showMainModel,
-  );
   setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);
   setModeSpecificElementVisibility(els.modeSpecificSettings, showModeSettings);
   setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);
@@ -88,6 +85,7 @@ export function updateModeSpecificSettings(authSource: any = currentAuthSource()
     legacyDirectApi: isDirectApi,
   }));
   updateWebSearchAvailability(authSource);
+  updateTransparencyControls();
   legacyMethod("syncReferenceFileAvailability");
   const refreshOutputSettingsLock = getLegacyBridge().methods.refreshOutputSettingsLock;
   if (typeof refreshOutputSettingsLock === "function") refreshOutputSettingsLock();

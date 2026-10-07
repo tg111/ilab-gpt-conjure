@@ -995,7 +995,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertNotIn("test-api-key-no-leak", json.dumps(body, ensure_ascii=False))
         self.assertNotIn("test-api-key-no-leak", request_text)
         self.assertNotIn("test-api-key-no-leak", metadata_text)
-    def test_api_images_mode_uses_prompt_prefix_for_prompt_fidelity(self) -> None:
+    def test_api_images_mode_sends_prompt_without_fidelity_prefix(self) -> None:
         from codex_image.webui.app import create_app
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -1026,8 +1026,8 @@ class WebUISettingsTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("instructions", body["request"])
-        self.assertIn("提示词保真规则", body["request"]["prompt"])
-        self.assertIn("用户原始提示词：\n文案标题设计偏儿童Q版卡通化", body["request"]["prompt"])
+        # Prompt processing is disabled: no fidelity rules wrap the prompt.
+        self.assertEqual(body["request"]["prompt"], "文案标题设计偏儿童Q版卡通化")
     def test_api_images_original_prompt_fidelity_sends_exact_prompt(self) -> None:
         from codex_image.webui.app import create_app
 
@@ -1066,7 +1066,7 @@ class WebUISettingsTests(unittest.TestCase):
             body = response.json()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(body["task"]["params"]["prompt_fidelity"], "original")
+        self.assertNotIn("prompt_fidelity", body["task"]["params"])
         self.assertNotIn("instructions", body["request"])
         self.assertEqual(body["request"]["prompt"], prompt)
     def test_codex_generate_defaults_to_images_channel_request_preview(self) -> None:
@@ -1106,7 +1106,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertNotIn("web_search", body["task"]["params"])
         self.assertEqual(body["request"]["webui_requested_backend"], "codex_images")
         self.assertEqual(body["request"]["endpoint"], "/images/generations")
-        self.assertEqual(body["task"]["params"]["prompt_fidelity"], "off")
+        self.assertNotIn("prompt_fidelity", body["task"]["params"])
         self.assertEqual(body["request"]["prompt"], "codex images default")
         self.assertNotIn("tools", body["request"])
         self.assertNotIn("instructions", body["request"])
@@ -3152,6 +3152,48 @@ class WebUISettingsTests(unittest.TestCase):
             deleted = client.delete(f"/api/prompt-templates/{template_id}")
             self.assertEqual(deleted.status_code, 200)
             self.assertEqual(deleted.json()["templates"], [])
+
+    def test_prompt_template_model_hints_survive_save_edit_and_pack_round_trip(self) -> None:
+        from codex_image.generation.catalog import list_model_manifests
+        from codex_image.webui.app import create_app
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            clients = [TestClient(create_app(
+                output_root=root / name / "outputs",
+                prompt_templates_path=root / name / "templates.json",
+                auth_checker=lambda: True,
+                auto_start_queue=False,
+            )) for name in ("source", "destination")]
+            source, destination = clients
+            model_ids = [model.id for model in list_model_manifests()] + ["any"]
+            for model_id in model_ids:
+                with self.subTest(model_id=model_id):
+                    created = source.post("/api/prompt-templates", json={
+                        "title": "Shared template", "content": "Synthetic prompt",
+                        "model_hint": model_id,
+                    })
+                    self.assertEqual(created.status_code, 200, created.text)
+                    template_id = created.json()["template"]["id"]
+                    updated = source.patch(f"/api/prompt-templates/{template_id}", json={"notes": "Edited"})
+                    self.assertEqual(updated.status_code, 200)
+                    self.assertEqual(updated.json()["template"]["model_hint"], model_id)
+            exported = source.get("/api/prompt-templates/export.json")
+            self.assertEqual(exported.status_code, 200)
+            self.assertEqual(exported.json()["model_hint"], "any")
+            imported = destination.post("/api/prompt-templates/import", files={
+                "file": ("templates.json", exported.content, "application/json"),
+            })
+            self.assertEqual(imported.status_code, 200, imported.text)
+            self.assertEqual(imported.json()["imported"], len(model_ids))
+            self.assertEqual({item["model_hint"] for item in imported.json()["templates"]}, set(model_ids))
+            repeated = destination.post("/api/prompt-templates/import", files={
+                "file": ("templates.json", exported.content, "application/json"),
+            })
+            self.assertEqual(repeated.json()["imported"], 0)
+            self.assertEqual(repeated.json()["skipped"], len(model_ids))
+            listed = destination.get("/api/prompt-templates").json()["templates"]
+            self.assertEqual({item["model_hint"] for item in listed}, set(model_ids))
 
     def test_prompt_templates_support_categories_thumbnails_and_pack_import_export(self) -> None:
         from codex_image.webui.app import create_app

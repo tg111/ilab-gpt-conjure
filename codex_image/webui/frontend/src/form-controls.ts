@@ -1,4 +1,6 @@
 import { getLegacyBridge } from "./state";
+import { initOutputParameterKeyboard } from "./output-parameter-keyboard";
+import { handleTransparentBackgroundChange, updateTransparencyControls } from "./background-controls";
 import {
   closeMainModelCombobox,
   currentMainModel,
@@ -33,11 +35,10 @@ import {
   handleCustomDimensionInput,
   handleCustomRatioInput,
   handleSizeModeEvent,
+  initCustomSizeLayout,
   swapCustomSizeDimensions,
   syncSizeControlsFromSize,
   updateCustomSize,
-  currentSizeMode,
-  setSizeMode,
   updatePixelPreview,
   updateSizeFromPreset,
   updateCustomRatioFieldState,
@@ -63,6 +64,9 @@ function syncRunButtonLabel(): void {
 export function bindFormControlEvents(): void {
   if (formControlEventsBound) return;
   formControlEventsBound = true;
+  initOutputParameterKeyboard();
+  els.transparentBackground?.addEventListener("change", handleTransparentBackgroundChange);
+  document.addEventListener(LOCALE_CHANGE_EVENT, updateTransparencyControls);
 
   document.querySelectorAll("[data-mode]").forEach((button: any) => {
     button.addEventListener("click", () => setMode(button.dataset.mode));
@@ -120,12 +124,12 @@ export function bindFormControlEvents(): void {
   });
 
   [els.resolution, els.ratio, els.orientation].filter(Boolean).forEach((element: any) => {
-    element.addEventListener("input", () => {
-      updateSizeFromPreset();
+    element.addEventListener("input", (event: Event) => {
+      updateSizeFromPreset(event);
       saveCurrentModelParameterDraft();
     });
-    element.addEventListener("change", () => {
-      updateSizeFromPreset();
+    element.addEventListener("change", (event: Event) => {
+      updateSizeFromPreset(event);
       saveCurrentModelParameterDraft();
     });
   });
@@ -147,6 +151,17 @@ export function bindFormControlEvents(): void {
     els.customSizeToggle.addEventListener("change", updateSizeFromPreset);
   }
   els.outputFormatGroup?.addEventListener("dblclick", handleOutputFormatDoubleClick);
+  const compressionButton = document.getElementById("outputCompressionButton");
+  compressionButton?.addEventListener("click", () => {
+    if (els.compressionPopover?.classList.contains("hidden")) openCompressionPopover();
+    else closeCompressionPopover();
+  });
+  els.outputFormatField?.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key !== "Escape" || els.compressionPopover?.classList.contains("hidden")) return;
+    event.stopPropagation();
+    closeCompressionPopover();
+    compressionButton?.focus();
+  });
 }
 
 export function setMode(mode: any): void {
@@ -168,6 +183,7 @@ export function setMode(mode: any): void {
 export function initFormControlsFeature(): void {
   if (formControlsInitialized) return;
   formControlsInitialized = true;
+  initCustomSizeLayout();
   document.addEventListener(LOCALE_CHANGE_EVENT, syncRunButtonLabel);
   Object.assign(getLegacyBridge().methods, {
     bindFormControlEvents,
