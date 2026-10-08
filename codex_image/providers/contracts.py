@@ -21,7 +21,6 @@ class ProviderModelBinding:
     parameter_codec: str
     operations: frozenset[GenerationOperation]
     is_default: bool = False
-    append_aspect_ratio_prompt: bool = False
     transparency_mode: str = "native"
     transparency_prompt_version: int = 1
 

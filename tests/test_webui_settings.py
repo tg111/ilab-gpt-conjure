@@ -1028,7 +1028,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertNotIn("instructions", body["request"])
         # Prompt processing is disabled: no fidelity rules wrap the prompt.
         self.assertEqual(body["request"]["prompt"], "文案标题设计偏儿童Q版卡通化")
-    def test_api_images_original_prompt_fidelity_sends_exact_prompt(self) -> None:
+    def test_api_images_sends_gallery_notes_without_instructions(self) -> None:
         from codex_image.webui.app import create_app
 
         prompt = "文案标题设计偏儿童Q版卡通化"
@@ -1068,7 +1068,10 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("prompt_fidelity", body["task"]["params"])
         self.assertNotIn("instructions", body["request"])
-        self.assertEqual(body["request"]["prompt"], prompt)
+        self.assertEqual(
+            body["request"]["prompt"],
+            f"{prompt}\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。",
+        )
     def test_codex_generate_defaults_to_images_channel_request_preview(self) -> None:
         from codex_image.webui.app import create_app
 

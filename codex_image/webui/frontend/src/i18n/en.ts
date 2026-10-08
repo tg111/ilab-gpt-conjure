@@ -1146,7 +1146,6 @@ export const EN_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelsInvalidResponse": "The provider returned an invalid model list. You can enter the name manually.",
     "apiSettings.modelsTooLarge": "The provider's model list is too large. Enter the model name manually.",
     "apiSettings.modelsFetchFailed": "Could not fetch models. Check the address and network, then try again.",
-    "apiSettings.appendRatioPrompt": "Add ratio prompt",
     "apiSettings.defaultProviderForModel": "Default provider for this model",
     "apiSettings.removeBinding": "Remove binding",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",

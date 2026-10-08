@@ -131,14 +131,13 @@ class ProviderSettingsGptImageBindingTests(unittest.TestCase):
 
     def test_upgrade_copies_transport_options_from_gpt_image_2_binding(self) -> None:
         self.write_v2(
-            [self.provider("relay", append_aspect_ratio_prompt=True, transparency_mode="prompt")],
+            [self.provider("relay", transparency_mode="prompt")],
             {"gpt-image-2": "relay"},
         )
 
         bindings = self.settings.read()["providers"][0]["bindings"]
 
         for binding in bindings:
-            self.assertTrue(binding.get("append_aspect_ratio_prompt"), binding["id"])
             self.assertEqual(binding.get("transparency_mode"), "prompt", binding["id"])
 
     def test_default_settings_bind_every_gpt_image_version(self) -> None:

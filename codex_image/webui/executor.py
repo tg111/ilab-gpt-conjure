@@ -106,9 +106,10 @@ async def _execute_stored_task(
     else:
         effective_api_mode = _normalize_api_mode(params.get("api_mode"))
     web_search_enabled = bool(params.get("web_search")) and effective_api_mode == "responses"
-    # Prompt processing is disabled: retries and recovery use the original text too.
-    model_prompt = prompt
-    transport_prompt = prompt
+    # Prompt processing is disabled: retries and recovery reuse the stored model
+    # prompt (expanded snippets and gallery notes) without adding instructions.
+    model_prompt = str(metadata.get("prompt_for_model") or prompt)
+    transport_prompt = model_prompt
     transport_instructions = None
     input_paths = [storage.input_path(str(name)) for name in metadata.get("input_files", [])]
 

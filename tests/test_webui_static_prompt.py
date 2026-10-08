@@ -52,7 +52,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
             "normalizeHexColor",
         ]:
             self._assert_bootstrap_proxy(legacy_source, function_name)
-    def test_prompt_fidelity_control_is_removed_and_prompt_is_sent_verbatim(self) -> None:
+    def test_prompt_fidelity_control_is_removed(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
 
@@ -64,7 +64,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn('currentPromptFidelity: proxy("currentPromptFidelity")', script)
         self.assertNotIn("prompt_fidelity = currentPromptFidelity()", script)
         self.assertNotIn('form.append("prompt_fidelity"', script)
-        self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{\s*return getPromptText\(\);")
+        self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{[\s\S]*?return buildPromptForModel\(\);")
         self.assertIn('isGptImageModel(state.selectedModelId)', script)
 
     def test_prompt_fidelity_help_is_not_mounted(self) -> None:
@@ -931,7 +931,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertRegex(script, r"PROMPT_SNIPPET_TRIGGER_PATTERN\s*=\s*/[\s\S]*\(\[~～〜∼˜\]\+\)")
         self.assertRegex(script, r"function activePromptSnippetMatch\(\)\s*\{[\s\S]*normalizePromptSnippetTrigger\(match\[2\]\)")
         self.assertRegex(script, r"promptTextFromNode\(node\)\s*\{[\s\S]*child\.classList\.contains\(\"prompt-snippet-chip\"\)[\s\S]*`~\$\{child\.dataset\.promptSnippetTag")
-        self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{\s*return getPromptText\(\);")
+        self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{[\s\S]*?return buildPromptForModel\(\);")
         self.assertRegex(script, r"function buildPromptForModel\(\)\s*\{[\s\S]*expandPromptSnippets\(getPromptText\(\)\)")
         self.assertRegex(styles, r"\.prompt-snippet-chip\s*\{[^}]*display:\s*inline-flex")
         self.assertRegex(styles, r"\.prompt-snippet-suggest\s*\{[^}]*position:\s*fixed")

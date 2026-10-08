@@ -215,9 +215,8 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             for key in required_keys:
                 self.assertIn(f'"{key}"', source, f"{path.name} is missing {key}")
 
-    def test_api_binding_ratio_prompt_copy_exists_in_every_locale(self) -> None:
+    def test_api_binding_copy_exists_in_every_locale(self) -> None:
         required_keys = (
-            "apiSettings.appendRatioPrompt",
             "apiSettings.defaultProviderForModel",
             "apiSettings.removeBinding",
             "apiSettings.providerIcon",
@@ -229,6 +228,8 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             source = path.read_text(encoding="utf-8")
             for key in required_keys:
                 self.assertIn(f'"{key}"', source, f"{path.name} is missing {key}")
+            # The per-binding ratio prompt toggle was removed with prompt processing.
+            self.assertNotIn('"apiSettings.appendRatioPrompt"', source, path.name)
 
         submit_source = Path("codex_image/webui/frontend/src/task-submit.ts").read_text(encoding="utf-8")
         self.assertIn('form.append("ui_language", currentLocaleCode())', submit_source)

@@ -524,6 +524,34 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         self.assertEqual(fake.generate_calls[0]["prompt"], prompt)
         self.assertIsNone(fake.generate_calls[0]["instructions"])
 
+    def test_queue_worker_sends_stored_model_prompt_with_gallery_notes(self) -> None:
+        import asyncio
+        from tests.webui_helpers import FakeImageClient
+
+        prompt = "让 @小美 做产品模特"
+        prompt_for_model = f"{prompt}\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。"
+        with tempfile.TemporaryDirectory() as tmp:
+            app = self._app(Path(tmp))
+            fake = FakeImageClient()
+            app.state.ctx.client_factory = lambda: fake
+            app.state.client_factory = app.state.ctx.client_factory
+            response = TestClient(app).post(
+                "/api/generate",
+                data={
+                    "prompt": prompt,
+                    "prompt_for_model": prompt_for_model,
+                    "canonical_model_id": "gpt-image-2",
+                    "provider_id": "codex",
+                    "binding_id": "codex-gpt-image-2-images",
+                    "parameters_json": json.dumps({"canvas.size": "864x1536", "output.count": 1}),
+                },
+            )
+            asyncio.run(app.state.queue_manager.run_available_once())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(fake.generate_calls[0]["prompt"], prompt_for_model)
+        self.assertNotIn("将宽高比设为", fake.generate_calls[0]["prompt"])
+
     def test_strict_prompt_fidelity_does_not_add_app_guidance(self) -> None:
         import asyncio
         from tests.webui_helpers import FakeImageClient
@@ -679,8 +707,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         task = response.json()["task"]
-        # Prompt processing is disabled for every model: the raw prompt is sent.
-        self.assertEqual(task["prompt_for_model"], "必须保留蓝色文字")
+        self.assertEqual(task["prompt_for_model"], "expanded gallery prompt")
         self.assertFalse(task.get("prompt_constraints"))
         self.assertNotIn("main_model", task["params"])
         self.assertNotIn("prompt_fidelity", task["params"])

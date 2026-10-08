@@ -978,6 +978,35 @@ raise SystemExit(1)
         self.assertEqual(len(fake.generate_calls), 1)
         self.assertEqual(fake.generate_calls[0]["prompt"], expected_model_prompt)
         self.assertEqual(task["prompt_for_model"], expected_model_prompt)
+    def test_queue_worker_sends_stored_model_prompt_with_gallery_notes(self) -> None:
+        from codex_image.webui.app import create_app
+
+        fake = FakeImageClient()
+        prompt = "让 @小美 做产品模特"
+        prompt_for_model = f"{prompt}\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。"
+        with tempfile.TemporaryDirectory() as tmp:
+            auth_settings_path = Path(tmp) / "auth-settings.json"
+            auth_settings_path.write_text(json.dumps({"source": "codex"}), encoding="utf-8")
+            app = create_app(
+                output_root=Path(tmp),
+                client_factory=lambda: fake,
+                auth_checker=lambda: True,
+                auth_settings_path=auth_settings_path,
+                batch_delay_seconds=0,
+                auto_start_queue=False,
+            )
+            client = TestClient(app)
+            client.post(
+                "/api/generate",
+                data={"prompt": prompt, "prompt_for_model": prompt_for_model, "size": "1536x864", "ratio": "16:9", "quality": "low"},
+            )
+
+            asyncio.run(app.state.queue_manager.run_available_once())
+
+        self.assertEqual(len(fake.generate_calls), 1)
+        self.assertEqual(fake.generate_calls[0]["prompt"], prompt_for_model)
+        self.assertFalse(fake.generate_calls[0].get("instructions"))
+
     def test_queue_worker_sends_strict_tasks_without_prompt_guard_instructions(self) -> None:
         from codex_image.webui.app import create_app
 

@@ -1064,7 +1064,6 @@ export const ZH_TW_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelsInvalidResponse": "供應商傳回的模型清單格式無效，仍可手動填寫名稱。",
     "apiSettings.modelsTooLarge": "供應商模型清單過大，請手動填寫模型名稱。",
     "apiSettings.modelsFetchFailed": "取得模型失敗，請檢查網址與網路後重試。",
-    "apiSettings.appendRatioPrompt": "追加比例提示",
     "apiSettings.defaultProviderForModel": "設為此型號預設供應商",
     "apiSettings.removeBinding": "刪除綁定",
     "apiSettings.catalogRequiredForBinding": "模型目录不可用，暂时无法添加绑定",

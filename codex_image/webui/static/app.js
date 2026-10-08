@@ -1229,7 +1229,6 @@
     "apiSettings.modelsInvalidResponse": "The provider returned an invalid model list. You can enter the name manually.",
     "apiSettings.modelsTooLarge": "The provider's model list is too large. Enter the model name manually.",
     "apiSettings.modelsFetchFailed": "Could not fetch models. Check the address and network, then try again.",
-    "apiSettings.appendRatioPrompt": "Add ratio prompt",
     "apiSettings.defaultProviderForModel": "Default provider for this model",
     "apiSettings.removeBinding": "Remove binding",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -2458,7 +2457,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Seitenverh\xE4ltnis erg\xE4nzen",
     "apiSettings.defaultProviderForModel": "Standardanbieter",
     "apiSettings.removeBinding": "Bindung entfernen",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -3686,7 +3684,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "A\xF1adir instrucci\xF3n de proporci\xF3n",
     "apiSettings.defaultProviderForModel": "Proveedor predeterminado",
     "apiSettings.removeBinding": "Eliminar v\xEDnculo",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -4914,7 +4911,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Ajouter l\u2019instruction de format",
     "apiSettings.defaultProviderForModel": "Fournisseur par d\xE9faut",
     "apiSettings.removeBinding": "Supprimer la liaison",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -6142,7 +6138,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u6BD4\u7387\u306E\u6307\u793A\u3092\u8FFD\u52A0",
     "apiSettings.defaultProviderForModel": "\u65E2\u5B9A\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.removeBinding": "\u30D0\u30A4\u30F3\u30C9\u3092\u524A\u9664",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -7370,7 +7365,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\uBE44\uC728 \uC9C0\uC2DC \uCD94\uAC00",
     "apiSettings.defaultProviderForModel": "\uAE30\uBCF8 \uACF5\uAE09\uC790",
     "apiSettings.removeBinding": "\uBC14\uC778\uB529 \uC0AD\uC81C",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -8598,7 +8592,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Adicionar instru\xE7\xE3o de propor\xE7\xE3o",
     "apiSettings.defaultProviderForModel": "Provedor padr\xE3o",
     "apiSettings.removeBinding": "Remover v\xEDnculo",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -9826,7 +9819,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u0440\u043E\u043F\u043E\u0440\u0446\u0438\u0438",
     "apiSettings.defaultProviderForModel": "\u041F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
     "apiSettings.removeBinding": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0443",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -11054,7 +11046,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Aggiungi istruzione proporzioni",
     "apiSettings.defaultProviderForModel": "Fornitore predefinito",
     "apiSettings.removeBinding": "Rimuovi associazione",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -12282,7 +12273,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u0905\u0928\u0941\u092A\u093E\u0924 \u0928\u093F\u0930\u094D\u0926\u0947\u0936 \u091C\u094B\u0921\u093C\u0947\u0902",
     "apiSettings.defaultProviderForModel": "\u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.removeBinding": "\u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u0939\u091F\u093E\u090F\u0901",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -13661,7 +13651,6 @@
     "apiSettings.modelsInvalidResponse": "Nh\xE0 cung c\u1EA5p tr\u1EA3 v\u1EC1 danh s\xE1ch m\xF4 h\xECnh kh\xF4ng h\u1EE3p l\u1EC7. B\u1EA1n c\xF3 th\u1EC3 nh\u1EADp t\xEAn th\u1EE7 c\xF4ng.",
     "apiSettings.modelsTooLarge": "Danh s\xE1ch m\xF4 h\xECnh c\u1EE7a nh\xE0 cung c\u1EA5p qu\xE1 l\u1EDBn. H\xE3y nh\u1EADp t\xEAn m\xF4 h\xECnh th\u1EE7 c\xF4ng.",
     "apiSettings.modelsFetchFailed": "Kh\xF4ng th\u1EC3 l\u1EA5y danh s\xE1ch m\xF4 h\xECnh. Ki\u1EC3m tra \u0111\u1ECBa ch\u1EC9 v\xE0 m\u1EA1ng r\u1ED3i th\u1EED l\u1EA1i.",
-    "apiSettings.appendRatioPrompt": "Th\xEAm t\u1EF7 l\u1EC7 v\xE0o l\u1EDDi nh\u1EAFc",
     "apiSettings.defaultProviderForModel": "Provider m\u1EB7c \u0111\u1ECBnh",
     "apiSettings.removeBinding": "X\xF3a li\xEAn k\u1EBFt",
     "apiSettings.catalogRequiredForBinding": "Danh m\u1EE5c m\xF4 h\xECnh kh\xF4ng kh\u1EA3 d\u1EE5ng n\xEAn ch\u01B0a th\u1EC3 th\xEAm li\xEAn k\u1EBFt.",
@@ -15041,7 +15030,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u5E94\u5546\u8FD4\u56DE\u7684\u6A21\u578B\u5217\u8868\u683C\u5F0F\u65E0\u6548\uFF0C\u4ECD\u53EF\u624B\u52A8\u586B\u5199\u540D\u79F0\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u5E94\u5546\u6A21\u578B\u5217\u8868\u8FC7\u5927\uFF0C\u8BF7\u624B\u52A8\u586B\u5199\u6A21\u578B\u540D\u79F0\u3002",
     "apiSettings.modelsFetchFailed": "\u83B7\u53D6\u6A21\u578B\u5931\u8D25\uFF0C\u8BF7\u68C0\u67E5\u5730\u5740\u4E0E\u7F51\u7EDC\u540E\u91CD\u8BD5\u3002",
-    "apiSettings.appendRatioPrompt": "\u8FFD\u52A0\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8BBE\u4E3A\u8BE5\u578B\u53F7\u9ED8\u8BA4\u4F9B\u5E94\u5546",
     "apiSettings.removeBinding": "\u5220\u9664\u7ED1\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -16339,7 +16327,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u61C9\u5546\u50B3\u56DE\u7684\u6A21\u578B\u6E05\u55AE\u683C\u5F0F\u7121\u6548\uFF0C\u4ECD\u53EF\u624B\u52D5\u586B\u5BEB\u540D\u7A31\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u61C9\u5546\u6A21\u578B\u6E05\u55AE\u904E\u5927\uFF0C\u8ACB\u624B\u52D5\u586B\u5BEB\u6A21\u578B\u540D\u7A31\u3002",
     "apiSettings.modelsFetchFailed": "\u53D6\u5F97\u6A21\u578B\u5931\u6557\uFF0C\u8ACB\u6AA2\u67E5\u7DB2\u5740\u8207\u7DB2\u8DEF\u5F8C\u91CD\u8A66\u3002",
-    "apiSettings.appendRatioPrompt": "\u52A0\u5165\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8A2D\u70BA\u6B64\u578B\u865F\u9810\u8A2D\u4F9B\u61C9\u5546",
     "apiSettings.removeBinding": "\u522A\u9664\u7D81\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -17637,7 +17624,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u61C9\u5546\u50B3\u56DE\u7684\u6A21\u578B\u6E05\u55AE\u683C\u5F0F\u7121\u6548\uFF0C\u4ECD\u53EF\u624B\u52D5\u586B\u5BEB\u540D\u7A31\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u61C9\u5546\u6A21\u578B\u6E05\u55AE\u904E\u5927\uFF0C\u8ACB\u624B\u52D5\u586B\u5BEB\u6A21\u578B\u540D\u7A31\u3002",
     "apiSettings.modelsFetchFailed": "\u53D6\u5F97\u6A21\u578B\u5931\u6557\uFF0C\u8ACB\u6AA2\u67E5\u7DB2\u5740\u8207\u7DB2\u8DEF\u5F8C\u91CD\u8A66\u3002",
-    "apiSettings.appendRatioPrompt": "\u8FFD\u52A0\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8A2D\u70BA\u6B64\u578B\u865F\u9810\u8A2D\u4F9B\u61C9\u5546",
     "apiSettings.removeBinding": "\u522A\u9664\u7D81\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -21208,7 +21194,7 @@
     });
   }
 
-  // ../base/node_modules/konva/lib/Global.js
+  // node_modules/konva/lib/Global.js
   var PI_OVER_180 = Math.PI / 180;
   function detectBrowser() {
     return typeof window !== "undefined" && ({}.toString.call(window) === "[object Window]" || {}.toString.call(window) === "[object global]");
@@ -21269,7 +21255,7 @@
   };
   Konva._injectGlobal(Konva);
 
-  // ../base/node_modules/konva/lib/Util.js
+  // node_modules/konva/lib/Util.js
   var NODE_ERROR = `Konva.js unsupported environment.
 
 Looks like you are trying to use Konva.js in Node.js environment. because "document" object is undefined.
@@ -22151,7 +22137,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/Context.js
+  // node_modules/konva/lib/Context.js
   function simplifyArray(arr) {
     const retArr = [], len = arr.length, util = Util;
     for (let n = 0; n < len; n++) {
@@ -22700,7 +22686,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/Canvas.js
+  // node_modules/konva/lib/Canvas.js
   var _pixelRatio;
   function getDevicePixelRatio() {
     if (_pixelRatio) {
@@ -22797,7 +22783,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/DragAndDrop.js
+  // node_modules/konva/lib/DragAndDrop.js
   var DD = {
     get isDragging() {
       let flag = false;
@@ -22909,7 +22895,7 @@ js: import "konva/skia-backend";
     window.addEventListener("touchcancel", DD._endDragAfter, false);
   }
 
-  // ../base/node_modules/konva/lib/Validators.js
+  // node_modules/konva/lib/Validators.js
   function _formatValue(val) {
     if (Util._isString(val)) {
       return '"' + val + '"';
@@ -23031,7 +23017,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // ../base/node_modules/konva/lib/Factory.js
+  // node_modules/konva/lib/Factory.js
   var GET = "get";
   var SET = "set";
   var Factory = {
@@ -23147,7 +23133,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/Node.js
+  // node_modules/konva/lib/Node.js
   function parseCSSFilters(cssFilter) {
     const filterRegex = /(\w+)\(([^)]+)\)/g;
     let match;
@@ -24652,7 +24638,7 @@ js: import "konva/skia-backend";
     getRotationDeg: "getRotation"
   });
 
-  // ../base/node_modules/konva/lib/Container.js
+  // node_modules/konva/lib/Container.js
   var Container = class extends Node2 {
     constructor() {
       super(...arguments);
@@ -24959,7 +24945,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Container, "clipHeight", void 0, getNumberValidator());
   Factory.addGetterSetter(Container, "clipFunc");
 
-  // ../base/node_modules/konva/lib/PointerEvents.js
+  // node_modules/konva/lib/PointerEvents.js
   var Captures = /* @__PURE__ */ new Map();
   var SUPPORT_POINTER_EVENTS = Konva._global["PointerEvent"] !== void 0;
   function getCapturedShape(pointerId) {
@@ -24997,7 +24983,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // ../base/node_modules/konva/lib/Stage.js
+  // node_modules/konva/lib/Stage.js
   var STAGE2 = "Stage";
   var STRING = "string";
   var PX = "px";
@@ -25711,7 +25697,7 @@ js: import "konva/skia-backend";
     });
   }
 
-  // ../base/node_modules/konva/lib/Shape.js
+  // node_modules/konva/lib/Shape.js
   var HAS_SHADOW = "hasShadow";
   var SHADOW_RGBA = "shadowRGBA";
   var patternImage = "patternImage";
@@ -26236,7 +26222,7 @@ js: import "konva/skia-backend";
     setDrawHitFunc: "setHitFunc"
   });
 
-  // ../base/node_modules/konva/lib/Layer.js
+  // node_modules/konva/lib/Layer.js
   var BEFORE_DRAW = "beforeDraw";
   var DRAW = "draw";
   var INTERSECTION_OFFSETS = [
@@ -26531,7 +26517,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Layer, "clearBeforeDraw", true);
   Factory.addGetterSetter(Layer, "hitGraphEnabled", true, getBooleanValidator());
 
-  // ../base/node_modules/konva/lib/FastLayer.js
+  // node_modules/konva/lib/FastLayer.js
   var FastLayer = class extends Layer {
     constructor(attrs) {
       super(attrs);
@@ -26542,7 +26528,7 @@ js: import "konva/skia-backend";
   FastLayer.prototype.nodeType = "FastLayer";
   _registerNode(FastLayer);
 
-  // ../base/node_modules/konva/lib/Group.js
+  // node_modules/konva/lib/Group.js
   var Group = class extends Container {
     _validateAdd(child) {
       const type = child.getType();
@@ -26554,7 +26540,7 @@ js: import "konva/skia-backend";
   Group.prototype.nodeType = "Group";
   _registerNode(Group);
 
-  // ../base/node_modules/konva/lib/Animation.js
+  // node_modules/konva/lib/Animation.js
   var now = (function() {
     if (glob.performance && glob.performance.now) {
       return function() {
@@ -26694,7 +26680,7 @@ js: import "konva/skia-backend";
   Animation.animIdCounter = 0;
   Animation.animRunning = false;
 
-  // ../base/node_modules/konva/lib/Tween.js
+  // node_modules/konva/lib/Tween.js
   var blacklist = {
     node: 1,
     duration: 1,
@@ -27173,7 +27159,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/_CoreInternals.js
+  // node_modules/konva/lib/_CoreInternals.js
   var Konva2 = Util._assign(Konva, {
     Util,
     Transform,
@@ -27194,7 +27180,7 @@ js: import "konva/skia-backend";
     Canvas
   });
 
-  // ../base/node_modules/konva/lib/shapes/Arc.js
+  // node_modules/konva/lib/shapes/Arc.js
   var Arc = class extends Shape {
     _sceneFunc(context) {
       const angle = Konva.getAngle(this.angle()), clockwise = this.clockwise();
@@ -27251,7 +27237,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arc, "angle", 0, getNumberValidator());
   Factory.addGetterSetter(Arc, "clockwise", false, getBooleanValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Line.js
+  // node_modules/konva/lib/shapes/Line.js
   function getControlPoints(x0, y0, x1, y1, x2, y2, t) {
     const d01 = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)), d12 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)), fa = t * d01 / (d01 + d12), fb = t * d12 / (d01 + d12), p1x = x1 - fa * (x2 - x0), p1y = y1 - fa * (y2 - y0), p2x = x1 + fb * (x2 - x0), p2y = y1 + fb * (y2 - y0);
     return [p1x, p1y, p2x, p2y];
@@ -27430,7 +27416,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Line, "tension", 0, getNumberValidator());
   Factory.addGetterSetter(Line, "points", [], getNumberArrayValidator());
 
-  // ../base/node_modules/konva/lib/BezierFunctions.js
+  // node_modules/konva/lib/BezierFunctions.js
   var tValues = [
     [],
     [],
@@ -28218,7 +28204,7 @@ js: import "konva/skia-backend";
     return t;
   };
 
-  // ../base/node_modules/konva/lib/shapes/Path.js
+  // node_modules/konva/lib/shapes/Path.js
   var Path = class _Path extends Shape {
     constructor(config) {
       super(config);
@@ -28874,7 +28860,7 @@ js: import "konva/skia-backend";
   _registerNode(Path);
   Factory.addGetterSetter(Path, "data");
 
-  // ../base/node_modules/konva/lib/shapes/Arrow.js
+  // node_modules/konva/lib/shapes/Arrow.js
   var Arrow = class extends Line {
     _sceneFunc(ctx) {
       super._sceneFunc(ctx);
@@ -28968,7 +28954,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arrow, "pointerAtBeginning", false);
   Factory.addGetterSetter(Arrow, "pointerAtEnding", true);
 
-  // ../base/node_modules/konva/lib/shapes/Circle.js
+  // node_modules/konva/lib/shapes/Circle.js
   var Circle = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -28999,7 +28985,7 @@ js: import "konva/skia-backend";
   _registerNode(Circle);
   Factory.addGetterSetter(Circle, "radius", 0, getNumberValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Ellipse.js
+  // node_modules/konva/lib/shapes/Ellipse.js
   var Ellipse = class extends Shape {
     _sceneFunc(context) {
       const rx = this.radiusX(), ry = this.radiusY();
@@ -29034,7 +29020,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ellipse, "radiusX", 0, getNumberValidator());
   Factory.addGetterSetter(Ellipse, "radiusY", 0, getNumberValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Image.js
+  // node_modules/konva/lib/shapes/Image.js
   var Image2 = class _Image extends Shape {
     constructor(attrs) {
       super(attrs);
@@ -29158,7 +29144,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Image2, "cropWidth", 0, getNumberValidator());
   Factory.addGetterSetter(Image2, "cropHeight", 0, getNumberValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Label.js
+  // node_modules/konva/lib/shapes/Label.js
   var ATTR_CHANGE_LIST = [
     "fontFamily",
     "fontSize",
@@ -29327,7 +29313,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Tag, "pointerHeight", 0, getNumberValidator());
   Factory.addGetterSetter(Tag, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../base/node_modules/konva/lib/shapes/Rect.js
+  // node_modules/konva/lib/shapes/Rect.js
   var Rect = class extends Shape {
     _sceneFunc(context) {
       const cornerRadius = this.cornerRadius(), width = this.width(), height = this.height();
@@ -29345,7 +29331,7 @@ js: import "konva/skia-backend";
   _registerNode(Rect);
   Factory.addGetterSetter(Rect, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../base/node_modules/konva/lib/shapes/RegularPolygon.js
+  // node_modules/konva/lib/shapes/RegularPolygon.js
   var RegularPolygon = class extends Shape {
     _sceneFunc(context) {
       const points = this._getPoints(), radius = this.radius(), sides = this.sides(), cornerRadius = this.cornerRadius();
@@ -29413,7 +29399,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(RegularPolygon, "sides", 0, getNumberValidator());
   Factory.addGetterSetter(RegularPolygon, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // ../base/node_modules/konva/lib/shapes/Ring.js
+  // node_modules/konva/lib/shapes/Ring.js
   var PIx2 = Math.PI * 2;
   var Ring = class extends Shape {
     _sceneFunc(context) {
@@ -29444,7 +29430,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ring, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Ring, "outerRadius", 0, getNumberValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Sprite.js
+  // node_modules/konva/lib/shapes/Sprite.js
   var Sprite = class extends Shape {
     constructor(config) {
       super(config);
@@ -29546,7 +29532,7 @@ js: import "konva/skia-backend";
     setIndex: "setFrameIndex"
   });
 
-  // ../base/node_modules/konva/lib/shapes/Star.js
+  // node_modules/konva/lib/shapes/Star.js
   var Star = class extends Shape {
     _sceneFunc(context) {
       const innerRadius = this.innerRadius(), outerRadius = this.outerRadius(), numPoints = this.numPoints();
@@ -29582,7 +29568,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Star, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Star, "outerRadius", 0, getNumberValidator());
 
-  // ../base/node_modules/konva/lib/shapes/Text.js
+  // node_modules/konva/lib/shapes/Text.js
   function stringToArray(string) {
     return [...string].reduce((acc, char, index, array) => {
       if (/\p{Emoji}/u.test(char)) {
@@ -30057,7 +30043,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Text, "underlineOffset", void 0, getNumberValidator());
   Factory.addGetterSetter(Text, "charRenderFunc", void 0);
 
-  // ../base/node_modules/konva/lib/shapes/TextPath.js
+  // node_modules/konva/lib/shapes/TextPath.js
   var EMPTY_STRING2 = "";
   var NORMAL2 = "normal";
   function _fillFunc3(context) {
@@ -30326,7 +30312,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(TextPath, "kerningFunc", void 0);
   Factory.addGetterSetter(TextPath, "direction", "inherit");
 
-  // ../base/node_modules/konva/lib/shapes/Transformer.js
+  // node_modules/konva/lib/shapes/Transformer.js
   var EVENTS_NAME = "tr-konva";
   var ATTR_CHANGE_LIST3 = [
     "resizeEnabledChange",
@@ -31319,7 +31305,7 @@ js: import "konva/skia-backend";
     enabledHandlers: "enabledAnchors"
   });
 
-  // ../base/node_modules/konva/lib/shapes/Wedge.js
+  // node_modules/konva/lib/shapes/Wedge.js
   var Wedge = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -31354,7 +31340,7 @@ js: import "konva/skia-backend";
     setAngleDeg: "setAngle"
   });
 
-  // ../base/node_modules/konva/lib/filters/Blur.js
+  // node_modules/konva/lib/filters/Blur.js
   function BlurStack() {
     this.r = 0;
     this.g = 0;
@@ -32046,7 +32032,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "blurRadius", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Brighten.js
+  // node_modules/konva/lib/filters/Brighten.js
   var Brighten = function(imageData) {
     const brightness = this.brightness() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -32057,7 +32043,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "brightness", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Brightness.js
+  // node_modules/konva/lib/filters/Brightness.js
   var Brightness = function(imageData) {
     const brightness = this.brightness(), data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -32067,7 +32053,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/filters/Contrast.js
+  // node_modules/konva/lib/filters/Contrast.js
   var Contrast = function(imageData) {
     const adjust = Math.pow((this.contrast() + 100) / 100, 2);
     const data = imageData.data, nPixels = data.length;
@@ -32101,7 +32087,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "contrast", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Emboss.js
+  // node_modules/konva/lib/filters/Emboss.js
   var Emboss = function(imageData) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
     const data = imageData.data;
@@ -32200,7 +32186,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "embossDirection", "top-left", void 0, Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "embossBlend", false, void 0, Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Enhance.js
+  // node_modules/konva/lib/filters/Enhance.js
   function remap(fromValue, fromMin, fromMax, toMin, toMax) {
     const fromRange = fromMax - fromMin, toRange = toMax - toMin;
     if (fromRange === 0) {
@@ -32279,7 +32265,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "enhance", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Grayscale.js
+  // node_modules/konva/lib/filters/Grayscale.js
   var Grayscale = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -32290,7 +32276,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/filters/HSL.js
+  // node_modules/konva/lib/filters/HSL.js
   Factory.addGetterSetter(Node2, "hue", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "luminance", 0, getNumberValidator(), Factory.afterSetFilter);
@@ -32313,7 +32299,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/filters/HSV.js
+  // node_modules/konva/lib/filters/HSV.js
   var HSV = function(imageData) {
     const data = imageData.data, nPixels = data.length, v = Math.pow(2, this.value()), s = Math.pow(2, this.saturation()), h = Math.abs(this.hue() + 360) % 360;
     const vsu = v * s * Math.cos(h * Math.PI / 180), vsw = v * s * Math.sin(h * Math.PI / 180);
@@ -32335,7 +32321,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "value", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Invert.js
+  // node_modules/konva/lib/filters/Invert.js
   var Invert = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -32345,7 +32331,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/filters/Kaleidoscope.js
+  // node_modules/konva/lib/filters/Kaleidoscope.js
   var ToPolar = function(src, dst, opt) {
     const srcPixels = src.data, dstPixels = dst.data, xSize = src.width, ySize = src.height, xMid = opt.polarCenterX || xSize / 2, yMid = opt.polarCenterY || ySize / 2;
     let rMax = Math.sqrt(xMid * xMid + yMid * yMid);
@@ -32474,7 +32460,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "kaleidoscopePower", 2, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "kaleidoscopeAngle", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Mask.js
+  // node_modules/konva/lib/filters/Mask.js
   function pixelAt(idata, x, y) {
     let idx = (y * idata.width + x) * 4;
     const d = [];
@@ -32619,7 +32605,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Noise.js
+  // node_modules/konva/lib/filters/Noise.js
   var Noise = function(imageData) {
     const amount = this.noise() * 255, data = imageData.data, nPixels = data.length, half = amount / 2;
     for (let i = 0; i < nPixels; i += 4) {
@@ -32630,7 +32616,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "noise", 0.2, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Pixelate.js
+  // node_modules/konva/lib/filters/Pixelate.js
   var Pixelate = function(imageData) {
     let pixelSize = Math.ceil(this.pixelSize()), width = imageData.width, height = imageData.height, nBinsX = Math.ceil(width / pixelSize), nBinsY = Math.ceil(height / pixelSize), data = imageData.data;
     if (pixelSize <= 0) {
@@ -32688,7 +32674,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "pixelSize", 8, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/Posterize.js
+  // node_modules/konva/lib/filters/Posterize.js
   var Posterize = function(imageData) {
     const levels = Math.round(this.levels() * 254) + 1, data = imageData.data, len = data.length, scale = 255 / levels;
     for (let i = 0; i < len; i += 1) {
@@ -32697,7 +32683,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "levels", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/RGB.js
+  // node_modules/konva/lib/filters/RGB.js
   var RGB = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue();
     for (let i = 0; i < nPixels; i += 4) {
@@ -32730,7 +32716,7 @@ js: import "konva/skia-backend";
   });
   Factory.addGetterSetter(Node2, "blue", 0, RGBComponent, Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/filters/RGBA.js
+  // node_modules/konva/lib/filters/RGBA.js
   var RGBA = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue(), alpha = this.alpha();
     for (let i = 0; i < nPixels; i += 4) {
@@ -32772,7 +32758,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // ../base/node_modules/konva/lib/filters/Sepia.js
+  // node_modules/konva/lib/filters/Sepia.js
   var Sepia = function(imageData) {
     const data = imageData.data, nPixels = data.length;
     for (let i = 0; i < nPixels; i += 4) {
@@ -32785,7 +32771,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // ../base/node_modules/konva/lib/filters/Solarize.js
+  // node_modules/konva/lib/filters/Solarize.js
   var Solarize = function(imageData) {
     const threshold = 128;
     const d = imageData.data;
@@ -32801,7 +32787,7 @@ js: import "konva/skia-backend";
     return imageData;
   };
 
-  // ../base/node_modules/konva/lib/filters/Threshold.js
+  // node_modules/konva/lib/filters/Threshold.js
   var Threshold = function(imageData) {
     const level = this.threshold() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 1) {
@@ -32810,7 +32796,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // ../base/node_modules/konva/lib/_FullInternals.js
+  // node_modules/konva/lib/_FullInternals.js
   var Konva3 = Konva2.Util._assign(Konva2, {
     Arc,
     Arrow,
@@ -32854,7 +32840,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // ../base/node_modules/konva/lib/index.js
+  // node_modules/konva/lib/index.js
   var lib_default = Konva3;
 
   // codex_image/webui/frontend/src/image-editor-canvas.ts
@@ -39216,7 +39202,6 @@ ${hint}` : hint;
         bindingTemplateForCompatibility(canonicalModelId, protocol, compatibility),
         operations
       ),
-      append_aspect_ratio_prompt: Boolean(original.append_aspect_ratio_prompt),
       transparency_mode: isGptImageModel(canonicalModelId) ? original.transparency_mode || "native" : "native"
     };
   }
@@ -39236,7 +39221,6 @@ ${hint}` : hint;
         protocol_profile: String(item.protocol_profile || fallbackTemplate?.protocol_profile || "").trim(),
         parameter_codec: String(item.parameter_codec || fallbackTemplate?.parameter_codec || "").trim(),
         operations: normalizedOperations(item.operations),
-        append_aspect_ratio_prompt: Boolean(item.append_aspect_ratio_prompt),
         transparency_mode: item.transparency_mode === "prompt" ? "prompt" : "native"
       };
     });
@@ -39380,17 +39364,6 @@ ${hint}` : hint;
       };
       syncTransparencyField();
       modelSelect.addEventListener("change", syncTransparencyField);
-      const ratioPromptField = document.createElement("label");
-      ratioPromptField.className = "provider-binding-toggle provider-binding-ratio-prompt";
-      ratioPromptField.dataset.i18nAttr = "title:apiSettings.appendRatioPrompt";
-      const ratioPromptInput = document.createElement("input");
-      ratioPromptInput.type = "checkbox";
-      ratioPromptInput.dataset.bindingRatioPrompt = "";
-      ratioPromptInput.checked = Boolean(binding.append_aspect_ratio_prompt);
-      const ratioPromptLabel = document.createElement("span");
-      ratioPromptLabel.dataset.i18n = "apiSettings.appendRatioPrompt";
-      ratioPromptLabel.textContent = translate("apiSettings.appendRatioPrompt");
-      ratioPromptField.append(ratioPromptInput, ratioPromptLabel);
       const defaultField = document.createElement("label");
       defaultField.className = "provider-binding-toggle provider-binding-default";
       defaultField.dataset.i18nAttr = "title:apiSettings.defaultProviderForModel";
@@ -39406,7 +39379,7 @@ ${hint}` : hint;
       footer.className = "provider-binding-footer";
       const footerSettings = document.createElement("div");
       footerSettings.className = "provider-binding-footer-settings";
-      footerSettings.append(ratioPromptField, defaultField);
+      footerSettings.append(defaultField);
       footer.append(footerSettings, remove);
       card.dataset.bindingOriginalModelId = binding.canonical_model_id;
       card.dataset.bindingPreviousModelId = binding.canonical_model_id;
@@ -39444,9 +39417,6 @@ ${hint}` : hint;
         protocol_profile: card.dataset.bindingOriginalProtocolProfile || "",
         parameter_codec: card.dataset.bindingOriginalParameterCodec || "",
         operations,
-        append_aspect_ratio_prompt: Boolean(
-          card.querySelector("[data-binding-ratio-prompt]")?.checked
-        ),
         transparency_mode: isGptImageModel(modelId) && card.querySelector("[data-binding-transparency]")?.value === "prompt" ? "prompt" : "native"
       };
       return {
@@ -42774,7 +42744,7 @@ ${hint}` : hint;
     Object.assign(methods, { refreshLanAccess });
   }
 
-  // ../base/node_modules/@noble/hashes/_u64.js
+  // node_modules/@noble/hashes/_u64.js
   var fromNumH = (n) => n / 2 ** 32 | 0;
   var fromNumL = (n) => n >>> 0;
   function setU64FromNum(view, byteOffset, n, isLE) {
@@ -42784,7 +42754,7 @@ ${hint}` : hint;
     view.setUint32(byteOffset + 4, isLE ? h : l, isLE);
   }
 
-  // ../base/node_modules/@noble/hashes/utils.js
+  // node_modules/@noble/hashes/utils.js
   function isBytes(a) {
     return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
   }
@@ -42871,7 +42841,7 @@ ${hint}` : hint;
     oid: Uint8Array.from([6, 9, 96, 134, 72, 1, 101, 3, 4, 2, suffix])
   });
 
-  // ../base/node_modules/@noble/hashes/_md.js
+  // node_modules/@noble/hashes/_md.js
   function Chi(a, b, c) {
     return a & b ^ ~a & c;
   }
@@ -42984,7 +42954,7 @@ ${hint}` : hint;
     1541459225
   ]);
 
-  // ../base/node_modules/@noble/hashes/sha2.js
+  // node_modules/@noble/hashes/sha2.js
   var SHA256_K = /* @__PURE__ */ Uint32Array.from([
     1116352408,
     1899447441,
@@ -47766,7 +47736,7 @@ ${galleryText}`;
     });
   }
   function currentPromptForModel() {
-    return getPromptText8();
+    return buildPromptForModel();
   }
   function initPromptModelFeature() {
     Object.assign(getLegacyBridge().methods, {
