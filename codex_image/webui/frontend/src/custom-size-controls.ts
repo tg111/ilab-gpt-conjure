@@ -357,7 +357,10 @@ export function syncRatioFromOrientation(): void {
 export function updatePresetRatioVisibility(): void {
   const ratioField = els.ratio?.closest?.(".ratio-field");
   if (!ratioField) return;
-  const visible = currentSizeMode() === "preset" && !els.customSizeToggle?.checked;
+  // Only automatic size drops the ratio row. In custom mode the preset fields stay
+  // in flow (hidden by #presetSizeFields) so the overlaid custom editor keeps
+  // the full editor height instead of scrolling.
+  const visible = currentSizeMode() !== "auto";
   ratioField.classList.toggle("hidden", !visible);
   ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
 }

@@ -814,7 +814,7 @@ export function renderModelParameters(
     .forEach((element) => element?.classList.toggle("hidden", !legacyGpt || automaticSize));
   const ratioField = els.ratio?.closest(".ratio-field") as HTMLElement | null;
   if (ratioField) {
-    const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
+    const ratioVisible = legacyGpt && !automaticSize;
     ratioField.classList.toggle("hidden", !ratioVisible);
     ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
   }

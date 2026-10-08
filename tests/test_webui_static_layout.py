@@ -3515,6 +3515,50 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_ratio_row_stays_in_flow_unless_size_is_automatic(self) -> None:
+        # The custom editor overlays the preset fields, so hiding the ratio row in
+        # custom mode shrinks the editor area and makes the custom editor scroll.
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("node is required for frontend behavior checks")
+        source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
+        model_source = Path("codex_image/webui/frontend/src/model-parameters.ts").read_text(encoding="utf-8")
+        self.assertIn("const ratioVisible = legacyGpt && !automaticSize;", model_source)
+        harness = "\n".join(
+            [
+                """
+                let activeMode = "auto";
+                const ratioField = {
+                  hidden: false,
+                  ariaHidden: "",
+                  classList: { toggle: (_name, on) => { ratioField.hidden = on; } },
+                  setAttribute: (_name, value) => { ratioField.ariaHidden = value; },
+                };
+                const els = {
+                  sizeModeGroup: { querySelector: () => ({ dataset: { customSizeMode: activeMode } }) },
+                  ratio: { closest: () => ratioField },
+                  customSizeToggle: { checked: false },
+                  size: { value: "auto" },
+                };
+                """,
+                self._extract_javascript_function(source, "currentSizeMode"),
+                self._extract_javascript_function(source, "updatePresetRatioVisibility"),
+                """
+                for (const [mode, hidden] of [["auto", true], ["preset", false], ["custom", false]]) {
+                  activeMode = mode;
+                  els.customSizeToggle.checked = mode === "custom";
+                  updatePresetRatioVisibility();
+                  if (ratioField.hidden !== hidden) {
+                    throw new Error(`${mode} mode: ratio row hidden=${ratioField.hidden}, expected ${hidden}`);
+                  }
+                }
+                """,
+            ]
+        )
+        result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_custom_size_mode_prefills_current_preset_dimensions(self) -> None:
         node = shutil.which("node")
         if node is None:
