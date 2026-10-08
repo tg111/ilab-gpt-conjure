@@ -155,7 +155,7 @@ test("unchanged protocol selection preserves the existing binding", () => {
   );
 });
 
-test("aspect-ratio prompt remains binding-scoped through normalization and protocol changes", () => {
+test("legacy aspect-ratio prompt flags are dropped through normalization and protocol changes", () => {
   const original = normalizeProviderBindings([{
     id: "responses",
     canonical_model_id: "gpt-image-2",
@@ -166,7 +166,7 @@ test("aspect-ratio prompt remains binding-scoped through normalization and proto
     append_aspect_ratio_prompt: true,
   }], "relay")[0];
 
-  assert.equal(original.append_aspect_ratio_prompt, true);
+  assert.equal("append_aspect_ratio_prompt" in original, false);
   const changed = bindingForProtocolSelection(
     original,
     "gpt-image-2",
@@ -175,7 +175,7 @@ test("aspect-ratio prompt remains binding-scoped through normalization and proto
     true,
     ["generate", "edit"],
   );
-  assert.equal(changed.append_aspect_ratio_prompt, true);
+  assert.equal("append_aspect_ratio_prompt" in changed, false);
 });
 
 test("GPT direct protocol changes normalize only that model binding", () => {
@@ -231,7 +231,6 @@ test("binding cards use the model-resolved operations instead of editable operat
       if (selector === "[data-binding-remote-model]") return { value: "relay/gpt-image-2" };
       if (selector === "[data-binding-protocol]") return { value: "openai_images" };
       if (selector === "[data-binding-compatibility]") return { value: "standard" };
-      if (selector === "[data-binding-ratio-prompt]") return { checked: true };
       if (selector === "[data-binding-default]") return { checked: false };
       return null;
     },
@@ -248,7 +247,7 @@ test("binding cards use the model-resolved operations instead of editable operat
   const bindings = readProviderBindingCards(container);
 
   assert.deepEqual(bindings[0].operations, ["generate", "edit"]);
-  assert.equal(bindings[0].append_aspect_ratio_prompt, true);
+  assert.equal("append_aspect_ratio_prompt" in bindings[0], false);
 });
 
 test("binding cards preserve legacy split operations while single bindings adopt the model operations", () => {

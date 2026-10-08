@@ -13,7 +13,6 @@ export interface ProviderModelBindingSettings {
   protocol_profile: string;
   parameter_codec: string;
   operations: GenerationOperation[];
-  append_aspect_ratio_prompt?: boolean;
   transparency_mode?: "native" | "prompt";
 }
 
@@ -111,7 +110,6 @@ export interface CatalogProviderBinding {
   protocol_profile: string;
   parameter_codec: string;
   operations: GenerationOperation[];
-  append_aspect_ratio_prompt?: boolean;
   transparency_mode?: "native" | "prompt";
   transparency_instruction?: string;
   available?: boolean;

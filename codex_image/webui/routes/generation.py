@@ -131,35 +131,6 @@ def _codex_mode_for_binding(
     return _CODEX_BINDING_MODES.get(str(binding_id or "").strip(), fallback)
 
 
-def _api_binding_appends_aspect_ratio_prompt(
-    ctx: WebUIContext,
-    *,
-    provider_id: str | None,
-    binding_id: str | None,
-    canonical_model_id: str | None,
-    operation: str,
-) -> bool:
-    selected_provider_id = str(provider_id or "").strip()
-    selected_binding_id = str(binding_id or "").strip()
-    selected_model_id = str(canonical_model_id or "").strip()
-    for connection in ctx.api_settings.read_connections():
-        if connection.id != selected_provider_id:
-            continue
-        candidates = [
-            binding
-            for binding in connection.bindings
-            if (
-                (selected_binding_id and binding.id == selected_binding_id)
-                or (
-                    not selected_binding_id
-                    and binding.canonical_model_id == selected_model_id
-                    and operation in binding.operations
-                )
-            )
-        ]
-        return len(candidates) == 1 and candidates[0].append_aspect_ratio_prompt
-    return False
-
 
 def _generation_request_error(exc: ValueError) -> HTTPException:
     message = str(exc)

@@ -995,7 +995,6 @@ export const KO_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "비율 지시 추가",
     "apiSettings.defaultProviderForModel": "기본 공급자",
     "apiSettings.removeBinding": "바인딩 삭제",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",

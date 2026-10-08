@@ -61,7 +61,6 @@ def generation_snapshot(plan: ExecutionPlan) -> dict[str, Any]:
         "protocol_profile": plan.binding.protocol_profile,
         "parameter_codec": plan.binding.parameter_codec,
         "binding_operations": sorted(plan.binding.operations),
-        "append_aspect_ratio_prompt": plan.binding.append_aspect_ratio_prompt,
         "transparency_mode": plan.binding.transparency_mode,
         "transparency_prompt_version": plan.binding.transparency_prompt_version,
         "requested_parameters": dict(plan.command.parameters),
@@ -83,7 +82,6 @@ def provider_binding_from_snapshot(snapshot: Mapping[str, Any]) -> ProviderModel
         protocol_profile=str(snapshot["protocol_profile"]),
         parameter_codec=str(snapshot["parameter_codec"]),
         operations=frozenset(str(item) for item in snapshot.get("binding_operations") or ()),
-        append_aspect_ratio_prompt=bool(snapshot.get("append_aspect_ratio_prompt", False)),
         # Before this field existed all bindings sent the native parameter.
         transparency_mode=str(snapshot.get("transparency_mode", "native")),
         transparency_prompt_version=int(snapshot.get("transparency_prompt_version", 1)),

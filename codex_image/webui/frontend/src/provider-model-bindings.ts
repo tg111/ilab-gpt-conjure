@@ -223,7 +223,6 @@ export function bindingForProtocolSelection(
       protocol,
       operations,
     ),
-    append_aspect_ratio_prompt: Boolean(original.append_aspect_ratio_prompt),
     transparency_mode: isGptImageModel(canonicalModelId) ? original.transparency_mode || "native" : "native",
   };
 }
@@ -252,7 +251,6 @@ export function bindingForCompatibilitySelection(
       bindingTemplateForCompatibility(canonicalModelId, protocol, compatibility),
       operations,
     ),
-    append_aspect_ratio_prompt: Boolean(original.append_aspect_ratio_prompt),
     transparency_mode: isGptImageModel(canonicalModelId) ? original.transparency_mode || "native" : "native",
   };
 }
@@ -279,7 +277,6 @@ export function normalizeProviderBindings(
         protocol_profile: String(item.protocol_profile || fallbackTemplate?.protocol_profile || "").trim(),
         parameter_codec: String(item.parameter_codec || fallbackTemplate?.parameter_codec || "").trim(),
         operations: normalizedOperations(item.operations),
-        append_aspect_ratio_prompt: Boolean(item.append_aspect_ratio_prompt),
         transparency_mode: item.transparency_mode === "prompt" ? "prompt" as const : "native" as const,
       };
     });
@@ -458,18 +455,6 @@ export function renderProviderBindingCards(
     syncTransparencyField();
     modelSelect.addEventListener("change", syncTransparencyField);
 
-    const ratioPromptField = document.createElement("label");
-    ratioPromptField.className = "provider-binding-toggle provider-binding-ratio-prompt";
-    ratioPromptField.dataset.i18nAttr = "title:apiSettings.appendRatioPrompt";
-    const ratioPromptInput = document.createElement("input");
-    ratioPromptInput.type = "checkbox";
-    ratioPromptInput.dataset.bindingRatioPrompt = "";
-    ratioPromptInput.checked = Boolean(binding.append_aspect_ratio_prompt);
-    const ratioPromptLabel = document.createElement("span");
-    ratioPromptLabel.dataset.i18n = "apiSettings.appendRatioPrompt";
-    ratioPromptLabel.textContent = translate("apiSettings.appendRatioPrompt");
-    ratioPromptField.append(ratioPromptInput, ratioPromptLabel);
-
     const defaultField = document.createElement("label");
     defaultField.className = "provider-binding-toggle provider-binding-default";
     defaultField.dataset.i18nAttr = "title:apiSettings.defaultProviderForModel";
@@ -486,7 +471,7 @@ export function renderProviderBindingCards(
     footer.className = "provider-binding-footer";
     const footerSettings = document.createElement("div");
     footerSettings.className = "provider-binding-footer-settings";
-    footerSettings.append(ratioPromptField, defaultField);
+    footerSettings.append(defaultField);
     footer.append(footerSettings, remove);
 
     card.dataset.bindingOriginalModelId = binding.canonical_model_id;
@@ -527,9 +512,6 @@ export function readProviderBindingCards(container: HTMLElement | null): Array<P
       protocol_profile: card.dataset.bindingOriginalProtocolProfile || "",
       parameter_codec: card.dataset.bindingOriginalParameterCodec || "",
       operations,
-      append_aspect_ratio_prompt: Boolean(
-        card.querySelector<HTMLInputElement>("[data-binding-ratio-prompt]")?.checked
-      ),
       transparency_mode: isGptImageModel(modelId)
         && card.querySelector<HTMLSelectElement>("[data-binding-transparency]")?.value === "prompt" ? "prompt" : "native",
     };

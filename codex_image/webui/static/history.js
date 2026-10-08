@@ -1544,7 +1544,6 @@
     "apiSettings.modelsInvalidResponse": "The provider returned an invalid model list. You can enter the name manually.",
     "apiSettings.modelsTooLarge": "The provider's model list is too large. Enter the model name manually.",
     "apiSettings.modelsFetchFailed": "Could not fetch models. Check the address and network, then try again.",
-    "apiSettings.appendRatioPrompt": "Add ratio prompt",
     "apiSettings.defaultProviderForModel": "Default provider for this model",
     "apiSettings.removeBinding": "Remove binding",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -2773,7 +2772,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Seitenverh\xE4ltnis erg\xE4nzen",
     "apiSettings.defaultProviderForModel": "Standardanbieter",
     "apiSettings.removeBinding": "Bindung entfernen",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -4001,7 +3999,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "A\xF1adir instrucci\xF3n de proporci\xF3n",
     "apiSettings.defaultProviderForModel": "Proveedor predeterminado",
     "apiSettings.removeBinding": "Eliminar v\xEDnculo",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -5229,7 +5226,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Ajouter l\u2019instruction de format",
     "apiSettings.defaultProviderForModel": "Fournisseur par d\xE9faut",
     "apiSettings.removeBinding": "Supprimer la liaison",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -6457,7 +6453,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u6BD4\u7387\u306E\u6307\u793A\u3092\u8FFD\u52A0",
     "apiSettings.defaultProviderForModel": "\u65E2\u5B9A\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.removeBinding": "\u30D0\u30A4\u30F3\u30C9\u3092\u524A\u9664",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -7685,7 +7680,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\uBE44\uC728 \uC9C0\uC2DC \uCD94\uAC00",
     "apiSettings.defaultProviderForModel": "\uAE30\uBCF8 \uACF5\uAE09\uC790",
     "apiSettings.removeBinding": "\uBC14\uC778\uB529 \uC0AD\uC81C",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -8913,7 +8907,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Adicionar instru\xE7\xE3o de propor\xE7\xE3o",
     "apiSettings.defaultProviderForModel": "Provedor padr\xE3o",
     "apiSettings.removeBinding": "Remover v\xEDnculo",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -10141,7 +10134,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u0440\u043E\u043F\u043E\u0440\u0446\u0438\u0438",
     "apiSettings.defaultProviderForModel": "\u041F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
     "apiSettings.removeBinding": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0443",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -11369,7 +11361,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Aggiungi istruzione proporzioni",
     "apiSettings.defaultProviderForModel": "Fornitore predefinito",
     "apiSettings.removeBinding": "Rimuovi associazione",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -12597,7 +12588,6 @@
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "\u0905\u0928\u0941\u092A\u093E\u0924 \u0928\u093F\u0930\u094D\u0926\u0947\u0936 \u091C\u094B\u0921\u093C\u0947\u0902",
     "apiSettings.defaultProviderForModel": "\u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.removeBinding": "\u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u0939\u091F\u093E\u090F\u0901",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
@@ -13976,7 +13966,6 @@
     "apiSettings.modelsInvalidResponse": "Nh\xE0 cung c\u1EA5p tr\u1EA3 v\u1EC1 danh s\xE1ch m\xF4 h\xECnh kh\xF4ng h\u1EE3p l\u1EC7. B\u1EA1n c\xF3 th\u1EC3 nh\u1EADp t\xEAn th\u1EE7 c\xF4ng.",
     "apiSettings.modelsTooLarge": "Danh s\xE1ch m\xF4 h\xECnh c\u1EE7a nh\xE0 cung c\u1EA5p qu\xE1 l\u1EDBn. H\xE3y nh\u1EADp t\xEAn m\xF4 h\xECnh th\u1EE7 c\xF4ng.",
     "apiSettings.modelsFetchFailed": "Kh\xF4ng th\u1EC3 l\u1EA5y danh s\xE1ch m\xF4 h\xECnh. Ki\u1EC3m tra \u0111\u1ECBa ch\u1EC9 v\xE0 m\u1EA1ng r\u1ED3i th\u1EED l\u1EA1i.",
-    "apiSettings.appendRatioPrompt": "Th\xEAm t\u1EF7 l\u1EC7 v\xE0o l\u1EDDi nh\u1EAFc",
     "apiSettings.defaultProviderForModel": "Provider m\u1EB7c \u0111\u1ECBnh",
     "apiSettings.removeBinding": "X\xF3a li\xEAn k\u1EBFt",
     "apiSettings.catalogRequiredForBinding": "Danh m\u1EE5c m\xF4 h\xECnh kh\xF4ng kh\u1EA3 d\u1EE5ng n\xEAn ch\u01B0a th\u1EC3 th\xEAm li\xEAn k\u1EBFt.",
@@ -15356,7 +15345,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u5E94\u5546\u8FD4\u56DE\u7684\u6A21\u578B\u5217\u8868\u683C\u5F0F\u65E0\u6548\uFF0C\u4ECD\u53EF\u624B\u52A8\u586B\u5199\u540D\u79F0\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u5E94\u5546\u6A21\u578B\u5217\u8868\u8FC7\u5927\uFF0C\u8BF7\u624B\u52A8\u586B\u5199\u6A21\u578B\u540D\u79F0\u3002",
     "apiSettings.modelsFetchFailed": "\u83B7\u53D6\u6A21\u578B\u5931\u8D25\uFF0C\u8BF7\u68C0\u67E5\u5730\u5740\u4E0E\u7F51\u7EDC\u540E\u91CD\u8BD5\u3002",
-    "apiSettings.appendRatioPrompt": "\u8FFD\u52A0\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8BBE\u4E3A\u8BE5\u578B\u53F7\u9ED8\u8BA4\u4F9B\u5E94\u5546",
     "apiSettings.removeBinding": "\u5220\u9664\u7ED1\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -16654,7 +16642,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u61C9\u5546\u50B3\u56DE\u7684\u6A21\u578B\u6E05\u55AE\u683C\u5F0F\u7121\u6548\uFF0C\u4ECD\u53EF\u624B\u52D5\u586B\u5BEB\u540D\u7A31\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u61C9\u5546\u6A21\u578B\u6E05\u55AE\u904E\u5927\uFF0C\u8ACB\u624B\u52D5\u586B\u5BEB\u6A21\u578B\u540D\u7A31\u3002",
     "apiSettings.modelsFetchFailed": "\u53D6\u5F97\u6A21\u578B\u5931\u6557\uFF0C\u8ACB\u6AA2\u67E5\u7DB2\u5740\u8207\u7DB2\u8DEF\u5F8C\u91CD\u8A66\u3002",
-    "apiSettings.appendRatioPrompt": "\u52A0\u5165\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8A2D\u70BA\u6B64\u578B\u865F\u9810\u8A2D\u4F9B\u61C9\u5546",
     "apiSettings.removeBinding": "\u522A\u9664\u7D81\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -17952,7 +17939,6 @@
     "apiSettings.modelsInvalidResponse": "\u4F9B\u61C9\u5546\u50B3\u56DE\u7684\u6A21\u578B\u6E05\u55AE\u683C\u5F0F\u7121\u6548\uFF0C\u4ECD\u53EF\u624B\u52D5\u586B\u5BEB\u540D\u7A31\u3002",
     "apiSettings.modelsTooLarge": "\u4F9B\u61C9\u5546\u6A21\u578B\u6E05\u55AE\u904E\u5927\uFF0C\u8ACB\u624B\u52D5\u586B\u5BEB\u6A21\u578B\u540D\u7A31\u3002",
     "apiSettings.modelsFetchFailed": "\u53D6\u5F97\u6A21\u578B\u5931\u6557\uFF0C\u8ACB\u6AA2\u67E5\u7DB2\u5740\u8207\u7DB2\u8DEF\u5F8C\u91CD\u8A66\u3002",
-    "apiSettings.appendRatioPrompt": "\u8FFD\u52A0\u6BD4\u4F8B\u63D0\u793A",
     "apiSettings.defaultProviderForModel": "\u8A2D\u70BA\u6B64\u578B\u865F\u9810\u8A2D\u4F9B\u61C9\u5546",
     "apiSettings.removeBinding": "\u522A\u9664\u7D81\u5B9A",
     "apiSettings.catalogRequiredForBinding": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u6682\u65F6\u65E0\u6CD5\u6DFB\u52A0\u7ED1\u5B9A",
@@ -27023,7 +27009,6 @@
         bindingTemplateForCompatibility(canonicalModelId, protocol, compatibility),
         operations
       ),
-      append_aspect_ratio_prompt: Boolean(original.append_aspect_ratio_prompt),
       transparency_mode: isGptImageModel(canonicalModelId) ? original.transparency_mode || "native" : "native"
     };
   }
@@ -27043,7 +27028,6 @@
         protocol_profile: String(item.protocol_profile || fallbackTemplate?.protocol_profile || "").trim(),
         parameter_codec: String(item.parameter_codec || fallbackTemplate?.parameter_codec || "").trim(),
         operations: normalizedOperations(item.operations),
-        append_aspect_ratio_prompt: Boolean(item.append_aspect_ratio_prompt),
         transparency_mode: item.transparency_mode === "prompt" ? "prompt" : "native"
       };
     });
@@ -27187,17 +27171,6 @@
       };
       syncTransparencyField();
       modelSelect.addEventListener("change", syncTransparencyField);
-      const ratioPromptField = document.createElement("label");
-      ratioPromptField.className = "provider-binding-toggle provider-binding-ratio-prompt";
-      ratioPromptField.dataset.i18nAttr = "title:apiSettings.appendRatioPrompt";
-      const ratioPromptInput = document.createElement("input");
-      ratioPromptInput.type = "checkbox";
-      ratioPromptInput.dataset.bindingRatioPrompt = "";
-      ratioPromptInput.checked = Boolean(binding.append_aspect_ratio_prompt);
-      const ratioPromptLabel = document.createElement("span");
-      ratioPromptLabel.dataset.i18n = "apiSettings.appendRatioPrompt";
-      ratioPromptLabel.textContent = translate("apiSettings.appendRatioPrompt");
-      ratioPromptField.append(ratioPromptInput, ratioPromptLabel);
       const defaultField = document.createElement("label");
       defaultField.className = "provider-binding-toggle provider-binding-default";
       defaultField.dataset.i18nAttr = "title:apiSettings.defaultProviderForModel";
@@ -27213,7 +27186,7 @@
       footer.className = "provider-binding-footer";
       const footerSettings = document.createElement("div");
       footerSettings.className = "provider-binding-footer-settings";
-      footerSettings.append(ratioPromptField, defaultField);
+      footerSettings.append(defaultField);
       footer.append(footerSettings, remove);
       card.dataset.bindingOriginalModelId = binding.canonical_model_id;
       card.dataset.bindingPreviousModelId = binding.canonical_model_id;
@@ -27251,9 +27224,6 @@
         protocol_profile: card.dataset.bindingOriginalProtocolProfile || "",
         parameter_codec: card.dataset.bindingOriginalParameterCodec || "",
         operations,
-        append_aspect_ratio_prompt: Boolean(
-          card.querySelector("[data-binding-ratio-prompt]")?.checked
-        ),
         transparency_mode: isGptImageModel(modelId) && card.querySelector("[data-binding-transparency]")?.value === "prompt" ? "prompt" : "native"
       };
       return {

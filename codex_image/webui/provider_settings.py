@@ -204,9 +204,6 @@ class ProviderSettings(StoreLockMixin):
                     parameter_codec=binding["parameter_codec"],
                     operations=frozenset(binding["operations"]),
                     is_default=defaults.get(binding["canonical_model_id"]) == provider["id"],
-                    append_aspect_ratio_prompt=bool(
-                        binding.get("append_aspect_ratio_prompt", False)
-                    ),
                     transparency_mode=binding.get("transparency_mode", "native"),
                 )
                 for binding in provider["bindings"]
@@ -349,8 +346,6 @@ class ProviderSettings(StoreLockMixin):
                         "parameter_codec": base.get("parameter_codec"),
                         "operations": list(base.get("operations") or ["generate", "edit"]),
                     }
-                    if base.get("append_aspect_ratio_prompt") is True:
-                        binding["append_aspect_ratio_prompt"] = True
                     if base.get("transparency_mode") == "prompt":
                         binding["transparency_mode"] = "prompt"
                     bindings.append(binding)

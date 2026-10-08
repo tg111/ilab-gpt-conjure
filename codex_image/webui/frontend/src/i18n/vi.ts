@@ -1146,7 +1146,6 @@ export const VI_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelsInvalidResponse": "Nhà cung cấp trả về danh sách mô hình không hợp lệ. Bạn có thể nhập tên thủ công.",
     "apiSettings.modelsTooLarge": "Danh sách mô hình của nhà cung cấp quá lớn. Hãy nhập tên mô hình thủ công.",
     "apiSettings.modelsFetchFailed": "Không thể lấy danh sách mô hình. Kiểm tra địa chỉ và mạng rồi thử lại.",
-    "apiSettings.appendRatioPrompt": "Thêm tỷ lệ vào lời nhắc",
     "apiSettings.defaultProviderForModel": "Provider mặc định",
     "apiSettings.removeBinding": "Xóa liên kết",
     "apiSettings.catalogRequiredForBinding": "Danh mục mô hình không khả dụng nên chưa thể thêm liên kết.",

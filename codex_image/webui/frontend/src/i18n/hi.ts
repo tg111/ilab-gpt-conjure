@@ -995,7 +995,6 @@ export const HI_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "अनुपात निर्देश जोड़ें",
     "apiSettings.defaultProviderForModel": "डिफ़ॉल्ट प्रदाता",
     "apiSettings.removeBinding": "बाइंडिंग हटाएँ",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",

@@ -260,8 +260,8 @@ class WebUIStaticProviderBindingTests(unittest.TestCase):
         self.assertNotIn('model?.operations || ["generate", "edit"]', self.binding_editor)
         self.assertIn("model?.operations || existingOperations", self.binding_editor)
         self.assertIn("provider-binding-footer", source)
-        self.assertIn('ratioPromptInput.dataset.bindingRatioPrompt = ""', source)
-        self.assertRegex(source, r"footerSettings\.append\(ratioPromptField,\s*defaultField\)")
+        self.assertNotIn("bindingRatioPrompt", source)
+        self.assertRegex(source, r"footerSettings\.append\(defaultField\)")
         self.assertRegex(source, r"footer\.append\(footerSettings,\s*remove\)")
         self.assertRegex(
             self.styles,

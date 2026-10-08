@@ -297,7 +297,8 @@ class ProviderSettingsV2Tests(unittest.TestCase):
         self.assertEqual(persisted["providers"][0].get("icon_emoji"), "🪄")
         self.assertEqual(public["providers"][0].get("icon_emoji"), "🪄")
 
-    def test_binding_persists_optional_aspect_ratio_prompt_setting(self) -> None:
+    def test_legacy_aspect_ratio_prompt_binding_setting_is_accepted_then_dropped(self) -> None:
+        # The per-binding ratio prompt toggle was removed; older files may still carry it.
         binding = {
             **self.provider()["bindings"][0],
             "append_aspect_ratio_prompt": True,
@@ -310,10 +311,10 @@ class ProviderSettingsV2Tests(unittest.TestCase):
         public = self.settings.public_settings()
         connection = self.settings.read_connections()[0]
 
-        self.assertTrue(written["providers"][0]["bindings"][0]["append_aspect_ratio_prompt"])
-        self.assertTrue(persisted["providers"][0]["bindings"][0]["append_aspect_ratio_prompt"])
-        self.assertTrue(public["providers"][0]["bindings"][0]["append_aspect_ratio_prompt"])
-        self.assertTrue(connection.bindings[0].append_aspect_ratio_prompt)
+        self.assertNotIn("append_aspect_ratio_prompt", written["providers"][0]["bindings"][0])
+        self.assertNotIn("append_aspect_ratio_prompt", persisted["providers"][0]["bindings"][0])
+        self.assertNotIn("append_aspect_ratio_prompt", public["providers"][0]["bindings"][0])
+        self.assertFalse(hasattr(connection.bindings[0], "append_aspect_ratio_prompt"))
 
     def test_legacy_auth_scheme_is_accepted_then_dropped_everywhere(self) -> None:
         legacy_provider = self.provider(auth_scheme="basic")

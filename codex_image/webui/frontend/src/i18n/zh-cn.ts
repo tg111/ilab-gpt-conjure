@@ -1146,7 +1146,6 @@ export const ZH_CN_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelsInvalidResponse": "供应商返回的模型列表格式无效，仍可手动填写名称。",
     "apiSettings.modelsTooLarge": "供应商模型列表过大，请手动填写模型名称。",
     "apiSettings.modelsFetchFailed": "获取模型失败，请检查地址与网络后重试。",
-    "apiSettings.appendRatioPrompt": "追加比例提示",
     "apiSettings.defaultProviderForModel": "设为该型号默认供应商",
     "apiSettings.removeBinding": "删除绑定",
     "apiSettings.catalogRequiredForBinding": "模型目录不可用，暂时无法添加绑定",

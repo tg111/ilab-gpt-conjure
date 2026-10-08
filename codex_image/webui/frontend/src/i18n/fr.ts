@@ -995,7 +995,6 @@ export const FR_DICTIONARY: TranslationDictionary = {
     "apiSettings.modelBindings": "Model bindings",
     "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model binding",
-    "apiSettings.appendRatioPrompt": "Ajouter l’instruction de format",
     "apiSettings.defaultProviderForModel": "Fournisseur par défaut",
     "apiSettings.removeBinding": "Supprimer la liaison",
     "apiSettings.catalogRequiredForBinding": "The model catalog is unavailable; a binding cannot be added yet.",
