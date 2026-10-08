@@ -37980,7 +37980,7 @@ ${hint}` : hint;
     [els43.orientation?.closest(".orientation-field"), els43.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element2) => element2?.classList.toggle("hidden", !legacyGpt || automaticSize));
     const ratioField = els43.ratio?.closest(".ratio-field");
     if (ratioField) {
-      const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
+      const ratioVisible = legacyGpt && !automaticSize;
       ratioField.classList.toggle("hidden", !ratioVisible);
       ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
     }
@@ -48783,7 +48783,7 @@ ${galleryText}`;
   function updatePresetRatioVisibility() {
     const ratioField = els25.ratio?.closest?.(".ratio-field");
     if (!ratioField) return;
-    const visible = currentSizeMode() === "preset" && !els25.customSizeToggle?.checked;
+    const visible = currentSizeMode() !== "auto";
     ratioField.classList.toggle("hidden", !visible);
     ratioField.setAttribute("aria-hidden", visible ? "false" : "true");
   }

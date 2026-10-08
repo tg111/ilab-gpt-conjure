@@ -25905,7 +25905,7 @@
     [els9.orientation?.closest(".orientation-field"), els9.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element) => element?.classList.toggle("hidden", !legacyGpt || automaticSize));
     const ratioField = els9.ratio?.closest(".ratio-field");
     if (ratioField) {
-      const ratioVisible = legacyGpt && !automaticSize && !visibility.customSize;
+      const ratioVisible = legacyGpt && !automaticSize;
       ratioField.classList.toggle("hidden", !ratioVisible);
       ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
     }
