@@ -1,3 +1,4 @@
+import { captureImageMentions, imageMentionPayload, imageMentionsValid } from "./prompt-image-mentions";
 import { composerFingerprint, markComposerSubmitted } from "./composer-draft";
 import { isGptImageModel } from "./gpt-image-models";
 import { setBackgroundControl } from "./background-controls";
@@ -6,6 +7,7 @@ import { currentLocaleCode, translate } from "./i18n";
 import { selectedProviderBinding } from "./provider-selection";
 import { appendCanonicalGenerationFields, currentGenerationSelection } from "./generation-request";
 import { taskOutputControlValues } from "./task-model-summary";
+import { galleryPrompt } from "./prompt-model";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -56,7 +58,6 @@ function syncGalleryInputsFromPrompt(...args: any[]) { return legacyMethod("sync
 function missingGalleryInputs(...args: any[]) { return legacyMethod("missingGalleryInputs", ...args); }
 function missingReferenceAssetInputs(...args: any[]) { return legacyMethod("missingReferenceAssetInputs", ...args); }
 function customSizeValidationMessage(...args: any[]) { return legacyMethod("customSizeValidationMessage", ...args); }
-function updatePixelPreview(...args: any[]) { return legacyMethod("updatePixelPreview", ...args); }
 function addPendingTask(...args: any[]) { return legacyMethod("addPendingTask", ...args); }
 function replacePendingTask(...args: any[]) { return legacyMethod("replacePendingTask", ...args); }
 function startRunFeedback(...args: any[]) { return legacyMethod("startRunFeedback", ...args); }
@@ -123,6 +124,13 @@ function referenceFileMetadata(source: any) {
   };
 }
 
+function referenceImageOrder() {
+  let uploadIndex = 0;
+  return state.images.map((source: any) => source.kind === "upload"
+    ? { kind: "upload", index: uploadIndex++ }
+    : { kind: source.kind, id: source.id });
+}
+
 export function applyTaskOutputParams(task: any): void {
   const params = task.params || {};
   const request = task.request || {};
@@ -169,7 +177,7 @@ function applyTaskToForm(task: any, options?: ApplyTaskToFormOptions) {
     return;
   }
   setMode(task.mode || "generate");
-  setPromptWithGalleryRefs(task.prompt || task.prompt_for_model || "", task.gallery_refs || []);
+  setPromptWithGalleryRefs(task.prompt || task.prompt_for_model || "", task.gallery_refs || [], task.prompt_image_mentions, task.input_sources || task.local_input_files || []);
   if (!options?.preserveOutputSettings) applyTaskOutputParams(task);
   updatePromptCount();
   updateRequestPreview();
@@ -188,6 +196,7 @@ function buildPreviewRequest() {
   const codexMode = isCodex ? currentCodexMode() : null;
   const parameters = currentCanonicalParameters();
   const selection = currentGenerationSelection();
+  const galleryContext = galleryPrompt();
   const payload: Record<string, any> = {
     mode: state.mode,
     auth_source: authSource,
@@ -199,9 +208,12 @@ function buildPreviewRequest() {
     ui_language: currentLocaleCode(),
     prompt: getPromptText(),
     prompt_for_model: currentPromptForModel(),
+    ...(galleryContext ? { gallery_prompt: galleryContext } : {}),
+    ...(imageMentionPayload() ? { prompt_image_mentions: imageMentionPayload() } : {}),
     images: uploads.map((source: any) => source.name),
     gallery_image_ids: galleries.map((source: any) => source.id),
     reference_asset_ids: assets.map((source: any) => source.id),
+    reference_image_order: referenceImageOrder(),
     reference_files: fileUploads.map((source: any) => source.filename),
     reference_file_ids: storedFiles.map((source: any) => source.id),
   };
@@ -274,6 +286,10 @@ async function runTask() {
   const assets = referenceAssetInputs();
   const fileUploads = referenceFileUploads();
   const storedFiles = storedReferenceFileInputs();
+  if (!imageMentionsValid()) {
+    setStatus(translate("promptMention.missing"), "error");
+    return;
+  }
   if (missingGalleryInputs().length) {
     setStatus(translate("status.missingGalleryReference"), "error");
     return;
@@ -306,7 +322,6 @@ async function runTask() {
   const customSizeError = els.size?.value === "custom" ? customSizeValidationMessage() : "";
   if (customSizeError) {
     updateCustomSize();
-    updatePixelPreview("custom");
     els.customWidth?.focus();
     setStatus(customSizeError, "error");
     return;
@@ -315,6 +330,10 @@ async function runTask() {
   const form = new FormData();
   form.append("prompt", prompt);
   form.append("prompt_for_model", promptForModel);
+  const imageMentions = imageMentionPayload();
+  if (imageMentions) form.append("prompt_image_mentions", JSON.stringify(imageMentions));
+  const galleryContext = galleryPrompt();
+  if (galleryContext) form.append("gallery_prompt", JSON.stringify(galleryContext));
   form.append("ui_language", currentLocaleCode());
   appendCanonicalGenerationFields(form, currentGenerationSelection());
   if (!state.generationCatalog || isGptImageModel(state.selectedModelId)) {
@@ -322,6 +341,7 @@ async function runTask() {
   }
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));
   assets.forEach((source: any) => form.append("reference_asset_ids", source.id));
+  form.append("reference_image_order", JSON.stringify(referenceImageOrder()));
   fileUploads.forEach((source: any) => form.append("reference_files", source.file));
   storedFiles.forEach((source: any) => form.append("reference_file_ids", source.id));
 
@@ -332,7 +352,7 @@ async function runTask() {
   }
 
   const submittedComposer = composerFingerprint();
-  const pendingTask = createPendingTask();
+  const pendingTask = { ...createPendingTask(), prompt_image_mentions: captureImageMentions() };
   addPendingTask(pendingTask);
   if (els.requestJson) {
     els.requestJson.textContent = JSON.stringify(pendingTask.request, null, 2);

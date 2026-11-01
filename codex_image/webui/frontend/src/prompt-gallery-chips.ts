@@ -1,3 +1,6 @@
+import { updateImageMentionMenu } from "./prompt-mention-menu";
+import { refreshImageMentionChips } from "./prompt-image-mentions";
+import { preserveComposerDraft } from "./composer-draft";
 import { getLegacyBridge } from "./state";
 import { positionPromptPopoverAtAnchor } from "./prompt-popover-position";
 import { formatTranslation, translate } from "./i18n";
@@ -56,33 +59,7 @@ export function findGalleryRefMentionAt(promptText: any, cursor: any, refs: any)
 
 export function updateMentionSuggest(): void {
   if (!els.mentionSuggest || !els.promptEditor) return;
-  const match = activeMentionMatch();
-  if (!match) {
-    hideMentionSuggest();
-    return;
-  }
-  const query = match.query.toLowerCase();
-  const items = state.galleryItems.filter((item: any) => item.name.toLowerCase().includes(query)).slice(0, 8);
-  if (!items.length) {
-    hideMentionSuggest();
-    return;
-  }
-  els.mentionSuggest.innerHTML = items.map((item: any) => `
-    <button type="button" class="mention-option" data-mention-id="${escapeHtml(item.id)}">
-      <img src="${escapeHtml(item.image_url)}" alt="">
-      <span>@${escapeHtml(item.name)}</span>
-      <small>${escapeHtml(categoryLabel(item.category))}</small>
-    </button>
-  `).join("");
-  els.mentionSuggest.querySelectorAll("[data-mention-id]").forEach((button: any) => {
-    button.addEventListener("mousedown", (event: any) => {
-      event.preventDefault();
-      const item = findGalleryItem(button.dataset.mentionId);
-      if (item) insertGalleryMention(item);
-    });
-  });
-  positionMentionSuggestAtCaret(match);
-  els.mentionSuggest.classList.remove("hidden");
+  updateImageMentionMenu();
 }
 
 export function activeMentionMatch(): any {
@@ -100,9 +77,11 @@ export function activeMentionMatch(): any {
   }
   if (container.nodeType !== Node.TEXT_NODE) return null;
   const textBeforeCaret = (container.textContent || "").slice(0, offset);
-  const match = textBeforeCaret.match(/@([^\s@，。,.]*)$/);
+  const match = textBeforeCaret.match(/@([^\n@，。,#~～〜∼˜]*)$/);
   if (!match) return null;
   const tokenStart = offset - match[0].length;
+  // Allow filenames and translated labels with spaces/dots without treating email addresses as mentions.
+  if (tokenStart > 0 && /[a-zA-Z0-9._%+-]/.test(textBeforeCaret.charAt(tokenStart - 1))) return null;
   const range = document.createRange();
   range.setStart(container, tokenStart);
   range.setEnd(container, offset);
@@ -136,6 +115,7 @@ export function insertGalleryMention(item: any): void {
   updateRequestPreview();
   hideMentionSuggest();
   hideColorSuggest();
+  hidePromptSnippetSuggest();
   setCaretAfterNode(trailingSpace);
 }
 
@@ -165,6 +145,7 @@ export function createGalleryChip(item: any): HTMLElement {
   chip.draggable = true;
   chip.dataset.promptChip = "gallery";
   chip.dataset.galleryId = item.id;
+  chip.dataset.imageRefKey = item.prompt_ref_key || `gallery:${item.id}`;
   chip.dataset.galleryName = item.name;
   chip.dataset.galleryCategory = item.category || "";
   chip.dataset.galleryCategoryName = item.category_name || categoryLabel(item.category);
@@ -186,6 +167,7 @@ export function createGalleryChip(item: any): HTMLElement {
   chip.addEventListener("keydown", (event: any) => {
     if (event.key === "Backspace" || event.key === "Delete") {
       event.preventDefault();
+      event.stopPropagation();
       removePromptGalleryChip(chip);
     }
   });
@@ -194,6 +176,7 @@ export function createGalleryChip(item: any): HTMLElement {
 
 export function removePromptGalleryChip(chip: any): void {
   if (!chip || !els.promptEditor?.contains(chip)) return;
+  preserveComposerDraft(true);
   const nextNode = chip.nextSibling;
   chip.remove();
   if (nextNode?.nodeType === Node.TEXT_NODE && !nextNode.textContent.trim()) {
@@ -239,15 +222,19 @@ export function syncGalleryInputsFromPrompt(): boolean {
   const chips = Array.from(els.promptEditor?.querySelectorAll(".gallery-chip[data-gallery-id]") || []);
   const mentionedIds = new Set(chips.map((chip: any) => chip.dataset.galleryId).filter(Boolean));
   const beforeKey = imageSourcesKey(state.images);
-  const uploads = state.images.filter((source: any) => source.kind !== "gallery");
-  const existingById = new Map(state.images.filter((source: any) => source.kind === "gallery").map((source: any) => [source.id, source]));
-  const galleries = chips.map((chip: any) => {
+  const retainedIds = new Set<string>();
+  const sources = state.images.filter((source: any) => {
+    if (source.kind !== "gallery") return true;
+    if (!mentionedIds.has(source.id) || retainedIds.has(source.id)) return false;
+    retainedIds.add(source.id);
+    return true;
+  });
+  for (const chip of chips as any[]) {
     const itemId = chip.dataset.galleryId;
-    const existing = existingById.get(itemId);
-    if (existing) return existing;
+    if (!itemId || retainedIds.has(itemId)) continue;
+    retainedIds.add(itemId);
     const item = findGalleryItem(itemId);
-    if (item) return gallerySource(item);
-    return gallerySource({
+    sources.push(gallerySource(item || {
       id: itemId,
       name: chip.dataset.galleryName || chip.textContent.replace(/^@/, "").trim() || translate("gallery.imageFallback"),
       category: chip.dataset.galleryCategory || "",
@@ -256,9 +243,9 @@ export function syncGalleryInputsFromPrompt(): boolean {
       prompt_note: chip.dataset.galleryPromptNote || "",
       image_url: chip.dataset.galleryImageUrl || "",
       missing: true,
-    });
-  }).filter((source: any) => source.id && mentionedIds.has(source.id));
-  state.images = [...uploads, ...galleries];
+    }));
+  }
+  state.images = sources;
   if (imageSourcesKey(state.images) === beforeKey) return false;
   if (!state.images.length) {
     setMode("generate");
@@ -277,6 +264,7 @@ export function imageSourcesKey(sources: any): string {
 }
 
 export function syncPromptGalleryMentionsFromInputs(): boolean {
+  refreshImageMentionChips(true);
   if (!els.promptEditor) return false;
   const selectedGalleryIds = new Set(galleryInputs().map((source: any) => source.id));
   let changed = false;
@@ -297,6 +285,8 @@ export function hideMentionSuggest(): void {
   if (!els.mentionSuggest) return;
   els.mentionSuggest.classList.add("hidden");
   els.mentionSuggest.innerHTML = "";
+  els.promptEditor?.removeAttribute("aria-activedescendant");
+  els.promptEditor?.setAttribute("aria-expanded", "false");
   els.mentionSuggest.style.removeProperty("--mention-left");
   els.mentionSuggest.style.removeProperty("--mention-top");
   els.mentionSuggest.style.removeProperty("--mention-width");

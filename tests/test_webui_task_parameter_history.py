@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import shutil
-import subprocess
-import tempfile
 from pathlib import Path
 
 from tests.webui_helpers import WebUIStaticTestCase
+
+from tests.frontend_runner import run_frontend
 
 
 class TaskParameterHistoryFrontendTests(WebUIStaticTestCase):
@@ -34,34 +33,15 @@ class TaskParameterHistoryFrontendTests(WebUIStaticTestCase):
         self.assertNotIn("selectGenerationProvider", inspect_body)
         self.assertNotIn("parameterDraftsByModel", inspect_body)
 
-    def test_history_and_parameter_migration_behavior(self) -> None:
-        node = shutil.which("node")
-        esbuild = Path("node_modules/.bin/esbuild")
-        if node is None or not esbuild.exists():
-            self.skipTest("node and npm install are required for frontend behavior tests")
+    def test_history_parameters_leave_current_output_settings_visible(self) -> None:
+        html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
+        styles = Path("codex_image/webui/static/styles/70-output-settings.css").read_text(encoding="utf-8")
+        source = Path("codex_image/webui/frontend/src/output-settings-lock.ts").read_text(encoding="utf-8")
+        self.assertGreater(html.index('id="taskParameterInspector"'), html.index('class="panel preview-panel"'))
+        self.assertNotIn(".output-settings-stage.is-inspecting-task", styles)
+        body = source[source.index("export function showTaskOutputSettings"):source.index("export function refreshOutputSettingsLock")]
+        self.assertIn("showLockedOutputSettings()", body)
+        self.assertNotIn("renderSummary(taskSnapshot", body)
 
-        with tempfile.TemporaryDirectory() as tmp:
-            output = Path(tmp) / "model-parameters-history.test.mjs"
-            build = subprocess.run(
-                [
-                    str(esbuild),
-                    "tests/frontend/model_parameters_history.test.ts",
-                    "--bundle",
-                    "--platform=node",
-                    "--format=esm",
-                    "--target=node20",
-                    f"--outfile={output}",
-                    "--log-level=warning",
-                ],
-                check=False,
-                capture_output=True,
-                text=True,
-            )
-            self.assertEqual(build.returncode, 0, build.stderr)
-            result = subprocess.run(
-                [node, "--test", str(output)],
-                check=False,
-                capture_output=True,
-                text=True,
-            )
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+    def test_history_and_parameter_migration_behavior(self) -> None:
+        run_frontend(self, "model_parameters_history.test.ts")

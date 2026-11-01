@@ -65,6 +65,9 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn("prompt_fidelity = currentPromptFidelity()", script)
         self.assertNotIn('form.append("prompt_fidelity"', script)
         self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{[\s\S]*?return buildPromptForModel\(\);")
+        # Gallery reference notes are still submitted for server-side resolution.
+        self.assertIn('form.append("gallery_prompt", JSON.stringify(galleryContext))', script)
+        self.assertNotIn('currentPromptFidelity() === "original") return null', script)
         self.assertIn('isGptImageModel(state.selectedModelId)', script)
 
     def test_prompt_fidelity_help_is_not_mounted(self) -> None:
@@ -135,7 +138,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
             "export function initPromptFeature",
             "function createGalleryChip",
             "function buildPromptForModel",
-            "function galleryReferenceInstruction",
+            "function galleryPrompt",
             "function syncPromptGalleryMentionsFromInputs",
             "function handlePromptChipDrop",
             "function getPromptText",
@@ -153,7 +156,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         )
         self.assertRegex(
             core_source,
-            r"function setPromptWithGalleryRefs\(text: any,\s*refs: any\): void\s*\{[\s\S]*const promptText = normalizePromptEditorText\(text\)",
+            r"function setPromptWithGalleryRefs\(text: any,\s*refs: any, mentions\?: ImageMentionContext, sources: any\[\] = \[\]\): void\s*\{[\s\S]*const promptText = normalizePromptEditorText\(text\)",
         )
 
         for function_name in [
@@ -599,15 +602,15 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn("new RegExp", source)
 
         find_panel_styles = self._extract_css_block(styles, ".prompt-find-panel")
-        self.assertIn("display: grid", find_panel_styles)
-        self.assertIn("grid-template-columns: minmax(78px, 1fr) minmax(78px, 1fr) max-content", find_panel_styles)
+        self.assertIn("display: flex", find_panel_styles)
+        self.assertIn("flex-wrap: wrap", find_panel_styles)
         self.assertIn("min-width: 0", find_panel_styles)
-        self.assertRegex(styles, r"\.prompt-find-panel \.control\s*\{[^}]*height:\s*calc\(var\(--prompt-secondary-action-height\) - 4px\)")
-        self.assertRegex(styles, r"\.prompt-find-panel \.ghost-button\s*\{[^}]*height:\s*calc\(var\(--prompt-secondary-action-height\) - 4px\)")
+        self.assertRegex(styles, r"\.prompt-find-panel \.control\s*\{[^}]*height:\s*var\(--prompt-secondary-action-height\)")
+        self.assertRegex(styles, r"\.prompt-find-panel \.ghost-button\s*\{[^}]*height:\s*var\(--prompt-secondary-action-height\)")
         self.assertRegex(styles, r"\.prompt-template-recent-cell\.find-active \.prompt-template-recent-dock\s*\{[^}]*display:\s*none")
         self.assertRegex(
             styles,
-            r"@media \(max-height:\s*1390px\) and \(min-width:\s*900px\)\s*\{[\s\S]*\.prompt-find-panel\s*\{[\s\S]*grid-template-columns:\s*minmax\(68px,\s*1fr\)\s+minmax\(68px,\s*1fr\)\s+max-content",
+            r"\.prompt-template-recent-cell\.find-active \.prompt-footer > :not\(\.prompt-find-panel\)\s*\{[^}]*display:\s*none",
         )
     def test_prompt_editor_core_modules_have_typescript_source_contract(self) -> None:
         prompt_source = self._prompt_source()
@@ -661,7 +664,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         for symbol in (
             "currentPromptForModel",
             "promptTokenReplacement",
-            "galleryPromptText",
+            "galleryPrompt",
         ):
             self.assertIn(f"export function {symbol}", model_source)
             self.assertIn(symbol, prompt_source)
@@ -692,9 +695,9 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertIn('event.key === "Backspace" || event.key === "Delete"', script)
         self.assertIn("data-remove-gallery-chip", script)
         self.assertIn("prompt_for_model", script)
-        self.assertIn("function galleryReferenceInstruction", script)
+        self.assertIn("function galleryPrompt", script)
         self.assertIn('translate("promptModel.galleryHeader")', script)
-        self.assertIn('formatTranslation("promptModel.galleryInstruction"', script)
+        self.assertIn('template: translate("promptModel.galleryInstruction")', script)
         self.assertIn("categoryPromptRole(source.category)", script)
         self.assertIn("source.prompt_note", script)
         self.assertIn("syncGalleryInputsFromPrompt()", script)
@@ -708,10 +711,10 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         script = self._frontend_script_source()
 
         self.assertIn('querySelectorAll(".gallery-chip[data-gallery-id]")', script)
-        self.assertIn("const existingById = new Map", script)
+        self.assertIn("const retainedIds = new Set", script)
         self.assertIn("const item = findGalleryItem(itemId)", script)
-        self.assertIn("if (item) return gallerySource(item)", script)
-        self.assertIn("state.images = [...uploads, ...galleries]", script)
+        self.assertIn("sources.push(gallerySource(item || {", script)
+        self.assertIn("state.images = sources", script)
         self.assertIn("function imageSourcesKey", script)
     def test_prompt_dragged_gallery_chips_keep_text_boundaries(self) -> None:
         script = self._frontend_script_source()
@@ -726,9 +729,9 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
 
         self.assertIn("function galleryRefsByMentionLength(refs)", script)
         self.assertIn("function findGalleryRefMentionAt(promptText, cursor, refs)", script)
-        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs\)\s*\{[\s\S]*const sortedRefs = galleryRefsByMentionLength\(refList\)")
-        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs\)\s*\{[\s\S]*const refMatch = findGalleryRefMentionAt\(promptText, cursor, sortedRefs\)")
-        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs\)\s*\{[\s\S]*if \(refMatch\) \{[\s\S]*els\.promptEditor\.append\(createGalleryChip\(refMatch\.ref\)\)")
+        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*const sortedRefs = galleryRefsByMentionLength\(refList\)")
+        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*const refMatch = findGalleryRefMentionAt\(promptText, cursor, sortedRefs\)")
+        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text, refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*if \(refMatch\) \{[\s\S]*els\.promptEditor\.append\(createGalleryChip\(refMatch\.ref\)\)")
         self.assertIn("cursor = refMatch.end", script)
     def test_prompt_mention_suggestions_close_after_insert_and_follow_caret(self) -> None:
         script = self._frontend_script_source()
@@ -737,7 +740,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertIn("positionMentionSuggestAtCaret(match)", script)
         self.assertIn("function setCaretAfterNode(node)", script)
         self.assertRegex(script, r"function setCaretAfterNode\(node\)\s*\{[\s\S]*node\.nodeType === Node\.TEXT_NODE[\s\S]*range\.setStart\(node,\s*\(node\.textContent \|\| \"\"\)\.length\)")
-        self.assertIn('if (event.key === "Escape") return;', script)
+        self.assertIn('["Escape", "ArrowUp", "ArrowDown", "Enter"].includes(event.key)', script)
         self.assertRegex(script, r"function activeMentionMatch\(\)\s*\{[\s\S]*window\.getSelection\(\)")
         self.assertRegex(script, r"function activeMentionMatch\(\)\s*\{[\s\S]*range\.setStart\(container,\s*tokenStart\)")
         self.assertNotRegex(script, r"function activeMentionMatch\(\)\s*\{[\s\S]{0,260}getPromptText\(\)")
@@ -807,7 +810,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertIn("data-color-code", script)
         self.assertIn("data-remove-color-chip", script)
         self.assertIn("promptTextFromNode", script)
-        self.assertRegex(script, r"promptTextFromNode\(node\)\s*\{[\s\S]*child\.classList\.contains\(\"color-chip\"\)[\s\S]*child\.dataset\.colorCode")
+        self.assertRegex(script, r"promptTextFromNode\(node, imageRenderer[^\n]+\{[\s\S]*child\.classList\.contains\(\"color-chip\"\)[\s\S]*child\.dataset\.colorCode")
         self.assertRegex(script, r"function activeColorMatch\(\)\s*\{[\s\S]*window\.getSelection\(\)")
         self.assertIn("textBeforeCaret.match(/#([0-9a-fA-F]{0,6})$/)", script)
         self.assertRegex(script, r"function insertColorCode\(colorCode\)\s*\{[\s\S]*match\.range\.deleteContents\(\)")
@@ -887,10 +890,10 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
     def test_history_prompt_restore_rebuilds_hex_color_chips(self) -> None:
         script = self._frontend_script_source()
 
-        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs\)\s*\{[\s\S]*createColorChip\(colorCode\)")
-        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs\)\s*\{[\s\S]*normalizeHexColor\(match\[0\]\)")
+        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*createColorChip\(colorCode\)")
+        self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*normalizeHexColor\(match\[0\]\)")
         self.assertIn("/@([^\\s@，。,.#~～〜∼˜]+)|#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])|(?:^|[\\s\\n，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’])([~～〜∼˜]+)([^\\s~～〜∼˜@#，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’]+)/g", script)
-        self.assertNotRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs\)\s*\{[\s\S]{0,160}!Array\.isArray\(refs\) \|\| !refs\.length")
+        self.assertNotRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]{0,160}!Array\.isArray\(refs\) \|\| !refs\.length")
     def test_color_chip_swatch_reopens_picker_for_editing(self) -> None:
         script = self._frontend_script_source()
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
@@ -930,7 +933,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertRegex(script, r"PROMPT_SNIPPET_TRIGGER_PATTERN\s*=\s*/\(\^\|\[\\s\\n，。")
         self.assertRegex(script, r"PROMPT_SNIPPET_TRIGGER_PATTERN\s*=\s*/[\s\S]*\(\[~～〜∼˜\]\+\)")
         self.assertRegex(script, r"function activePromptSnippetMatch\(\)\s*\{[\s\S]*normalizePromptSnippetTrigger\(match\[2\]\)")
-        self.assertRegex(script, r"promptTextFromNode\(node\)\s*\{[\s\S]*child\.classList\.contains\(\"prompt-snippet-chip\"\)[\s\S]*`~\$\{child\.dataset\.promptSnippetTag")
+        self.assertRegex(script, r"promptTextFromNode\(node, imageRenderer[^\n]+\{[\s\S]*child\.classList\.contains\(\"prompt-snippet-chip\"\)[\s\S]*`~\$\{child\.dataset\.promptSnippetTag")
         self.assertRegex(script, r"function currentPromptForModel\(\)[^{]*\{[\s\S]*?return buildPromptForModel\(\);")
         self.assertRegex(script, r"function buildPromptForModel\(\)\s*\{[\s\S]*expandPromptSnippets\(getPromptText\(\)\)")
         self.assertRegex(styles, r"\.prompt-snippet-chip\s*\{[^}]*display:\s*inline-flex")
@@ -1112,7 +1115,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertRegex(styles, r"\.image-uploader-grid\s*\{[^}]*overflow:\s*hidden")
         self.assertRegex(styles, r"\.image-thumb-list\s*\{[^}]*overflow-x:\s*auto")
         self.assertRegex(styles, r"\.upload-tile\s*\{[^}]*height:\s*100%")
-        self.assertRegex(html, r'<span class="icon" aria-hidden="true">\s*<svg[\s\S]*<path d="M12 5v14M5 12h14"')
+        self.assertRegex(html, r'<span class="icon" aria-hidden="true">\s*<svg[^>]*data-ui-icon="plus"[^>]*><use href="/static/icons/ui.svg\?v=1#plus"')
         self.assertNotIn('<span class="icon">+</span>', html)
         self.assertRegex(styles, r"\.upload-tile\s+\.icon\s*\{[^}]*line-height:\s*0")
         self.assertRegex(styles, r"\.upload-tile\s+\.icon\s+svg\s*\{[^}]*display:\s*block")
@@ -1135,9 +1138,9 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertRegex(styles, r"\.prompt-footer\s*>\s*\.icon-text-button\s*\{[^}]*white-space:\s*nowrap")
         self.assertRegex(styles, r"\.prompt-footer\s*>\s*\.icon-text-button\s+span\s*\{[^}]*white-space:\s*nowrap")
         self.assertRegex(styles, r"\.icon-text-button\s*\{[^}]*gap:\s*6px")
-        self.assertRegex(styles, r"\.button-icon\s*\{[^}]*width:\s*14px")
+        self.assertRegex(styles, r"\.button-icon\s*\{[^}]*width:\s*16px")
         self.assertRegex(styles, r"\.quiet-danger-button\s*\{[^}]*color:\s*var\(--text-secondary\)")
-        self.assertRegex(styles, r"\.quiet-danger-button:hover\s*,\s*\.quiet-danger-button:focus-visible\s*\{[^}]*color:\s*var\(--danger\)")
+        self.assertRegex(styles, r"\.quiet-danger-button:where\(:not\(:disabled\)\):hover\s*,\s*\.quiet-danger-button:focus-visible\s*\{[^}]*color:\s*var\(--danger\)")
     def test_preview_shows_prompt_popover_for_each_output(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -1180,7 +1183,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertRegex(styles, r"@container \(max-width:\s*380px\)\s*\{[\s\S]*?\.prompt-action-row\s*>\s*\.add-to-input-btn[\s\S]*?width:\s*100%")
         self.assertRegex(styles, r"\.prompt-popover\s*\{[^}]*position:\s*fixed")
         self.assertRegex(styles, r"\.prompt-popover\s*\{[^}]*width:\s*min\(760px,\s*calc\(100vw - 24px\)\)")
-        self.assertRegex(styles, r"\.prompt-popover-body\s*\{[^}]*overflow:\s*hidden")
+        self.assertRegex(styles, r"\.prompt-popover-body\s*\{[^}]*overflow:\s*auto")
         self.assertRegex(styles, r"\.prompt-popover-compare\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)")
         self.assertRegex(styles, r"\.prompt-popover-section-tools\s*\{[^}]*display:\s*inline-flex")
         self.assertRegex(styles, r"\.prompt-copy-inline\s*\{[^}]*min-height:\s*24px")
@@ -1226,14 +1229,13 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn('id="mainModelToggle"', html)
         self.assertIn('id="mainModelOptions"', html)
         self.assertIn('role="listbox"', html)
-        self.assertIn('/static/app.js?v=runtime-855', html)
-        self.assertIn('/static/styles.css?v=runtime-855', html)
         self.assertIn("mainModel: document.querySelector", script)
         self.assertIn("mainModelCombobox: document.querySelector", script)
         self.assertIn("mainModelToggle: document.querySelector", script)
         self.assertIn("mainModelOptions: document.querySelector", script)
         self.assertIn("mainModelShowAllOptions: false", script)
         self.assertIn('"gpt-6.1-sol",', script)
+        self.assertIn('"gpt-6.1-terra",', script)
         self.assertIn('"gpt-6-astra",', script)
         self.assertIn('"gpt-6-sol",', script)
         self.assertIn('"gpt-6-luna",', script)
@@ -1285,9 +1287,10 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
                 const customMatches = mainModelOptionsForQuery("future-model-x");
                 for (const [query, expected] of [
                   ["  ASTRA ", ["gpt-6-astra"]],
-                  ["gpt-6", ["gpt-6.1-sol", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna"]],
+                  ["gpt-6", ["gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna"]],
                   ["  SOL ", ["gpt-6.1-sol", "gpt-6-sol", "gpt-5.6-sol"]],
                   ["Luna", ["gpt-6-luna", "gpt-5.6-luna"]],
+                  ["Terra", ["gpt-6.1-terra", "gpt-5.6-terra"]],
                 ]) {
                   const matches = mainModelOptionsForQuery(query);
                   if (JSON.stringify(matches) !== JSON.stringify(expected)) {
@@ -1352,7 +1355,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
                 if (els.mainModel.value !== "gpt-6-luna") {
                   throw new Error("new users must default to GPT 6 Luna");
                 }
-                for (const model of ["gpt-6.1-sol", "gpt-6-sol", "gpt-6-luna", "gpt-5.6-luna", "gpt-5.4-mini", "provider-custom-model"]) {
+                for (const model of ["gpt-6.1-terra", "gpt-6.1-sol", "gpt-6-sol", "gpt-6-luna", "gpt-5.6-luna", "gpt-5.4-mini", "provider-custom-model"]) {
                   storedValues[MAIN_MODEL_STORAGE_KEY] = model;
                   restoreMainModel();
                   if (els.mainModel.value !== model) throw new Error("saved model must survive");
@@ -1377,18 +1380,18 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn('id="mainModelField"', html)
         self.assertRegex(html, r'<input\s+id="mainModel"[^>]*aria-labelledby="mainModelLabel"')
         self.assertNotIn('id="promptFidelityField"', html)
-        self.assertIn('id="apiDirectSettingsNotice"', html)
+        self.assertNotIn('id="apiDirectSettingsNotice"', html)
         self.assertIn('id="modeSpecificSettings"', html)
         self.assertIn('id="modeSettingsSlot"', html)
         self.assertIn('class="mode-settings-slot full-width"', html)
         self.assertIn('class="mode-specific-settings mode-transition"', html)
         self.assertIn('class="model-tool-row"', html)
-        self.assertIn('class="api-direct-settings-notice mode-transition mode-collapsed hidden"', html)
+        self.assertIn('"without-main-model"', script)
         self.assertRegex(
             html,
-            r'id="modeSpecificSettings"[\s\S]*id="mainModelField"[\s\S]*id="apiDirectSettingsNotice"',
+            r'id="modeSpecificSettings"[\s\S]*id="mainModelField"',
         )
-        self.assertIn("直接使用所选图像模型生成", html)
+        self.assertNotIn("直接使用所选图像模型生成", html)
         self.assertIn("API 设置", html)
         self.assertNotIn("原始/保真/创意可用，保真规则随 prompt 发送", html)
         self.assertNotIn("<span>提示词模式</span>\n                      <strong>原始/保真/创意可用", html)
@@ -1396,7 +1399,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn("modeSpecificSettings: document.querySelector(\"#modeSpecificSettings\")", script)
         self.assertIn("mainModelField: document.querySelector(\"#mainModelField\")", script)
         self.assertNotIn("promptFidelityField: document.querySelector(\"#promptFidelityField\")", script)
-        self.assertIn("apiDirectSettingsNotice: document.querySelector(\"#apiDirectSettingsNotice\")", script)
+        self.assertNotIn("apiDirectSettingsNotice: document.querySelector", script)
         self.assertIn("pendingAuthSource: null", script)
         self.assertIn("function applyAuthSourceSelection", script)
         self.assertIn("function setModeSpecificElementVisibility", script)
@@ -1418,7 +1421,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn('if (!isGptImageModel(modelId))', script)
         self.assertIn("setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);", script)
         self.assertIn("setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);", script)
-        self.assertIn("setModeSpecificElementVisibility(els.apiDirectSettingsNotice, visibility.showApiDirectNotice);", script)
+        self.assertNotIn('id="apiDirectSettingsNotice"', html)
         self.assertNotIn("setModeSpecificElementVisibility(els.promptFidelityField, visibility.showPromptFidelity);", script)
         self.assertIn("state.pendingAuthSource = null;", auth_source)
         self.assertIn("renderAuthSource(state.authStatus);", auth_source)
@@ -1429,7 +1432,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertNotIn("function supportsGptPromptProcessing", script)
         self.assertNotIn('const value = els.promptFidelity?.value || "off";', script)
         self.assertIn("updateModeSpecificSettings();", script)
-        self.assertRegex(styles, r"\.api-direct-settings-notice\s*\{[^}]*min-height:\s*0\b")
+        self.assertNotIn(".api-direct-settings-notice", styles)
         self.assertNotIn(".api-direct-settings-grid", styles)
         self.assertNotIn('id="apiDirectSettingsButton"', html)
         self.assertIn('id="generationProviderSettingsButton"', html)

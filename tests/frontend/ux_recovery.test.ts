@@ -53,11 +53,86 @@ test("size corrections satisfy provider limits without silently changing the sou
   assert.deepEqual(suggestLegalSize(1024,1024), {width:1024,height:1024});
   const square = suggestLegalSize(16,16); assert.equal(square.width, square.height);
 });
+
+test("editing a failed task restores inputs, unlocks parameters and preserves the prior draft", async () => {
+  const previous = { window: globalThis.window, document: globalThis.document };
+  let prompt = "Unsaved draft";
+  let locked = true;
+  let editorShown = false;
+  let adopted: any = null;
+  let outputParams: any = null;
+  const task = {
+    task_id: "failed-task", status: "partial_failed", mode: "edit", prompt: "Failed task prompt",
+    local_input_files: [{ kind: "asset", id: "reference", name: "Reference" }],
+    reference_files: [{ id: "document", filename: "notes.txt", family: "text" }],
+    outputs: [{ index: 2, status: "completed", url: "/synthetic-output.png" }],
+  };
+  const originalTask = structuredClone(task);
+  const state: any = { tasks: [task], images: [], referenceFiles: [], taskInputRestoreSeq: 0, mode: "generate" };
+  const methods: any = {
+    closePromptPopover() {}, markTaskViewed() {}, updateTaskSelectionVisuals() {}, renderPreview() {},
+    renderReferenceFiles() {}, renderImageStrip() {}, updateRequestPreview() {}, revokeUploadPreviewUrls() {},
+    isOutputSettingsLocked: () => locked, showTaskOutputSettings() {}, clearTaskParameterInspection() {},
+    getPromptText: () => prompt, setPromptText: (value: string) => { prompt = value; },
+    setMode: (value: string) => { state.mode = value; },
+    applyTaskToForm: (value: any) => { prompt = value.prompt; state.mode = value.mode; },
+    taskRequestPreviewPayload: () => null, setStatus() {},
+    unlockOutputSettings: () => { locked = false; },
+    adoptTaskParameters: (value: any) => { assert.equal(locked, false); adopted = value; },
+    applyTaskOutputParams: (value: any) => { assert.equal(adopted, value); outputParams = value; },
+    showGenerationEditor: () => { editorShown = true; },
+  };
+  (globalThis as any).window = { __codexImageWebUI: { state, methods, els: {} } };
+  (globalThis as any).document = { getElementById: () => null };
+  try {
+    const { initTaskSelectionFeature } = await import("../../codex_image/webui/frontend/src/task-selection");
+    const { restoreComposerDraft } = await import("../../codex_image/webui/frontend/src/composer-draft");
+    initTaskSelectionFeature();
+    assert.equal(typeof methods.editTaskInputs, "function");
+    await methods.editTaskInputs(task.task_id);
+    assert.equal(prompt, task.prompt);
+    assert.deepEqual(state.images, task.local_input_files);
+    assert.equal(state.referenceFiles[0].id, "document");
+    assert.equal(adopted, task);
+    assert.equal(outputParams, task, "prompt processing and main-model controls also restore after unlocking");
+    assert.equal(editorShown, true);
+    assert.deepEqual(task, originalTask, "editing must retain the task and successful outputs");
+    restoreComposerDraft();
+    assert.equal(prompt, "Unsaved draft");
+  } finally { Object.assign(globalThis, previous); }
+});
 test("credential errors require account repair while transient errors remain retryable", () => {
   for (const error of ['HTTP 401 invalid_api_key','401 Unauthorized','authentication_error','Incorrect API key provided']) assert.equal(taskRecoveryKind({error}), 'credentials');
   assert.equal(taskRecoveryKind({error:'HTTP 503 upstream unavailable'}),'temporary');
   assert.equal(taskRecoveryKind({last_error:'insufficient_quota'}),'quota');
   assert.equal(taskRecoveryKind({error:'unsupported mime type'}),'input');
+  for (const error of ['HTTP 400: {"error":{"message":"fixture invalid parameters"}}', 'invalid_parameters', 'HTTP 422 Unprocessable Entity']) {
+    assert.equal(taskRecoveryKind({error}), 'input');
+  }
+});
+
+test("diagnostic numbers cannot hide retry actions for transient failures", async () => {
+  const previousWindow = globalThis.window;
+  const methods: any = {};
+  (globalThis as any).window = { __codexImageWebUI: { state: {}, els: {}, methods } };
+  try {
+    const { initTaskDerivedFeature } = await import("../../codex_image/webui/frontend/src/task-derived");
+    initTaskDerivedFeature();
+    for (const error of [
+      'HTTP 502 upstream service temporarily unavailable; diagnostics={"latency_ms":400}',
+      'HTTP 503 upstream unavailable; diagnostics={"response_bytes":422}',
+      'HTTP 502 upstream unavailable; diagnostics={"latency_ms":401}',
+      'HTTP 502 upstream unavailable; details mention HTTP 400 invalid_parameters',
+    ]) {
+      const task = { status: "failed", error, total_count: 1, outputs: [{ index: 1, status: "failed", error }] };
+      assert.equal(taskRecoveryKind(task), "temporary", error);
+      assert.equal(methods.canRetryFailedTask(task), true, error);
+    }
+    for (const error of ['HTTP 400 invalid request parameters', 'HTTP status: 422', 'status code=400', 'HTTP 401 Unauthorized']) {
+      const task = { status: "failed", error, total_count: 1, outputs: [{ index: 1, status: "failed", error }] };
+      assert.equal(methods.canRetryFailedTask(task), false, error);
+    }
+  } finally { (globalThis as any).window = previousWindow; }
 });
 
 test("draft restoration preserves prompt chips, files and image blobs across a destructive switch", async () => {

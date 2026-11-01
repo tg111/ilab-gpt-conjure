@@ -131,10 +131,6 @@ function storedSource(item: any): ReferenceFileSource | null {
 }
 
 export function addReferenceFileInput(input: File | ReferenceFileSource | any): boolean {
-  if (!responsesEnabled()) {
-    showResponsesRequirement();
-    return false;
-  }
   const state = getState();
   let source: ReferenceFileSource | null = null;
   if (input instanceof File) {
@@ -152,7 +148,8 @@ export function addReferenceFileInput(input: File | ReferenceFileSource | any): 
   }
   requirementActionVisible = false;
   state.referenceFiles.push(source);
-  renderReferenceFiles();
+  if (!responsesEnabled()) showResponsesRequirement();
+  else renderReferenceFiles();
   legacyMethod("updateRequestPreview");
   return true;
 }
@@ -192,6 +189,7 @@ export function renderReferenceFiles(): void {
   requirementFeedback = null;
   container.replaceChildren();
   const sources = getState().referenceFiles as ReferenceFileSource[];
+  requirementActionVisible = sources.length > 0 && !responsesEnabled();
   if (!sources.length && !requirementActionVisible) {
     container.classList.add("hidden");
     legacyMethod("updateImageStripDensity");
@@ -210,8 +208,34 @@ export function renderReferenceFiles(): void {
       ? translate("referenceFiles.openApiSettings")
       : translate("referenceFiles.switchToResponses");
     action.addEventListener("click", activateResponsesRequirementAction);
-    feedback.append(message, action);
-    els.imageUploaderGrid?.append(feedback);
+    feedback.append(message);
+    const state = getState();
+    const compatible = state.generationCatalog
+      ? (legacyMethod("eligibleProviderBindings", state.generationCatalog, state.selectedModelId, state.mode) || [])
+        .filter((entry: any) => entry.binding.protocol_profile.endsWith("_responses"))
+      : [];
+    if (compatible.length) {
+      const select = document.createElement("select");
+      select.className = "control reference-file-provider";
+      select.setAttribute("aria-label", translate("referenceFiles.chooseResponses"));
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = translate("referenceFiles.chooseResponses");
+      select.append(placeholder);
+      compatible.forEach((entry: any) => {
+        const option = document.createElement("option");
+        option.value = entry.selectionKey;
+        option.textContent = entry.binding.display_name || entry.provider.name;
+        select.append(option);
+      });
+      select.addEventListener("change", () => {
+        if (!select.value) return;
+        legacyMethod("selectGenerationProvider", select.value);
+        syncReferenceFileAvailability();
+      });
+      feedback.append(select);
+    } else feedback.append(action);
+    els.imageUploaderGrid?.after(feedback);
     requirementFeedback = feedback;
   }
   sources.forEach((source, index) => {
@@ -230,7 +254,7 @@ export function renderReferenceFiles(): void {
     remove.className = "thumb-remove reference-file-remove";
     remove.setAttribute("aria-label", formatTranslation("referenceFiles.remove", { filename: source.filename }));
     remove.title = translate("action.remove");
-    remove.innerHTML = '<span class="thumb-remove-icon" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg></span>';
+    remove.innerHTML = '<span class="thumb-remove-icon" aria-hidden="true"><svg data-ui-icon="close" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg></span>';
     remove.addEventListener("click", () => removeReferenceFile(index));
     tile.append(icon, name, remove);
     container.append(tile);
@@ -243,6 +267,19 @@ export function renderReferenceFiles(): void {
 
 export function syncReferenceFileAvailability(): void {
   const supported = responsesEnabled();
+  const binding = legacyMethod("selectedProviderBinding");
+  const showFileHint = Boolean(binding?.protocol_profile?.endsWith("_responses"));
+  const upload = getEls().imageUploadSource as HTMLElement | null;
+  const title = upload?.querySelector<HTMLElement>(".upload-title-full");
+  const titleKey = showFileHint ? "imageInput.uploadFull" : "imageInput.uploadImages";
+  if (title) {
+    title.dataset.i18n = titleKey;
+    title.textContent = translate(titleKey);
+  }
+  const ariaKey = showFileHint ? "imageInput.uploadAria" : "imageInput.uploadImages";
+  upload?.setAttribute("data-i18n-attr", `aria-label:${ariaKey}`);
+  upload?.setAttribute("aria-label", translate(ariaKey));
+  upload?.querySelector(".upload-subtitle")?.classList.toggle("hidden", !showFileHint);
   if (supported && requirementActionVisible) {
     requirementActionVisible = false;
     renderReferenceFiles();
@@ -250,6 +287,8 @@ export function syncReferenceFileAvailability(): void {
     if (status?.textContent === translate("referenceFiles.requiresResponses")) {
       legacyMethod("setStatus", translate("status.waiting"), "");
     }
+  } else if (!supported && getState().referenceFiles.length) {
+    renderReferenceFiles();
   }
 }
 
@@ -262,7 +301,10 @@ export function initReferenceFileInputsFeature(): void {
     if (target?.matches?.("#generationProviderSelect, #apiMode")) syncReferenceFileAvailability();
   });
   els.authSourceGroup?.addEventListener("click", () => queueMicrotask(syncReferenceFileAvailability));
-  document.addEventListener(LOCALE_CHANGE_EVENT, renderReferenceFiles);
+  document.addEventListener(LOCALE_CHANGE_EVENT, () => {
+    renderReferenceFiles();
+    syncReferenceFileAvailability();
+  });
   syncReferenceFileAvailability();
   Object.assign(getLegacyBridge().methods, {
     referenceFileUploads,
