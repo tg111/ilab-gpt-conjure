@@ -32,7 +32,11 @@ test("failed deletion preserves settings, caches and routing; pending deletion e
         writes++;
         const payload = JSON.parse(String(init.body));
         assert.deepEqual(payload.providers.map((p: any) => p.id), ["b"]);
-        assert.deepEqual(payload.default_provider_by_model, { "gpt-image-2": "b" });
+        // Providers without explicit bindings get every GPT Image version bound,
+        // so each version's default moves to the remaining provider.
+        assert.deepEqual(payload.default_provider_by_model, {
+          "gpt-image-2": "b", "gpt-image-2.5-flare": "b", "gpt-image-2.5-sunburst": "b",
+        });
         assert.equal("api_key" in payload.providers[0], false);
         await new Promise<void>(resolve => { release = resolve; });
         if (failure === "offline") throw new TypeError("Synthetic network failure");
