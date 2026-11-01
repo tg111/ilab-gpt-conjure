@@ -1,6 +1,7 @@
 import { getLegacyBridge } from "./state";
 import { selectedProviderBinding } from "./provider-selection";
 import { updateTransparencyControls } from "./background-controls";
+import { closeMainModelCombobox } from "./main-model-combobox";
 import { resolveModeSettingsVisibility, type ModeSettingsVisibility } from "./mode-settings-visibility";
 
 const bridge = getLegacyBridge();
@@ -31,12 +32,13 @@ export function setModeSpecificElementVisibility(element: any, visible: any): vo
 }
 
 function applyModeSettingsVisibility(visibility: ModeSettingsVisibility): void {
-  const showModeSettings = visibility.showMainModel
-    || visibility.showApiDirectNotice;
+  // Prompt processing is disabled, so only the main model uses this slot.
+  const showModeSettings = visibility.showMainModel;
+  els.modeSpecificSettings?.classList.toggle("without-main-model", !visibility.showMainModel);
+  if (!visibility.showMainModel) closeMainModelCombobox();
   setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);
   setModeSpecificElementVisibility(els.modeSpecificSettings, showModeSettings);
   setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);
-  setModeSpecificElementVisibility(els.apiDirectSettingsNotice, visibility.showApiDirectNotice);
 }
 
 function updateWebSearchAvailability(authSource: any = currentAuthSource()): void {

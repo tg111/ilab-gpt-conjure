@@ -196,7 +196,6 @@ const bridgeMethods: LegacyMethods = {
   addImages: proxy("addImages"),
   clearImages: proxy("clearImages"),
   updateImageStripDensity: proxy("updateImageStripDensity"),
-  updatePixelPreview: proxy("updatePixelPreview"),
   updatePreviewElapsedDisplay,
   updatePromptCount,
   updateQuantity: proxy("updateQuantity"),

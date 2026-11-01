@@ -1,3 +1,5 @@
+import { imageMentionLabel, refreshImageMentionChips } from "./prompt-image-mentions";
+import { preserveComposerDraft } from "./composer-draft";
 import { getEls } from "./dom";
 import { getLegacyBridge, getState } from "./state";
 import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
@@ -15,6 +17,7 @@ function addImages(event: any) {
 }
 
 function clearImages() {
+  preserveComposerDraft(true);
   const state = getState();
   legacyMethod("revokeUploadPreviewUrls", state.images);
   state.images = [];
@@ -29,7 +32,7 @@ function createThumbAddIcon() {
   const icon = document.createElement("span");
   icon.className = "thumb-add-icon";
   icon.setAttribute("aria-hidden", "true");
-  icon.innerHTML = '<svg viewBox="0 0 16 16" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-linecap="round"/></svg>';
+  icon.innerHTML = '<svg data-ui-icon="plus" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#plus"/></svg>';
   return icon;
 }
 
@@ -37,7 +40,7 @@ function createThumbRemoveIcon() {
   const icon = document.createElement("span");
   icon.className = "thumb-remove-icon";
   icon.setAttribute("aria-hidden", "true");
-  icon.innerHTML = '<svg viewBox="0 0 16 16" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"/></svg>';
+  icon.innerHTML = '<svg data-ui-icon="close" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg>';
   return icon;
 }
 
@@ -90,6 +93,7 @@ function handleImageStripWheel(event: WheelEvent) {
 }
 
 function renderImageStrip() {
+  refreshImageMentionChips();
   const state = getState();
   const els = getEls();
   const hasImages = Boolean(state.images.length);
@@ -160,6 +164,7 @@ function renderImageStrip() {
       : source.kind === "asset"
         ? translate("imageInput.recentBadge")
         : translate("imageInput.uploadBadge");
+    if (source.kind !== "gallery") badge.textContent = imageMentionLabel(source);
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "thumb-remove";
@@ -168,6 +173,7 @@ function renderImageStrip() {
     remove.append(createThumbRemoveIcon());
     remove.addEventListener("click", (event) => {
       event.stopPropagation();
+      preserveComposerDraft(true);
       const removedSource = state.images[index];
       legacyMethod("revokeUploadPreviewUrl", removedSource, { ignoredCurrentSources: new Set([removedSource]) });
       state.images.splice(index, 1);

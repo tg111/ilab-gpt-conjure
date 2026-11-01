@@ -83,7 +83,7 @@ from .thumbnails import (
 
 
 TASK_SOURCE_DATA_SUBDIR = "tasks"
-TASK_SOURCE_DATA_SUFFIXES = ("metadata.json", "request.json", "debug-sse.jsonl")
+TASK_SOURCE_DATA_SUFFIXES = ("metadata.json", "request.json", "debug-sse.jsonl", "provider-responses.json")
 DIMENSION_SIZE_RE = re.compile(r"^\s*(\d{1,5})\s*[xX×]\s*(\d{1,5})\s*$")
 
 
@@ -199,6 +199,7 @@ class TaskStorage:
         self._history_organization_lock = threading.RLock()
         self._task_index_repair_lock = threading.Lock()
         self._task_write_locks = tuple(threading.RLock() for _ in range(64))
+        self._reference_asset_index_untrusted = False
 
     def create_task(self, mode: str) -> CreatedTask:
         task_id = datetime.now(UTC).strftime("%Y%m%d%H%M%S") + "-" + uuid.uuid4().hex[:8]
@@ -209,17 +210,31 @@ class TaskStorage:
         task_source_dir.mkdir(parents=True, exist_ok=True)
         return CreatedTask(task_id=task_id, path=task_source_dir, mode=mode)
 
-    def write_metadata(self, task_id: str, metadata: dict[str, Any]) -> Path:
+    def write_metadata(
+        self, task_id: str, metadata: dict[str, Any], *, reset_cancellation: bool = False,
+    ) -> Path:
         path = self.metadata_path(task_id)
         with self._task_write_lock(task_id):
-            _preserve_sticky_task_cancellation(path, metadata)
+            if reset_cancellation:
+                # Explicit recovery after execution stops may clear cancellation;
+                # ordinary progress writes keep it sticky.
+                for key in ("cancel_requested", "cancel_requested_at", "cancelled_at"):
+                    metadata.pop(key, None)
+            else:
+                _preserve_sticky_task_cancellation(path, metadata)
             _stabilize_task_terminal_timestamp(path, metadata)
-            atomic_write_text(
-                path,
-                json.dumps(metadata, indent=2, ensure_ascii=False),
-                mode=0o600,
-            )
-            self.task_index.upsert(metadata)
+            try:
+                atomic_write_text(
+                    path,
+                    json.dumps(metadata, indent=2, ensure_ascii=False),
+                    mode=0o600,
+                )
+                self.task_index.upsert(metadata)
+            except Exception:
+                # A failed write can leave durable metadata absent from the index,
+                # including an atomic replace followed by a failed directory fsync.
+                self._reference_asset_index_untrusted = True
+                raise
         return path
 
     def read_metadata(self, task_id: str) -> dict[str, Any]:
@@ -694,6 +709,11 @@ class TaskStorage:
         return self.rebuild_task_index()
 
     def reference_asset_reference_counts(self) -> dict[str, int]:
+        if self._reference_asset_index_untrusted:
+            # Stay on authoritative disk records for this storage instance. Startup
+            # recovery reconciles missing index entries before accepting requests.
+            # An unreadable record raises, so callers cannot prune uncertain inputs.
+            return self.resource_reference_counts("reference_asset")
         counts: dict[str, int] = {}
         for task in self.task_index.list_summaries():
             raw_references = task.get("reference_assets")
@@ -848,6 +868,10 @@ class TaskStorage:
     def task_history_summary(self) -> dict[str, Any]:
         self.refresh_stale_task_index()
         return self.history_query.summary()
+
+    def task_history_summaries(self, task_ids: list[str]) -> list[dict[str, Any]]:
+        self.refresh_stale_task_index()
+        return self.history_query.summaries_for_task_ids(task_ids)
 
     def query_task_history(
         self,

@@ -104,6 +104,72 @@ def _plan(*, profile: str, codec: str, base_url: str, operation: str = "generate
 
 
 class GeminiImageCodecTests(unittest.TestCase):
+    def test_nano_banana_21_routes_generation_and_edits_with_model_specific_limits(self) -> None:
+        from codex_image.generation.snapshot import generation_snapshot
+        from codex_image.webui.generation_request import preview_generation_command
+
+        for profile, codec in (
+            ("gemini_generate_content", "gemini_generate_content_image"),
+            ("gemini_generate_content", "gemini_generate_content_image_config"),
+            ("openai_images", "gemini_openai_images"),
+        ):
+            for operation in ("generate", "edit"):
+                for remote_id in ("gemini-nano-banana-2.1", "vendor/custom-nano-21"):
+                    with self.subTest(codec=codec, operation=operation, remote_id=remote_id):
+                        binding = replace(
+                            _binding(profile=profile, codec=codec),
+                            canonical_model_id="nano-banana-2.1",
+                            remote_model_id=remote_id,
+                        )
+                        provider = _provider(binding, base_url="https://relay.example/v1beta")
+                        command = GenerationCommand(
+                            operation=operation,
+                            canonical_model_id="nano-banana-2.1",
+                            provider_id=provider.id,
+                            prompt="draw a rabbit",
+                            parameters={
+                                "canvas.aspect_ratio": "8:1",
+                                "canvas.resolution": "4K",
+                                "gemini.google_search": True,
+                            },
+                            image_inputs=_command().image_inputs * 14 if operation == "edit" else (),
+                        )
+
+                        def preview(value):
+                            return preview_generation_command(
+                                value, codex_mode="images", provider_connections=[provider],
+                            )
+
+                        plan = preview(command)
+                        request = plan.protocol_request
+                        if profile == "gemini_generate_content":
+                            self.assertEqual(
+                                request.path,
+                                f"/models/{remote_id.replace('/', '%2F')}:generateContent",
+                            )
+                            config = request.json_body["generationConfig"]
+                            image = config.get("imageConfig") or config["responseFormat"]["image"]
+                            self.assertEqual(
+                                len(request.json_body["contents"][0]["parts"]),
+                                15 if operation == "edit" else 1,
+                            )
+                        else:
+                            body = request.form_fields if operation == "edit" else request.json_body
+                            self.assertEqual(body["model"], remote_id)
+                            config = body["generation_config"]
+                            if isinstance(config, str):
+                                config = json.loads(config)
+                            image = config["responseFormat"]["image"]
+                            self.assertEqual(len(request.files), 14 if operation == "edit" else 0)
+                        self.assertEqual(image, {"aspectRatio": "8:1", "imageSize": "4K"})
+                        snapshot = generation_snapshot(plan)
+                        self.assertEqual(snapshot["canonical_model_id"], "nano-banana-2.1")
+                        self.assertEqual(snapshot["remote_model_id"], remote_id)
+                        with self.assertRaisesRegex(ValueError, "canvas.resolution"):
+                            preview(replace(command, parameters={"canvas.resolution": "512"}))
+                        with self.assertRaisesRegex(ValueError, "image_input_limit_exceeded"):
+                            preview(replace(command, image_inputs=_command().image_inputs * 15))
+
     def test_native_codec_encodes_both_four_category_safety_presets(self) -> None:
         from codex_image.providers.codecs.gemini_image import GeminiGenerateContentImageCodec
 
@@ -428,7 +494,8 @@ class GeminiGenerateContentAdapterTests(unittest.TestCase):
         with self.assertRaises(GenerationProviderError) as raised:
             self._execute(body=body)
 
-        self.assertEqual(raised.exception.detail.code, "upstream_error")
+        self.assertEqual(raised.exception.detail.code, "asset_download_failed")
+        self.assertFalse(raised.exception.detail.retryable)
 
     def test_image_config_relay_can_return_an_unauthenticated_file_url(self) -> None:
         from codex_image.providers.gemini import GeminiGenerateContentAdapter
@@ -490,7 +557,7 @@ class GeminiGenerateContentAdapterTests(unittest.TestCase):
             (403, "authentication_failed", False),
             (422, "invalid_parameters", False),
             (429, "rate_limited", True),
-            (500, "upstream_error", True),
+            (500, "upstream_error", False),
         )
         for status, code, retryable in cases:
             with self.subTest(status=status):
@@ -690,6 +757,53 @@ class GeminiRegistrationTests(unittest.TestCase):
 
 
 class GeminiExecutionPlanClientTests(unittest.TestCase):
+    def test_batch_timeout_and_cancellation_drain_the_single_inflight_request(self) -> None:
+        import asyncio
+        import threading
+        from codex_image.providers.codecs.gemini_image import GeminiGenerateContentImageCodec
+        from codex_image.providers.registry import ProviderRegistry
+        from codex_image.webui.execution_plan_client import ExecutionPlanImageClient
+        from codex_image.webui.executor_transport import _call_image_client
+
+        for cancel in (False, True):
+            with self.subTest(cancel=cancel):
+                entered, release = threading.Event(), threading.Event()
+                calls = []
+
+                class BlockingProtocol:
+                    def execute(self, plan):
+                        calls.append(plan)
+                        entered.set()
+                        if not release.wait(5):
+                            raise RuntimeError("batch drain barrier timed out")
+                        return GenerationResult(assets=(GeneratedAsset(b"one", "image/png"), GeneratedAsset(b"two", "image/png")), usage={})
+
+                registry = ProviderRegistry(protocols={"gemini_generate_content": BlockingProtocol()},
+                                            codecs={"gemini_generate_content_image": GeminiGenerateContentImageCodec()})
+                client = ExecutionPlanImageClient(_plan(profile="gemini_generate_content", codec="gemini_generate_content_image",
+                                                       base_url="https://relay.example/v1beta"), object(), registry=registry)
+
+                async def run():
+                    requests = [asyncio.create_task(client.call_output(lambda: _call_image_client(
+                        None, {}, client.generate_image, timeout_seconds=None if cancel else 0.01,
+                    ))) for _ in range(2)]
+                    try:
+                        self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+                        if cancel:
+                            for request in requests:
+                                request.cancel()
+                        await asyncio.sleep(0.03)
+                        self.assertFalse(requests[0].done(), "provider work must drain before releasing the caller")
+                        self.assertEqual(len(calls), 1)
+                    finally:
+                        release.set()
+                    results = await asyncio.wait_for(asyncio.gather(*requests, return_exceptions=True), 2)
+                    for result in results:
+                        self.assertIsInstance(result, asyncio.CancelledError if cancel else TimeoutError)
+                    self.assertEqual(len(calls), 1)
+
+                asyncio.run(run())
+
     def test_batch_assets_are_distributed_without_duplicate_upstream_request(self) -> None:
         from codex_image.providers.codecs.gemini_image import GeminiGenerateContentImageCodec
         from codex_image.providers.registry import ProviderRegistry

@@ -10,11 +10,13 @@ import type { createHistorySelectionModel } from "./history-selection-model";
 import { formatTranslation, translate } from "./i18n";
 import { localizedTaskStatus, taskRecoveryMessage } from "./task-recovery";
 import { submittedPromptForTask } from "./transparency-status";
+import { taskUpdateIsOlder } from "./state-sync";
+import type { WebUITask } from "./types";
 
 export function createHistoryDetailController(deps: {
   selection: ReturnType<typeof createHistorySelectionModel>;
   filters: Pick<ReturnType<typeof createHistoryFiltersController>, "updateHistoryUrl">;
-  list: Pick<ReturnType<typeof createHistoryListController>, "loadTasks" | "status">;
+  list: Pick<ReturnType<typeof createHistoryListController>, "loadTasks" | "status" | "historyTaskSummary">;
   confirmations(): { deleteConfirming: boolean; deleteConfirmTaskId: string; deleteUnselectedConfirmTaskId: string };
   resetTaskConfirmations(): void;
   renderToolbar(): void;
@@ -73,14 +75,48 @@ export function createHistoryDetailController(deps: {
     }
   }
 
-  async function fetchHistoryTaskDetail(taskId: string): Promise<any> {
-    const response = await fetch(`/api/tasks/${encodeURIComponent(taskId)}`);
+  async function fetchHistoryTaskDetail(taskId: string, { signal }: { signal?: AbortSignal | undefined } = {}): Promise<any> {
+    const response = await fetch(`/api/tasks/${encodeURIComponent(taskId)}`, { signal: signal ?? null });
     const data = await response.json().catch(() => ({}));
+    signal?.throwIfAborted();
     if (!response.ok) throw new Error(data.detail || translate("history.detailFailed"));
     return {
       ...(data.task || {}),
       ...(data.organization || {}),
     };
+  }
+
+  async function refreshTaskDetail({ task, signal }: { task?: WebUITask | null | undefined; signal?: AbortSignal | undefined } = {}): Promise<void> {
+    const previous = detailTask;
+    const taskId = String(previous?.task_id || "");
+    if (!taskId || !isCurrentHistoryDetailLoad(historyDetailLoadToken, taskId)) return;
+    if (task && String(task.task_id) !== taskId) return;
+    const summary = task || deps.list.historyTaskSummary(taskId);
+    if (!summary || taskUpdateIsOlder(previous, summary)) return;
+    if (!task && summary.updated_at && summary.updated_at === previous.updated_at && summary.status === previous.status) return;
+    const token = ++historyDetailLoadToken;
+    try {
+      const incoming = task && !task.summary_only ? task : await fetchHistoryTaskDetail(taskId, { signal });
+      signal?.throwIfAborted();
+      if (!isCurrentHistoryDetailLoad(token, taskId) || detailTask !== previous || taskUpdateIsOlder(previous, incoming)) return;
+      const current = { ...incoming, favorite: incoming.favorite ?? previous.favorite, tags: incoming.tags ?? previous.tags };
+      if (JSON.stringify(current) !== JSON.stringify(previous)) {
+        const active = document.activeElement;
+        const focused = active && els.detail?.contains(active) ? active : null;
+        const identity = focused ? [...focused.attributes].filter(attr => attr.name === "id" || attr.name.startsWith("data-history-")) : [];
+        renderTaskDetail(current);
+        if (identity.length) {
+          [...els.detail?.querySelectorAll<HTMLElement>("button, input, a, [tabindex]") || []]
+            .find(element => element.tagName === focused?.tagName && identity.every(attr => element.getAttribute(attr.name) === attr.value))
+            ?.focus({ preventScroll: true });
+        }
+      }
+    } catch (error) {
+      if (signal?.aborted) throw error;
+      if (isCurrentHistoryDetailLoad(token, taskId) && detailTask === previous) {
+        setText(els.resultSummary, errorMessage(error, translate("history.detailFailed")));
+      }
+    }
   }
 
   function isCurrentHistoryDetailLoad(loadToken: number, taskId: string): boolean {
@@ -225,6 +261,7 @@ export function createHistoryDetailController(deps: {
     const canZip = urls.length > 1;
     const singleDownloadHref = urls.length === 1 ? String(urls[0]?.url || "") : "";
     const hasSelectedOutputs = selectedCount > 0;
+    const selectedDownloadHref = urls.length > 1 && selectedCount === 1 ? urls.find(record => record.selected)?.url : "";
     const canDeleteUnselected = selectedCount > 0 && selectedCount < urls.length;
     const confirmingDeleteUnselected = deps.confirmations().deleteUnselectedConfirmTaskId === taskId;
     const archived = historyTaskArchived(task);
@@ -280,6 +317,8 @@ export function createHistoryDetailController(deps: {
         <button class="ghost-button text-sm" type="button" data-history-reuse-task="${escapeHtml(taskId)}">${escapeHtml(translate("history.reuseTask"))}</button>
         ${selectedCount > 1
         ? `<a class="ghost-button text-sm" href="${escapeHtml(zipHref)}?selected=1" download>${escapeHtml(translate("history.downloadSelected"))}</a>`
+        : selectedDownloadHref
+          ? `<a class="ghost-button text-sm" href="${escapeHtml(selectedDownloadHref)}" download>${escapeHtml(translate("history.downloadSelected"))}</a>`
         : canZip
           ? `<a class="ghost-button text-sm" href="${escapeHtml(zipHref)}" download>${escapeHtml(translate("history.downloadAll"))}</a>`
           : singleDownloadHref
@@ -289,9 +328,9 @@ export function createHistoryDetailController(deps: {
       <div class="history-detail-actions-management">
         <button class="ghost-button text-sm" type="button" data-history-open-export="${escapeHtml(taskId)}">${escapeHtml(translate("history.export"))}</button>
         <button class="ghost-button text-sm" type="button" data-history-archive-task="${escapeHtml(taskId)}" data-history-archive-value="${archived ? "false" : "true"}">${escapeHtml(archived ? translate("archive.restore") : translate("action.archive"))}</button>
-        ${hasSelectedOutputs
-        ? `<button class="ghost-button text-sm danger-button" type="button" ${canDeleteUnselected && !deleteBlocked ? `data-history-delete-unselected="${escapeHtml(taskId)}"` : "disabled"}>${escapeHtml(confirmingDeleteUnselected ? translate("history.confirmDeleteUnselected") : translate("history.deleteUnselected"))}</button>`
-        : `<button class="ghost-button text-sm danger-button" type="button" data-history-delete-task="${escapeHtml(taskId)}" ${deleteBlocked ? "disabled" : ""}>${escapeHtml(confirmingDeleteTask ? translate("history.confirmDelete") : translate("action.delete"))}</button>`}
+        ${hasSelectedOutputs && canDeleteUnselected
+        ? `<button class="ghost-button text-sm danger-button" type="button" data-history-delete-unselected="${escapeHtml(taskId)}" ${deleteBlocked ? "disabled" : ""}>${escapeHtml(confirmingDeleteUnselected ? translate("history.confirmDeleteUnselected") : translate("history.deleteUnselected"))}</button>` : ""}
+        <button class="ghost-button text-sm danger-button" type="button" data-history-delete-task="${escapeHtml(taskId)}" ${deleteBlocked ? "disabled" : ""}>${escapeHtml(confirmingDeleteTask ? translate("history.confirmDelete") : translate("taskContext.delete"))}</button>
       </div>
     </div>
     ${["failed", "partial_failed"].includes(task.status) ? `<div class="history-recovery"><p>${escapeHtml(taskRecoveryMessage(task))}</p><details><summary>${escapeHtml(translate("ux.errorDetails"))}</summary><p>${escapeHtml(String(task.error || task.last_error || ""))}</p></details><button type="button" class="ghost-button text-sm" data-history-reuse-task="${escapeHtml(taskId)}">${escapeHtml(translate("ux.openRecovery"))}</button></div>` : ""}
@@ -473,6 +512,7 @@ export function createHistoryDetailController(deps: {
   return {
     loadTaskDetail,
     fetchHistoryTaskDetail,
+    refreshTaskDetail,
     renderHistoryManagementDetail,
     renderSelectionDetail,
     syncHistorySelectionDetail,

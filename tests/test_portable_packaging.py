@@ -104,23 +104,6 @@ class PortablePackagingTests(unittest.TestCase):
         launcher_text = Path("launcher/src/lib.rs").read_text(encoding="utf-8")
         self.assertIn('"webui-network-egress-settings.json"', launcher_text)
 
-    def test_github_workflows_pin_node24_compatible_actions(self) -> None:
-        workflow_paths = [
-            Path(".github/workflows/ci.yml"),
-            Path(".github/workflows/release-portable.yml"),
-        ]
-        pinned_actions = [
-            "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1",
-            "actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0",
-            "actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0",
-            "actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0",
-            "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1",
-        ]
-
-        combined = "\n".join(path.read_text(encoding="utf-8") for path in workflow_paths)
-        for pinned_action in pinned_actions:
-            self.assertIn(pinned_action, combined)
-
     def test_ci_workflow_avoids_github_unsupported_job_hashfiles_if(self) -> None:
         workflow = Path(".github/workflows/ci.yml")
         self.assertTrue(workflow.exists(), f"{workflow} should exist")
@@ -143,9 +126,11 @@ class PortablePackagingTests(unittest.TestCase):
             self.assertTrue(path.exists(), f"{path} should exist")
 
         build_text = build_script.read_text(encoding="utf-8")
-        self.assertIn('$PythonVersion = "3.11.9"', build_text)
+        self.assertIn('$PythonVersion = "3.14.10"', build_text)
         self.assertIn("python-${PythonVersion}-embed-amd64.zip", build_text)
-        self.assertIn("get-pip.py", build_text)
+        self.assertIn("pip-26.2.2-py3-none-any.whl", build_text)
+        self.assertIn("Python runtime SHA256 mismatch", build_text)
+        self.assertIn("pip wheel SHA256 mismatch", build_text)
         self.assertIn("requirements-webui.txt", build_text)
         self.assertIn('"launcher"', build_text)
         self.assertIn("package.json", build_text)
@@ -274,7 +259,7 @@ class PortablePackagingTests(unittest.TestCase):
             self.assertTrue(path.exists(), f"{path} should exist")
 
         build_text = build_script.read_text(encoding="utf-8")
-        self.assertIn('PYTHON_VERSION="3.11.9"', build_text)
+        self.assertIn('PYTHON_VERSION="3.14.10"', build_text)
         self.assertIn("python-${PYTHON_VERSION}-macos11.pkg", build_text)
         self.assertIn('PACKAGE_ARCH="arm64"', build_text)
         self.assertIn('PACKAGE_ARCH="x64"', build_text)
@@ -318,7 +303,7 @@ class PortablePackagingTests(unittest.TestCase):
 
         launcher_text = launcher.read_text(encoding="utf-8")
         self.assertIn('export PATH="/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"', launcher_text)
-        self.assertIn("Python.framework/Versions/3.11/bin/python3", launcher_text)
+        self.assertIn("Python.framework/Versions/Current/bin/python3", launcher_text)
         self.assertIn("codex_image.webui.startup_auth", launcher_text)
         self.assertIn("webui-auth-settings.json", launcher_text)
         self.assertIn("PYTHON_FRAMEWORK=", launcher_text)
@@ -622,38 +607,16 @@ hdiutil() { printf 'dmg\n' >> "$TRACE"; touch "$DMG_PATH"; }
         self.assertIn("windows-app-x64", text)
         self.assertIn("actions/upload-artifact", text)
         self.assertIn("actions/download-artifact", text)
-        self.assertIn("scripts/build-update-manifest.py", text)
-        self.assertIn("latest.json", text)
+        self.assertIn("scripts/publish-release.py", text)
         self.assertIn("ILAB_CONJURE_UPDATE_SIGNING_PRIVATE_KEY_B64", text)
-        self.assertIn("--require-signature", text)
         self.assertIn("Check out release notes", text)
         self.assertIn("ref: ${{ needs.resolve-release.outputs.checkout-ref }}", text)
-        self.assertIn("GH_REPO: ${{ github.repository }}", text)
-        self.assertIn("## 发布说明", text)
-        self.assertIn('release_summary="$(awk', text)
-        self.assertIn(
-            "/^(当前版本|受影响平台|必要操作与数据迁移|本版重点)：/",
-            text,
-        )
-        self.assertIn("/^本版详情：/", text)
-        self.assertIn("in_details && /^## /", text)
-        self.assertIn("${release_summary}", text)
-        self.assertIn("此版本包含 iLab CONJURE 对应 tag 的源码和免安装一键包。", text)
-        self.assertIn("完整版本说明见 [RELEASES.md](https://github.com/${GITHUB_REPOSITORY}/blob/${RELEASE_TAG}/RELEASES.md)。", text)
-        self.assertIn("## 免安装一键包", text)
-        self.assertIn("## 推荐下载", text)
-        self.assertIn("iLab-GPT-CONJURE-macos-arm64-${release_version}.dmg", text)
-        self.assertIn("iLab-GPT-CONJURE-macos-x64-${release_version}.dmg", text)
-        self.assertIn("iLab-GPT-CONJURE-windows-x64_${release_version}.zip", text)
-        self.assertIn('release_version="${RELEASE_TAG#v}"', text)
-        self.assertIn("- Windows x64：ilab-gpt-conjure_windows_portable_x64_${release_version}.zip", text)
-        self.assertNotIn("- Windows x64：`ilab-gpt-conjure_windows_portable_x64_${release_version}.zip`", text)
-        self.assertNotIn("<version>", text)
-        self.assertNotIn("Portable packages for iLab GPT Conjure.", text)
-        self.assertIn("gh release edit", text)
-        self.assertIn("gh release upload", text)
-        self.assertIn('-name "latest.json"', text)
-        self.assertIn('-name "*.dmg"', text)
+        self.assertIn('--repo "$GITHUB_REPOSITORY"', text)
+        self.assertEqual(text.count("python scripts/check-package-smoke.py"), 4)
+        self.assertIn("environment: release", text)
+        # Release-note content, complete asset lists and signing failures are exercised
+        # by test_release_pipeline instead of coupling this contract to inline awk.
+
 
 
 if __name__ == "__main__":

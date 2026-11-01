@@ -65,7 +65,6 @@ export function swapCustomSizeDimensions(event?: any): void {
   els.customHeight.value = width;
   if (typeof swapCustomRatioDigits === "function") swapCustomRatioDigits();
   updateCustomSize();
-  updatePixelPreview("custom");
   updateRequestPreview();
   saveCurrentModelParameterDraft();
 }
@@ -228,7 +227,6 @@ export function applyCustomAspectRatioDigits(widthRatio: any, heightRatio: any):
     }
   }
   updateCustomSize();
-  updatePixelPreview("custom");
   updateRequestPreview();
 }
 
@@ -284,7 +282,6 @@ export function updateSizeFromPreset(event: any = null): void {
     if (typeof setCustomAspectRatioFromManualInputs === "function") setCustomAspectRatioFromManualInputs();
     if (typeof applyCustomAspectRatioFromWidth === "function") applyCustomAspectRatioFromWidth();
     updateCustomSize();
-    updatePixelPreview("custom");
     updateRequestPreview();
     return;
   }
@@ -293,7 +290,6 @@ export function updateSizeFromPreset(event: any = null): void {
     ? sizeForPreset(els.resolution?.value, els.ratio?.value)
     : "auto";
   els.size.value = size;
-  updatePixelPreview(size);
   updateCustomSize();
   updateRequestPreview();
 }
@@ -384,28 +380,7 @@ export function setSizeControlValue(select: any, value: any): boolean {
   return true;
 }
 
-export function updatePixelPreview(size: any): void {
-  if (!els.pixelPreview) return;
-  if (size === "auto") {
-    els.pixelPreview.textContent = formatTranslation("output.pixelPreviewAuto");
-    return;
-  }
-  if (size === "custom") {
-    const message = customSizeValidationMessage();
-    if (message) {
-      els.pixelPreview.textContent = formatTranslation("output.pixelPreviewValue", { value: message });
-      return;
-    }
-    els.pixelPreview.textContent = formatTranslation("output.pixelPreviewValue", {
-      value: `${customDimensionValue(els.customWidth)} x ${customDimensionValue(els.customHeight)} px`,
-    });
-    return;
-  }
-  const [width, height] = String(size).split("x");
-  els.pixelPreview.textContent = formatTranslation("output.pixelPreviewValue", { value: `${width} x ${height} px` });
-}
-
-document.addEventListener(LOCALE_CHANGE_EVENT, () => updatePixelPreview(els.size?.value || ""));
+document.addEventListener(LOCALE_CHANGE_EVENT, updateCustomSize);
 
 export function syncSizeControlsFromSize(size: any): void {
   if (!size || size === "auto") {
@@ -436,7 +411,6 @@ export function syncSizeControlsFromSize(size: any): void {
     els.size.value = "custom";
     els.customWidth.value = width;
     els.customHeight.value = height;
-    updatePixelPreview("custom");
     updateCustomSize();
     updateRequestPreview();
   }
@@ -477,7 +451,7 @@ export function updateCustomSize(): void {
       suggestion.textContent = formatTranslation("ux.useSize", next);
       suggestion.onclick = () => {
         els.customWidth.value = String(next.width); els.customHeight.value = String(next.height);
-        updateCustomSize(); updatePixelPreview("custom"); updateRequestPreview(); saveCurrentModelParameterDraft();
+        updateCustomSize(); updateRequestPreview(); saveCurrentModelParameterDraft();
       };
     }
   }

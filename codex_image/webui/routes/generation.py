@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -13,6 +15,8 @@ from codex_image.generation.service import redacted_protocol_request
 from codex_image.client_types import ResponsesInputFile
 from codex_image.generation.types import ImageInput
 from codex_image.webui.context import WebUIContext
+from codex_image.webui.gallery_prompt import resolve_gallery_prompt
+from codex_image.webui.prompt_image_mentions import resolve_prompt_image_mentions
 from codex_image.webui.generation_request import (
     generation_command_from_form,
     parse_parameters_json,
@@ -44,7 +48,6 @@ from codex_image.webui.executor_inputs import (
     _resolve_reference_files,
 )
 from codex_image.webui.prompt_ratio import (
-    normalize_prompt_ratio,
     orientation_from_ratio,
     ratio_from_size,
 )
@@ -60,6 +63,10 @@ from codex_image.webui.reference_files import (
     reference_file_task_record,
     resolve_reference_file_ids,
     validate_reference_file_total,
+)
+from codex_image.webui.reference_image_order import (
+    normalize_reference_image_order,
+    ordered_reference_data_urls,
 )
 from codex_image.webui.storage import utc_now
 from codex_image.webui.task_metadata import _dedupe_preserve_order, _params, _with_file_urls, _write_queued_metadata
@@ -254,6 +261,7 @@ def _prepare_generation_submission(
     image_data_urls: list[str],
     mask_data_url: str | None,
     reference_file_inputs: list[ResponsesInputFile],
+    resolved_original_prompt: str | None = None,
 ) -> PreparedGenerationSubmission:
     h = ctx.route_helpers
     compression = _normalize_compression(output_format, output_compression)
@@ -286,9 +294,13 @@ def _prepare_generation_submission(
     # Prompt processing is disabled: no ratio or guard instructions are added.
     # The model still gets expanded snippets and gallery reference notes, either
     # from the WebUI composer or by expanding snippets for direct API callers.
-    model_prompt = str(
-        prompt_for_model or h["model_prompt_for_fidelity"](prompt, None, "original") or ""
-    )
+    # The routes default a missing prompt_for_model to the prompt itself, so an
+    # unchanged prompt means no composed version was sent.
+    original_prompt = resolved_original_prompt if resolved_original_prompt is not None else prompt
+    composed_prompt = str(prompt_for_model or "")
+    if not composed_prompt or composed_prompt in {prompt, original_prompt}:
+        composed_prompt = h["model_prompt_for_fidelity"](original_prompt, None, "original")
+    model_prompt = str(composed_prompt or "")
     request_model_prompt = model_prompt
     request_instructions = None
     prompt_constraints: list[str] = []
@@ -409,6 +421,8 @@ def _persist_generation_submission(
     gallery_refs: list[dict[str, Any]],
     reference_assets: list[dict[str, Any]],
     file_references: list[dict[str, Any]],
+    reference_image_order: list[dict[str, str]] | None,
+    prompt_image_mentions: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     h = ctx.route_helpers
     stored_request_payload = h["slim_request_payload"](
@@ -419,6 +433,8 @@ def _persist_generation_submission(
         reference_files=file_references,
         mask_file=mask_file,
     )
+    if reference_image_order is not None:
+        stored_request_payload["webui_image_refs"]["reference_image_order"] = reference_image_order
     stored_request_payload["webui_requested_backend"] = requested_backend
     if effective_api_provider_id is not None:
         stored_request_payload["webui_api_provider_id"] = effective_api_provider_id
@@ -447,6 +463,8 @@ def _persist_generation_submission(
         gallery_refs=gallery_refs,
         reference_assets=reference_assets,
         reference_files=file_references,
+        reference_image_order=reference_image_order,
+        prompt_image_mentions=prompt_image_mentions,
         prompt_constraints=prepared.prompt_constraints,
         requested_backend=requested_backend,
         max_attempts=ctx.queue_manager.max_attempts if ctx.queue_manager is not None else 1,
@@ -488,6 +506,16 @@ def _reject_cached_unsupported_reference_files(
     )
     if key in ctx.responses_file_unsupported_keys:
         raise HTTPException(status_code=400, detail=PROVIDER_REFERENCE_FILES_UNSUPPORTED_DETAIL)
+
+
+@contextmanager
+def _retain_selected_reference_assets(ctx: WebUIContext, asset_ids: list[str]) -> Iterator[None]:
+    with ExitStack() as stack:
+        try:
+            stack.enter_context(ctx.reference_asset_storage.retain_for_submission(_dedupe_preserve_order(asset_ids)))
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="Invalid reference asset id") from exc
+        yield
 
 
 async def _prepare_reference_files(
@@ -586,9 +614,10 @@ def _commit_reference_files(
 
 async def _prepare_raster_uploads(
     uploads: list[UploadFile],
+    *, preserve_positions: bool = False,
 ) -> list[ValidatedRasterImage]:
     try:
-        return await read_validated_raster_uploads(uploads)
+        return await read_validated_raster_uploads(uploads, deduplicate=not preserve_positions)
     except InvalidRasterImage as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
@@ -737,9 +766,12 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         binding_id: str | None = Form(None),
         parameters_json: str | None = Form(None),
         prompt_for_model: str | None = Form(None),
+        gallery_prompt: str | None = Form(None),
+        prompt_image_mentions: str | None = Form(None),
         prompt_fidelity: str = Form(DEFAULT_PROMPT_FIDELITY),
         gallery_image_ids: list[str] | None = Form(None),
         reference_asset_ids: list[str] | None = Form(None),
+        reference_image_order: str | None = Form(None),
         reference_file_ids: list[str] | None = Form(None),
         reference_images: list[UploadFile] | None = File(None),
         reference_files: list[UploadFile] | None = File(None),
@@ -782,102 +814,116 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
             gallery_image_ids or [],
             include_data_urls=False,
         )
-        uploaded_images = await _prepare_raster_uploads(reference_images or [])
-        predicted_uploaded_assets = [
-            _prepared_reference_asset(image)
-            for image in uploaded_images
-        ]
-        selected_assets, _ = _resolve_reference_assets(
-            ctx.reference_asset_storage,
-            reference_asset_ids or [],
-            touch=False,
-            include_data_urls=False,
-        )
-        predicted_assets = h["dedupe_reference_assets"](
-            predicted_uploaded_assets + selected_assets
-        )
-        _validate_task_image_resources(
-            reference_assets=predicted_assets,
-            gallery_refs=gallery_refs,
-        )
-        prepared_reference_files = await _prepare_reference_files(
-            ctx.reference_file_storage,
-            reference_files or [],
-            reference_file_ids or [],
-        )
-        reference_data_urls = _predicted_reference_data_urls(
-            ctx,
-            uploads=uploaded_images,
-            predicted_assets=predicted_assets,
-        )
-        gallery_data_urls = _gallery_data_urls(ctx, gallery_refs)
-        all_reference_data_urls = reference_data_urls + gallery_data_urls
-        prepared_submission = _prepare_generation_submission(
-            ctx,
-            operation="generate",
-            prompt=prompt,
-            prompt_for_model=prompt_for_model,
-            ui_language=ui_language,
-            prompt_fidelity=prompt_fidelity,
-            main_model=main_model,
-            model=model,
-            size=size,
-            resolution=resolution,
-            ratio=ratio,
-            orientation=orientation,
-            quality=quality,
-            background=background,
-            output_format=output_format,
-            input_fidelity=None,
-            moderation=moderation,
-            output_compression=output_compression,
-            n=n,
-            web_search=web_search,
-            auth_source=auth_source,
-            effective_api_mode=effective_api_mode,
-            effective_codex_mode=effective_codex_mode,
-            effective_api_provider_id=effective_api_provider_id,
-            effective_api_provider_name=effective_api_provider_name,
-            effective_api_images_concurrency=effective_api_images_concurrency,
-            requested_backend=requested_backend,
-            canonical_model_id=canonical_model_id,
-            provider_id=provider_id,
-            binding_id=binding_id,
-            parameters_json=parameters_json,
-            explicit_form_fields=explicit_form_fields,
-            image_data_urls=all_reference_data_urls,
-            mask_data_url=None,
-            reference_file_inputs=list(prepared_reference_files.response_inputs),
-        )
+        with _retain_selected_reference_assets(ctx, reference_asset_ids or []):
+            uploaded_images = await _prepare_raster_uploads(reference_images or [], preserve_positions=reference_image_order is not None)
+            predicted_uploaded_assets = [
+                _prepared_reference_asset(image)
+                for image in uploaded_images
+            ]
+            selected_assets, _ = _resolve_reference_assets(
+                ctx.reference_asset_storage,
+                reference_asset_ids or [],
+                touch=False,
+                include_data_urls=False,
+            )
+            image_order = normalize_reference_image_order(
+                reference_image_order, predicted_uploaded_assets, selected_assets, gallery_refs,
+            )
+            resolved_original, prompt_for_model, resolved_mentions = resolve_prompt_image_mentions(
+                prompt_image_mentions, prompt, prompt_for_model or prompt, predicted_uploaded_assets, image_order,
+            )
+            prompt_for_model = resolve_gallery_prompt(prompt_for_model, gallery_prompt, image_order)
+            predicted_assets = h["dedupe_reference_assets"](
+                predicted_uploaded_assets + selected_assets
+            )
+            _validate_task_image_resources(
+                reference_assets=predicted_assets,
+                gallery_refs=gallery_refs,
+            )
+            prepared_reference_files = await _prepare_reference_files(
+                ctx.reference_file_storage,
+                reference_files or [],
+                reference_file_ids or [],
+            )
+            reference_data_urls = _predicted_reference_data_urls(
+                ctx,
+                uploads=uploaded_images,
+                predicted_assets=predicted_assets,
+            )
+            gallery_data_urls = _gallery_data_urls(ctx, gallery_refs)
+            all_reference_data_urls = ordered_reference_data_urls(
+                predicted_assets, reference_data_urls, gallery_refs, gallery_data_urls, image_order,
+            )
+            prepared_submission = _prepare_generation_submission(
+                ctx,
+                operation="generate",
+                prompt=prompt,
+                prompt_for_model=prompt_for_model,
+                ui_language=ui_language,
+                prompt_fidelity=prompt_fidelity,
+                main_model=main_model,
+                model=model,
+                size=size,
+                resolution=resolution,
+                ratio=ratio,
+                orientation=orientation,
+                quality=quality,
+                background=background,
+                output_format=output_format,
+                input_fidelity=None,
+                moderation=moderation,
+                output_compression=output_compression,
+                n=n,
+                web_search=web_search,
+                auth_source=auth_source,
+                effective_api_mode=effective_api_mode,
+                effective_codex_mode=effective_codex_mode,
+                effective_api_provider_id=effective_api_provider_id,
+                effective_api_provider_name=effective_api_provider_name,
+                effective_api_images_concurrency=effective_api_images_concurrency,
+                requested_backend=requested_backend,
+                canonical_model_id=canonical_model_id,
+                provider_id=provider_id,
+                binding_id=binding_id,
+                parameters_json=parameters_json,
+                explicit_form_fields=explicit_form_fields,
+                image_data_urls=all_reference_data_urls,
+                mask_data_url=None,
+                reference_file_inputs=list(prepared_reference_files.response_inputs),
+                resolved_original_prompt=resolved_original if resolved_mentions is not None else None,
+            )
 
-        reference_assets = _commit_reference_assets(
-            ctx,
-            uploads=uploaded_images,
-            predicted_assets=predicted_assets,
-        )
-        file_references = _commit_reference_files(
-            ctx.reference_file_storage,
-            prepared_reference_files,
-        )
-        task = ctx.storage.create_task("generate")
-        return _persist_generation_submission(
-            ctx,
-            prepared=prepared_submission,
-            operation="generate",
-            task_id=task.task_id,
-            created_at=utc_now(),
-            prompt=prompt,
-            requested_backend=requested_backend,
-            auth_source=auth_source,
-            effective_api_provider_id=effective_api_provider_id,
-            effective_api_provider_name=effective_api_provider_name,
-            effective_api_images_concurrency=effective_api_images_concurrency,
-            input_files=[],
-            mask_file=None,
-            gallery_refs=gallery_refs,
-            reference_assets=reference_assets,
-            file_references=file_references,
-        )
+            with ctx.reference_asset_storage.protect_submission(item["id"] for item in predicted_assets):
+                reference_assets = _commit_reference_assets(
+                    ctx,
+                    uploads=uploaded_images,
+                    predicted_assets=predicted_assets,
+                )
+                file_references = _commit_reference_files(
+                    ctx.reference_file_storage,
+                    prepared_reference_files,
+                )
+                task = ctx.storage.create_task("generate")
+                return _persist_generation_submission(
+                    ctx,
+                    prepared=prepared_submission,
+                    operation="generate",
+                    task_id=task.task_id,
+                    created_at=utc_now(),
+                    prompt=prompt,
+                    requested_backend=requested_backend,
+                    auth_source=auth_source,
+                    effective_api_provider_id=effective_api_provider_id,
+                    effective_api_provider_name=effective_api_provider_name,
+                    effective_api_images_concurrency=effective_api_images_concurrency,
+                    input_files=[],
+                    mask_file=None,
+                    gallery_refs=gallery_refs,
+                    reference_assets=reference_assets,
+                    file_references=file_references,
+                    reference_image_order=image_order,
+                    prompt_image_mentions=resolved_mentions,
+                )
 
     @app.post("/api/edit")
     async def edit(
@@ -906,9 +952,12 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         binding_id: str | None = Form(None),
         parameters_json: str | None = Form(None),
         prompt_for_model: str | None = Form(None),
+        gallery_prompt: str | None = Form(None),
+        prompt_image_mentions: str | None = Form(None),
         prompt_fidelity: str = Form(DEFAULT_PROMPT_FIDELITY),
         gallery_image_ids: list[str] | None = Form(None),
         reference_asset_ids: list[str] | None = Form(None),
+        reference_image_order: str | None = Form(None),
         reference_file_ids: list[str] | None = Form(None),
         images: list[UploadFile] | None = File(None),
         mask: UploadFile | None = File(None),
@@ -952,130 +1001,144 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
             gallery_image_ids or [],
             include_data_urls=False,
         )
-        uploaded_images = await _prepare_raster_uploads(images or [])
-        prepared_masks = await _prepare_raster_uploads(
-            [mask] if mask is not None else []
-        )
-        prepared_mask = prepared_masks[0] if prepared_masks else None
-        predicted_uploaded_assets = [
-            _prepared_reference_asset(image)
-            for image in uploaded_images
-        ]
-        selected_assets, _ = _resolve_reference_assets(
-            ctx.reference_asset_storage,
-            reference_asset_ids or [],
-            touch=False,
-            include_data_urls=False,
-        )
-        predicted_assets = h["dedupe_reference_assets"](
-            predicted_uploaded_assets + selected_assets
-        )
-        if not predicted_assets and not gallery_refs:
-            raise HTTPException(status_code=400, detail="At least one image is required")
-        _validate_task_image_resources(
-            reference_assets=predicted_assets,
-            gallery_refs=gallery_refs,
-            mask=prepared_mask,
-        )
-        prepared_reference_files = await _prepare_reference_files(
-            ctx.reference_file_storage,
-            reference_files or [],
-            reference_file_ids or [],
-        )
-        image_data_urls = _predicted_reference_data_urls(
-            ctx,
-            uploads=uploaded_images,
-            predicted_assets=predicted_assets,
-        )
-        gallery_data_urls = _gallery_data_urls(ctx, gallery_refs)
-        all_image_data_urls = image_data_urls + gallery_data_urls
-        mask_data_url = (
-            _bytes_to_data_url(
-                prepared_mask.data,
-                filename=prepared_mask.filename,
-                mime_type=prepared_mask.mime_type,
+        with _retain_selected_reference_assets(ctx, reference_asset_ids or []):
+            uploaded_images = await _prepare_raster_uploads(images or [], preserve_positions=reference_image_order is not None)
+            prepared_masks = await _prepare_raster_uploads(
+                [mask] if mask is not None else []
             )
-            if prepared_mask is not None
-            else None
-        )
-        effective_input_fidelity = input_fidelity if image_model_supports_input_fidelity(model) else None
-        prepared_submission = _prepare_generation_submission(
-            ctx,
-            operation="edit",
-            prompt=prompt,
-            prompt_for_model=prompt_for_model,
-            ui_language=ui_language,
-            prompt_fidelity=prompt_fidelity,
-            main_model=main_model,
-            model=model,
-            size=size,
-            resolution=resolution,
-            ratio=ratio,
-            orientation=orientation,
-            quality=quality,
-            background=background,
-            output_format=output_format,
-            input_fidelity=effective_input_fidelity,
-            moderation=moderation,
-            output_compression=output_compression,
-            n=n,
-            web_search=web_search,
-            auth_source=auth_source,
-            effective_api_mode=effective_api_mode,
-            effective_codex_mode=effective_codex_mode,
-            effective_api_provider_id=effective_api_provider_id,
-            effective_api_provider_name=effective_api_provider_name,
-            effective_api_images_concurrency=effective_api_images_concurrency,
-            requested_backend=requested_backend,
-            canonical_model_id=canonical_model_id,
-            provider_id=provider_id,
-            binding_id=binding_id,
-            parameters_json=parameters_json,
-            explicit_form_fields=explicit_form_fields,
-            image_data_urls=all_image_data_urls,
-            mask_data_url=mask_data_url,
-            reference_file_inputs=list(prepared_reference_files.response_inputs),
-        )
-
-        reference_assets = _commit_reference_assets(
-            ctx,
-            uploads=uploaded_images,
-            predicted_assets=predicted_assets,
-        )
-        file_references = _commit_reference_files(
-            ctx.reference_file_storage,
-            prepared_reference_files,
-        )
-        task = ctx.storage.create_task("edit")
-        mask_files = (
-            [
-                ctx.storage.write_input(
-                    task.task_id,
-                    prepared_mask.filename,
-                    prepared_mask.data,
-                    kind="mask",
-                    index=1,
-                )
+            prepared_mask = prepared_masks[0] if prepared_masks else None
+            predicted_uploaded_assets = [
+                _prepared_reference_asset(image)
+                for image in uploaded_images
             ]
-            if prepared_mask is not None
-            else []
-        )
-        mask_file = mask_files[0].name if mask_files else None
-        return _persist_generation_submission(
-            ctx,
-            prepared=prepared_submission,
-            operation="edit",
-            task_id=task.task_id,
-            created_at=utc_now(),
-            prompt=prompt,
-            requested_backend=requested_backend,
-            auth_source=auth_source,
-            effective_api_provider_id=effective_api_provider_id,
-            effective_api_provider_name=effective_api_provider_name,
-            effective_api_images_concurrency=effective_api_images_concurrency,
-            input_files=[],
-            mask_file=mask_file,
-            gallery_refs=gallery_refs,
-            reference_assets=reference_assets,
-            file_references=file_references,
-        )
+            selected_assets, _ = _resolve_reference_assets(
+                ctx.reference_asset_storage,
+                reference_asset_ids or [],
+                touch=False,
+                include_data_urls=False,
+            )
+            image_order = normalize_reference_image_order(
+                reference_image_order, predicted_uploaded_assets, selected_assets, gallery_refs,
+            )
+            resolved_original, prompt_for_model, resolved_mentions = resolve_prompt_image_mentions(
+                prompt_image_mentions, prompt, prompt_for_model or prompt, predicted_uploaded_assets, image_order,
+            )
+            prompt_for_model = resolve_gallery_prompt(prompt_for_model, gallery_prompt, image_order)
+            predicted_assets = h["dedupe_reference_assets"](
+                predicted_uploaded_assets + selected_assets
+            )
+            if not predicted_assets and not gallery_refs:
+                raise HTTPException(status_code=400, detail="At least one image is required")
+            _validate_task_image_resources(
+                reference_assets=predicted_assets,
+                gallery_refs=gallery_refs,
+                mask=prepared_mask,
+            )
+            prepared_reference_files = await _prepare_reference_files(
+                ctx.reference_file_storage,
+                reference_files or [],
+                reference_file_ids or [],
+            )
+            image_data_urls = _predicted_reference_data_urls(
+                ctx,
+                uploads=uploaded_images,
+                predicted_assets=predicted_assets,
+            )
+            gallery_data_urls = _gallery_data_urls(ctx, gallery_refs)
+            all_image_data_urls = ordered_reference_data_urls(
+                predicted_assets, image_data_urls, gallery_refs, gallery_data_urls, image_order,
+            )
+            mask_data_url = (
+                _bytes_to_data_url(
+                    prepared_mask.data,
+                    filename=prepared_mask.filename,
+                    mime_type=prepared_mask.mime_type,
+                )
+                if prepared_mask is not None
+                else None
+            )
+            effective_input_fidelity = input_fidelity if image_model_supports_input_fidelity(model) else None
+            prepared_submission = _prepare_generation_submission(
+                ctx,
+                operation="edit",
+                prompt=prompt,
+                prompt_for_model=prompt_for_model,
+                ui_language=ui_language,
+                prompt_fidelity=prompt_fidelity,
+                main_model=main_model,
+                model=model,
+                size=size,
+                resolution=resolution,
+                ratio=ratio,
+                orientation=orientation,
+                quality=quality,
+                background=background,
+                output_format=output_format,
+                input_fidelity=effective_input_fidelity,
+                moderation=moderation,
+                output_compression=output_compression,
+                n=n,
+                web_search=web_search,
+                auth_source=auth_source,
+                effective_api_mode=effective_api_mode,
+                effective_codex_mode=effective_codex_mode,
+                effective_api_provider_id=effective_api_provider_id,
+                effective_api_provider_name=effective_api_provider_name,
+                effective_api_images_concurrency=effective_api_images_concurrency,
+                requested_backend=requested_backend,
+                canonical_model_id=canonical_model_id,
+                provider_id=provider_id,
+                binding_id=binding_id,
+                parameters_json=parameters_json,
+                explicit_form_fields=explicit_form_fields,
+                image_data_urls=all_image_data_urls,
+                mask_data_url=mask_data_url,
+                reference_file_inputs=list(prepared_reference_files.response_inputs),
+                resolved_original_prompt=resolved_original if resolved_mentions is not None else None,
+            )
+
+            with ctx.reference_asset_storage.protect_submission(item["id"] for item in predicted_assets):
+                reference_assets = _commit_reference_assets(
+                    ctx,
+                    uploads=uploaded_images,
+                    predicted_assets=predicted_assets,
+                )
+                file_references = _commit_reference_files(
+                    ctx.reference_file_storage,
+                    prepared_reference_files,
+                )
+                task = ctx.storage.create_task("edit")
+                mask_files = (
+                    [
+                        ctx.storage.write_input(
+                            task.task_id,
+                            prepared_mask.filename,
+                            prepared_mask.data,
+                            kind="mask",
+                            index=1,
+                        )
+                    ]
+                    if prepared_mask is not None
+                    else []
+                )
+                mask_file = mask_files[0].name if mask_files else None
+                return _persist_generation_submission(
+                    ctx,
+                    prepared=prepared_submission,
+                    operation="edit",
+                    task_id=task.task_id,
+                    created_at=utc_now(),
+                    prompt=prompt,
+                    requested_backend=requested_backend,
+                    auth_source=auth_source,
+                    effective_api_provider_id=effective_api_provider_id,
+                    effective_api_provider_name=effective_api_provider_name,
+                    effective_api_images_concurrency=effective_api_images_concurrency,
+                    input_files=[],
+                    mask_file=mask_file,
+                    gallery_refs=gallery_refs,
+                    reference_assets=reference_assets,
+                    file_references=file_references,
+                    reference_image_order=image_order,
+                    prompt_image_mentions=resolved_mentions,
+                )

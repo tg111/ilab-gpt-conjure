@@ -182,7 +182,11 @@ export function buildOutputSettingsSummaryModel(
     } else {
       details.push({ label: translate("output.lock.call"), value: context.callLabel });
     }
-    details.push({ label: translate("output.moderation"), value: snapshot.moderation });
+    details.push({
+      label: translate("output.moderation"),
+      value: snapshot.moderation === "auto" ? translate("ux.moderationAuto")
+        : snapshot.moderation === "low" ? translate("ux.moderationLow") : snapshot.moderation,
+    });
   } else {
     const safety = geminiSafetyLabel(snapshot.safety_settings, snapshot.has_safety_settings);
     if (safety) details.push({ label: translate("gemini.safetySettings"), value: safety });
@@ -464,11 +468,9 @@ export function showLockedOutputSettings(): void {
 
 export function showTaskOutputSettings(task: any): void {
   if (!locked) return;
-  taskSnapshot = snapshotFromTask(task);
-  taskContext = taskSummaryContext(task);
-  renderSummary(taskSnapshot, taskContext);
-  setLockedViewVisible(true);
-  updateLockButton();
+  // The output panel always describes the next submission, including when locked.
+  showLockedOutputSettings();
+  legacyMethod("inspectTaskParameters", task);
 }
 
 export function refreshOutputSettingsLock(): void {
@@ -510,6 +512,7 @@ function lockOutputSettings(): void {
 }
 
 function unlockOutputSettings(): void {
+  if (!locked) return;
   if (lockedSnapshot) applySnapshot(lockedSnapshot);
   locked = false;
   lockedSnapshot = null;
@@ -546,6 +549,7 @@ export function initOutputSettingsLockFeature(): void {
   initialized = true;
   Object.assign(getLegacyBridge().methods, {
     isOutputSettingsLocked,
+    unlockOutputSettings,
     restoreOutputSettingsLock,
     refreshOutputSettingsLock,
     showLockedOutputSettings,
