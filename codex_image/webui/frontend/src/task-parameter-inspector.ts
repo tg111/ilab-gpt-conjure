@@ -5,7 +5,7 @@ import { selectConcreteModel } from "./model-selection";
 import { restoreCurrentModelParameterDraft } from "./model-parameter-drafts";
 import { eligibleProviders, selectGenerationProvider } from "./provider-selection";
 import { getLegacyBridge } from "./state";
-import { modelsShareParameterEditor, taskCanonicalModelId, taskModelFamilyId, taskOutputSettingsView } from "./task-model-summary";
+import { modelsShareParameterEditor, taskModelFamilyId, taskOutputSettingsView } from "./task-model-summary";
 import type { CatalogModel, GenerationCatalog, GenerationSnapshotView, ParameterMigrationReport, WebUITask } from "./types";
 
 function record(value: unknown): Record<string, unknown> {
@@ -210,12 +210,10 @@ export function taskParameterInspectionAction(
   task: WebUITask | null | undefined,
   selectedModelId: string,
   outputSettingsLocked: boolean,
-  taskParametersEditing = false,
 ): TaskParameterInspectionAction {
   if (outputSettingsLocked) return "preserve";
   if (!task) return "clear";
-  if (taskParametersEditing) return "clear";
-  return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId) ? "clear" : "inspect";
+  return taskOutputSettingsView(task, selectedModelId, false) === "editor" ? "clear" : "inspect";
 }
 
 export function reconcileTaskParameterInspection(): void {
@@ -225,10 +223,6 @@ export function reconcileTaskParameterInspection(): void {
     task,
     String(state.selectedModelId || ""),
     Boolean(methods.isOutputSettingsLocked?.()),
-    Boolean(
-      state.taskParameterEditingTaskId
-      && String(state.taskParameterEditingTaskId) === String(task?.task_id),
-    ),
   );
   if (action === "inspect" && task) inspectTaskParameters(task);
   else if (action === "clear" && state.inspectedGenerationSnapshot) clearTaskParameterInspection();
@@ -312,7 +306,6 @@ export function adoptTaskParameters(task: WebUITask): ParameterMigrationReport {
   // historical values after routing settles, then restore controls and preview.
   state.parameterDraftsByModel[model.id] = report.values;
   state.parameterDraftVersionsByModel[model.id] = model.version;
-  state.taskParameterEditingTaskId = task.task_id;
   state.inspectedGenerationSnapshot = null;
   renderTaskParameterInspector();
   restoreCurrentModelParameterDraft();

@@ -449,14 +449,7 @@ export function isOutputSettingsLocked(): boolean {
 }
 
 export function showLockedOutputSettings(): void {
-  // A task selection can arrive after a previously locked summary was
-  // rendered. Keep the visual layer in sync even when the lock is already
-  // disabled, otherwise the stale overlay continues to inert the editor.
-  if (!locked) {
-    setLockedViewVisible(false);
-    updateLockButton();
-    return;
-  }
+  if (!locked) return;
   taskSnapshot = null;
   taskContext = null;
   lockedSnapshot = snapshotFromCurrentSelection();
@@ -474,11 +467,7 @@ export function showTaskOutputSettings(task: any): void {
 }
 
 export function refreshOutputSettingsLock(): void {
-  if (!locked) {
-    setLockedViewVisible(false);
-    updateLockButton();
-    return;
-  }
+  if (!locked) return;
   if (taskSnapshot && taskContext) {
     renderSummary(taskSnapshot, taskContext);
     return;

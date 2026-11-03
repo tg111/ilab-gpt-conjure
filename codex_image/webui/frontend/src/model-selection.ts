@@ -1,15 +1,13 @@
 import type { CatalogModel, GenerationCatalog, ModelFamilyId } from "./types";
 import { getLegacyBridge } from "./state";
-import { renderProviderSelection, selectedProviderBinding } from "./provider-selection";
+import { renderProviderSelection } from "./provider-selection";
 import {
-  canonicalControlValues,
   migratePortableModelDraft,
   restoreCurrentModelParameterDraft,
   saveCurrentModelParameterDraft,
 } from "./model-parameter-drafts";
 import { modelFamilyBrandMarkHtml } from "./model-family-icons";
 import { refreshSegmentedIndicators } from "./segmented-indicator";
-import { isGptImageModel } from "./gpt-image-models";
 
 export function modelsForFamily(catalog: GenerationCatalog, familyId: ModelFamilyId): CatalogModel[] {
   return catalog.models.filter((model) => model.family_id === familyId);
@@ -30,43 +28,6 @@ function focusFamilyOption(familyId: ModelFamilyId): void {
   });
 }
 
-function editingSelectedTask(state: any): boolean {
-  return Boolean(
-    state.taskParameterEditingTaskId
-    && String(state.taskParameterEditingTaskId) === String(state.selectedTaskId),
-  );
-}
-
-function currentDraftForModel(
-  sourceModel: CatalogModel,
-  preserveTaskParameters: boolean,
-): Record<string, unknown> {
-  const { state, methods } = getLegacyBridge();
-  if (!preserveTaskParameters || !isGptImageModel(sourceModel.id)
-      || typeof methods.currentTaskParams !== "function") {
-    return state.parameterDraftsByModel[sourceModel.id] || {};
-  }
-  return canonicalControlValues(
-    methods.currentTaskParams(),
-    selectedProviderBinding()?.protocol_profile || "",
-  );
-}
-
-function migrateCurrentTaskParameters(
-  sourceModel: CatalogModel | undefined,
-  targetModel: CatalogModel,
-  preserveTaskParameters: boolean,
-): void {
-  if (!sourceModel || sourceModel.id === targetModel.id || !preserveTaskParameters) return;
-  const { state } = getLegacyBridge();
-  state.parameterDraftsByModel[targetModel.id] = migratePortableModelDraft(
-    sourceModel,
-    targetModel,
-    currentDraftForModel(sourceModel, true),
-    state.parameterDraftsByModel[targetModel.id] || {},
-  );
-}
-
 export function selectModelFamily(familyId: ModelFamilyId): void {
   const { state } = getLegacyBridge();
   const catalog = state.generationCatalog;
@@ -76,10 +37,7 @@ export function selectModelFamily(familyId: ModelFamilyId): void {
   const remembered = state.lastModelByFamily[familyId];
   const model = models.find((item) => item.id === remembered) || models[0];
   if (!model) return;
-  const sourceModel = catalog.models.find((item) => item.id === state.selectedModelId);
-  const preserveTaskParameters = editingSelectedTask(state);
-  saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
-  migrateCurrentTaskParameters(sourceModel, model, preserveTaskParameters);
+  saveCurrentModelParameterDraft();
   state.selectedFamilyId = familyId;
   state.selectedModelId = model.id;
   state.lastModelByFamily[familyId] = model.id;
@@ -100,13 +58,12 @@ export function selectConcreteModel(modelId: string): void {
   if (!model) return;
   const sourceModel = state.generationCatalog?.models.find((item) => item.id === state.selectedModelId);
   const familyChanged = sourceModel?.family_id !== model.family_id;
-  const preserveTaskParameters = editingSelectedTask(state);
-  saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
-  if (sourceModel && (sourceModel.family_id === model.family_id || preserveTaskParameters)) {
+  saveCurrentModelParameterDraft();
+  if (sourceModel?.family_id === model.family_id) {
     state.parameterDraftsByModel[model.id] = migratePortableModelDraft(
       sourceModel,
       model,
-      currentDraftForModel(sourceModel, preserveTaskParameters),
+      state.parameterDraftsByModel[sourceModel.id] || {},
       state.parameterDraftsByModel[model.id] || {},
     );
   }

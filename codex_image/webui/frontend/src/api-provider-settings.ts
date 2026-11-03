@@ -14,7 +14,7 @@ import {
   scrollActiveApiProviderCardIntoView,
   updateApiProviderListPresentation,
 } from "./api-provider-list-ui";
-import { applyProviderDraft, defaultGptImageBindings, normalizeApiImagesConcurrency, normalizeApiProvider, normalizeApiSettings, normalizeCodexMode, withoutApiProvider } from "./api-provider-model";
+import { applyProviderDraft, normalizeApiImagesConcurrency, normalizeApiProvider, normalizeApiSettings, normalizeCodexMode, withoutApiProvider } from "./api-provider-model";
 import { apiSettingsSavePayload, patchApiSettings } from "./api-provider-save";
 import {
   cancelApiProviderSortInteraction,
@@ -490,7 +490,7 @@ export function addApiProvider(): void {
     name: translate("apiSettings.newProvider"),
     base_url: DEFAULT_API_BASE_URL,
     concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-    bindings: defaultGptImageBindings(id, "openai_images"),
+    bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")],
   }, state.apiSettings.providers.length);
   populateApiSettingsForm();
   setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");

@@ -26899,8 +26899,6 @@
       parameterDraftVersionsByModel: {},
       parameterValidationErrorsByModel: {},
       inspectedGenerationSnapshot: null,
-      taskParameterEditingTaskId: null,
-      applyingCompletedTaskOutputSettings: false,
       draggedPromptChip: null,
       legacyArchivedTaskIds: [],
       batchMode: false,
@@ -27172,9 +27170,8 @@
   }
 
   // codex_image/webui/frontend/src/gpt-image-models.ts
-  var GPT_IMAGE_MODEL_IDS = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"];
   function isGptImageModel(modelId) {
-    return GPT_IMAGE_MODEL_IDS.includes(String(modelId || ""));
+    return ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"].includes(String(modelId || ""));
   }
 
   // codex_image/webui/frontend/src/background-controls.ts
@@ -28119,13 +28116,11 @@
   function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
     const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
     return Object.fromEntries(targetModel.parameters.map((definition) => {
-      const rawSourceValue = sourceDraft[definition.id];
-      const sourceValue = definition.id === "canvas.resolution" && typeof rawSourceValue === "string" ? rawSourceValue.toLowerCase() === "standard" || rawSourceValue === "1k" ? "1K" : rawSourceValue.toLowerCase() === "2k" ? "2K" : rawSourceValue.toLowerCase() === "4k" ? "4K" : rawSourceValue : rawSourceValue;
-      if (sourceValue !== void 0 && parameterValueValid2(definition, sourceValue)) {
-        return [definition.id, cloneValue2(sourceValue)];
-      }
       if (sourceIds.has(definition.id)) {
-        return [definition.id, cloneValue2(definition.default)];
+        const sourceValue = sourceDraft[definition.id];
+        return [definition.id, cloneValue2(
+          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
+        )];
       }
       const targetValue = targetDraft[definition.id];
       return [definition.id, cloneValue2(
@@ -28133,14 +28128,8 @@
       )];
     }));
   }
-  function selectedTaskIsCompleted(state6) {
-    const selectedTask = state6.tasks?.find((task) => String(task?.task_id) === String(state6.selectedTaskId));
-    return selectedTask?.status === "completed";
-  }
-  function saveCurrentModelParameterDraft(options = {}) {
+  function saveCurrentModelParameterDraft() {
     const { state: state6, methods } = getLegacyBridge();
-    if (state6.applyingCompletedTaskOutputSettings) return;
-    if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state6)) return;
     const model = state6.generationCatalog?.models.find((item) => item.id === state6.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
     if (!isGptImageModel(model.id)) {
@@ -28219,34 +28208,18 @@
   function usesExpandedConcreteModelOptions(models) {
     return models.length > 1;
   }
-  function editingSelectedTask(state6) {
-    return Boolean(
-      state6.taskParameterEditingTaskId && String(state6.taskParameterEditingTaskId) === String(state6.selectedTaskId)
-    );
-  }
-  function currentDraftForModel(sourceModel, preserveTaskParameters) {
-    const { state: state6, methods } = getLegacyBridge();
-    if (!preserveTaskParameters || !isGptImageModel(sourceModel.id) || typeof methods.currentTaskParams !== "function") {
-      return state6.parameterDraftsByModel[sourceModel.id] || {};
-    }
-    return canonicalControlValues(
-      methods.currentTaskParams(),
-      selectedProviderBinding()?.protocol_profile || ""
-    );
-  }
   function selectConcreteModel(modelId) {
     const { state: state6 } = getLegacyBridge();
     const model = state6.generationCatalog?.models.find((item) => item.id === modelId);
     if (!model) return;
     const sourceModel = state6.generationCatalog?.models.find((item) => item.id === state6.selectedModelId);
     const familyChanged = sourceModel?.family_id !== model.family_id;
-    const preserveTaskParameters = editingSelectedTask(state6);
-    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
-    if (sourceModel && (sourceModel.family_id === model.family_id || preserveTaskParameters)) {
+    saveCurrentModelParameterDraft();
+    if (sourceModel?.family_id === model.family_id) {
       state6.parameterDraftsByModel[model.id] = migratePortableModelDraft(
         sourceModel,
         model,
-        currentDraftForModel(sourceModel, preserveTaskParameters),
+        state6.parameterDraftsByModel[sourceModel.id] || {},
         state6.parameterDraftsByModel[model.id] || {}
       );
     }
@@ -29633,24 +29606,19 @@
   }
 
   // codex_image/webui/frontend/src/api-provider-model.ts
-  function defaultGptImageBindings(providerId, protocol, legacyRemoteModelId = DEFAULT_API_IMAGE_MODEL) {
-    return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
-      `${providerId}-${modelId}`,
-      modelId,
-      modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
-      protocol
-    ));
-  }
   function normalizeApiProvider(provider = {}, index = 0) {
     const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
     const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
     const legacyMode = provider.api_mode === "responses" ? "responses" : DEFAULT_API_MODE;
     const bindings = normalizeProviderBindings(
-      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : defaultGptImageBindings(
-        id,
-        legacyMode === "responses" ? "openai_responses" : "openai_images",
-        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL
-      ),
+      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : [{
+        id: `${id}-gpt-image-2`,
+        canonical_model_id: "gpt-image-2",
+        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
+        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
+        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
+        operations: ["generate", "edit"]
+      }],
       id
     );
     const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -29704,22 +29672,11 @@
     if (!providers.length) providers.push(normalizeApiProvider({}, 0));
     const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
     const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
-    const defaultProviderByModel = { ...settings.default_provider_by_model || {} };
-    const supportedModelIds = new Set(
-      providers.flatMap((provider) => provider.bindings.map((binding) => binding.canonical_model_id))
-    );
-    supportedModelIds.forEach((modelId) => {
-      const supportingProviders = providers.filter((provider) => provider.bindings.some((binding) => binding.canonical_model_id === modelId));
-      if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
-        const fallback = supportingProviders.find((provider) => provider.id === activeProvider.id) || supportingProviders[0];
-        if (fallback) defaultProviderByModel[modelId] = fallback.id;
-      }
-    });
     return {
       schema_version: 2,
       codex_mode: normalizeCodexMode(settings.codex_mode),
       active_provider_id: activeProvider.id,
-      default_provider_by_model: defaultProviderByModel,
+      default_provider_by_model: { ...settings.default_provider_by_model || { "gpt-image-2": activeProvider.id } },
       providers
     };
   }
@@ -30991,7 +30948,7 @@
       name: translate("apiSettings.newProvider"),
       base_url: DEFAULT_API_BASE_URL,
       concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-      bindings: defaultGptImageBindings(id, "openai_images")
+      bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")]
     }, state4.apiSettings.providers.length);
     populateApiSettingsForm();
     setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");
@@ -33533,8 +33490,6 @@
     state5.historyTaskReveal = null;
     state5.historyTaskRevealSeq += 1;
     state5.selectedTaskId = null;
-    state5.taskParameterEditingTaskId = null;
-    state5.applyingCompletedTaskOutputSettings = false;
     clearTaskParameterInspection();
     state5.mode = "generate";
     revokeUploadPreviewUrls(state5.images);

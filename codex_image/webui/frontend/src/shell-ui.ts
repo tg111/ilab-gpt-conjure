@@ -313,8 +313,6 @@ function resetForm() {
   state.historyTaskReveal = null;
   state.historyTaskRevealSeq += 1;
   state.selectedTaskId = null;
-  state.taskParameterEditingTaskId = null;
-  state.applyingCompletedTaskOutputSettings = false;
   clearTaskParameterInspection();
   state.mode = "generate";
   revokeUploadPreviewUrls(state.images);

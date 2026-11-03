@@ -138,8 +138,6 @@ export function createDefaultState(): WebUIState {
   parameterDraftVersionsByModel: {},
   parameterValidationErrorsByModel: {},
   inspectedGenerationSnapshot: null,
-  taskParameterEditingTaskId: null,
-  applyingCompletedTaskOutputSettings: false,
   draggedPromptChip: null,
   legacyArchivedTaskIds: [],
   batchMode: false,

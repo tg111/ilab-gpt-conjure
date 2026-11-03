@@ -13,24 +13,8 @@ export interface ApiProviderSettings {
   default_provider_by_model: Record<string, string>; providers: ApiProviderDraft[];
 }
 
-import { GPT_IMAGE_MODEL_IDS } from "./gpt-image-models";
-import { bindingFromProtocol, normalizeProviderBindings } from "./provider-model-bindings";
-import type { BindingProtocol } from "./provider-model-bindings";
+import { normalizeProviderBindings } from "./provider-model-bindings";
 import { DEFAULT_API_BASE_URL, DEFAULT_API_IMAGE_MODEL, DEFAULT_API_IMAGES_CONCURRENCY, DEFAULT_API_MODE, DEFAULT_CODEX_MODE } from "./state-defaults";
-
-/** API providers start with every GPT Image version bound to the same endpoint. */
-export function defaultGptImageBindings(
-  providerId: string,
-  protocol: BindingProtocol,
-  legacyRemoteModelId: string = DEFAULT_API_IMAGE_MODEL,
-): ProviderModelBindingSettings[] {
-  return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
-    `${providerId}-${modelId}`,
-    modelId,
-    modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
-    protocol,
-  ));
-}
 
 export function normalizeApiProvider(provider: any = {}, index: number = 0): ApiProviderDraft {
   const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
@@ -39,11 +23,14 @@ export function normalizeApiProvider(provider: any = {}, index: number = 0): Api
   const bindings = normalizeProviderBindings(
     Array.isArray(provider.bindings) && provider.bindings.length
       ? provider.bindings
-      : defaultGptImageBindings(
-        id,
-        legacyMode === "responses" ? "openai_responses" : "openai_images",
-        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
-      ),
+      : [{
+        id: `${id}-gpt-image-2`,
+        canonical_model_id: "gpt-image-2",
+        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
+        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
+        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
+        operations: ["generate", "edit"],
+      }],
     id,
   );
   const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -104,25 +91,11 @@ export function normalizeApiSettings(settings: any = {}): ApiProviderSettings {
   if (!providers.length) providers.push(normalizeApiProvider({}, 0));
   const requestedActive = String(settings.active_provider_id || providers[0]!.id).trim().toLowerCase();
   const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0]!;
-  // Every bound model needs a default provider; prefer the active provider.
-  const defaultProviderByModel: Record<string, string> = { ...(settings.default_provider_by_model || {}) };
-  const supportedModelIds = new Set(
-    providers.flatMap((provider) => provider.bindings.map((binding) => binding.canonical_model_id)),
-  );
-  supportedModelIds.forEach((modelId) => {
-    const supportingProviders = providers.filter((provider) => (
-      provider.bindings.some((binding) => binding.canonical_model_id === modelId)
-    ));
-    if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
-      const fallback = supportingProviders.find((provider) => provider.id === activeProvider.id) || supportingProviders[0];
-      if (fallback) defaultProviderByModel[modelId] = fallback.id;
-    }
-  });
   return {
     schema_version: 2,
     codex_mode: normalizeCodexMode(settings.codex_mode),
     active_provider_id: activeProvider.id,
-    default_provider_by_model: defaultProviderByModel,
+    default_provider_by_model: { ...(settings.default_provider_by_model || { "gpt-image-2": activeProvider.id }) },
     providers,
   };
 }

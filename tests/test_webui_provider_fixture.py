@@ -81,9 +81,6 @@ class ProviderFixtureTests(unittest.TestCase):
                 mega_models,
                 {
                     "gpt-image-2",
-                    # Existing GPT Image 2 bindings gain the 2.5 versions on read.
-                    "gpt-image-2.5-flare",
-                    "gpt-image-2.5-sunburst",
                     "nano-banana-pro",
                     "nano-banana-2.1",
                     "nano-banana-2",
