@@ -140,20 +140,7 @@ async function run() {
   await until(() => !!state.apiSettings?.providers?.length, "settings ready");
   check("only the last provider is protected from deletion", find<HTMLButtonElement>("#deleteApiProviderButton").disabled === (state.apiSettings.providers.length === 1));
   find("#addApiProviderButton").click();
-  // New providers start with every GPT Image version bound (GPT Image 2.5 binding migration).
-  await until(() => cards().length === 3 && !find("#apiProviderEditor").classList.contains("hidden"), "new draft");
-  check("new draft binds every GPT Image version", JSON.stringify(cards().map(item =>
-    item.querySelector<HTMLSelectElement>("[data-binding-model]")!.value))
-    === JSON.stringify(["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]));
-  check("multi-binding new draft starts collapsed", cards().every(item => !item.open));
-  // The checks below start from a single expanded binding, so remove the 2.5
-  // bindings and open the remaining card the way a user would.
-  while (cards().length > 1) {
-    cards()[cards().length - 1].querySelector<HTMLElement>("[data-remove-provider-binding]")!.click();
-    await pause();
-  }
-  cards()[0].querySelector<HTMLElement>(".provider-binding-summary")!.click();
-  await pause();
+  await until(() => cards().length === 1 && !find("#apiProviderEditor").classList.contains("hidden"), "new draft");
   input("#apiProviderName", "QA-settings");
   input("#apiKey", "qa-settings-synthetic-only");
   let card = cards()[0];

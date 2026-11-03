@@ -22080,8 +22080,6 @@
       parameterDraftVersionsByModel: {},
       parameterValidationErrorsByModel: {},
       inspectedGenerationSnapshot: null,
-      taskParameterEditingTaskId: null,
-      applyingCompletedTaskOutputSettings: false,
       draggedPromptChip: null,
       legacyArchivedTaskIds: [],
       batchMode: false,
@@ -22330,9 +22328,8 @@
   initializeLegacyBridge();
 
   // codex_image/webui/frontend/src/gpt-image-models.ts
-  var GPT_IMAGE_MODEL_IDS = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"];
   function isGptImageModel(modelId) {
-    return GPT_IMAGE_MODEL_IDS.includes(String(modelId || ""));
+    return ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"].includes(String(modelId || ""));
   }
 
   // codex_image/webui/frontend/src/background-controls.ts
@@ -22518,31 +22515,6 @@
       familyOptionButtons().find((button) => button.dataset.familyId === familyId)?.focus();
     });
   }
-  function editingSelectedTask(state33) {
-    return Boolean(
-      state33.taskParameterEditingTaskId && String(state33.taskParameterEditingTaskId) === String(state33.selectedTaskId)
-    );
-  }
-  function currentDraftForModel(sourceModel, preserveTaskParameters) {
-    const { state: state33, methods } = getLegacyBridge();
-    if (!preserveTaskParameters || !isGptImageModel(sourceModel.id) || typeof methods.currentTaskParams !== "function") {
-      return state33.parameterDraftsByModel[sourceModel.id] || {};
-    }
-    return canonicalControlValues(
-      methods.currentTaskParams(),
-      selectedProviderBinding()?.protocol_profile || ""
-    );
-  }
-  function migrateCurrentTaskParameters(sourceModel, targetModel, preserveTaskParameters) {
-    if (!sourceModel || sourceModel.id === targetModel.id || !preserveTaskParameters) return;
-    const { state: state33 } = getLegacyBridge();
-    state33.parameterDraftsByModel[targetModel.id] = migratePortableModelDraft(
-      sourceModel,
-      targetModel,
-      currentDraftForModel(sourceModel, true),
-      state33.parameterDraftsByModel[targetModel.id] || {}
-    );
-  }
   function selectModelFamily(familyId) {
     const { state: state33 } = getLegacyBridge();
     const catalog = state33.generationCatalog;
@@ -22552,10 +22524,7 @@
     const remembered = state33.lastModelByFamily[familyId];
     const model = models.find((item) => item.id === remembered) || models[0];
     if (!model) return;
-    const sourceModel = catalog.models.find((item) => item.id === state33.selectedModelId);
-    const preserveTaskParameters = editingSelectedTask(state33);
-    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
-    migrateCurrentTaskParameters(sourceModel, model, preserveTaskParameters);
+    saveCurrentModelParameterDraft();
     state33.selectedFamilyId = familyId;
     state33.selectedModelId = model.id;
     state33.lastModelByFamily[familyId] = model.id;
@@ -22575,13 +22544,12 @@
     if (!model) return;
     const sourceModel = state33.generationCatalog?.models.find((item) => item.id === state33.selectedModelId);
     const familyChanged = sourceModel?.family_id !== model.family_id;
-    const preserveTaskParameters = editingSelectedTask(state33);
-    saveCurrentModelParameterDraft({ preserveCompletedTaskDraft: true });
-    if (sourceModel && (sourceModel.family_id === model.family_id || preserveTaskParameters)) {
+    saveCurrentModelParameterDraft();
+    if (sourceModel?.family_id === model.family_id) {
       state33.parameterDraftsByModel[model.id] = migratePortableModelDraft(
         sourceModel,
         model,
-        currentDraftForModel(sourceModel, preserveTaskParameters),
+        state33.parameterDraftsByModel[sourceModel.id] || {},
         state33.parameterDraftsByModel[model.id] || {}
       );
     }
@@ -23742,13 +23710,11 @@
   function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
     const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
     return Object.fromEntries(targetModel.parameters.map((definition) => {
-      const rawSourceValue = sourceDraft[definition.id];
-      const sourceValue = definition.id === "canvas.resolution" && typeof rawSourceValue === "string" ? rawSourceValue.toLowerCase() === "standard" || rawSourceValue === "1k" ? "1K" : rawSourceValue.toLowerCase() === "2k" ? "2K" : rawSourceValue.toLowerCase() === "4k" ? "4K" : rawSourceValue : rawSourceValue;
-      if (sourceValue !== void 0 && parameterValueValid2(definition, sourceValue)) {
-        return [definition.id, cloneValue2(sourceValue)];
-      }
       if (sourceIds.has(definition.id)) {
-        return [definition.id, cloneValue2(definition.default)];
+        const sourceValue = sourceDraft[definition.id];
+        return [definition.id, cloneValue2(
+          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
+        )];
       }
       const targetValue = targetDraft[definition.id];
       return [definition.id, cloneValue2(
@@ -23756,14 +23722,8 @@
       )];
     }));
   }
-  function selectedTaskIsCompleted(state33) {
-    const selectedTask = state33.tasks?.find((task) => String(task?.task_id) === String(state33.selectedTaskId));
-    return selectedTask?.status === "completed";
-  }
-  function saveCurrentModelParameterDraft(options = {}) {
+  function saveCurrentModelParameterDraft() {
     const { state: state33, methods } = getLegacyBridge();
-    if (state33.applyingCompletedTaskOutputSettings) return;
-    if (options.preserveCompletedTaskDraft && selectedTaskIsCompleted(state33)) return;
     const model = state33.generationCatalog?.models.find((item) => item.id === state33.selectedModelId);
     if (!model || typeof methods.currentTaskParams !== "function") return;
     if (!isGptImageModel(model.id)) {
@@ -23830,14 +23790,11 @@
     }
     let draft = state33.parameterDraftsByModel[model.id] || {};
     if (isGptImageModel(model.id) && typeof methods.currentTaskParams === "function") {
-      const currentValues = canonicalControlValues(
-        methods.currentTaskParams(),
-        selectedProviderBinding()?.protocol_profile || ""
-      );
-      draft = { ...draft, ...currentValues };
-      if (!state33.applyingCompletedTaskOutputSettings) {
-        state33.parameterDraftsByModel[model.id] = draft;
-      }
+      draft = {
+        ...draft,
+        ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || "")
+      };
+      state33.parameterDraftsByModel[model.id] = draft;
     }
     return {
       canonicalModelId: model.id,
@@ -42269,24 +42226,19 @@ ${hint}` : hint);
   }
 
   // codex_image/webui/frontend/src/api-provider-model.ts
-  function defaultGptImageBindings(providerId, protocol, legacyRemoteModelId = DEFAULT_API_IMAGE_MODEL) {
-    return GPT_IMAGE_MODEL_IDS.map((modelId) => bindingFromProtocol(
-      `${providerId}-${modelId}`,
-      modelId,
-      modelId === DEFAULT_API_IMAGE_MODEL ? legacyRemoteModelId : modelId,
-      protocol
-    ));
-  }
   function normalizeApiProvider(provider = {}, index = 0) {
     const fallbackId = index === 0 ? "default" : `provider-${index + 1}`;
     const id = String(provider.id || fallbackId).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "") || fallbackId;
     const legacyMode = provider.api_mode === "responses" ? "responses" : DEFAULT_API_MODE;
     const bindings = normalizeProviderBindings(
-      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : defaultGptImageBindings(
-        id,
-        legacyMode === "responses" ? "openai_responses" : "openai_images",
-        String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL
-      ),
+      Array.isArray(provider.bindings) && provider.bindings.length ? provider.bindings : [{
+        id: `${id}-gpt-image-2`,
+        canonical_model_id: "gpt-image-2",
+        remote_model_id: String(provider.image_model || DEFAULT_API_IMAGE_MODEL).trim() || DEFAULT_API_IMAGE_MODEL,
+        protocol_profile: legacyMode === "responses" ? "openai_responses" : "openai_images",
+        parameter_codec: legacyMode === "responses" ? "gpt_openai_responses" : "gpt_openai_images",
+        operations: ["generate", "edit"]
+      }],
       id
     );
     const gptBinding = bindings.find((binding) => binding.canonical_model_id === "gpt-image-2") || bindings[0];
@@ -42340,22 +42292,11 @@ ${hint}` : hint);
     if (!providers.length) providers.push(normalizeApiProvider({}, 0));
     const requestedActive = String(settings.active_provider_id || providers[0].id).trim().toLowerCase();
     const activeProvider = providers.find((provider) => provider.id === requestedActive) || providers[0];
-    const defaultProviderByModel = { ...settings.default_provider_by_model || {} };
-    const supportedModelIds = new Set(
-      providers.flatMap((provider) => provider.bindings.map((binding) => binding.canonical_model_id))
-    );
-    supportedModelIds.forEach((modelId) => {
-      const supportingProviders = providers.filter((provider) => provider.bindings.some((binding) => binding.canonical_model_id === modelId));
-      if (!supportingProviders.some((provider) => provider.id === defaultProviderByModel[modelId])) {
-        const fallback = supportingProviders.find((provider) => provider.id === activeProvider.id) || supportingProviders[0];
-        if (fallback) defaultProviderByModel[modelId] = fallback.id;
-      }
-    });
     return {
       schema_version: 2,
       codex_mode: normalizeCodexMode(settings.codex_mode),
       active_provider_id: activeProvider.id,
-      default_provider_by_model: defaultProviderByModel,
+      default_provider_by_model: { ...settings.default_provider_by_model || { "gpt-image-2": activeProvider.id } },
       providers
     };
   }
@@ -43627,7 +43568,7 @@ ${hint}` : hint);
       name: translate("apiSettings.newProvider"),
       base_url: DEFAULT_API_BASE_URL,
       concurrency: DEFAULT_API_IMAGES_CONCURRENCY,
-      bindings: defaultGptImageBindings(id, "openai_images")
+      bindings: [bindingFromProtocol(`${id}-gpt-image-2`, "gpt-image-2", DEFAULT_API_IMAGE_MODEL, "openai_images")]
     }, state10.apiSettings.providers.length);
     populateApiSettingsForm();
     setApiSettingsFeedback(translate("apiSettings.newDraftStatus"), "running");
@@ -51946,11 +51887,7 @@ ${hint}` : hint);
     return locked;
   }
   function showLockedOutputSettings() {
-    if (!locked) {
-      setLockedViewVisible(false);
-      updateLockButton();
-      return;
-    }
+    if (!locked) return;
     taskSnapshot = null;
     taskContext = null;
     lockedSnapshot = snapshotFromCurrentSelection();
@@ -51965,11 +51902,7 @@ ${hint}` : hint);
     legacyMethod29("inspectTaskParameters", task);
   }
   function refreshOutputSettingsLock() {
-    if (!locked) {
-      setLockedViewVisible(false);
-      updateLockButton();
-      return;
-    }
+    if (!locked) return;
     if (taskSnapshot && taskContext) {
       renderSummary(taskSnapshot, taskContext);
       return;
@@ -52319,7 +52252,7 @@ ${hint}` : hint);
   }
   function taskOutputSettingsView(task, selectedModelId, outputSettingsLocked) {
     if (outputSettingsLocked) return "locked-summary";
-    return "editor";
+    return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId) ? "editor" : "parameter-inspector";
   }
   function taskRequestedParameters(task) {
     const source = record3(task);
@@ -60225,9 +60158,6 @@ ${hint}` : hint);
   function applyTaskToFormWithOutputLock(task) {
     const outputSettingsLocked = Boolean(legacyMethod42("isOutputSettingsLocked"));
     const outputView = taskOutputSettingsView(task, String(state31.selectedModelId || ""), outputSettingsLocked);
-    const applyingCompletedTaskOutputSettings = task?.status === "completed" && outputView === "editor";
-    state31.taskParameterEditingTaskId = applyingCompletedTaskOutputSettings ? task.task_id : null;
-    state31.applyingCompletedTaskOutputSettings = applyingCompletedTaskOutputSettings;
     applyTaskToForm2(task, {
       preserveOutputSettings: outputView !== "editor",
       preserveComposer: false
@@ -60243,11 +60173,6 @@ ${hint}` : hint);
     }
     clearTaskParameterInspection();
     legacyMethod42("showLockedOutputSettings");
-  }
-  function finishCompletedTaskOutputSettingsApplication(task) {
-    if (task?.status === "completed" && String(state31.taskParameterEditingTaskId || "") === String(task.task_id || "")) {
-      state31.applyingCompletedTaskOutputSettings = false;
-    }
   }
   function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
     if (restoreSeq == null) return true;
@@ -60481,10 +60406,10 @@ ${hint}` : hint);
     preserveComposerDraft();
     applyTaskToFormWithOutputLock(task);
     const restoredPrompt = legacyMethod42("getPromptText");
+    await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+    if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+    renderSelectedTask(task, taskId);
     try {
-      await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-      if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-      renderSelectedTask(task, taskId);
       await restoreTaskInputs(task, { taskId, restoreSeq });
     } catch (error) {
       if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -60493,8 +60418,6 @@ ${hint}` : hint);
       renderImageStrip6();
       setStatus22(error.message, "error");
       return;
-    } finally {
-      finishCompletedTaskOutputSettingsApplication(task);
     }
     if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
     markComposerBaseline(restoredPrompt);
@@ -60564,10 +60487,10 @@ ${hint}` : hint);
       preserveComposerDraft();
       applyTaskToFormWithOutputLock(task);
       const restoredPrompt = legacyMethod42("getPromptText");
+      await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+      if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+      renderSelectedTask(task, taskId);
       try {
-        await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-        if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-        renderSelectedTask(task, taskId);
         await restoreTaskInputs(task, { taskId, restoreSeq });
       } catch (error) {
         if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -60576,8 +60499,6 @@ ${hint}` : hint);
         renderImageStrip6();
         setStatus22(error.message || translate("referenceCollector.addFailed"), "error");
         return;
-      } finally {
-        finishCompletedTaskOutputSettingsApplication(task);
       }
       if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
       applySelectedTaskRequestPreview(task);
@@ -61439,8 +61360,6 @@ ${hint}` : hint);
     state32.historyTaskReveal = null;
     state32.historyTaskRevealSeq += 1;
     state32.selectedTaskId = null;
-    state32.taskParameterEditingTaskId = null;
-    state32.applyingCompletedTaskOutputSettings = false;
     clearTaskParameterInspection2();
     state32.mode = "generate";
     revokeUploadPreviewUrls3(state32.images);
@@ -62670,11 +62589,10 @@ ${hint}` : hint);
       Object.entries(snapshot2.requested_parameters).filter(([id]) => taskParameterVisibleInInspector(snapshot2, id))
     );
   }
-  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked, taskParametersEditing = false) {
+  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked) {
     if (outputSettingsLocked) return "preserve";
     if (!task) return "clear";
-    if (taskParametersEditing) return "clear";
-    return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId) ? "clear" : "inspect";
+    return taskOutputSettingsView(task, selectedModelId, false) === "editor" ? "clear" : "inspect";
   }
   function reconcileTaskParameterInspection() {
     const { state: state33, methods } = getLegacyBridge();
@@ -62682,10 +62600,7 @@ ${hint}` : hint);
     const action = taskParameterInspectionAction(
       task,
       String(state33.selectedModelId || ""),
-      Boolean(methods.isOutputSettingsLocked?.()),
-      Boolean(
-        state33.taskParameterEditingTaskId && String(state33.taskParameterEditingTaskId) === String(task?.task_id)
-      )
+      Boolean(methods.isOutputSettingsLocked?.())
     );
     if (action === "inspect" && task) inspectTaskParameters2(task);
     else if (action === "clear" && state33.inspectedGenerationSnapshot) clearTaskParameterInspection3();
@@ -62765,7 +62680,6 @@ ${hint}` : hint);
     }
     state33.parameterDraftsByModel[model.id] = report.values;
     state33.parameterDraftVersionsByModel[model.id] = model.version;
-    state33.taskParameterEditingTaskId = task.task_id;
     state33.inspectedGenerationSnapshot = null;
     renderTaskParameterInspector();
     restoreCurrentModelParameterDraft();

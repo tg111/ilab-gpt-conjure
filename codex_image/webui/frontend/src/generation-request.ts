@@ -23,17 +23,11 @@ export function currentGenerationSelection(): CanonicalGenerationSelection {
   }
   let draft = state.parameterDraftsByModel[model.id] || {};
   if (isGptImageModel(model.id) && typeof methods.currentTaskParams === "function") {
-    const currentValues = canonicalControlValues(
-      methods.currentTaskParams(),
-      selectedProviderBinding()?.protocol_profile || "",
-    );
-    draft = { ...draft, ...currentValues };
-    // Loading a completed task intentionally updates the visible legacy
-    // controls. Do not persist those historical values as the model draft
-    // while the task handoff is in progress.
-    if (!state.applyingCompletedTaskOutputSettings) {
-      state.parameterDraftsByModel[model.id] = draft;
-    }
+    draft = {
+      ...draft,
+      ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || ""),
+    };
+    state.parameterDraftsByModel[model.id] = draft;
   }
   return {
     canonicalModelId: model.id,

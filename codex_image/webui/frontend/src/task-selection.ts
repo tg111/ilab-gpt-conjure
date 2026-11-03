@@ -46,9 +46,6 @@ function revealHistoryTaskInSidebar(task) { return legacyMethod("revealHistoryTa
 function applyTaskToFormWithOutputLock(task) {
   const outputSettingsLocked = Boolean(legacyMethod("isOutputSettingsLocked"));
   const outputView = taskOutputSettingsView(task, String(state.selectedModelId || ""), outputSettingsLocked);
-  const applyingCompletedTaskOutputSettings = task?.status === "completed" && outputView === "editor";
-  state.taskParameterEditingTaskId = applyingCompletedTaskOutputSettings ? task.task_id : null;
-  state.applyingCompletedTaskOutputSettings = applyingCompletedTaskOutputSettings;
   applyTaskToForm(task, {
     preserveOutputSettings: outputView !== "editor",
     preserveComposer: false,
@@ -64,15 +61,6 @@ function applyTaskToFormWithOutputLock(task) {
   }
   clearTaskParameterInspection();
   legacyMethod("showLockedOutputSettings");
-}
-
-function finishCompletedTaskOutputSettingsApplication(task) {
-  if (
-    task?.status === "completed"
-    && String(state.taskParameterEditingTaskId || "") === String(task.task_id || "")
-  ) {
-    state.applyingCompletedTaskOutputSettings = false;
-  }
 }
 
 function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
@@ -329,10 +317,10 @@ async function selectTask(taskId) {
   preserveComposerDraft();
   applyTaskToFormWithOutputLock(task);
   const restoredPrompt = legacyMethod("getPromptText");
+  await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+  if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+  renderSelectedTask(task, taskId);
   try {
-    await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-    if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-    renderSelectedTask(task, taskId);
     await restoreTaskInputs(task, { taskId, restoreSeq });
   } catch (error) {
     if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -341,8 +329,6 @@ async function selectTask(taskId) {
     renderImageStrip();
     setStatus(error.message, "error");
     return;
-  } finally {
-    finishCompletedTaskOutputSettingsApplication(task);
   }
   if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
   markComposerBaseline(restoredPrompt);
@@ -418,12 +404,12 @@ async function restoreHistoryTaskReuseHandoff() {
     await revealHistoryTaskInSidebar(task);
     const restoreSeq = ++state.taskInputRestoreSeq;
     preserveComposerDraft();
-    applyTaskToFormWithOutputLock(task);
-    const restoredPrompt = legacyMethod("getPromptText");
+  applyTaskToFormWithOutputLock(task);
+  const restoredPrompt = legacyMethod("getPromptText");
+    await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
+    if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
+    renderSelectedTask(task, taskId);
     try {
-      await restoreTaskReferenceFiles(task, { taskId, restoreSeq });
-      if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
-      renderSelectedTask(task, taskId);
       await restoreTaskInputs(task, { taskId, restoreSeq });
     } catch (error) {
       if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
@@ -432,8 +418,6 @@ async function restoreHistoryTaskReuseHandoff() {
       renderImageStrip();
       setStatus(error.message || translate("referenceCollector.addFailed"), "error");
       return;
-    } finally {
-      finishCompletedTaskOutputSettingsApplication(task);
     }
     if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) return;
     applySelectedTaskRequestPreview(task);

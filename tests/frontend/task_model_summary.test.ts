@@ -141,13 +141,13 @@ test("unknown canonical model IDs remain truthful instead of being guessed", () 
   assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
-test("unlocked history selection keeps the composer editable across models", () => {
+test("locked task selection keeps the visual summary while unlocked cross-model history uses the inspector", () => {
   const geminiTask = {
     generation_snapshot: { canonical_model_id: "nano-banana-2-lite" },
   };
 
   assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", true), "locked-summary");
-  assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", false), "editor");
+  assert.equal(taskOutputSettingsView(geminiTask, "gpt-image-2", false), "parameter-inspector");
   assert.equal(taskOutputSettingsView(geminiTask, "nano-banana-2-lite", false), "editor");
 });
 
@@ -160,9 +160,8 @@ test("GPT history versions share the current parameter editor without changing t
       assert.equal(taskOutputSettingsView(task, selectedModel, true), "locked-summary");
       assert.equal(taskCanonicalModelId(task), historicalModel);
     }
-    // Unlocked history selection always loads an editable composer, even across model families.
-    assert.equal(taskOutputSettingsView(task, "nano-banana-2", false), "editor");
-    assert.equal(taskOutputSettingsView(task, "gpt-image-future", false), "editor");
+    assert.equal(taskOutputSettingsView(task, "nano-banana-2", false), "parameter-inspector");
+    assert.equal(taskOutputSettingsView(task, "gpt-image-future", false), "parameter-inspector");
   }
   assert.equal(taskOutputSettingsView({ params: { model: "gpt-image-2" } }, "gpt-image-2.5-flare", false), "editor");
 });
