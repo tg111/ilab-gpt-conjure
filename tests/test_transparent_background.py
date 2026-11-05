@@ -89,7 +89,7 @@ class TransparentBackgroundTests(unittest.TestCase):
         return next(t for t in payload['tools'] if t['type'] == 'image_generation') if plan.binding.protocol_profile.endswith('responses') else payload
 
     def test_native_and_prompt_modes_all_gpt_models_operations_and_protocols(self):
-        for model in ('gpt-image-2', 'gpt-image-2.5-flare', 'gpt-image-2.5-sunburst'):
+        for model in ('gpt-image-2', 'gpt-image-2.5-flare', 'gpt-image-2.5-sunburst', 'gpt-image-2.6-flare', 'gpt-image-2.6-sunburst'):
             for profile in ('openai_images', 'openai_responses', 'codex_images', 'codex_responses'):
                 for operation in ('generate', 'edit'):
                     for mode in ('native', 'prompt'):

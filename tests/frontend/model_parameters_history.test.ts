@@ -85,7 +85,7 @@ function installBridge() {
   return { state, restore: () => { (globalThis as any).window = previousWindow; } };
 }
 
-const gptVersions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"];
+const gptVersions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"];
 
 function installGptAdoptionBridge(selectedModelId: string) {
   const previous = { window: globalThis.window, document: globalThis.document };
@@ -606,10 +606,10 @@ test("history inspection closes when the selected model catches up with the task
 test("GPT history reconciliation keeps the shared editor and current provider version", () => {
   const { state, restore } = installBridge();
   try {
-    for (const historicalModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+    for (const historicalModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
       const snapshot = { canonical_model_id: historicalModel } as any;
       const task = { task_id: "gpt-history", generation_snapshot: snapshot } as any;
-      for (const selectedModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+      for (const selectedModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
         assert.equal(taskParameterInspectionMatchesSelectedModel(snapshot, selectedModel), true);
         assert.equal(taskParameterInspectionAction(task, selectedModel, false), "clear");
         assert.equal(taskParameterInspectionAction(task, selectedModel, true), "preserve");

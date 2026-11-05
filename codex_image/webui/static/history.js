@@ -27170,8 +27170,15 @@
   }
 
   // codex_image/webui/frontend/src/gpt-image-models.ts
+  var GPT_IMAGE_MODEL_IDS = [
+    "gpt-image-2",
+    "gpt-image-2.5-flare",
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.6-flare",
+    "gpt-image-2.6-sunburst"
+  ];
   function isGptImageModel(modelId) {
-    return ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"].includes(String(modelId || ""));
+    return GPT_IMAGE_MODEL_IDS.includes(String(modelId || ""));
   }
 
   // codex_image/webui/frontend/src/background-controls.ts
