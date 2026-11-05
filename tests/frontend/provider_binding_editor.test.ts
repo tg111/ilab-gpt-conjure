@@ -280,7 +280,7 @@ test("binding cards preserve legacy split operations while single bindings adopt
   assert.deepEqual(resolvedBindingOperations(edit, [generate, edit], model), ["edit"]);
 });
 
-for (const modelId of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+for (const modelId of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
   test(`${modelId} shares GPT protocols while retaining its identity and custom remote name`, () => {
     assert.deepEqual(availableProtocolsForModel(modelId), ["openai_images", "openai_responses"]);
     for (const protocol of ["openai_images", "openai_responses"] as const) {
@@ -296,7 +296,7 @@ test("model changes follow defaults across consecutive selections while preservi
   let remote = "gpt-image-2";
   remote = remoteModelAfterSelection(remote, "gpt-image-2", "gpt-image-2.5-flare");
   assert.equal(remote, "gpt-image-2.5-flare");
-  remote = remoteModelAfterSelection(remote, "gpt-image-2.5-flare", "gpt-image-2.5-sunburst");
+  remote = remoteModelAfterSelection(remote, "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst");
   assert.equal(remote, "gpt-image-2.5-sunburst");
   assert.equal(remoteModelAfterSelection(remote, remote, "gpt-image-2"), "gpt-image-2");
   assert.equal(remoteModelAfterSelection("  ", "gpt-image-2", "gpt-image-2.5-flare"), "gpt-image-2.5-flare");
@@ -360,7 +360,7 @@ test("provider edits keep complete defaults and retain the submitted form after 
     els.apiProviderBindings = { querySelectorAll: () => [card] };
   };
   try {
-    for (const model of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+    for (const model of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
       for (const isDefault of [true, false]) {
         await t.test(`${model} saves after changing a ${isDefault ? "default" : "non-default"} provider`, () => {
           prepare(isDefault, model);

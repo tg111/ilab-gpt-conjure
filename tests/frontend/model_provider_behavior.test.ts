@@ -415,7 +415,7 @@ test("GPT-only controls stay hidden for Gemini even without an eligible provider
 });
 
 test("main model visibility follows the Responses protocol for Codex and relay bindings", () => {
-  for (const modelId of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+  for (const modelId of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
     for (const protocolProfile of ["codex_responses", "openai_responses", "codex_images", "openai_images", null]) {
       assert.deepEqual(resolveModeSettingsVisibility({catalogAvailable: true, modelId, protocolProfile, legacyDirectApi: false}), {
         showMainModel: Boolean(protocolProfile?.endsWith("_responses")),
@@ -763,7 +763,7 @@ test("catalog refresh follows a changed selected binding instead of switching su
   const before: GenerationCatalog = {
     ...catalog,
     families: [{ id: "gpt-image", display_name: "GPT Image", short_name: "GPT", label_key: "gpt" }],
-    models: ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"].map(id => ({
+    models: ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"].map(id => ({
       ...model(id, "gpt-image"), operations: ["generate", "edit"], parameters,
     })),
     providers: [provider("edited", "gpt-image-2"), provider("fallback", "gpt-image-2")],
@@ -797,7 +797,7 @@ test("catalog refresh follows a changed selected binding instead of switching su
   (globalThis as any).document = { querySelectorAll: () => [], createElement: () => new FakeElement() };
   (globalThis as any).localStorage = { setItem() {} };
   try {
-    for (const nextModel of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
+    for (const nextModel of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
       for (const locked of [false, true]) {
         await t.test(`${nextModel} follows the selected binding with parameters ${locked ? "locked" : "unlocked"}`, async () => {
           prepare(nextModel, locked);
@@ -893,7 +893,7 @@ test("GPT versions share one parameter panel and are selected through provider b
       { id: "gemini-image", display_name: "Gemini", short_name: "Gemini", label_key: "gemini" },
     ],
     models: [
-      ...["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"].map(id => ({ ...model(id, "gpt-image"), parameters })),
+      ...["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"].map(id => ({ ...model(id, "gpt-image"), parameters })),
       model("nano-banana-pro", "gemini-image"), model("nano-banana-2", "gemini-image"),
     ],
     providers: [

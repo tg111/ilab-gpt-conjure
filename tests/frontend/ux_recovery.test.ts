@@ -25,7 +25,7 @@ test("template creation records the current model and edits preserve the stored 
   try {
     const { initPromptTemplatesFeature } = await import("../../codex_image/webui/frontend/src/prompt-templates");
     initPromptTemplatesFeature();
-    for (const modelId of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "nano-banana-2"]) {
+    for (const modelId of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst", "nano-banana-2"]) {
       state.selectedModelId = modelId;
       form.dataset.promptTemplateFormId = "";
       await methods.savePromptTemplateFromDrawer();

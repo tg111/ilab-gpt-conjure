@@ -23,6 +23,8 @@ class GenerationCatalogTests(unittest.TestCase):
                 "gpt-image-2",
                 "gpt-image-2.5-flare",
                 "gpt-image-2.5-sunburst",
+                "gpt-image-2.6-flare",
+                "gpt-image-2.6-sunburst",
                 "nano-banana-pro",
                 "nano-banana-2.1",
                 "nano-banana-2",
@@ -32,7 +34,7 @@ class GenerationCatalogTests(unittest.TestCase):
 
     def test_gpt_image_versions_share_parameters_without_changing_legacy_model(self) -> None:
         original = get_model_manifest("gpt-image-2")
-        for model_id in ("gpt-image-2.5-flare", "gpt-image-2.5-sunburst"):
+        for model_id in ("gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"):
             model = get_model_manifest(model_id)
             self.assertIs(model.parameters, original.parameters)
             self.assertEqual(model.family_id, "gpt-image")
@@ -45,7 +47,7 @@ class GenerationCatalogTests(unittest.TestCase):
         from codex_image.generation.snapshot import generation_snapshot
         from codex_image.providers.contracts import ProviderConnection, ProviderModelBinding
         from codex_image.webui.generation_request import preview_generation_command
-        for model_id in ("gpt-image-2.5-flare", "gpt-image-2.5-sunburst"):
+        for model_id in ("gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"):
             for protocol in ("openai_images", "openai_responses"):
                 with self.subTest(model=model_id, protocol=protocol):
                     binding = ProviderModelBinding("b", "relay", model_id, "vendor/custom-25",

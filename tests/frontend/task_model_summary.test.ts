@@ -152,7 +152,7 @@ test("locked task selection keeps the visual summary while unlocked cross-model 
 });
 
 test("GPT history versions share the current parameter editor without changing the historical identity", () => {
-  const versions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"];
+  const versions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"];
   for (const historicalModel of versions) {
     const task = { generation_snapshot: { canonical_model_id: historicalModel } };
     for (const selectedModel of versions) {

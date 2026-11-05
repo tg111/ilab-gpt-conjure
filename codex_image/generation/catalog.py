@@ -373,12 +373,20 @@ MODEL_MANIFESTS = (
 )
 
 # GPT Image versions share the same parameter contract and codecs.
-GPT_IMAGE_MODEL_IDS = frozenset({"gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"})
+GPT_IMAGE_MODEL_IDS = frozenset({
+    "gpt-image-2",
+    "gpt-image-2.5-flare",
+    "gpt-image-2.5-sunburst",
+    "gpt-image-2.6-flare",
+    "gpt-image-2.6-sunburst",
+})
 MODEL_MANIFESTS = (MODEL_MANIFESTS[0], *(
     replace(MODEL_MANIFESTS[0], id=model_id, official_model_id=model_id, display_name=name)
     for model_id, name in (
         ("gpt-image-2.5-flare", "GPT Image 2.5 Flare"),
         ("gpt-image-2.5-sunburst", "GPT Image 2.5 Sunburst"),
+        ("gpt-image-2.6-flare", "GPT Image 2.6 Flare"),
+        ("gpt-image-2.6-sunburst", "GPT Image 2.6 Sunburst"),
     )
 ), *MODEL_MANIFESTS[1:])
 
