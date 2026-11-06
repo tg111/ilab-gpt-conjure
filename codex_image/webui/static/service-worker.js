@@ -1,11 +1,11 @@
-const CACHE_NAME = "ilab-conjure-shell-v398";
+const CACHE_NAME = "ilab-conjure-shell-v399";
 const APP_SHELL_URLS = [
   "/",
   "/history",
   "/manifest.webmanifest",
   "/static/styles.css?v=runtime-922",
-  "/static/app.js?v=runtime-904",
-  "/static/history.js?v=history-189",
+  "/static/app.js?v=runtime-905",
+  "/static/history.js?v=history-190",
   "/static/pwa.js?v=pwa-1",
   "/static/icons/ui.svg?v=1",
   "/static/image-editor-fill-worker.js?v=1",
@@ -47,13 +47,20 @@ self.addEventListener("fetch", (event) => {
 
   if (!APP_SHELL_PATHS.has(requestUrl.pathname)) return;
 
+  // Network first: the WebUI is served locally, so always prefer the live
+  // assets and only fall back to the cache when the server is unreachable.
+  // A cache-first strategy kept serving a stale app.js whenever a rebuild
+  // forgot to bump the ?v= query, which broke the output settings panel
+  // until a hard refresh bypassed the worker.
   event.respondWith(
-    caches.match(request).then((cached) => (
-      cached || fetch(request).then((response) => {
+    fetch(request).then((response) => {
+      if (response.ok) {
         const copy = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-        return response;
-      }).catch(() => caches.match(request, { ignoreSearch: true }))
-    ))
+      }
+      return response;
+    }).catch(() => caches.match(request).then((cached) => (
+      cached || caches.match(request, { ignoreSearch: true })
+    )))
   );
 });
