@@ -121,7 +121,8 @@
         });
       })();
     </script>
-    <link rel="stylesheet" href="/static/styles.css?v=runtime-922" />
+    <script src="/static/appearance-bootstrap.js?v=2"></script>
+    <link rel="stylesheet" href="/static/styles.css?v=runtime-930" />
   </head>
   <body>
     <div class="layout-container">
@@ -784,15 +785,28 @@
                           <button class="radio-btn" data-val="low" type="button" data-i18n="output.qualityLow">低</button>
                           <button class="radio-btn" data-val="medium" type="button" data-i18n="output.qualityMedium">中</button>
                           <button class="radio-btn" data-val="high" type="button" data-i18n="output.qualityHigh">高</button>
+                          <button class="radio-btn hidden" disabled data-val="xhigh" type="button" data-i18n="output.qualityXhigh">超高</button>
+                          <button class="radio-btn hidden" disabled data-val="max" type="button" data-i18n="output.qualityMax">最高</button>
                         </div>
                         <select id="quality" class="hidden">
                           <option value="auto" data-i18n="output.qualityAuto">自动</option>
                           <option value="low" data-i18n="output.qualityLow">低</option>
                           <option value="medium" data-i18n="output.qualityMedium">中</option>
                           <option value="high" data-i18n="output.qualityHigh">高</option>
+                          <option value="xhigh" data-i18n="output.qualityXhigh">超高</option>
+                          <option value="max" data-i18n="output.qualityMax">最高</option>
                         </select>
                       </div>
 
+                      <div id="complexityField" class="field complexity-field hidden">
+                        <span class="output-label-pair" data-i18n="output.complexity">复杂度</span>
+                        <div id="complexityGroup" class="radio-group" role="group" aria-label="复杂度" data-i18n-attr="aria-label:output.complexity">
+                          <button class="radio-btn" type="button" data-val="low" data-i18n="output.qualityLow">低</button>
+                          <button class="radio-btn" type="button" data-val="medium" data-i18n="output.qualityMedium">中</button>
+                          <button class="radio-btn active" type="button" data-val="high" data-i18n="output.qualityHigh">高</button>
+                        </div>
+                        <select id="complexity" class="hidden"><option value="low">low</option><option value="medium">medium</option><option value="high" selected>high</option></select>
+                      </div>
                       <div class="field quantity-field">
                         <span class="output-label-pair" data-i18n="output.quantity">数量</span>
                         <div class="radio-group quantity-group" id="quantityGroup" role="group" aria-label="数量" data-i18n-attr="aria-label:output.quantity">
@@ -832,10 +846,12 @@
                         <button class="radio-btn" data-val="jpeg" type="button">jpeg</button>
                         <button class="radio-btn" data-val="webp" type="button">webp</button>
                       </div>
-                      <select id="outputFormat" class="hidden">
+                      <select id="outputFormat" class="hidden" aria-label="输出格式" data-i18n-attr="aria-label:output.format">
                         <option value="png">png</option>
                         <option value="jpeg">jpeg</option>
                         <option value="webp">webp</option>
+                        <option value="svg" hidden disabled>svg</option>
+                        <option value="gif" hidden disabled>gif</option>
                       </select>
                       <div id="compressionPopover" class="compression-popover hidden" role="dialog" tabindex="-1" aria-hidden="true" aria-label="压缩率设置" data-i18n-attr="aria-label:output.compression">
                         <label id="compressionField" class="range-control compression-range">
@@ -845,6 +861,11 @@
                           </div>
                           <input id="compression" class="slider" type="range" min="50" max="100" step="1" value="80" />
                         </label>
+                        <div id="gifOptions" class="gif-options hidden">
+                          <label class="field"><span data-i18n="output.frameCount">帧数</span><input id="frameCount" class="control" type="number" min="2" max="64" step="1" value="9" disabled /></label>
+                          <label class="field"><span data-i18n="output.frameDuration">每帧时长（毫秒）</span><input id="frameDuration" class="control" type="number" min="20" max="2000" step="10" value="200" disabled /></label>
+                          <div class="gif-duration"><span data-i18n="output.totalDuration">总时长</span><output id="gifDuration" for="frameCount frameDuration" aria-live="polite">1.8 s</output></div>
+                        </div>
                       </div>
                     </div>
                     <div class="field moderation-field">
@@ -1066,6 +1087,10 @@
                     </button>
                   </div>
                 </label>
+                <label id="apiSvgAuthorModelField" class="field api-svg-author-model-field hidden">
+                  <span data-i18n="apiSettings.svgAuthorModel">SVG 绘制模型</span>
+                  <input id="apiSvgAuthorModel" class="control" type="text" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="gpt-6-luna" />
+                </label>
                 <section class="provider-bindings-editor" aria-labelledby="providerBindingsTitle">
                   <div class="provider-bindings-header">
                     <div class="provider-bindings-title-row">
@@ -1255,6 +1280,10 @@
                 <input id="userConfigIncludeApiKeys" type="checkbox" />
                 <span><strong data-i18n="userConfigBackup.includeApiKeys">包含 API Key（敏感）</strong><small data-i18n="userConfigBackup.apiKeyWarning">备份包不加密，请妥善保存。</small></span>
               </label>
+              <label id="userConfigLegacyBackupRow" class="user-config-section-row hidden" hidden>
+                <input id="userConfigLegacyBackup" type="checkbox" />
+                <span data-i18n="userConfigBackup.legacyCompatible">兼容旧版（不包含配色）</span>
+              </label>
               <div id="userConfigBackupProgress" class="user-config-progress hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="备份进度" data-i18n-attr="aria-label:userConfigBackup.backupProgress">
                 <span></span>
               </div>
@@ -1363,6 +1392,10 @@
           <button id="imageEditorClose" class="ghost-button drawer-close-button" type="button" aria-label="关闭编辑输入图片面板" title="关闭" data-i18n-attr="aria-label:close.imageEditor;title:action.close">
             <svg class="drawer-close-icon" data-ui-icon="close" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg>
           </button>
+        </div>
+        <div id="imageEditorModeGroup" class="image-editor-mode-group hidden" role="group" aria-label="编辑输入图片" data-i18n-attr="aria-label:imageEditor.title">
+          <button class="ghost-button text-sm active" type="button" data-image-editor-mode="image" aria-pressed="true" data-i18n="imageEditor.image">图像</button>
+          <button class="ghost-button text-sm" type="button" data-image-editor-mode="markup" aria-pressed="false" data-i18n="imageEditor.markup">标注</button>
         </div>
         <div class="image-editor-toolbar" aria-label="图片编辑工具栏" data-i18n-attr="aria-label:imageEditor.toolbar">
           <div class="image-editor-tool-group" aria-label="工具" data-i18n-attr="aria-label:imageEditor.tools">
@@ -1552,7 +1585,7 @@
     </div>
 
     <div id="taskNotificationToastRegion" class="task-notification-toast-region" aria-live="polite"></div>
-  <script src="/static/app.js?v=runtime-905"></script>
+  <script src="/static/app.js?v=runtime-917"></script>
     <script>
       (() => {
         document.querySelectorAll(".radio-group").forEach((group) => {

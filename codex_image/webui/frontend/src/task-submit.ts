@@ -79,7 +79,12 @@ function selectedRoutingFields(): { authSource: "codex" | "api"; requestedBacken
   return { authSource, requestedBackend: profile || (authSource === "codex" ? "codex_images" : "api_images") };
 }
 
-const REFERENCE_FILE_ERROR_KEYS: Record<string, string> = {
+const REQUEST_ERROR_KEYS: Record<string, string> = {
+  openai_gif_edit_frame_limit_exceeded: "taskSubmit.openAiGifEditFrameLimit",
+  gif_output_does_not_support_mask: "taskSubmit.gifMaskUnsupported",
+  gif_output_does_not_support_compression: "taskSubmit.gifCompressionUnsupported",
+  gif_output_does_not_support_partial_images: "taskSubmit.gifPartialImagesUnsupported",
+  output_compression_requires_jpeg_or_webp: "taskSubmit.compressionFormatUnsupported",
   reference_file_empty: "referenceFiles.errorEmpty",
   reference_file_type_unsupported: "referenceFiles.errorUnsupported",
   reference_file_type_mismatch: "referenceFiles.errorMismatch",
@@ -108,7 +113,7 @@ function responseErrorMessage(detail: unknown): string {
     : detail && typeof detail === "object" && "code" in detail
       ? String((detail as any).code || "")
       : "";
-  const localeKey = REFERENCE_FILE_ERROR_KEYS[code];
+  const localeKey = REQUEST_ERROR_KEYS[code];
   return localeKey ? translate(localeKey) : sanitizedApiMessage(detail, fallback);
 }
 
@@ -156,12 +161,15 @@ export function applyTaskOutputParams(task: any): void {
   }
   if (output.quality && els.quality) els.quality.value = output.quality;
   if (output.output_format && els.outputFormat) els.outputFormat.value = output.output_format;
+  if (els.complexity) els.complexity.value = String(output.complexity || "high");
+  if (els.frameCount) els.frameCount.value = String(output.frame_count ?? 9);
+  if (els.frameDuration) els.frameDuration.value = String(output.frame_duration_ms ?? 200);
   setBackgroundControl(output.background);
   if (output.moderation && els.moderation) els.moderation.value = output.moderation;
   if (output.output_compression !== null && output.output_compression !== undefined && els.compression) {
     els.compression.value = output.output_compression;
   }
-  [els.quality, els.outputFormat, els.moderation].forEach((element: any) => {
+  [els.complexity, els.quality, els.outputFormat, els.moderation].forEach((element: any) => {
     element?.dispatchEvent(new Event("change"));
   });
   updateQuantity();
@@ -286,6 +294,22 @@ async function runTask() {
   const assets = referenceAssetInputs();
   const fileUploads = referenceFileUploads();
   const storedFiles = storedReferenceFileInputs();
+  updateCompression();
+  if (els.outputFormat?.value === "gif" && [els.frameCount, els.frameDuration].some((input: HTMLInputElement) => input && !input.checkValidity())) {
+    getLegacyBridge().methods.openCompressionPopover?.();
+    [els.frameCount, els.frameDuration].find((input: HTMLInputElement) => input && !input.checkValidity())?.reportValidity();
+    return;
+  }
+  const marked = state.images.filter((source: any) => source.markupFile);
+  if (marked.length) {
+    const model = state.generationCatalog?.models.find((item: any) => item.id === state.selectedModelId);
+    if (!model?.input_constraints.supports_markup || selectedProviderBinding()?.protocol_profile !== "openai_images" || state.mode !== "edit") {
+      setStatus(translate("imageEditor.markupUnsupported"), "error"); return;
+    }
+    if (marked.length > 1 || state.images[0] !== marked[0]) {
+      setStatus(translate("imageEditor.markupFirstOnly"), "error"); return;
+    }
+  }
   if (!imageMentionsValid()) {
     setStatus(translate("promptMention.missing"), "error");
     return;
@@ -342,6 +366,7 @@ async function runTask() {
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));
   assets.forEach((source: any) => form.append("reference_asset_ids", source.id));
   form.append("reference_image_order", JSON.stringify(referenceImageOrder()));
+  if (marked[0]?.markupFile) form.append("markup", marked[0].markupFile, "markup.png");
   fileUploads.forEach((source: any) => form.append("reference_files", source.file));
   storedFiles.forEach((source: any) => form.append("reference_file_ids", source.id));
 
@@ -380,7 +405,7 @@ async function runTask() {
     stopRunFeedback();
     setStatus(translate("taskSubmit.queued"), "ok");
     await window.refreshQueue?.();
-    if (uploads.length || assets.length) await refreshRecentAssets();
+    if (uploads.length || assets.length) void refreshRecentAssets();
     renderPreview();
     getLegacyBridge().methods.showMobilePreview?.();
   } catch (error) {

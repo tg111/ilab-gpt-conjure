@@ -1,6 +1,7 @@
 import { getLegacyBridge } from "./state";
 import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { moveQueueTask } from "./queue";
+import { isTaskDeletionPending } from "./task-actions";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
@@ -150,7 +151,7 @@ function taskContextMenuHtml(task: any) {
         ].join("")
       : [
           taskContextButton("archive", translate("taskContext.archive")),
-          taskContextButton("delete", translate("taskContext.delete"), false, true),
+          taskContextButton("delete", translate("taskContext.delete"), isTaskDeletionPending(String(task.task_id)), true),
         ].join("");
   return `
     <div class="task-context-menu-section">

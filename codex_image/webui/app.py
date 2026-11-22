@@ -483,9 +483,19 @@ def create_app(
         )
 
     @app.api_route("/manifest.webmanifest", methods=["GET", "HEAD"], response_model=None)
-    def web_app_manifest() -> Response:
+    def web_app_manifest(theme_color: str | None = None, background_color: str | None = None) -> Response:
         manifest_path = static_path / "manifest.webmanifest"
         if manifest_path.exists():
+            overrides = {key: value for key, value in {
+                "theme_color": theme_color, "background_color": background_color,
+            }.items() if value is not None}
+            if any(not re.fullmatch(r"#[0-9a-fA-F]{6}", value) for value in overrides.values()):
+                raise HTTPException(status_code=422, detail="Manifest colors must be six-digit HEX colors")
+            if overrides:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                manifest.update(overrides)
+                return Response(json.dumps(manifest), media_type="application/manifest+json",
+                                headers={"Cache-Control": "no-store"})
             return FileResponse(
                 manifest_path,
                 media_type="application/manifest+json",
@@ -768,6 +778,7 @@ def _slim_request_payload(
     reference_assets: list[dict[str, Any]],
     reference_files: list[dict[str, Any]] | None = None,
     mask_file: str | None = None,
+    markup_file: str | None = None,
 ) -> dict[str, Any]:
     slim = _redact_request_data(request_payload)
     if isinstance(slim, dict):
@@ -776,6 +787,8 @@ def _slim_request_payload(
             "gallery_refs": gallery_refs,
             "reference_assets": reference_assets,
         }
+        if markup_file:
+            refs["markup_file"] = markup_file
         if mask_file:
             refs["mask_file"] = mask_file
         slim["webui_image_refs"] = refs

@@ -141,7 +141,22 @@ def _codex_mode_for_binding(
 
 def _generation_request_error(exc: ValueError) -> HTTPException:
     message = str(exc)
-    if message == "transparent_background_requires_png_or_webp":
+    format_errors = {
+        "openai_gif_edit_frame_limit_exceeded": "OpenAI GIF edits support up to 16 frames. Reduce the frame count.",
+        "gif_output_does_not_support_mask": "GIF output does not support masks. Remove the mask or choose another output format.",
+        "gif_output_does_not_support_compression": "GIF output does not support compression settings. Remove compression or choose JPEG/WebP.",
+        "gif_output_does_not_support_partial_images": "GIF output does not support partial-image previews. Disable partial-image previews or choose another output format.",
+        "output_compression_requires_jpeg_or_webp": "Compression settings require JPEG or WebP output. Remove compression or choose JPEG/WebP.",
+    }
+    if message == "Parameter is not applicable: gpt.output_compression":
+        message = "output_compression_requires_jpeg_or_webp"
+    if message in format_errors:
+        code = message
+        safe_message = format_errors[message]
+    elif message == "gif_frame_pixel_limit_exceeded":
+        code = message
+        safe_message = "Reduce GIF frame count or resolution to stay within the local image decoding limit."
+    elif message == "transparent_background_requires_png_or_webp":
         code = message
         safe_message = "Transparent backgrounds require PNG or WebP output."
     elif "does not support model" in message:
@@ -176,6 +191,7 @@ def _preview_form_generation(
     instructions: str | None,
     image_data_urls: list[str],
     mask_data_url: str | None,
+    markup_data_url: str | None = None,
     reference_file_inputs: list[ResponsesInputFile],
     legacy_fields: dict[str, Any],
     explicit_form_fields: frozenset[str],
@@ -192,6 +208,7 @@ def _preview_form_generation(
             image_inputs=tuple(ImageInput(item) for item in image_data_urls),
             reference_files=tuple(reference_file_inputs),
             mask_image=mask_data_url,
+            markup_image=markup_data_url,
             main_model=main_model,
             instructions=instructions,
             legacy_fields=legacy_fields,
@@ -260,6 +277,7 @@ def _prepare_generation_submission(
     explicit_form_fields: frozenset[str],
     image_data_urls: list[str],
     mask_data_url: str | None,
+    markup_data_url: str | None = None,
     reference_file_inputs: list[ResponsesInputFile],
     resolved_original_prompt: str | None = None,
 ) -> PreparedGenerationSubmission:
@@ -318,6 +336,7 @@ def _prepare_generation_submission(
         instructions=request_instructions,
         image_data_urls=image_data_urls,
         mask_data_url=mask_data_url,
+        markup_data_url=markup_data_url,
         reference_file_inputs=reference_file_inputs,
         legacy_fields={
             "model": model,
@@ -418,6 +437,7 @@ def _persist_generation_submission(
     effective_api_images_concurrency: int,
     input_files: list[Path],
     mask_file: str | None,
+    markup_file: str | None = None,
     gallery_refs: list[dict[str, Any]],
     reference_assets: list[dict[str, Any]],
     file_references: list[dict[str, Any]],
@@ -432,6 +452,7 @@ def _persist_generation_submission(
         reference_assets=reference_assets,
         reference_files=file_references,
         mask_file=mask_file,
+        markup_file=markup_file,
     )
     if reference_image_order is not None:
         stored_request_payload["webui_image_refs"]["reference_image_order"] = reference_image_order
@@ -460,6 +481,7 @@ def _persist_generation_submission(
         params=prepared.params,
         input_files=[path.name for path in input_files],
         mask_file=mask_file,
+        markup_file=markup_file,
         gallery_refs=gallery_refs,
         reference_assets=reference_assets,
         reference_files=file_references,
@@ -695,6 +717,7 @@ def _validate_task_image_resources(
     reference_assets: list[dict[str, Any]],
     gallery_refs: list[dict[str, Any]],
     mask: ValidatedRasterImage | None = None,
+    markup: ValidatedRasterImage | None = None,
 ) -> None:
     resources: list[TaskImageResource] = []
     for item in [*reference_assets, *gallery_refs]:
@@ -712,6 +735,8 @@ def _validate_task_image_resources(
                 size_bytes=len(mask.data),
             )
         )
+    if markup is not None:
+        resources.append(TaskImageResource(key=f"content:{markup.sha256}", size_bytes=len(markup.data)))
     try:
         validate_task_image_total(
             resources,
@@ -961,6 +986,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         reference_file_ids: list[str] | None = Form(None),
         images: list[UploadFile] | None = File(None),
         mask: UploadFile | None = File(None),
+        markup: UploadFile | None = File(None),
         reference_files: list[UploadFile] | None = File(None),
     ) -> dict[str, Any]:
         explicit_form_fields = frozenset(str(key) for key in (await request.form()).keys())
@@ -1007,6 +1033,13 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 [mask] if mask is not None else []
             )
             prepared_mask = prepared_masks[0] if prepared_masks else None
+            prepared_markups = await _prepare_raster_uploads([markup] if markup is not None else [])
+            prepared_markup = prepared_markups[0] if prepared_markups else None
+            markup_data_url = (
+                _bytes_to_data_url(prepared_markup.data, filename=prepared_markup.filename,
+                                   mime_type=prepared_markup.mime_type)
+                if prepared_markup is not None else None
+            )
             predicted_uploaded_assets = [
                 _prepared_reference_asset(image)
                 for image in uploaded_images
@@ -1033,6 +1066,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 reference_assets=predicted_assets,
                 gallery_refs=gallery_refs,
                 mask=prepared_mask,
+                markup=prepared_markup,
             )
             prepared_reference_files = await _prepare_reference_files(
                 ctx.reference_file_storage,
@@ -1093,6 +1127,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 explicit_form_fields=explicit_form_fields,
                 image_data_urls=all_image_data_urls,
                 mask_data_url=mask_data_url,
+                markup_data_url=markup_data_url,
                 reference_file_inputs=list(prepared_reference_files.response_inputs),
                 resolved_original_prompt=resolved_original if resolved_mentions is not None else None,
             )
@@ -1122,6 +1157,11 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                     else []
                 )
                 mask_file = mask_files[0].name if mask_files else None
+                markup_file = (
+                    ctx.storage.write_input(task.task_id, "markup.png", prepared_markup.data,
+                                            kind="markup", index=1).name
+                    if prepared_markup is not None else None
+                )
                 return _persist_generation_submission(
                     ctx,
                     prepared=prepared_submission,
@@ -1136,6 +1176,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                     effective_api_images_concurrency=effective_api_images_concurrency,
                     input_files=[],
                     mask_file=mask_file,
+                    markup_file=markup_file,
                     gallery_refs=gallery_refs,
                     reference_assets=reference_assets,
                     file_references=file_references,

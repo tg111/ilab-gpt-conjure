@@ -13,7 +13,7 @@
     const triggers = /* @__PURE__ */ new WeakMap();
     const narrowHistory = window.matchMedia("(max-width: 1100px)");
     const historyBackground = /* @__PURE__ */ new Map();
-    const visible = (element2) => element2.id === "historyDetail" ? narrowHistory.matches && Boolean(element2.closest(".history-detail-open")) : !element2.classList.contains("hidden") && !element2.hidden && (!element2.matches(".resource-sheet") || element2.classList.contains("open"));
+    const visible = (element3) => element3.id === "historyDetail" ? narrowHistory.matches && Boolean(element3.closest(".history-detail-open")) : !element3.classList.contains("hidden") && !element3.hidden && (!element3.matches(".resource-sheet") || element3.classList.contains("open"));
     const ownedPopovers = (root) => Array.from(root.querySelectorAll('[aria-controls][aria-expanded="true"]')).flatMap((trigger) => (trigger.getAttribute("aria-controls") || "").split(/\s+/).map((id) => document.getElementById(id))).filter((popover) => Boolean(popover && !root.contains(popover) && visible(popover) && popover.getClientRects().length));
     const containsFocus = (root, target) => root.contains(target) || ownedPopovers(root).some((popover) => popover.contains(target));
     const focusables = (root) => [root, ...ownedPopovers(root)].flatMap((layer) => Array.from(layer.querySelectorAll(focusSelector))).filter((item) => !item.closest('[inert], [hidden], .hidden, [aria-hidden="true"]') && item.getClientRects().length > 0);
@@ -21,7 +21,7 @@
       root.tabIndex = -1;
       (focusables(root)[0] || root).focus({ preventScroll: true });
     };
-    const sync = () => {
+    const sync2 = () => {
       if (syncing) return;
       syncing = true;
       document.querySelectorAll(layerSelector).forEach((layer) => {
@@ -80,11 +80,11 @@
       if (topVisible?.id === "historyDetail" && !containsFocus(topVisible, document.activeElement)) focusFirst(topVisible);
       syncing = false;
     };
-    new MutationObserver(sync).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "hidden"] });
-    narrowHistory.addEventListener("change", sync);
-    sync();
+    new MutationObserver(sync2).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "hidden"] });
+    narrowHistory.addEventListener("change", sync2);
+    sync2();
     document.addEventListener("focusin", (event) => {
-      sync();
+      sync2();
       const top = stack[stack.length - 1];
       if (top && visible(top) && !containsFocus(top, event.target)) focusFirst(top);
       previousFocus = document.activeElement;
@@ -115,6 +115,45 @@
 
   // codex_image/webui/frontend/src/i18n/en.ts
   var EN_DICTIONARY = {
+    "appearance.open": "Customize colors",
+    "appearance.skin": "Color theme",
+    "appearance.default": "Original",
+    "appearance.blue": "Blue",
+    "appearance.purple": "Purple",
+    "appearance.amber": "Amber",
+    "appearance.primary": "Primary color",
+    "appearance.hint": "#RRGGBB \xB7 Shades adapt for readability in light and dark modes.",
+    "appearance.background": "Background tone",
+    "appearance.neutral": "Neutral",
+    "appearance.warm": "Warm",
+    "appearance.cool": "Cool",
+    "appearance.tinted": "Tinted",
+    "appearance.reset": "Restore original colors",
+    "appearance.cancel": "Cancel preview",
+    "appearance.apply": "Apply colors",
+    "appearance.preview": "Preview \xB7 applies to this browser after saving.",
+    "appearance.invalid": "Enter a six-digit HEX color, e.g. #457B66.",
+    "appearance.saveFailed": "Colors previewed, but browser storage is unavailable.",
+    "appearance.saved": "Colors saved",
+    "referenceCollector.svgConversionFailed": "Could not convert SVG to a reference image. Download it and convert it to PNG before trying again.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI GIF edits support up to 16 frames. Reduce the frame count.",
+    "taskSubmit.gifMaskUnsupported": "GIF output does not support masks. Remove the mask or choose another output format.",
+    "taskSubmit.gifCompressionUnsupported": "GIF output does not support compression settings. Remove compression or choose JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF output does not support partial-image previews. Disable them or choose another output format.",
+    "taskSubmit.compressionFormatUnsupported": "Compression settings require JPEG or WebP. Remove compression or choose JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Markup supports up to 16,777,216 pixels. Resize the original first.",
+    "imageEditor.replacesMarkup": "Saving image edits will remove the existing markup.",
+    "output.qualityXhigh": "Extra high",
+    "output.qualityMax": "Maximum",
+    "output.complexity": "Complexity",
+    "output.frameCount": "Frames",
+    "output.frameDuration": "Frame duration (ms)",
+    "output.totalDuration": "Total duration",
+    "imageEditor.markup": "Markup",
+    "imageEditor.image": "Image",
+    "imageEditor.saveMarkup": "Save markup",
+    "imageEditor.markupFirstOnly": "Markup is supported on the first reference image only",
+    "imageEditor.markupUnsupported": "This model or API does not support markup. Switch it or remove the markup.",
     "mobile.taskActions": "Task actions",
     "mobile.photos": "Photos",
     "mobile.files": "Files",
@@ -161,6 +200,7 @@
     "ux.recovery.quota": "Check the task provider\u2019s quota or account balance.",
     "ux.recovery.input": "Check the prompt, reference files and generation settings for unsupported inputs.",
     "ux.recovery.temporary": "Generation did not complete. Successful images are retained; retry failed images when available.",
+    "ux.recovery.svgAuthorModel": "In this provider\u2019s API settings, choose an SVG author model your OpenAI project can use, then retry.",
     "ux.checkProvider": "Check provider settings",
     "ux.acceptDetail": "Keep successful images and finish the task without filling the failed slots.",
     "ux.editInputs": "Edit inputs and settings",
@@ -1146,6 +1186,7 @@
     "userConfigBackup.groupGalleryItems": "Shared images",
     "userConfigBackup.groupPromptTemplates": "Prompt templates",
     "userConfigBackup.groupSettings": "System settings",
+    "userConfigBackup.legacyCompatible": "Compatible with older versions (without colors)",
     "userConfigBackup.includeApiKeys": "Include API keys (sensitive)",
     "userConfigBackup.apiKeyWarning": "The archive is not encrypted. Store it securely.",
     "userConfigBackup.backupProgress": "Backup progress",
@@ -1312,6 +1353,8 @@
     "apiSettings.modeImagesShort": "Direct",
     "apiSettings.imageModel": "Image generation model",
     "apiSettings.concurrency": "Concurrency limit",
+    "apiSettings.svgAuthorModel": "SVG author model",
+    "apiSettings.invalidSvgAuthorModel": "Enter a valid SVG model ID without spaces.",
     "apiSettings.concurrencyShort": "Concurrency",
     "apiSettings.advancedSettings": "Advanced settings",
     "apiSettings.concurrencyValue": "concurrency {concurrency}",
@@ -1521,6 +1564,45 @@
 
   // codex_image/webui/frontend/src/i18n/de.ts
   var DE_DICTIONARY = {
+    "appearance.open": "Farben anpassen",
+    "appearance.skin": "Farbschema",
+    "appearance.default": "Original",
+    "appearance.blue": "Blau",
+    "appearance.purple": "Violett",
+    "appearance.amber": "Bernstein",
+    "appearance.primary": "Hauptfarbe",
+    "appearance.hint": "#RRGGBB \xB7 Farbt\xF6ne passen sich f\xFCr gute Lesbarkeit an helle und dunkle Modi an.",
+    "appearance.background": "Hintergrundton",
+    "appearance.neutral": "Neutral",
+    "appearance.warm": "Warm",
+    "appearance.cool": "K\xFChl",
+    "appearance.tinted": "Get\xF6nt",
+    "appearance.reset": "Originalfarben wiederherstellen",
+    "appearance.cancel": "Vorschau abbrechen",
+    "appearance.apply": "Farben anwenden",
+    "appearance.preview": "Vorschau \xB7 Nach dem Anwenden in diesem Browser gespeichert.",
+    "appearance.invalid": "Sechsstellige HEX-Farbe eingeben, z. B. #457B66.",
+    "appearance.saveFailed": "Vorschau verf\xFCgbar, aber der Browser kann die Einstellung nicht speichern.",
+    "appearance.saved": "Farben gespeichert",
+    "referenceCollector.svgConversionFailed": "SVG konnte nicht als Referenzbild konvertiert werden. Lade es herunter und wandle es vor einem erneuten Versuch in PNG um.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI unterst\xFCtzt bei GIF-Bearbeitungen bis zu 16 Bilder. Verringere die Bildanzahl.",
+    "taskSubmit.gifMaskUnsupported": "GIF-Ausgabe unterst\xFCtzt keine Masken. Entferne die Maske oder w\xE4hle ein anderes Ausgabeformat.",
+    "taskSubmit.gifCompressionUnsupported": "GIF-Ausgabe unterst\xFCtzt keine Kompressionseinstellungen. Entferne sie oder w\xE4hle JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF-Ausgabe unterst\xFCtzt keine Zwischenbildvorschau. Deaktiviere sie oder w\xE4hle ein anderes Ausgabeformat.",
+    "taskSubmit.compressionFormatUnsupported": "Kompressionseinstellungen erfordern JPEG oder WebP. Entferne sie oder w\xE4hle JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Markierungen unterst\xFCtzen bis zu 16.777.216 Pixel. Verkleinern Sie zuerst das Original.",
+    "imageEditor.replacesMarkup": "Beim Speichern der Bildbearbeitung wird die vorhandene Markierung entfernt.",
+    "output.qualityXhigh": "Sehr hoch",
+    "output.qualityMax": "Maximum",
+    "output.complexity": "Komplexit\xE4t",
+    "output.frameCount": "Frames",
+    "output.frameDuration": "Dauer pro Frame (ms)",
+    "output.totalDuration": "Gesamtdauer",
+    "imageEditor.markup": "Markierung",
+    "imageEditor.image": "Bild",
+    "imageEditor.saveMarkup": "Markierung speichern",
+    "imageEditor.markupFirstOnly": "Markierungen sind nur auf dem ersten Referenzbild m\xF6glich",
+    "imageEditor.markupUnsupported": "Dieses Modell oder diese API unterst\xFCtzt keine Markierungen. Wechseln Sie oder entfernen Sie die Markierung.",
     "app.newTask": "Neu",
     "app.newTaskAria": "Neuer Chat",
     "sidebar.searchPlaceholder": "Suchaufforderungen oder Aufgabe ID",
@@ -2474,6 +2556,7 @@
     "userConfigBackup.emptyReplaceBlocked": "Ersetzen nicht m\xF6glich: {groups} sind in der Sicherung leer, enthalten aber aktuelle Daten. Heben Sie die Auswahl auf oder verwenden Sie die inkrementelle Wiederherstellung.",
     "user_config_restore_empty_replace_blocked": "Leere Sicherungsdaten d\xFCrfen keine vorhandenen Daten ersetzen. Heben Sie die Auswahl auf oder verwenden Sie die inkrementelle Wiederherstellung.",
     "user_config_restore_preview_unavailable": "Die aktuellen Daten konnten nicht sicher gelesen werden. Pr\xFCfen Sie die lokalen Dateien und validieren Sie die Sicherung erneut.",
+    "userConfigBackup.legacyCompatible": "Mit \xE4lteren Versionen kompatibel (ohne Farben)",
     "userConfigBackup.includeApiKeys": "API-Schl\xFCssel einschlie\xDFen (sensibel)",
     "userConfigBackup.apiKeyWarning": "Die Sicherung ist nicht verschl\xFCsselt. Bewahren Sie sie sicher auf.",
     "userConfigBackup.incremental": "Inkrementell",
@@ -2556,6 +2639,8 @@
     "apiSettings.modeImagesShort": "Direkt",
     "apiSettings.imageModel": "Bildgenerierungsmodell",
     "apiSettings.concurrency": "Parallelit\xE4tslimit",
+    "apiSettings.svgAuthorModel": "SVG-Erstellungsmodell",
+    "apiSettings.invalidSvgAuthorModel": "Gib eine g\xFCltige SVG-Modell-ID ohne Leerzeichen ein.",
     "apiSettings.concurrencyShort": "Parallelit\xE4t",
     "apiSettings.remoteModelName": "Modellname beim Anbieter",
     "apiSettings.fetchModels": "Modelle abrufen",
@@ -2906,6 +2991,7 @@
     "ux.recovery.input": "Prompt, Referenzdateien und Generierungseinstellungen auf nicht unterst\xFCtzte Eingaben pr\xFCfen.",
     "ux.recovery.quota": "Kontingent oder Kontostand des Aufgabenanbieters pr\xFCfen.",
     "ux.recovery.temporary": "Generierung nicht abgeschlossen. Erfolgreiche Bilder bleiben erhalten; fehlgeschlagene Bilder bei Verf\xFCgbarkeit erneut versuchen.",
+    "ux.recovery.svgAuthorModel": "Trage in den API-Einstellungen des Anbieters ein SVG-Erstellungsmodell ein, das dein OpenAI-Projekt verwenden darf, und versuche es erneut.",
     "ux.referenceAdded": "Zu den Referenzen dieser Aufgabe hinzugef\xFCgt",
     "ux.referenceFailed": "Referenz konnte nicht hinzugef\xFCgt werden. Erneut versuchen.",
     "ux.restoreDraft": "Eingaben wiederherstellen",
@@ -2927,6 +3013,45 @@
 
   // codex_image/webui/frontend/src/i18n/es.ts
   var ES_DICTIONARY = {
+    "appearance.open": "Personalizar colores",
+    "appearance.skin": "Tema de colores",
+    "appearance.default": "Original",
+    "appearance.blue": "Azul",
+    "appearance.purple": "Morado",
+    "appearance.amber": "\xC1mbar",
+    "appearance.primary": "Color principal",
+    "appearance.hint": "#RRGGBB \xB7 Los tonos se adaptan para facilitar la lectura en modo claro y oscuro.",
+    "appearance.background": "Tono de fondo",
+    "appearance.neutral": "Neutro",
+    "appearance.warm": "C\xE1lido",
+    "appearance.cool": "Fr\xEDo",
+    "appearance.tinted": "Te\xF1ido",
+    "appearance.reset": "Restaurar colores",
+    "appearance.cancel": "Cancelar vista previa",
+    "appearance.apply": "Aplicar colores",
+    "appearance.preview": "Vista previa \xB7 Se guardar\xE1 en este navegador al aplicar.",
+    "appearance.invalid": "Introduce un color HEX de seis d\xEDgitos, como #457B66.",
+    "appearance.saveFailed": "Vista previa disponible, pero el navegador no puede guardar la preferencia.",
+    "appearance.saved": "Colores guardados",
+    "referenceCollector.svgConversionFailed": "No se pudo convertir el SVG en imagen de referencia. Desc\xE1rgalo y convi\xE9rtelo a PNG antes de reintentarlo.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI admite hasta 16 fotogramas al editar GIF. Reduce el n\xFAmero de fotogramas.",
+    "taskSubmit.gifMaskUnsupported": "La salida GIF no admite m\xE1scaras. Elimina la m\xE1scara o cambia el formato de salida.",
+    "taskSubmit.gifCompressionUnsupported": "La salida GIF no admite ajustes de compresi\xF3n. Elim\xEDnalos o elige JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "La salida GIF no admite vistas previas parciales. Desact\xEDvalas o cambia el formato de salida.",
+    "taskSubmit.compressionFormatUnsupported": "La compresi\xF3n requiere JPEG o WebP. Elimina ese ajuste o elige JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Las anotaciones admiten hasta 16.777.216 p\xEDxeles. Reduce primero la imagen original.",
+    "imageEditor.replacesMarkup": "Al guardar los cambios de imagen se eliminar\xE1 la anotaci\xF3n existente.",
+    "output.qualityXhigh": "Muy alta",
+    "output.qualityMax": "M\xE1xima",
+    "output.complexity": "Complejidad",
+    "output.frameCount": "Fotogramas",
+    "output.frameDuration": "Duraci\xF3n por fotograma (ms)",
+    "output.totalDuration": "Duraci\xF3n total",
+    "imageEditor.markup": "Anotaci\xF3n",
+    "imageEditor.image": "Imagen",
+    "imageEditor.saveMarkup": "Guardar anotaci\xF3n",
+    "imageEditor.markupFirstOnly": "Solo se admite anotar la primera imagen de referencia",
+    "imageEditor.markupUnsupported": "Este modelo o API no admite anotaciones. C\xE1mbialo o elimina la anotaci\xF3n.",
     "app.newTask": "Nuevo",
     "app.newTaskAria": "Nuevo chat",
     "sidebar.searchPlaceholder": "Mensajes de b\xFAsqueda o tarea ID",
@@ -3880,6 +4005,7 @@
     "userConfigBackup.emptyReplaceBlocked": "No se puede reemplazar: {groups} est\xE1 vac\xEDo en la copia pero contiene datos actuales. Anula la selecci\xF3n o usa la restauraci\xF3n incremental.",
     "user_config_restore_empty_replace_blocked": "Los datos vac\xEDos de una copia no pueden reemplazar datos existentes. Anula la selecci\xF3n o usa la restauraci\xF3n incremental.",
     "user_config_restore_preview_unavailable": "No se pudieron leer con seguridad los datos actuales. Revisa los archivos locales y vuelve a validar la copia.",
+    "userConfigBackup.legacyCompatible": "Compatible con versiones anteriores (sin colores)",
     "userConfigBackup.includeApiKeys": "Incluir claves API (sensible)",
     "userConfigBackup.apiKeyWarning": "La copia no est\xE1 cifrada. Gu\xE1rdala de forma segura.",
     "userConfigBackup.incremental": "Incremental",
@@ -3962,6 +4088,8 @@
     "apiSettings.modeImagesShort": "directo",
     "apiSettings.imageModel": "Modelo de generaci\xF3n de im\xE1genes",
     "apiSettings.concurrency": "L\xEDmite de simultaneidad",
+    "apiSettings.svgAuthorModel": "Modelo de creaci\xF3n SVG",
+    "apiSettings.invalidSvgAuthorModel": "Introduce un ID de modelo SVG v\xE1lido sin espacios.",
     "apiSettings.concurrencyShort": "concurrencia",
     "apiSettings.remoteModelName": "Modelo del proveedor",
     "apiSettings.fetchModels": "Obtener modelos",
@@ -4312,6 +4440,7 @@
     "ux.recovery.input": "Revisa si el prompt, los archivos de referencia o los ajustes contienen entradas no compatibles.",
     "ux.recovery.quota": "Revisa la cuota o el saldo del proveedor de la tarea.",
     "ux.recovery.temporary": "La generaci\xF3n no se complet\xF3. Se conservan las im\xE1genes correctas; reintenta las fallidas cuando sea posible.",
+    "ux.recovery.svgAuthorModel": "Indica en la configuraci\xF3n de la API del proveedor un modelo de creaci\xF3n SVG disponible en tu proyecto de OpenAI y vuelve a intentarlo.",
     "ux.referenceAdded": "A\xF1adido a las referencias de esta tarea",
     "ux.referenceFailed": "No se pudo a\xF1adir la referencia. Int\xE9ntalo de nuevo.",
     "ux.restoreDraft": "Restaurar entradas",
@@ -4333,6 +4462,45 @@
 
   // codex_image/webui/frontend/src/i18n/fr.ts
   var FR_DICTIONARY = {
+    "appearance.open": "Personnaliser les couleurs",
+    "appearance.skin": "Th\xE8me de couleurs",
+    "appearance.default": "Original",
+    "appearance.blue": "Bleu",
+    "appearance.purple": "Violet",
+    "appearance.amber": "Ambre",
+    "appearance.primary": "Couleur principale",
+    "appearance.hint": "#RRGGBB \xB7 Les nuances s\u2019adaptent \xE0 la lisibilit\xE9 des modes clair et sombre.",
+    "appearance.background": "Teinte de fond",
+    "appearance.neutral": "Neutre",
+    "appearance.warm": "Chaude",
+    "appearance.cool": "Froide",
+    "appearance.tinted": "Teint\xE9e",
+    "appearance.reset": "R\xE9tablir les couleurs",
+    "appearance.cancel": "Annuler l\u2019aper\xE7u",
+    "appearance.apply": "Appliquer les couleurs",
+    "appearance.preview": "Aper\xE7u \xB7 Enregistr\xE9 dans ce navigateur apr\xE8s application.",
+    "appearance.invalid": "Saisissez une couleur HEX \xE0 six chiffres, par ex. #457B66.",
+    "appearance.saveFailed": "Aper\xE7u affich\xE9, mais le navigateur ne peut pas enregistrer la pr\xE9f\xE9rence.",
+    "appearance.saved": "Couleurs enregistr\xE9es",
+    "referenceCollector.svgConversionFailed": "Impossible de convertir le SVG en image de r\xE9f\xE9rence. T\xE9l\xE9chargez-le et convertissez-le en PNG avant de r\xE9essayer.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI accepte jusqu\u2019\xE0 16 images par GIF en mode \xE9dition. R\xE9duisez le nombre d\u2019images.",
+    "taskSubmit.gifMaskUnsupported": "La sortie GIF ne prend pas en charge les masques. Retirez le masque ou changez de format.",
+    "taskSubmit.gifCompressionUnsupported": "La sortie GIF ne prend pas en charge la compression. Retirez ce r\xE9glage ou choisissez JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "La sortie GIF ne prend pas en charge les aper\xE7us interm\xE9diaires. D\xE9sactivez-les ou changez de format.",
+    "taskSubmit.compressionFormatUnsupported": "La compression n\xE9cessite JPEG ou WebP. Retirez ce r\xE9glage ou choisissez JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Les annotations acceptent jusqu\u2019\xE0 16 777 216 pixels. R\xE9duisez d\u2019abord l\u2019image originale.",
+    "imageEditor.replacesMarkup": "Enregistrer les modifications de l\u2019image supprimera l\u2019annotation existante.",
+    "output.qualityXhigh": "Tr\xE8s haute",
+    "output.qualityMax": "Maximale",
+    "output.complexity": "Complexit\xE9",
+    "output.frameCount": "Images",
+    "output.frameDuration": "Dur\xE9e par image (ms)",
+    "output.totalDuration": "Dur\xE9e totale",
+    "imageEditor.markup": "Annotation",
+    "imageEditor.image": "Image",
+    "imageEditor.saveMarkup": "Enregistrer l\u2019annotation",
+    "imageEditor.markupFirstOnly": "Seule la premi\xE8re image de r\xE9f\xE9rence peut \xEAtre annot\xE9e",
+    "imageEditor.markupUnsupported": "Ce mod\xE8le ou cette API ne prend pas en charge les annotations. Changez-le ou supprimez l\u2019annotation.",
     "app.newTask": "Nouveau",
     "app.newTaskAria": "Nouvelle discussion",
     "sidebar.searchPlaceholder": "Rechercher des invites ou une t\xE2che ID",
@@ -5286,6 +5454,7 @@
     "userConfigBackup.emptyReplaceBlocked": "Remplacement impossible : {groups} est vide dans la sauvegarde mais contient des donn\xE9es actuelles. D\xE9s\xE9lectionnez-le ou utilisez la restauration incr\xE9mentielle.",
     "user_config_restore_empty_replace_blocked": "Des donn\xE9es de sauvegarde vides ne peuvent pas remplacer des donn\xE9es existantes. D\xE9s\xE9lectionnez-les ou utilisez la restauration incr\xE9mentielle.",
     "user_config_restore_preview_unavailable": "Les donn\xE9es actuelles n\u2019ont pas pu \xEAtre lues en toute s\xE9curit\xE9. V\xE9rifiez les fichiers locaux et revalidez la sauvegarde.",
+    "userConfigBackup.legacyCompatible": "Compatible avec les anciennes versions (sans couleurs)",
     "userConfigBackup.includeApiKeys": "Inclure les cl\xE9s API (sensible)",
     "userConfigBackup.apiKeyWarning": "La sauvegarde n\u2019est pas chiffr\xE9e. Conservez-la en lieu s\xFBr.",
     "userConfigBackup.incremental": "Incr\xE9mentiel",
@@ -5368,6 +5537,8 @@
     "apiSettings.modeImagesShort": "Direct",
     "apiSettings.imageModel": "Mod\xE8le de g\xE9n\xE9ration d\u2019images",
     "apiSettings.concurrency": "Limite de simultan\xE9it\xE9",
+    "apiSettings.svgAuthorModel": "Mod\xE8le de cr\xE9ation SVG",
+    "apiSettings.invalidSvgAuthorModel": "Saisissez un identifiant de mod\xE8le SVG valide sans espaces.",
     "apiSettings.concurrencyShort": "Concurrence",
     "apiSettings.remoteModelName": "Nom du mod\xE8le du fournisseur",
     "apiSettings.fetchModels": "Obtenir les mod\xE8les",
@@ -5718,6 +5889,7 @@
     "ux.recovery.input": "V\xE9rifiez les entr\xE9es non prises en charge dans le prompt, les fichiers de r\xE9f\xE9rence et les param\xE8tres.",
     "ux.recovery.quota": "V\xE9rifiez le quota ou le solde du fournisseur de la t\xE2che.",
     "ux.recovery.temporary": "G\xE9n\xE9ration incompl\xE8te. Les images r\xE9ussies sont conserv\xE9es ; relancez celles en \xE9chec si possible.",
+    "ux.recovery.svgAuthorModel": "Dans les param\xE8tres API du fournisseur, indiquez un mod\xE8le de cr\xE9ation SVG autoris\xE9 pour votre projet OpenAI, puis r\xE9essayez.",
     "ux.referenceAdded": "Ajout\xE9 aux r\xE9f\xE9rences de cette t\xE2che",
     "ux.referenceFailed": "Impossible d\u2019ajouter la r\xE9f\xE9rence. R\xE9essayez.",
     "ux.restoreDraft": "Restaurer les entr\xE9es",
@@ -5739,6 +5911,45 @@
 
   // codex_image/webui/frontend/src/i18n/ja.ts
   var JA_DICTIONARY = {
+    "appearance.open": "\u914D\u8272\u3092\u8ABF\u6574",
+    "appearance.skin": "\u914D\u8272",
+    "appearance.default": "\u6A19\u6E96",
+    "appearance.blue": "\u30D6\u30EB\u30FC",
+    "appearance.purple": "\u30D1\u30FC\u30D7\u30EB",
+    "appearance.amber": "\u30A2\u30F3\u30D0\u30FC",
+    "appearance.primary": "\u30E1\u30A4\u30F3\u30AB\u30E9\u30FC",
+    "appearance.hint": "#RRGGBB \xB7 \u660E\u6697\u30E2\u30FC\u30C9\u3068\u6587\u5B57\u306E\u8AAD\u307F\u3084\u3059\u3055\u306B\u5408\u308F\u305B\u3066\u8ABF\u6574\u3057\u307E\u3059\u3002",
+    "appearance.background": "\u80CC\u666F\u306E\u8272\u8ABF",
+    "appearance.neutral": "\u4E2D\u7ACB",
+    "appearance.warm": "\u6696\u8272",
+    "appearance.cool": "\u5BD2\u8272",
+    "appearance.tinted": "\u4E3B\u8272\u306B\u5408\u308F\u305B\u308B",
+    "appearance.reset": "\u6A19\u6E96\u8272\u306B\u623B\u3059",
+    "appearance.cancel": "\u30D7\u30EC\u30D3\u30E5\u30FC\u3092\u53D6\u6D88",
+    "appearance.apply": "\u914D\u8272\u3092\u9069\u7528",
+    "appearance.preview": "\u30D7\u30EC\u30D3\u30E5\u30FC\u4E2D\u3002\u9069\u7528\u3059\u308B\u3068\u3053\u306E\u30D6\u30E9\u30A6\u30B6\u30FC\u306B\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002",
+    "appearance.invalid": "6\u6841\u306EHEX\u8272\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A#457B66\uFF09\u3002",
+    "appearance.saveFailed": "\u30D7\u30EC\u30D3\u30E5\u30FC\u3057\u307E\u3057\u305F\u304C\u3001\u30D6\u30E9\u30A6\u30B6\u30FC\u306B\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3002",
+    "appearance.saved": "\u914D\u8272\u3092\u4FDD\u5B58\u3057\u307E\u3057\u305F",
+    "referenceCollector.svgConversionFailed": "SVG \u3092\u53C2\u7167\u753B\u50CF\u306B\u5909\u63DB\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3057\u3066 PNG \u306B\u5909\u63DB\u3057\u3066\u304B\u3089\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u306E GIF \u7DE8\u96C6\u306F\u6700\u5927 16 \u30D5\u30EC\u30FC\u30E0\u3067\u3059\u3002\u30D5\u30EC\u30FC\u30E0\u6570\u3092\u6E1B\u3089\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "taskSubmit.gifMaskUnsupported": "GIF \u51FA\u529B\u306F\u30DE\u30B9\u30AF\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093\u3002\u30DE\u30B9\u30AF\u3092\u524A\u9664\u3059\u308B\u304B\u3001\u51FA\u529B\u5F62\u5F0F\u3092\u5909\u66F4\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "taskSubmit.gifCompressionUnsupported": "GIF \u51FA\u529B\u306F\u5727\u7E2E\u8A2D\u5B9A\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093\u3002\u5727\u7E2E\u8A2D\u5B9A\u3092\u524A\u9664\u3059\u308B\u304B\u3001JPEG/WebP \u306B\u5909\u66F4\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \u51FA\u529B\u306F\u9014\u4E2D\u753B\u50CF\u306E\u30D7\u30EC\u30D3\u30E5\u30FC\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093\u3002\u30D7\u30EC\u30D3\u30E5\u30FC\u3092\u7121\u52B9\u306B\u3059\u308B\u304B\u3001\u51FA\u529B\u5F62\u5F0F\u3092\u5909\u66F4\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "taskSubmit.compressionFormatUnsupported": "\u5727\u7E2E\u8A2D\u5B9A\u306F JPEG/WebP \u306E\u307F\u5BFE\u5FDC\u3067\u3059\u3002\u5727\u7E2E\u8A2D\u5B9A\u3092\u524A\u9664\u3059\u308B\u304B\u3001\u5F62\u5F0F\u3092\u5909\u66F4\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "imageEditor.markupPixelLimit": "\u6CE8\u91C8\u306F\u6700\u592716,777,216\u30D4\u30AF\u30BB\u30EB\u3067\u3059\u3002\u5148\u306B\u5143\u753B\u50CF\u3092\u7E2E\u5C0F\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "imageEditor.replacesMarkup": "\u753B\u50CF\u306E\u7DE8\u96C6\u3092\u4FDD\u5B58\u3059\u308B\u3068\u65E2\u5B58\u306E\u6CE8\u91C8\u304C\u524A\u9664\u3055\u308C\u307E\u3059\u3002",
+    "output.qualityXhigh": "\u8D85\u9AD8",
+    "output.qualityMax": "\u6700\u9AD8",
+    "output.complexity": "\u8907\u96D1\u5EA6",
+    "output.frameCount": "\u30D5\u30EC\u30FC\u30E0\u6570",
+    "output.frameDuration": "\u5404\u30D5\u30EC\u30FC\u30E0\u306E\u9577\u3055\uFF08ms\uFF09",
+    "output.totalDuration": "\u5408\u8A08\u6642\u9593",
+    "imageEditor.markup": "\u6CE8\u91C8",
+    "imageEditor.image": "\u753B\u50CF",
+    "imageEditor.saveMarkup": "\u6CE8\u91C8\u3092\u4FDD\u5B58",
+    "imageEditor.markupFirstOnly": "\u6CE8\u91C8\u306F\u6700\u521D\u306E\u53C2\u7167\u753B\u50CF\u306E\u307F\u5BFE\u5FDC",
+    "imageEditor.markupUnsupported": "\u3053\u306E\u30E2\u30C7\u30EB\u307E\u305F\u306F API \u306F\u6CE8\u91C8\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093\u3002\u5909\u66F4\u3059\u308B\u304B\u6CE8\u91C8\u3092\u524A\u9664\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "app.newTask": "\u65B0\u898F",
     "app.newTaskAria": "\u65B0\u898F\u30C1\u30E3\u30C3\u30C8",
     "sidebar.searchPlaceholder": "\u30D7\u30ED\u30F3\u30D7\u30C8\u307E\u305F\u306F\u30BF\u30B9\u30AF ID \u3092\u691C\u7D22",
@@ -6692,6 +6903,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\u7F6E\u63DB\u3067\u304D\u307E\u305B\u3093\u3002\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u5185\u306E {groups} \u306F\u7A7A\u3067\u3059\u304C\u3001\u73FE\u5728\u306E\u30C7\u30FC\u30BF\u304C\u3042\u308A\u307E\u3059\u3002\u9078\u629E\u3092\u5916\u3059\u304B\u3001\u5897\u5206\u5FA9\u5143\u3092\u4F7F\u7528\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "user_config_restore_empty_replace_blocked": "\u7A7A\u306E\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u30C7\u30FC\u30BF\u3067\u65E2\u5B58\u30C7\u30FC\u30BF\u3092\u7F6E\u63DB\u3059\u308B\u3053\u3068\u306F\u3067\u304D\u307E\u305B\u3093\u3002\u9078\u629E\u3092\u5916\u3059\u304B\u3001\u5897\u5206\u5FA9\u5143\u3092\u4F7F\u7528\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "user_config_restore_preview_unavailable": "\u73FE\u5728\u306E\u30C7\u30FC\u30BF\u3092\u5B89\u5168\u306B\u8AAD\u307F\u53D6\u308C\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u30ED\u30FC\u30AB\u30EB\u30D5\u30A1\u30A4\u30EB\u3092\u78BA\u8A8D\u3057\u3001\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u3092\u518D\u691C\u8A3C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "userConfigBackup.legacyCompatible": "\u65E7\u30D0\u30FC\u30B8\u30E7\u30F3\u3068\u4E92\u63DB\uFF08\u914D\u8272\u3092\u542B\u3081\u306A\u3044\uFF09",
     "userConfigBackup.includeApiKeys": "API \u30AD\u30FC\u3092\u542B\u3081\u308B\uFF08\u6A5F\u5BC6\uFF09",
     "userConfigBackup.apiKeyWarning": "\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u306F\u6697\u53F7\u5316\u3055\u308C\u307E\u305B\u3093\u3002\u5B89\u5168\u306B\u4FDD\u7BA1\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "userConfigBackup.incremental": "\u8FFD\u52A0",
@@ -6774,6 +6986,8 @@
     "apiSettings.modeImagesShort": "\u76F4\u7D50",
     "apiSettings.imageModel": "\u753B\u50CF\u751F\u6210\u30E2\u30C7\u30EB",
     "apiSettings.concurrency": "\u540C\u6642\u5B9F\u884C\u4E0A\u9650",
+    "apiSettings.svgAuthorModel": "SVG \u4F5C\u6210\u30E2\u30C7\u30EB",
+    "apiSettings.invalidSvgAuthorModel": "\u30B9\u30DA\u30FC\u30B9\u3092\u542B\u307E\u306A\u3044\u6709\u52B9\u306A SVG \u30E2\u30C7\u30EB ID \u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "apiSettings.concurrencyShort": "\u540C\u6642\u5B9F\u884C",
     "apiSettings.remoteModelName": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E\u30E2\u30C7\u30EB\u540D",
     "apiSettings.fetchModels": "\u30E2\u30C7\u30EB\u3092\u53D6\u5F97",
@@ -7124,6 +7338,7 @@
     "ux.recovery.input": "\u30D7\u30ED\u30F3\u30D7\u30C8\u3001\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u3001\u751F\u6210\u8A2D\u5B9A\u306B\u975E\u5BFE\u5FDC\u306E\u5165\u529B\u304C\u306A\u3044\u304B\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.recovery.quota": "\u30BF\u30B9\u30AF\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E\u5229\u7528\u67A0\u3084\u6B8B\u9AD8\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.recovery.temporary": "\u751F\u6210\u304C\u5B8C\u4E86\u3057\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u6210\u529F\u3057\u305F\u753B\u50CF\u306F\u4FDD\u6301\u3055\u308C\u307E\u3059\u3002\u5229\u7528\u53EF\u80FD\u306A\u5834\u5408\u306F\u5931\u6557\u5206\u3092\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
+    "ux.recovery.svgAuthorModel": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E API \u8A2D\u5B9A\u3067\u3001OpenAI \u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u304C\u5229\u7528\u3067\u304D\u308B SVG \u4F5C\u6210\u30E2\u30C7\u30EB\u3092\u5165\u529B\u3057\u3066\u304B\u3089\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.referenceAdded": "\u3053\u306E\u30BF\u30B9\u30AF\u306E\u53C2\u7167\u306B\u8FFD\u52A0\u3057\u307E\u3057\u305F",
     "ux.referenceFailed": "\u53C2\u7167\u3092\u8FFD\u52A0\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.restoreDraft": "\u5165\u529B\u3092\u5FA9\u5143",
@@ -7145,6 +7360,45 @@
 
   // codex_image/webui/frontend/src/i18n/ko.ts
   var KO_DICTIONARY = {
+    "appearance.open": "\uC0C9\uC0C1 \uC870\uC815",
+    "appearance.skin": "\uC0C9\uC0C1 \uD14C\uB9C8",
+    "appearance.default": "\uAE30\uBCF8",
+    "appearance.blue": "\uD30C\uB791",
+    "appearance.purple": "\uBCF4\uB77C",
+    "appearance.amber": "\uD638\uBC15\uC0C9",
+    "appearance.primary": "\uC8FC \uC0C9\uC0C1",
+    "appearance.hint": "#RRGGBB \xB7 \uBC1D\uACE0 \uC5B4\uB450\uC6B4 \uBAA8\uB4DC\uC758 \uAC00\uB3C5\uC131\uC5D0 \uB9DE\uAC8C \uC870\uC815\uD569\uB2C8\uB2E4.",
+    "appearance.background": "\uBC30\uACBD \uC0C9\uC870",
+    "appearance.neutral": "\uC911\uB9BD",
+    "appearance.warm": "\uB530\uB73B\uD568",
+    "appearance.cool": "\uCC28\uAC00\uC6C0",
+    "appearance.tinted": "\uC8FC \uC0C9\uC0C1",
+    "appearance.reset": "\uAE30\uBCF8 \uC0C9\uC0C1 \uBCF5\uC6D0",
+    "appearance.cancel": "\uBBF8\uB9AC \uBCF4\uAE30 \uCDE8\uC18C",
+    "appearance.apply": "\uC0C9\uC0C1 \uC801\uC6A9",
+    "appearance.preview": "\uBBF8\uB9AC \uBCF4\uB294 \uC911\uC785\uB2C8\uB2E4. \uC801\uC6A9\uD558\uBA74 \uC774 \uBE0C\uB77C\uC6B0\uC800\uC5D0 \uC800\uC7A5\uB429\uB2C8\uB2E4.",
+    "appearance.invalid": "6\uC790\uB9AC HEX \uC0C9\uC0C1\uC744 \uC785\uB825\uD558\uC138\uC694. \uC608: #457B66.",
+    "appearance.saveFailed": "\uBBF8\uB9AC \uBCF4\uAE30\uB294 \uAC00\uB2A5\uD558\uC9C0\uB9CC \uBE0C\uB77C\uC6B0\uC800\uC5D0 \uC800\uC7A5\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.",
+    "appearance.saved": "\uC0C9\uC0C1\uC774 \uC800\uC7A5\uB418\uC5C8\uC2B5\uB2C8\uB2E4",
+    "referenceCollector.svgConversionFailed": "SVG\uB97C \uCC38\uC870 \uC774\uBBF8\uC9C0\uB85C \uBCC0\uD658\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uB2E4\uC6B4\uB85C\uB4DC\uD55C \uD6C4 PNG\uB85C \uBCC0\uD658\uD558\uC5EC \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI GIF \uD3B8\uC9D1\uC740 \uCD5C\uB300 16\uD504\uB808\uC784\uC744 \uC9C0\uC6D0\uD569\uB2C8\uB2E4. \uD504\uB808\uC784 \uC218\uB97C \uC904\uC774\uC138\uC694.",
+    "taskSubmit.gifMaskUnsupported": "GIF \uCD9C\uB825\uC740 \uB9C8\uC2A4\uD06C\uB97C \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uB9C8\uC2A4\uD06C\uB97C \uC81C\uAC70\uD558\uAC70\uB098 \uCD9C\uB825 \uD615\uC2DD\uC744 \uBCC0\uACBD\uD558\uC138\uC694.",
+    "taskSubmit.gifCompressionUnsupported": "GIF \uCD9C\uB825\uC740 \uC555\uCD95 \uC124\uC815\uC744 \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC555\uCD95 \uC124\uC815\uC744 \uC81C\uAC70\uD558\uAC70\uB098 JPEG/WebP\uB85C \uBCC0\uACBD\uD558\uC138\uC694.",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \uCD9C\uB825\uC740 \uC911\uAC04 \uC774\uBBF8\uC9C0 \uBBF8\uB9AC\uBCF4\uAE30\uB97C \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uBBF8\uB9AC\uBCF4\uAE30\uB97C \uB044\uAC70\uB098 \uCD9C\uB825 \uD615\uC2DD\uC744 \uBCC0\uACBD\uD558\uC138\uC694.",
+    "taskSubmit.compressionFormatUnsupported": "\uC555\uCD95 \uC124\uC815\uC740 JPEG/WebP\uB9CC \uC9C0\uC6D0\uD569\uB2C8\uB2E4. \uC555\uCD95 \uC124\uC815\uC744 \uC81C\uAC70\uD558\uAC70\uB098 \uD615\uC2DD\uC744 \uBCC0\uACBD\uD558\uC138\uC694.",
+    "imageEditor.markupPixelLimit": "\uC8FC\uC11D\uC740 \uCD5C\uB300 16,777,216\uD53D\uC140\uAE4C\uC9C0 \uC9C0\uC6D0\uD569\uB2C8\uB2E4. \uC6D0\uBCF8 \uD06C\uAE30\uB97C \uBA3C\uC800 \uC904\uC774\uC138\uC694.",
+    "imageEditor.replacesMarkup": "\uC774\uBBF8\uC9C0 \uD3B8\uC9D1\uC744 \uC800\uC7A5\uD558\uBA74 \uAE30\uC874 \uC8FC\uC11D\uC774 \uC81C\uAC70\uB429\uB2C8\uB2E4.",
+    "output.qualityXhigh": "\uB9E4\uC6B0 \uB192\uC74C",
+    "output.qualityMax": "\uCD5C\uACE0",
+    "output.complexity": "\uBCF5\uC7A1\uB3C4",
+    "output.frameCount": "\uD504\uB808\uC784 \uC218",
+    "output.frameDuration": "\uD504\uB808\uC784 \uC2DC\uAC04(ms)",
+    "output.totalDuration": "\uCD1D \uC2DC\uAC04",
+    "imageEditor.markup": "\uC8FC\uC11D",
+    "imageEditor.image": "\uC774\uBBF8\uC9C0",
+    "imageEditor.saveMarkup": "\uC8FC\uC11D \uC800\uC7A5",
+    "imageEditor.markupFirstOnly": "\uCCAB \uBC88\uC9F8 \uCC38\uC870 \uC774\uBBF8\uC9C0\uC5D0\uB9CC \uC8FC\uC11D\uC744 \uC0AC\uC6A9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4",
+    "imageEditor.markupUnsupported": "\uC774 \uBAA8\uB378 \uB610\uB294 API\uB294 \uC8FC\uC11D\uC744 \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uBCC0\uACBD\uD558\uAC70\uB098 \uC8FC\uC11D\uC744 \uC81C\uAC70\uD558\uC138\uC694.",
     "app.newTask": "\uC0C8\uB85C \uB9CC\uB4E4\uAE30",
     "app.newTaskAria": "\uC0C8 \uCC44\uD305 \uB9CC\uB4E4\uAE30",
     "sidebar.searchPlaceholder": "\uD504\uB86C\uD504\uD2B8 \uB610\uB294 \uC791\uC5C5 ID \uAC80\uC0C9",
@@ -8098,6 +8352,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\uAD50\uCCB4\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uBC31\uC5C5\uC758 {groups} \uD56D\uBAA9\uC740 \uBE44\uC5B4 \uC788\uC9C0\uB9CC \uD604\uC7AC \uB370\uC774\uD130\uAC00 \uC788\uC2B5\uB2C8\uB2E4. \uC120\uD0DD\uC744 \uD574\uC81C\uD558\uAC70\uB098 \uC99D\uBD84 \uBCF5\uC6D0\uC744 \uC0AC\uC6A9\uD558\uC138\uC694.",
     "user_config_restore_empty_replace_blocked": "\uBE48 \uBC31\uC5C5 \uB370\uC774\uD130\uB85C \uAE30\uC874 \uB370\uC774\uD130\uB97C \uAD50\uCCB4\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uC120\uD0DD\uC744 \uD574\uC81C\uD558\uAC70\uB098 \uC99D\uBD84 \uBCF5\uC6D0\uC744 \uC0AC\uC6A9\uD558\uC138\uC694.",
     "user_config_restore_preview_unavailable": "\uD604\uC7AC \uB370\uC774\uD130\uB97C \uC548\uC804\uD558\uAC8C \uC77D\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uB85C\uCEEC \uD30C\uC77C\uC744 \uD655\uC778\uD558\uACE0 \uBC31\uC5C5\uC744 \uB2E4\uC2DC \uAC80\uC99D\uD558\uC138\uC694.",
+    "userConfigBackup.legacyCompatible": "\uC774\uC804 \uBC84\uC804\uACFC \uD638\uD658(\uC0C9\uC0C1 \uC81C\uC678)",
     "userConfigBackup.includeApiKeys": "API \uD0A4 \uD3EC\uD568(\uBBFC\uAC10 \uC815\uBCF4)",
     "userConfigBackup.apiKeyWarning": "\uBC31\uC5C5 \uD30C\uC77C\uC740 \uC554\uD638\uD654\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC548\uC804\uD558\uAC8C \uBCF4\uAD00\uD558\uC138\uC694.",
     "userConfigBackup.incremental": "\uC99D\uBD84",
@@ -8180,6 +8435,8 @@
     "apiSettings.modeImagesShort": "\uC9C1\uC811 \uC5F0\uACB0",
     "apiSettings.imageModel": "\uC774\uBBF8\uC9C0 \uC0DD\uC131 \uBAA8\uB378",
     "apiSettings.concurrency": "\uB3D9\uC2DC \uC2E4\uD589 \uD55C\uB3C4",
+    "apiSettings.svgAuthorModel": "SVG \uC791\uC131 \uBAA8\uB378",
+    "apiSettings.invalidSvgAuthorModel": "\uACF5\uBC31 \uC5C6\uC774 \uC720\uD6A8\uD55C SVG \uBAA8\uB378 ID\uB97C \uC785\uB825\uD558\uC138\uC694.",
     "apiSettings.concurrencyShort": "\uB3D9\uC2DC \uC2E4\uD589",
     "apiSettings.remoteModelName": "\uACF5\uAE09\uC790 \uBAA8\uB378 \uC774\uB984",
     "apiSettings.fetchModels": "\uBAA8\uB378 \uAC00\uC838\uC624\uAE30",
@@ -8530,6 +8787,7 @@
     "ux.recovery.input": "\uD504\uB86C\uD504\uD2B8, \uCC38\uC870 \uD30C\uC77C, \uC0DD\uC131 \uC124\uC815\uC5D0 \uC9C0\uC6D0\uD558\uC9C0 \uC54A\uB294 \uC785\uB825\uC774 \uC788\uB294\uC9C0 \uD655\uC778\uD558\uC138\uC694.",
     "ux.recovery.quota": "\uC791\uC5C5 \uACF5\uAE09\uC790\uC758 \uC0AC\uC6A9 \uD55C\uB3C4\uB098 \uACC4\uC815 \uC794\uC561\uC744 \uD655\uC778\uD558\uC138\uC694.",
     "ux.recovery.temporary": "\uC0DD\uC131\uC774 \uC644\uB8CC\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. \uC131\uACF5\uD55C \uC774\uBBF8\uC9C0\uB294 \uC720\uC9C0\uB429\uB2C8\uB2E4. \uAC00\uB2A5\uD558\uBA74 \uC2E4\uD328\uD55C \uC774\uBBF8\uC9C0\uB97C \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
+    "ux.recovery.svgAuthorModel": "\uACF5\uAE09\uC790\uC758 API \uC124\uC815\uC5D0 OpenAI \uD504\uB85C\uC81D\uD2B8\uC5D0\uC11C \uC0AC\uC6A9\uD560 \uC218 \uC788\uB294 SVG \uC791\uC131 \uBAA8\uB378\uC744 \uC785\uB825\uD55C \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
     "ux.referenceAdded": "\uC774 \uC791\uC5C5\uC758 \uCC38\uC870\uC5D0 \uCD94\uAC00\uD588\uC2B5\uB2C8\uB2E4",
     "ux.referenceFailed": "\uCC38\uC870\uB97C \uCD94\uAC00\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
     "ux.restoreDraft": "\uC785\uB825 \uBCF5\uC6D0",
@@ -8551,6 +8809,45 @@
 
   // codex_image/webui/frontend/src/i18n/pt.ts
   var PT_DICTIONARY = {
+    "appearance.open": "Personalizar cores",
+    "appearance.skin": "Tema de cores",
+    "appearance.default": "Original",
+    "appearance.blue": "Azul",
+    "appearance.purple": "Roxo",
+    "appearance.amber": "\xC2mbar",
+    "appearance.primary": "Cor principal",
+    "appearance.hint": "#RRGGBB \xB7 Os tons adaptam-se \xE0 legibilidade nos modos claro e escuro.",
+    "appearance.background": "Tom de fundo",
+    "appearance.neutral": "Neutro",
+    "appearance.warm": "Quente",
+    "appearance.cool": "Frio",
+    "appearance.tinted": "Tingido",
+    "appearance.reset": "Restaurar cores",
+    "appearance.cancel": "Cancelar pr\xE9via",
+    "appearance.apply": "Aplicar cores",
+    "appearance.preview": "Pr\xE9via \xB7 Ser\xE1 salvo neste navegador ao aplicar.",
+    "appearance.invalid": "Digite uma cor HEX de seis d\xEDgitos, como #457B66.",
+    "appearance.saveFailed": "Pr\xE9via dispon\xEDvel, mas o navegador n\xE3o consegue salvar a prefer\xEAncia.",
+    "appearance.saved": "Cores salvas",
+    "referenceCollector.svgConversionFailed": "N\xE3o foi poss\xEDvel converter o SVG em imagem de refer\xEAncia. Baixe-o e converta-o para PNG antes de tentar novamente.",
+    "taskSubmit.openAiGifEditFrameLimit": "A edi\xE7\xE3o de GIF na OpenAI aceita at\xE9 16 quadros. Reduza o n\xFAmero de quadros.",
+    "taskSubmit.gifMaskUnsupported": "A sa\xEDda GIF n\xE3o aceita m\xE1scaras. Remova a m\xE1scara ou altere o formato de sa\xEDda.",
+    "taskSubmit.gifCompressionUnsupported": "A sa\xEDda GIF n\xE3o aceita configura\xE7\xF5es de compress\xE3o. Remova-as ou escolha JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "A sa\xEDda GIF n\xE3o aceita pr\xE9vias parciais. Desative-as ou altere o formato de sa\xEDda.",
+    "taskSubmit.compressionFormatUnsupported": "A compress\xE3o exige JPEG ou WebP. Remova a configura\xE7\xE3o ou escolha JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Anota\xE7\xF5es aceitam at\xE9 16.777.216 pixels. Redimensione primeiro a imagem original.",
+    "imageEditor.replacesMarkup": "Salvar as edi\xE7\xF5es da imagem remover\xE1 a anota\xE7\xE3o existente.",
+    "output.qualityXhigh": "Muito alta",
+    "output.qualityMax": "M\xE1xima",
+    "output.complexity": "Complexidade",
+    "output.frameCount": "Quadros",
+    "output.frameDuration": "Dura\xE7\xE3o por quadro (ms)",
+    "output.totalDuration": "Dura\xE7\xE3o total",
+    "imageEditor.markup": "Anota\xE7\xE3o",
+    "imageEditor.image": "Imagem",
+    "imageEditor.saveMarkup": "Salvar anota\xE7\xE3o",
+    "imageEditor.markupFirstOnly": "Somente a primeira imagem de refer\xEAncia aceita anota\xE7\xF5es",
+    "imageEditor.markupUnsupported": "Este modelo ou API n\xE3o aceita anota\xE7\xF5es. Altere-o ou remova a anota\xE7\xE3o.",
     "app.newTask": "Novo",
     "app.newTaskAria": "Novo bate-papo",
     "sidebar.searchPlaceholder": "Solicita\xE7\xF5es de pesquisa ou tarefa ID",
@@ -9504,6 +9801,7 @@
     "userConfigBackup.emptyReplaceBlocked": "N\xE3o \xE9 poss\xEDvel substituir: {groups} est\xE1 vazio no backup, mas cont\xE9m dados atuais. Desmarque-o ou use a restaura\xE7\xE3o incremental.",
     "user_config_restore_empty_replace_blocked": "Dados vazios do backup n\xE3o podem substituir dados existentes. Desmarque-os ou use a restaura\xE7\xE3o incremental.",
     "user_config_restore_preview_unavailable": "N\xE3o foi poss\xEDvel ler os dados atuais com seguran\xE7a. Verifique os arquivos locais e valide o backup novamente.",
+    "userConfigBackup.legacyCompatible": "Compat\xEDvel com vers\xF5es anteriores (sem cores)",
     "userConfigBackup.includeApiKeys": "Incluir chaves de API (sens\xEDvel)",
     "userConfigBackup.apiKeyWarning": "O backup n\xE3o \xE9 criptografado. Guarde-o com seguran\xE7a.",
     "userConfigBackup.incremental": "Incremental",
@@ -9586,6 +9884,8 @@
     "apiSettings.modeImagesShort": "Direto",
     "apiSettings.imageModel": "Modelo de gera\xE7\xE3o de imagens",
     "apiSettings.concurrency": "Limite de simultaneidade",
+    "apiSettings.svgAuthorModel": "Modelo de cria\xE7\xE3o de SVG",
+    "apiSettings.invalidSvgAuthorModel": "Insira um ID de modelo SVG v\xE1lido, sem espa\xE7os.",
     "apiSettings.concurrencyShort": "Simultaneidade",
     "apiSettings.remoteModelName": "Modelo do provedor",
     "apiSettings.fetchModels": "Obter modelos",
@@ -9936,6 +10236,7 @@
     "ux.recovery.input": "Verifique entradas incompat\xEDveis no prompt, nos arquivos de refer\xEAncia e nas configura\xE7\xF5es.",
     "ux.recovery.quota": "Verifique a cota ou o saldo do fornecedor da tarefa.",
     "ux.recovery.temporary": "A gera\xE7\xE3o n\xE3o foi conclu\xEDda. As imagens geradas foram mantidas; tente novamente as que falharam quando poss\xEDvel.",
+    "ux.recovery.svgAuthorModel": "Nas configura\xE7\xF5es de API do provedor, informe um modelo de cria\xE7\xE3o de SVG permitido no seu projeto OpenAI e tente novamente.",
     "ux.referenceAdded": "Adicionado \xE0s refer\xEAncias desta tarefa",
     "ux.referenceFailed": "N\xE3o foi poss\xEDvel adicionar a refer\xEAncia. Tente novamente.",
     "ux.restoreDraft": "Restaurar entradas",
@@ -9957,6 +10258,45 @@
 
   // codex_image/webui/frontend/src/i18n/ru.ts
   var RU_DICTIONARY = {
+    "appearance.open": "\u041D\u0430\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u0446\u0432\u0435\u0442\u0430",
+    "appearance.skin": "\u0426\u0432\u0435\u0442\u043E\u0432\u0430\u044F \u0442\u0435\u043C\u0430",
+    "appearance.default": "\u0418\u0441\u0445\u043E\u0434\u043D\u0430\u044F",
+    "appearance.blue": "\u0421\u0438\u043D\u044F\u044F",
+    "appearance.purple": "\u0424\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0430\u044F",
+    "appearance.amber": "\u042F\u043D\u0442\u0430\u0440\u043D\u0430\u044F",
+    "appearance.primary": "\u041E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0432\u0435\u0442",
+    "appearance.hint": "#RRGGBB \xB7 \u041E\u0442\u0442\u0435\u043D\u043A\u0438 \u0430\u0434\u0430\u043F\u0442\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u0434\u043B\u044F \u0447\u0438\u0442\u0430\u0435\u043C\u043E\u0441\u0442\u0438 \u0432 \u0441\u0432\u0435\u0442\u043B\u043E\u043C \u0438 \u0442\u0451\u043C\u043D\u043E\u043C \u0440\u0435\u0436\u0438\u043C\u0430\u0445.",
+    "appearance.background": "\u0422\u043E\u043D \u0444\u043E\u043D\u0430",
+    "appearance.neutral": "\u041D\u0435\u0439\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0439",
+    "appearance.warm": "\u0422\u0451\u043F\u043B\u044B\u0439",
+    "appearance.cool": "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439",
+    "appearance.tinted": "\u0412 \u0442\u043E\u043D",
+    "appearance.reset": "\u0412\u0435\u0440\u043D\u0443\u0442\u044C \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0435 \u0446\u0432\u0435\u0442\u0430",
+    "appearance.cancel": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440",
+    "appearance.apply": "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C \u0446\u0432\u0435\u0442\u0430",
+    "appearance.preview": "\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \xB7 \u041F\u043E\u0441\u043B\u0435 \u043F\u0440\u0438\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442\u0441\u044F \u0432 \u044D\u0442\u043E\u043C \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435.",
+    "appearance.invalid": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0448\u0435\u0441\u0442\u0438\u0437\u043D\u0430\u0447\u043D\u044B\u0439 HEX-\u0446\u0432\u0435\u0442, \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 #457B66.",
+    "appearance.saveFailed": "\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D, \u043D\u043E \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0443.",
+    "appearance.saved": "\u0426\u0432\u0435\u0442\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B",
+    "referenceCollector.svgConversionFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u0442\u044C SVG \u0432 \u0440\u0435\u0444\u0435\u0440\u0435\u043D\u0441. \u0421\u043A\u0430\u0447\u0430\u0439\u0442\u0435 \u0435\u0433\u043E \u0438 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u0443\u0439\u0442\u0435 \u0432 PNG, \u0437\u0430\u0442\u0435\u043C \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0434\u043E 16 \u043A\u0430\u0434\u0440\u043E\u0432 \u043F\u0440\u0438 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 GIF. \u0423\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u0435 \u0447\u0438\u0441\u043B\u043E \u043A\u0430\u0434\u0440\u043E\u0432.",
+    "taskSubmit.gifMaskUnsupported": "\u0412\u044B\u0432\u043E\u0434 GIF \u043D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u043C\u0430\u0441\u043A\u0438. \u0423\u0434\u0430\u043B\u0438\u0442\u0435 \u043C\u0430\u0441\u043A\u0443 \u0438\u043B\u0438 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0440\u0443\u0433\u043E\u0439 \u0444\u043E\u0440\u043C\u0430\u0442.",
+    "taskSubmit.gifCompressionUnsupported": "\u0412\u044B\u0432\u043E\u0434 GIF \u043D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0441\u0436\u0430\u0442\u0438\u044F. \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u0438\u0445 \u0438\u043B\u0438 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "\u0412\u044B\u0432\u043E\u0434 GIF \u043D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u043F\u0440\u043E\u043C\u0435\u0436\u0443\u0442\u043E\u0447\u043D\u044B\u0435 \u043F\u0440\u0435\u0432\u044C\u044E. \u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u0435 \u0438\u0445 \u0438\u043B\u0438 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0440\u0443\u0433\u043E\u0439 \u0444\u043E\u0440\u043C\u0430\u0442.",
+    "taskSubmit.compressionFormatUnsupported": "\u0421\u0436\u0430\u0442\u0438\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F JPEG/WebP. \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0443 \u0438\u043B\u0438 \u0441\u043C\u0435\u043D\u0438\u0442\u0435 \u0444\u043E\u0440\u043C\u0430\u0442.",
+    "imageEditor.markupPixelLimit": "\u0420\u0430\u0437\u043C\u0435\u0442\u043A\u0430 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0434\u043E 16 777 216 \u043F\u0438\u043A\u0441\u0435\u043B\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0443\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u0435 \u043E\u0440\u0438\u0433\u0438\u043D\u0430\u043B.",
+    "imageEditor.replacesMarkup": "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0443\u0434\u0430\u043B\u0438\u0442 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0443\u044E \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0443.",
+    "output.qualityXhigh": "\u041E\u0447\u0435\u043D\u044C \u0432\u044B\u0441\u043E\u043A\u043E\u0435",
+    "output.qualityMax": "\u041C\u0430\u043A\u0441\u0438\u043C\u0443\u043C",
+    "output.complexity": "\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C",
+    "output.frameCount": "\u041A\u0430\u0434\u0440\u044B",
+    "output.frameDuration": "\u0414\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C \u043A\u0430\u0434\u0440\u0430 (\u043C\u0441)",
+    "output.totalDuration": "\u041E\u0431\u0449\u0430\u044F \u0434\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C",
+    "imageEditor.markup": "\u0420\u0430\u0437\u043C\u0435\u0442\u043A\u0430",
+    "imageEditor.image": "\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
+    "imageEditor.saveMarkup": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0443",
+    "imageEditor.markupFirstOnly": "\u0420\u0430\u0437\u043C\u0435\u0442\u043A\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u0430 \u043F\u0435\u0440\u0432\u043E\u043C \u0440\u0435\u0444\u0435\u0440\u0435\u043D\u0441\u0435",
+    "imageEditor.markupUnsupported": "\u042D\u0442\u0430 \u043C\u043E\u0434\u0435\u043B\u044C \u0438\u043B\u0438 API \u043D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0443. \u0421\u043C\u0435\u043D\u0438\u0442\u0435 \u0438\u0445 \u0438\u043B\u0438 \u0443\u0434\u0430\u043B\u0438\u0442\u0435 \u0440\u0430\u0437\u043C\u0435\u0442\u043A\u0443.",
     "app.newTask": "\u041D\u043E\u0432\u044B\u0439",
     "app.newTaskAria": "\u041D\u043E\u0432\u044B\u0439 \u0447\u0430\u0442",
     "sidebar.searchPlaceholder": "\u041F\u043E\u0438\u0441\u043A\u043E\u0432\u044B\u0435 \u0437\u0430\u043F\u0440\u043E\u0441\u044B \u0438\u043B\u0438 \u0437\u0430\u0434\u0430\u0447\u0430 ID",
@@ -10910,6 +11250,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\u0417\u0430\u043C\u0435\u043D\u0430 \u043D\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u0430: {groups} \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0432 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0439 \u043A\u043E\u043F\u0438\u0438, \u043D\u043E \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0442\u0435\u043A\u0443\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435. \u0421\u043D\u0438\u043C\u0438\u0442\u0435 \u0432\u044B\u0431\u043E\u0440 \u0438\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0434\u043E\u0431\u0430\u0432\u043E\u0447\u043D\u043E\u0435 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435.",
     "user_config_restore_empty_replace_blocked": "\u041F\u0443\u0441\u0442\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u043E\u0439 \u043A\u043E\u043F\u0438\u0438 \u043D\u0435 \u043C\u043E\u0433\u0443\u0442 \u0437\u0430\u043C\u0435\u043D\u0438\u0442\u044C \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435. \u0421\u043D\u0438\u043C\u0438\u0442\u0435 \u0432\u044B\u0431\u043E\u0440 \u0438\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0434\u043E\u0431\u0430\u0432\u043E\u0447\u043D\u043E\u0435 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435.",
     "user_config_restore_preview_unavailable": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0442\u0435\u043A\u0443\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435. \u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B \u0438 \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E \u043F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443\u044E \u043A\u043E\u043F\u0438\u044E.",
+    "userConfigBackup.legacyCompatible": "\u0421\u043E\u0432\u043C\u0435\u0441\u0442\u0438\u043C\u043E\u0441\u0442\u044C \u0441\u043E \u0441\u0442\u0430\u0440\u044B\u043C\u0438 \u0432\u0435\u0440\u0441\u0438\u044F\u043C\u0438 (\u0431\u0435\u0437 \u0446\u0432\u0435\u0442\u043E\u0432)",
     "userConfigBackup.includeApiKeys": "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043A\u043B\u044E\u0447\u0438 API (\u043A\u043E\u043D\u0444\u0438\u0434\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u043E)",
     "userConfigBackup.apiKeyWarning": "\u0420\u0435\u0437\u0435\u0440\u0432\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u043D\u0435 \u0437\u0430\u0448\u0438\u0444\u0440\u043E\u0432\u0430\u043D\u0430. \u0425\u0440\u0430\u043D\u0438\u0442\u0435 \u0435\u0451 \u0432 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u043C \u043C\u0435\u0441\u0442\u0435.",
     "userConfigBackup.incremental": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C",
@@ -10992,6 +11333,8 @@
     "apiSettings.modeImagesShort": "\u041F\u0440\u044F\u043C\u043E\u0439",
     "apiSettings.imageModel": "\u041C\u043E\u0434\u0435\u043B\u044C \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
     "apiSettings.concurrency": "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u043F\u0430\u0440\u0430\u043B\u043B\u0435\u043B\u0438\u0437\u043C\u0430",
+    "apiSettings.svgAuthorModel": "\u041C\u043E\u0434\u0435\u043B\u044C \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F SVG",
+    "apiSettings.invalidSvgAuthorModel": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 ID \u043C\u043E\u0434\u0435\u043B\u0438 SVG \u0431\u0435\u0437 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432.",
     "apiSettings.concurrencyShort": "\u041F\u0430\u0440\u0430\u043B\u043B\u0435\u043B\u0438\u0437\u043C",
     "apiSettings.remoteModelName": "\u041C\u043E\u0434\u0435\u043B\u044C \u0443 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
     "apiSettings.fetchModels": "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u0438",
@@ -11342,6 +11685,7 @@
     "ux.recovery.input": "\u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043F\u0440\u043E\u043C\u043F\u0442, \u0444\u0430\u0439\u043B\u044B-\u043E\u0431\u0440\u0430\u0437\u0446\u044B \u0438 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043D\u0430 \u043D\u0435\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u043C\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435.",
     "ux.recovery.quota": "\u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043A\u0432\u043E\u0442\u0443 \u0438\u043B\u0438 \u0431\u0430\u043B\u0430\u043D\u0441 \u0443 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430 \u0437\u0430\u0434\u0430\u0447\u0438.",
     "ux.recovery.temporary": "\u0413\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u043D\u0435 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0430. \u0423\u0441\u043F\u0435\u0448\u043D\u044B\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B; \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043D\u0435\u0443\u0434\u0430\u0447\u043D\u044B\u0435, \u0435\u0441\u043B\u0438 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E.",
+    "ux.recovery.svgAuthorModel": "\u0412 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u0445 API \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430 \u0443\u043A\u0430\u0436\u0438\u0442\u0435 \u043C\u043E\u0434\u0435\u043B\u044C \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F SVG, \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0443\u044E \u0432\u0430\u0448\u0435\u043C\u0443 \u043F\u0440\u043E\u0435\u043A\u0442\u0443 OpenAI, \u0438 \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
     "ux.referenceAdded": "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043A \u043E\u0431\u0440\u0430\u0437\u0446\u0430\u043C \u044D\u0442\u043E\u0439 \u0437\u0430\u0434\u0430\u0447\u0438",
     "ux.referenceFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u0431\u0440\u0430\u0437\u0435\u0446. \u041F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
     "ux.restoreDraft": "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0432\u0432\u043E\u0434",
@@ -11363,6 +11707,45 @@
 
   // codex_image/webui/frontend/src/i18n/it.ts
   var IT_DICTIONARY = {
+    "appearance.open": "Personalizza colori",
+    "appearance.skin": "Tema colori",
+    "appearance.default": "Originale",
+    "appearance.blue": "Blu",
+    "appearance.purple": "Viola",
+    "appearance.amber": "Ambra",
+    "appearance.primary": "Colore principale",
+    "appearance.hint": "#RRGGBB \xB7 Le tonalit\xE0 si adattano alla leggibilit\xE0 in modalit\xE0 chiara e scura.",
+    "appearance.background": "Tono di sfondo",
+    "appearance.neutral": "Neutro",
+    "appearance.warm": "Caldo",
+    "appearance.cool": "Freddo",
+    "appearance.tinted": "Tinto",
+    "appearance.reset": "Ripristina colori",
+    "appearance.cancel": "Annulla anteprima",
+    "appearance.apply": "Applica colori",
+    "appearance.preview": "Anteprima \xB7 Verr\xE0 salvata in questo browser dopo l\u2019applicazione.",
+    "appearance.invalid": "Inserisci un colore HEX di sei cifre, ad es. #457B66.",
+    "appearance.saveFailed": "Anteprima disponibile, ma il browser non pu\xF2 salvare la preferenza.",
+    "appearance.saved": "Colori salvati",
+    "referenceCollector.svgConversionFailed": "Impossibile convertire l\u2019SVG in immagine di riferimento. Scaricalo e convertilo in PNG prima di riprovare.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI supporta fino a 16 fotogrammi nelle modifiche GIF. Riduci il numero di fotogrammi.",
+    "taskSubmit.gifMaskUnsupported": "L\u2019output GIF non supporta le maschere. Rimuovi la maschera o cambia formato.",
+    "taskSubmit.gifCompressionUnsupported": "L\u2019output GIF non supporta la compressione. Rimuovi l\u2019impostazione o scegli JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "L\u2019output GIF non supporta le anteprime parziali. Disattivale o cambia formato.",
+    "taskSubmit.compressionFormatUnsupported": "La compressione richiede JPEG o WebP. Rimuovi l\u2019impostazione o scegli JPEG/WebP.",
+    "imageEditor.markupPixelLimit": "Le annotazioni supportano fino a 16.777.216 pixel. Ridimensiona prima l\u2019originale.",
+    "imageEditor.replacesMarkup": "Salvare le modifiche all\u2019immagine rimuover\xE0 l\u2019annotazione esistente.",
+    "output.qualityXhigh": "Molto alta",
+    "output.qualityMax": "Massima",
+    "output.complexity": "Complessit\xE0",
+    "output.frameCount": "Fotogrammi",
+    "output.frameDuration": "Durata per fotogramma (ms)",
+    "output.totalDuration": "Durata totale",
+    "imageEditor.markup": "Annotazione",
+    "imageEditor.image": "Immagine",
+    "imageEditor.saveMarkup": "Salva annotazione",
+    "imageEditor.markupFirstOnly": "Le annotazioni sono disponibili solo sulla prima immagine di riferimento",
+    "imageEditor.markupUnsupported": "Questo modello o API non supporta le annotazioni. Cambialo o rimuovi l\u2019annotazione.",
     "app.newTask": "Nuovo",
     "app.newTaskAria": "Nuova chat",
     "sidebar.searchPlaceholder": "Richieste di ricerca o attivit\xE0 ID",
@@ -12316,6 +12699,7 @@
     "userConfigBackup.emptyReplaceBlocked": "Impossibile sostituire: {groups} \xE8 vuoto nel backup ma contiene dati attuali. Deselezionalo o usa il ripristino incrementale.",
     "user_config_restore_empty_replace_blocked": "I dati vuoti del backup non possono sostituire dati esistenti. Deselezionali o usa il ripristino incrementale.",
     "user_config_restore_preview_unavailable": "Impossibile leggere in sicurezza i dati attuali. Controlla i file locali e convalida di nuovo il backup.",
+    "userConfigBackup.legacyCompatible": "Compatibile con le versioni precedenti (senza colori)",
     "userConfigBackup.includeApiKeys": "Includi chiavi API (sensibile)",
     "userConfigBackup.apiKeyWarning": "Il backup non \xE8 crittografato. Conservalo in modo sicuro.",
     "userConfigBackup.incremental": "Incrementale",
@@ -12398,6 +12782,8 @@
     "apiSettings.modeImagesShort": "Diretto",
     "apiSettings.imageModel": "Modello di generazione immagini",
     "apiSettings.concurrency": "Limite di concorrenza",
+    "apiSettings.svgAuthorModel": "Modello di creazione SVG",
+    "apiSettings.invalidSvgAuthorModel": "Inserisci un ID di modello SVG valido senza spazi.",
     "apiSettings.concurrencyShort": "Concorrenza",
     "apiSettings.remoteModelName": "Modello del fornitore",
     "apiSettings.fetchModels": "Ottieni modelli",
@@ -12748,6 +13134,7 @@
     "ux.recovery.input": "Controlla che prompt, file di riferimento e impostazioni non contengano input non supportati.",
     "ux.recovery.quota": "Controlla la quota o il saldo del fornitore dell'attivit\xE0.",
     "ux.recovery.temporary": "Generazione incompleta. Le immagini riuscite sono conservate; riprova quelle non riuscite quando possibile.",
+    "ux.recovery.svgAuthorModel": "Nelle impostazioni API del fornitore, inserisci un modello di creazione SVG consentito nel tuo progetto OpenAI, poi riprova.",
     "ux.referenceAdded": "Aggiunto ai riferimenti dell'attivit\xE0",
     "ux.referenceFailed": "Impossibile aggiungere il riferimento. Riprova.",
     "ux.restoreDraft": "Ripristina input",
@@ -12769,6 +13156,45 @@
 
   // codex_image/webui/frontend/src/i18n/hi.ts
   var HI_DICTIONARY = {
+    "appearance.open": "\u0930\u0902\u0917 \u092C\u0926\u0932\u0947\u0902",
+    "appearance.skin": "\u0930\u0902\u0917 \u0925\u0940\u092E",
+    "appearance.default": "\u092E\u0942\u0932",
+    "appearance.blue": "\u0928\u0940\u0932\u093E",
+    "appearance.purple": "\u092C\u0948\u0902\u0917\u0928\u0940",
+    "appearance.amber": "\u0905\u0902\u092C\u0930",
+    "appearance.primary": "\u092E\u0941\u0916\u094D\u092F \u0930\u0902\u0917",
+    "appearance.hint": "#RRGGBB \xB7 \u0939\u0932\u094D\u0915\u0947 \u0914\u0930 \u0917\u0939\u0930\u0947 \u092E\u094B\u0921 \u092E\u0947\u0902 \u092A\u0920\u0928\u0940\u092F\u0924\u093E \u0915\u0947 \u0932\u093F\u090F \u0930\u0902\u0917 \u0938\u092E\u093E\u092F\u094B\u091C\u093F\u0924 \u0939\u094B\u0924\u0947 \u0939\u0948\u0902\u0964",
+    "appearance.background": "\u092A\u0943\u0937\u094D\u0920\u092D\u0942\u092E\u093F \u0930\u0902\u0917",
+    "appearance.neutral": "\u0924\u091F\u0938\u094D\u0925",
+    "appearance.warm": "\u0917\u0930\u094D\u092E",
+    "appearance.cool": "\u0920\u0902\u0921\u093E",
+    "appearance.tinted": "\u092E\u0941\u0916\u094D\u092F \u0930\u0902\u0917 \u0905\u0928\u0941\u0938\u093E\u0930",
+    "appearance.reset": "\u092E\u0942\u0932 \u0930\u0902\u0917 \u092C\u0939\u093E\u0932 \u0915\u0930\u0947\u0902",
+    "appearance.cancel": "\u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
+    "appearance.apply": "\u0930\u0902\u0917 \u0932\u093E\u0917\u0942 \u0915\u0930\u0947\u0902",
+    "appearance.preview": "\u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \xB7 \u0932\u093E\u0917\u0942 \u0915\u0930\u0928\u0947 \u092A\u0930 \u0907\u0938 \u092C\u094D\u0930\u093E\u0909\u091C\u093C\u0930 \u092E\u0947\u0902 \u0938\u0939\u0947\u091C\u093E \u091C\u093E\u090F\u0917\u093E\u0964",
+    "appearance.invalid": "\u091B\u0939 \u0905\u0902\u0915\u094B\u0902 \u0915\u093E HEX \u0930\u0902\u0917 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902, \u091C\u0948\u0938\u0947 #457B66\u0964",
+    "appearance.saveFailed": "\u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u0909\u092A\u0932\u092C\u094D\u0927 \u0939\u0948, \u0932\u0947\u0915\u093F\u0928 \u092C\u094D\u0930\u093E\u0909\u091C\u093C\u0930 \u0935\u0930\u0940\u092F\u0924\u093E \u0938\u0939\u0947\u091C \u0928\u0939\u0940\u0902 \u0938\u0915\u0924\u093E\u0964",
+    "appearance.saved": "\u0930\u0902\u0917 \u0938\u0939\u0947\u091C\u0947 \u0917\u090F",
+    "referenceCollector.svgConversionFailed": "SVG \u0915\u094B \u0938\u0902\u0926\u0930\u094D\u092D \u091B\u0935\u093F \u092E\u0947\u0902 \u092C\u0926\u0932\u093E \u0928\u0939\u0940\u0902 \u091C\u093E \u0938\u0915\u093E\u0964 \u0907\u0938\u0947 \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0915\u0947 PNG \u092E\u0947\u0902 \u092C\u0926\u0932\u0947\u0902, \u092B\u093F\u0930 \u0926\u094B\u092C\u093E\u0930\u093E \u0915\u094B\u0936\u093F\u0936 \u0915\u0930\u0947\u0902\u0964",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u092A\u0930 GIF \u0938\u0902\u092A\u093E\u0926\u0928 \u092E\u0947\u0902 \u0905\u0927\u093F\u0915\u0924\u092E 16 \u092B\u093C\u094D\u0930\u0947\u092E \u0938\u092E\u0930\u094D\u0925\u093F\u0924 \u0939\u0948\u0902\u0964 \u092B\u093C\u094D\u0930\u0947\u092E \u0915\u0940 \u0938\u0902\u0916\u094D\u092F\u093E \u0915\u092E \u0915\u0930\u0947\u0902\u0964",
+    "taskSubmit.gifMaskUnsupported": "GIF \u0906\u0909\u091F\u092A\u0941\u091F \u092E\u093E\u0938\u094D\u0915 \u0915\u093E \u0938\u092E\u0930\u094D\u0925\u0928 \u0928\u0939\u0940\u0902 \u0915\u0930\u0924\u093E\u0964 \u092E\u093E\u0938\u094D\u0915 \u0939\u091F\u093E\u090F\u0901 \u092F\u093E \u0906\u0909\u091F\u092A\u0941\u091F \u092B\u093C\u0949\u0930\u094D\u092E\u0948\u091F \u092C\u0926\u0932\u0947\u0902\u0964",
+    "taskSubmit.gifCompressionUnsupported": "GIF \u0906\u0909\u091F\u092A\u0941\u091F \u0938\u0902\u092A\u0940\u0921\u093C\u0928 \u0938\u0947\u091F\u093F\u0902\u0917 \u0915\u093E \u0938\u092E\u0930\u094D\u0925\u0928 \u0928\u0939\u0940\u0902 \u0915\u0930\u0924\u093E\u0964 \u0909\u0938\u0947 \u0939\u091F\u093E\u090F\u0901 \u092F\u093E JPEG/WebP \u091A\u0941\u0928\u0947\u0902\u0964",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \u0906\u0909\u091F\u092A\u0941\u091F \u0906\u0902\u0936\u093F\u0915 \u091B\u0935\u093F \u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u0915\u093E \u0938\u092E\u0930\u094D\u0925\u0928 \u0928\u0939\u0940\u0902 \u0915\u0930\u0924\u093E\u0964 \u0909\u0938\u0947 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902 \u092F\u093E \u0906\u0909\u091F\u092A\u0941\u091F \u092B\u093C\u0949\u0930\u094D\u092E\u0948\u091F \u092C\u0926\u0932\u0947\u0902\u0964",
+    "taskSubmit.compressionFormatUnsupported": "\u0938\u0902\u092A\u0940\u0921\u093C\u0928 \u0915\u0947\u0935\u0932 JPEG/WebP \u0915\u0947 \u0932\u093F\u090F \u0909\u092A\u0932\u092C\u094D\u0927 \u0939\u0948\u0964 \u0938\u0947\u091F\u093F\u0902\u0917 \u0939\u091F\u093E\u090F\u0901 \u092F\u093E \u092B\u093C\u0949\u0930\u094D\u092E\u0948\u091F \u092C\u0926\u0932\u0947\u0902\u0964",
+    "imageEditor.markupPixelLimit": "\u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0905\u0927\u093F\u0915\u0924\u092E 16,777,216 \u092A\u093F\u0915\u094D\u0938\u0947\u0932 \u0915\u093E \u0938\u092E\u0930\u094D\u0925\u0928 \u0915\u0930\u0924\u093E \u0939\u0948\u0964 \u092A\u0939\u0932\u0947 \u092E\u0942\u0932 \u091B\u0935\u093F \u0915\u093E \u0906\u0915\u093E\u0930 \u0918\u091F\u093E\u090F\u0901\u0964",
+    "imageEditor.replacesMarkup": "\u091B\u0935\u093F \u0915\u0947 \u0938\u0902\u092A\u093E\u0926\u0928 \u0938\u0939\u0947\u091C\u0928\u0947 \u0938\u0947 \u092E\u094C\u091C\u0942\u0926\u093E \u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0939\u091F \u091C\u093E\u090F\u0917\u093E\u0964",
+    "output.qualityXhigh": "\u092C\u0939\u0941\u0924 \u0909\u091A\u094D\u091A",
+    "output.qualityMax": "\u0905\u0927\u093F\u0915\u0924\u092E",
+    "output.complexity": "\u091C\u091F\u093F\u0932\u0924\u093E",
+    "output.frameCount": "\u092B\u093C\u094D\u0930\u0947\u092E",
+    "output.frameDuration": "\u092A\u094D\u0930\u0924\u093F \u092B\u093C\u094D\u0930\u0947\u092E \u0905\u0935\u0927\u093F (ms)",
+    "output.totalDuration": "\u0915\u0941\u0932 \u0905\u0935\u0927\u093F",
+    "imageEditor.markup": "\u092E\u093E\u0930\u094D\u0915\u0905\u092A",
+    "imageEditor.image": "\u091B\u0935\u093F",
+    "imageEditor.saveMarkup": "\u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0938\u0939\u0947\u091C\u0947\u0902",
+    "imageEditor.markupFirstOnly": "\u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0915\u0947\u0935\u0932 \u092A\u0939\u0932\u0940 \u0938\u0902\u0926\u0930\u094D\u092D \u091B\u0935\u093F \u092A\u0930 \u0938\u092E\u0930\u094D\u0925\u093F\u0924 \u0939\u0948",
+    "imageEditor.markupUnsupported": "\u092F\u0939 \u092E\u0949\u0921\u0932 \u092F\u093E API \u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0915\u093E \u0938\u092E\u0930\u094D\u0925\u0928 \u0928\u0939\u0940\u0902 \u0915\u0930\u0924\u093E\u0964 \u0907\u0938\u0947 \u092C\u0926\u0932\u0947\u0902 \u092F\u093E \u092E\u093E\u0930\u094D\u0915\u0905\u092A \u0939\u091F\u093E\u090F\u0901\u0964",
     "app.newTask": "\u0928\u092F\u093E",
     "app.newTaskAria": "\u0928\u0908 \u091A\u0948\u091F",
     "sidebar.searchPlaceholder": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092F\u093E \u0915\u093E\u0930\u094D\u092F ID \u0916\u094B\u091C\u0947\u0902",
@@ -13722,6 +14148,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\u092C\u0926\u0932 \u0928\u0939\u0940\u0902 \u0938\u0915\u0924\u0947: \u092C\u0948\u0915\u0905\u092A \u092E\u0947\u0902 {groups} \u0916\u093E\u0932\u0940 \u0939\u0948, \u0932\u0947\u0915\u093F\u0928 \u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u0921\u0947\u091F\u093E \u092E\u094C\u091C\u0942\u0926 \u0939\u0948\u0964 \u0907\u0938\u0947 \u0905\u091A\u092F\u0928\u093F\u0924 \u0915\u0930\u0947\u0902 \u092F\u093E \u0907\u0928\u094D\u0915\u094D\u0930\u0940\u092E\u0947\u0902\u091F\u0932 \u0930\u093F\u0938\u094D\u091F\u094B\u0930 \u091A\u0941\u0928\u0947\u0902\u0964",
     "user_config_restore_empty_replace_blocked": "\u0916\u093E\u0932\u0940 \u092C\u0948\u0915\u0905\u092A \u0921\u0947\u091F\u093E \u092E\u094C\u091C\u0942\u0926\u093E \u0921\u0947\u091F\u093E \u0915\u094B \u0928\u0939\u0940\u0902 \u092C\u0926\u0932 \u0938\u0915\u0924\u093E\u0964 \u0907\u0938\u0947 \u0905\u091A\u092F\u0928\u093F\u0924 \u0915\u0930\u0947\u0902 \u092F\u093E \u0907\u0928\u094D\u0915\u094D\u0930\u0940\u092E\u0947\u0902\u091F\u0932 \u0930\u093F\u0938\u094D\u091F\u094B\u0930 \u091A\u0941\u0928\u0947\u0902\u0964",
     "user_config_restore_preview_unavailable": "\u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u0921\u0947\u091F\u093E \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0930\u0942\u092A \u0938\u0947 \u092A\u0922\u093C\u093E \u0928\u0939\u0940\u0902 \u091C\u093E \u0938\u0915\u093E\u0964 \u0938\u094D\u0925\u093E\u0928\u0940\u092F \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u091C\u093E\u0901\u091A\u0947\u0902 \u0914\u0930 \u092C\u0948\u0915\u0905\u092A \u0915\u094B \u092B\u093F\u0930 \u0938\u0924\u094D\u092F\u093E\u092A\u093F\u0924 \u0915\u0930\u0947\u0902\u0964",
+    "userConfigBackup.legacyCompatible": "\u092A\u0941\u0930\u093E\u0928\u0947 \u0938\u0902\u0938\u094D\u0915\u0930\u0923\u094B\u0902 \u0915\u0947 \u0938\u093E\u0925 \u0938\u0902\u0917\u0924 (\u0930\u0902\u0917\u094B\u0902 \u0915\u0947 \u092C\u093F\u0928\u093E)",
     "userConfigBackup.includeApiKeys": "API \u0915\u0941\u0902\u091C\u093F\u092F\u093E\u0901 \u0936\u093E\u092E\u093F\u0932 \u0915\u0930\u0947\u0902 (\u0938\u0902\u0935\u0947\u0926\u0928\u0936\u0940\u0932)",
     "userConfigBackup.apiKeyWarning": "\u092C\u0948\u0915\u0905\u092A \u090F\u0928\u094D\u0915\u094D\u0930\u093F\u092A\u094D\u091F\u0947\u0921 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u0907\u0938\u0947 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0930\u0916\u0947\u0902\u0964",
     "userConfigBackup.incremental": "\u0915\u094D\u0930\u092E\u093F\u0915",
@@ -13804,6 +14231,8 @@
     "apiSettings.modeImagesShort": "\u092A\u094D\u0930\u0924\u094D\u092F\u0915\u094D\u0937",
     "apiSettings.imageModel": "\u091B\u0935\u093F \u0928\u093F\u0930\u094D\u092E\u093E\u0923 \u092E\u0949\u0921\u0932",
     "apiSettings.concurrency": "\u0938\u092E\u0935\u0930\u094D\u0924\u0940 \u0938\u0940\u092E\u093E",
+    "apiSettings.svgAuthorModel": "SVG \u092C\u0928\u093E\u0928\u0947 \u0935\u093E\u0932\u093E \u092E\u0949\u0921\u0932",
+    "apiSettings.invalidSvgAuthorModel": "\u092C\u093F\u0928\u093E \u0938\u094D\u092A\u0947\u0938 \u0935\u093E\u0932\u0940 \u092E\u093E\u0928\u094D\u092F SVG \u092E\u0949\u0921\u0932 \u0906\u0908\u0921\u0940 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964",
     "apiSettings.concurrencyShort": "\u0938\u092E\u0935\u0930\u094D\u0924\u0940",
     "apiSettings.remoteModelName": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u093E \u092E\u0949\u0921\u0932 \u0928\u093E\u092E",
     "apiSettings.fetchModels": "\u092E\u0949\u0921\u0932 \u092A\u094D\u0930\u093E\u092A\u094D\u0924 \u0915\u0930\u0947\u0902",
@@ -14154,6 +14583,7 @@
     "ux.recovery.input": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F, \u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u094B\u0902 \u0914\u0930 \u091C\u0928\u0930\u0947\u0936\u0928 \u0938\u0947\u091F\u093F\u0902\u0917 \u092E\u0947\u0902 \u0905\u0938\u092E\u0930\u094D\u0925\u093F\u0924 \u0907\u0928\u092A\u0941\u091F \u091C\u093E\u0901\u091A\u0947\u0902\u0964",
     "ux.recovery.quota": "\u0915\u093E\u0930\u094D\u092F \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u093E \u0915\u094B\u091F\u093E \u092F\u093E \u0916\u093E\u0924\u0947 \u0915\u093E \u0936\u0947\u0937 \u091C\u093E\u0901\u091A\u0947\u0902\u0964",
     "ux.recovery.temporary": "\u091C\u0928\u0930\u0947\u0936\u0928 \u092A\u0942\u0930\u093E \u0928\u0939\u0940\u0902 \u0939\u0941\u0906\u0964 \u0938\u092B\u0932 \u091A\u093F\u0924\u094D\u0930 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0939\u0948\u0902; \u0909\u092A\u0932\u092C\u094D\u0927 \u0939\u094B\u0928\u0947 \u092A\u0930 \u0935\u093F\u092B\u0932 \u091A\u093F\u0924\u094D\u0930 \u092B\u093F\u0930 \u092C\u0928\u093E\u090F\u0901\u0964",
+    "ux.recovery.svgAuthorModel": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u0940 API \u0938\u0947\u091F\u093F\u0902\u0917 \u092E\u0947\u0902 \u0910\u0938\u093E SVG \u092E\u0949\u0921\u0932 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902 \u091C\u093F\u0938\u0947 \u0906\u092A\u0915\u093E OpenAI \u092A\u094D\u0930\u094B\u091C\u0947\u0915\u094D\u091F \u0907\u0938\u094D\u0924\u0947\u092E\u093E\u0932 \u0915\u0930 \u0938\u0915\u0947, \u092B\u093F\u0930 \u0926\u094B\u092C\u093E\u0930\u093E \u0915\u094B\u0936\u093F\u0936 \u0915\u0930\u0947\u0902\u0964",
     "ux.referenceAdded": "\u0907\u0938 \u0915\u093E\u0930\u094D\u092F \u0915\u0947 \u0938\u0902\u0926\u0930\u094D\u092D\u094B\u0902 \u092E\u0947\u0902 \u091C\u094B\u0921\u093C\u093E \u0917\u092F\u093E",
     "ux.referenceFailed": "\u0938\u0902\u0926\u0930\u094D\u092D \u0928\u0939\u0940\u0902 \u091C\u094B\u0921\u093C\u093E \u091C\u093E \u0938\u0915\u093E\u0964 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
     "ux.restoreDraft": "\u0907\u0928\u092A\u0941\u091F \u092C\u0939\u093E\u0932 \u0915\u0930\u0947\u0902",
@@ -14175,6 +14605,45 @@
 
   // codex_image/webui/frontend/src/i18n/vi.ts
   var VI_DICTIONARY = {
+    "appearance.open": "T\xF9y ch\u1EC9nh m\xE0u",
+    "appearance.skin": "Ch\u1EE7 \u0111\u1EC1 m\xE0u",
+    "appearance.default": "G\u1ED1c",
+    "appearance.blue": "Xanh lam",
+    "appearance.purple": "T\xEDm",
+    "appearance.amber": "H\u1ED5 ph\xE1ch",
+    "appearance.primary": "M\xE0u ch\xEDnh",
+    "appearance.hint": "#RRGGBB \xB7 S\u1EAFc \u0111\u1ED9 t\u1EF1 \u0111i\u1EC1u ch\u1EC9nh \u0111\u1EC3 d\u1EC5 \u0111\u1ECDc \u1EDF ch\u1EBF \u0111\u1ED9 s\xE1ng v\xE0 t\u1ED1i.",
+    "appearance.background": "T\xF4ng n\u1EC1n",
+    "appearance.neutral": "Trung t\xEDnh",
+    "appearance.warm": "\u1EA4m",
+    "appearance.cool": "L\u1EA1nh",
+    "appearance.tinted": "Theo m\xE0u ch\xEDnh",
+    "appearance.reset": "Kh\xF4i ph\u1EE5c m\xE0u g\u1ED1c",
+    "appearance.cancel": "H\u1EE7y xem tr\u01B0\u1EDBc",
+    "appearance.apply": "\xC1p d\u1EE5ng m\xE0u",
+    "appearance.preview": "\u0110ang xem tr\u01B0\u1EDBc \xB7 L\u01B0u trong tr\xECnh duy\u1EC7t n\xE0y sau khi \xE1p d\u1EE5ng.",
+    "appearance.invalid": "Nh\u1EADp m\xE0u HEX s\xE1u ch\u1EEF s\u1ED1, v\xED d\u1EE5 #457B66.",
+    "appearance.saveFailed": "\u0110\xE3 xem tr\u01B0\u1EDBc nh\u01B0ng tr\xECnh duy\u1EC7t kh\xF4ng th\u1EC3 l\u01B0u t\xF9y ch\u1ECDn.",
+    "appearance.saved": "\u0110\xE3 l\u01B0u m\xE0u",
+    "referenceCollector.svgConversionFailed": "Kh\xF4ng th\u1EC3 chuy\u1EC3n SVG th\xE0nh \u1EA3nh tham chi\u1EBFu. H\xE3y t\u1EA3i xu\u1ED1ng v\xE0 chuy\u1EC3n sang PNG r\u1ED3i th\u1EED l\u1EA1i.",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI h\u1ED7 tr\u1EE3 t\u1ED1i \u0111a 16 khung h\xECnh khi ch\u1EC9nh s\u1EEDa GIF. H\xE3y gi\u1EA3m s\u1ED1 khung h\xECnh.",
+    "taskSubmit.gifMaskUnsupported": "\u0110\u1EA7u ra GIF kh\xF4ng h\u1ED7 tr\u1EE3 m\u1EB7t n\u1EA1. H\xE3y b\u1ECF m\u1EB7t n\u1EA1 ho\u1EB7c \u0111\u1ED5i \u0111\u1ECBnh d\u1EA1ng \u0111\u1EA7u ra.",
+    "taskSubmit.gifCompressionUnsupported": "\u0110\u1EA7u ra GIF kh\xF4ng h\u1ED7 tr\u1EE3 thi\u1EBFt l\u1EADp n\xE9n. H\xE3y b\u1ECF thi\u1EBFt l\u1EADp n\xE9n ho\u1EB7c ch\u1ECDn JPEG/WebP.",
+    "taskSubmit.gifPartialImagesUnsupported": "\u0110\u1EA7u ra GIF kh\xF4ng h\u1ED7 tr\u1EE3 xem tr\u01B0\u1EDBc \u1EA3nh t\u1EEBng ph\u1EA7n. H\xE3y t\u1EAFt t\xEDnh n\u0103ng n\xE0y ho\u1EB7c \u0111\u1ED5i \u0111\u1ECBnh d\u1EA1ng \u0111\u1EA7u ra.",
+    "taskSubmit.compressionFormatUnsupported": "N\xE9n ch\u1EC9 h\u1ED7 tr\u1EE3 JPEG/WebP. H\xE3y b\u1ECF thi\u1EBFt l\u1EADp n\xE9n ho\u1EB7c \u0111\u1ED5i \u0111\u1ECBnh d\u1EA1ng.",
+    "imageEditor.markupPixelLimit": "Ch\xFA th\xEDch h\u1ED7 tr\u1EE3 t\u1ED1i \u0111a 16.777.216 pixel. H\xE3y gi\u1EA3m k\xEDch th\u01B0\u1EDBc \u1EA3nh g\u1ED1c tr\u01B0\u1EDBc.",
+    "imageEditor.replacesMarkup": "L\u01B0u ch\u1EC9nh s\u1EEDa \u1EA3nh s\u1EBD x\xF3a ch\xFA th\xEDch hi\u1EC7n c\xF3.",
+    "output.qualityXhigh": "R\u1EA5t cao",
+    "output.qualityMax": "T\u1ED1i \u0111a",
+    "output.complexity": "\u0110\u1ED9 ph\u1EE9c t\u1EA1p",
+    "output.frameCount": "S\u1ED1 khung",
+    "output.frameDuration": "Th\u1EDDi gian m\u1ED7i khung (ms)",
+    "output.totalDuration": "T\u1ED5ng th\u1EDDi gian",
+    "imageEditor.markup": "Ch\xFA th\xEDch",
+    "imageEditor.image": "\u1EA2nh",
+    "imageEditor.saveMarkup": "L\u01B0u ch\xFA th\xEDch",
+    "imageEditor.markupFirstOnly": "Ch\u1EC9 h\u1ED7 tr\u1EE3 ch\xFA th\xEDch tr\xEAn \u1EA3nh tham chi\u1EBFu \u0111\u1EA7u ti\xEAn",
+    "imageEditor.markupUnsupported": "M\xF4 h\xECnh ho\u1EB7c API n\xE0y kh\xF4ng h\u1ED7 tr\u1EE3 ch\xFA th\xEDch. H\xE3y \u0111\u1ED5i ho\u1EB7c x\xF3a ch\xFA th\xEDch.",
     "mobile.taskActions": "Thao t\xE1c t\xE1c v\u1EE5",
     "mobile.photos": "\u1EA2nh",
     "mobile.files": "T\u1EC7p",
@@ -14221,6 +14690,7 @@
     "ux.recovery.quota": "Ki\u1EC3m tra h\u1EA1n m\u1EE9c ho\u1EB7c s\u1ED1 d\u01B0 t\xE0i kho\u1EA3n c\u1EE7a nh\xE0 cung c\u1EA5p.",
     "ux.recovery.input": "Ki\u1EC3m tra l\u1EDDi nh\u1EAFc, t\u1EC7p tham chi\u1EBFu v\xE0 th\xF4ng s\u1ED1 t\u1EA1o \u1EA3nh.",
     "ux.recovery.temporary": "T\u1EA1o \u1EA3nh ch\u01B0a ho\xE0n t\u1EA5t. \u1EA2nh th\xE0nh c\xF4ng \u0111\u01B0\u1EE3c gi\u1EEF l\u1EA1i; c\xF3 th\u1EC3 th\u1EED l\u1EA1i \u1EA3nh th\u1EA5t b\u1EA1i.",
+    "ux.recovery.svgAuthorModel": "Trong c\xE0i \u0111\u1EB7t API c\u1EE7a nh\xE0 cung c\u1EA5p, nh\u1EADp m\xF4 h\xECnh t\u1EA1o SVG m\xE0 d\u1EF1 \xE1n OpenAI c\u1EE7a b\u1EA1n \u0111\u01B0\u1EE3c ph\xE9p s\u1EED d\u1EE5ng r\u1ED3i th\u1EED l\u1EA1i.",
     "ux.checkProvider": "Ki\u1EC3m tra nh\xE0 cung c\u1EA5p",
     "ux.acceptDetail": "Gi\u1EEF \u1EA3nh th\xE0nh c\xF4ng v\xE0 k\u1EBFt th\xFAc t\xE1c v\u1EE5 m\xE0 kh\xF4ng t\u1EA1o l\u1EA1i \u1EA3nh th\u1EA5t b\u1EA1i.",
     "ux.editInputs": "S\u1EEDa \u0111\u1EA7u v\xE0o v\xE0 thi\u1EBFt l\u1EADp",
@@ -15206,6 +15676,7 @@
     "userConfigBackup.groupGalleryItems": "\u1EA2nh d\xF9ng chung",
     "userConfigBackup.groupPromptTemplates": "M\u1EABu prompt",
     "userConfigBackup.groupSettings": "C\xE0i \u0111\u1EB7t h\u1EC7 th\u1ED1ng",
+    "userConfigBackup.legacyCompatible": "T\u01B0\u01A1ng th\xEDch v\u1EDBi b\u1EA3n c\u0169 (kh\xF4ng g\u1ED3m m\xE0u s\u1EAFc)",
     "userConfigBackup.includeApiKeys": "Bao g\u1ED3m API Key (nh\u1EA1y c\u1EA3m)",
     "userConfigBackup.apiKeyWarning": "B\u1EA3n sao l\u01B0u kh\xF4ng \u0111\u01B0\u1EE3c m\xE3 h\xF3a. H\xE3y l\u01B0u gi\u1EEF an to\xE0n.",
     "userConfigBackup.backupProgress": "Ti\u1EBFn \u0111\u1ED9 sao l\u01B0u",
@@ -15372,6 +15843,8 @@
     "apiSettings.modeImagesShort": "Tr\u1EF1c ti\u1EBFp",
     "apiSettings.imageModel": "M\xF4 h\xECnh h\xECnh \u1EA3nh",
     "apiSettings.concurrency": "Gi\u1EDBi h\u1EA1n \u0111\u1ED3ng th\u1EDDi c\u1EE7a provider",
+    "apiSettings.svgAuthorModel": "M\xF4 h\xECnh t\u1EA1o SVG",
+    "apiSettings.invalidSvgAuthorModel": "Nh\u1EADp ID m\xF4 h\xECnh SVG h\u1EE3p l\u1EC7 kh\xF4ng ch\u1EE9a d\u1EA5u c\xE1ch.",
     "apiSettings.concurrencyShort": "\u0110\u1ED3ng th\u1EDDi",
     "apiSettings.advancedSettings": "C\xE0i \u0111\u1EB7t n\xE2ng cao",
     "apiSettings.concurrencyValue": "{concurrency} \u0111\u1ED3ng th\u1EDDi",
@@ -15581,6 +16054,45 @@
 
   // codex_image/webui/frontend/src/i18n/zh-cn.ts
   var ZH_CN_DICTIONARY = {
+    "appearance.open": "\u8C03\u6574\u914D\u8272",
+    "appearance.skin": "\u76AE\u80A4",
+    "appearance.default": "\u539F\u8272",
+    "appearance.blue": "\u84DD\u8272",
+    "appearance.purple": "\u7D2B\u8272",
+    "appearance.amber": "\u7425\u73C0",
+    "appearance.primary": "\u4E3B\u8272",
+    "appearance.hint": "#RRGGBB \xB7 \u81EA\u52A8\u9002\u914D\u6DF1\u6D45\u6A21\u5F0F\u4E0E\u6587\u5B57\u5BF9\u6BD4\u5EA6\u3002",
+    "appearance.background": "\u80CC\u666F\u8272\u7CFB",
+    "appearance.neutral": "\u4E2D\u6027",
+    "appearance.warm": "\u6696\u7070",
+    "appearance.cool": "\u51B7\u7070",
+    "appearance.tinted": "\u968F\u4E3B\u8272",
+    "appearance.reset": "\u6062\u590D\u539F\u8272",
+    "appearance.cancel": "\u53D6\u6D88\u9884\u89C8",
+    "appearance.apply": "\u5E94\u7528\u914D\u8272",
+    "appearance.preview": "\u6B63\u5728\u9884\u89C8\uFF0C\u5E94\u7528\u540E\u4FDD\u5B58\u5728\u5F53\u524D\u6D4F\u89C8\u5668\u3002",
+    "appearance.invalid": "\u8BF7\u8F93\u5165\u516D\u4F4D HEX \u8272\u503C\uFF0C\u4F8B\u5982 #457B66\u3002",
+    "appearance.saveFailed": "\u914D\u8272\u5DF2\u9884\u89C8\uFF0C\u4F46\u6D4F\u89C8\u5668\u65E0\u6CD5\u4FDD\u5B58\u504F\u597D\u3002",
+    "appearance.saved": "\u914D\u8272\u5DF2\u4FDD\u5B58",
+    "referenceCollector.svgConversionFailed": "\u65E0\u6CD5\u5C06 SVG \u8F6C\u4E3A\u53C2\u8003\u56FE\uFF0C\u8BF7\u4E0B\u8F7D\u540E\u8F6C\u6362\u4E3A PNG \u518D\u8BD5\u3002",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u7684 GIF \u7F16\u8F91\u6700\u591A\u652F\u6301 16 \u5E27\uFF0C\u8BF7\u51CF\u5C11\u5E27\u6570\u3002",
+    "taskSubmit.gifMaskUnsupported": "GIF \u4E0D\u652F\u6301\u8499\u7248\uFF0C\u8BF7\u79FB\u9664\u8499\u7248\u6216\u5207\u6362\u8F93\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.gifCompressionUnsupported": "GIF \u4E0D\u652F\u6301\u538B\u7F29\u7387\uFF0C\u8BF7\u79FB\u9664\u538B\u7F29\u53C2\u6570\u6216\u5207\u6362\u4E3A JPEG/WebP\u3002",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \u4E0D\u652F\u6301\u5206\u5E27\u9884\u89C8\uFF0C\u8BF7\u5173\u95ED\u5206\u5E27\u9884\u89C8\u6216\u5207\u6362\u8F93\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.compressionFormatUnsupported": "\u538B\u7F29\u7387\u4EC5\u652F\u6301 JPEG/WebP\uFF0C\u8BF7\u79FB\u9664\u538B\u7F29\u53C2\u6570\u6216\u5207\u6362\u683C\u5F0F\u3002",
+    "imageEditor.markupPixelLimit": "\u6807\u6CE8\u6700\u5927\u652F\u6301 1677 \u4E07\u50CF\u7D20\uFF0C\u8BF7\u5148\u7F29\u5C0F\u539F\u56FE",
+    "imageEditor.replacesMarkup": "\u4FDD\u5B58\u56FE\u50CF\u7F16\u8F91\u5C06\u79FB\u9664\u539F\u6709\u6807\u6CE8",
+    "output.qualityXhigh": "\u8D85\u9AD8",
+    "output.qualityMax": "\u6700\u9AD8",
+    "output.complexity": "\u590D\u6742\u5EA6",
+    "output.frameCount": "\u5E27\u6570",
+    "output.frameDuration": "\u6BCF\u5E27\u65F6\u957F\uFF08\u6BEB\u79D2\uFF09",
+    "output.totalDuration": "\u603B\u65F6\u957F",
+    "imageEditor.markup": "\u6807\u6CE8",
+    "imageEditor.image": "\u56FE\u50CF",
+    "imageEditor.saveMarkup": "\u4FDD\u5B58\u6807\u6CE8",
+    "imageEditor.markupFirstOnly": "\u6807\u6CE8\u4EC5\u652F\u6301\u7B2C\u4E00\u5F20\u53C2\u8003\u56FE",
+    "imageEditor.markupUnsupported": "\u6B64\u6A21\u578B\u6216\u63A5\u53E3\u4E0D\u652F\u6301\u6807\u6CE8\uFF0C\u8BF7\u5207\u6362\u6216\u79FB\u9664\u6807\u6CE8",
     "mobile.taskActions": "\u4EFB\u52A1\u64CD\u4F5C",
     "mobile.photos": "\u7167\u7247",
     "mobile.files": "\u6587\u4EF6",
@@ -15627,6 +16139,7 @@
     "ux.recovery.quota": "\u989D\u5EA6\u6216\u8D26\u6237\u4F59\u989D\u4E0D\u8DB3\u3002\u8BF7\u68C0\u67E5\u4EFB\u52A1\u4F9B\u5E94\u5546\u7684\u8D26\u6237\u9650\u5236\u3002",
     "ux.recovery.input": "\u8BF7\u6C42\u8F93\u5165\u4E0D\u53D7\u652F\u6301\u3002\u8BF7\u68C0\u67E5\u63D0\u793A\u8BCD\u3001\u53C2\u8003\u6587\u4EF6\u548C\u751F\u6210\u53C2\u6570\u3002",
     "ux.recovery.temporary": "\u751F\u6210\u672A\u5B8C\u6210\u3002\u5DF2\u6210\u529F\u7684\u56FE\u7247\u4F1A\u4FDD\u7559\uFF1B\u53EF\u91CD\u8BD5\u5931\u8D25\u56FE\u7247\u3002",
+    "ux.recovery.svgAuthorModel": "\u8BF7\u5728\u8BE5\u4F9B\u5E94\u5546\u7684 API \u8BBE\u7F6E\u4E2D\u586B\u5199 OpenAI \u9879\u76EE\u53EF\u7528\u7684 SVG \u7ED8\u5236\u6A21\u578B\uFF0C\u7136\u540E\u91CD\u8BD5\u3002",
     "ux.checkProvider": "\u68C0\u67E5\u4F9B\u5E94\u5546\u8BBE\u7F6E",
     "ux.acceptDetail": "\u4FDD\u7559\u5DF2\u6210\u529F\u56FE\u7247\u5E76\u7ED3\u675F\u4EFB\u52A1\uFF0C\u4E0D\u518D\u8865\u9F50\u5931\u8D25\u56FE\u7247\u3002",
     "ux.editInputs": "\u4FEE\u6539\u8F93\u5165\u4E0E\u53C2\u6570",
@@ -16612,6 +17125,7 @@
     "userConfigBackup.groupGalleryItems": "\u516C\u7528\u56FE",
     "userConfigBackup.groupPromptTemplates": "\u63D0\u793A\u8BCD\u6A21\u677F",
     "userConfigBackup.groupSettings": "\u7CFB\u7EDF\u8BBE\u7F6E",
+    "userConfigBackup.legacyCompatible": "\u517C\u5BB9\u65E7\u7248\uFF08\u4E0D\u5305\u542B\u914D\u8272\uFF09",
     "userConfigBackup.includeApiKeys": "\u5305\u542B API Key\uFF08\u654F\u611F\uFF09",
     "userConfigBackup.apiKeyWarning": "\u5907\u4EFD\u5305\u4E0D\u52A0\u5BC6\uFF0C\u8BF7\u59A5\u5584\u4FDD\u5B58\u3002",
     "userConfigBackup.backupProgress": "\u5907\u4EFD\u8FDB\u5EA6",
@@ -16778,6 +17292,8 @@
     "apiSettings.modeImagesShort": "\u76F4\u8FDE",
     "apiSettings.imageModel": "\u56FE\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u5E76\u53D1\u4E0A\u9650",
+    "apiSettings.svgAuthorModel": "SVG \u7ED8\u5236\u6A21\u578B",
+    "apiSettings.invalidSvgAuthorModel": "\u8BF7\u8F93\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u5E76\u53D1",
     "apiSettings.advancedSettings": "\u9AD8\u7EA7\u8BBE\u7F6E",
     "apiSettings.concurrencyValue": "\u5E76\u53D1 {concurrency}",
@@ -16987,6 +17503,45 @@
 
   // codex_image/webui/frontend/src/i18n/zh-hk.ts
   var ZH_HK_DICTIONARY = {
+    "appearance.open": "\u8ABF\u6574\u914D\u8272",
+    "appearance.skin": "\u914D\u8272",
+    "appearance.default": "\u539F\u8272",
+    "appearance.blue": "\u85CD\u8272",
+    "appearance.purple": "\u7D2B\u8272",
+    "appearance.amber": "\u7425\u73C0",
+    "appearance.primary": "\u4E3B\u8272",
+    "appearance.hint": "#RRGGBB \xB7 \u81EA\u52D5\u9069\u914D\u6DF1\u6DFA\u6A21\u5F0F\u8207\u6587\u5B57\u5C0D\u6BD4\u5EA6\u3002",
+    "appearance.background": "\u80CC\u666F\u8272\u7CFB",
+    "appearance.neutral": "\u4E2D\u6027",
+    "appearance.warm": "\u6696\u7070",
+    "appearance.cool": "\u51B7\u7070",
+    "appearance.tinted": "\u96A8\u4E3B\u8272",
+    "appearance.reset": "\u6062\u5FA9\u539F\u8272",
+    "appearance.cancel": "\u53D6\u6D88\u9810\u89BD",
+    "appearance.apply": "\u5957\u7528\u914D\u8272",
+    "appearance.preview": "\u6B63\u5728\u9810\u89BD\uFF0C\u5957\u7528\u5F8C\u5132\u5B58\u5728\u76EE\u524D\u700F\u89BD\u5668\u3002",
+    "appearance.invalid": "\u8ACB\u8F38\u5165\u516D\u4F4D HEX \u8272\u78BC\uFF0C\u4F8B\u5982 #457B66\u3002",
+    "appearance.saveFailed": "\u5DF2\u9810\u89BD\u914D\u8272\uFF0C\u4F46\u700F\u89BD\u5668\u7121\u6CD5\u5132\u5B58\u504F\u597D\u3002",
+    "appearance.saved": "\u914D\u8272\u5DF2\u5132\u5B58",
+    "referenceCollector.svgConversionFailed": "\u7121\u6CD5\u5C07 SVG \u8F49\u70BA\u53C3\u8003\u5716\uFF0C\u8ACB\u4E0B\u8F09\u5F8C\u8F49\u63DB\u70BA PNG \u518D\u8A66\u3002",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u7684 GIF \u7DE8\u8F2F\u6700\u591A\u652F\u63F4 16 \u5E40\uFF0C\u8ACB\u6E1B\u5C11\u5E40\u6578\u3002",
+    "taskSubmit.gifMaskUnsupported": "GIF \u4E0D\u652F\u63F4\u906E\u7F69\uFF0C\u8ACB\u79FB\u9664\u906E\u7F69\u6216\u5207\u63DB\u8F38\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.gifCompressionUnsupported": "GIF \u4E0D\u652F\u63F4\u58D3\u7E2E\u7387\uFF0C\u8ACB\u79FB\u9664\u58D3\u7E2E\u53C3\u6578\u6216\u5207\u63DB\u70BA JPEG/WebP\u3002",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \u4E0D\u652F\u63F4\u5206\u5E40\u9810\u89BD\uFF0C\u8ACB\u95DC\u9589\u5206\u5E40\u9810\u89BD\u6216\u5207\u63DB\u8F38\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.compressionFormatUnsupported": "\u58D3\u7E2E\u7387\u50C5\u652F\u63F4 JPEG/WebP\uFF0C\u8ACB\u79FB\u9664\u58D3\u7E2E\u53C3\u6578\u6216\u5207\u63DB\u683C\u5F0F\u3002",
+    "imageEditor.markupPixelLimit": "\u6A19\u8A3B\u6700\u5927\u652F\u63F4 1677 \u842C\u50CF\u7D20\uFF0C\u8ACB\u5148\u7E2E\u5C0F\u539F\u5716",
+    "imageEditor.replacesMarkup": "\u5132\u5B58\u5716\u50CF\u7DE8\u8F2F\u5C07\u79FB\u9664\u539F\u6709\u6A19\u8A3B",
+    "output.qualityXhigh": "\u8D85\u9AD8",
+    "output.qualityMax": "\u6700\u9AD8",
+    "output.complexity": "\u8907\u96DC\u5EA6",
+    "output.frameCount": "\u5F71\u683C\u6578",
+    "output.frameDuration": "\u6BCF\u683C\u6642\u9577\uFF08\u6BEB\u79D2\uFF09",
+    "output.totalDuration": "\u7E3D\u6642\u9577",
+    "imageEditor.markup": "\u6A19\u8A3B",
+    "imageEditor.image": "\u5716\u50CF",
+    "imageEditor.saveMarkup": "\u5132\u5B58\u6A19\u8A3B",
+    "imageEditor.markupFirstOnly": "\u6A19\u8A3B\u50C5\u652F\u63F4\u7B2C\u4E00\u5F35\u53C3\u8003\u5716",
+    "imageEditor.markupUnsupported": "\u6B64\u6A21\u578B\u6216\u4ECB\u9762\u4E0D\u652F\u63F4\u6A19\u8A3B\uFF0C\u8ACB\u5207\u63DB\u6216\u79FB\u9664\u6A19\u8A3B",
     "ux.historyDraftSaveFailed": "\u672A\u80FD\u4FDD\u7559\u76EE\u524D\u8349\u7A3F\uFF0C\u5DF2\u7559\u5728\u751F\u6210\u9801\u3002\u8ACB\u7A0D\u5F8C\u91CD\u8A66\u3002",
     "ux.historyDraftRestoreFailed": "\u8349\u7A3F\u9084\u539F\u5931\u6557\uFF0C\u5DF2\u4FDD\u7559\u81E8\u6642\u526F\u672C\u3002\u8ACB\u91CD\u65B0\u6574\u7406\u518D\u8A66\u3002",
     "mobile.taskActions": "\u4EFB\u52D9\u64CD\u4F5C",
@@ -17992,6 +18547,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\u7121\u6CD5\u53D6\u4EE3\uFF1A\u5099\u4EFD\u4E2D\u7684 {groups} \u70BA\u7A7A\uFF0C\u4F46\u76EE\u524D\u4ECD\u6709\u8CC7\u6599\u3002\u8ACB\u53D6\u6D88\u9078\u64C7\u6216\u6539\u7528\u589E\u91CF\u6062\u5FA9\u3002",
     "user_config_restore_empty_replace_blocked": "\u7A7A\u767D\u5099\u4EFD\u5167\u5BB9\u4E0D\u80FD\u53D6\u4EE3\u73FE\u6709\u8CC7\u6599\u3002\u8ACB\u53D6\u6D88\u9078\u64C7\u6216\u6539\u7528\u589E\u91CF\u6062\u5FA9\u3002",
     "user_config_restore_preview_unavailable": "\u7121\u6CD5\u5B89\u5168\u8B80\u53D6\u76EE\u524D\u8CC7\u6599\u3002\u8ACB\u6AA2\u67E5\u672C\u6A5F\u6A94\u6848\u5F8C\u91CD\u65B0\u9A57\u8B49\u5099\u4EFD\u3002",
+    "userConfigBackup.legacyCompatible": "\u76F8\u5BB9\u820A\u7248\uFF08\u4E0D\u5305\u542B\u914D\u8272\uFF09",
     "userConfigBackup.includeApiKeys": "\u5305\u542B API Key\uFF08\u654F\u611F\uFF09",
     "userConfigBackup.apiKeyWarning": "\u5099\u4EFD\u6A94\u672A\u7D93\u52A0\u5BC6\uFF0C\u8ACB\u59A5\u5584\u4FDD\u5B58\u3002",
     "userConfigBackup.incremental": "\u589E\u91CF",
@@ -18091,6 +18647,8 @@
     "apiSettings.modeImagesShort": "\u76F4\u9023",
     "apiSettings.imageModel": "\u5F71\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u4E26\u767C\u4E0A\u9650",
+    "apiSettings.svgAuthorModel": "SVG \u7E6A\u88FD\u6A21\u578B",
+    "apiSettings.invalidSvgAuthorModel": "\u8ACB\u8F38\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u4E26\u767C",
     "apiSettings.advancedSettings": "\u9032\u968E\u8A2D\u5B9A",
     "apiSettings.concurrencyValue": "\u4F75\u767C{concurrency}",
@@ -18383,6 +18941,7 @@
     "ux.recovery.input": "\u4E0D\u652F\u63F4\u6B64\u8ACB\u6C42\u8F38\u5165\u3002\u8ACB\u6AA2\u67E5\u63D0\u793A\u8A5E\u3001\u53C3\u8003\u6A94\u6848\u548C\u751F\u6210\u53C3\u6578\u3002",
     "ux.recovery.quota": "\u984D\u5EA6\u6216\u5E33\u6236\u9918\u984D\u4E0D\u8DB3\u3002\u8ACB\u6AA2\u67E5\u4EFB\u52D9\u4F9B\u61C9\u5546\u7684\u5E33\u6236\u9650\u5236\u3002",
     "ux.recovery.temporary": "\u751F\u6210\u672A\u5B8C\u6210\u3002\u5DF2\u6210\u529F\u7684\u5716\u7247\u6703\u4FDD\u7559\uFF1B\u53EF\u91CD\u8A66\u5931\u6557\u7684\u5716\u7247\u3002",
+    "ux.recovery.svgAuthorModel": "\u8ACB\u5728\u8A72\u4F9B\u61C9\u5546\u7684 API \u8A2D\u5B9A\u4E2D\u586B\u5BEB OpenAI \u5C08\u6848\u53EF\u7528\u7684 SVG \u7E6A\u88FD\u6A21\u578B\uFF0C\u7136\u5F8C\u91CD\u8A66\u3002",
     "ux.referenceAdded": "\u5DF2\u52A0\u5165\u672C\u6B21\u53C3\u8003\u8F38\u5165",
     "ux.referenceFailed": "\u672A\u80FD\u52A0\u5165\u53C3\u8003\u5716\uFF0C\u8ACB\u91CD\u8A66\u3002",
     "ux.restoreDraft": "\u9084\u539F\u8F38\u5165",
@@ -18393,6 +18952,45 @@
 
   // codex_image/webui/frontend/src/i18n/zh-tw.ts
   var ZH_TW_DICTIONARY = {
+    "appearance.open": "\u8ABF\u6574\u914D\u8272",
+    "appearance.skin": "\u914D\u8272",
+    "appearance.default": "\u539F\u8272",
+    "appearance.blue": "\u85CD\u8272",
+    "appearance.purple": "\u7D2B\u8272",
+    "appearance.amber": "\u7425\u73C0",
+    "appearance.primary": "\u4E3B\u8272",
+    "appearance.hint": "#RRGGBB \xB7 \u81EA\u52D5\u9069\u914D\u6DF1\u6DFA\u6A21\u5F0F\u8207\u6587\u5B57\u5C0D\u6BD4\u5EA6\u3002",
+    "appearance.background": "\u80CC\u666F\u8272\u7CFB",
+    "appearance.neutral": "\u4E2D\u6027",
+    "appearance.warm": "\u6696\u7070",
+    "appearance.cool": "\u51B7\u7070",
+    "appearance.tinted": "\u96A8\u4E3B\u8272",
+    "appearance.reset": "\u6062\u5FA9\u539F\u8272",
+    "appearance.cancel": "\u53D6\u6D88\u9810\u89BD",
+    "appearance.apply": "\u5957\u7528\u914D\u8272",
+    "appearance.preview": "\u6B63\u5728\u9810\u89BD\uFF0C\u5957\u7528\u5F8C\u5132\u5B58\u5728\u76EE\u524D\u700F\u89BD\u5668\u3002",
+    "appearance.invalid": "\u8ACB\u8F38\u5165\u516D\u4F4D HEX \u8272\u78BC\uFF0C\u4F8B\u5982 #457B66\u3002",
+    "appearance.saveFailed": "\u5DF2\u9810\u89BD\u914D\u8272\uFF0C\u4F46\u700F\u89BD\u5668\u7121\u6CD5\u5132\u5B58\u504F\u597D\u3002",
+    "appearance.saved": "\u914D\u8272\u5DF2\u5132\u5B58",
+    "referenceCollector.svgConversionFailed": "\u7121\u6CD5\u5C07 SVG \u8F49\u70BA\u53C3\u8003\u5716\uFF0C\u8ACB\u4E0B\u8F09\u5F8C\u8F49\u63DB\u70BA PNG \u518D\u8A66\u3002",
+    "taskSubmit.openAiGifEditFrameLimit": "OpenAI \u7684 GIF \u7DE8\u8F2F\u6700\u591A\u652F\u63F4 16 \u5F71\u683C\uFF0C\u8ACB\u6E1B\u5C11\u5F71\u683C\u6578\u3002",
+    "taskSubmit.gifMaskUnsupported": "GIF \u4E0D\u652F\u63F4\u906E\u8272\u7247\uFF0C\u8ACB\u79FB\u9664\u906E\u8272\u7247\u6216\u5207\u63DB\u8F38\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.gifCompressionUnsupported": "GIF \u4E0D\u652F\u63F4\u58D3\u7E2E\u7387\uFF0C\u8ACB\u79FB\u9664\u58D3\u7E2E\u53C3\u6578\u6216\u5207\u63DB\u70BA JPEG/WebP\u3002",
+    "taskSubmit.gifPartialImagesUnsupported": "GIF \u4E0D\u652F\u63F4\u5206\u5E40\u9810\u89BD\uFF0C\u8ACB\u95DC\u9589\u5206\u5E40\u9810\u89BD\u6216\u5207\u63DB\u8F38\u51FA\u683C\u5F0F\u3002",
+    "taskSubmit.compressionFormatUnsupported": "\u58D3\u7E2E\u7387\u50C5\u652F\u63F4 JPEG/WebP\uFF0C\u8ACB\u79FB\u9664\u58D3\u7E2E\u53C3\u6578\u6216\u5207\u63DB\u683C\u5F0F\u3002",
+    "imageEditor.markupPixelLimit": "\u6A19\u8A3B\u6700\u5927\u652F\u63F4 1677 \u842C\u50CF\u7D20\uFF0C\u8ACB\u5148\u7E2E\u5C0F\u539F\u5716",
+    "imageEditor.replacesMarkup": "\u5132\u5B58\u5716\u50CF\u7DE8\u8F2F\u5C07\u79FB\u9664\u539F\u6709\u6A19\u8A3B",
+    "output.qualityXhigh": "\u8D85\u9AD8",
+    "output.qualityMax": "\u6700\u9AD8",
+    "output.complexity": "\u8907\u96DC\u5EA6",
+    "output.frameCount": "\u5F71\u683C\u6578",
+    "output.frameDuration": "\u6BCF\u683C\u6642\u9577\uFF08\u6BEB\u79D2\uFF09",
+    "output.totalDuration": "\u7E3D\u6642\u9577",
+    "imageEditor.markup": "\u6A19\u8A3B",
+    "imageEditor.image": "\u5716\u50CF",
+    "imageEditor.saveMarkup": "\u5132\u5B58\u6A19\u8A3B",
+    "imageEditor.markupFirstOnly": "\u6A19\u8A3B\u50C5\u652F\u63F4\u7B2C\u4E00\u5F35\u53C3\u8003\u5716",
+    "imageEditor.markupUnsupported": "\u6B64\u6A21\u578B\u6216\u4ECB\u9762\u4E0D\u652F\u63F4\u6A19\u8A3B\uFF0C\u8ACB\u5207\u63DB\u6216\u79FB\u9664\u6A19\u8A3B",
     "ux.historyDraftSaveFailed": "\u672A\u80FD\u4FDD\u7559\u76EE\u524D\u8349\u7A3F\uFF0C\u5DF2\u7559\u5728\u751F\u6210\u9801\u3002\u8ACB\u7A0D\u5F8C\u91CD\u8A66\u3002",
     "ux.historyDraftRestoreFailed": "\u8349\u7A3F\u9084\u539F\u5931\u6557\uFF0C\u5DF2\u4FDD\u7559\u66AB\u5B58\u526F\u672C\u3002\u8ACB\u91CD\u65B0\u6574\u7406\u518D\u8A66\u3002",
     "mobile.taskActions": "\u4EFB\u52D9\u64CD\u4F5C",
@@ -19398,6 +19996,7 @@
     "userConfigBackup.emptyReplaceBlocked": "\u7121\u6CD5\u53D6\u4EE3\uFF1A\u5099\u4EFD\u4E2D\u7684 {groups} \u70BA\u7A7A\uFF0C\u4F46\u76EE\u524D\u4ECD\u6709\u8CC7\u6599\u3002\u8ACB\u53D6\u6D88\u9078\u53D6\u6216\u6539\u7528\u589E\u91CF\u9084\u539F\u3002",
     "user_config_restore_empty_replace_blocked": "\u7A7A\u767D\u5099\u4EFD\u5167\u5BB9\u4E0D\u80FD\u53D6\u4EE3\u73FE\u6709\u8CC7\u6599\u3002\u8ACB\u53D6\u6D88\u9078\u53D6\u6216\u6539\u7528\u589E\u91CF\u9084\u539F\u3002",
     "user_config_restore_preview_unavailable": "\u7121\u6CD5\u5B89\u5168\u8B80\u53D6\u76EE\u524D\u8CC7\u6599\u3002\u8ACB\u6AA2\u67E5\u672C\u6A5F\u6A94\u6848\u5F8C\u91CD\u65B0\u9A57\u8B49\u5099\u4EFD\u3002",
+    "userConfigBackup.legacyCompatible": "\u76F8\u5BB9\u820A\u7248\uFF08\u4E0D\u5305\u542B\u914D\u8272\uFF09",
     "userConfigBackup.includeApiKeys": "\u5305\u542B API Key\uFF08\u654F\u611F\uFF09",
     "userConfigBackup.apiKeyWarning": "\u5099\u4EFD\u6A94\u672A\u52A0\u5BC6\uFF0C\u8ACB\u59A5\u5584\u4FDD\u5B58\u3002",
     "userConfigBackup.incremental": "\u589E\u91CF",
@@ -19497,6 +20096,8 @@
     "apiSettings.modeImagesShort": "\u76F4\u9023",
     "apiSettings.imageModel": "\u5F71\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u4E26\u767C\u4E0A\u9650",
+    "apiSettings.svgAuthorModel": "SVG \u7E6A\u88FD\u6A21\u578B",
+    "apiSettings.invalidSvgAuthorModel": "\u8ACB\u8F38\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u4E26\u767C",
     "apiSettings.advancedSettings": "\u9032\u968E\u8A2D\u5B9A",
     "apiSettings.concurrencyValue": "\u4F75\u767C{concurrency}",
@@ -19789,6 +20390,7 @@
     "ux.recovery.input": "\u4E0D\u652F\u63F4\u6B64\u8ACB\u6C42\u8F38\u5165\u3002\u8ACB\u6AA2\u67E5\u63D0\u793A\u8A5E\u3001\u53C3\u8003\u6A94\u6848\u548C\u751F\u6210\u53C3\u6578\u3002",
     "ux.recovery.quota": "\u984D\u5EA6\u6216\u5E33\u6236\u9918\u984D\u4E0D\u8DB3\u3002\u8ACB\u6AA2\u67E5\u4EFB\u52D9\u4F9B\u61C9\u5546\u7684\u5E33\u6236\u9650\u5236\u3002",
     "ux.recovery.temporary": "\u751F\u6210\u672A\u5B8C\u6210\u3002\u5DF2\u6210\u529F\u7684\u5716\u7247\u6703\u4FDD\u7559\uFF1B\u53EF\u91CD\u8A66\u5931\u6557\u7684\u5716\u7247\u3002",
+    "ux.recovery.svgAuthorModel": "\u8ACB\u5728\u8A72\u4F9B\u61C9\u5546\u7684 API \u8A2D\u5B9A\u4E2D\u586B\u5BEB OpenAI \u5C08\u6848\u53EF\u7528\u7684 SVG \u7E6A\u88FD\u6A21\u578B\uFF0C\u7136\u5F8C\u91CD\u8A66\u3002",
     "ux.referenceAdded": "\u5DF2\u52A0\u5165\u672C\u6B21\u53C3\u8003\u8F38\u5165",
     "ux.referenceFailed": "\u672A\u80FD\u52A0\u5165\u53C3\u8003\u5716\uFF0C\u8ACB\u91CD\u8A66\u3002",
     "ux.restoreDraft": "\u9084\u539F\u8F38\u5165",
@@ -20252,12 +20854,12 @@
   function applyLocaleToDocument() {
     document.documentElement.lang = currentLocale;
     document.documentElement.dataset.locale = currentLocale;
-    document.querySelectorAll("[data-i18n]").forEach((element2) => {
-      element2.textContent = translate(element2.dataset.i18n || "");
+    document.querySelectorAll("[data-i18n]").forEach((element3) => {
+      element3.textContent = translate(element3.dataset.i18n || "");
     });
-    document.querySelectorAll("[data-i18n-attr]").forEach((element2) => {
-      translationPairs(element2.dataset.i18nAttr).forEach(([attribute, key2]) => {
-        element2.setAttribute(attribute, translate(key2));
+    document.querySelectorAll("[data-i18n-attr]").forEach((element3) => {
+      translationPairs(element3.dataset.i18nAttr).forEach(([attribute, key2]) => {
+        element3.setAttribute(attribute, translate(key2));
       });
     });
     updateLanguageSelect();
@@ -20357,8 +20959,8 @@
     const origins = /* @__PURE__ */ new Map();
     const hide = () => {
       const wasOpen = !drawer.classList.contains("hidden");
-      origins.forEach((placeholder, element2) => {
-        placeholder.replaceWith(element2);
+      origins.forEach((placeholder, element3) => {
+        placeholder.replaceWith(element3);
       });
       origins.clear();
       drawer.classList.add("hidden");
@@ -20368,12 +20970,12 @@
     const open = () => {
       if (!window.matchMedia("(max-width: 1180px)").matches) return;
       if (!drawer.classList.contains("hidden")) return;
-      sidebar.querySelectorAll(".sidebar-search, .task-history-shell, .sidebar-footer").forEach((element2) => {
-        if (element2.parentElement?.closest(".task-history-shell")) return;
+      sidebar.querySelectorAll(".sidebar-search, .task-history-shell, .sidebar-footer").forEach((element3) => {
+        if (element3.parentElement?.closest(".task-history-shell")) return;
         const placeholder = document.createComment("task-drawer-origin");
-        element2.before(placeholder);
-        origins.set(element2, placeholder);
-        drawer.append(element2);
+        element3.before(placeholder);
+        origins.set(element3, placeholder);
+        drawer.append(element3);
       });
       drawer.classList.remove("hidden");
       trigger.setAttribute("aria-expanded", "true");
@@ -20410,7 +21012,7 @@
     workspace.id = "referenceWorkspace";
     toggle.setAttribute("aria-controls", workspace.id);
     let expanded = false;
-    const sync = () => {
+    const sync2 = () => {
       const { state: state33 } = getLegacyBridge();
       toggle.hidden = Boolean(state33.images.length || (state33.referenceFiles || []).length);
       const collapsed = window.matchMedia("(max-width: 600px), (max-height: 500px)").matches && !expanded && !state33.images.length && !(state33.referenceFiles || []).length;
@@ -20420,12 +21022,12 @@
     };
     toggle.addEventListener("click", () => {
       expanded = !expanded;
-      sync();
+      sync2();
     });
-    new MutationObserver(sync).observe(document.getElementById("imageThumbItems"), { childList: true });
-    new MutationObserver(sync).observe(document.getElementById("referenceFileSelection"), { childList: true });
-    window.matchMedia("(max-width: 600px), (max-height: 500px)").addEventListener("change", sync);
-    sync();
+    new MutationObserver(sync2).observe(document.getElementById("imageThumbItems"), { childList: true });
+    new MutationObserver(sync2).observe(document.getElementById("referenceFileSelection"), { childList: true });
+    window.matchMedia("(max-width: 600px), (max-height: 500px)").addEventListener("change", sync2);
+    sync2();
   }
 
   // codex_image/webui/frontend/src/compact-composer-layout.ts
@@ -20438,10 +21040,10 @@
     const count = document.getElementById("charCount");
     const restore = document.getElementById("restoreComposerDraft");
     if (!workspace || !controls || !summarySlot || !footer || !summary || !count || !restore) return;
-    const origins = [summary, count, restore].map((element2) => {
+    const origins = [summary, count, restore].map((element3) => {
       const marker = document.createComment("compact-composer-origin");
-      element2.before(marker);
-      return { element: element2, marker };
+      element3.before(marker);
+      return { element: element3, marker };
     });
     let compact = false;
     const isCompact = () => getComputedStyle(controls).getPropertyValue("--compact-composer").trim() === "1";
@@ -20449,11 +21051,11 @@
     restore.addEventListener("blur", () => {
       restoreLostFocusDuringResize = isCompact() !== compact;
     });
-    const sync = () => {
+    const sync2 = () => {
       const focused = document.activeElement;
       const next = isCompact();
       if (next === compact) return;
-      const movingFocus = focused instanceof HTMLElement && origins.some(({ element: element2 }) => element2.contains(focused));
+      const movingFocus = focused instanceof HTMLElement && origins.some(({ element: element3 }) => element3.contains(focused));
       const restoreFocus = restoreLostFocusDuringResize && focused === document.body;
       restoreLostFocusDuringResize = false;
       compact = next;
@@ -20461,7 +21063,7 @@
         summarySlot.append(summary);
         footer.append(count, restore);
       } else {
-        origins.forEach(({ element: element2, marker }) => marker.after(element2));
+        origins.forEach(({ element: element3, marker }) => marker.after(element3));
       }
       controls.toggleAttribute("data-compact-composer", compact);
       onDensityChange();
@@ -20471,12 +21073,12 @@
     let pending = 0;
     const schedule = () => {
       cancelAnimationFrame(pending);
-      pending = requestAnimationFrame(sync);
+      pending = requestAnimationFrame(sync2);
     };
     new ResizeObserver(schedule).observe(workspace);
     window.addEventListener("resize", schedule);
     window.matchMedia("(pointer: fine)").addEventListener("change", schedule);
-    sync();
+    sync2();
   }
 
   // codex_image/webui/frontend/src/mobile-shell.ts
@@ -20554,7 +21156,7 @@
       origins.set(node, marker);
       target.append(node);
     };
-    const sync = () => {
+    const sync2 = () => {
       sheet.close();
       origins.forEach((marker, node) => marker.replaceWith(node));
       origins.clear();
@@ -20565,10 +21167,10 @@
       ["historyToolbarUtilities", "modelFamilyOptions", "queueButton", "taskNotificationButton", "taskNotificationCenter", "generationProviderSettingsButton", "themeSwitcher", "githubLink"].forEach((id) => move(id, sheet.content));
     };
     sheet.content.addEventListener("click", (event) => {
-      if (event.target.closest("#generationProviderSettingsButton, #queueButton, #historyManagementButton, #historyRefreshButton")) sheet.close();
+      if (event.target.closest("#generationProviderSettingsButton, #queueButton, #historyManagementButton, #historyRefreshButton, #appearanceTrigger")) sheet.close();
     }, true);
-    query.addEventListener("change", sync);
-    sync();
+    query.addEventListener("change", sync2);
+    sync2();
     let frame = 0;
     const updateViewport = () => {
       cancelAnimationFrame(frame);
@@ -20647,21 +21249,21 @@
     back.addEventListener("click", showEditor);
     getLegacyBridge().methods.showGenerationEditor = showEditor;
     getLegacyBridge().methods.showMobilePreview = showPreview;
-    const feedback2 = document.getElementById("statusText");
+    const feedback3 = document.getElementById("statusText");
     const feedbackOrigin = document.createComment("mobile-feedback-origin");
-    feedback2?.before(feedbackOrigin);
-    const sync = () => {
+    feedback3?.before(feedbackOrigin);
+    const sync2 = () => {
       sheet.close();
       if (query.matches) {
         sheet.content.append(output);
         dock.append(run);
         if (lock && sheetHeader) sheetHeader.insertBefore(lock, sheetHeader.lastElementChild);
-        if (feedback2) summary.before(feedback2);
+        if (feedback3) summary.before(feedback3);
       } else {
         outputOrigin.after(output);
         runOrigin.after(run);
         if (lock) lockOrigin.after(lock);
-        if (feedback2) feedbackOrigin.after(feedback2);
+        if (feedback3) feedbackOrigin.after(feedback3);
       }
     };
     const label = () => {
@@ -20677,8 +21279,8 @@
     };
     if (execution) new MutationObserver(syncSummary).observe(execution, { childList: true, characterData: true, subtree: true });
     syncSummary();
-    query.addEventListener("change", sync);
-    sync();
+    query.addEventListener("change", sync2);
+    sync2();
   }
 
   // codex_image/webui/frontend/src/prompt-image-mentions.ts
@@ -20932,30 +21534,30 @@
     const { state: state33, methods } = getLegacyBridge();
     return { prompt: methods.getPromptText?.() || "", prompt_image_mentions: captureImageMentions(), images: (state33.images || []).map((item) => ({ ...item })), files: (state33.referenceFiles || []).map((item) => ({ ...item })), mode: state33.mode };
   }
-  function key(draft) {
-    return JSON.stringify([draft.prompt, draft.prompt_image_mentions, draft.images.map((item) => [item.id, item.name, item.file ? null : item.previewUrl, item.file?.size, item.file?.lastModified]), draft.files.map((item) => [item.id, item.filename, item.file?.size, item.file?.lastModified]), draft.mode]);
+  function key(draft2) {
+    return JSON.stringify([draft2.prompt, draft2.prompt_image_mentions, draft2.images.map((item) => [item.id, item.name, item.file ? null : item.previewUrl, item.file?.size, item.file?.lastModified, item.markupFile?.size, item.markupFile?.lastModified]), draft2.files.map((item) => [item.id, item.filename, item.file?.size, item.file?.lastModified, item.markupFile?.size, item.markupFile?.lastModified]), draft2.mode]);
   }
   function composerFingerprint() {
     return key(capture());
   }
   function markComposerSubmitted(fingerprint) {
-    drafts = drafts.filter((draft) => key(draft) !== fingerprint);
+    drafts = drafts.filter((draft2) => key(draft2) !== fingerprint);
     if (composerFingerprint() === fingerprint) baseline = fingerprint;
     renderRestoreButton();
   }
   function markComposerBaseline(prompt) {
-    const draft = capture();
-    if (prompt !== void 0) draft.prompt = prompt;
-    baseline = key(draft);
+    const draft2 = capture();
+    if (prompt !== void 0) draft2.prompt = prompt;
+    baseline = key(draft2);
   }
   function composerHasChanges() {
-    const draft = capture();
-    return Boolean(draft.prompt || draft.images.length || draft.files.length) && key(draft) !== baseline;
+    const draft2 = capture();
+    return Boolean(draft2.prompt || draft2.images.length || draft2.files.length) && key(draft2) !== baseline;
   }
   function preserveComposerDraft(force = false) {
     if (!force && !composerHasChanges()) return;
-    const draft = capture();
-    if (key(drafts[drafts.length - 1] || { prompt: "", images: [], files: [], mode: "generate" }) !== key(draft)) drafts.push(draft);
+    const draft2 = capture();
+    if (key(drafts[drafts.length - 1] || { prompt: "", images: [], files: [], mode: "generate" }) !== key(draft2)) drafts.push(draft2);
     renderRestoreButton();
   }
   function renderRestoreButton() {
@@ -20967,24 +21569,24 @@
     }
   }
   function restoreComposerDraft() {
-    const draft = drafts.pop();
-    if (!draft) return;
+    const draft2 = drafts.pop();
+    if (!draft2) return;
     preserveComposerDraft();
-    applyDraft(draft);
+    applyDraft(draft2);
     getLegacyBridge().methods.setStatus?.(translate("ux.draftRestored"), "ok");
     baseline = "";
     renderRestoreButton();
   }
-  function applyDraft(draft) {
+  function applyDraft(draft2) {
     const { state: state33, methods } = getLegacyBridge();
     state33.taskInputRestoreSeq += 1;
     state33.selectedTaskId = null;
     methods.revokeUploadPreviewUrls?.(state33.images);
-    state33.images = draft.images.map((item) => item.kind === "upload" && item.file ? { ...item, previewUrl: URL.createObjectURL(item.file) } : { ...item });
-    state33.referenceFiles = draft.files.map((item) => ({ ...item }));
-    if (draft.prompt_image_mentions) methods.setPromptWithGalleryRefs?.(draft.prompt, [], draft.prompt_image_mentions, state33.images);
-    else methods.setPromptText?.(draft.prompt);
-    methods.setMode?.(draft.mode);
+    state33.images = draft2.images.map((item) => item.kind === "upload" && item.file ? { ...item, previewUrl: URL.createObjectURL(item.file) } : { ...item });
+    state33.referenceFiles = draft2.files.map((item) => ({ ...item }));
+    if (draft2.prompt_image_mentions) methods.setPromptWithGalleryRefs?.(draft2.prompt, [], draft2.prompt_image_mentions, state33.images);
+    else methods.setPromptText?.(draft2.prompt);
+    methods.setMode?.(draft2.mode);
     methods.clearTaskParameterInspection?.();
     methods.renderImageStrip?.();
     methods.renderReferenceFiles?.();
@@ -21360,6 +21962,8 @@
       userConfigBackupSectionList: document.querySelector("#userConfigBackupSectionList"),
       userConfigIncludeApiKeysRow: document.querySelector("#userConfigIncludeApiKeysRow"),
       userConfigIncludeApiKeys: document.querySelector("#userConfigIncludeApiKeys"),
+      userConfigLegacyBackupRow: document.querySelector("#userConfigLegacyBackupRow"),
+      userConfigLegacyBackup: document.querySelector("#userConfigLegacyBackup"),
       userConfigBackupProgress: document.querySelector("#userConfigBackupProgress"),
       userConfigBackupStatus: document.querySelector("#userConfigBackupStatus"),
       cancelUserConfigBackupButton: document.querySelector("#cancelUserConfigBackupButton"),
@@ -21430,6 +22034,8 @@
       cancelApiProviderEditButton: document.querySelector("#cancelApiProviderEditButton"),
       saveApiProviderEditButton: document.querySelector("#saveApiProviderEditButton"),
       apiBaseUrl: document.querySelector("#apiBaseUrl"),
+      apiSvgAuthorModel: document.querySelector("#apiSvgAuthorModel"),
+      apiSvgAuthorModelField: document.querySelector("#apiSvgAuthorModelField"),
       providerBindingsCount: document.querySelector("#providerBindingsCount"),
       apiKey: document.querySelector("#apiKey"),
       apiKeyRevealButton: document.querySelector("#apiKeyRevealButton"),
@@ -21578,6 +22184,9 @@
       customRatioFromImageButton: document.querySelector("#customRatioFromImageButton"),
       swapCustomSizeButton: document.querySelector("#swapCustomSizeButton"),
       quality: document.querySelector("#quality"),
+      complexity: document.querySelector("#complexity"),
+      frameCount: document.querySelector("#frameCount"),
+      frameDuration: document.querySelector("#frameDuration"),
       outputFormat: document.querySelector("#outputFormat"),
       outputFormatField: document.querySelector("#outputFormatField"),
       outputFormatGroup: document.querySelector("#outputFormatGroup"),
@@ -21796,8 +22405,8 @@
     if (task.local_pending) return true;
     return ELAPSED_TICK_STATUSES.has(String(task.status || ""));
   }
-  function setTextIfChanged(element2, text) {
-    if (element2.textContent !== text) element2.textContent = text;
+  function setTextIfChanged(element3, text) {
+    if (element3.textContent !== text) element3.textContent = text;
   }
   function updateTaskElapsedCard(card, task) {
     const statusElement = card.querySelector("[data-task-status-id]");
@@ -21817,8 +22426,8 @@
     if (runtimeElement) setTextIfChanged(runtimeElement, taskCardRuntimeText(task));
     const retryElement = card.querySelector("[data-task-retry-id]");
     if (retryElement) setTextIfChanged(retryElement, taskRetryStateText(task));
-    card.querySelectorAll("[data-preview-elapsed]").forEach((element2) => {
-      updateElapsedTimerElement(element2, elapsedMillisecondsSince(element2.dataset.previewStart));
+    card.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
+      updateElapsedTimerElement(element3, elapsedMillisecondsSince(element3.dataset.previewStart));
     });
   }
   function updateTaskElapsedDisplays() {
@@ -21840,34 +22449,34 @@
   function updatePreviewElapsedDisplay() {
     const { els: els43 } = getLegacyBridge();
     if (!els43.previewGrid) return;
-    els43.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element2) => {
-      updateElapsedTimerElement(element2, elapsedMillisecondsSince(element2.dataset.previewStart));
+    els43.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
+      updateElapsedTimerElement(element3, elapsedMillisecondsSince(element3.dataset.previewStart));
     });
   }
-  function updateElapsedTimerElement(element2, totalMilliseconds) {
+  function updateElapsedTimerElement(element3, totalMilliseconds) {
     const elapsed = formatDurationParts(totalMilliseconds);
-    element2.setAttribute("aria-label", elapsed.text);
-    const main = element2.querySelector(".elapsed-main");
-    const ms = element2.querySelector(".elapsed-ms");
+    element3.setAttribute("aria-label", elapsed.text);
+    const main = element3.querySelector(".elapsed-main");
+    const ms = element3.querySelector(".elapsed-ms");
     if (main && ms) {
       updateElapsedPartElement(main, elapsed.clock);
       updateElapsedPartElement(ms, elapsed.fraction);
       return;
     }
-    element2.innerHTML = elapsedTimerMarkup(totalMilliseconds);
+    element3.innerHTML = elapsedTimerMarkup(totalMilliseconds);
   }
-  function updateElapsedPartElement(element2, text) {
+  function updateElapsedPartElement(element3, text) {
     const chars = Array.from(text);
-    const charNodes = Array.from(element2.querySelectorAll("[data-elapsed-char]"));
+    const charNodes = Array.from(element3.querySelectorAll("[data-elapsed-char]"));
     if (charNodes.length !== chars.length) {
-      element2.innerHTML = elapsedPartMarkup(text);
+      element3.innerHTML = elapsedPartMarkup(text);
       return;
     }
     for (const [index, node] of charNodes.entries()) {
       const char = chars[index];
       if (node.dataset.elapsedCharValue === char) continue;
       if (!/^\d$/.test(char || "") || !node.classList.contains("elapsed-wheel")) {
-        element2.innerHTML = elapsedPartMarkup(text);
+        element3.innerHTML = elapsedPartMarkup(text);
         return;
       }
       node.dataset.elapsedCharValue = char;
@@ -22339,6 +22948,42 @@
     return GPT_IMAGE_MODEL_IDS.includes(String(modelId || ""));
   }
 
+  // codex_image/webui/frontend/src/gpt-model-controls.ts
+  function syncGptModelControls(model) {
+    const { els: els43 } = getLegacyBridge();
+    const quality = model.parameters.find((parameter) => parameter.id === "gpt.quality");
+    const format = model.parameters.find((parameter) => parameter.id === "output.format");
+    const extended = !!quality?.allowed_values.includes("max");
+    const complexity = model.parameters.some((parameter) => parameter.id === "gpt.complexity");
+    const root = document.getElementById("outputFileSettings");
+    if (!root) return;
+    root?.classList.toggle("extended-quality", extended);
+    root?.classList.toggle("image26-controls", complexity);
+    document.getElementById("complexityField")?.classList.toggle("hidden", !complexity);
+    if (els43.complexity) els43.complexity.disabled = !complexity;
+    document.querySelectorAll("#qualityGroup [data-val]").forEach((button) => {
+      const supported = quality?.allowed_values.includes(button.dataset.val) ?? true;
+      button.hidden = !supported;
+      button.classList.toggle("hidden", !supported);
+      button.disabled = !supported;
+    });
+    for (const option2 of Array.from(els43.quality?.options || [])) {
+      option2.disabled = !(quality?.allowed_values.includes(option2.value) ?? true);
+    }
+    const select = els43.outputFormat;
+    if (!select) return;
+    for (const option2 of Array.from(select.options)) {
+      const supported = format?.allowed_values.includes(option2.value) ?? ["png", "jpeg", "webp"].includes(option2.value);
+      option2.hidden = !supported;
+      option2.disabled = !supported;
+    }
+    if (select.selectedOptions[0]?.disabled) select.value = "png";
+    if (complexity) mountThemedSelect(select);
+    select.closest(".themed-select")?.classList.toggle("hidden", !complexity);
+    els43.outputFormatGroup?.classList.toggle("hidden", complexity);
+    syncThemedSelect(select);
+  }
+
   // codex_image/webui/frontend/src/background-controls.ts
   var transparentPreference = false;
   function setBackgroundControl(value) {
@@ -22352,7 +22997,7 @@
     const { els: els43, state: state33 } = getLegacyBridge();
     if (!els43.transparentBackground) return;
     const supported = !state33.generationCatalog || isGptImageModel(state33.selectedModelId || "");
-    const formatSupported = els43.outputFormat?.value !== "jpeg";
+    const formatSupported = ["png", "webp", "svg"].includes(els43.outputFormat?.value || "png");
     if (els43.background?.value === "transparent") transparentPreference = true;
     const enabled = supported && formatSupported && transparentPreference;
     if (supported && els43.background) {
@@ -22361,7 +23006,7 @@
     }
     els43.transparentBackground.checked = enabled;
     els43.transparentBackground.disabled = !supported || !formatSupported;
-    els43.transparentBackgroundField?.classList.toggle("hidden", !supported);
+    els43.transparentBackgroundField?.classList.toggle("hidden", !supported || state33.selectedModelId?.startsWith("gpt-image-2.6-") && !formatSupported);
     const label = document.getElementById("transparentBackgroundLabel");
     const labelKey = formatSupported ? "output.transparentBackground" : "output.transparencyUnavailable";
     if (label) {
@@ -22852,6 +23497,7 @@
     getLegacyBridge().methods.persistModelSelection?.();
     renderProviderSelection();
     getLegacyBridge().methods.updateModeSpecificSettings?.();
+    getLegacyBridge().methods.updateCompression?.();
     getLegacyBridge().methods.updateRequestPreview?.();
   }
   function initProviderSelectionFeature() {
@@ -22993,7 +23639,7 @@
     }
     return value;
   }
-  function gptSizeValid(value) {
+  function gptSizeValid(value, animation = false) {
     if (typeof value !== "string") return false;
     if (value === "auto") return true;
     const match = value.match(/^(\d+)x(\d+)$/i);
@@ -23003,6 +23649,7 @@
     if (!Number.isInteger(width) || !Number.isInteger(height)) return false;
     if (width < 16 || width > 3840 || height < 16 || height > 3840) return false;
     if (width % 16 !== 0 || height % 16 !== 0) return false;
+    if (animation) return true;
     if (Math.max(width, height) / Math.min(width, height) > 3) return false;
     const pixels = width * height;
     return pixels >= 655360 && pixels <= 8294400;
@@ -23032,6 +23679,12 @@
     }
     return true;
   }
+  function modelParameterValueValid(model, definition, value, values) {
+    if (definition.id === "canvas.size" && model.id.startsWith("gpt-image-2.6-") && values["output.format"] === "gif") {
+      return gptSizeValid(value, true);
+    }
+    return parameterValueValid(definition, value);
+  }
   function nextObjectChoiceValue(definition, value, key2, next) {
     const row = definition.object_choices?.find((item) => item.key === key2);
     if (!row || !row.allowed_values.includes(next)) return { ...value };
@@ -23044,13 +23697,13 @@
     return new Set(definition.object_presets?.flatMap((preset) => Object.keys(preset.value)) || []);
   }
   function matchingObjectPreset(definition, value) {
-    const presets = definition.object_presets || [];
+    const presets2 = definition.object_presets || [];
     const managedKeys = managedPresetKeys(definition);
     const presentManagedKeys = [...managedKeys].filter((key2) => key2 in value);
     if (presentManagedKeys.length === 0) {
-      return presets.find((preset) => preset.matches_empty) || null;
+      return presets2.find((preset) => preset.matches_empty) || null;
     }
-    return presets.find((preset) => [...managedKeys].every((key2) => key2 in value && key2 in preset.value && value[key2] === preset.value[key2])) || null;
+    return presets2.find((preset) => [...managedKeys].every((key2) => key2 in value && key2 in preset.value && value[key2] === preset.value[key2])) || null;
   }
   function nextObjectPresetValue(definition, value, preset) {
     if (!definition.object_presets?.some((item) => item.id === preset.id)) return { ...value };
@@ -23075,7 +23728,7 @@
         continue;
       }
       const prior = previous[definition.id];
-      if (parameterValueValid(definition, prior)) {
+      if (modelParameterValueValid(model, definition, prior, previous)) {
         values[definition.id] = cloneValue(prior);
       } else {
         const replacement = cloneValue(definition.default);
@@ -23094,10 +23747,10 @@
       (condition) => condition.parameter_id === parameterId
     ));
   }
-  function activeParameterValuesFor(model, operation, draft) {
+  function activeParameterValuesFor(model, operation, draft2) {
     const values = Object.fromEntries(model.parameters.map((definition) => {
-      const value = draft[definition.id];
-      return [definition.id, cloneValue(parameterValueValid(definition, value) ? value : definition.default)];
+      const value = draft2[definition.id];
+      return [definition.id, cloneValue(modelParameterValueValid(model, definition, value, draft2) ? value : definition.default)];
     }));
     return Object.fromEntries(model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => definition.control !== "notice").filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values))).map((definition) => [definition.id, cloneValue(values[definition.id])]));
   }
@@ -23525,7 +24178,7 @@
   function resolvedParameterValues(model, values) {
     return Object.fromEntries(model.parameters.map((definition) => [
       definition.id,
-      parameterValueValid(definition, values[definition.id]) ? values[definition.id] : cloneValue(definition.default)
+      modelParameterValueValid(model, definition, values[definition.id], values) ? values[definition.id] : cloneValue(definition.default)
     ]));
   }
   function visibleParameterDefinitions(model, values, operation) {
@@ -23599,6 +24252,7 @@
       return;
     }
     ensureModelDraft(model);
+    syncGptModelControls(model);
     const visibility = legacyParameterVisibility(model.id, els43.size?.value);
     const legacyGpt = visibility.legacyGpt;
     state33.customSizeTransitionSeq += 1;
@@ -23613,11 +24267,11 @@
       els43.outputFormatField,
       els43.moderation?.closest(".moderation-field")
     ].filter(Boolean);
-    legacyElements.forEach((element2) => {
-      element2.classList.toggle("hidden", !legacyGpt);
+    legacyElements.forEach((element3) => {
+      element3.classList.toggle("hidden", !legacyGpt);
     });
     const automaticSize = els43.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
-    [els43.orientation?.closest(".orientation-field"), els43.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element2) => element2?.classList.toggle("hidden", !legacyGpt || automaticSize));
+    [els43.orientation?.closest(".orientation-field"), els43.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element3) => element3?.classList.toggle("hidden", !legacyGpt || automaticSize));
     const ratioField = els43.ratio?.closest(".ratio-field");
     if (ratioField) {
       const ratioVisible = legacyGpt && !automaticSize;
@@ -23640,7 +24294,7 @@
     const { state: state33 } = getLegacyBridge();
     const model = state33.generationCatalog?.models.find((item) => item.id === modelId);
     const definition = model?.parameters.find((item) => item.id === parameterId);
-    if (!model || !definition || !parameterValueValid(definition, value)) return;
+    if (!model || !definition || !modelParameterValueValid(model, definition, value, state33.parameterDraftsByModel[modelId] || {})) return;
     state33.parameterDraftsByModel[modelId] = {
       ...state33.parameterDraftsByModel[modelId] || {},
       [parameterId]: cloneValue(value)
@@ -23688,12 +24342,17 @@
       "canvas.aspect_ratio": taskParams.ratio,
       "canvas.resolution": taskParams.resolution,
       "gpt.quality": taskParams.quality,
+      "gpt.complexity": taskParams.complexity,
       "gpt.background": taskParams.background ?? "auto",
       "output.format": format,
       "gpt.moderation": taskParams.moderation,
       "gpt.web_search": protocolProfile.endsWith("_responses") && Boolean(taskParams.web_search),
       "output.count": taskParams.n
     };
+    if (format === "gif") {
+      values["gpt.frame_count"] = taskParams.frame_count;
+      values["gpt.frame_duration_ms"] = taskParams.frame_duration_ms;
+    }
     if (format === "jpeg" || format === "webp") {
       values["gpt.output_compression"] = taskParams.output_compression;
     }
@@ -23754,26 +24413,31 @@
       renderCurrentModelParameters();
       return;
     }
-    const draft = {
+    syncGptModelControls(model);
+    const draft2 = {
       ...Object.fromEntries(model.parameters.map((parameter) => [parameter.id, parameter.default])),
       ...state33.parameterDraftsByModel[modelId] || {}
     };
-    if (typeof draft["canvas.resolution"] === "string" && els43.resolution) els43.resolution.value = draft["canvas.resolution"];
-    if (typeof draft["canvas.aspect_ratio"] === "string" && els43.ratio) els43.ratio.value = draft["canvas.aspect_ratio"];
-    if ((draft["canvas.resolution"] || draft["canvas.aspect_ratio"]) && typeof methods.updateSizeFromPreset === "function") {
+    if (typeof draft2["canvas.resolution"] === "string" && els43.resolution) els43.resolution.value = draft2["canvas.resolution"];
+    if (typeof draft2["canvas.aspect_ratio"] === "string" && els43.ratio) els43.ratio.value = draft2["canvas.aspect_ratio"];
+    if ((draft2["canvas.resolution"] || draft2["canvas.aspect_ratio"]) && typeof methods.updateSizeFromPreset === "function") {
       methods.updateSizeFromPreset();
     }
-    if (typeof draft["canvas.size"] === "string") methods.syncSizeControlsFromSize?.(draft["canvas.size"]);
-    if (typeof draft["gpt.quality"] === "string" && els43.quality) els43.quality.value = draft["gpt.quality"];
-    if (typeof draft["output.format"] === "string" && els43.outputFormat) els43.outputFormat.value = draft["output.format"];
-    setBackgroundControl(draft["gpt.background"]);
-    if (typeof draft["gpt.moderation"] === "string" && els43.moderation) els43.moderation.value = draft["gpt.moderation"];
-    if (typeof draft["gpt.output_compression"] === "number" && els43.compression) els43.compression.value = String(draft["gpt.output_compression"]);
-    if (typeof draft["gpt.web_search"] === "boolean" && els43.webSearch) {
-      els43.webSearch.checked = draft["gpt.web_search"] && (selectedProviderBinding()?.protocol_profile || "").endsWith("_responses");
+    if (typeof draft2["canvas.size"] === "string") methods.syncSizeControlsFromSize?.(draft2["canvas.size"]);
+    if (typeof draft2["gpt.quality"] === "string" && els43.quality) els43.quality.value = draft2["gpt.quality"];
+    if (typeof draft2["output.format"] === "string" && els43.outputFormat) els43.outputFormat.value = draft2["output.format"];
+    if (els43.outputFormat?.selectedOptions?.[0]?.disabled) els43.outputFormat.value = "png";
+    if (els43.complexity) els43.complexity.value = String(draft2["gpt.complexity"] || "high");
+    if (els43.frameCount) els43.frameCount.value = String(draft2["gpt.frame_count"] ?? 9);
+    if (els43.frameDuration) els43.frameDuration.value = String(draft2["gpt.frame_duration_ms"] ?? 200);
+    setBackgroundControl(draft2["gpt.background"]);
+    if (typeof draft2["gpt.moderation"] === "string" && els43.moderation) els43.moderation.value = draft2["gpt.moderation"];
+    if (typeof draft2["gpt.output_compression"] === "number" && els43.compression) els43.compression.value = String(draft2["gpt.output_compression"]);
+    if (typeof draft2["gpt.web_search"] === "boolean" && els43.webSearch) {
+      els43.webSearch.checked = draft2["gpt.web_search"] && (selectedProviderBinding()?.protocol_profile || "").endsWith("_responses");
     }
-    if (typeof draft["output.count"] === "number" && els43.nInput) els43.nInput.value = String(draft["output.count"]);
-    methods.syncRadioButtons?.(els43.quality, els43.outputFormat, els43.moderation, els43.nInput);
+    if (typeof draft2["output.count"] === "number" && els43.nInput) els43.nInput.value = String(draft2["output.count"]);
+    methods.syncRadioButtons?.(els43.complexity, els43.quality, els43.outputFormat, els43.moderation, els43.nInput);
     methods.updateQuantity?.();
     methods.updateCompression?.();
     renderCurrentModelParameters();
@@ -23795,19 +24459,19 @@
     if (!model || !state33.selectedProviderId) {
       return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
     }
-    let draft = state33.parameterDraftsByModel[model.id] || {};
+    let draft2 = state33.parameterDraftsByModel[model.id] || {};
     if (isGptImageModel(model.id) && typeof methods.currentTaskParams === "function") {
-      draft = {
-        ...draft,
+      draft2 = {
+        ...draft2,
         ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || "")
       };
-      state33.parameterDraftsByModel[model.id] = draft;
+      state33.parameterDraftsByModel[model.id] = draft2;
     }
     return {
       canonicalModelId: model.id,
       providerId: state33.selectedProviderId,
       bindingId: selectedProviderBinding()?.id || "",
-      parameters: activeParameterValuesFor(model, state33.mode, draft)
+      parameters: activeParameterValuesFor(model, state33.mode, draft2)
     };
   }
   function appendCanonicalGenerationFields(form, selection) {
@@ -23819,8 +24483,8 @@
 
   // codex_image/webui/frontend/src/execution-summary.ts
   function updateExecutionSummary() {
-    const element2 = document.getElementById("executionSummary");
-    if (!element2) return;
+    const element3 = document.getElementById("executionSummary");
+    if (!element3) return;
     const selection = currentGenerationSelection();
     const { state: state33 } = getLegacyBridge();
     const model = state33.generationCatalog?.models.find((item) => item.id === selection.canonicalModelId);
@@ -23828,11 +24492,11 @@
     const p = selection.parameters;
     const size = String(p["canvas.size"] || p["canvas.aspect_ratio"] || "").replace(/(\d+)x(\d+)/i, "$1 \xD7 $2");
     const resolution = String(p["output.resolution"] || p["canvas.resolution"] || "");
-    element2.textContent = [translate("ux.execution"), model?.display_name || translate("modelSelection.providerUnavailable"), provider?.name, size, resolution, formatTranslation("ux.imageCount", { count: Number(p["output.count"] || 1) }), p["gpt.background"] === "transparent" ? translate("output.transparentBackground") : ""].filter(Boolean).join(" \xB7 ");
-    element2.title = element2.textContent;
-    element2.dataset.modelId = selection.canonicalModelId;
-    element2.dataset.providerId = selection.providerId;
-    element2.dataset.parameters = JSON.stringify(p);
+    element3.textContent = [translate("ux.execution"), model?.display_name || translate("modelSelection.providerUnavailable"), provider?.name, size, resolution, formatTranslation("ux.imageCount", { count: Number(p["output.count"] || 1) }), p["gpt.background"] === "transparent" ? translate("output.transparentBackground") : ""].filter(Boolean).join(" \xB7 ");
+    element3.title = element3.textContent;
+    element3.dataset.modelId = selection.canonicalModelId;
+    element3.dataset.providerId = selection.providerId;
+    element3.dataset.parameters = JSON.stringify(p);
   }
 
   // codex_image/webui/frontend/src/output-controls.ts
@@ -23915,7 +24579,9 @@
   }
   function updateCompression() {
     const controls = document.querySelector(".controls-col");
-    const compact = !!controls && getComputedStyle(controls).getPropertyValue("--compact-composer").trim() === "1";
+    const { state: state33 } = getLegacyBridge();
+    const image26 = state33.selectedModelId?.startsWith("gpt-image-2.6-");
+    const compact = image26 || !!controls && getComputedStyle(controls).getPropertyValue("--compact-composer").trim() === "1";
     const button = document.getElementById("outputCompressionButton");
     const options = document.querySelector("#outputFormatField .output-format-options");
     let layoutFocus = null;
@@ -23941,10 +24607,28 @@
     els2.compressionPopover?.setAttribute("data-i18n-attr", `aria-label:${labelKey}`);
     els2.compressionPopover?.setAttribute("aria-label", translate(labelKey));
     updateTransparencyControls();
-    const compressionEnabled = els2.outputFormat.value !== "png";
-    const optionsAvailable = compressionEnabled || extraOptionsCompact && !els2.transparentBackgroundField?.classList.contains("hidden");
+    const format = els2.outputFormat.value;
+    const compressionEnabled = ["jpeg", "webp"].includes(format);
+    const gif = image26 && format === "gif";
+    document.getElementById("gifOptions")?.classList.toggle("hidden", !gif);
+    if (els2.frameCount) {
+      els2.frameCount.disabled = !gif;
+      const size = els2.size?.value === "custom" ? `${els2.customWidth?.value}x${els2.customHeight?.value}` : els2.size?.value;
+      const dimensions2 = String(size || "").match(/^(\d+)x(\d+)$/);
+      const frameLimit = dimensions2 ? Math.floor(128 * 1024 * 1024 / (Number(dimensions2[1]) * Number(dimensions2[2]))) : 64;
+      const provider = state33.generationCatalog?.providers.find((item) => item.id === state33.selectedProviderId);
+      const providerLimit = state33.mode === "edit" ? provider?.gif_edit_max_frames ?? 64 : 64;
+      els2.frameCount.max = String(Math.max(2, Math.min(providerLimit, frameLimit)));
+    }
+    if (els2.frameDuration) els2.frameDuration.disabled = !gif;
+    const duration = document.getElementById("gifDuration");
+    if (duration) {
+      const seconds = Number(els2.frameCount?.value) * Number(els2.frameDuration?.value) / 1e3;
+      duration.textContent = Number.isFinite(seconds) ? `${Number(seconds.toFixed(2))} s` : "\u2014";
+    }
+    const optionsAvailable = gif || compressionEnabled || extraOptionsCompact && !els2.transparentBackgroundField?.classList.contains("hidden");
     button?.classList.toggle("hidden", !optionsAvailable);
-    els2.compressionField?.classList.toggle("hidden", extraOptionsCompact && !compressionEnabled);
+    els2.compressionField?.classList.toggle("hidden", !compressionEnabled);
     els2.compression.disabled = !compressionEnabled;
     if (!optionsAvailable) {
       closeCompressionPopover();
@@ -23960,7 +24644,7 @@
     }
   }
   function focusFirstOutputOption() {
-    const first = els2.compressionPopover?.querySelector("input:not(:disabled)");
+    const first = Array.from(els2.compressionPopover?.querySelectorAll("input:not(:disabled)") || []).find((field) => field.getClientRects().length);
     (first || els2.compressionPopover)?.focus({ preventScroll: true });
   }
   function openCompressionPopover() {
@@ -24292,8 +24976,8 @@
     }
     container.classList.toggle("hidden", !sources.length);
     if (requirementActionVisible) {
-      const feedback2 = document.createElement("div");
-      feedback2.className = "reference-file-requirement";
+      const feedback3 = document.createElement("div");
+      feedback3.className = "reference-file-requirement";
       const message = document.createElement("span");
       message.textContent = translate("referenceFiles.requiresResponses");
       const action = document.createElement("button");
@@ -24301,7 +24985,7 @@
       action.className = "ghost-button text-sm";
       action.textContent = (legacyMethod3("currentAuthSource") || "codex") === "api" ? translate("referenceFiles.openApiSettings") : translate("referenceFiles.switchToResponses");
       action.addEventListener("click", activateResponsesRequirementAction);
-      feedback2.append(message);
+      feedback3.append(message);
       const state33 = getState();
       const compatible = state33.generationCatalog ? (legacyMethod3("eligibleProviderBindings", state33.generationCatalog, state33.selectedModelId, state33.mode) || []).filter((entry) => entry.binding.protocol_profile.endsWith("_responses")) : [];
       if (compatible.length) {
@@ -24323,10 +25007,10 @@
           legacyMethod3("selectGenerationProvider", select.value);
           syncReferenceFileAvailability();
         });
-        feedback2.append(select);
-      } else feedback2.append(action);
-      els43.imageUploaderGrid?.after(feedback2);
-      requirementFeedback = feedback2;
+        feedback3.append(select);
+      } else feedback3.append(action);
+      els43.imageUploaderGrid?.after(feedback3);
+      requirementFeedback = feedback3;
     }
     sources.forEach((source, index) => {
       const tile = document.createElement("div");
@@ -24457,6 +25141,55 @@
       } catch {
       }
       return [];
+    }
+  }
+
+  // codex_image/webui/frontend/src/svg-reference.ts
+  var MAX_REFERENCE_BYTES = 50 * 1024 * 1024;
+  var MAX_REFERENCE_EDGE = 16384;
+  var MAX_REFERENCE_PIXELS = 64 * 1024 * 1024;
+  async function svgReferenceFile(blob, filename) {
+    if (!blob.size || blob.size > MAX_REFERENCE_BYTES) throw new Error("Invalid SVG size");
+    const source = await blob.text();
+    if (/<!\s*(?:DOCTYPE|ENTITY)/i.test(source)) throw new Error("Unsupported SVG declaration");
+    const svgDocument = new DOMParser().parseFromString(source, "image/svg+xml");
+    const root = svgDocument.documentElement;
+    if (svgDocument.querySelector("parsererror") || root.localName !== "svg" || root.namespaceURI !== "http://www.w3.org/2000/svg") {
+      throw new Error("Invalid SVG document");
+    }
+    const viewBox = (root.getAttribute("viewBox") || "").trim().split(/[\s,]+/);
+    const dimension = (name, index) => {
+      const value = root.getAttribute(name) || "";
+      const number = /^[\d.]+(?:px)?$/.test(value) ? Number(value.replace(/px$/, "")) : viewBox.length === 4 ? Number(viewBox[index]) : NaN;
+      if (!Number.isFinite(number) || number <= 0 || number > MAX_REFERENCE_EDGE) throw new Error("Invalid SVG dimensions");
+      return Math.max(1, Math.round(number));
+    };
+    const width = dimension("width", 2), height = dimension("height", 3);
+    if (width * height > MAX_REFERENCE_PIXELS) throw new Error("SVG exceeds reference pixel limit");
+    root.setAttribute("width", String(width));
+    root.setAttribute("height", String(height));
+    const imageUrl = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(root)], { type: "image/svg+xml" }));
+    const canvas = document.createElement("canvas");
+    try {
+      const image = new Image();
+      image.decoding = "async";
+      image.src = imageUrl;
+      await image.decode();
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Reference canvas unavailable");
+      context.drawImage(image, 0, 0, width, height);
+      const png = await new Promise((resolve, reject) => canvas.toBlob(
+        (value) => value ? resolve(value) : reject(new Error("Reference conversion failed")),
+        "image/png"
+      ));
+      if (png.size > MAX_REFERENCE_BYTES) throw new Error("PNG exceeds reference byte limit");
+      const name = filename.replace(/[\\/:*?"<>|]+/g, "-").trim().replace(/\.(?:svg|png|jpe?g|webp|gif)$/i, "") || "reference";
+      return new File([png], `${name}.png`, { type: "image/png" });
+    } finally {
+      URL.revokeObjectURL(imageUrl);
+      canvas.width = canvas.height = 0;
     }
   }
 
@@ -24885,7 +25618,15 @@
     }
     const blob = await response.blob();
     const type = blob.type || "image/png";
-    const filename = ensureImageFilenameExtension(filenameFromImageUrl(url, fallbackName), type);
+    const name = filenameFromImageUrl(url, fallbackName);
+    if ((type.split(";", 1)[0] || "").trim().toLowerCase() === "image/svg+xml") {
+      try {
+        return await svgReferenceFile(blob, name);
+      } catch {
+        throw new Error(translate("referenceCollector.svgConversionFailed"));
+      }
+    }
+    const filename = ensureImageFilenameExtension(name, type);
     return new File([blob], filename, { type });
   }
   function collectedReferenceFilename(item, index) {
@@ -25592,8 +26333,8 @@ js: import "konva/skia-backend";
       return _isCanvasFarblingActive;
     },
     getHitColor() {
-      const color = this.getRandomColor();
-      return this.isCanvasFarblingActive() ? this.getSnappedHexColor(color) : color;
+      const color2 = this.getRandomColor();
+      return this.isCanvasFarblingActive() ? this.getSnappedHexColor(color2) : color2;
     },
     getHitColorKey(r, g, b) {
       if (this.isCanvasFarblingActive()) {
@@ -25607,19 +26348,19 @@ js: import "konva/skia-backend";
       const rgb = this._hexToRgb(hex);
       return HASH + this._rgbToHex(Math.round(rgb.r / 5) * 5, Math.round(rgb.g / 5) * 5, Math.round(rgb.b / 5) * 5);
     },
-    getRGB(color) {
+    getRGB(color2) {
       let rgb;
-      if (color in COLORS) {
-        rgb = COLORS[color];
+      if (color2 in COLORS) {
+        rgb = COLORS[color2];
         return {
           r: rgb[0],
           g: rgb[1],
           b: rgb[2]
         };
-      } else if (color[0] === HASH) {
-        return this._hexToRgb(color.substring(1));
-      } else if (color.substr(0, 4) === RGB_PAREN) {
-        rgb = RGB_REGEX.exec(color.replace(/ /g, ""));
+      } else if (color2[0] === HASH) {
+        return this._hexToRgb(color2.substring(1));
+      } else if (color2.substr(0, 4) === RGB_PAREN) {
+        rgb = RGB_REGEX.exec(color2.replace(/ /g, ""));
         return {
           r: parseInt(rgb[1], 10),
           g: parseInt(rgb[2], 10),
@@ -26510,11 +27251,11 @@ js: import "konva/skia-backend";
     }
     _applyShadow(shape) {
       var _a, _b, _c;
-      const color = (_a = shape.getShadowRGBA()) !== null && _a !== void 0 ? _a : "black", blur = (_b = shape.getShadowBlur()) !== null && _b !== void 0 ? _b : 5, offset = (_c = shape.getShadowOffset()) !== null && _c !== void 0 ? _c : {
+      const color2 = (_a = shape.getShadowRGBA()) !== null && _a !== void 0 ? _a : "black", blur = (_b = shape.getShadowBlur()) !== null && _b !== void 0 ? _b : 5, offset = (_c = shape.getShadowOffset()) !== null && _c !== void 0 ? _c : {
         x: 0,
         y: 0
       }, scale = shape.getAbsoluteScale(), ratio = this.canvas.getPixelRatio(), scaleX = scale.x * ratio, scaleY = scale.y * ratio;
-      this.setAttr("shadowColor", color);
+      this.setAttr("shadowColor", color2);
       this.setAttr("shadowBlur", blur * Math.min(Math.abs(scaleX), Math.abs(scaleY)));
       this.setAttr("shadowOffsetX", offset.x * scaleX);
       this.setAttr("shadowOffsetY", offset.y * scaleY);
@@ -36871,8 +37612,8 @@ js: import "konva/skia-backend";
   function isImageEditorLineGesture(from, to) {
     return imageEditorPointDistance(from, to) >= 4;
   }
-  function imageEditorBucketFillColor(color) {
-    const normalized = String(color || "#ff3b30").replace("#", "").trim();
+  function imageEditorBucketFillColor(color2) {
+    const normalized = String(color2 || "#ff3b30").replace("#", "").trim();
     const hex = /^[0-9a-fA-F]{6}$/.test(normalized) ? normalized : "ff3b30";
     return [
       Number.parseInt(hex.slice(0, 2), 16),
@@ -37095,7 +37836,7 @@ js: import "konva/skia-backend";
     function cancel() {
       cancelPending?.();
     }
-    function fill(point, canvas, boundary, color, redrawOverlay) {
+    function fill(point, canvas, boundary, color2, redrawOverlay) {
       cancel();
       return new Promise((resolve, reject) => {
         const ctx = canvas.getContext("2d"), boundaryCtx = boundary.getContext("2d", { willReadFrequently: true });
@@ -37143,7 +37884,7 @@ js: import "konva/skia-backend";
         };
         try {
           const pixels = boundaryCtx.getImageData(0, 0, canvas.width, canvas.height).data;
-          worker.postMessage({ boundary: pixels, width: canvas.width, height: canvas.height, point, color: imageEditorBucketFillColor(color) }, [pixels.buffer]);
+          worker.postMessage({ boundary: pixels, width: canvas.width, height: canvas.height, point, color: imageEditorBucketFillColor(color2) }, [pixels.buffer]);
         } catch (error) {
           finish(null, error);
         }
@@ -37494,6 +38235,8 @@ js: import "konva/skia-backend";
     canvasScope: "base",
     hasInstructionMarks: false
   };
+  var markupMode = false;
+  var modeSwitchPending = false;
   var imageEditorFeatureInitialized = false;
   var imageEditorLayerSequence = 0;
   var editorFill = createImageEditorFill();
@@ -37525,9 +38268,9 @@ js: import "konva/skia-backend";
     editorHistory.redoImageEdit();
   }
   function paintBucketFillRegion(point) {
-    const { workCanvas, brushBoundaryCanvas, color } = imageEditorState;
+    const { workCanvas, brushBoundaryCanvas, color: color2 } = imageEditorState;
     if (!workCanvas || !brushBoundaryCanvas) return Promise.resolve(false);
-    const pending = editorFill.fill(point, workCanvas, brushBoundaryCanvas, color, redrawImageEditorBrushOverlay).finally(() => {
+    const pending = editorFill.fill(point, workCanvas, brushBoundaryCanvas, color2, redrawImageEditorBrushOverlay).finally(() => {
       if (pendingFill === pending) pendingFill = null;
     });
     pendingFill = pending;
@@ -37550,8 +38293,8 @@ js: import "konva/skia-backend";
     setImageEditorStatus: (...args) => setImageEditorStatus(...args),
     renderImageEditor: (...args) => renderImageEditor(...args),
     selectedImageEditorLayer: (...args) => selectedImageEditorLayer(...args),
-    applyImageEditorLayerEraseDot: (...args) => applyImageEditorLayerEraseDot(...args),
-    applyImageEditorLayerEraseSegment: (...args) => applyImageEditorLayerEraseSegment(...args),
+    applyImageEditorLayerEraseDot: (...args) => markupMode ? eraseMarkup(args[1], args[1]) : applyImageEditorLayerEraseDot(...args),
+    applyImageEditorLayerEraseSegment: (...args) => markupMode ? eraseMarkup(args[1], args[2]) : applyImageEditorLayerEraseSegment(...args),
     updateImageEditorCropBox: (...args) => updateImageEditorCropBox(...args),
     previewEditorArrow: (...args) => previewEditorArrow(...args),
     drawEditorBrushSegment: (...args) => drawEditorBrushSegment(...args),
@@ -37622,6 +38365,86 @@ js: import "konva/skia-backend";
   }
   function imageEditorContext(canvas = imageEditorState.workCanvas) {
     return canvas?.getContext("2d", { willReadFrequently: true }) || null;
+  }
+  function eraseMarkup(from, to) {
+    for (const canvas of [imageEditorState.workCanvas, imageEditorState.brushBoundaryCanvas, imageEditorState.brushOverlayCanvas]) {
+      const ctx = imageEditorContext(canvas);
+      if (!canvas || !ctx) continue;
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.lineWidth = imageEditorState.strokeWidth;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x + 0.01, to.y);
+      ctx.stroke();
+      ctx.restore();
+      markImageEditorCanvasChanged(canvas);
+    }
+    return true;
+  }
+  function markupSupported() {
+    const state33 = getState();
+    return !!state33.generationCatalog?.models.find((model) => model.id === state33.selectedModelId)?.input_constraints.supports_markup && selectedProviderBinding()?.protocol_profile === "openai_images" && imageEditorState.sourceIndex === 0;
+  }
+  function updateEditorModeControls() {
+    const els43 = getEls();
+    document.getElementById("imageEditorModeGroup")?.classList.toggle("hidden", !markupSupported() && !imageEditorState.source?.markupFile);
+    document.querySelectorAll("[data-image-editor-mode]").forEach((button) => {
+      const active = button.dataset.imageEditorMode === "markup" === markupMode;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    els43.imageEditorModal?.classList.toggle("markup-mode", markupMode);
+    if (els43.imageEditorSave) {
+      const key2 = markupMode ? "imageEditor.saveMarkup" : "action.save";
+      els43.imageEditorSave.dataset.i18n = key2;
+      els43.imageEditorSave.textContent = translate(key2);
+    }
+  }
+  async function loadExistingMarkup() {
+    const file = imageEditorState.source?.markupFile;
+    if (!file) return;
+    const sessionId = imageEditorState.sessionId;
+    const image = await loadImageEditorImage(file);
+    if (sessionId !== imageEditorState.sessionId) return;
+    const canvas = imageEditorState.workCanvas;
+    if (!canvas || canvas.width !== image.naturalWidth || canvas.height !== image.naturalHeight) throw new Error("markup_dimensions_mismatch");
+    imageEditorContext()?.drawImage(image, 0, 0);
+    markImageEditorCanvasChanged(canvas);
+    editorHistory.reset();
+    pushImageEditorHistory();
+  }
+  function requestEditorMode(markup, anchor) {
+    if (markup === markupMode || modeSwitchPending || !imageEditorState.image) return;
+    const change = async () => {
+      modeSwitchPending = true;
+      try {
+        const image = imageEditorState.image;
+        if (markup && image.naturalWidth * image.naturalHeight > 16777216) {
+          setImageEditorStatus(translate("imageEditor.markupPixelLimit"), "error");
+          return;
+        }
+        markupMode = markup;
+        initializeImageEditorCanvases(image);
+        if (markup) await loadExistingMarkup();
+        imageEditorState.tool = markup ? "brush" : "crop";
+        updateEditorModeControls();
+        renderImageEditor();
+        setImageEditorStatus(!markup && imageEditorState.source?.markupFile ? translate("imageEditor.replacesMarkup") : "");
+      } finally {
+        modeSwitchPending = false;
+      }
+    };
+    if (editorHistory.canUndo() || imageEditorState.crop?.width) {
+      legacyMethod5("openConfirmPopover", anchor, {
+        title: translate("ux.discardEdits"),
+        message: translate("ux.imageUnsaved"),
+        focusCancel: true,
+        confirmText: translate("ux.discardEdits"),
+        onConfirm: () => void change()
+      });
+    } else void change();
   }
   function imageEditorBrushBoundaryContext() {
     return imageEditorState.brushBoundaryCanvas?.getContext("2d", { willReadFrequently: true }) || null;
@@ -37719,7 +38542,7 @@ js: import "konva/skia-backend";
     };
   }
   function resizeImageEditorCanvas(width, height, offsetX = 0, offsetY = 0) {
-    const dimensions2 = imageEditorClampedCanvasDimensions(width, height);
+    const dimensions2 = markupMode ? imageEditorBaseDimensions() : imageEditorClampedCanvasDimensions(width, height);
     const stage = imageEditorState.konvaStage;
     const didResize = stage?.width?.() !== dimensions2.width || stage?.height?.() !== dimensions2.height;
     const didShift = Boolean(offsetX || offsetY);
@@ -37975,7 +38798,7 @@ js: import "konva/skia-backend";
   }
   function initializeImageEditorCanvases(image) {
     editorFill.cancel();
-    const dimensions2 = imageEditorExportDimensions(image);
+    const dimensions2 = markupMode ? { width: image.naturalWidth, height: image.naturalHeight, scale: 1 } : imageEditorExportDimensions(image);
     const baseCanvas = imageEditorCanvasFromImage(image, dimensions2);
     const workCanvas = document.createElement("canvas");
     const brushBoundaryCanvas = document.createElement("canvas");
@@ -38202,7 +39025,7 @@ ${hint}` : hint);
       }
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source) return;
     }
-    const saveCanvas = imageEditorCanvasForSave();
+    const saveCanvas = markupMode ? imageEditorState.workCanvas : imageEditorCanvasForSave();
     if (!source || !isEditableImageSource(source) || !saveCanvas || !state33.images.includes(source)) {
       setImageEditorStatus(translate("imageEditor.saveFailed"), "error");
       return;
@@ -38212,6 +39035,15 @@ ${hint}` : hint);
       const blob = await imageEditorExportBlob(saveCanvas);
       const sourceIndex = state33.images.indexOf(source);
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source || sourceIndex < 0) {
+        return;
+      }
+      if (markupMode) {
+        const pixels = saveCanvas.getContext("2d")?.getImageData(0, 0, saveCanvas.width, saveCanvas.height).data;
+        const hasMarks = pixels?.some((value, index) => index % 4 === 3 && value > 0);
+        state33.images[sourceIndex] = { ...source, markupFile: hasMarks ? new File([blob], "markup.png", { type: "image/png", lastModified: Date.now() }) : void 0 };
+        legacyMethod5("renderImageStrip");
+        legacyMethod5("updateRequestPreview");
+        closeImageEditor(true);
         return;
       }
       const filename = editedUploadFilename(source.originalFile?.name || source.name || source.file?.name);
@@ -38321,6 +39153,7 @@ ${hint}` : hint);
       return;
     }
     const sessionId = nextImageEditorSession();
+    markupMode = Boolean(source.markupFile);
     imageEditorState.sourceIndex = index;
     imageEditorState.source = source;
     imageEditorState.originalFile = null;
@@ -38342,7 +39175,11 @@ ${hint}` : hint);
       const image = await loadImageEditorImage(file);
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source) return;
       imageEditorState.image = image;
+      if (markupMode && image.naturalWidth * image.naturalHeight > 16777216) throw new Error("markup_pixel_limit");
       initializeImageEditorCanvases(image);
+      if (markupMode) await loadExistingMarkup();
+      imageEditorState.tool = markupMode ? "brush" : "crop";
+      updateEditorModeControls();
       renderImageEditor();
     } catch {
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source) return;
@@ -38387,6 +39224,7 @@ ${hint}` : hint);
   }
   function setImageEditorTool(tool) {
     if (!["select", "brush", "arrow", "crop", "fill", "eraser"].includes(tool)) return;
+    if (markupMode && ["select", "crop"].includes(tool)) return;
     imageEditorState.tool = tool;
     editorPointer.clearDrawing();
     clearImageEditorPreview();
@@ -38415,7 +39253,7 @@ ${hint}` : hint);
       const image = await loadImageEditorImage(file);
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source || imageEditorState.originalFile !== file) return;
       imageEditorState.image = image;
-      imageEditorState.tool = "crop";
+      imageEditorState.tool = markupMode ? "brush" : "crop";
       initializeImageEditorCanvases(image);
       renderImageEditor();
       setImageEditorStatus(translate("imageEditor.resetDone"));
@@ -38472,6 +39310,9 @@ ${hint}` : hint);
   }
   function bindImageEditorEvents() {
     const els43 = getEls();
+    document.querySelectorAll("[data-image-editor-mode]").forEach((button) => {
+      button.addEventListener("click", () => requestEditorMode(button.dataset.imageEditorMode === "markup", button));
+    });
     els43.imageEditorClose?.addEventListener("click", () => closeImageEditor());
     els43.imageEditorCancel?.addEventListener("click", () => closeImageEditor());
     els43.imageEditorModal?.addEventListener("click", (event) => {
@@ -39421,11 +40262,13 @@ ${hint}` : hint);
   var recentAssetsFeatureInitialized = false;
   var RECENT_ASSET_RENDER_BATCH_SIZE = 12;
   var RECENT_ASSET_LOAD_AHEAD_PX = 96;
+  var RECENT_ASSET_REFRESH_TIMEOUT_MS = 5e3;
   var RECENT_ASSET_PREVIEW_VISIBILITY_KEY = "codex-image-recent-asset-previews-hidden";
   var recentAssetRenderLimit = RECENT_ASSET_RENDER_BATCH_SIZE;
   var recentAssetPreviewsHidden = false;
   var recentAssetLoadState = "idle";
   var recentAssetLoadError = "";
+  var recentAssetRefreshController = null;
   function legacyMethod8(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
@@ -39499,27 +40342,42 @@ ${hint}` : hint);
     syncRecentAssetPreviewVisibility();
   }
   async function refreshRecentAssets() {
-    if (!els4.recentAssetList) return;
+    const list = els4.recentAssetList;
+    if (!list) return;
+    recentAssetRefreshController?.abort();
+    const controller = new AbortController();
+    recentAssetRefreshController = controller;
+    const { signal } = controller;
+    const timeout = window.setTimeout(() => controller.abort(), RECENT_ASSET_REFRESH_TIMEOUT_MS);
     recentAssetLoadState = "loading";
     recentAssetLoadError = "";
-    els4.recentAssetList.setAttribute("aria-busy", "true");
-    renderRecentAssets();
+    list.setAttribute("aria-busy", "true");
+    renderRecentAssetDock(list.childElementCount > 0);
+    let preparedImages;
     try {
-      const response = await fetch("/api/reference-assets/recent?limit=50");
+      const response = await fetch("/api/reference-assets/recent?limit=50", { signal });
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.detail || translate("recentAssets.loadFailed"));
       }
-      state3.recentAssets = Array.isArray(data.items) ? data.items : [];
-      recentAssetRenderLimit = RECENT_ASSET_RENDER_BATCH_SIZE;
+      signal.throwIfAborted();
+      const items = Array.isArray(data.items) ? data.items : [];
+      preparedImages = await prepareRecentAssetImages(list, items, signal);
+      signal.throwIfAborted();
+      state3.recentAssets = items;
       recentAssetLoadState = "idle";
     } catch (error) {
+      if (recentAssetRefreshController !== controller) return;
       recentAssetLoadState = "error";
-      recentAssetLoadError = error?.message || translate("recentAssets.loadFailed");
-      recentAssetRenderLimit = RECENT_ASSET_RENDER_BATCH_SIZE;
+      recentAssetLoadError = signal.aborted ? translate("recentAssets.loadFailed") : error?.message || translate("recentAssets.loadFailed");
     } finally {
-      els4.recentAssetList.removeAttribute("aria-busy");
-      renderRecentAssets();
+      window.clearTimeout(timeout);
+      controller.abort();
+      if (recentAssetRefreshController === controller) {
+        recentAssetRefreshController = null;
+        list.removeAttribute("aria-busy");
+        renderRecentAssets(preparedImages);
+      }
     }
   }
   function renderRecentAssetStatus() {
@@ -39541,43 +40399,153 @@ ${hint}` : hint);
     <button class="ghost-button text-sm" type="button" data-recent-assets-retry>${escapeHtml4(translate("action.refresh"))}</button>
   `;
   }
-  function renderRecentAssets(appendFrom = 0) {
-    if (!els4.recentAssetDock || !els4.recentAssetList) return;
-    const items = state3.recentAssets.filter((item) => item?.id && item?.image_url);
-    const visibleItems = items.slice(0, recentAssetRenderLimit);
-    const append = appendFrom > 0 && els4.recentAssetList.childElementCount === appendFrom;
-    els4.recentAssetDock.classList.toggle("hidden", !items.length && recentAssetLoadState === "idle");
-    els4.recentAssetDock.classList.toggle("is-loading", recentAssetLoadState === "loading");
+  function renderRecentAssetDock(hasItems) {
+    els4.recentAssetDock?.classList.toggle("hidden", !hasItems && recentAssetLoadState === "idle");
+    els4.recentAssetDock?.classList.toggle("is-loading", recentAssetLoadState === "loading");
     renderRecentAssetStatus();
     syncRecentAssetPreviewVisibility();
-    const markup = (append ? visibleItems.slice(appendFrom) : visibleItems).map((item) => {
-      const name = recentAssetName(item);
-      const referenceCount = recentAssetReferenceCount(item);
-      const hideOnly = recentAssetRequiresHide(item);
-      const actionLabel = hideOnly ? formatTranslation("recentAssets.hide", { name }) : formatTranslation("recentAssets.delete", { name });
-      const actionTitle = hideOnly ? formatTranslation("recentAssets.inUse", { count: referenceCount }) : translate("recentAssets.deleteTitle");
-      const actionAttribute = hideOnly ? `data-reference-asset-hide="${escapeHtml4(item.id)}"` : `data-reference-asset-delete="${escapeHtml4(item.id)}"`;
-      const thumbnailUrl = item.thumbnail_url || item.image_url;
-      return `
-    <div class="recent-asset-button" title="${escapeHtml4(name)}">
-      <button class="recent-asset-use" type="button" data-reference-asset-id="${escapeHtml4(item.id)}" aria-label="${escapeHtml4(formatTranslation("recentAssets.use", { name }))}">
-        <img src="${escapeHtml4(thumbnailUrl)}" data-full-src="${escapeHtml4(item.image_url)}" alt="${escapeHtml4(name)}" loading="lazy" decoding="async">
-        <span>${escapeHtml4(name)}</span>
+  }
+  function recentAssetCards(list) {
+    return new Map(Array.from(
+      list.querySelectorAll(".recent-asset-button"),
+      (card) => [card.dataset.recentAssetId, card]
+    ));
+  }
+  function setRecentAssetImageSource(image, item) {
+    const thumbnailUrl = item.thumbnail_url || item.image_url;
+    if (image.dataset.thumbnailSrc === thumbnailUrl && image.dataset.fullSrc === item.image_url) return;
+    image.dataset.thumbnailSrc = thumbnailUrl;
+    image.dataset.fullSrc = item.image_url;
+    image.src = thumbnailUrl;
+  }
+  function useRecentAssetImageFallback(image) {
+    const originalUrl = image.dataset.fullSrc;
+    if (!originalUrl || image.getAttribute("src") === originalUrl) return false;
+    image.src = originalUrl;
+    return true;
+  }
+  function recentAssetsInViewport(list, items) {
+    if (recentAssetPreviewsHidden || !list.firstElementChild || !list.clientWidth) return [];
+    const style = getComputedStyle(list);
+    const gap = parseFloat(style.columnGap) || 0;
+    const padding = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+    const stride = list.firstElementChild.getBoundingClientRect().width + gap;
+    if (!stride) return [];
+    const count = Math.min(items.length, recentAssetRenderLimit);
+    const maxScroll = Math.max(0, count * stride - gap + padding - list.clientWidth);
+    const start = Math.min(Math.max(0, list.scrollLeft), maxScroll);
+    return items.slice(
+      Math.max(0, Math.floor(start / stride) - 1),
+      Math.min(count, Math.ceil((start + list.clientWidth) / stride) + 1)
+    );
+  }
+  async function decodeRecentAssetImage(item, signal) {
+    signal.throwIfAborted();
+    const image = new Image();
+    image.decoding = "async";
+    let cancel;
+    const aborted = new Promise((_resolve, reject) => {
+      cancel = () => {
+        image.removeAttribute("src");
+        reject(signal.reason);
+      };
+      signal.addEventListener("abort", cancel, { once: true });
+    });
+    try {
+      setRecentAssetImageSource(image, item);
+      try {
+        await Promise.race([image.decode(), aborted]);
+      } catch {
+        signal.throwIfAborted();
+        if (!useRecentAssetImageFallback(image)) throw new Error(translate("recentAssets.loadFailed"));
+        await Promise.race([image.decode(), aborted]).catch(() => {
+          signal.throwIfAborted();
+          throw new Error(translate("recentAssets.loadFailed"));
+        });
+      }
+      signal.throwIfAborted();
+      return image;
+    } finally {
+      signal.removeEventListener("abort", cancel);
+    }
+  }
+  async function prepareRecentAssetImages(list, items, signal) {
+    const validItems = items.filter((item) => item?.id && item?.image_url);
+    const cards = recentAssetCards(list);
+    const prepared = /* @__PURE__ */ new Map();
+    while (!signal.aborted) {
+      const missing = recentAssetsInViewport(list, validItems).filter((item) => {
+        if (prepared.has(item.id)) return false;
+        const current = cards.get(item.id)?.querySelector("img");
+        return !(current?.complete && current.naturalWidth > 0 && current.dataset.thumbnailSrc === (item.thumbnail_url || item.image_url) && current.dataset.fullSrc === item.image_url);
+      });
+      if (!missing.length) break;
+      await Promise.all(missing.map(async (item) => {
+        prepared.set(item.id, await decodeRecentAssetImage(item, signal));
+      }));
+    }
+    return prepared;
+  }
+  function createRecentAssetCard(id) {
+    const card = document.createElement("div");
+    card.className = "recent-asset-button";
+    card.dataset.recentAssetId = id;
+    card.innerHTML = `
+      <button class="recent-asset-use" type="button">
+        <img loading="lazy" decoding="async">
+        <span></span>
       </button>
-      <button class="recent-asset-delete${hideOnly ? " is-hide" : ""}" type="button" ${actionAttribute} aria-label="${escapeHtml4(actionLabel)}" title="${escapeHtml4(actionTitle)}">\xD7</button>
-    </div>
+      <button class="recent-asset-delete" type="button">\xD7</button>
   `;
-    }).join("");
-    if (append) els4.recentAssetList.insertAdjacentHTML("beforeend", markup);
-    else els4.recentAssetList.innerHTML = markup;
+    card.querySelector(".recent-asset-use").dataset.referenceAssetId = id;
+    return card;
+  }
+  function updateRecentAssetCard(card, item, preparedImage) {
+    const name = recentAssetName(item);
+    const hideOnly = recentAssetRequiresHide(item);
+    const use = card.querySelector(".recent-asset-use");
+    const action = card.querySelector(".recent-asset-delete");
+    let image = use.querySelector("img");
+    if (preparedImage) {
+      image.replaceWith(preparedImage);
+      image = preparedImage;
+    }
+    setRecentAssetImageSource(image, item);
+    image.alt = name;
+    card.title = name;
+    use.querySelector("span").textContent = name;
+    use.setAttribute("aria-label", formatTranslation("recentAssets.use", { name }));
+    action.classList.toggle("is-hide", hideOnly);
+    action.removeAttribute(hideOnly ? "data-reference-asset-delete" : "data-reference-asset-hide");
+    action.setAttribute(hideOnly ? "data-reference-asset-hide" : "data-reference-asset-delete", item.id);
+    action.setAttribute("aria-label", formatTranslation(hideOnly ? "recentAssets.hide" : "recentAssets.delete", { name }));
+    action.title = hideOnly ? formatTranslation("recentAssets.inUse", { count: recentAssetReferenceCount(item) }) : translate("recentAssets.deleteTitle");
+  }
+  function renderRecentAssets(preparedImages) {
+    const list = els4.recentAssetList;
+    if (!list) return;
+    const items = state3.recentAssets.filter((item) => item?.id && item?.image_url);
+    const visibleItems = items.slice(0, recentAssetRenderLimit);
+    const desiredIds = new Set(visibleItems.map((item) => item.id));
+    const cards = recentAssetCards(list);
+    const scrollLeft = list.scrollLeft;
+    const focused = document.activeElement;
+    renderRecentAssetDock(items.length > 0);
+    cards.forEach((card, id) => {
+      if (!desiredIds.has(id)) card.remove();
+    });
+    visibleItems.forEach((item, index) => {
+      const card = cards.get(item.id) || createRecentAssetCard(item.id);
+      updateRecentAssetCard(card, item, preparedImages?.get(item.id));
+      if (list.children[index] !== card) list.insertBefore(card, list.children[index] || null);
+    });
+    if (focused && list.contains(focused) && focused !== document.activeElement) focused.focus({ preventScroll: true });
+    if (list.scrollLeft !== scrollLeft) list.scrollLeft = scrollLeft;
   }
   function handleRecentAssetImageError(event) {
     const image = event.target;
     if (!(image instanceof HTMLImageElement)) return;
-    const originalUrl = image.dataset.fullSrc;
-    if (!originalUrl || image.getAttribute("src") === originalUrl) return;
-    image.removeAttribute("data-full-src");
-    image.src = originalUrl;
+    useRecentAssetImageFallback(image);
   }
   function handleRecentAssetClick(event) {
     const target = event.target instanceof Element ? event.target : null;
@@ -39621,11 +40589,8 @@ ${hint}` : hint);
     if (!list || recentAssetRenderLimit >= state3.recentAssets.length) return;
     const remaining = list.scrollWidth - list.clientWidth - list.scrollLeft;
     if (remaining > RECENT_ASSET_LOAD_AHEAD_PX) return;
-    const scrollLeft = list.scrollLeft;
-    const previousLimit = recentAssetRenderLimit;
     recentAssetRenderLimit += RECENT_ASSET_RENDER_BATCH_SIZE;
-    renderRecentAssets(previousLimit);
-    list.scrollLeft = scrollLeft;
+    renderRecentAssets();
   }
   function wheelDeltaInPixels2(event) {
     const dominantDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
@@ -39659,6 +40624,7 @@ ${hint}` : hint);
       }
       state3.recentAssets = state3.recentAssets.filter((item) => item.id !== assetId);
       renderRecentAssets();
+      if (recentAssetLoadState === "loading") void refreshRecentAssets();
       setStatus4(translate("recentAssets.hidden"), "ok");
     } catch (error) {
       setStatus4(error.message || translate("recentAssets.hideFailed"), "error");
@@ -39685,6 +40651,7 @@ ${hint}` : hint);
         setMode("generate");
       }
       renderRecentAssets();
+      if (recentAssetLoadState === "loading") void refreshRecentAssets();
       renderImageStrip3();
       updateRequestPreview3();
       setStatus4(translate("recentAssets.deleted"), "ok");
@@ -40018,9 +40985,9 @@ ${hint}` : hint);
     if (window.CSS?.escape) return window.CSS.escape(text);
     return text.replace(/["\\]/g, "\\$&");
   }
-  function measuredElementHeight(element2) {
-    if (!element2) return 0;
-    return Math.ceil(element2.getBoundingClientRect().height);
+  function measuredElementHeight(element3) {
+    if (!element3) return 0;
+    return Math.ceil(element3.getBoundingClientRect().height);
   }
   function renderGalleryGrid2(options = {}) {
     if (options.animateHeight) {
@@ -40972,6 +41939,8 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/main-model-combobox.ts
   var DEFAULT_MAIN_MODEL = "gpt-6-luna";
   var MAIN_MODEL_OPTIONS = [
+    "gpt-6.2-sol",
+    "gpt-6.2-astra",
     "gpt-6.1-sol",
     "gpt-6.1-terra",
     "gpt-6-astra",
@@ -41168,16 +42137,16 @@ ${hint}` : hint);
   function currentCodexMode() {
     return legacyMethod14("currentCodexMode");
   }
-  function setModeSpecificElementVisibility(element2, visible) {
-    if (!element2) return;
-    element2.setAttribute("aria-hidden", visible ? "false" : "true");
+  function setModeSpecificElementVisibility(element3, visible) {
+    if (!element3) return;
+    element3.setAttribute("aria-hidden", visible ? "false" : "true");
     if (visible) {
-      element2.classList.remove("hidden");
-      element2.classList.remove("mode-collapsed");
+      element3.classList.remove("hidden");
+      element3.classList.remove("mode-collapsed");
       return;
     }
-    element2.classList.add("mode-collapsed");
-    element2.classList.add("hidden");
+    element3.classList.add("mode-collapsed");
+    element3.classList.add("hidden");
   }
   function applyModeSettingsVisibility(visibility) {
     const showModeSettings = visibility.showMainModel;
@@ -41663,6 +42632,7 @@ ${hint}` : hint);
     return [...model.operations];
   }
   function availableProtocolsForModel(modelId) {
+    if (modelId.startsWith("gpt-image-2.6-")) return ["openai_images"];
     if (modelId.startsWith("nano-banana")) return ["gemini", "openai_images"];
     if (isGptImageModel(modelId)) return ["openai_images", "openai_responses"];
     return [];
@@ -41802,11 +42772,11 @@ ${hint}` : hint);
     );
   }
   function option(value, label, selected) {
-    const element2 = document.createElement("option");
-    element2.value = value;
-    element2.textContent = label;
-    element2.selected = selected;
-    return element2;
+    const element3 = document.createElement("option");
+    element3.value = value;
+    element3.textContent = label;
+    element3.selected = selected;
+    return element3;
   }
   function openProviderBindingCard(container, bindingId, options = {}) {
     if (!container) return;
@@ -42155,22 +43125,22 @@ ${hint}` : hint);
       return "";
     }
   }
-  function evaluateProviderCredentialSave(draft, savedProviders) {
-    if (String(draft?.api_key || "").trim()) return { kind: "allow" };
+  function evaluateProviderCredentialSave(draft2, savedProviders) {
+    if (String(draft2?.api_key || "").trim()) return { kind: "allow" };
     const providers = Array.isArray(savedProviders) ? savedProviders : [];
-    const nextOrigin = providerUrlOrigin(draft?.base_url);
-    const existing = providers.find((provider) => provider?.id === draft?.id);
+    const nextOrigin = providerUrlOrigin(draft2?.base_url);
+    const existing = providers.find((provider) => provider?.id === draft2?.id);
     if (existing && Boolean(existing.api_key_set || existing.api_key)) {
       const previousOrigin = providerUrlOrigin(existing.base_url);
       if (previousOrigin && previousOrigin === nextOrigin) return { kind: "allow" };
       return {
         kind: "confirm_origin_change",
-        providerId: String(draft.id || ""),
+        providerId: String(draft2.id || ""),
         previousOrigin,
         nextOrigin
       };
     }
-    const sourceId = String(draft?.api_key_source_provider_id || "").trim();
+    const sourceId = String(draft2?.api_key_source_provider_id || "").trim();
     const source = providers.find((provider) => provider?.id === sourceId);
     if (source && Boolean(source.api_key_set || source.api_key) && providerUrlOrigin(source.base_url) === nextOrigin) {
       return { kind: "allow" };
@@ -42265,6 +43235,7 @@ ${hint}` : hint);
       api_key_masked: String(provider.api_key_masked || ""),
       api_key_source_provider_id: String(provider.api_key_source_provider_id || "").trim(),
       icon_emoji: String(provider.icon_emoji || "").trim(),
+      svg_author_model: String(provider.svg_author_model || "").trim(),
       default_model_ids: Array.isArray(provider.default_model_ids) ? provider.default_model_ids.map((value) => String(value || "").trim()).filter(Boolean) : []
     };
   }
@@ -42322,29 +43293,29 @@ ${hint}` : hint);
     }
     return normalizeApiSettings({ ...current, providers, default_provider_by_model: defaults });
   }
-  function applyProviderDraft(settings, draft) {
+  function applyProviderDraft(settings, draft2) {
     var _a, _b;
     const normalized = normalizeApiSettings(settings);
-    const index = normalized.providers.findIndex((provider) => provider.id === draft.id);
+    const index = normalized.providers.findIndex((provider) => provider.id === draft2.id);
     if (index >= 0) {
-      normalized.providers[index] = normalizeApiProvider({ ...normalized.providers[index], ...draft }, index);
+      normalized.providers[index] = normalizeApiProvider({ ...normalized.providers[index], ...draft2 }, index);
     } else {
-      normalized.providers.push(normalizeApiProvider(draft, normalized.providers.length));
+      normalized.providers.push(normalizeApiProvider(draft2, normalized.providers.length));
     }
-    normalized.active_provider_id = draft.id;
-    const defaultModelIds = new Set(draft.default_model_ids || []);
-    for (const binding of draft.bindings || []) {
+    normalized.active_provider_id = draft2.id;
+    const defaultModelIds = new Set(draft2.default_model_ids || []);
+    for (const binding of draft2.bindings || []) {
       const modelId = binding.canonical_model_id;
-      if (defaultModelIds.has(modelId)) normalized.default_provider_by_model[modelId] = draft.id;
-      else if (normalized.default_provider_by_model[modelId] === draft.id) delete normalized.default_provider_by_model[modelId];
+      if (defaultModelIds.has(modelId)) normalized.default_provider_by_model[modelId] = draft2.id;
+      else if (normalized.default_provider_by_model[modelId] === draft2.id) delete normalized.default_provider_by_model[modelId];
     }
     for (const modelId of Object.keys(normalized.default_provider_by_model)) {
-      if (normalized.default_provider_by_model[modelId] !== draft.id) continue;
-      if (!(draft.bindings || []).some((binding) => binding.canonical_model_id === modelId)) {
+      if (normalized.default_provider_by_model[modelId] !== draft2.id) continue;
+      if (!(draft2.bindings || []).some((binding) => binding.canonical_model_id === modelId)) {
         delete normalized.default_provider_by_model[modelId];
       }
     }
-    const fallbackProviders = normalized.providers.filter((provider) => provider.id !== draft.id).concat(draft);
+    const fallbackProviders = normalized.providers.filter((provider) => provider.id !== draft2.id).concat(draft2);
     for (const provider of fallbackProviders) {
       for (const binding of provider.bindings) {
         (_a = normalized.default_provider_by_model)[_b = binding.canonical_model_id] ?? (_a[_b] = provider.id);
@@ -42367,6 +43338,7 @@ ${hint}` : hint);
           icon_emoji: provider.icon_emoji || "",
           base_url: provider.base_url,
           concurrency: provider.concurrency,
+          svg_author_model: provider.svg_author_model,
           bindings: provider.bindings
         };
         if (provider.api_key || !provider.api_key_set) item.api_key = provider.api_key;
@@ -42394,6 +43366,7 @@ ${hint}` : hint);
         throw new Error(translate("apiSettings.defaultMappingInvalid"));
       }
       if (detail === "api_key_required") throw new Error(translate("apiSettings.apiKeyRequired"));
+      if (detail === "invalid_svg_author_model") throw new Error(translate("apiSettings.invalidSvgAuthorModel"));
       if (detail === "api_key_origin_change_confirmation_required") {
         throw new Error(translate("apiSettings.originChangeConfirmationRequired"));
       }
@@ -42488,8 +43461,8 @@ ${hint}` : hint);
     preview.removeAttribute("role");
     preview.style.width = `${rect.width}px`;
     preview.style.height = `${rect.height}px`;
-    preview.querySelectorAll("button, [tabindex]").forEach((element2) => {
-      element2.setAttribute("tabindex", "-1");
+    preview.querySelectorAll("button, [tabindex]").forEach((element3) => {
+      element3.setAttribute("tabindex", "-1");
     });
     layer.append(preview);
     document.body.append(layer);
@@ -42503,8 +43476,8 @@ ${hint}` : hint);
   }
   function rowAtPoint(clientX, clientY) {
     if (!providerList) return null;
-    for (const element2 of document.elementsFromPoint(clientX, clientY)) {
-      const row = element2.closest(".api-provider-sort-row[data-api-provider-id]");
+    for (const element3 of document.elementsFromPoint(clientX, clientY)) {
+      const row = element3.closest(".api-provider-sort-row[data-api-provider-id]");
       if (row && row.parentElement === providerList && row !== dragSession?.row) return row;
     }
     return null;
@@ -42876,6 +43849,452 @@ ${hint}` : hint);
     });
   }
 
+  // codex_image/webui/frontend/src/appearance.ts
+  var APPEARANCE_STORAGE_KEY = "ilab-conjure-appearance";
+  var APPEARANCE_CHANGE_EVENT = "ilab-appearance-change";
+  var DEFAULT_APPEARANCE = { version: 1, preset: "default", primary: "#457B66", background: "tinted" };
+  function normalizeAppearance(value) {
+    const v = value;
+    if (!v || v.version !== 1 || !["default", "custom"].includes(v.preset || "") || typeof v.primary !== "string" || !/^#[\da-f]{6}$/i.test(v.primary) || !["neutral", "warm", "cool", "tinted"].includes(v.background || "")) return { ...DEFAULT_APPEARANCE };
+    return v.preset === "default" ? { ...DEFAULT_APPEARANCE } : { version: 1, preset: "custom", primary: v.primary.toUpperCase(), background: v.background };
+  }
+  function readAppearance(storage) {
+    try {
+      return normalizeAppearance(JSON.parse((storage ?? localStorage).getItem(APPEARANCE_STORAGE_KEY) || "null"));
+    } catch {
+      return { ...DEFAULT_APPEARANCE };
+    }
+  }
+  function persistAppearance(value, storage) {
+    try {
+      (storage ?? localStorage).setItem(APPEARANCE_STORAGE_KEY, JSON.stringify(normalizeAppearance(value)));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  var linear = (v) => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  var channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  function colorContrast(a, b) {
+    const luminance = (hex) => channels(hex).map(linear).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+    const [x, y] = [luminance(a), luminance(b)].sort((a2, b2) => b2 - a2);
+    return (x + 0.05) / (y + 0.05);
+  }
+  function seedChromaHue(hex) {
+    const [r, g, b] = channels(hex).map(linear);
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    const a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+    const bb = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+    return [Math.hypot(a, bb), Math.atan2(bb, a)];
+  }
+  function color(lightness, chroma, hue) {
+    let rgb = [];
+    for (let attempt = 0; attempt < 80; attempt++) {
+      const a = chroma * Math.cos(hue), b = chroma * Math.sin(hue);
+      const l = (lightness + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+      const m = (lightness - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+      const s = (lightness - 0.0894841775 * a - 1.291485548 * b) ** 3;
+      rgb = [
+        4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+        -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+        -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s
+      ];
+      if (rgb.every((v) => v >= -1e-5 && v <= 1.00001)) break;
+      chroma *= 0.85;
+    }
+    return "#" + rgb.map((v) => Math.max(0, Math.min(255, Math.round(255 * (v <= 31308e-7 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055))))).map((v) => v.toString(16).padStart(2, "0")).join("");
+  }
+  function appearanceTokens(value, dark) {
+    const appearance = normalizeAppearance(value);
+    if (appearance.preset === "default") return {};
+    const [c, h] = seedChromaHue(appearance.primary);
+    const hue = appearance.background === "warm" ? 80 * Math.PI / 180 : appearance.background === "cool" ? 250 * Math.PI / 180 : h;
+    const tint = appearance.background === "neutral" || appearance.background === "tinted" && c < 5e-3 ? 0 : 0.012;
+    const neutral = (l) => color(l, tint, hue);
+    const brand = (l) => color(l, Math.min(c, 0.16), h);
+    const surface = neutral(dark ? 0.24 : 0.995);
+    let primaryL = dark ? 0.77 : 0.51;
+    const foreground = dark ? "#101010" : "#ffffff";
+    while (colorContrast(brand(primaryL), foreground) < 4.8 || colorContrast(brand(primaryL), surface) < 4.5) {
+      primaryL += dark ? 5e-3 : -5e-3;
+      if (primaryL <= 0.2 || primaryL >= 0.9) break;
+    }
+    const primary = brand(primaryL);
+    const selectedHover = brand(primaryL + (dark ? 0.035 : -0.025));
+    const selectedPressed = brand(primaryL - 0.045);
+    const soft = color(dark ? 0.32 : 0.93, Math.min(c, 0.035), h);
+    const tokens = {
+      bg: neutral(dark ? 0.18 : 0.97),
+      surface,
+      "surface-soft": neutral(dark ? 0.28 : 0.98),
+      line: neutral(dark ? 0.37 : 0.89),
+      text: neutral(dark ? 0.95 : 0.24),
+      "text-secondary": neutral(dark ? 0.82 : 0.37),
+      muted: neutral(dark ? 0.64 : 0.6),
+      "text-muted": neutral(dark ? 0.73 : 0.46),
+      "control-border": neutral(dark ? 0.62 : 0.55),
+      primary,
+      "primary-foreground": foreground,
+      "primary-strong": brand(dark ? 0.87 : 0.4),
+      "primary-light": soft,
+      "action-shadow": `${primary}29`,
+      "secondary-action-surface": soft,
+      "secondary-action-hover": color(dark ? 0.39 : 0.87, Math.min(c, 0.04), h),
+      "secondary-action-pressed": color(dark ? 0.44 : 0.81, Math.min(c, 0.04), h),
+      "model-family-rail-surface": neutral(dark ? 0.34 : 0.92),
+      "model-family-indicator-surface": surface,
+      "task-card-surface-selected-hover": selectedHover,
+      "task-card-surface-selected-pressed": selectedPressed,
+      "task-card-selected-secondary": foreground,
+      "task-card-drawer-archive-surface": primary,
+      "task-card-drawer-archive-text": foreground,
+      "history-stack-layer-1": neutral(dark ? 0.44 : 0.9),
+      "history-stack-layer-2": neutral(dark ? 0.37 : 0.81),
+      "history-stack-layer-3": neutral(dark ? 0.3 : 0.72),
+      code: neutral(0.15),
+      "code-text": neutral(0.9),
+      "scrollbar-track": color(dark ? 0.28 : 0.94, Math.min(c, 0.018), h),
+      "scrollbar-thumb": brand(dark ? 0.62 : 0.58),
+      "scrollbar-thumb-hover": primary,
+      "shadow-rgb": "0, 0, 0",
+      "viewer-overlay": `${color(0.16, Math.min(c, 0.025), h)}d1`,
+      "viewer-surface": color(0.25, Math.min(c, 0.025), h),
+      "viewer-hover": color(0.34, Math.min(c, 0.035), h),
+      "viewer-foreground": "#f5f5f5",
+      "viewer-muted": "#d6d6d6",
+      "viewer-border": "#ffffff33",
+      "viewer-accent": brand(0.82),
+      "viewer-accent-foreground": "#101010",
+      "focus-ring": primary,
+      "task-card-focus-ring": primary,
+      "shadow-sm": `0 2px 8px ${dark ? "#00000033" : "#0000000a"}`,
+      "shadow-popover": `0 14px 34px ${dark ? "#00000061" : "#00000029"}`,
+      "shadow-modal": `0 24px 80px ${dark ? "#0000007a" : "#0000003d"}`,
+      overlay: dark ? "#0000009e" : "#00000075",
+      "overlay-subtle": dark ? "#00000070" : "#00000047"
+    };
+    const textSurfaces = ["bg", "surface", "surface-soft", "primary-light", "secondary-action-hover", "secondary-action-pressed"];
+    for (const [name, initial] of [["text", dark ? 0.95 : 0.24], ["text-secondary", dark ? 0.82 : 0.37], ["text-muted", dark ? 0.73 : 0.46]]) {
+      let l = initial;
+      while (textSurfaces.some((key2) => colorContrast(neutral(l), tokens[key2]) < 4.6) && l > 0.1 && l < 0.99) l += dark ? 5e-3 : -5e-3;
+      tokens[name] = neutral(l);
+    }
+    for (const [name, hue2] of [["danger", 25], ["info", 255], ["waiting", 85]]) {
+      let l = dark ? 0.3 : 0.95;
+      const statusColor = () => color(l, 0.06, hue2 * Math.PI / 180);
+      while ([primary, selectedHover, selectedPressed].some((bg) => colorContrast(statusColor(), bg) < 4.6) && l > 0.1 && l < 0.99) l += dark ? -5e-3 : 5e-3;
+      tokens[`task-card-selected-${name}`] = statusColor();
+    }
+    return tokens;
+  }
+  function applyAppearance(value) {
+    if (typeof document === "undefined") return;
+    const appearance = normalizeAppearance(value);
+    let style = document.getElementById("appearance-tokens");
+    if (!style) {
+      style = document.createElement("style");
+      style.id = "appearance-tokens";
+      document.head.append(style);
+    }
+    style.textContent = [false, true].map((dark) => {
+      const tokens = appearanceTokens(appearance, dark);
+      return `:root[data-theme="${dark ? "dark" : "light"}"][data-appearance="custom"]{${Object.entries(tokens).map(([k, v]) => `--${k}:${v};`).join("")}}`;
+    }).join("\n");
+    document.documentElement.dataset.appearance = appearance.preset;
+    style.dataset.appearance = JSON.stringify(appearance);
+    const syncChrome = () => {
+      const current = normalizeAppearance(JSON.parse(style.dataset.appearance));
+      const dark = document.documentElement.dataset.theme === "dark";
+      const tokens = appearanceTokens(current, dark);
+      const primary = tokens.primary || (dark ? "#72b79b" : "#457b66");
+      const background = tokens.bg || (dark ? "#101815" : "#f3f6f4");
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", primary);
+      const manifest = document.querySelector('link[rel="manifest"]');
+      if (manifest) manifest.setAttribute("href", `/manifest.webmanifest?${new URLSearchParams({ theme_color: primary, background_color: background })}`);
+    };
+    syncChrome();
+    if (!style.dataset.chromeBound) {
+      style.dataset.chromeBound = "true";
+      new MutationObserver(syncChrome).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    }
+  }
+
+  // codex_image/webui/frontend/src/appearance-settings.ts
+  var draft = { ...DEFAULT_APPEARANCE };
+  var draftEdited = false;
+  var initialized3 = false;
+  var returnFocus = null;
+  var openRequest = 0;
+  var presets = [
+    { id: "default", color: "#457B66", background: "tinted" },
+    { id: "blue", color: "#386FC4", background: "cool" },
+    { id: "purple", color: "#8057B0", background: "neutral" },
+    { id: "amber", color: "#A66D25", background: "warm" }
+  ];
+  var element = (id) => document.getElementById(id);
+  function feedback(key2 = "") {
+    const status = element("appearanceStatus");
+    if (status) {
+      status.dataset.message = key2;
+      status.textContent = key2 ? translate(key2) : "";
+    }
+  }
+  function sync() {
+    const hex = element("appearanceHex");
+    const picker = element("appearanceColor");
+    if (!hex || !picker) return;
+    hex.value = picker.value = draft.primary;
+    hex.setAttribute("aria-invalid", "false");
+    element("appearanceApply").disabled = false;
+    document.querySelectorAll("[data-appearance-preset]").forEach((button) => {
+      const preset = presets.find((p) => p.id === button.dataset.appearancePreset);
+      button.setAttribute("aria-pressed", String(preset.id === "default" ? draft.preset === "default" : draft.preset === "custom" && draft.primary === preset.color && draft.background === preset.background));
+    });
+    document.querySelectorAll("[data-background-tone]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.backgroundTone === draft.background));
+    });
+    updatePresetPreviews();
+  }
+  function updatePresetPreviews() {
+    const dark = document.documentElement.dataset.theme === "dark";
+    document.querySelectorAll("[data-appearance-preset]").forEach((button) => {
+      const preset = presets.find((p) => p.id === button.dataset.appearancePreset);
+      const tokens = appearanceTokens({ version: 1, preset: "custom", primary: preset.color, background: preset.background }, dark);
+      const original = dark ? { bg: "#101815", surface: "#17221e", primary: "#72b79b", text: "#e7f0ec" } : { bg: "#f3f6f4", surface: "#ffffff", primary: "#457b66", text: "#1f352f" };
+      for (const name of ["bg", "surface", "primary", "text"]) {
+        button.style.setProperty(`--preview-${name}`, preset.id === "default" ? original[name] : tokens[name]);
+      }
+    });
+  }
+  function restoreSavedAppearance() {
+    if (!initialized3) return;
+    draftEdited = false;
+    draft = readAppearance();
+    applyAppearance(draft);
+    sync();
+    feedback();
+  }
+  function closeAppearancePopover(restoreFocus = true) {
+    openRequest++;
+    const popover = element("appearancePopover");
+    if (!popover || popover.hidden) return;
+    popover.hidden = true;
+    element("appearanceTrigger")?.setAttribute("aria-expanded", "false");
+    restoreSavedAppearance();
+    if (restoreFocus) {
+      const target = returnFocus?.getClientRects().length && !returnFocus.closest(".hidden, [hidden], [inert]") ? returnFocus : document.querySelector(".mobile-more-button");
+      target?.focus({ preventScroll: true });
+    }
+    returnFocus = null;
+  }
+  function positionPopover() {
+    const popover = element("appearancePopover");
+    if (!popover || popover.hidden) return;
+    const trigger = element("appearanceTrigger");
+    const anchor = trigger.getClientRects().length ? trigger : document.querySelector(".mobile-more-button");
+    const viewport = window.visualViewport;
+    const leftEdge = viewport?.offsetLeft || 0, topEdge = viewport?.offsetTop || 0;
+    const width = viewport?.width || window.innerWidth, height = viewport?.height || window.innerHeight;
+    const margin = 12;
+    popover.style.width = `${Math.min(320, width - margin * 2)}px`;
+    popover.style.maxHeight = `${height - margin * 2}px`;
+    const tones = popover.querySelector(".appearance-tones");
+    tones.classList.remove("appearance-tones-wrapped");
+    if (Array.from(tones.children).some((button) => button.scrollWidth > button.clientWidth + 1)) {
+      tones.classList.add("appearance-tones-wrapped");
+    }
+    const rect = anchor.getBoundingClientRect();
+    const below = rect.bottom + 8;
+    const top = below + popover.offsetHeight <= topEdge + height - margin ? below : Math.max(topEdge + margin, rect.top - popover.offsetHeight - 8);
+    popover.style.left = `${Math.max(leftEdge + margin, Math.min(rect.right - popover.offsetWidth, leftEdge + width - popover.offsetWidth - margin))}px`;
+    popover.style.top = `${Math.max(topEdge + margin, top)}px`;
+  }
+  function openPopover() {
+    const request = ++openRequest;
+    requestAnimationFrame(() => {
+      if (request !== openRequest) return;
+      restoreSavedAppearance();
+      const trigger = element("appearanceTrigger");
+      returnFocus = trigger.getClientRects().length ? trigger : document.querySelector(".mobile-more-button");
+      element("appearancePopover").hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      positionPopover();
+      element("appearancePopover").querySelector('[data-appearance-preset][aria-pressed="true"]')?.focus({ preventScroll: true });
+      if (!element("appearancePopover").contains(document.activeElement)) element("appearanceHex").focus({ preventScroll: true });
+    });
+  }
+  function initAppearanceSettings(closeSettings) {
+    if (initialized3) return;
+    const panel = element("systemSettingsLanguagePanel");
+    const scroll = panel?.querySelector(".system-settings-scroll");
+    const switcher = element("themeSwitcher");
+    if (!panel || !scroll || !switcher) return;
+    initialized3 = true;
+    const trigger = document.createElement("button");
+    trigger.id = "appearanceTrigger";
+    trigger.type = "button";
+    trigger.className = "theme-option appearance-trigger";
+    trigger.setAttribute("aria-controls", "appearancePopover");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-haspopup", "dialog");
+    trigger.innerHTML = '<span class="appearance-current-color" aria-hidden="true"></span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path fill="currentColor" d="m1 3 4 4 4-4Z"/></svg>';
+    switcher.append(trigger);
+    const shortcut = document.createElement("button");
+    shortcut.id = "appearanceShortcut";
+    shortcut.type = "button";
+    shortcut.className = "ghost-button appearance-shortcut";
+    shortcut.dataset.i18n = "appearance.open";
+    scroll.append(shortcut);
+    const popover = document.createElement("section");
+    popover.id = "appearancePopover";
+    popover.className = "appearance-popover";
+    popover.hidden = true;
+    popover.setAttribute("role", "dialog");
+    popover.setAttribute("aria-modal", "false");
+    popover.setAttribute("aria-labelledby", "appearanceTitle");
+    popover.innerHTML = `<header class="appearance-heading"><strong id="appearanceTitle" data-i18n="appearance.skin"></strong><div class="appearance-heading-actions">
+    <button id="appearanceReset" class="ghost-button" type="button"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3v7h7L8.3 7.3A6 6 0 1 1 6 12H3a9 9 0 1 0 3.2-6.9Z"/></svg></button>
+    <button id="appearanceClose" class="ghost-button drawer-close-button" type="button"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m6.4 4.3 5.6 5.6 5.6-5.6 2.1 2.1-5.6 5.6 5.6 5.6-2.1 2.1-5.6-5.6-5.6 5.6-2.1-2.1 5.6-5.6-5.6-5.6Z"/></svg></button></div></header>`;
+    const section = document.createElement("div");
+    section.className = "appearance-settings";
+    section.innerHTML = `
+    <div class="field">
+      <div class="appearance-presets" role="group" aria-label="${translate("appearance.skin")}" data-i18n-attr="aria-label:appearance.skin">
+        ${presets.map((p) => `<button type="button" class="appearance-preset" data-appearance-preset="${p.id}" aria-pressed="false"><span class="appearance-preview" aria-hidden="true"><span class="appearance-preview-rail"></span><span class="appearance-preview-page"><span>Aa</span><i></i></span></span><span data-i18n="appearance.${p.id}"></span></button>`).join("")}
+      </div>
+    </div>
+    <div class="field"><label for="appearanceHex" data-i18n="appearance.primary"></label>
+      <div class="appearance-color-row">
+        <input id="appearanceColor" type="color" aria-label="${translate("appearance.primary")}" data-i18n-attr="aria-label:appearance.primary" />
+        <input id="appearanceHex" class="control" type="text" maxlength="7" spellcheck="false" autocomplete="off" placeholder="#457B66" aria-describedby="appearanceHint appearanceStatus" />
+      </div>
+      <span id="appearanceHint" class="field-hint" data-i18n="appearance.hint"></span>
+    </div>
+    <div class="field"><span data-i18n="appearance.background"></span>
+      <div class="appearance-tones" role="group" aria-label="${translate("appearance.background")}" data-i18n-attr="aria-label:appearance.background">
+        ${["neutral", "warm", "cool", "tinted"].map((t) => `<button type="button" class="ghost-button" data-background-tone="${t}" aria-pressed="false" data-i18n="appearance.${t}"></button>`).join("")}
+      </div>
+    </div>`;
+    popover.append(section);
+    const actions = document.createElement("div");
+    actions.className = "appearance-actions";
+    actions.innerHTML = `<p id="appearanceStatus" role="status" aria-live="polite"></p>
+    <button id="appearanceCancel" type="button" class="ghost-button" data-i18n="appearance.cancel"></button>
+    <button id="appearanceApply" type="button" class="run-button" data-i18n="appearance.apply"></button>`;
+    popover.append(actions);
+    document.body.append(popover);
+    const localize = () => {
+      popover.querySelectorAll("[data-i18n]").forEach((e) => {
+        e.textContent = translate(e.dataset.i18n);
+      });
+      popover.querySelectorAll('[role="group"]').forEach((group) => group.setAttribute("aria-label", translate(group.classList.contains("appearance-presets") ? "appearance.skin" : "appearance.background")));
+      trigger.title = translate("appearance.open");
+      trigger.setAttribute("aria-label", translate("appearance.open"));
+      shortcut.textContent = translate("appearance.open");
+      element("appearanceColor").setAttribute("aria-label", translate("appearance.primary"));
+      element("appearanceClose").setAttribute("aria-label", translate("action.close"));
+      element("appearanceReset").setAttribute("aria-label", translate("appearance.reset"));
+      element("appearanceReset").title = translate("appearance.reset");
+      feedback(element("appearanceStatus")?.dataset.message);
+      positionPopover();
+    };
+    localize();
+    document.addEventListener(LOCALE_CHANGE_EVENT, localize);
+    const preview = () => {
+      draftEdited = true;
+      applyAppearance(draft);
+      sync();
+      feedback();
+    };
+    trigger.addEventListener("click", () => {
+      if (popover.hidden) openPopover();
+      else closeAppearancePopover();
+    });
+    shortcut.addEventListener("click", () => {
+      if (closeSettings()) openPopover();
+    });
+    element("appearanceReset").addEventListener("click", () => {
+      draft = { ...DEFAULT_APPEARANCE };
+      preview();
+    });
+    section.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      if (button.dataset.appearancePreset) {
+        const p = presets.find((p2) => p2.id === button.dataset.appearancePreset);
+        draft = p.id === "default" ? { ...DEFAULT_APPEARANCE } : { version: 1, preset: "custom", primary: p.color, background: p.background };
+      } else if (button.dataset.backgroundTone) {
+        draft = { ...draft, preset: "custom", background: button.dataset.backgroundTone };
+      } else return;
+      preview();
+    });
+    element("appearanceColor").addEventListener("input", (event) => {
+      draft = { ...draft, preset: "custom", primary: event.target.value.toUpperCase() };
+      preview();
+    });
+    element("appearanceHex").addEventListener("input", (event) => {
+      draftEdited = true;
+      const input = event.target;
+      const valid = /^#[\da-f]{6}$/i.test(input.value);
+      input.setAttribute("aria-invalid", String(!valid));
+      element("appearanceApply").disabled = !valid;
+      if (!valid) {
+        feedback("appearance.invalid");
+        return;
+      }
+      draft = { ...draft, preset: "custom", primary: input.value.toUpperCase() };
+      preview();
+    });
+    element("appearanceCancel").addEventListener("click", () => closeAppearancePopover());
+    element("appearanceClose").addEventListener("click", () => closeAppearancePopover());
+    element("appearanceApply").addEventListener("click", () => {
+      if (!persistAppearance(draft)) {
+        feedback("appearance.saveFailed");
+        return;
+      }
+      document.dispatchEvent(new Event(APPEARANCE_CHANGE_EVENT));
+      closeAppearancePopover();
+    });
+    document.addEventListener("click", (event) => {
+      if (!popover.hidden && !popover.contains(event.target) && !switcher.contains(event.target)) closeAppearancePopover(false);
+    }, true);
+    document.addEventListener("focusin", (event) => {
+      if (!popover.hidden && !popover.contains(event.target) && !switcher.contains(event.target)) closeAppearancePopover(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (popover.hidden) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        closeAppearancePopover();
+      }
+      if (event.key === "Tab") {
+        const buttons = Array.from(popover.querySelectorAll("button:not(:disabled), input:not(:disabled)"));
+        const first = buttons[0], last = buttons[buttons.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }, true);
+    window.addEventListener("resize", positionPopover);
+    window.visualViewport?.addEventListener("resize", positionPopover);
+    window.visualViewport?.addEventListener("scroll", positionPopover);
+    new ResizeObserver(positionPopover).observe(popover);
+    new MutationObserver(updatePresetPreviews).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    window.addEventListener("storage", (event) => {
+      if (event.key !== APPEARANCE_STORAGE_KEY && event.key !== null) return;
+      if (popover.hidden || !draftEdited) restoreSavedAppearance();
+    });
+    document.addEventListener(APPEARANCE_CHANGE_EVENT, restoreSavedAppearance);
+    restoreSavedAppearance();
+  }
+
   // codex_image/webui/frontend/src/system-settings.ts
   var systemSettingsFeatureInitialized = false;
   var systemSettingsHeightAnimationToken = 0;
@@ -43068,6 +44487,7 @@ ${hint}` : hint);
     return true;
   }
   function openSystemSettingsModal(tab = "api") {
+    closeAppearancePopover(false);
     const { els: els43 } = getLegacyBridge();
     const modal = els43.systemSettingsModal;
     const wasHidden = modal?.classList.contains("hidden") ?? true;
@@ -43090,9 +44510,9 @@ ${hint}` : hint);
     const modal = els43.systemSettingsModal;
     const activeElement = document.activeElement;
     if (modal && activeElement instanceof HTMLElement && modal.contains(activeElement)) {
-      const returnFocus = systemSettingsReturnFocus;
-      if (returnFocus?.isConnected && !returnFocus.closest("[inert]")) {
-        returnFocus.focus({ preventScroll: true });
+      const returnFocus2 = systemSettingsReturnFocus;
+      if (returnFocus2?.isConnected && !returnFocus2.closest("[inert]")) {
+        returnFocus2.focus({ preventScroll: true });
       }
       if (modal.contains(document.activeElement)) activeElement.blur();
     }
@@ -43146,6 +44566,10 @@ ${hint}` : hint);
   function initSystemSettingsFeature() {
     if (systemSettingsFeatureInitialized) return;
     systemSettingsFeatureInitialized = true;
+    initAppearanceSettings(() => {
+      closeSystemSettingsModal();
+      return Boolean(getLegacyBridge().els.systemSettingsModal?.classList.contains("hidden"));
+    });
     const { els: els43 } = getLegacyBridge();
     els43.systemSettingsTabs?.addEventListener("click", handleSystemSettingsTabClick);
     els43.systemSettingsTabs?.addEventListener("keydown", handleSystemSettingsTabKeydown);
@@ -43243,8 +44667,8 @@ ${hint}` : hint);
     }
     return `${rootName} ${Date.now()}`;
   }
-  function setElementText(element2, value) {
-    if (element2) element2.textContent = String(value ?? "");
+  function setElementText(element3, value) {
+    if (element3) element3.textContent = String(value ?? "");
   }
   function setApiKeyRevealVisible(visible) {
     if (!els12.apiKey) return;
@@ -43302,27 +44726,39 @@ ${hint}` : hint);
   function apiProviderEditorActive() {
     return Boolean(state10.apiProviderEditingId && state10.apiProviderDraft);
   }
+  function syncSvgAuthorModelVisibility() {
+    let official = false;
+    try {
+      const url = new URL(els12.apiBaseUrl?.value || DEFAULT_API_BASE_URL);
+      official = url.origin === "https://api.openai.com" && !url.username && !url.password;
+    } catch {
+    }
+    els12.apiSvgAuthorModelField?.classList.toggle("hidden", !official);
+  }
   function draftProviderFromForm() {
-    const draft = state10.apiProviderDraft || activeApiProvider();
+    const draft2 = state10.apiProviderDraft || activeApiProvider();
     const bindingCards = readProviderBindingCards(els12.apiProviderBindings);
     return normalizeApiProvider({
-      ...draft,
-      name: els12.apiProviderName?.value || draft.name,
-      icon_emoji: els12.apiProviderIconEmoji ? els12.apiProviderIconEmoji.value : draft.icon_emoji,
+      ...draft2,
+      name: els12.apiProviderName?.value || draft2.name,
+      icon_emoji: els12.apiProviderIconEmoji ? els12.apiProviderIconEmoji.value : draft2.icon_emoji,
       base_url: els12.apiBaseUrl?.value || DEFAULT_API_BASE_URL,
+      svg_author_model: els12.apiSvgAuthorModel?.value ?? draft2.svg_author_model,
       api_key: els12.apiKey?.value || "",
       concurrency: normalizeApiImagesConcurrency(els12.apiImagesConcurrency?.value),
       bindings: bindingCards,
       default_model_ids: bindingCards.filter((binding) => binding.is_default).map((binding) => binding.canonical_model_id),
-      api_key_set: Boolean(draft.api_key_set || draft.api_key || draft.api_key_source_provider_id),
-      api_key_masked: draft.api_key_masked,
-      api_key_source_provider_id: draft.api_key_source_provider_id
+      api_key_set: Boolean(draft2.api_key_set || draft2.api_key || draft2.api_key_source_provider_id),
+      api_key_masked: draft2.api_key_masked,
+      api_key_source_provider_id: draft2.api_key_source_provider_id
     }, 0);
   }
   function writeProviderForm(provider) {
     if (els12.apiProviderName) els12.apiProviderName.value = provider.name || "";
     if (els12.apiProviderIconEmoji) els12.apiProviderIconEmoji.value = provider.icon_emoji || "";
     if (els12.apiBaseUrl) els12.apiBaseUrl.value = provider.base_url || DEFAULT_API_BASE_URL;
+    if (els12.apiSvgAuthorModel) els12.apiSvgAuthorModel.value = provider.svg_author_model || "";
+    syncSvgAuthorModelVisibility();
     if (els12.apiImagesConcurrency) els12.apiImagesConcurrency.value = String(normalizeApiImagesConcurrency(provider.concurrency ?? provider.images_concurrency));
     if (els12.apiKey) {
       els12.apiKey.value = provider.api_key || "";
@@ -43786,20 +45222,20 @@ ${hint}` : hint);
   }
   function addProviderBinding() {
     if (!apiProviderEditorActive()) return;
-    const draft = draftProviderFromForm();
+    const draft2 = draftProviderFromForm();
     const models = state10.generationCatalog?.models || [];
-    const model = models.find((item) => !draft.bindings.some((binding) => binding.canonical_model_id === item.id)) || models[0];
+    const model = models.find((item) => !draft2.bindings.some((binding) => binding.canonical_model_id === item.id)) || models[0];
     if (!model) {
       setApiSettingsFeedback(translate("apiSettings.catalogRequiredForBinding"), "error");
       return;
     }
-    const bindingId = `${draft.id}-binding-${Date.now()}`;
+    const bindingId = `${draft2.id}-binding-${Date.now()}`;
     const protocol = availableProtocolsForModel(model.id)[0];
     if (!protocol) {
       setApiSettingsFeedback(translate("apiSettings.catalogRequiredForBinding"), "error");
       return;
     }
-    draft.bindings.push(bindingFromProtocol(
+    draft2.bindings.push(bindingFromProtocol(
       bindingId,
       model.id,
       model.official_model_id || model.id,
@@ -43807,34 +45243,34 @@ ${hint}` : hint);
       [...model.operations]
     ));
     if (!state10.apiSettings.default_provider_by_model?.[model.id]) {
-      draft.default_model_ids = [.../* @__PURE__ */ new Set([...draft.default_model_ids || [], model.id])];
+      draft2.default_model_ids = [.../* @__PURE__ */ new Set([...draft2.default_model_ids || [], model.id])];
     }
-    state10.apiProviderDraft = draft;
+    state10.apiProviderDraft = draft2;
     renderProviderBindingCards(
       els12.apiProviderBindings,
-      draft.bindings,
+      draft2.bindings,
       models,
-      draft.id,
-      defaultsForProviderDraft(draft)
+      draft2.id,
+      defaultsForProviderDraft(draft2)
     );
     openProviderBindingCard(els12.apiProviderBindings, bindingId, { focus: true });
     updateProviderBindingCount();
   }
   function removeProviderBinding(bindingId) {
     if (!apiProviderEditorActive()) return;
-    const draft = draftProviderFromForm();
-    if (draft.bindings.length <= 1) {
+    const draft2 = draftProviderFromForm();
+    if (draft2.bindings.length <= 1) {
       setApiSettingsFeedback(translate("apiSettings.keepOneBinding"), "error");
       return;
     }
-    draft.bindings = draft.bindings.filter((binding) => binding.id !== bindingId);
-    state10.apiProviderDraft = draft;
+    draft2.bindings = draft2.bindings.filter((binding) => binding.id !== bindingId);
+    state10.apiProviderDraft = draft2;
     renderProviderBindingCards(
       els12.apiProviderBindings,
-      draft.bindings,
+      draft2.bindings,
       state10.generationCatalog?.models || [],
-      draft.id,
-      defaultsForProviderDraft(draft)
+      draft2.id,
+      defaultsForProviderDraft(draft2)
     );
     updateProviderBindingCount();
   }
@@ -44136,6 +45572,7 @@ ${hint}` : hint);
     if (apiSettingsFeatureInitialized) return;
     apiSettingsFeatureInitialized = true;
     const { els: els43, state: state33 } = getLegacyBridge();
+    els43.apiBaseUrl?.addEventListener("input", syncSvgAuthorModelVisibility);
     initProviderModelDiscovery({
       container: els43.apiProviderBindings,
       connectionInputs: [els43.apiBaseUrl, els43.apiKey],
@@ -44336,6 +45773,7 @@ ${hint}` : hint);
     }
     return {
       theme: normalizeThemePreference(storage.getItem(THEME_STORAGE_KEY)),
+      ...storage.getItem(APPEARANCE_STORAGE_KEY) !== null ? { appearance: readAppearance(storage) } : {},
       notifications
     };
   }
@@ -44343,6 +45781,14 @@ ${hint}` : hint);
     const storage = environment.storage ?? localStorage;
     const permission = environment.notificationPermission ?? (typeof Notification === "undefined" ? "unsupported" : Notification.permission);
     const warnings = [];
+    const notifications = "notifications" in preferences ? preferences.notifications : { in_app: preferences.notifications_in_app, system: preferences.notifications_system };
+    if (preferences.appearance && (mode === "replace" || storage.getItem(APPEARANCE_STORAGE_KEY) === null)) {
+      const appearance = normalizeAppearance(preferences.appearance);
+      const saved = persistAppearance(appearance, storage);
+      if (!saved) warnings.push("appearance.saveFailed");
+      applyAppearance(appearance);
+      if (saved && typeof document !== "undefined") document.dispatchEvent(new Event(APPEARANCE_CHANGE_EVENT));
+    }
     const shouldApplyTheme = mode === "replace" || storage.getItem(THEME_STORAGE_KEY) === null;
     if (shouldApplyTheme) {
       persistThemePreference(preferences.theme, storage);
@@ -44351,11 +45797,11 @@ ${hint}` : hint);
     const settingsMissing = storage.getItem(TASK_NOTIFICATION_SETTINGS_KEY) === null;
     let appliedNotifications = readUserConfigClientPreferences(storage).notifications;
     if (mode === "replace" || settingsMissing) {
-      const system = preferences.notifications.system && permission === "granted";
-      if (preferences.notifications.system && !system) {
+      const system = notifications.system && permission === "granted";
+      if (notifications.system && !system) {
         warnings.push("user_config_restore_system_notification_permission_missing");
       }
-      appliedNotifications = { in_app: preferences.notifications.in_app, system };
+      appliedNotifications = { in_app: notifications.in_app, system };
       try {
         storage.setItem(TASK_NOTIFICATION_SETTINGS_KEY, JSON.stringify({
           inApp: appliedNotifications.in_app,
@@ -44366,6 +45812,7 @@ ${hint}` : hint);
     }
     return {
       applied: {
+        ...storage.getItem(APPEARANCE_STORAGE_KEY) !== null ? { appearance: readAppearance(storage) } : {},
         theme: shouldApplyTheme ? preferences.theme : readUserConfigClientPreferences(storage).theme,
         notifications: appliedNotifications
       },
@@ -45283,8 +46730,8 @@ ${hint}` : hint);
   var currentSettings = null;
   var requestSequence = 0;
   var saving = false;
-  var initialized3 = false;
-  function feedback(message, error = false) {
+  var initialized4 = false;
+  function feedback2(message, error = false) {
     const { els: els43 } = getLegacyBridge();
     if (!els43.lanAccessStatus) return;
     els43.lanAccessStatus.textContent = message;
@@ -45311,7 +46758,7 @@ ${hint}` : hint);
     currentSettings = settings;
     if (els43.lanAccessEnabled) els43.lanAccessEnabled.checked = settings.enabled;
     const key2 = settings.host_override ? "hostOverride" : settings.restart_required ? settings.enabled ? "pendingEnable" : "pendingDisable" : settings.active ? "active" : "localOnly";
-    feedback(translate(`lanAccess.${key2}`));
+    feedback2(translate(`lanAccess.${key2}`));
     if (!els43.lanAccessAddresses) return;
     els43.lanAccessAddresses.replaceChildren();
     els43.lanAccessAddresses.hidden = !settings.enabled && !settings.active;
@@ -45358,7 +46805,7 @@ ${hint}` : hint);
       const data = await response.json();
       if (sequence === requestSequence) render(data);
     } catch {
-      if (sequence === requestSequence) feedback(translate("lanAccess.failed"), true);
+      if (sequence === requestSequence) feedback2(translate("lanAccess.failed"), true);
     } finally {
       if (sequence === requestSequence && els43.lanAccessEnabled) {
         els43.lanAccessEnabled.disabled = currentSettings === null;
@@ -45373,7 +46820,7 @@ ${hint}` : hint);
     ++requestSequence;
     els43.lanAccessEnabled.disabled = true;
     const enabled = els43.lanAccessEnabled.checked;
-    feedback(translate("lanAccess.saving"));
+    feedback2(translate("lanAccess.saving"));
     try {
       const response = await fetch("/api/lan-access", {
         method: "PATCH",
@@ -45384,7 +46831,7 @@ ${hint}` : hint);
       render(await response.json());
     } catch {
       els43.lanAccessEnabled.checked = currentSettings.enabled;
-      feedback(translate("lanAccess.failed"), true);
+      feedback2(translate("lanAccess.failed"), true);
     } finally {
       saving = false;
       els43.lanAccessEnabled.disabled = false;
@@ -45392,8 +46839,8 @@ ${hint}` : hint);
     }
   }
   function initLanAccessSettingsFeature() {
-    if (initialized3) return;
-    initialized3 = true;
+    if (initialized4) return;
+    initialized4 = true;
     const { els: els43, methods } = getLegacyBridge();
     els43.lanAccessEnabled?.addEventListener("change", () => void saveLanAccess());
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
@@ -45848,13 +47295,14 @@ ${hint}` : hint);
     }
     return unique;
   }
-  function buildUserConfigBackupRequest(sections, includeApiKeys, clientPreferences) {
+  function buildUserConfigBackupRequest(sections, includeApiKeys, clientPreferences, legacyCompatible = false) {
     const normalized = normalizeSections(sections);
     const settingsSelected = normalized.includes("settings");
+    const { theme, notifications } = clientPreferences;
     return {
       sections: normalized,
       include_api_keys: settingsSelected && includeApiKeys,
-      client_preferences: settingsSelected ? clientPreferences : null
+      client_preferences: settingsSelected ? legacyCompatible ? { theme, notifications } : clientPreferences : null
     };
   }
   function createReplacementConfirmation(archiveSha256, sections, mode) {
@@ -46180,7 +47628,7 @@ ${hint}` : hint);
     prompt_templates: "userConfigBackup.groupPromptTemplates",
     settings: "userConfigBackup.groupSettings"
   };
-  var initialized4 = false;
+  var initialized5 = false;
   var currentBackupJob = null;
   var currentRestoreSessionId = null;
   var currentPreview = null;
@@ -46200,31 +47648,31 @@ ${hint}` : hint);
     const value = getLegacyBridge().els[name];
     return value instanceof HTMLInputElement ? value : null;
   }
-  function setHidden(element2, hidden) {
-    if (!element2) return;
-    element2.classList.toggle("hidden", hidden);
-    element2.hidden = hidden;
-    element2.setAttribute("aria-hidden", hidden ? "true" : "false");
+  function setHidden(element3, hidden) {
+    if (!element3) return;
+    element3.classList.toggle("hidden", hidden);
+    element3.hidden = hidden;
+    element3.setAttribute("aria-hidden", hidden ? "true" : "false");
   }
   function setStatus11(name, message, state33 = "") {
-    const element2 = bridgeElement(name);
-    if (!element2) return;
-    element2.textContent = message;
-    element2.classList.toggle("ok", state33 === "ok");
-    element2.classList.toggle("error", state33 === "error");
-    element2.classList.toggle("running", state33 === "running");
+    const element3 = bridgeElement(name);
+    if (!element3) return;
+    element3.textContent = message;
+    element3.classList.toggle("ok", state33 === "ok");
+    element3.classList.toggle("error", state33 === "error");
+    element3.classList.toggle("running", state33 === "running");
   }
   function setProgress(name, value) {
-    const element2 = bridgeElement(name);
-    if (!element2) return;
+    const element3 = bridgeElement(name);
+    if (!element3) return;
     const visible = value !== null;
-    element2.classList.toggle("hidden", !visible);
-    element2.classList.toggle("is-indeterminate", value === -1);
+    element3.classList.toggle("hidden", !visible);
+    element3.classList.toggle("is-indeterminate", value === -1);
     if (!visible) return;
     const percent = value === -1 ? 0 : Math.max(0, Math.min(100, Math.round(value)));
-    element2.style.setProperty("--user-config-progress", `${percent}%`);
-    element2.setAttribute("aria-valuenow", String(percent));
-    element2.setAttribute("aria-busy", value === -1 ? "true" : "false");
+    element3.style.setProperty("--user-config-progress", `${percent}%`);
+    element3.setAttribute("aria-valuenow", String(percent));
+    element3.setAttribute("aria-busy", value === -1 ? "true" : "false");
   }
   function setActionPriority(button, priority) {
     if (!button) return;
@@ -46258,6 +47706,15 @@ ${hint}` : hint);
     const settingsSelected = sections.includes("settings");
     const sensitiveRow = bridgeElement("userConfigIncludeApiKeysRow");
     if (sensitiveRow) sensitiveRow.hidden = !settingsSelected;
+    const legacyRow = bridgeElement("userConfigLegacyBackupRow");
+    if (legacyRow) {
+      let hasAppearance = false;
+      try {
+        hasAppearance = localStorage.getItem(APPEARANCE_STORAGE_KEY) !== null;
+      } catch {
+      }
+      setHidden(legacyRow, !settingsSelected || !hasAppearance);
+    }
     if (!settingsSelected) {
       const includeKeys = inputElement("userConfigIncludeApiKeys");
       if (includeKeys) includeKeys.checked = false;
@@ -46335,21 +47792,22 @@ ${hint}` : hint);
       return;
     }
     const includeApiKeys = inputElement("userConfigIncludeApiKeys")?.checked === true;
+    const legacyCompatible = inputElement("userConfigLegacyBackup")?.checked === true;
     if (includeApiKeys) {
       openWebConfirm(bridgeElement("createUserConfigBackupButton"), {
         title: translate("userConfigBackup.includeApiKeys"),
         message: translate("userConfigBackup.apiKeyConfirm"),
         confirmText: translate("userConfigBackup.create"),
         danger: false,
-        onConfirm: () => performCreateBackup(sections, includeApiKeys)
+        onConfirm: () => performCreateBackup(sections, includeApiKeys, legacyCompatible)
       });
       return;
     }
-    await performCreateBackup(sections, includeApiKeys);
+    await performCreateBackup(sections, includeApiKeys, legacyCompatible);
   }
-  async function performCreateBackup(sections, includeApiKeys) {
+  async function performCreateBackup(sections, includeApiKeys, legacyCompatible) {
     if (pendingBackupCreation || transferClosing || activeUpload || restoreApplying) return;
-    const request = buildUserConfigBackupRequest(sections, includeApiKeys, readUserConfigClientPreferences(localStorage));
+    const request = buildUserConfigBackupRequest(sections, includeApiKeys, readUserConfigClientPreferences(localStorage), legacyCompatible);
     setProgress("userConfigBackupProgress", -1);
     setStatus11("userConfigBackupStatus", translate("userConfigBackup.creatingBackup"), "running");
     const pending = transferController.startBackup(request).then(() => {
@@ -46826,8 +48284,8 @@ ${hint}` : hint);
     els43.confirmUserConfigReplaceButton?.addEventListener("click", () => void applyRestore());
   }
   function initUserConfigBackupFeature() {
-    if (initialized4) return;
-    initialized4 = true;
+    if (initialized5) return;
+    initialized5 = true;
     bindEvents();
     Object.assign(getLegacyBridge().methods, {
       openUserConfigBackupController,
@@ -46908,8 +48366,8 @@ ${hint}` : hint);
   }
   function dedupeColors(colors) {
     const result = [];
-    colors.forEach((color) => {
-      if (color && !result.includes(color)) result.push(color);
+    colors.forEach((color2) => {
+      if (color2 && !result.includes(color2)) result.push(color2);
     });
     return result;
   }
@@ -46965,7 +48423,7 @@ ${hint}` : hint);
   }
   function recentColorsForDisplay() {
     const favoriteHex = new Set(favoriteColorsForDisplay().map((item) => item.hex));
-    return (state11.colorPalette?.recent_colors || []).filter((color) => !favoriteHex.has(color));
+    return (state11.colorPalette?.recent_colors || []).filter((color2) => !favoriteHex.has(color2));
   }
   function rememberRecentColor(colorCode) {
     const normalized = normalizeHexColor(colorCode);
@@ -47215,7 +48673,7 @@ ${hint}` : hint);
     const swatchRowClass = state12.colorPaletteManageMode ? "color-swatch-row is-managing" : "color-swatch-row";
     const swatchButtons = [
       ...favoriteColors.map((item) => colorSwatchButton(item.hex, item.name, { removable: state12.colorPaletteManageMode })),
-      ...recentColors.map((color) => colorSwatchButton(color, translate("colors.recentLabel")))
+      ...recentColors.map((color2) => colorSwatchButton(color2, translate("colors.recentLabel")))
     ].join("");
     els15.colorSuggest.innerHTML = `
     <div class="color-suggest-main" data-color-original="${escapeHtml10(editingColor)}">
@@ -47255,8 +48713,8 @@ ${hint}` : hint);
     if (!normalized) return "";
     return favoriteColorsForDisplay2().find((item) => item.hex === normalized)?.name || "";
   }
-  function colorSwatchButton(color, label = "", { removable = false } = {}) {
-    const normalized = normalizeHexColor2(color) || DEFAULT_COLOR_CODE2;
+  function colorSwatchButton(color2, label = "", { removable = false } = {}) {
+    const normalized = normalizeHexColor2(color2) || DEFAULT_COLOR_CODE2;
     const deleteLabel = escapeHtml10(formatTranslation("colors.deleteFavorite", { name: label || normalized }));
     return `
     <span class="color-swatch-item">
@@ -49909,8 +51367,8 @@ ${hint}` : hint);
     els19.mentionSuggest.style.removeProperty("--mention-width");
     els19.mentionSuggest.style.removeProperty("--prompt-popover-max-height");
   }
-  function setCaretToEnd(element2) {
-    legacyMethod23("setCaretToEnd", element2);
+  function setCaretToEnd(element3) {
+    legacyMethod23("setCaretToEnd", element3);
   }
   function initPromptGalleryChipsFeature() {
     Object.assign(getLegacyBridge().methods, {
@@ -50396,10 +51854,10 @@ ${hint}` : hint);
       els21.promptEditor.textContent = "";
     }
   }
-  function setCaretToEnd2(element2) {
-    element2.focus();
+  function setCaretToEnd2(element3) {
+    element3.focus();
     const range = document.createRange();
-    range.selectNodeContents(element2);
+    range.selectNodeContents(element3);
     range.collapse(false);
     const selection = window.getSelection();
     if (!selection) return;
@@ -50631,8 +52089,8 @@ ${hint}` : hint);
     return Boolean(els23.promptFindPanel && !els23.promptFindPanel.classList.contains("hidden"));
   }
   function isNodeInsidePromptAtomicChip(node) {
-    const element2 = node.nodeType === PROMPT_FIND_ELEMENT_NODE ? node : node.parentElement || (node.parentNode?.nodeType === PROMPT_FIND_ELEMENT_NODE ? node.parentNode : null);
-    return Boolean(element2?.closest(".gallery-chip, .color-chip, .prompt-snippet-chip"));
+    const element3 = node.nodeType === PROMPT_FIND_ELEMENT_NODE ? node : node.parentElement || (node.parentNode?.nodeType === PROMPT_FIND_ELEMENT_NODE ? node.parentNode : null);
+    return Boolean(element3?.closest(".gallery-chip, .color-chip, .prompt-snippet-chip"));
   }
   function collectPromptFindMatchesFromNode(node, needle, matches) {
     if (isNodeInsidePromptAtomicChip(node)) return;
@@ -50793,7 +52251,7 @@ ${hint}` : hint);
   function initOutputParameterKeyboard() {
     const root = document.getElementById("settingsGrid");
     if (!root) return;
-    const sync = () => root.querySelectorAll(".radio-group").forEach(syncOutputRadioGroup);
+    const sync2 = () => root.querySelectorAll(".radio-group").forEach(syncOutputRadioGroup);
     root.addEventListener("keydown", (event) => {
       const button = event.target.closest(".radio-btn");
       const group = button?.closest(".radio-group");
@@ -50808,13 +52266,13 @@ ${hint}` : hint);
       next.click();
       syncOutputRadioGroup(group);
     });
-    new MutationObserver(sync).observe(root, {
+    new MutationObserver(sync2).observe(root, {
       subtree: true,
       childList: true,
       attributes: true,
       attributeFilter: ["class", "disabled"]
     });
-    sync();
+    sync2();
   }
 
   // codex_image/webui/frontend/src/size-presets.ts
@@ -50935,6 +52393,7 @@ ${hint}` : hint);
     if (width === null || height === null) return translate("output.customSizeRequired");
     if (width < 16 || width > 3840 || height < 16 || height > 3840) return translate("output.customSizeBounds");
     if (width % 16 !== 0 || height % 16 !== 0) return translate("output.customSizeMultiple");
+    if (getLegacyBridge().state.selectedModelId?.startsWith("gpt-image-2.6-") && els24.outputFormat?.value === "gif") return "";
     if (Math.max(width, height) / Math.min(width, height) > GPT_IMAGE_2_MAX_LONG_SHORT_RATIO) return translate("output.customSizeRatio");
     const totalPixels = width * height;
     if (totalPixels < GPT_IMAGE_2_MIN_PIXELS || totalPixels > GPT_IMAGE_2_MAX_PIXELS) return translate("output.customSizePixels");
@@ -50976,9 +52435,16 @@ ${hint}` : hint);
       background: els24.background?.value || "auto",
       output_format: els24.outputFormat.value,
       moderation: els24.moderation.value,
-      output_compression: els24.outputFormat.value === "png" ? null : Number(els24.compression.value)
+      output_compression: ["jpeg", "webp"].includes(els24.outputFormat.value) ? Number(els24.compression.value) : null
     };
     const { state: state33 } = getLegacyBridge();
+    if (state33.selectedModelId?.startsWith("gpt-image-2.6-")) {
+      params.complexity = els24.complexity?.value || "high";
+      if (params.output_format === "gif") {
+        params.frame_count = Number(els24.frameCount?.value || 9);
+        params.frame_duration_ms = Number(els24.frameDuration?.value || 200);
+      }
+    }
     if (!state33.generationCatalog || isGptImageModel(state33.selectedModelId)) {
       params.main_model = currentMainModel();
     }
@@ -51452,22 +52918,25 @@ ${hint}` : hint);
       els26.customWidth,
       els26.customHeight,
       els26.quality,
+      els26.complexity,
+      els26.frameCount,
+      els26.frameDuration,
       els26.outputFormat,
       els26.moderation,
       els26.compression,
       els26.nInput
-    ].filter(Boolean).forEach((element2) => {
+    ].filter(Boolean).forEach((element3) => {
       const handleParameterChange = () => {
         persistMainModel();
         updateQuantity();
-        updateCompression();
-        if (element2 === els26.customWidth || element2 === els26.customHeight) handleCustomDimensionInput(element2);
+        if (element3 === els26.customWidth || element3 === els26.customHeight) handleCustomDimensionInput(element3);
         updateCustomSize();
+        updateCompression();
         updateRequestPreview();
         saveCurrentModelParameterDraft();
       };
-      element2.addEventListener("input", handleParameterChange);
-      element2.addEventListener("change", handleParameterChange);
+      element3.addEventListener("input", handleParameterChange);
+      element3.addEventListener("change", handleParameterChange);
     });
     els26.mainModel?.addEventListener("focus", () => openMainModelCombobox({ showAll: true }));
     els26.mainModel?.addEventListener("click", () => {
@@ -51492,19 +52961,19 @@ ${hint}` : hint);
       if (!els26.mainModelCombobox || els26.mainModelCombobox.contains(event.target)) return;
       closeMainModelCombobox();
     });
-    [els26.resolution, els26.ratio, els26.orientation].filter(Boolean).forEach((element2) => {
-      element2.addEventListener("input", (event) => {
+    [els26.resolution, els26.ratio, els26.orientation].filter(Boolean).forEach((element3) => {
+      element3.addEventListener("input", (event) => {
         updateSizeFromPreset(event);
         saveCurrentModelParameterDraft();
       });
-      element2.addEventListener("change", (event) => {
+      element3.addEventListener("change", (event) => {
         updateSizeFromPreset(event);
         saveCurrentModelParameterDraft();
       });
     });
-    [els26.customRatioWidth, els26.customRatioHeight].filter(Boolean).forEach((element2) => {
-      element2.addEventListener("input", () => {
-        handleCustomRatioInput(element2);
+    [els26.customRatioWidth, els26.customRatioHeight].filter(Boolean).forEach((element3) => {
+      element3.addEventListener("input", () => {
+        handleCustomRatioInput(element3);
         updateCustomSize();
         updateRequestPreview();
         saveCurrentModelParameterDraft();
@@ -51526,7 +52995,7 @@ ${hint}` : hint);
     });
     const handleCompressionKeydown = (event) => {
       if (event.key === "Tab" && els26.compressionPopover?.contains(document.activeElement)) {
-        const fields = [...els26.compressionPopover.querySelectorAll("input:not(:disabled)")];
+        const fields = [...els26.compressionPopover.querySelectorAll("input:not(:disabled)")].filter((field) => field.getClientRects().length);
         const boundary = event.shiftKey ? fields[0] : fields[fields.length - 1];
         if (document.activeElement === boundary) closeCompressionPopover();
         return;
@@ -51601,7 +53070,7 @@ ${hint}` : hint);
 
   // codex_image/webui/frontend/src/output-settings-lock.ts
   var STORAGE_KEY = "codex-image-output-settings-lock-v1";
-  var initialized5 = false;
+  var initialized6 = false;
   var locked = false;
   var lockedSnapshot = null;
   var taskSnapshot = null;
@@ -51666,6 +53135,8 @@ ${hint}` : hint);
     return translate(value === "original" ? "output.modeOriginal" : value === "off" ? "output.modeCreative" : "output.modeStrict");
   }
   function qualityLabel(value) {
+    if (value === "xhigh") return translate("output.qualityXhigh");
+    if (value === "max") return translate("output.qualityMax");
     const key2 = value === "low" ? "output.qualityLow" : value === "medium" ? "output.qualityMedium" : value === "high" ? "output.qualityHigh" : "output.qualityAuto";
     return translate(key2);
   }
@@ -51694,6 +53165,13 @@ ${hint}` : hint);
         { label: translate("output.lock.prompt"), value: promptFidelityLabel(snapshot2.prompt_fidelity) },
         { label: translate("output.quality"), value: qualityLabel(snapshot2.quality) }
       );
+      if (snapshot2.parameters["gpt.complexity"]) {
+        details.push({ label: translate("output.complexity"), value: qualityLabel(String(snapshot2.parameters["gpt.complexity"])) });
+      }
+      if (snapshot2.output_format === "gif") {
+        details.push({ label: translate("output.frameCount"), value: String(snapshot2.parameters["gpt.frame_count"] ?? 9) });
+        details.push({ label: translate("output.frameDuration"), value: `${snapshot2.parameters["gpt.frame_duration_ms"] ?? 200} ms` });
+      }
       if (context.responses) {
         details.push({
           label: translate("output.lock.search"),
@@ -51762,10 +53240,10 @@ ${hint}` : hint);
     });
   }
   function createElement(tag, className, text = "") {
-    const element2 = document.createElement(tag);
-    element2.className = className;
-    if (text) element2.textContent = text;
-    return element2;
+    const element3 = document.createElement(tag);
+    element3.className = className;
+    if (text) element3.textContent = text;
+    return element3;
   }
   function createSummaryCard(label) {
     const card = createElement("div", "output-settings-summary-card");
@@ -51888,7 +53366,13 @@ ${hint}` : hint);
     }
   }
   function applySnapshot(snapshot2) {
-    legacyMethod29("applyTaskOutputParams", { params: snapshot2 });
+    legacyMethod29("applyTaskOutputParams", {
+      params: snapshot2,
+      generation_snapshot: {
+        canonical_model_id: snapshot2.canonical_model_id,
+        requested_parameters: snapshot2.parameters
+      }
+    });
   }
   function isOutputSettingsLocked() {
     return locked;
@@ -51970,8 +53454,8 @@ ${hint}` : hint);
     updateLockButton();
   }
   function initOutputSettingsLockFeature() {
-    if (initialized5) return;
-    initialized5 = true;
+    if (initialized6) return;
+    initialized6 = true;
     Object.assign(getLegacyBridge().methods, {
       isOutputSettingsLocked,
       unlockOutputSettings,
@@ -52254,12 +53738,16 @@ ${hint}` : hint);
   function taskCanonicalModelId(task) {
     return explicitCanonicalModelId(task) || "gpt-image-2";
   }
-  function modelsShareParameterEditor(leftModelId, rightModelId) {
-    return leftModelId === rightModelId || isGptImageModel(leftModelId) && isGptImageModel(rightModelId);
+  function modelsShareParameterEditor(leftModelId, rightModelId, catalog) {
+    if (leftModelId === rightModelId) return true;
+    if (!isGptImageModel(leftModelId) || !isGptImageModel(rightModelId)) return false;
+    const left = catalog?.models.find((model) => model.id === leftModelId);
+    const right = catalog?.models.find((model) => model.id === rightModelId);
+    return Boolean(left?.parameters && right?.parameters && JSON.stringify(left.parameters) === JSON.stringify(right.parameters));
   }
-  function taskOutputSettingsView(task, selectedModelId, outputSettingsLocked) {
+  function taskOutputSettingsView(task, selectedModelId, outputSettingsLocked, catalog) {
     if (outputSettingsLocked) return "locked-summary";
-    return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId) ? "editor" : "parameter-inspector";
+    return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId, catalog) ? "editor" : "parameter-inspector";
   }
   function taskRequestedParameters(task) {
     const source = record3(task);
@@ -52284,6 +53772,9 @@ ${hint}` : hint);
       ratio: preferredParameter(parameters, "canvas.aspect_ratio", params.ratio, request.ratio),
       resolution: preferredParameter(parameters, "canvas.resolution", params.resolution, request.resolution),
       quality: preferredParameter(parameters, "gpt.quality", params.quality, request.quality),
+      complexity: preferredParameter(parameters, "gpt.complexity", params.complexity, request.complexity),
+      frame_count: preferredParameter(parameters, "gpt.frame_count", params.frame_count, request.frame_count),
+      frame_duration_ms: preferredParameter(parameters, "gpt.frame_duration_ms", params.frame_duration_ms, request.frame_duration_ms),
       background: preferredParameter(parameters, "gpt.background", params.background, request.background),
       moderation: preferredParameter(parameters, "gpt.moderation", params.moderation, request.moderation),
       web_search: preferredParameter(parameters, "gpt.web_search", params.web_search, request.web_search),
@@ -53360,7 +54851,7 @@ ${hint}` : hint);
       if (existingCards.length > tasks.length) return false;
       const existingCardsMatch = existingCards.every((card, index) => String(card.dataset.taskId || "") === String(tasks[index]?.task_id || ""));
       if (!existingCardsMatch) return false;
-      body.querySelectorAll("[data-load-more-task-group]").forEach((element2) => element2.remove());
+      body.querySelectorAll("[data-load-more-task-group]").forEach((element3) => element3.remove());
       body.dataset.renderComplete = "false";
       scheduleExpandedTaskGroupItemsRender2(group, normalizedActiveGroupKey, {
         startIndex: existingCards.length,
@@ -53704,9 +55195,9 @@ ${hint}` : hint);
       els27.taskSearch.value = "";
       changed = true;
     }
-    [els27.taskStatusFilter, els27.taskRatioFilter, els27.taskOrientationFilter, els27.taskPromptFidelityFilter, els27.taskResolutionFilter].filter(Boolean).forEach((element2) => {
-      if (element2.value) {
-        element2.value = "";
+    [els27.taskStatusFilter, els27.taskRatioFilter, els27.taskOrientationFilter, els27.taskPromptFidelityFilter, els27.taskResolutionFilter].filter(Boolean).forEach((element3) => {
+      if (element3.value) {
+        element3.value = "";
         changed = true;
       }
     });
@@ -53806,7 +55297,7 @@ ${hint}` : hint);
   function taskGroupCount2(...args) {
     return legacyMethod31("taskGroupCount", ...args);
   }
-  function element(node) {
+  function element2(node) {
     return node instanceof HTMLElement ? node : null;
   }
   function latestTaskNavigationTargetGroupKey(visibleGroupKeys) {
@@ -53864,7 +55355,7 @@ ${hint}` : hint);
     let remainingFrames = 4;
     const pinToTop = () => {
       if (token !== latestTaskNavigationPinToken || state20.latestTaskKeepAtTop !== true) return;
-      const sidebarContent = element(els28.sidebarContent);
+      const sidebarContent = element2(els28.sidebarContent);
       if (sidebarContent) sidebarContent.scrollTop = 0;
       remainingFrames -= 1;
       if (remainingFrames > 0) {
@@ -53884,7 +55375,7 @@ ${hint}` : hint);
     latestTaskNavigationPinToken += 1;
   }
   function handleLatestTaskNavigationKeydown(event) {
-    const sidebarContent = element(els28.sidebarContent);
+    const sidebarContent = element2(els28.sidebarContent);
     if (!sidebarContent || !(document.activeElement instanceof Node)) return;
     if (!sidebarContent.contains(document.activeElement)) return;
     if (!["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) return;
@@ -53972,7 +55463,7 @@ ${hint}` : hint);
     return true;
   }
   function scrollExpandedTaskGroupToTop2(behavior = "smooth") {
-    const sidebarContent = element(els28.sidebarContent);
+    const sidebarContent = element2(els28.sidebarContent);
     if (!sidebarContent) return;
     sidebarContent.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : behavior });
   }
@@ -53995,10 +55486,10 @@ ${hint}` : hint);
     );
   }
   function latestTaskNavigationCurrentViewModel() {
-    const sidebarContent = element(els28.sidebarContent);
+    const sidebarContent = element2(els28.sidebarContent);
     const renderInProgress = taskHistoryRenderInProgress();
     const currentGroupKey = currentTaskHistoryGroupKey();
-    const firstTask = element(els28.taskList?.querySelector?.(".task-group-items-expanded .task-card[data-task-id]:not(.task-card-removing)"));
+    const firstTask = element2(els28.taskList?.querySelector?.(".task-group-items-expanded .task-card[data-task-id]:not(.task-card-removing)"));
     return latestTaskNavigationViewModel({
       scrollTop: sidebarContent?.scrollTop || 0,
       scrollHeight: sidebarContent?.scrollHeight || 0,
@@ -54027,8 +55518,8 @@ ${hint}` : hint);
     if (header instanceof HTMLElement) header.focus({ preventScroll: true });
   }
   function refreshLatestTaskNavigation() {
-    const button = element(els28.taskLatestButton);
-    const badge = element(els28.taskLatestBadge);
+    const button = element2(els28.taskLatestButton);
+    const badge = element2(els28.taskLatestBadge);
     if (!button) return;
     const viewModel = latestTaskNavigationCurrentViewModel();
     if (viewModel.shouldClearNotice && state20.latestTaskNoticeCount) {
@@ -54119,8 +55610,8 @@ ${hint}` : hint);
   `;
   }
   function renderTaskHistoryAnchors2(layout) {
-    const topAnchors = element(els28.taskHistoryTopAnchors);
-    const bottomAnchors = element(els28.taskHistoryBottomAnchors);
+    const topAnchors = element2(els28.taskHistoryTopAnchors);
+    const bottomAnchors = element2(els28.taskHistoryBottomAnchors);
     if (!topAnchors || !bottomAnchors) return;
     topAnchors.innerHTML = layout.top.map((group) => anchorRowHtml(group)).join("");
     bottomAnchors.innerHTML = layout.bottom.map((group) => anchorRowHtml(group)).join("");
@@ -54129,7 +55620,7 @@ ${hint}` : hint);
     applyImmediateAnchorSelection(layout.expandedKey || "");
   }
   function taskHistoryLayoutElements() {
-    const shell = element(els28.taskHistoryShell);
+    const shell = element2(els28.taskHistoryShell);
     if (!shell) return [];
     return Array.from(
       shell.querySelectorAll(".task-history-anchor-row, .task-group-header-split")
@@ -55028,6 +56519,7 @@ ${hint}` : hint);
   var TASK_CARD_REMOVAL_FALLBACK_MS = 320;
   var TASK_CARD_REFLOW_DURATION_MS = 180;
   var TASK_CARD_REFLOW_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+  var pendingTaskDeletions = /* @__PURE__ */ new Set();
   function legacyMethod34(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
@@ -55245,9 +56737,14 @@ ${hint}` : hint);
       return false;
     }
   }
+  function isTaskDeletionPending(taskId) {
+    return pendingTaskDeletions.has(taskId);
+  }
   async function deleteTask(taskId) {
-    closePromptPopover5();
+    if (isTaskDeletionPending(taskId)) return false;
+    pendingTaskDeletions.add(taskId);
     try {
+      closePromptPopover5();
       await deleteTaskById(taskId);
       await runTaskCardRemovalTransition2([taskId], renderTasks5, "delete");
       await refreshTasksAfterDeletion2();
@@ -55259,6 +56756,8 @@ ${hint}` : hint);
     } catch (error) {
       setStatus18(errorMessage3(error, translate("taskActions.deleteFailed")), "error");
       return false;
+    } finally {
+      pendingTaskDeletions.delete(taskId);
     }
   }
   async function deleteTaskById(taskId) {
@@ -55366,7 +56865,8 @@ ${hint}` : hint);
       state23.taskViewedRequestIds.delete(String(taskId));
     }
   }
-  function openTaskDeleteConfirm2(deleteButton, taskId) {
+  function openTaskDeleteConfirm2(anchor, taskId, onCancel) {
+    if (isTaskDeletionPending(taskId)) return;
     closePromptPopover5();
     const task = state23.tasks.find((item) => String(item.task_id) === String(taskId));
     if (!task) return;
@@ -55375,12 +56875,13 @@ ${hint}` : hint);
       return;
     }
     const title = task.prompt || task.mode || taskId;
-    openConfirmPopover6(deleteButton, {
+    openConfirmPopover6(anchor, {
       title: translate("taskActions.deleteTitle"),
       focusCancel: true,
       message: translate("taskActions.deleteMessage"),
       detail: title,
       confirmText: translate("action.delete"),
+      onCancel,
       onConfirm: async () => {
         await deleteTask(taskId);
       }
@@ -55528,7 +57029,12 @@ ${hint}` : hint);
     const profile = selectedProviderBinding()?.protocol_profile || "";
     return { authSource, requestedBackend: profile || (authSource === "codex" ? "codex_images" : "api_images") };
   }
-  var REFERENCE_FILE_ERROR_KEYS = {
+  var REQUEST_ERROR_KEYS = {
+    openai_gif_edit_frame_limit_exceeded: "taskSubmit.openAiGifEditFrameLimit",
+    gif_output_does_not_support_mask: "taskSubmit.gifMaskUnsupported",
+    gif_output_does_not_support_compression: "taskSubmit.gifCompressionUnsupported",
+    gif_output_does_not_support_partial_images: "taskSubmit.gifPartialImagesUnsupported",
+    output_compression_requires_jpeg_or_webp: "taskSubmit.compressionFormatUnsupported",
     reference_file_empty: "referenceFiles.errorEmpty",
     reference_file_type_unsupported: "referenceFiles.errorUnsupported",
     reference_file_type_mismatch: "referenceFiles.errorMismatch",
@@ -55550,7 +57056,7 @@ ${hint}` : hint);
   function responseErrorMessage(detail) {
     const fallback = translate("taskSubmit.requestFailed");
     const code = typeof detail === "string" ? detail : detail && typeof detail === "object" && "code" in detail ? String(detail.code || "") : "";
-    const localeKey = REFERENCE_FILE_ERROR_KEYS[code];
+    const localeKey = REQUEST_ERROR_KEYS[code];
     return localeKey ? translate(localeKey) : sanitizedApiMessage(detail, fallback);
   }
   function referenceFileMetadata(source) {
@@ -55589,13 +57095,16 @@ ${hint}` : hint);
     }
     if (output.quality && els32.quality) els32.quality.value = output.quality;
     if (output.output_format && els32.outputFormat) els32.outputFormat.value = output.output_format;
+    if (els32.complexity) els32.complexity.value = String(output.complexity || "high");
+    if (els32.frameCount) els32.frameCount.value = String(output.frame_count ?? 9);
+    if (els32.frameDuration) els32.frameDuration.value = String(output.frame_duration_ms ?? 200);
     setBackgroundControl(output.background);
     if (output.moderation && els32.moderation) els32.moderation.value = output.moderation;
     if (output.output_compression !== null && output.output_compression !== void 0 && els32.compression) {
       els32.compression.value = output.output_compression;
     }
-    [els32.quality, els32.outputFormat, els32.moderation].forEach((element2) => {
-      element2?.dispatchEvent(new Event("change"));
+    [els32.complexity, els32.quality, els32.outputFormat, els32.moderation].forEach((element3) => {
+      element3?.dispatchEvent(new Event("change"));
     });
     updateQuantity2();
     syncRadioButtons2(els32.nInput);
@@ -55714,6 +57223,24 @@ ${hint}` : hint);
     const assets = referenceAssetInputs2();
     const fileUploads = referenceFileUploads2();
     const storedFiles = storedReferenceFileInputs2();
+    updateCompression2();
+    if (els32.outputFormat?.value === "gif" && [els32.frameCount, els32.frameDuration].some((input) => input && !input.checkValidity())) {
+      getLegacyBridge().methods.openCompressionPopover?.();
+      [els32.frameCount, els32.frameDuration].find((input) => input && !input.checkValidity())?.reportValidity();
+      return;
+    }
+    const marked = state24.images.filter((source) => source.markupFile);
+    if (marked.length) {
+      const model = state24.generationCatalog?.models.find((item) => item.id === state24.selectedModelId);
+      if (!model?.input_constraints.supports_markup || selectedProviderBinding()?.protocol_profile !== "openai_images" || state24.mode !== "edit") {
+        setStatus19(translate("imageEditor.markupUnsupported"), "error");
+        return;
+      }
+      if (marked.length > 1 || state24.images[0] !== marked[0]) {
+        setStatus19(translate("imageEditor.markupFirstOnly"), "error");
+        return;
+      }
+    }
     if (!imageMentionsValid()) {
       setStatus19(translate("promptMention.missing"), "error");
       return;
@@ -55772,6 +57299,7 @@ ${hint}` : hint);
     galleries.forEach((source) => form.append("gallery_image_ids", source.id));
     assets.forEach((source) => form.append("reference_asset_ids", source.id));
     form.append("reference_image_order", JSON.stringify(referenceImageOrder()));
+    if (marked[0]?.markupFile) form.append("markup", marked[0].markupFile, "markup.png");
     fileUploads.forEach((source) => form.append("reference_files", source.file));
     storedFiles.forEach((source) => form.append("reference_file_ids", source.id));
     if (state24.mode === "generate") {
@@ -55807,7 +57335,7 @@ ${hint}` : hint);
       stopRunFeedback2();
       setStatus19(translate("taskSubmit.queued"), "ok");
       await window.refreshQueue?.();
-      if (uploads.length || assets.length) await refreshRecentAssets2();
+      if (uploads.length || assets.length) void refreshRecentAssets2();
       renderPreview4();
       getLegacyBridge().methods.showMobilePreview?.();
     } catch (error) {
@@ -55873,7 +57401,7 @@ ${hint}` : hint);
     return [els33.taskStatusFilter, els33.taskRatioFilter, els33.taskOrientationFilter, els33.taskPromptFidelityFilter, els33.taskResolutionFilter].filter(Boolean);
   }
   function activeTaskFilterCount() {
-    return taskFilterControls().filter((element2) => Boolean(element2.value)).length;
+    return taskFilterControls().filter((element3) => Boolean(element3.value)).length;
   }
   function taskSearchHasValue() {
     return Boolean(String(state25.taskSearchQuery || "").trim());
@@ -55931,9 +57459,9 @@ ${hint}` : hint);
   }
   function clearTaskFilters(options = {}) {
     let changed = false;
-    taskFilterControls().forEach((element2) => {
-      if (element2.value) {
-        element2.value = "";
+    taskFilterControls().forEach((element3) => {
+      if (element3.value) {
+        element3.value = "";
         changed = true;
       }
     });
@@ -56024,8 +57552,8 @@ ${hint}` : hint);
     els33.taskFilterButton?.addEventListener("click", toggleTaskFilterPopover);
     els33.taskFilterClearButton?.addEventListener("click", () => clearTaskFilters());
     document.addEventListener("keydown", handleTaskFilterKeydown);
-    taskFilterControls().forEach((element2) => {
-      element2.addEventListener("change", () => {
+    taskFilterControls().forEach((element3) => {
+      element3.addEventListener("change", () => {
         updateTaskFilterSummary();
         renderTasks6();
       });
@@ -56454,11 +57982,11 @@ ${hint}` : hint);
       await applyRealtimeTaskPayloads(payload2.task ? [payload2.task] : [], payload2.sync);
     }
   }
-  async function applyRealtimeTaskPayloads(tasks, sync) {
+  async function applyRealtimeTaskPayloads(tasks, sync2) {
     const bridge39 = getLegacyBridge();
     const state33 = bridge39.state;
     for (const task of tasks) {
-      if (!acceptTaskUpdate(state33, task, sync)) continue;
+      if (!acceptTaskUpdate(state33, task, sync2)) continue;
       const previousTask = state33.tasks.find((item) => String(item.task_id) === String(task?.task_id));
       bridge39.methods.notifyTaskUpdate?.(previousTask, task);
       await bridge39.methods.applyTaskUpdate(task);
@@ -56505,10 +58033,10 @@ ${hint}` : hint);
   function invalidateQueueRequests() {
     getState().queueRequestSeq += 1;
   }
-  function applyQueueState(queue, { deferTaskListRender = false, sync } = {}) {
+  function applyQueueState(queue, { deferTaskListRender = false, sync: sync2 } = {}) {
     const state33 = getState();
-    if (!acceptQueueSnapshot(state33, sync)) return;
-    if (!sync) invalidateQueueRequests();
+    if (!acceptQueueSnapshot(state33, sync2)) return;
+    if (!sync2) invalidateQueueRequests();
     state33.queue = normalizeQueueState(queue);
     renderQueue({ deferTaskListRender });
   }
@@ -57745,7 +59273,7 @@ ${hint}` : hint);
       taskContextButton("cancel", translate("action.cancel"), false, true)
     ].join("") : [
       taskContextButton("archive", translate("taskContext.archive")),
-      taskContextButton("delete", translate("taskContext.delete"), false, true)
+      taskContextButton("delete", translate("taskContext.delete"), isTaskDeletionPending(String(task.task_id)), true)
     ].join("");
     return `
     <div class="task-context-menu-section">
@@ -57922,6 +59450,7 @@ ${hint}` : hint);
 
   // codex_image/webui/frontend/src/task-recovery.ts
   function taskRecoveryKind(task) {
+    if (task?.generation_error?.code === "svg_author_model_rejected") return "svgAuthorModel";
     const text = String(task?.error || task?.last_error || "").toLowerCase();
     const statusMatch = text.match(/\bhttp(?:\s+(?:error|status))?\s*[:=]?\s*(\d{3})\b/) || text.match(/\bstatus(?:\s+code)?\s*[:=]\s*(\d{3})\b/);
     const status = statusMatch ? Number(statusMatch[1]) : null;
@@ -58081,11 +59610,11 @@ ${hint}` : hint);
   }
   function taskInputThumbnailRoute(task, index) {
     const inputIndex = positiveInt(index);
-    if (!task?.task_id || inputIndex === null) return "";
+    if (!task?.task_id || task.local_pending || inputIndex === null) return "";
     return `/api/tasks/${encodeURIComponent(task.task_id)}/inputs/${inputIndex}/thumbnail`;
   }
   function taskInputThumbnailUrls(task) {
-    if (!task) return [];
+    if (!task || task.local_pending) return [];
     if (Array.isArray(task.input_thumbnail_urls) && task.input_thumbnail_urls.length) {
       return task.input_thumbnail_urls.filter(Boolean);
     }
@@ -58095,6 +59624,10 @@ ${hint}` : hint);
     return typeof url === "string" && /^\/outputs\/[^/]+\/inputs\//.test(url);
   }
   function taskInputPreviewUrls2(task) {
+    if (task?.local_pending) {
+      const sources = Array.isArray(task.input_sources) && task.input_sources.length ? task.input_sources : task.local_input_files;
+      return Array.isArray(sources) ? sources.map((source) => source?.previewUrl || source?.image_url).filter(Boolean) : [];
+    }
     const thumbnailUrls = taskInputThumbnailUrls(task);
     if (Array.isArray(task?.input_sources) && task.input_sources.length) {
       const inputUrls = taskInputUrls(task);
@@ -58845,7 +60378,18 @@ ${hint}` : hint);
     const selectedIndexes = taskSelectedOutputIndexes2(task).join(",");
     const size = task.params?.size || task.output_size || currentSize2();
     if (status === "failed" || status === "partial_failed") {
-      return ["failed", taskId, status, outputUrls, selectedIndexes, taskFailureMessage2(task), taskRetryStateText4(task), canRetryFailedTask3(task), canAcceptTaskSuccesses3(task)].join("|");
+      return [
+        "failed",
+        taskId,
+        status,
+        outputUrls,
+        selectedIndexes,
+        taskRecoveryKind(task),
+        taskFailureMessage2(task),
+        taskRetryStateText4(task),
+        canRetryFailedTask3(task),
+        canAcceptTaskSuccesses3(task)
+      ].join("|");
     }
     if (status === "submitting" || status === "queued") {
       return ["waiting", taskId, status, outputUrls, selectedIndexes, taskGeneratedCount2(task, 0), taskTotalCount2(task), size, task.last_error || task.error || "", taskRetryStateText4(task)].join("|");
@@ -59490,11 +61034,12 @@ ${hint}` : hint);
   function retryFailureSummaryButton(task) {
     const taskId = escapeHtml18(task.task_id || "");
     const actions = [];
+    const recoveryKind = taskRecoveryKind(task);
     actions.push(`<p class="recovery-guidance">${escapeHtml18(taskRecoveryMessage(task))}</p>`);
-    if (taskRecoveryKind(task) === "credentials" || taskRecoveryKind(task) === "quota") {
+    if (["credentials", "quota", "svgAuthorModel"].includes(recoveryKind)) {
       actions.push(`<button type="button" class="ghost-button text-sm" data-preview-provider-settings>${escapeHtml18(translate("ux.checkProvider"))}</button>`);
     }
-    if (taskRecoveryKind(task) === "input") {
+    if (recoveryKind === "input") {
       actions.push(`<button type="button" class="ghost-button text-sm" data-preview-edit-inputs="${taskId}">${escapeHtml18(translate("ux.editInputs"))}</button>`);
     }
     if (canRetryFailedTask3(task)) {
@@ -59707,15 +61252,15 @@ ${hint}` : hint);
     migrateLegacyArchives = false,
     requestSeq = state30.tasksRequestSeq,
     taskGroups,
-    sync,
+    sync: sync2,
     signal
   } = {}) {
     signal?.throwIfAborted();
     const incoming = Array.isArray(tasks) ? tasks : [];
     const snapshot2 = reconcileTaskSnapshot(
       state30,
-      queueSnapshotIsNewer(state30, sync) ? mergeActiveQueueTaskDetails(incoming) : incoming,
-      sync
+      queueSnapshotIsNewer(state30, sync2) ? mergeActiveQueueTaskDetails(incoming) : incoming,
+      sync2
     );
     if (snapshot2 === null) return false;
     const previousLocalPendingTasks = state30.tasks.filter((task) => task?.local_pending);
@@ -60164,7 +61709,7 @@ ${hint}` : hint);
   }
   function applyTaskToFormWithOutputLock(task) {
     const outputSettingsLocked = Boolean(legacyMethod42("isOutputSettingsLocked"));
-    const outputView = taskOutputSettingsView(task, String(state31.selectedModelId || ""), outputSettingsLocked);
+    const outputView = taskOutputSettingsView(task, String(state31.selectedModelId || ""), outputSettingsLocked, state31.generationCatalog);
     applyTaskToForm2(task, {
       preserveOutputSettings: outputView !== "editor",
       preserveComposer: false
@@ -60309,8 +61854,21 @@ ${hint}` : hint);
   async function restoreTaskInputs(task, options = {}) {
     const taskId = options.taskId ?? task?.task_id;
     const restoreSeq = options.restoreSeq;
+    const restoreWithMarkup = async (sources) => {
+      if (task.markup_file && sources[0] && !sources[0].markupFile) {
+        try {
+          const response = await fetch(`/api/tasks/${encodeURIComponent(taskId)}/markup`);
+          if (!response.ok) throw new Error(translate("imageEditor.openFailed"));
+          sources[0] = { ...sources[0], markupFile: new File([await response.blob()], "markup.png", { type: "image/png" }) };
+        } catch (error) {
+          revokeUploadPreviewUrls2(sources);
+          throw error;
+        }
+      }
+      return applyTaskInputRestoreSources(sources, taskId, restoreSeq);
+    };
     if (Array.isArray(task.local_input_files)) {
-      return applyTaskInputRestoreSources(task.local_input_files.slice(), taskId, restoreSeq);
+      return restoreWithMarkup(task.local_input_files.slice());
     }
     if (Array.isArray(task.input_sources) && task.input_sources.length) {
       const restoredSources = [];
@@ -60347,12 +61905,12 @@ ${hint}` : hint);
         revokeUploadPreviewUrls2(restoredSources);
         throw error;
       }
-      return applyTaskInputRestoreSources(restoredSources, taskId, restoreSeq);
+      return restoreWithMarkup(restoredSources);
     }
     const urls = taskInputUrls2(task);
     const gallerySources = Array.isArray(task.gallery_refs) ? task.gallery_refs.map((ref) => gallerySource4(ref)) : [];
     if (!urls.length) {
-      return applyTaskInputRestoreSources(gallerySources, taskId, restoreSeq);
+      return restoreWithMarkup(gallerySources);
     }
     if (selectedTaskInputRestoreCurrent(taskId, restoreSeq)) {
       setStatus22(translate("status.loadingHistoryInputs"), "");
@@ -60377,7 +61935,7 @@ ${hint}` : hint);
       revokeUploadPreviewUrls2(files);
       throw error;
     }
-    return applyTaskInputRestoreSources([...files, ...gallerySources], taskId, restoreSeq);
+    return restoreWithMarkup([...files, ...gallerySources]);
   }
   async function selectTask2(taskId) {
     closePromptPopover8();
@@ -62399,27 +63957,27 @@ ${hint}` : hint);
   }
   async function addToInput(url, anchor) {
     if (anchor?.disabled) return;
-    let feedback2 = anchor?.parentElement?.querySelector(".reference-add-feedback");
-    if (anchor && !feedback2) {
-      feedback2 = document.createElement("span");
-      feedback2.className = "reference-add-feedback";
-      feedback2.setAttribute("role", "status");
-      anchor.after(feedback2);
+    let feedback3 = anchor?.parentElement?.querySelector(".reference-add-feedback");
+    if (anchor && !feedback3) {
+      feedback3 = document.createElement("span");
+      feedback3.className = "reference-add-feedback";
+      feedback3.setAttribute("role", "status");
+      anchor.after(feedback3);
     }
     if (anchor) {
       anchor.disabled = true;
       anchor.setAttribute("aria-busy", "true");
     }
-    if (feedback2) feedback2.textContent = translate("ux.addingReference");
+    if (feedback3) feedback3.textContent = translate("ux.addingReference");
     try {
       legacyMethod45("setStatus", translate("ux.addingReference"), "");
       const file = await legacyMethod45("imageFileFromUrl", url, "preview-" + Date.now());
       await legacyMethod45("addImageFiles", [file]);
       legacyMethod45("setStatus", translate("ux.referenceAdded"), "ok");
-      if (feedback2) feedback2.textContent = translate("ux.referenceAdded");
+      if (feedback3) feedback3.textContent = translate("ux.referenceAdded");
     } catch (error) {
       legacyMethod45("setStatus", `${translate("ux.referenceFailed")} ${error instanceof Error ? error.message : ""}`, "error");
-      if (feedback2) feedback2.textContent = translate("ux.referenceFailed");
+      if (feedback3) feedback3.textContent = translate("ux.referenceFailed");
     } finally {
       if (anchor) {
         anchor.disabled = false;
@@ -62553,6 +64111,9 @@ ${hint}` : hint);
   var GPT_TASK_PARAMETER_INSPECTOR_ORDER = new Map([
     "canvas.size",
     "gpt.quality",
+    "gpt.complexity",
+    "gpt.frame_count",
+    "gpt.frame_duration_ms",
     "output.format",
     "gpt.background",
     "output.count",
@@ -62596,10 +64157,10 @@ ${hint}` : hint);
       Object.entries(snapshot2.requested_parameters).filter(([id]) => taskParameterVisibleInInspector(snapshot2, id))
     );
   }
-  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked) {
+  function taskParameterInspectionAction(task, selectedModelId, outputSettingsLocked, catalog) {
     if (outputSettingsLocked) return "preserve";
     if (!task) return "clear";
-    return taskOutputSettingsView(task, selectedModelId, false) === "editor" ? "clear" : "inspect";
+    return taskOutputSettingsView(task, selectedModelId, false, catalog) === "editor" ? "clear" : "inspect";
   }
   function reconcileTaskParameterInspection() {
     const { state: state33, methods } = getLegacyBridge();
@@ -62607,7 +64168,8 @@ ${hint}` : hint);
     const action = taskParameterInspectionAction(
       task,
       String(state33.selectedModelId || ""),
-      Boolean(methods.isOutputSettingsLocked?.())
+      Boolean(methods.isOutputSettingsLocked?.()),
+      state33.generationCatalog
     );
     if (action === "inspect" && task) inspectTaskParameters2(task);
     else if (action === "clear" && state33.inspectedGenerationSnapshot) clearTaskParameterInspection3();
@@ -62668,7 +64230,7 @@ ${hint}` : hint);
   function adoptTaskParameters(task) {
     const { state: state33, methods } = getLegacyBridge();
     const snapshot2 = snapshotFromTask(task);
-    const keepGptBinding = isGptImageModel(state33.selectedModelId) && isGptImageModel(snapshot2.canonical_model_id);
+    const keepGptBinding = isGptImageModel(state33.selectedModelId) && modelsShareParameterEditor(snapshot2.canonical_model_id, String(state33.selectedModelId || ""), state33.generationCatalog);
     const targetModelId = keepGptBinding ? state33.selectedModelId : snapshot2.canonical_model_id;
     const model = state33.generationCatalog?.models.find((item) => item.id === targetModelId);
     if (!model) {

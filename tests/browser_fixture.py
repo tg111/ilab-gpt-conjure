@@ -9,6 +9,7 @@ on normal shutdown. It never reads the user's task directories or settings.
 from __future__ import annotations
 
 import argparse
+import asyncio
 from datetime import datetime, timedelta, timezone
 import io
 import json
@@ -29,6 +30,9 @@ from codex_image.webui.app import create_app
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "codex_image/webui/static"
 BROWSER_SUITES = {
+    "appearance": "appearance.browser",
+    "image26": "image26.browser",
+    "svg-reference": "svg_reference.browser",
     "history": "history_page.browser",
     "image-mentions": "image_mentions.browser",
     "prompt-paste": "prompt_paste.browser",
@@ -36,6 +40,8 @@ BROWSER_SUITES = {
     "api-settings": "api_settings.browser",
     "api-provider-delete": "api_provider_delete.browser",
     "workbench-feedback": "workbench_feedback.browser",
+    "task-context-delete": "task_context_delete.browser",
+    "recent-asset-refresh": "recent_asset_refresh.browser",
     "ui-icons": "ui_icons.browser",
     "output-controls": "output_controls.browser",
     "main-model": "main_model.browser",
@@ -142,7 +148,7 @@ def main() -> None:
             def acceptance_page(suite: str):
                 if suite not in BROWSER_SUITES:
                     raise HTTPException(404)
-                script = BROWSER_SUITES[suite] if suite in ("history", "workbench-layout", "api-settings", "api-provider-delete", "workbench-feedback", "ui-icons", "output-controls", "main-model", "prompt-response") else "browser_harness"
+                script = "browser_harness" if suite in ("image-mentions", "prompt-paste") else BROWSER_SUITES[suite]
                 return HTMLResponse(
                     f'<!doctype html><html><body><h1>{suite} acceptance</h1>'
                     '<pre id="results">Running</pre>'
@@ -163,6 +169,23 @@ def main() -> None:
             @app.get("/qa-history")
             def history_page():
                 return HTMLResponse(acceptance_html("history.html"))
+
+            @app.get("/qa-svg-reference/{name}.svg")
+            def svg_reference(name: str):
+                dimensions = {"fixed": 'width="64" height="32"', "viewbox": 'viewBox="0 0 80 40"',
+                              "oversized": 'width="16384" height="16384"'}
+                if name not in dimensions:
+                    raise HTTPException(404)
+                return Response(
+                    f'<svg xmlns="http://www.w3.org/2000/svg" {dimensions[name]}><rect width="16" height="16" fill="#ff0000"/></svg>',
+                    media_type="image/svg+xml", headers={"Content-Security-Policy": "default-src 'none'; sandbox"},
+                )
+
+            @app.get("/qa-reference-thumbnail/{asset_id}")
+            async def slow_reference_thumbnail(asset_id: str, stalled: bool = False):
+                await asyncio.sleep(7 if stalled else 0.75)
+                path = app.state.reference_asset_storage.thumbnail_path(asset_id)
+                return FileResponse(path, media_type="image/webp", headers={"Cache-Control": "no-store"})
 
             @app.get("/qa-unexpected-requests")
             def network_report():

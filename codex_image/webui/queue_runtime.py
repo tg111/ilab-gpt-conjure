@@ -422,6 +422,7 @@ def _validated_snapshot_plan(
         return None
     provider_id = str(snapshot.get("provider_id") or "")
     api_key = ""
+    svg_author_model = ""
     if provider_id != "codex":
         configured = _configured_provider_exact(ctx, provider_id)
         if configured is None:
@@ -458,6 +459,7 @@ def _validated_snapshot_plan(
                 retryable=False,
             )
         api_key = str(configured["api_key"])
+        svg_author_model = str(configured.get("svg_author_model") or "")
     params = metadata.get("params") if isinstance(metadata.get("params"), dict) else {}
     # Prompt processing is disabled: send the stored model prompt (expanded snippets
     # and gallery notes) without ratio or guard instructions.
@@ -492,6 +494,13 @@ def _validated_snapshot_plan(
         mask_path = ctx.storage.input_path(mask_name)
         if mask_path.exists():
             mask_data_url = _file_to_data_url(mask_path)
+    markup_data_url = None
+    markup_name = metadata.get("markup_file")
+    if isinstance(markup_name, str) and markup_name:
+        markup_path = ctx.storage.task_owned_input_path(str(metadata.get("task_id") or ""), markup_name)
+        if markup_path is None or not markup_path.is_file():
+            raise ValueError("markup_input_missing")
+        markup_data_url = _file_to_data_url(markup_path)
     _, reference_file_inputs = _resolve_reference_files(
         ctx.reference_file_storage,
         metadata.get("reference_files"),
@@ -505,6 +514,7 @@ def _validated_snapshot_plan(
         image_inputs=tuple(ImageInput(item) for item in image_data_urls),
         reference_files=tuple(reference_file_inputs),
         mask_image=mask_data_url,
+        markup_image=markup_data_url,
         main_model=str(params.get("main_model") or "") or None,
         instructions=transport_instructions,
         legacy_compat_parameters=dict(snapshot.get("legacy_compat_parameters") or {}),
@@ -514,6 +524,7 @@ def _validated_snapshot_plan(
         command=command,
         api_key=api_key,
         registry=registry,
+        svg_author_model=svg_author_model,
     )
 
 
