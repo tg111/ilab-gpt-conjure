@@ -30,24 +30,12 @@ class WebUILauncherTests(unittest.TestCase):
             Path("Start WebUI.command"),
             Path("Start WebUI Debug.command"),
             Path("Start WebUI.bat"),
-            Path("packaging/macos/Start WebUI Portable.command"),
-            Path("packaging/windows/Start WebUI Portable.bat"),
         )
         for launcher in launchers:
             text = launcher.read_text(encoding="utf-8")
             self.assertNotIn("--workers", text)
             self.assertNotIn("WEB_CONCURRENCY", text)
 
-        for app_module in (
-            Path("packaging/macos/portable_webui_app.py"),
-            Path("packaging/macos/standard_webui_app.py"),
-            Path("packaging/windows/portable_webui_app.py"),
-            Path("packaging/windows/standard_webui_app.py"),
-        ):
-            self.assertIn(
-                "enforce_single_instance=True",
-                app_module.read_text(encoding="utf-8"),
-            )
 
     def test_launcher_uses_shutdown_aware_server_listener_settings(self) -> None:
         launcher = Path("Start WebUI.command")
@@ -233,40 +221,6 @@ class WebUILauncherTests(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200, response.text)
-
-    def test_packaged_launchers_bound_graceful_shutdown_and_do_not_orphan_uvicorn(self) -> None:
-        mac_portable = Path("packaging/macos/Start WebUI Portable.command").read_text(
-            encoding="utf-8"
-        )
-        windows_portable = Path(
-            "packaging/windows/Start WebUI Portable.bat"
-        ).read_text(encoding="utf-8")
-        rust_launcher = Path("launcher/src/lib.rs").read_text(encoding="utf-8")
-
-        self.assertIn("--timeout-graceful-shutdown 5", mac_portable)
-        self.assertIn(
-            'exec "$PYTHON_BIN" -m codex_image.webui.server',
-            mac_portable,
-        )
-        self.assertNotIn('SERVER_PID="$!"', mac_portable)
-
-        self.assertIn("-m codex_image.webui.open_when_ready", windows_portable)
-        self.assertIn("--timeout-graceful-shutdown 5", windows_portable)
-        self.assertIn(
-            '"%PYTHON_BIN%" -m codex_image.webui.server '
-            "portable_webui_app:app",
-            windows_portable,
-        )
-        self.assertNotIn(
-            'start "iLab CONJURE WebUI" /b "%PYTHON_BIN%" '
-            "-m codex_image.webui.server",
-            windows_portable,
-        )
-        self.assertNotIn(":keep_server_window_open", windows_portable)
-
-        self.assertIn('"codex_image.webui.server"', rust_launcher)
-        self.assertIn('"--timeout-graceful-shutdown"', rust_launcher)
-        self.assertIn('"5"', rust_launcher)
 
     def _run_server_sigint_case(self, *, repeated: bool) -> tuple[int, str]:
         project_root = Path.cwd()

@@ -2488,10 +2488,6 @@ button, input, select, textarea {
 }
 
 .version-info {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  width: auto;
   color: var(--text-muted);
   font-size: 11px;
   line-height: 1.2;
@@ -2499,36 +2495,8 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   min-height: 28px;
   padding: 4px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    background var(--motion-base),
-    color var(--motion-base),
-    box-shadow var(--motion-base);
-}
-
-.version-info:hover,
-.version-info:focus-visible {
-  background: var(--surface-soft);
-  color: var(--text-secondary);
-}
-
-.version-info.has-update {
-  color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 9%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 22%, transparent);
-}
-
-.version-update-badge {
-  width: 7px;
-  height: 7px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -10769,10 +10737,6 @@ input[type=range].slider:disabled::-moz-range-thumb {
   width: min(520px, 94vw);
 }
 
-.version-modal-panel {
-  width: min(520px, 94vw);
-}
-
 .system-settings-modal-panel {
   --settings-control-border: color-mix(in srgb, var(--line) 75%, var(--control-border));
   --settings-button-surface: var(--secondary-action-surface);
@@ -10835,88 +10799,6 @@ input[type=range].slider:disabled::-moz-range-thumb {
   margin: 0;
   color: var(--text-muted);
   font-size: 13px;
-}
-
-.version-detail-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.version-detail-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 38px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface-soft);
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.version-detail-row strong {
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.version-onboarding {
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--primary-light);
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.version-onboarding.hidden {
-  display: none;
-}
-
-.version-onboarding strong {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.version-onboarding p {
-  margin: 0;
-}
-
-.version-onboarding ul {
-  display: grid;
-  gap: 5px;
-  margin: 8px 0 0;
-  padding-left: 18px;
-}
-
-.version-onboarding li::marker {
-  color: var(--primary);
-}
-
-.version-modal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.version-modal-actions .run-button,
-.version-modal-actions .ghost-button {
-  width: auto;
-  min-width: 112px;
-  height: 34px;
-}
-
-.version-modal-actions .hidden {
-  display: none;
 }
 
 .api-settings-feedback {

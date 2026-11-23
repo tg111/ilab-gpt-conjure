@@ -5,14 +5,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/kadevin/ilab-conjure/releases"><img alt="release" src="https://img.shields.io/github/v/release/kadevin/ilab-conjure?style=flat-square&logo=github&label=release&color=0EA5E9"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/kadevin/ilab-conjure/actions/workflows/ci.yml/badge.svg?branch=main&event=push"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/commits/main"><img alt="last commit" src="https://img.shields.io/github/last-commit/kadevin/ilab-conjure?style=flat-square&logo=github&label=last%20commit&color=10B981"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/stargazers"><img alt="stars" src="https://img.shields.io/github/stars/kadevin/ilab-conjure?style=flat-square&logo=github&label=stars&color=0284C7"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/network/members"><img alt="forks" src="https://img.shields.io/github/forks/kadevin/ilab-conjure?style=flat-square&logo=github&label=forks&color=0369A1"></a>
-</p>
-
-<p align="center">
   <img alt="license AGPL-3.0-only" src="https://img.shields.io/badge/license-AGPL--3.0--only-22C55E?style=flat-square">
   <img alt="Python: security-patched release required" src="https://img.shields.io/badge/python-security%20patched-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="FastAPI WebUI" src="https://img.shields.io/badge/WebUI-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
@@ -23,18 +15,20 @@
 
 
 <p align="center">
-  中文 · <a href="README.en.md">English</a> · <a href="RELEASES.md">下载 / Releases</a>
+  中文 · <a href="README.en.md">English</a>
 </p>
 
 <p align="center">
   <img src="assets/UI_cn.webp" alt="iLab CONJURE WebUI 截图" width="960" />
 </p>
 
+> 本项目是 [kadevin/ilab-conjure](https://github.com/kadevin/ilab-conjure) 的独立分叉（基于上游 v1.2.1），不再与上游同步。仅支持源码运行，不提供安装包和自动更新。
+
 ## 简介
 
 iLab CONJURE 是本地优先的 AI 图片生成工作台，支持 GPT Image、Gemini，以及个人本机 Codex 工作流。通过 WebUI 完成生成、编辑和素材管理，也可用 CLI 自动化处理。
 
-新用户可直接下载[应用包](#应用包下载)；开发者可[从源码安装](#安装)。接入供应商建议使用 API 模式，本工具不适合作为公网多用户服务。
+从[源码安装](#安装)后运行，可部署在本机或自己的服务器上。接入供应商建议使用 API 模式，本工具不适合作为公网多用户服务。
 
 ## 功能
 
@@ -43,7 +37,7 @@ iLab CONJURE 是本地优先的 AI 图片生成工作台，支持 GPT Image、Ge
 - **输出控制：** 调整尺寸、比例、质量、数量和格式；支持模型提供的透明背景、联网搜索及参数锁定。
 - **任务与历史：** 并发队列、多图输出、失败重试，以及历史搜索、收藏、标签、批量整理和 ZIP 导出。
 - **界面与设置：** 响应式紧凑布局、深浅主题、自定义配色、14 种语言选项，以及代理、存储、通知和配置备份恢复。
-- **本地运行：** 提供 macOS、Windows 应用包与 portable 包，支持托盘／菜单栏启动和 CLI。
+- **源码运行：** 从源码启动 WebUI，并提供 CLI。
 
 点击顶栏明暗切换右侧的颜色圆点，展开配色面板，选择皮肤、自定义主色和背景色系；工作区实时预览，点击“应用配色”保存。手机端从“更多”中的主题控件进入。配色保存在当前浏览器，可随配置备份迁移；深浅模式仍可独立跟随系统。
 
@@ -66,47 +60,17 @@ GPT Image 的透明背景适用于 PNG／WebP，可按通道使用原生参数�
 
 凭据、提示词、图片、任务数据库和日志应留在本地，不要提交到 Git。安全边界见 [SECURITY.md](SECURITY.md)。
 
-## 应用包下载
-
-正式版本与下载入口见 [下载 / Releases](RELEASES.md) 或 [GitHub 最新正式版](https://github.com/kadevin/ilab-conjure/releases/latest)。
-
-| 平台 | 安装与启动 |
-| --- | --- |
-| macOS | 按芯片选择 arm64 或 x64 DMG，将 App 拖入 Applications 后打开。 |
-| Windows | 下载 x64 App ZIP，解压到普通用户目录，运行 `iLab GPT CONJURE.exe`。 |
-| Portable | 下载对应平台 ZIP，解压后运行 `Start iLab GPT CONJURE.app` 或 `.exe`。 |
-
-应用包内置 Python、依赖和前端资源，日常使用无需 Node.js。标准版数据保存在 macOS 的 `~/Library/Application Support/iLab GPT CONJURE` 或 Windows 的 `%APPDATA%\iLab GPT CONJURE`；portable 数据保存在同级 `data/`。
-
-**更新：** macOS 标准版和 portable 可从托盘／菜单栏检查更新，确认后校验签名与文件哈希并安装；Windows 标准 ZIP 手动替换。更新前退出旧实例，保留数据目录。安装依赖失败时检查网络或重新下载完整包，无需删除图库、配置或任务记录。
-
-<details>
-<summary>旧版迁移与 macOS 打开提示</summary>
-
-项目自 v0.7.0 从 `iLab GPT CONJURE` 更名为 `iLab CONJURE`；部分安装包、程序和数据目录仍沿用旧名。标准版首次启动可在确认后复制相邻 portable 数据，不删除旧目录，也不自动覆盖已有标准版数据。
-
-v0.6.1 及更早的 macOS 标准版需手动安装一次支持更新助手的版本；v0.5.4 及更早 portable 用户建议下载完整包升级。Portable 更新保留 `data/`，被替换文件备份到 `.backup/`；终端调试和手动更新可使用包内 `Start WebUI Portable`、`Update WebUI Portable` 脚本。
-
-macOS 构建使用临时签名（ad-hoc），未使用 Developer ID 签名或经过公证。确认下载来源可信后，可右键 App →“打开”，并在系统提示中确认。Portable 解压目录也可使用：
-
-```bash
-xattr -dr com.apple.quarantine /path/to/ilab-gpt-conjure_macos_portable_arm64
-# Intel Mac 使用对应的 macos_portable_x64 目录
-```
-
-</details>
-
 ## 环境要求
 
-以下仅适用于源码安装：Python 安全补丁基线为 **3.11.18、3.12.16、3.13.18、3.14.10、3.15.2** 或对应分支的更新版本；安装依赖需 **pip 26.2.2+**。修改前端时才需要 Node.js，版本见 [`.node-version`](.node-version)。
+Python 安全补丁基线为 **3.11.18、3.12.16、3.13.18、3.14.10、3.15.2** 或对应分支的更新版本；安装依赖需 **pip 26.2.2+**。修改前端时才需要 Node.js，版本见 [`.node-version`](.node-version)。
 
 ## 安装
 
 以下命令用于 macOS／Linux 终端；Windows PowerShell 中将 `python3` 换为 `py -3`（未安装 Python Launcher 时用 `python`），将 `.venv/bin/python` 换为 `.venv\Scripts\python.exe`。
 
 ```bash
-git clone https://github.com/kadevin/ilab-conjure.git
-cd ilab-conjure
+git clone https://github.com/tg111/ilab-gpt-conjure.git
+cd ilab-gpt-conjure
 python3 codex_image/runtime_security.py
 python3 -m venv .venv
 .venv/bin/python codex_image/runtime_security.py --installer
@@ -175,8 +139,6 @@ GPT Image 2.6 通过 Images API 提供复杂度、超高／最高质量，以及
 
 修改存储路径需重启，不会自动搬迁数据。切换后历史为空时，可在“存储与通知 → 查看原默认目录”改回原路径并重启。迁移前先备份、退出应用，再完整复制输入与输出目录（含图库、参考素材和源数据），不要只复制图片或单个数据库，也不要覆盖已有目标数据。
 
-macOS 标准版保留自定义路径；从 portable 迁移时仅调整原 `data/` 内的路径，外部目录不变。原路径配置保存在 `.migration/webui-settings-before-path-rebase.json`，旧数据不删除。
-
 ### 用户配置备份与恢复
 
 导出到不支持配色备份的旧版时，勾选“兼容旧版（不包含配色）”。
@@ -219,16 +181,8 @@ API Key 默认排除，手动包含后 ZIP **不加密**；OAuth 登录态不备
 
 ## 开发
 
-开发与验证见 [CONTRIBUTING.md](CONTRIBUTING.md)，打包与发布见 [RELEASES.md](RELEASES.md)，安全基线见 [依赖安全说明](docs/dependency-security.md)。修改 TypeScript 或 CSS 后需生成并同步 `codex_image/webui/static/` 中的资源。
+开发与验证见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全基线见 [依赖安全说明](docs/dependency-security.md)。修改 TypeScript 或 CSS 后需生成并同步 `codex_image/webui/static/` 中的资源。
 
 ## 许可证
 
 采用 [GNU AGPLv3](LICENSE)。修改后通过网络提供服务时，需按协议开放对应源码。许可证仅适用于代码，不授予项目名称、Logo、素材、凭据、用户内容或第三方模型／API 服务的权利。
-
-## 交流与定制开发
-
-欢迎交流 AI 编程与生图工作流，也接受本地工具、企业网站和智能体应用定制。扫码时备注 `iLab CONJURE` 或 `定制开发`。
-
-<p align="center">
-  <img src="assets/wechat-qr.jpg" alt="iLab WeChat QR Code" width="240" />
-</p>

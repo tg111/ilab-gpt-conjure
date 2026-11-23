@@ -9,7 +9,6 @@ htmlcov/
 .venv/
 venv/
 node_modules/
-launcher/target/
 .playwright-cli/
 .env
 .eggs/

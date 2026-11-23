@@ -7,7 +7,7 @@ from fastapi import Body, FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import Response
 
 from codex_image.webui.context import WebUIContext
-from codex_image.webui.app_version import app_version_payload, dismiss_post_update_onboarding, open_portable_updater
+from codex_image.webui.app_version import app_version_payload
 from codex_image.webui.settings_store import (
     MAX_COLOR_IMPORT_BYTES,
     MAX_PROMPT_TEMPLATE_IMPORT_BYTES,
@@ -46,21 +46,7 @@ def register_settings_routes(app: FastAPI, ctx: WebUIContext) -> None:
 
     @app.get("/api/app-version")
     def get_app_version() -> dict[str, Any]:
-        return app_version_payload(ctx.output_root)
-
-    @app.post("/api/app-version/open-updater")
-    def open_app_updater() -> dict[str, Any]:
-        try:
-            return open_portable_updater(ctx.output_root)
-        except FileNotFoundError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
-
-    @app.post("/api/app-version/dismiss-onboarding")
-    def dismiss_app_version_onboarding() -> dict[str, Any]:
-        try:
-            return dismiss_post_update_onboarding(ctx.output_root)
-        except FileNotFoundError as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        return app_version_payload()
 
     @app.get("/api/settings")
     def get_settings() -> dict[str, Any]:

@@ -838,37 +838,23 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn(".api-status-bar", styles)
         self.assertRegex(styles, r"\.version-info\s*\{[^}]*text-align:\s*center")
         self.assertRegex(styles, r"\.version-info\s*\{[^}]*font-size:\s*11px")
-        self.assertIn('id="versionInfo"', html)
-        self.assertIn('id="versionUpdateBadge"', html)
-        self.assertIn('id="versionModal"', html)
-        self.assertRegex(styles, r"\.version-info\.has-update\s*\{[^}]*color:\s*var\(--primary\)")
-        self.assertRegex(styles, r"\.version-update-badge\s*\{[^}]*background:\s*var\(--accent\)")
-        self.assertRegex(styles, r"\.version-modal-panel\s*\{[^}]*width:\s*min\(520px,\s*94vw\)")
-        self.assertRegex(styles, r"\.version-onboarding\s*\{[^}]*background:\s*var\(--primary-light\)")
+        self.assertIn('<span id="versionInfo" class="version-info">', html)
         self.assertRegex(styles, r"\.batch-toolbar\s*\{[^}]*align-self:\s*stretch")
         self.assertRegex(styles, r"\.batch-toolbar\s*\{[^}]*gap:\s*7px")
         self.assertRegex(styles, r"\.batch-toolbar\s*\{[^}]*padding:\s*8px\s+10px")
 
-    def test_app_version_status_uses_api_and_updater_action(self) -> None:
+    def test_app_version_label_is_static_and_has_no_update_flow(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = Path("codex_image/webui/static/app.js").read_text(encoding="utf-8")
 
         self.assertIn('id="versionLabel"', html)
-        self.assertIn('data-i18n-attr="aria-label:footer.versionInfo;title:footer.versionInfo"', html)
-        self.assertIn('id="versionUpdateButton"', html)
-        self.assertIn('id="versionOnboardingNotice"', html)
-        self.assertIn('id="versionStandardDownloadLink"', html)
-        self.assertIn('id="versionContinuePortableButton"', html)
-        self.assertIn('id="versionDismissOnboardingButton"', html)
         self.assertIn("/api/app-version", script)
-        self.assertIn("/api/app-version/open-updater", script)
-        self.assertIn("/api/app-version/dismiss-onboarding", script)
-        self.assertIn("post_update_onboarding", script)
         self.assertIn("footer.version", script)
-        self.assertIn("version.updaterStarted", script)
-        self.assertIn("version.onboardingStatus", script)
-        self.assertIn("version.standardDownload", script)
         self.assertIn("document.addEventListener(LOCALE_CHANGE_EVENT", script)
+        for removed in ('id="versionModal"', 'id="versionUpdateButton"', 'id="versionOnboardingNotice"'):
+            self.assertNotIn(removed, html)
+        for removed in ("/api/app-version/open-updater", "/api/app-version/dismiss-onboarding", "post_update_onboarding"):
+            self.assertNotIn(removed, script)
 
     def test_workspace_profiles_use_available_container_width(self) -> None:
         base = Path("codex_image/webui/static/styles/01-base.css").read_text(encoding="utf-8")

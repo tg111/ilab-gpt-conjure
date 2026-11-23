@@ -5,14 +5,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/kadevin/ilab-conjure/releases"><img alt="release" src="https://img.shields.io/github/v/release/kadevin/ilab-conjure?style=flat-square&logo=github&label=release&color=0EA5E9"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/kadevin/ilab-conjure/actions/workflows/ci.yml/badge.svg?branch=main&event=push"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/commits/main"><img alt="last commit" src="https://img.shields.io/github/last-commit/kadevin/ilab-conjure?style=flat-square&logo=github&label=last%20commit&color=10B981"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/stargazers"><img alt="stars" src="https://img.shields.io/github/stars/kadevin/ilab-conjure?style=flat-square&logo=github&label=stars&color=0284C7"></a>
-  <a href="https://github.com/kadevin/ilab-conjure/network/members"><img alt="forks" src="https://img.shields.io/github/forks/kadevin/ilab-conjure?style=flat-square&logo=github&label=forks&color=0369A1"></a>
-</p>
-
-<p align="center">
   <img alt="license AGPL-3.0-only" src="https://img.shields.io/badge/license-AGPL--3.0--only-22C55E?style=flat-square">
   <img alt="Python: security-patched release required" src="https://img.shields.io/badge/python-security%20patched-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="FastAPI WebUI" src="https://img.shields.io/badge/WebUI-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
@@ -23,18 +15,20 @@
 
 
 <p align="center">
-  English · <a href="README.md">中文</a> · <a href="RELEASES.md">Downloads / Releases</a>
+  English · <a href="README.md">中文</a>
 </p>
 
 <p align="center">
   <img src="assets/UI_en.webp" alt="iLab CONJURE WebUI screenshot" width="960" />
 </p>
 
+> This project is an independent fork of [kadevin/ilab-conjure](https://github.com/kadevin/ilab-conjure), based on upstream v1.2.1, and no longer tracks upstream. It runs from source only; there are no app packages or automatic updates.
+
 ## Overview
 
 iLab CONJURE is a local-first AI image workbench for GPT Image, Gemini, and personal Codex workflows. Generate, edit, and organize images in the WebUI, or automate tasks with the CLI.
 
-Start with an [app package](#app-packages), or [install from source](#install). API mode is recommended for provider integrations. This tool is not intended as a public multi-user service.
+Install and run it [from source](#install), locally or on your own server. API mode is recommended for provider integrations. This tool is not intended as a public multi-user service.
 
 ## Features
 
@@ -43,7 +37,7 @@ Start with an [app package](#app-packages), or [install from source](#install). 
 - **Output controls:** Size, ratio, quality, count, and format, plus parameter locking and model-supported transparency or web search.
 - **Tasks and history:** Concurrent queues, multi-image results, retries, search, favorites, tags, batch management, and ZIP export.
 - **Interface and settings:** Compact responsive layouts, light/dark themes, custom colors, 14 language options, proxies, storage, notifications, and configuration backup.
-- **Local tools:** macOS and Windows standard/portable packages, tray or menu-bar launchers, and a CLI.
+- **Source install:** run the WebUI from source, plus a CLI.
 
 Click the color dot beside the top-bar light/dark switch to choose a skin, primary color, and background tone. The workspace previews changes live; apply them to save in this browser. On mobile, the theme controls are under **More**. Configuration backups carry your colors to another browser; light/dark mode remains independent.
 
@@ -66,36 +60,6 @@ GPT Image transparency is available for PNG/WebP through native parameters or pr
 
 Keep credentials, prompts, images, task databases, and logs out of Git. See [SECURITY.md](SECURITY.md) for security boundaries.
 
-## App packages
-
-Find published versions in [Downloads / Releases](RELEASES.md) or the [latest official GitHub release](https://github.com/kadevin/ilab-conjure/releases/latest).
-
-| Platform | Install and launch |
-| --- | --- |
-| macOS | Choose the arm64 or x64 DMG for your Mac, drag the app into Applications, and open it. |
-| Windows | Extract the x64 App ZIP into a normal user directory and run `iLab GPT CONJURE.exe`. |
-| Portable | Extract the platform ZIP and run `Start iLab GPT CONJURE.app` or `.exe`. |
-
-Packages include Python, dependencies, and frontend assets; normal use does not require Node.js. Standard app data lives in `~/Library/Application Support/iLab GPT CONJURE` on macOS or `%APPDATA%\iLab GPT CONJURE` on Windows. Portable data stays in the adjacent `data/` folder.
-
-**Updates:** macOS standard and portable launchers offer user-confirmed updates with signature and file-hash checks. Windows standard ZIP updates are manual. Quit the old instance before replacing files and preserve data folders. If dependency installation fails, check the network or download a complete package; do not reset gallery, settings, or task data.
-
-<details>
-<summary>Legacy migration and macOS opening tips</summary>
-
-The project was renamed from `iLab GPT CONJURE` to `iLab CONJURE` in v0.7.0. Some package, executable, and data-folder names retain the old name. On first launch, the standard app can copy adjacent portable data after confirmation, without deleting the original or automatically overwriting existing standard data.
-
-macOS standard v0.6.1 and earlier require one manual installation of an updater-enabled version. Portable v0.5.4 and earlier users should download a complete package. Portable updates preserve `data/` and back up replaced files to `.backup/`. The bundled `Start WebUI Portable` and `Update WebUI Portable` scripts remain available for terminal troubleshooting and manual updates.
-
-macOS builds use ad-hoc signing, without Developer ID signing or notarization. After checking the download source, right-click the app, choose Open, and confirm the system prompt. For an extracted portable folder, you can also use:
-
-```bash
-xattr -dr com.apple.quarantine /path/to/ilab-gpt-conjure_macos_portable_arm64
-# Use the corresponding macos_portable_x64 folder on Intel Macs
-```
-
-</details>
-
 ## Requirements
 
 For source installs only: use **Python 3.11.18, 3.12.16, 3.13.18, 3.14.10, 3.15.2**, or a newer patch on the corresponding branch, and **pip 26.2.2+** for dependency installation. Node.js is only needed for frontend changes; its version is in [`.node-version`](.node-version).
@@ -105,8 +69,8 @@ For source installs only: use **Python 3.11.18, 3.12.16, 3.13.18, 3.14.10, 3.15.
 These commands use a macOS/Linux shell. In Windows PowerShell, replace `python3` with `py -3` (or `python` without the Python Launcher), and `.venv/bin/python` with `.venv\Scripts\python.exe`.
 
 ```bash
-git clone https://github.com/kadevin/ilab-conjure.git
-cd ilab-conjure
+git clone https://github.com/tg111/ilab-gpt-conjure.git
+cd ilab-gpt-conjure
 python3 codex_image/runtime_security.py
 python3 -m venv .venv
 .venv/bin/python codex_image/runtime_security.py --installer
@@ -175,8 +139,6 @@ If Clash/Mihomo Fake-IP DNS prevents downloading a generated image, enable Fake-
 
 Storage-path changes require a restart and do not move data. If history appears empty, restore the original paths under Storage & Notifications → Original default folders and restart. Before relocating, back up and quit, then copy the complete input/output directories, including gallery, references, and source data. Do not copy only images or one database, or overwrite existing destination data.
 
-The macOS standard app preserves custom paths. Portable migration rebases only paths inside the old `data/`; external folders stay unchanged. The original path settings are retained in `.migration/webui-settings-before-path-rebase.json`, and original data is not deleted.
-
 ### User configuration backup and restore
 
 To export for an older version that lacks appearance backup support, select **Compatible with older versions (without colors)**.
@@ -219,16 +181,8 @@ References, editing, masks, and dry runs are supported; see `--help` for all opt
 
 ## Development
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development and checks, [RELEASES.md](RELEASES.md) for packaging and releases, and [dependency security notes](docs/dependency-security.md) for runtime baselines. After TypeScript or CSS changes, regenerate and include the assets under `codex_image/webui/static/`.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development and checks, and [dependency security notes](docs/dependency-security.md) for runtime baselines. After TypeScript or CSS changes, regenerate and include the assets under `codex_image/webui/static/`.
 
 ## License
 
 Licensed under [GNU AGPLv3](LICENSE). Modified versions offered over a network must provide corresponding source under the license. This covers code, not rights to the project name, logo, assets, credentials, user content, or third-party model/API services.
-
-## Contact And Custom Work
-
-Connect on WeChat to discuss AI coding and image workflows, or custom local tools, business websites, and agent apps. Mention `iLab CONJURE` or `custom development` when adding the contact.
-
-<p align="center">
-  <img src="assets/wechat-qr.jpg" alt="iLab WeChat QR Code" width="240" />
-</p>
