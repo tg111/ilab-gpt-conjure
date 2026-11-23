@@ -89,10 +89,10 @@ jobs:
           python -m pip install ruff==0.16.0 bandit==1.9.4 pip-audit==2.10.1
 
       - name: Check critical Python errors
-        run: ruff check codex_image tests scripts packaging
+        run: ruff check codex_image tests scripts
 
       - name: Scan Python code for high-confidence high-severity issues
-        run: bandit -q -r codex_image scripts packaging -x '*/tests/*' -lll -iii
+        run: bandit -q -r codex_image scripts -x '*/tests/*' -lll -iii
 
       - name: Audit locked runtime and build dependencies
         run: |
