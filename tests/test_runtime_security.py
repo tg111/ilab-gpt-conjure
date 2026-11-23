@@ -13,16 +13,19 @@ from codex_image.runtime_security import dependency_security_error, main, pip_se
 
 
 class RuntimeSecurityTests(unittest.TestCase):
-    def test_python_patch_boundaries(self):
-        for fixed in ((3, 11, 18), (3, 12, 16), (3, 13, 18), (3, 14, 10), (3, 15, 2)):
-            with self.subTest(fixed=fixed):
-                self.assertIsNone(python_security_error(fixed))
-                self.assertIsNone(python_security_error((*fixed[:2], fixed[2] + 1)))
-                error = python_security_error((*fixed[:2], fixed[2] - 1))
-                self.assertIn("security baseline", error)
+    def test_python_minimum_versions(self):
+        for version_info in ((3, 11, 0), (3, 12, 0), (3, 13, 0), (3, 15, 0)):
+            with self.subTest(version_info=version_info):
+                self.assertIsNone(python_security_error(version_info, "linux"))
+                self.assertIsNone(python_security_error(version_info, "darwin"))
+        for version_info in ((3, 13, 0), (3, 13, 12), (3, 14, 0), (3, 15, 0)):
+            with self.subTest(version_info=version_info, platform="win32"):
+                self.assertIsNone(python_security_error(version_info, "win32"))
+        for version_info, platform in (((3, 10, 99), "linux"), ((3, 12, 99), "win32"), ((3, 11, 18), "win32")):
+            with self.subTest(version_info=version_info, platform=platform):
+                error = python_security_error(version_info, platform)
+                self.assertIn("unsupported", error)
                 self.assertIn("virtual environment", error)
-        self.assertIsNotNone(python_security_error((3, 10, 99)))
-        self.assertIsNotNone(python_security_error((3, 15, 0)))
 
     @staticmethod
     def _dependency_version(name, changed_name, changed_version):

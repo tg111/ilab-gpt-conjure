@@ -28,8 +28,9 @@ configuration, not the contents of previously published or installed packages.
 
 ## Runtime and build baseline
 
-- Source startup, CLI and the WebUI server check the Python security baseline
-  before starting work, including Python 3.15.2 for the 3.15 branch. Manual
+- Source startup, CLI and the WebUI server check the minimum Python version
+  before starting work: 3.11, or 3.13 on Windows. No specific patch release is
+  required, because this fork runs locally. Manual
   WebUI and CLI startup also reject missing, prerelease or older Pillow/certifi
   versions below the security floors (13.0.0 and 2026.10.19). These minimum
   checks do not replace the exact installation lock. Checks report the required

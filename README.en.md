@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="license AGPL-3.0-only" src="https://img.shields.io/badge/license-AGPL--3.0--only-22C55E?style=flat-square">
-  <img alt="Python: security-patched release required" src="https://img.shields.io/badge/python-security%20patched-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="Python 3.11+ (Windows 3.13+)" src="https://img.shields.io/badge/python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="FastAPI WebUI" src="https://img.shields.io/badge/WebUI-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
   <img alt="CLI" src="https://img.shields.io/badge/CLI-enabled-334155?style=flat-square">
   <img alt="OpenAI-Compatible API" src="https://img.shields.io/badge/OpenAI--Compatible-API-111827?style=flat-square">
@@ -62,7 +62,7 @@ Keep credentials, prompts, images, task databases, and logs out of Git. See [SEC
 
 ## Requirements
 
-For source installs only: use **Python 3.11.18, 3.12.16, 3.13.18, 3.14.10, 3.15.2**, or a newer patch on the corresponding branch, and **pip 26.2.2+** for dependency installation. Node.js is only needed for frontend changes; its version is in [`.node-version`](.node-version).
+For source installs only: use **Python 3.11+** (**3.13+ on Windows**, where the backup features need `os.fchmod`; no specific patch release is required), and **pip 26.2.2+** for dependency installation. Node.js is only needed for frontend changes; its version is in [`.node-version`](.node-version).
 
 ## Install
 

@@ -8,25 +8,30 @@ from importlib.metadata import PackageNotFoundError, version
 from collections.abc import Sequence
 
 
-# Python's October 2026 security releases, including the emSign trust-store fix.
-MINIMUM_PYTHON_PATCHES = {(3, 11): 18, (3, 12): 16, (3, 13): 18, (3, 14): 10, (3, 15): 2}
+# This fork runs locally, so only the versions the code needs are enforced, not
+# the latest security patch of each branch. Pillow 13 requires Python 3.11, and
+# Windows gained os.fchmod (used by the backup features) in Python 3.13.
+MINIMUM_PYTHON = (3, 11)
+MINIMUM_PYTHON_WINDOWS = (3, 13)
 MINIMUM_PIP = (26, 2, 2)
 # Security floors, separate from the exact versions in the installation lock.
 MINIMUM_RUNTIME_DEPENDENCIES = {"Pillow": (13, 0, 0), "certifi": (2026, 10, 19)}
 
 
-def python_security_error(version_info: Sequence[int] | None = None) -> str | None:
+def python_security_error(
+    version_info: Sequence[int] | None = None,
+    platform: str | None = None,
+) -> str | None:
     current = tuple((sys.version_info if version_info is None else version_info)[:3])
     label = ".".join(map(str, current))
-    if current[:2] < (3, 11):
-        return f"Python {label} is unsupported. Use a security-patched Python 3.11 or newer."
-    minimum = MINIMUM_PYTHON_PATCHES.get(current[:2])
-    if minimum is not None and current[2] < minimum:
-        required = ".".join(map(str, (*current[:2], minimum)))
+    on_windows = (sys.platform if platform is None else platform) == "win32"
+    minimum = MINIMUM_PYTHON_WINDOWS if on_windows else MINIMUM_PYTHON
+    if current[:2] < minimum:
+        required = ".".join(map(str, minimum))
+        where = " on Windows" if on_windows else ""
         return (
-            f"Python {label} is below the security baseline {required}. "
-            "Choose a patched interpreter and recreate this project's virtual environment; "
-            "updating Python packages alone does not update the interpreter."
+            f"Python {label} is unsupported{where}. Use Python {required} or newer "
+            "and recreate this project's virtual environment."
         )
     return None
 

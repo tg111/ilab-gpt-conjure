@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="license AGPL-3.0-only" src="https://img.shields.io/badge/license-AGPL--3.0--only-22C55E?style=flat-square">
-  <img alt="Python: security-patched release required" src="https://img.shields.io/badge/python-security%20patched-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="Python 3.11+ (Windows 3.13+)" src="https://img.shields.io/badge/python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="FastAPI WebUI" src="https://img.shields.io/badge/WebUI-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
   <img alt="CLI" src="https://img.shields.io/badge/CLI-enabled-334155?style=flat-square">
   <img alt="OpenAI-Compatible API" src="https://img.shields.io/badge/OpenAI--Compatible-API-111827?style=flat-square">
@@ -62,7 +62,7 @@ GPT Image 的透明背景适用于 PNG／WebP，可按通道使用原生参数�
 
 ## 环境要求
 
-Python 安全补丁基线为 **3.11.18、3.12.16、3.13.18、3.14.10、3.15.2** 或对应分支的更新版本；安装依赖需 **pip 26.2.2+**。修改前端时才需要 Node.js，版本见 [`.node-version`](.node-version)。
+需要 **Python 3.11+**，Windows 需要 **Python 3.13+**（备份功能依赖 Windows 上 3.13 才提供的 `os.fchmod`），不要求特定补丁版本；安装依赖需 **pip 26.2.2+**。修改前端时才需要 Node.js，版本见 [`.node-version`](.node-version)。
 
 ## 安装
 
