@@ -5,6 +5,7 @@ from typing import Any
 
 from fastapi import FastAPI
 
+from codex_image.generation.capabilities import binding_capabilities
 from codex_image.generation.catalog import (
     MODEL_MANIFEST_VERSION,
     list_model_families,
@@ -24,6 +25,17 @@ def _runtime_available(profile: str, codec: str) -> bool:
     except ValueError:
         return False
     return True
+
+
+def _with_capabilities(binding: dict[str, Any], models: dict[str, Any]) -> dict[str, Any]:
+    model = models.get(str(binding.get("canonical_model_id") or ""))
+    if model is not None:
+        binding["capabilities"] = binding_capabilities(
+            model,
+            str(binding.get("protocol_profile") or ""),
+            str(binding.get("parameter_codec") or ""),
+        ).payload()
+    return binding
 
 
 def _parameter_payload(parameter: Any) -> dict[str, Any]:
@@ -69,6 +81,7 @@ def generation_catalog_payload(ctx: WebUIContext) -> dict[str, Any]:
     settings = ctx.api_settings.public_settings()
     codex_mode = str(settings.get("codex_mode") or "images")
     codex_available = bool(ctx.route_helpers["codex_auth_checker"]())
+    models = {model.id: model for model in list_model_manifests()}
     codex_bindings = [
         {
             "id": f"codex-gpt-image-2-{mode}",
@@ -83,6 +96,7 @@ def generation_catalog_payload(ctx: WebUIContext) -> dict[str, Any]:
         }
         for mode in ("images", "responses")
     ]
+    codex_bindings = [_with_capabilities(binding, models) for binding in codex_bindings]
     providers: list[dict[str, Any]] = [{
         "id": "codex",
         "name": "Codex",
@@ -102,7 +116,7 @@ def generation_catalog_payload(ctx: WebUIContext) -> dict[str, Any]:
                 str(binding.get("protocol_profile") or ""),
                 str(binding.get("parameter_codec") or ""),
             )
-            bindings.append(binding)
+            bindings.append(_with_capabilities(binding, models))
         runtime_available = any(binding["available"] for binding in bindings)
         catalog_provider = {
             "id": provider["id"],
@@ -125,7 +139,7 @@ def generation_catalog_payload(ctx: WebUIContext) -> dict[str, Any]:
         "schema_version": 1,
         "manifest_version": MODEL_MANIFEST_VERSION,
         "families": [asdict(family) for family in list_model_families()],
-        "models": [_model_payload(model) for model in list_model_manifests()],
+        "models": [_model_payload(model) for model in models.values()],
         "providers": providers,
         "default_provider_by_model": dict(settings.get("default_provider_by_model") or {}),
         "codex": {"available": codex_available, "mode": codex_mode},

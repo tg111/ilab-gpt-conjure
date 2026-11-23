@@ -112,25 +112,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | codex_images/gpt_codex_images | edit | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/edits",
-   "images": [
-    {
-     "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwCAIAAAAuKetIAAAAU0lEQVR4nO3PQQ3AIADAQEAmShCB6IngcVnSU9DOfc/4s6UDXjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9Zz4BvunPcQwAAAAASUVORK5CYII="
-    }
-   ],
-   "model": "vendor/gpt-image-2",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/edits",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2 | codex_images/gpt_codex_images | edit | web-search-off": {
   "content_type": "application/json",
@@ -241,20 +223,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | codex_images/gpt_codex_images | generate | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/generations",
-   "model": "vendor/gpt-image-2",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/generations",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2 | codex_images/gpt_codex_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -1075,25 +1044,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | openai_images/gpt_openai_images | edit | web-search": {
-  "content_type": "multipart/form-data",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/edits",
-   "images": [
-    {
-     "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwCAIAAAAuKetIAAAAU0lEQVR4nO3PQQ3AIADAQEAmShCB6IngcVnSU9DOfc/4s6UDXjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9Zz4BvunPcQwAAAAASUVORK5CYII="
-    }
-   ],
-   "model": "vendor/gpt-image-2",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/edits",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2 | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -1204,20 +1155,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | openai_images/gpt_openai_images | generate | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/generations",
-   "model": "vendor/gpt-image-2",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/generations",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2 | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -1930,25 +1868,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | edit | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/edits",
-   "images": [
-    {
-     "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwCAIAAAAuKetIAAAAU0lEQVR4nO3PQQ3AIADAQEAmShCB6IngcVnSU9DOfc/4s6UDXjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9Zz4BvunPcQwAAAAASUVORK5CYII="
-    }
-   ],
-   "model": "vendor/gpt-image-2.5-flare",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/edits",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | edit | web-search-off": {
   "content_type": "application/json",
@@ -2059,20 +1979,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | generate | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/generations",
-   "model": "vendor/gpt-image-2.5-flare",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/generations",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -2893,25 +2800,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | edit | web-search": {
-  "content_type": "multipart/form-data",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/edits",
-   "images": [
-    {
-     "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwCAIAAAAuKetIAAAAU0lEQVR4nO3PQQ3AIADAQEAmShCB6IngcVnSU9DOfc/4s6UDXjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9Zz4BvunPcQwAAAAASUVORK5CYII="
-    }
-   ],
-   "model": "vendor/gpt-image-2.5-flare",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/edits",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -3022,20 +2911,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | generate | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/generations",
-   "model": "vendor/gpt-image-2.5-flare",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/generations",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -3935,25 +3811,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | edit | web-search": {
-  "content_type": "multipart/form-data",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/edits",
-   "images": [
-    {
-     "image_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAwCAIAAAAuKetIAAAAU0lEQVR4nO3PQQ3AIADAQEAmShCB6IngcVnSU9DOfc/4s6UDXjWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9Zz4BvunPcQwAAAAASUVORK5CYII="
-    }
-   ],
-   "model": "vendor/gpt-image-2.6-sunburst",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/edits",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -4116,20 +3974,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | generate | web-search": {
-  "content_type": "application/json",
-  "files": [],
-  "form_fields": {},
-  "json_body": {
-   "endpoint": "/images/generations",
-   "model": "vendor/gpt-image-2.6-sunburst",
-   "n": 1,
-   "output_format": "png",
-   "prompt": "a small red fox in the snow",
-   "size": "1024x1024"
-  },
-  "method": "POST",
-  "path": "/images/generations",
-  "repeat_count": 1
+  "error": "parameter_not_supported_by_binding: gpt.web_search"
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",

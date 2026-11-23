@@ -4,7 +4,7 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
-from codex_image.providers.capabilities import openai_gif_edit_frame_limit
+from codex_image.providers.capabilities import CODEC_CAPABILITIES, openai_gif_edit_frame_limit
 from codex_image.providers.contracts import (
     ExecutionPlan,
     ProviderConnection,
@@ -12,6 +12,7 @@ from codex_image.providers.contracts import (
 )
 from codex_image.providers.registry import ProviderRegistry
 
+from .capabilities import binding_capabilities
 from .types import GenerationCommand, ModelManifest, ParameterDefinition
 
 
@@ -42,6 +43,7 @@ class BindingResolver:
         # Resolving both declarations here makes missing explicit registrations fail
         # before transport work begins. Protocol execution remains a later boundary.
         self._registry.protocol(binding.protocol_profile)
+        self._validate_binding_capabilities(command, model, binding)
         codec = self._registry.codec(binding.parameter_codec)
         mapped_parameter_ids = codec.mapped_parameter_ids(model, command.operation)
         missing_parameter_ids = sorted(set(command.parameters) - set(mapped_parameter_ids))
@@ -142,6 +144,31 @@ class BindingResolver:
             ):
                 raise ValueError(f"Parameter is not applicable: {parameter_id}")
             cls._validate_parameter_value(definition, value)
+
+    @staticmethod
+    def _validate_binding_capabilities(
+        command: GenerationCommand,
+        model: ModelManifest,
+        binding: ProviderModelBinding,
+    ) -> None:
+        if binding.parameter_codec not in CODEC_CAPABILITIES:
+            # Codecs registered outside the built-in table declare their own mapping.
+            return
+        capabilities = binding_capabilities(model, binding.protocol_profile, binding.parameter_codec)
+        if not capabilities.available:
+            raise ValueError(capabilities.unavailable_reason)
+        if command.markup_image and not capabilities.supports_markup:
+            raise ValueError("image_feature_requires_openai_images")
+        supported = set(capabilities.parameter_ids)
+        # A parameter the binding cannot act on is accepted only at its default,
+        # where leaving it out would send the same request.
+        unsupported = sorted(
+            parameter_id
+            for parameter_id, value in command.parameters.items()
+            if parameter_id not in supported and value != model.parameter(parameter_id).default
+        )
+        if unsupported:
+            raise ValueError("parameter_not_supported_by_binding: " + ", ".join(unsupported))
 
     @staticmethod
     def _condition_matches(condition, values, definitions) -> bool:
