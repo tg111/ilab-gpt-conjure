@@ -5,6 +5,7 @@ import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { aspectRatioSlots, createAspectRatioIcon } from "./aspect-ratio-controls";
 import { refreshSegmentedIndicators } from "./segmented-indicator";
 import { getLegacyBridge } from "./state";
+import { SIZE_MODE_LABEL_KEYS, upgradeParameters, valueRequirementReason } from "./unified-parameters";
 import type {
   CatalogModel,
   CatalogObjectPreset,
@@ -84,7 +85,17 @@ function modelParameterValueValid(model: CatalogModel, definition: CatalogParame
   if (definition.id === "canvas.size" && model.id.startsWith("gpt-image-2.6-") && values["output.format"] === "gif") {
     return gptSizeValid(value, true);
   }
-  return parameterValueValid(definition, value);
+  return parameterValueValid(definition, value) && !valueRequirementReason(model, definition, value, values);
+}
+
+// Readable explanations for value requirements reported by the catalog.
+const VALUE_REQUIREMENT_LABEL_KEYS: Readonly<Record<string, string>> = {
+  transparent_background_requires_png_webp_or_svg: "output.transparencyFormat",
+};
+
+function segmentLabel(definition: CatalogParameterDefinition, value: unknown): string {
+  const key = definition.control === "image_size" ? SIZE_MODE_LABEL_KEYS[String(value)] : "";
+  return key ? translate(key) : String(value);
 }
 
 export function nextObjectChoiceValue(
@@ -144,8 +155,10 @@ function conditionMatches(
 
 export function initializeParameterDraft(
   model: CatalogModel,
-  previous: Record<string, unknown> = {},
+  stored: Record<string, unknown> = {},
 ): ParameterMigrationReport {
+  // Drafts, locks and history may use earlier parameter names.
+  const previous = upgradeParameters(model, stored);
   const values: Record<string, unknown> = {};
   const defaulted: ParameterMigrationReport["defaulted"] = [];
   const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
@@ -291,8 +304,10 @@ function renderSegmented(
     const button = document.createElement("button");
     button.type = "button";
     button.className = `radio-btn${allowed === value ? " active" : ""}`;
-    button.textContent = String(allowed);
-    button.disabled = context.readOnly;
+    button.textContent = segmentLabel(definition, allowed);
+    const blockedReason = allowed === value ? "" : valueRequirementReason(context.model, definition, allowed, context.values);
+    if (blockedReason) button.title = translate(VALUE_REQUIREMENT_LABEL_KEYS[blockedReason] || blockedReason);
+    button.disabled = context.readOnly || Boolean(blockedReason);
     button.tabIndex = context.readOnly ? -1 : 0;
     button.setAttribute("aria-pressed", allowed === value ? "true" : "false");
     button.addEventListener("click", () => {
@@ -658,7 +673,13 @@ export const PARAMETER_RENDERERS: Record<CatalogParameterDefinition["control"], 
   choice_grid: renderChoiceGrid,
   object_presets: renderObjectPresets,
   aspect_ratio_grid: renderAspectRatioGrid,
+  image_size: renderSegmented,
 };
+
+// A size control with a single mode (provider-sized models) has nothing to choose.
+function parameterHasChoice(definition: CatalogParameterDefinition): boolean {
+  return definition.control !== "image_size" || definition.allowed_values.length > 1;
+}
 
 export function advancedParametersAreExpanded(model: CatalogModel, readOnly: boolean): boolean {
   return readOnly || model.expand_advanced_parameters === true;
@@ -711,6 +732,7 @@ function visibleParameterDefinitions(
 ): CatalogParameterDefinition[] {
   return model.parameters
     .filter((definition) => definition.operations.includes(operation))
+    .filter(parameterHasChoice)
     .filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
 }
 

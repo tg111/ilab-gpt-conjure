@@ -40,7 +40,7 @@ export interface CatalogParameterDefinition {
   id: string;
   label_key: string;
   group: "model" | "canvas" | "generation" | "advanced";
-  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid";
+  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid" | "image_size";
   value_type: "string" | "integer" | "boolean" | "object";
   default: unknown;
   allowed_values: unknown[];
@@ -53,6 +53,29 @@ export interface CatalogParameterDefinition {
   full_width: boolean;
   object_choices?: CatalogObjectChoiceRow[];
   object_presets?: CatalogObjectPreset[];
+  value_requirements?: CatalogValueRequirement[];
+}
+
+export interface CatalogValueRequirement {
+  value: unknown;
+  condition: CatalogParameterVisibility;
+  reason: string;
+}
+
+export interface CatalogCustomSizeRules {
+  min_edge: number;
+  max_edge: number;
+  multiple: number;
+  max_aspect_ratio: number;
+  min_pixels: number;
+  max_pixels: number;
+  relaxed_formats: string[];
+}
+
+export interface CatalogSizeSpec {
+  modes: string[];
+  presets: Record<string, Record<string, [number, number]>>;
+  custom: CatalogCustomSizeRules | null;
 }
 
 export interface CatalogModel {
@@ -70,6 +93,10 @@ export interface CatalogModel {
     supports_reference_files: boolean;
   };
   expand_advanced_parameters?: boolean;
+  unified_parameters?: CatalogParameterDefinition[];
+  size_spec?: CatalogSizeSpec | null;
+  // Earlier parameter names of this model's family, attached when the catalog loads.
+  parameter_renames?: Record<string, string>;
 }
 
 export interface CatalogFamily {
@@ -90,6 +117,13 @@ export interface CatalogProviderBinding {
   transparency_instruction?: string;
   available?: boolean;
   display_name?: string;
+  capabilities?: {
+    available: boolean;
+    unavailable_reason: string | null;
+    parameter_ids: string[];
+    uses_main_model: boolean;
+    supports_markup: boolean;
+  };
 }
 
 export interface CatalogProvider {
@@ -110,6 +144,7 @@ export interface GenerationCatalog {
   providers: CatalogProvider[];
   default_provider_by_model: Record<string, string>;
   codex: { available: boolean; mode: ApiMode };
+  parameter_renames?: Record<string, Record<string, string>>;
 }
 
 export interface GenerationSnapshotView {

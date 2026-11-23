@@ -476,7 +476,8 @@ def _canvas_mode(modes: tuple[str, ...]) -> ParameterDefinition:
 
 
 def _web_search(label_key: str) -> ParameterDefinition:
-    return _toggle("tools.web_search", label_key, group="generation")
+    # A segmented off/on control matches the height of its neighbours in the grid.
+    return _boolean_segmented("tools.web_search", label_key, group="generation")
 
 
 def _unified_gpt_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[ParameterDefinition, ...]:

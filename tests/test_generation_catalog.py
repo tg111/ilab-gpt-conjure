@@ -223,7 +223,7 @@ class GenerationCatalogTests(unittest.TestCase):
                     self.assertEqual(parameter_ids[5:], ("tools.web_search",))
                     google_search = model.parameter("tools.web_search")
                     self.assertEqual(google_search.group, "generation")
-                    self.assertEqual(google_search.control, "toggle")
+                    self.assertEqual(google_search.control, "boolean_segmented")
                     self.assertEqual(google_search.value_type, "boolean")
                     self.assertFalse(google_search.default)
                     self.assertFalse(google_search.full_width)

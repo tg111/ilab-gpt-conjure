@@ -18,7 +18,7 @@ from typing import Any
 from .catalog import get_model_manifest
 from .types import ImageSizeSpec, ModelManifest
 
-_FAMILY_RENAMES = {
+FAMILY_PARAMETER_RENAMES = {
     "gpt-image": {"gpt.web_search": "tools.web_search"},
     "gemini-image": {"gemini.google_search": "tools.web_search"},
 }
@@ -42,7 +42,7 @@ def upgrade_parameters(model: ModelManifest | str, parameters: Mapping[str, Any]
     manifest = _manifest(model)
     upgraded = dict(parameters)
     defined = {definition.id for definition in manifest.parameters}
-    for old, new in _FAMILY_RENAMES.get(manifest.family_id, {}).items():
+    for old, new in FAMILY_PARAMETER_RENAMES.get(manifest.family_id, {}).items():
         # Only rename into a parameter the model has, so an unknown id is still
         # reported under the name the caller sent.
         if old in upgraded and new in defined and new not in upgraded:
@@ -116,6 +116,7 @@ def custom_size_error(spec: ImageSizeSpec, size: Any, output_format: str | None)
 
 
 __all__ = (
+    "FAMILY_PARAMETER_RENAMES",
     "custom_size_error",
     "preset_for_size",
     "requested_image_size",

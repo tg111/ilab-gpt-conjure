@@ -6,6 +6,7 @@ from typing import Any
 from fastapi import FastAPI
 
 from codex_image.generation.capabilities import binding_capabilities
+from codex_image.generation.parameter_vocabulary import FAMILY_PARAMETER_RENAMES
 from codex_image.generation.catalog import (
     MODEL_MANIFEST_VERSION,
     list_model_families,
@@ -163,6 +164,9 @@ def generation_catalog_payload(ctx: WebUIContext) -> dict[str, Any]:
         "families": [asdict(family) for family in list_model_families()],
         "models": [_model_payload(model) for model in models.values()],
         "providers": providers,
+        # Earlier parameter names per family; the unified form upgrades stored
+        # drafts, locks and history with the same rules the backend applies.
+        "parameter_renames": {family: dict(renames) for family, renames in FAMILY_PARAMETER_RENAMES.items()},
         "default_provider_by_model": dict(settings.get("default_provider_by_model") or {}),
         "codex": {"available": codex_available, "mode": codex_mode},
     }

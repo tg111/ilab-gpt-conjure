@@ -118,13 +118,15 @@ export function normalizeOutputSettingsSnapshot(params: any): OutputSettingsSnap
     output_format: String(parameters["output.format"] || params?.output_format || "png").toLowerCase(),
     output_compression: compression === null || compression === undefined ? null : Number(compression),
     moderation: String(parameters["gpt.moderation"] || params?.moderation || "auto"),
-    web_search: Boolean(parameters["gpt.web_search"] ?? params?.web_search),
+    web_search: Boolean(parameters["tools.web_search"] ?? parameters["gpt.web_search"] ?? params?.web_search),
     resolution: String(parameters["canvas.resolution"] || params?.resolution || ""),
     has_safety_settings: hasOwn(parameters, "gemini.safety_settings"),
     safety_settings: record(parameters["gemini.safety_settings"]),
-    google_search: hasOwn(parameters, "gemini.google_search")
-      ? Boolean(parameters["gemini.google_search"])
-      : null,
+    google_search: hasOwn(parameters, "tools.web_search")
+      ? Boolean(parameters["tools.web_search"])
+      : hasOwn(parameters, "gemini.google_search")
+        ? Boolean(parameters["gemini.google_search"])
+        : null,
   };
 }
 

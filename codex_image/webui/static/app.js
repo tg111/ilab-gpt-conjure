@@ -21339,6 +21339,82 @@
     decorateLegacyAspectRatioButtons();
   }
 
+  // codex_image/webui/frontend/src/unified-parameters.ts
+  var UNIFIED_FORM_FAMILIES = /* @__PURE__ */ new Set(["gemini-image"]);
+  function adoptUnifiedParameters(payload2) {
+    if (!payload2 || typeof payload2 !== "object") return payload2;
+    const catalog = payload2;
+    if (!Array.isArray(catalog.models)) return payload2;
+    const renames = catalog.parameter_renames || {};
+    return {
+      ...catalog,
+      models: catalog.models.map((model) => {
+        if (!UNIFIED_FORM_FAMILIES.has(model?.family_id) || !Array.isArray(model.unified_parameters)) return model;
+        return {
+          ...model,
+          parameters: model.unified_parameters,
+          parameter_renames: { ...renames[model.family_id] || {} }
+        };
+      })
+    };
+  }
+  function usesUnifiedParameters(model) {
+    return model.parameters.some((definition) => definition.id === "canvas.mode");
+  }
+  function presetForSize(spec, size) {
+    for (const [resolution, ratios] of Object.entries(spec.presets)) {
+      for (const [ratio, [width, height]] of Object.entries(ratios)) {
+        if (`${width}x${height}` === size) return [ratio, resolution];
+      }
+    }
+    return null;
+  }
+  function upgradeParameters(model, parameters) {
+    if (!usesUnifiedParameters(model)) return { ...parameters };
+    const upgraded = { ...parameters };
+    const defined = new Set(model.parameters.map((definition) => definition.id));
+    for (const [previous, current] of Object.entries(model.parameter_renames || {})) {
+      if (previous in upgraded && defined.has(current) && !(current in upgraded)) {
+        upgraded[current] = upgraded[previous];
+        delete upgraded[previous];
+      }
+    }
+    const spec = model.size_spec;
+    if (spec && Object.keys(spec.presets).length && !("canvas.mode" in upgraded) && "canvas.size" in upgraded) {
+      const size = upgraded["canvas.size"];
+      delete upgraded["canvas.size"];
+      const text = typeof size === "string" ? size.trim() : "";
+      const preset = text ? presetForSize(spec, text) : null;
+      if (text === "auto") {
+        upgraded["canvas.mode"] = "auto";
+      } else if (preset) {
+        upgraded["canvas.mode"] = "preset";
+        upgraded["canvas.aspect_ratio"] = preset[0];
+        upgraded["canvas.resolution"] = preset[1];
+      } else {
+        upgraded["canvas.mode"] = "custom";
+        upgraded["canvas.size"] = size;
+      }
+    }
+    return upgraded;
+  }
+  function conditionHolds(condition, values, definitions) {
+    const actual = condition.parameter_id in values ? values[condition.parameter_id] : definitions.get(condition.parameter_id)?.default;
+    if (condition.operator === "equals") return actual === condition.value;
+    if (condition.operator === "not_equals") return actual !== condition.value;
+    return Array.isArray(condition.value) && condition.value.includes(actual);
+  }
+  function valueRequirementReason(model, definition, value, values) {
+    const definitions = new Map(model.parameters.map((item) => [item.id, item]));
+    const failed = (definition.value_requirements || []).find((requirement) => requirement.value === value && !conditionHolds(requirement.condition, values, definitions));
+    return failed ? failed.reason : "";
+  }
+  var SIZE_MODE_LABEL_KEYS = {
+    auto: "output.sizeAuto",
+    preset: "output.sizePreset",
+    custom: "output.sizeCustom"
+  };
+
   // codex_image/webui/frontend/src/model-parameters.ts
   function cloneValue(value) {
     if (Array.isArray(value)) return value.map(cloneValue);
@@ -21391,7 +21467,14 @@
     if (definition.id === "canvas.size" && model.id.startsWith("gpt-image-2.6-") && values["output.format"] === "gif") {
       return gptSizeValid(value, true);
     }
-    return parameterValueValid(definition, value);
+    return parameterValueValid(definition, value) && !valueRequirementReason(model, definition, value, values);
+  }
+  var VALUE_REQUIREMENT_LABEL_KEYS = {
+    transparent_background_requires_png_webp_or_svg: "output.transparencyFormat"
+  };
+  function segmentLabel(definition, value) {
+    const key2 = definition.control === "image_size" ? SIZE_MODE_LABEL_KEYS[String(value)] : "";
+    return key2 ? translate(key2) : String(value);
   }
   function nextObjectChoiceValue(definition, value, key2, next) {
     const row = definition.object_choices?.find((item) => item.key === key2);
@@ -21426,7 +21509,8 @@
     if (condition.operator === "not_equals") return actual !== condition.value;
     return Array.isArray(condition.value) && condition.value.includes(actual);
   }
-  function initializeParameterDraft(model, previous = {}) {
+  function initializeParameterDraft(model, stored = {}) {
+    const previous = upgradeParameters(model, stored);
     const values = {};
     const defaulted = [];
     const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
@@ -21541,8 +21625,10 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = `radio-btn${allowed === value ? " active" : ""}`;
-      button.textContent = String(allowed);
-      button.disabled = context.readOnly;
+      button.textContent = segmentLabel(definition, allowed);
+      const blockedReason = allowed === value ? "" : valueRequirementReason(context.model, definition, allowed, context.values);
+      if (blockedReason) button.title = translate(VALUE_REQUIREMENT_LABEL_KEYS[blockedReason] || blockedReason);
+      button.disabled = context.readOnly || Boolean(blockedReason);
       button.tabIndex = context.readOnly ? -1 : 0;
       button.setAttribute("aria-pressed", allowed === value ? "true" : "false");
       button.addEventListener("click", () => {
@@ -21858,8 +21944,12 @@
     notice: renderNotice,
     choice_grid: renderChoiceGrid,
     object_presets: renderObjectPresets,
-    aspect_ratio_grid: renderAspectRatioGrid
+    aspect_ratio_grid: renderAspectRatioGrid,
+    image_size: renderSegmented
   };
+  function parameterHasChoice(definition) {
+    return definition.control !== "image_size" || definition.allowed_values.length > 1;
+  }
   function advancedParametersAreExpanded(model, readOnly) {
     return readOnly || model.expand_advanced_parameters === true;
   }
@@ -21890,7 +21980,7 @@
     ]));
   }
   function visibleParameterDefinitions(model, values, operation) {
-    return model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
+    return model.parameters.filter((definition) => definition.operations.includes(operation)).filter(parameterHasChoice).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
   }
   function renderParameterDefinitionsInto(root, model, values, options) {
     const operation = options.operation || "generate";
@@ -41395,7 +41485,7 @@ ${hint}` : hint);
       if (!object(item)) return false;
       const objectChoicesValid = item.object_choices === void 0 || Array.isArray(item.object_choices) && item.object_choices.every((row) => object(row) && nonempty(row.key) && nonempty(row.label_key) && nonempty(row.default) && Array.isArray(row.allowed_values) && row.allowed_values.length > 0 && row.allowed_values.every(nonempty) && row.allowed_values.includes(row.default) && Array.isArray(row.label_keys) && row.label_keys.length === row.allowed_values.length && row.label_keys.every(nonempty));
       const objectPresetsValid = item.object_presets === void 0 || Array.isArray(item.object_presets) && item.object_presets.every((preset) => object(preset) && nonempty(preset.id) && nonempty(preset.label_key) && object(preset.value) && typeof preset.matches_empty === "boolean");
-      return nonempty(item.id) && nonempty(item.label_key) && ["model", "canvas", "generation", "advanced"].includes(String(item.group)) && ["select", "segmented", "boolean_segmented", "toggle", "slider", "number", "text", "notice", "choice_grid", "object_presets", "aspect_ratio_grid"].includes(String(item.control)) && valueType(item.value_type) && hasValueType(item.value_type, item.default) && Array.isArray(item.allowed_values) && item.allowed_values.every((value2) => hasValueType(item.value_type, value2)) && (item.scope === "application" || item.scope === "model") && finiteOrNull(item.minimum) && finiteOrNull(item.maximum) && finiteOrNull(item.step) && operations(item.operations) && typeof item.full_width === "boolean" && objectChoicesValid && objectPresetsValid && (item.control !== "boolean_segmented" || item.value_type === "boolean") && (item.control !== "choice_grid" || item.value_type === "object" && Array.isArray(item.object_choices) && item.object_choices.length > 0) && (item.control !== "object_presets" || item.value_type === "object" && Array.isArray(item.object_choices) && item.object_choices.length > 0 && Array.isArray(item.object_presets) && item.object_presets.length > 0) && (item.control !== "aspect_ratio_grid" || item.value_type === "string" && Array.isArray(item.allowed_values) && item.allowed_values.length > 0) && Array.isArray(item.visible_when) && item.visible_when.every((condition) => object(condition) && nonempty(condition.parameter_id) && ["equals", "not_equals", "in"].includes(String(condition.operator)) && (condition.operator !== "in" || Array.isArray(condition.value)));
+      return nonempty(item.id) && nonempty(item.label_key) && ["model", "canvas", "generation", "advanced"].includes(String(item.group)) && ["select", "segmented", "boolean_segmented", "toggle", "slider", "number", "text", "notice", "choice_grid", "object_presets", "aspect_ratio_grid", "image_size"].includes(String(item.control)) && valueType(item.value_type) && hasValueType(item.value_type, item.default) && Array.isArray(item.allowed_values) && item.allowed_values.every((value2) => hasValueType(item.value_type, value2)) && (item.scope === "application" || item.scope === "model") && finiteOrNull(item.minimum) && finiteOrNull(item.maximum) && finiteOrNull(item.step) && operations(item.operations) && typeof item.full_width === "boolean" && objectChoicesValid && objectPresetsValid && (item.control !== "boolean_segmented" || item.value_type === "boolean") && (item.control !== "choice_grid" || item.value_type === "object" && Array.isArray(item.object_choices) && item.object_choices.length > 0) && (item.control !== "object_presets" || item.value_type === "object" && Array.isArray(item.object_choices) && item.object_choices.length > 0 && Array.isArray(item.object_presets) && item.object_presets.length > 0) && (item.control !== "aspect_ratio_grid" || item.value_type === "string" && Array.isArray(item.allowed_values) && item.allowed_values.length > 0) && (item.control !== "image_size" || item.value_type === "string" && Array.isArray(item.allowed_values) && item.allowed_values.length > 0) && (item.value_requirements === void 0 || Array.isArray(item.value_requirements) && item.value_requirements.every((requirement) => object(requirement) && nonempty(requirement.reason) && object(requirement.condition) && nonempty(requirement.condition.parameter_id))) && Array.isArray(item.visible_when) && item.visible_when.every((condition) => object(condition) && nonempty(condition.parameter_id) && ["equals", "not_equals", "in"].includes(String(condition.operator)) && (condition.operator !== "in" || Array.isArray(condition.value)));
     };
     if (candidate.schema_version !== 1 || !Number.isInteger(candidate.manifest_version) || candidate.manifest_version <= 0 || !Array.isArray(candidate.families) || candidate.families.length === 0 || !Array.isArray(candidate.models) || candidate.models.length === 0 || !Array.isArray(candidate.providers) || candidate.providers.length === 0 || !object(candidate.default_provider_by_model) || !object(candidate.codex)) return false;
     const families = candidate.families;
@@ -41465,7 +41555,7 @@ ${hint}` : hint);
     let followedBindingModel = false;
     try {
       const response = await fetch("/api/generation-catalog", { headers: { Accept: "application/json" } });
-      const payload2 = await response.json();
+      const payload2 = adoptUnifiedParameters(await response.json());
       if (!response.ok || !isGenerationCatalog(payload2)) throw new Error("generation catalog unavailable");
       const previousBinding = selectedProviderBinding();
       const updatedBinding = payload2.providers.find((provider) => provider.id === state33.selectedProviderId)?.bindings.find((binding) => binding.id === previousBinding?.id);
@@ -50781,11 +50871,11 @@ ${hint}` : hint);
       output_format: String(parameters["output.format"] || params?.output_format || "png").toLowerCase(),
       output_compression: compression === null || compression === void 0 ? null : Number(compression),
       moderation: String(parameters["gpt.moderation"] || params?.moderation || "auto"),
-      web_search: Boolean(parameters["gpt.web_search"] ?? params?.web_search),
+      web_search: Boolean(parameters["tools.web_search"] ?? parameters["gpt.web_search"] ?? params?.web_search),
       resolution: String(parameters["canvas.resolution"] || params?.resolution || ""),
       has_safety_settings: hasOwn(parameters, "gemini.safety_settings"),
       safety_settings: record(parameters["gemini.safety_settings"]),
-      google_search: hasOwn(parameters, "gemini.google_search") ? Boolean(parameters["gemini.google_search"]) : null
+      google_search: hasOwn(parameters, "tools.web_search") ? Boolean(parameters["tools.web_search"]) : hasOwn(parameters, "gemini.google_search") ? Boolean(parameters["gemini.google_search"]) : null
     };
   }
   function promptFidelityLabel(value) {
