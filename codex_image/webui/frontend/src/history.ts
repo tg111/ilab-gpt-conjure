@@ -3,6 +3,7 @@ import {
   type HistoryDetailMode
 } from "./history-action-panel";
 import { historyTaskCardHtml } from "./history-card-view";
+import { installThumbnailFallback } from "./image-fallback";
 import { createHistoryContextMenu } from "./history-context-menu";
 import { createHistoryDetailController } from "./history-detail-controller";
 import { createHistoryFiltersController } from "./history-filters-controller";
@@ -541,6 +542,7 @@ function bindEvents(): void {
 }
 
 async function bootHistoryPage(): Promise<void> {
+  installThumbnailFallback();
   initializeHistoryMobileFilters({
     page: els.page,
     sidebar: els.sidebar,

@@ -1,4 +1,5 @@
 import { getLegacyBridge } from "./state";
+import { setThumbnailFirstSource, thumbnailFallbackAttribute, thumbnailFirstUrl } from "./image-fallback";
 import { formatTranslation } from "./i18n";
 import { prefersReducedMotion } from "./webui-utils";
 
@@ -92,7 +93,7 @@ function previewQuickGalleryItem(itemId: any) {
     return;
   }
   els.quickGalleryPreview.innerHTML = `
-    <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.name)}">
+    <img src="${escapeHtml(thumbnailFirstUrl(item))}"${thumbnailFallbackAttribute(item, escapeHtml)} alt="${escapeHtml(item.name)}">
     <span>${escapeHtml(item.name)}</span>
   `;
   els.quickGalleryPreview.classList.add("visible");
@@ -215,7 +216,7 @@ function animateGalleryItemToInput(item: any, fromEl: any) {
   if (!sourceRect || !targetRect) return;
   const clone = document.createElement("img");
   clone.className = "gallery-fly-clone";
-  clone.src = item.image_url;
+  setThumbnailFirstSource(clone, item);
   clone.alt = "";
   clone.style.left = `${sourceRect.left}px`;
   clone.style.top = `${sourceRect.top}px`;

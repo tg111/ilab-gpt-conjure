@@ -1,4 +1,5 @@
 import { getLegacyBridge } from "./state";
+import { thumbnailFallbackAttribute, thumbnailFirstUrl } from "./image-fallback";
 import { setGalleryDragPreview } from "./gallery-drag-preview";
 import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
 
@@ -171,7 +172,7 @@ function galleryGridContentHtml(items: any) {
         <span>${translate("gallery.dragSort")}</span>
       </button>
       <div class="gallery-card-media">
-        <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.name)}" draggable="false" loading="lazy" decoding="async">
+        <img src="${escapeHtml(thumbnailFirstUrl(item))}"${thumbnailFallbackAttribute(item, escapeHtml)} alt="${escapeHtml(item.name)}" draggable="false" loading="lazy" decoding="async">
       </div>
       <div class="gallery-card-body">
         <div class="gallery-card-heading">
@@ -321,7 +322,7 @@ function handleGalleryGridDragStart(event: DragEvent) {
     type: "item",
     title: item?.name || translate("gallery.imageFallback"),
     subtitle: categoryLabel(item?.category || state.activeGalleryCategory),
-    imageUrl: item?.image_url,
+    imageUrl: thumbnailFirstUrl(item),
     sourceElement: card,
   });
   window.requestAnimationFrame(() => {

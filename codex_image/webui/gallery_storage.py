@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import glob
 import hashlib
 import json
 import re
@@ -16,6 +17,11 @@ from .storage_utils import _guess_mime_type, _safe_filename, utc_now
 from .atomic_files import _fsync_parent, atomic_write_bytes, atomic_write_text
 from .image_uploads import InvalidRasterImage, validate_raster_image
 from .store_locks import StoreLockMixin
+from .thumbnails import THUMBNAIL_MAX_EDGE, create_image_thumbnail
+
+
+# Gallery cards render up to ~300 CSS px wide, so 768 px stays sharp on 2x screens.
+GALLERY_THUMBNAIL_MAX_EDGE = THUMBNAIL_MAX_EDGE
 
 
 DEFAULT_GALLERY_CATEGORIES = [
@@ -543,6 +549,7 @@ class GalleryStorage(StoreLockMixin):
             self._bump_restore_version(item_id)
             if old_path != image_path and old_path.exists() and old_path.parent == item_path:
                 old_path.unlink()
+            self._remove_item_thumbnails(item_id)
             return self._normalize_item_metadata(metadata)
 
     def delete_item(self, item_id: str) -> None:
@@ -552,6 +559,7 @@ class GalleryStorage(StoreLockMixin):
                 raise FileNotFoundError(item_id)
             self._bump_restore_version(item_id)
             shutil.rmtree(item_path)
+            self._remove_item_thumbnails(item_id)
 
     def image_path(self, item_id: str) -> Path:
         metadata = self.read_item(item_id)
@@ -559,6 +567,36 @@ class GalleryStorage(StoreLockMixin):
         if not path.exists():
             raise FileNotFoundError(item_id)
         return path
+
+    def thumbnail_path(self, item_id: str) -> Path:
+        """Return a cached, bounded WebP preview; the source image is never altered."""
+        with self._lock:
+            metadata = self.read_item(item_id)
+            source = self.image_path(item_id)
+            digest = str(metadata.get("sha256") or "")[:16] or "unversioned"
+            thumbnail = self._thumbnail_root() / f"{item_id}-{digest}.webp"
+            if thumbnail.is_file():
+                return thumbnail
+            self._remove_item_thumbnails(item_id)
+            temporary = thumbnail.with_name(f".{item_id}-{uuid.uuid4().hex}.webp")
+            try:
+                if create_image_thumbnail(source, temporary, max_edge=GALLERY_THUMBNAIL_MAX_EDGE) is None:
+                    raise ValueError("Gallery thumbnail unavailable")
+                temporary.replace(thumbnail)
+            finally:
+                temporary.unlink(missing_ok=True)
+            return thumbnail
+
+    def _thumbnail_root(self) -> Path:
+        return self.root / ".thumbnails"
+
+    def _remove_item_thumbnails(self, item_id: str) -> None:
+        root = self._thumbnail_root()
+        if not root.is_dir():
+            return
+        for path in root.glob(f"{glob.escape(item_id)}-*.webp"):
+            if path.is_file():
+                path.unlink(missing_ok=True)
 
     def _write_item_metadata(self, item_id: str, metadata: dict[str, Any]) -> Path:
         path = self._item_path(item_id) / "metadata.json"

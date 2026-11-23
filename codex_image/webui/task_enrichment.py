@@ -40,6 +40,7 @@ def _gallery_item_response(item: dict[str, Any]) -> dict[str, Any]:
     item_id = str(item.get("id") or "")
     enriched = dict(item)
     enriched["image_url"] = f"/api/gallery/{quote(item_id, safe='')}/image" if item_id else ""
+    enriched["thumbnail_url"] = f"/api/gallery/{quote(item_id, safe='')}/thumbnail" if item_id else ""
     return enriched
 
 
@@ -65,6 +66,7 @@ def _gallery_ref_response(item: dict[str, Any]) -> dict[str, Any]:
         "sha256": response.get("sha256"),
         "size_bytes": response.get("size_bytes"),
         "image_url": response.get("image_url"),
+        "thumbnail_url": response.get("thumbnail_url"),
         "missing": False,
     }
 
@@ -101,6 +103,7 @@ def _enrich_gallery_refs(gallery_refs: Any, gallery_storage: GalleryStorage | No
         if not item_id or gallery_storage is None:
             enriched["missing"] = True
             enriched["image_url"] = ""
+            enriched["thumbnail_url"] = ""
             enriched_refs.append(enriched)
             continue
         try:
@@ -109,6 +112,7 @@ def _enrich_gallery_refs(gallery_refs: Any, gallery_storage: GalleryStorage | No
         except (FileNotFoundError, ValueError):
             enriched["missing"] = True
             enriched["image_url"] = ""
+            enriched["thumbnail_url"] = ""
         else:
             enriched.update(_gallery_ref_response(item))
         enriched_refs.append(enriched)
@@ -131,6 +135,7 @@ def _enrich_reference_assets(reference_assets: Any, storage: ReferenceAssetStora
         except (FileNotFoundError, ValueError):
             fallback["missing"] = True
             fallback["image_url"] = ""
+            fallback["thumbnail_url"] = ""
             enriched.append(fallback)
             continue
         enriched.append(_reference_asset_response(stored))
@@ -192,6 +197,7 @@ def _input_sources(
             "filename": item.get("filename"),
             "mime_type": item.get("mime_type"),
             "image_url": item.get("image_url", ""),
+            "thumbnail_url": item.get("thumbnail_url", ""),
             "missing": bool(item.get("missing")),
         }
         for item in (reference_assets or [])
@@ -206,6 +212,7 @@ def _input_sources(
             "category_prompt_role": ref.get("category_prompt_role"),
             "prompt_note": ref.get("prompt_note", ""),
             "image_url": ref.get("image_url", ""),
+            "thumbnail_url": ref.get("thumbnail_url", ""),
             "missing": bool(ref.get("missing")),
         }
         for ref in gallery_refs

@@ -1,4 +1,5 @@
 import { getEls } from "./dom";
+import { taskMediaThumbnailAttributes } from "./image-fallback";
 import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { getLegacyBridge, getState } from "./state";
 import { addReferenceFileInput, partitionReferenceDropFiles } from "./reference-file-inputs";
@@ -47,6 +48,7 @@ function gallerySource(item: any) {
     category_prompt_role: item.category_prompt_role || legacyMethod("categoryPromptRole", item.category),
     prompt_note: item.prompt_note || "",
     image_url: item.image_url || "",
+    thumbnail_url: item.thumbnail_url || "",
     previewUrl: item.image_url || "",
     missing: Boolean(item.missing),
   };
@@ -417,7 +419,7 @@ function renderReferenceCollector() {
     <div class="reference-collector-list">
       ${items.map((item: any, index: number) => `
         <div class="reference-collector-item" title="${escapeHtml(item.name || translate("referenceCollector.itemFallback"))}">
-          <img src="${escapeHtml(item.url)}" alt="">
+          <img ${taskMediaThumbnailAttributes(item.url, escapeHtml)} alt="" decoding="async">
           <button type="button" data-reference-collector-remove="${index}" aria-label="${escapeHtml(formatTranslation("referenceCollector.remove"))}">×</button>
         </div>
       `).join("")}

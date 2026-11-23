@@ -113,14 +113,15 @@ function renderImageStrip() {
     const image = document.createElement("img");
     const isUploadedImage = source.kind === "upload" && source.file instanceof File;
     const preserveAnimation = isUploadedImage && (/^image\/gif$/i.test(source.file.type) || /\.gif$/i.test(source.file.name));
-    const previewUrl = source.kind === "asset" && source.thumbnail_url
+    const hasServerThumbnail = (source.kind === "asset" || source.kind === "gallery") && Boolean(source.thumbnail_url);
+    const previewUrl = hasServerThumbnail
       ? source.thumbnail_url
       : isUploadedImage && !preserveAnimation
         ? source.thumbnail_url || ""
         : legacyMethod("sourcePreviewUrl", source);
     if (previewUrl) {
       image.src = previewUrl;
-      if (source.kind === "asset" && source.thumbnail_url && source.image_url) {
+      if (hasServerThumbnail && source.image_url) {
         image.addEventListener("error", () => { image.src = source.image_url; }, { once: true });
       }
     } else if (isUploadedImage) {

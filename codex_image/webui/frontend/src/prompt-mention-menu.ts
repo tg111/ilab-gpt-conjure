@@ -1,4 +1,5 @@
 import { getLegacyBridge } from "./state";
+import { thumbnailFallbackAttribute } from "./image-fallback";
 import { translate } from "./i18n";
 import { createImageMentionChip, imageMentionLabel, imageReferenceKey } from "./prompt-image-mentions";
 
@@ -28,7 +29,7 @@ export function updateImageMentionMenu(): void {
     const badge = source.kind === "gallery" ? methods.categoryLabel!(source.category)
       : translate(source.kind === "asset" ? "imageInput.recentBadge" : "imageInput.uploadBadge");
     return `<button type="button" role="option" id="image-mention-option-${index}" class="mention-option" data-image-mention-index="${index}">
-      <img src="${escape(source.previewUrl || source.image_url || "")}" alt=""><span>${escape(label)}</span><small>${escape(badge)}</small></button>`;
+      <img src="${escape(source.thumbnail_url || source.previewUrl || source.image_url || "")}"${thumbnailFallbackAttribute(source, escape)} alt=""><span>${escape(label)}</span><small>${escape(badge)}</small></button>`;
   };
   els.mentionSuggest.setAttribute("role", "listbox");
   els.mentionSuggest.setAttribute("aria-label", translate("promptMention.choose"));

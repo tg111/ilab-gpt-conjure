@@ -1,4 +1,5 @@
 import { getLegacyBridge } from "./state";
+import { setThumbnailFirstSource } from "./image-fallback";
 import { formatTranslation, translate } from "./i18n";
 
 export type ImageMentionSource = { kind: string; id?: string; index?: number; missing?: boolean };
@@ -55,7 +56,8 @@ export function createImageMentionChip(source: any, fallback?: { text: string; s
   chip.dataset.imageRefSource = JSON.stringify(source ? sourcePointer(source) : { ...fallback?.source, missing: true });
   if (source?.previewUrl || source?.image_url) {
     const image = document.createElement("img");
-    image.src = source.previewUrl || source.image_url;
+    if (source.thumbnail_url) setThumbnailFirstSource(image, source);
+    else image.src = source.previewUrl || source.image_url;
     image.alt = "";
     chip.append(image);
   }

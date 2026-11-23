@@ -1,10 +1,12 @@
 import { formatTranslation, translate } from "./i18n";
 import { referenceFileIconSvgMarkup } from "./reference-file-icons";
 import { escapeHtml } from "./webui-utils";
+import { thumbnailFallbackAttribute, thumbnailFirstUrl } from "./image-fallback";
 import { requestedTransparentBackground, transparencyStatusHtml } from "./transparency-status";
 
 export type HistoryOutputRecord = {
   url: string;
+  thumbnailUrl?: string;
   index: number;
   selected: boolean;
   revisedPrompt: string;
@@ -79,6 +81,7 @@ export function taskOutputRecords(task: any): HistoryOutputRecord[] {
     const size = outputSizeForTask(task, fallbackIndex, output);
     records.push({
       url,
+      thumbnailUrl: String(output.thumbnail_url || ""),
       index: outputIndex,
       selected: selectedIndexes.has(outputIndex),
       revisedPrompt: String(output.revised_prompt || ""),
@@ -203,7 +206,7 @@ function historyDetailImageHtml(
           aria-label="${escapeHtml(translate("history.openPreview"))}"
         >
           ${outputBadge}
-          <img class="${record.hasTransparency ? "transparency-grid" : ""}" src="${escapeHtml(record.url)}" alt="" loading="lazy" decoding="async">
+          <img class="${record.hasTransparency ? "transparency-grid" : ""}" src="${escapeHtml(thumbnailFirstUrl({ thumbnail_url: record.thumbnailUrl, image_url: record.url }))}"${thumbnailFallbackAttribute({ thumbnail_url: record.thumbnailUrl, image_url: record.url }, escapeHtml)} alt="" loading="lazy" decoding="async">
         </button>
         ${transparencyStatusHtml(record.hasTransparency, Boolean(record.requestedTransparency))}
         <div class="history-detail-image-actions" aria-label="${escapeHtml(translate("history.outputActions"))}">

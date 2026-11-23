@@ -1,4 +1,5 @@
 import { updateImageMentionMenu } from "./prompt-mention-menu";
+import { setThumbnailFirstSource } from "./image-fallback";
 import { refreshImageMentionChips } from "./prompt-image-mentions";
 import { preserveComposerDraft } from "./composer-draft";
 import { getLegacyBridge } from "./state";
@@ -150,8 +151,9 @@ export function createGalleryChip(item: any): HTMLElement {
   chip.dataset.galleryCategoryPromptRole = item.category_prompt_role || categoryPromptRole(item.category);
   chip.dataset.galleryPromptNote = item.prompt_note || "";
   chip.dataset.galleryImageUrl = item.image_url || "";
+  chip.dataset.galleryThumbnailUrl = item.thumbnail_url || "";
   const image = document.createElement("img");
-  image.src = item.image_url || "";
+  setThumbnailFirstSource(image, item);
   image.alt = "";
   const label = document.createElement("span");
   label.textContent = `@${item.name}`;
@@ -240,6 +242,7 @@ export function syncGalleryInputsFromPrompt(): boolean {
       category_prompt_role: chip.dataset.galleryCategoryPromptRole || "",
       prompt_note: chip.dataset.galleryPromptNote || "",
       image_url: chip.dataset.galleryImageUrl || "",
+      thumbnail_url: chip.dataset.galleryThumbnailUrl || "",
       missing: true,
     }));
   }

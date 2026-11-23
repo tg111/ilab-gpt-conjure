@@ -1,4 +1,5 @@
 import { initOverlayFocus } from "./overlay-focus";
+import { installThumbnailFallback } from "./image-fallback";
 import { initCompactWorkspace } from "./compact-workspace";
 import { initCompactComposerLayout } from "./compact-composer-layout";
 import { initMobileShell } from "./mobile-shell";
@@ -62,6 +63,7 @@ import { initProviderSelectionFeature } from "./provider-selection";
 import { initThemedSelectFeature } from "./themed-select";
 
 initReferenceFileInputsFeature();
+installThumbnailFallback();
 initInputSourcesFeature();
 initImageEditorFeature();
 initImageStripFeature();

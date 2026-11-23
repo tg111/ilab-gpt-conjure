@@ -18898,6 +18898,34 @@
     return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
+  // codex_image/webui/frontend/src/image-fallback.ts
+  var FALLBACK_ATTRIBUTE = "data-fallback-src";
+  var installed = false;
+  function thumbnailFirstUrl(item) {
+    if (!item) return "";
+    return String(item.thumbnail_url || item.image_url || item.previewUrl || "");
+  }
+  function fallbackFor(primaryUrl, fullUrl) {
+    const clean2 = String(fullUrl || "");
+    return clean2 && clean2 !== primaryUrl ? clean2 : "";
+  }
+  function thumbnailFallbackAttribute(item, escape) {
+    const fallback = fallbackFor(thumbnailFirstUrl(item), item?.image_url);
+    return fallback ? ` ${FALLBACK_ATTRIBUTE}="${escape(fallback)}"` : "";
+  }
+  function installThumbnailFallback() {
+    if (installed || typeof document === "undefined") return;
+    installed = true;
+    document.addEventListener("error", (event) => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement)) return;
+      const fallback = image.getAttribute(FALLBACK_ATTRIBUTE);
+      if (!fallback) return;
+      image.removeAttribute(FALLBACK_ATTRIBUTE);
+      image.src = fallback;
+    }, true);
+  }
+
   // codex_image/webui/frontend/src/transparency-status.ts
   function submittedPromptForTask(task) {
     return [task?.prompt_for_model || task?.prompt || "", task?.generation_snapshot?.transparency_instruction || ""].filter(Boolean).join("\n\n");
@@ -18960,6 +18988,7 @@
       const size = outputSizeForTask(task, fallbackIndex, output);
       records.push({
         url,
+        thumbnailUrl: String(output.thumbnail_url || ""),
         index: outputIndex,
         selected: selectedIndexes.has(outputIndex),
         revisedPrompt: String(output.revised_prompt || ""),
@@ -19062,7 +19091,7 @@
           aria-label="${escapeHtml2(translate("history.openPreview"))}"
         >
           ${outputBadge}
-          <img class="${record2.hasTransparency ? "transparency-grid" : ""}" src="${escapeHtml2(record2.url)}" alt="" loading="lazy" decoding="async">
+          <img class="${record2.hasTransparency ? "transparency-grid" : ""}" src="${escapeHtml2(thumbnailFirstUrl({ thumbnail_url: record2.thumbnailUrl, image_url: record2.url }))}"${thumbnailFallbackAttribute({ thumbnail_url: record2.thumbnailUrl, image_url: record2.url }, escapeHtml2)} alt="" loading="lazy" decoding="async">
         </button>
         ${transparencyStatusHtml(record2.hasTransparency, Boolean(record2.requestedTransparency))}
         <div class="history-detail-image-actions" aria-label="${escapeHtml2(translate("history.outputActions"))}">
@@ -20680,7 +20709,7 @@
       return loadToken === historyDetailLoadToken && deps.selection.snapshot().selectedTaskId === taskId && deps.selection.snapshot().selectedTaskIds.size === 1 && deps.selection.snapshot().selectedTaskIds.has(taskId);
     }
     async function preloadHistoryDetailImages(task) {
-      const urls = taskOutputRecords(task).map((record2) => record2.url).filter((url) => Boolean(url));
+      const urls = taskOutputRecords(task).map((record2) => thumbnailFirstUrl({ thumbnail_url: record2.thumbnailUrl, image_url: record2.url })).filter((url) => Boolean(url));
       if (!urls.length) return;
       await Promise.all(urls.map((url) => preloadHistoryDetailImage(url)));
     }
@@ -33792,7 +33821,7 @@
     };
   }
 
-  // node_modules/@noble/hashes/_u64.js
+  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/_u64.js
   var fromNumH = (n) => n / 2 ** 32 | 0;
   var fromNumL = (n) => n >>> 0;
   function setU64FromNum(view, byteOffset, n, isLE) {
@@ -33802,7 +33831,7 @@
     view.setUint32(byteOffset + 4, isLE ? h : l, isLE);
   }
 
-  // node_modules/@noble/hashes/utils.js
+  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/utils.js
   function isBytes(a) {
     return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
   }
@@ -33889,7 +33918,7 @@
     oid: Uint8Array.from([6, 9, 96, 134, 72, 1, 101, 3, 4, 2, suffix])
   });
 
-  // node_modules/@noble/hashes/_md.js
+  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/_md.js
   function Chi(a, b, c) {
     return a & b ^ ~a & c;
   }
@@ -34002,7 +34031,7 @@
     1541459225
   ]);
 
-  // node_modules/@noble/hashes/sha2.js
+  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/sha2.js
   var SHA256_K = /* @__PURE__ */ Uint32Array.from([
     1116352408,
     1899447441,
@@ -35864,6 +35893,7 @@
     }, { signal: lifetime.signal });
   }
   async function bootHistoryPage() {
+    installThumbnailFallback();
     initializeHistoryMobileFilters({
       page: els9.page,
       sidebar: els9.sidebar,

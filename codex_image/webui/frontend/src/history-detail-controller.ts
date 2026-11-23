@@ -1,4 +1,5 @@
 import { createGroundingAttribution } from "./grounding-attribution";
+import { thumbnailFirstUrl } from "./image-fallback";
 import { historyDetailCloseEffect, historyManagementPanelHtml, historySelectionDetailResolution, historySelectionPanelHtml, nextHistoryActionPanelSection, type HistoryActionPanelCopy, type HistoryActionPanelSection, type HistoryDetailMode } from "./history-action-panel";
 import { historyDetailImagesHtml, historyDetailImagesLayoutClass, historyInputLightboxUrlsFromTask, historyInputReferencesHtml, historyLightboxUrlsFromTask, historyReferenceFilesHtml, taskOutputRecords, taskSelectedOutputIndexes } from "./history-detail-media";
 import type { createHistoryFiltersController } from "./history-filters-controller";
@@ -127,8 +128,9 @@ export function createHistoryDetailController(deps: {
   }
 
   async function preloadHistoryDetailImages(task: any): Promise<void> {
+    // Preload what the detail view renders: the thumbnail, not the full-size original.
     const urls = taskOutputRecords(task)
-      .map((record) => record.url)
+      .map((record) => thumbnailFirstUrl({ thumbnail_url: record.thumbnailUrl, image_url: record.url }))
       .filter((url): url is string => Boolean(url));
     if (!urls.length) return;
     await Promise.all(urls.map((url) => preloadHistoryDetailImage(url)));

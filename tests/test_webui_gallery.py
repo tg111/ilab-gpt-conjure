@@ -155,6 +155,75 @@ class WebUIGalleryTests(unittest.TestCase):
         self.assertEqual(renamed.json()["item"]["category"], "character")
         self.assertEqual(deleted.status_code, 200)
         self.assertEqual(after_delete, [])
+    def test_gallery_thumbnail_is_bounded_cached_and_follows_image_lifecycle(self) -> None:
+        from codex_image.webui.app import create_app
+        from codex_image.webui.thumbnails import create_image_thumbnail
+
+        source = BytesIO()
+        large = Image.effect_noise((1600, 1200), 100).convert("RGBA")
+        large.paste((0, 0, 0, 0), (0, 0, 400, 400))
+        large.save(source, format="PNG")
+        original_bytes = source.getvalue()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            app = create_app(
+                output_root=root / "tasks",
+                gallery_root=root / "gallery",
+                client_factory=lambda: FakeImageClient(),
+                auth_checker=lambda: True,
+                auto_start_queue=False,
+            )
+            storage = app.state.gallery_storage
+            client = TestClient(app)
+            item = client.post(
+                "/api/gallery",
+                data={"name": "大图", "category": "portrait"},
+                files={"image": ("large.png", original_bytes, "image/png")},
+            ).json()["item"]
+            listed = client.get("/api/gallery").json()["items"][0]
+            with patch(
+                "codex_image.webui.gallery_storage.create_image_thumbnail",
+                wraps=create_image_thumbnail,
+            ) as create_thumbnail:
+                thumbnail = client.get(listed["thumbnail_url"])
+                again = client.get(listed["thumbnail_url"])
+            first_path = storage.thumbnail_path(item["id"])
+            with Image.open(BytesIO(thumbnail.content)) as preview:
+                preview_format = preview.format
+                preview_size = preview.size
+                preview_mode = preview.mode
+
+            replaced = client.put(
+                f"/api/gallery/{item['id']}/image",
+                files={"image": ("small.png", self._image_bytes(), "image/png")},
+            )
+            replaced_thumbnail = client.get(listed["thumbnail_url"])
+            second_path = storage.thumbnail_path(item["id"])
+            first_path_after_replace = first_path.exists()
+            client.delete(f"/api/gallery/{item['id']}")
+            after_delete = client.get(listed["thumbnail_url"])
+            second_path_after_delete = second_path.exists()
+            listed_after_delete = client.get("/api/gallery").json()["items"]
+
+        self.assertEqual(listed["thumbnail_url"], f"/api/gallery/{item['id']}/thumbnail")
+        self.assertEqual(thumbnail.status_code, 200)
+        self.assertEqual(thumbnail.headers["content-type"], "image/webp")
+        self.assertEqual(preview_format, "WEBP")
+        self.assertEqual(preview_mode, "RGBA")
+        self.assertEqual(max(preview_size), 768)
+        self.assertLess(len(thumbnail.content), len(original_bytes))
+        self.assertEqual(again.content, thumbnail.content)
+        self.assertEqual(create_thumbnail.call_count, 1)
+        self.assertEqual(replaced.status_code, 200)
+        self.assertEqual(replaced_thumbnail.status_code, 200)
+        with Image.open(BytesIO(replaced_thumbnail.content)) as replaced_preview:
+            self.assertEqual(replaced_preview.size, (12, 8))
+        self.assertNotEqual(first_path, second_path)
+        self.assertFalse(first_path_after_replace)
+        self.assertEqual(after_delete.status_code, 404)
+        self.assertFalse(second_path_after_delete)
+        self.assertEqual(listed_after_delete, [])
+
     def test_gallery_route_replaces_item_image(self) -> None:
         from codex_image.webui.app import create_app
 

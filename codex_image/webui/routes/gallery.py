@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile
@@ -174,6 +175,16 @@ def register_gallery_routes(app: FastAPI, ctx: WebUIContext) -> None:
             media_type=mime_type,
             headers={"Cache-Control": "no-store"},
         )
+
+    @app.get("/api/gallery/{item_id}/thumbnail")
+    def get_gallery_thumbnail(item_id: str) -> Response:
+        try:
+            path = ctx.gallery_storage.thumbnail_path(item_id)
+        except (FileNotFoundError, json.JSONDecodeError) as exc:
+            raise HTTPException(status_code=404, detail="Gallery item not found") from exc
+        except (ValueError, OSError) as exc:
+            raise HTTPException(status_code=404, detail="Gallery thumbnail unavailable") from exc
+        return FileResponse(path, media_type="image/webp", headers={"Cache-Control": "no-store"})
 
     @app.get("/api/reference-assets/recent")
     def list_reference_assets(limit: int = 20) -> dict[str, Any]:

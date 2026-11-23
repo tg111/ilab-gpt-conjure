@@ -466,6 +466,7 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/api/gallery/{item_id}", "DELETE"),
                 ("/api/gallery/{item_id}/image", "GET"),
                 ("/api/gallery/{item_id}/image", "PUT"),
+                ("/api/gallery/{item_id}/thumbnail", "GET"),
                 ("/api/prompt-template-assets/{asset_id}/image", "GET"),
                 ("/api/reference-assets/recent", "GET"),
                 ("/api/reference-assets/{asset_id}/thumbnail", "GET"),
