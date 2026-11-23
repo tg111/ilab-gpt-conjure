@@ -928,8 +928,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         )
         self.assertRegex(
             output,
-            r"\.controls-col \.output-panel \.field > span,\s*"
-            r"\.controls-col \.output-panel \.field-label\s*\{[^}]*"
+            r"\.controls-col \.output-panel \.field > span\s*\{[^}]*"
             r"padding-inline-start:\s*var\(--control-label-optical-inset\)",
         )
         self.assertNotRegex(
@@ -944,7 +943,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         shell = self._extract_css_at_rule(responsive, "@media (max-width: 1180px)")
         self.assertNotRegex(shell, r"\.top-nav\s*\{[^}]*(?:overflow|overflow-x):\s*auto")
         self.assertRegex(shell, r"\.nav-actions\s*\{[^}]*overflow-x:\s*auto")
-        self.assertRegex(shell, r"\.auth-source-detail\s*\{[^}]*display:\s*none")
 
     def test_responsive_scroll_owners_are_explicit(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
@@ -1679,7 +1677,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn("width var(", indicator_transition)
         self.assertNotIn("height var(", indicator_transition)
         self.assertRegex(styles, r"\.radio-group\.segmented-indicator-host\s+\.radio-btn\.active\s*\{[^}]*background:\s*transparent")
-        self.assertRegex(styles, r"\.auth-source-group\.segmented-indicator-host\s+\.auth-source-button\.active\s*\{[^}]*background:\s*transparent")
         self.assertRegex(styles, r"\.system-settings-tabs\.segmented-indicator-host\s+\.system-settings-tab\.active\s*\{[^}]*background:\s*transparent")
         self.assertRegex(styles, r"\.system-settings-tabs\.segmented-indicator-host\s+\.system-settings-tab\.active\s*\{[^}]*color:\s*var\(--primary-foreground\)")
         self.assertRegex(styles, r"@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*\.segmented-indicator\s*\{[^}]*transition:\s*none")
@@ -1933,7 +1930,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("codex_mode: state.apiSettings.codex_mode", script)
         self.assertIn("function currentCodexMode", script)
         self.assertIn('return mode === "responses" ? "Codex Responses" : "Codex Image"', script)
-        self.assertIn("function syncCodexModeNotes", script)
         self.assertIn('providerBindingSelectionKey("codex", `codex-gpt-image-2-${normalized}`)', provider_source)
         self.assertIn("function selectCodexMode", script)
         self.assertIn("function queueApiSettingsAutosave", script)
@@ -1996,8 +1992,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('apiProviderBindings?.addEventListener("change"', script)
         self.assertNotIn("els.apiImageModel", script)
         self.assertIn("auth_source: authSource", script)
-        self.assertIn("function backendForAuthSource", script)
-        self.assertIn('return codexMode === "responses" ? "codex_responses" : "codex_images"', script)
         self.assertIn("requested_backend: requestedBackend", script)
         self.assertIn("function taskBackendValue", script)
         self.assertIn("function taskApiProviderLabel", script)
@@ -2061,12 +2055,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.compact-api-settings-grid > \.api-provider-name-field\s*\{[^}]*grid-column:\s*1[^}]*grid-row:\s*1")
         self.assertRegex(styles, r"\.compact-api-settings-grid > \.api-concurrency-field\s*\{[^}]*grid-column:\s*2[^}]*grid-row:\s*1")
         self.assertRegex(styles, r"\.api-settings-grid\s*\{[^}]*align-items:\s*start")
-        self.assertRegex(styles, r"\.api-mode-field\s*\{[^}]*grid-template-columns:\s*minmax\(280px,\s*320px\)")
-        self.assertRegex(styles, r"\.api-mode-field\s*\{[^}]*justify-content:\s*center")
-        self.assertRegex(styles, r"\.api-mode-field \.radio-group\s*\{[^}]*--segmented-control-height:\s*28px")
-        self.assertRegex(styles, r"\.api-mode-field \.radio-group\s*\{[^}]*justify-self:\s*center")
-        self.assertRegex(styles, r"\.api-mode-field \.segmented-indicator\s*\{[^}]*box-shadow:\s*none")
-        self.assertRegex(styles, r"\.api-mode-field \.radio-group\.segmented-indicator-host \.radio-btn\.active\s*\{[^}]*color:\s*var\(--primary-strong\)")
         self.assertRegex(styles, r"\.api-provider-list\s*\{[^}]*display:\s*contents")
         self.assertNotRegex(styles, r"\.api-provider-list\s*\{[^}]*overflow-x:\s*auto")
         self.assertRegex(styles, r"\.api-provider-choice\.active\s*\{[^}]*background:\s*var\(--primary-light\)")
@@ -2094,11 +2082,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         )
         self.assertRegex(styles, r"\.api-advanced-settings\s*\{[^}]*grid-column:\s*1\s*/\s*-1")
         self.assertRegex(styles, r"\.api-advanced-settings > summary\s*\{[^}]*display:\s*flex")
-        self.assertRegex(styles, r"\.api-advanced-settings-summary\s*\{[^}]*margin-left:\s*auto")
-        self.assertRegex(styles, r"\.api-advanced-settings-body\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)")
-        self.assertRegex(styles, r"\.api-advanced-settings\[open\] \.api-advanced-settings-chevron\s*\{[^}]*transform:")
         self.assertRegex(styles, r"@media\s*\(max-width:\s*620px\)\s*\{[\s\S]*?\.api-settings-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)")
-        self.assertRegex(styles, r"@media\s*\(max-width:\s*620px\)\s*\{[\s\S]*?\.api-advanced-settings-body\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)")
         self.assertRegex(styles, r"\.api-key-input-wrap\s*\{[^}]*position:\s*relative")
         self.assertRegex(styles, r"\.api-key-input-wrap \.control\s*\{[^}]*padding-right:\s*40px")
         self.assertRegex(styles, r"\.api-key-reveal-button\s*\{[^}]*position:\s*absolute")
@@ -2507,8 +2491,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("setStatus(customSizeError", script)
         self.assertRegex(styles, r"\.custom-size-control\s*\{[^}]*display:\s*grid")
         self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*transition:\s*none")
-        self.assertRegex(styles, r"\.settings-grid\.is-size-transitioning\s*\{[^}]*overflow:\s*hidden")
-        self.assertRegex(styles, r"\.settings-grid\.is-size-transitioning\s*\{[^}]*will-change:\s*height")
         self.assertRegex(styles, r"\.size-editors\s*>\s*\.custom-size\s*\{[^}]*position:\s*absolute[^}]*inset:\s*0")
         self.assertNotRegex(styles, r"\.custom-size::before\s*\{")
         self.assertRegex(styles, r"\.size-editors\s*\{[^}]*position:\s*relative")
@@ -2554,8 +2536,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*max-height:\s*none")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*padding:\s*8px 16px")
         self.assertRegex(styles, r"\.custom-size\s*\{[^}]*transition:[^}]*max-height var\(--motion-height\)")
-        self.assertRegex(styles, r"\.custom-size\.custom-size-collapsed\s*\{[^}]*max-height:\s*0")
-        self.assertRegex(styles, r"\.custom-size\.custom-size-collapsed\s*\{[^}]*opacity:\s*0")
         self.assertNotIn(".custom-size-field", styles)
         self.assertRegex(styles, r"\.custom-size-row\s*\{[^}]*--measure-input-width:\s*88px")
         self.assertRegex(styles, r"\.custom-size-icon-button\s*\{[^}]*width:\s*30px")
@@ -3006,7 +2986,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 function updateRequestPreview() { requestPreviewUpdated += 1; }
                 function saveCurrentModelParameterDraft() { modelDraftSaved += 1; }
                 """,
-                self._extract_javascript_function(custom_size_source, "setCustomSizeMode"),
                 self._extract_javascript_function(custom_size_source, "setSizeMode"),
                 self._extract_javascript_function(custom_size_source, "currentSizeMode"),
                 self._extract_javascript_function(custom_size_source, "updateSizeFromPreset"),
@@ -3019,7 +2998,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
                 self._extract_javascript_function(size_source, "sizeForPreset"),
                 self._extract_javascript_function(size_source, "presetDimensions"),
                 """
-                setCustomSizeMode(true);
+                setSizeMode("custom");
                 if (els.size.value !== "custom") {
                   throw new Error(`expected custom size mode, got ${els.size.value}`);
                 }
@@ -3375,7 +3354,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function addImageFiles(files, options = {})", script)
         self.assertIn("function handleImagePaste(event)", script)
         self.assertIn("event.clipboardData?.items", script)
-        self.assertIn("function imageFilesFromDataTransfer(dataTransfer)", script)
         self.assertIn("function dataTransferHasFile(dataTransfer)", script)
         self.assertRegex(script, r"function handleImageDragOver\(event(?:: DragEvent)?\)")
         self.assertIn("event.preventDefault()", script)
@@ -3565,9 +3543,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function drawEditorBrushBoundarySegment(from, to)", script)
         self.assertIn("function drawEditorBrushOverlaySegment(from, to)", script)
         self.assertIn("function redrawImageEditorBrushOverlay(ctx)", script)
-        self.assertIn("function imageEditorBoundaryPixelBlocks(data, index)", script)
-        self.assertIn("function imageEditorBoundaryHasPixels(data)", script)
-        self.assertIn("function imageEditorPixelTouchesCanvasEdge(index, width, height)", script)
         self.assertNotIn("function imageEditorPixelMatches(data, offset, target, tolerance)", script)
         self.assertNotIn("target = [", script)
         self.assertIn("function handleImageEditorHistoryShortcut(event)", script)
@@ -3710,7 +3685,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             image_editor_source,
             r"node\.on\(\"dragstart\", \(event: any\) => \{[\s\S]*const hitLayer = imageEditorLayerAtPoint\(point\) \|\| layer;[\s\S]*selectImageEditorLayer\(hitLayer\.id, \{ updateTool: false \}\);",
         )
-        self.assertIn("function imageEditorLayerFromNode(node: any)", image_editor_source)
         self.assertIn("function isImageEditorTransformerTarget(node: any)", image_editor_source)
         self.assertIn("current === imageEditorState.konvaTransformer", image_editor_source)
         self.assertIn("function imageEditorLayerAtPoint(point: any)", image_editor_source)
@@ -3857,7 +3831,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             ".auth-source-button.active",
             ".system-settings-tab.active",
             ".system-settings-tabs.segmented-indicator-host .system-settings-tab.active",
-            ".segment.active",
             ".radio-btn.active",
             ".quick-gallery-category.active",
             ".resource-manage-button",

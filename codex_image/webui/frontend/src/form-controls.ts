@@ -40,7 +40,6 @@ import {
   syncSizeControlsFromSize,
   updateCustomSize,
   updateSizeFromPreset,
-  updateCustomRatioFieldState,
   updateCustomRatioReferenceButtonState,
 } from "./custom-size-controls";
 import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
@@ -213,7 +212,6 @@ export function initFormControlsFeature(): void {
     syncSizeControlsFromSize,
     updateSizeFromPreset,
     updateCustomSize,
-    updateCustomRatioFieldState,
     updateCustomRatioReferenceButtonState,
     customSizeValidationMessage,
     syncRadioButtons,
@@ -225,9 +223,7 @@ export function initFormControlsFeature(): void {
     selectMainModelOption,
     handleMainModelKeydown,
     handleSizeModeEvent,
-    handleCustomDimensionInput,
     handleCustomRatioInput,
-    applyFirstReferenceImageAspectRatio,
     swapCustomSizeDimensions,
     handleOutputFormatDoubleClick,
   });

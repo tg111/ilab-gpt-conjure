@@ -4,7 +4,6 @@ import { prefersReducedMotion } from "./webui-utils";
 
 const bridge = getLegacyBridge();
 const state = bridge.state;
-const els = bridge.els;
 const TASK_CARD_REMOVING_CLASS = "task-card-removing";
 const TASK_CARD_REMOVAL_FALLBACK_MS = 320;
 const TASK_CARD_REFLOW_DURATION_MS = 180;

@@ -383,12 +383,6 @@ export function createHistoryListController(deps: {
     deps.reconcileSelection();
   }
 
-  function removeHistoryTaskCardPreservingAnchor(
-    taskId: string,
-  ): void {
-    removeHistoryTaskIdsFromWindow([taskId]);
-  }
-
   function applyHistoryOrganizations(
     organizations: Record<string, HistoryOrganization>,
   ): void {

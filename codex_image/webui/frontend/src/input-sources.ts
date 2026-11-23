@@ -262,15 +262,6 @@ function handleImagePaste(event: ClipboardEvent) {
   });
 }
 
-function imageFilesFromDataTransfer(dataTransfer: any) {
-  const files = Array.from(dataTransfer?.files || []).filter(isImageFile) as File[];
-  if (files.length) return files;
-  return Array.from(dataTransfer?.items || [])
-    .filter((item: any) => item?.kind === "file" && (!item.type || item.type.startsWith("image/")))
-    .map((item: any) => item.getAsFile?.())
-    .filter(isImageFile) as File[];
-}
-
 function dataTransferHasFile(dataTransfer: any) {
   if (!dataTransfer) return false;
   if (Array.from(dataTransfer.types || []).includes("Files")) return true;
@@ -688,7 +679,6 @@ export function initInputSourcesFeature() {
     missingReferenceAssetInputs,
     addReferenceAssetInput,
     collectReferenceOutput,
-    renderReferenceCollector,
     restoreCollectedReferences,
     addCollectedReferencesToInput,
     imageFileFromUrl,

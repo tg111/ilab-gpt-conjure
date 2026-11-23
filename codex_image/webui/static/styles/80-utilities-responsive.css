@@ -16,10 +16,6 @@
   display: none !important;
 }
 
-.mt-2 { margin-top: 8px; }
-.mt-3 { margin-top: 12px; }
-.mb-0 { margin-bottom: 0; }
-
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -764,17 +760,9 @@ button:disabled {
     background: var(--scrollbar-thumb);
   }
 
-  .auth-source-switcher {
-    flex: 0 0 auto;
-  }
-
   .generation-provider-control {
     flex: 0 0 min(240px, 62vw);
     max-width: min(240px, 62vw);
-  }
-
-  .auth-source-detail {
-    display: none;
   }
 
   .queue-drawer {
@@ -980,9 +968,6 @@ button:disabled {
   .dashboard { grid-auto-rows: minmax(min-content, auto); }
   .controls-col, .preview-col { height: auto; }
   .controls-col .prompt-panel { min-height: min-content; }
-  .controls-col #promptFidelityField { flex-direction: column; align-items: stretch; }
-  .controls-col .prompt-fidelity-label { align-self: stretch; justify-content: space-between; min-height: 24px; }
-  .controls-col #promptFidelityGroup { flex: 1; min-width: 0; }
   .controls-col .upload-title { font-size: 13px; line-height: 1.4; }
   .controls-col .upload-subtitle { font-size: 12px; line-height: 1.4; }
 }
@@ -1027,11 +1012,9 @@ button:disabled {
 .output-panel .main-model-field .model-combobox { width: 100%; }
 /* Match the segmented control's button, padding, and two border edges. */
 .output-panel .main-model-field .control { height: calc(var(--mode-settings-segment-height) + 8px); }
-.output-panel #promptFidelityGroup { --segmented-control-height: var(--mode-settings-segment-height); }
-.output-panel .prompt-fidelity-label { align-self: stretch; justify-content: space-between; min-height: 24px; }
 .output-panel .output-field-heading .web-search-toggle { min-height: 24px; padding: 0; font-size: 12px; gap: 7px; }
 .output-panel .output-field-heading .generation-option-label { font-size: 12px; }
-.output-panel .field > span, .output-panel .field-label { font-size: 13px; }
+.output-panel .field > span { font-size: 13px; }
 .output-panel .control { min-height: 36px; }
 .output-panel .radio-group { --segmented-control-height: 30px; --segmented-control-padding: 3px; }
 .output-panel #ratioGroup { grid-template-rows: repeat(2, 36px); gap: 6px; padding: 0; border: 0; background: transparent; }
@@ -1147,7 +1130,7 @@ button:disabled {
     .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) { --laptop-label-width: 28px; }
     .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) :is(.resolution-field, .quantity-field, .moderation-field) { --laptop-label-width: 36px; }
     .output-panel .output-settings-header h2 { font-weight: 500; }
-    .output-panel :is(.field > span, .field > label, .field-label, .prompt-fidelity-label, .output-field-heading > span, .output-field-heading > label, .radio-btn) {
+    .output-panel :is(.field > span, .field > label, .output-field-heading > span, .output-field-heading > label, .radio-btn) {
       font-size: 12px;
     }
     .output-panel .radio-group {
@@ -1172,7 +1155,7 @@ button:disabled {
       align-items: center;
       gap: 6px;
     }
-    .controls-col .output-panel :is(.orientation-field, .resolution-field, .ratio-field, .quality-field, .quantity-field) > :is(span, .field-label) {
+    .controls-col .output-panel :is(.orientation-field, .resolution-field, .ratio-field, .quality-field, .quantity-field) > :is(span) {
       text-align: start;
       padding-inline-start: 0;
     }

@@ -1223,60 +1223,6 @@ body.api-provider-sort-dragging * {
 
 }
 
-.api-mode-field {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(280px, 320px);
-  align-items: center;
-  justify-content: center;
-}
-
-.api-mode-field .radio-group {
-  --segmented-control-height: 28px;
-  --segmented-control-padding: 2px;
-  --segmented-indicator-radius: 6px;
-  width: 100%;
-  justify-self: center;
-  border-color: color-mix(in srgb, var(--line) 76%, transparent);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--surface-soft) 76%, transparent);
-}
-
-.api-mode-field .radio-btn {
-  padding: 0 12px;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-.api-mode-field .segmented-indicator {
-  box-sizing: border-box;
-  border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--line));
-  background: color-mix(in srgb, var(--primary-light) 56%, var(--surface));
-  box-shadow: none;
-}
-
-.api-mode-field .radio-group.segmented-indicator-host .radio-btn.active {
-  color: var(--primary-strong);
-  font-weight: 600;
-}
-
-.api-mode-field .radio-btn:not(.active):hover,
-.api-mode-field .radio-btn:not(.active):focus-visible {
-  color: var(--text-secondary);
-  outline: none;
-}
-
-@media (max-width: 620px) {
-  .api-mode-field {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 5px;
-  }
-
-  .api-mode-field .radio-group {
-    justify-self: stretch;
-  }
-}
-
 .api-provider-name-field,
 .api-base-url-field,
 .api-key-field {
@@ -1518,51 +1464,10 @@ body.api-provider-sort-dragging * {
   font-weight: 650;
 }
 
-.api-advanced-settings-summary {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-  overflow: hidden;
-  color: var(--text-muted);
-  font-size: 11px;
-  white-space: nowrap;
-}
-
 #apiAdvancedImageModelSummary {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.api-advanced-settings-chevron {
-  width: 8px;
-  height: 8px;
-  flex: 0 0 auto;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg) translate(-1px, -1px);
-  transition: transform var(--motion-fast);
-}
-
-.api-advanced-settings[open] .api-advanced-settings-chevron {
-  transform: rotate(225deg) translate(-1px, -1px);
-}
-
-.api-advanced-settings-body {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 10px 11px 11px;
-  border-top: 1px solid color-mix(in srgb, var(--line) 64%, transparent);
-}
-
-.api-advanced-settings-body .field {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 5px;
 }
 
 @media (max-width: 620px) {
@@ -1582,10 +1487,6 @@ body.api-provider-sort-dragging * {
   }
 
   .compact-api-settings-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .api-advanced-settings-body {
     grid-template-columns: minmax(0, 1fr);
   }
 

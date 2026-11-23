@@ -172,7 +172,6 @@ export function initGalleryFeature() {
     sortGalleryItems,
     filterGalleryItems,
     refreshGallery,
-    openGallery,
     closeGallery,
     findGalleryItem,
     applyGalleryItemOrder,

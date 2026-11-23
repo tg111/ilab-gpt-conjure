@@ -416,15 +416,6 @@ function taskNotificationTitle(status: TerminalTaskStatus): string {
   return translate("notifications.taskCompleted");
 }
 
-function taskNotificationMessage(task: WebUITask, status: TerminalTaskStatus): string {
-  return taskNotificationMessageFromParts(status, {
-    successCount: completedOutputCount(task),
-    failedCount: positiveNumber(task.failed_count),
-    prompt: promptSnippet(task.prompt || task.prompt_for_model || ""),
-    errorMessage: String(task.last_error || task.error || ""),
-  });
-}
-
 function taskNotificationMessageFromParts(
   status: TerminalTaskStatus,
   parts: { successCount?: number; failedCount?: number; prompt?: string; errorMessage?: string },

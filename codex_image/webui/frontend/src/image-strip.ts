@@ -223,8 +223,6 @@ export function initImageStripFeature() {
   imageStripFeatureInitialized = true;
   bindImageStripEvents();
   Object.assign(getLegacyBridge().methods, {
-    addImages,
-    clearImages,
     updateImageStripDensity,
     handleImageStripWheel,
     renderImageStrip,

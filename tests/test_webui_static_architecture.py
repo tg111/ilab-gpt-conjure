@@ -46,7 +46,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         self.assertIn("Object.assign(getLegacyBridge().methods", image_strip_source)
         for function_name in [
             "renderImageStrip",
-            "clearImages",
             "updateImageStripDensity",
         ]:
             self._assert_bootstrap_proxy(legacy_source, function_name)
@@ -275,21 +274,17 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         self.assertIn("export function normalizeApiSettings(settings", Path("codex_image/webui/frontend/src/api-provider-model.ts").read_text(encoding="utf-8"))
         self.assertIn("export function openApiSettingsModal()", provider_source)
         self.assertIn("export function openGenerationProviderSettings()", provider_source)
-        self.assertIn("export function backendForAuthSource(authSource", provider_source)
         self.assertIn("Object.assign(getLegacyBridge().methods", api_settings_source)
         for function_name in [
             "refreshHealth",
             "setAuthSource",
             "renderAuthSource",
-            "normalizeApiSettings",
             "openApiSettingsModal",
-            "backendForAuthSource",
             "updateModeSpecificSettings",
         ]:
             self.assertNotRegex(api_settings_source, rf"\n(?:async\s+)?function {function_name}\(")
         for function_name in [
             "refreshHealth",
-            "normalizeApiSettings",
             "openApiSettingsModal",
             "renderAuthSource",
         ]:
@@ -312,8 +307,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         self.assertIn("Object.assign(getLegacyBridge().methods", storage_settings_source)
         for function_name in [
             "refreshSettings",
-            "populateSettingsForm",
-            "openSettingsModal",
             "saveSettings",
         ]:
             self._assert_bootstrap_proxy(legacy_source, function_name)
@@ -402,7 +395,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
             "closeConfirmPopover",
             "positionConfirmPopover",
             "openPromptPopover",
-            "positionPromptPopover",
             "clampPopoverPosition",
             "closePromptPopover",
             "copyOptimizedPrompt",
@@ -535,7 +527,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         for marker in [
             "export function initPromptFeature",
             "function createGalleryChip",
-            "function buildPromptForModel",
             "function galleryPrompt",
             "function syncPromptGalleryMentionsFromInputs",
             "function handlePromptChipDrop",
@@ -563,7 +554,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
             "syncPromptFromEditor",
             "createGalleryChip",
             "createPromptSnippetChip",
-            "buildPromptForModel",
             "currentPromptForModel",
             "syncGalleryInputsFromPrompt",
             "syncPromptGalleryMentionsFromInputs",
@@ -609,8 +599,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
             "positionColorSuggestAtCaret",
             "openColorChipEditor",
             "positionColorSuggestAtChip",
-            "colorNameForHex",
-            "colorSwatchButton",
             "createColorChip",
             "updateColorChip",
             "readableTextColor",
@@ -818,7 +806,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         self.assertLess(main_source.index("initTaskListControlsFeature()"), main_source.index("initTaskFeature()"))
         self.assertIn("export function initTaskListControlsFeature", task_list_controls_source)
         self.assertIn("function bindTaskListControlEvents()", task_list_controls_source)
-        self.assertIn("function replacementGroupKey(currentKey", task_list_controls_source)
         self.assertIn("function handleTaskListClick(event", task_list_controls_source)
         self.assertIn("Object.assign(getLegacyBridge().methods", task_list_controls_source)
         self.assertIn("selectTask", legacy_source)

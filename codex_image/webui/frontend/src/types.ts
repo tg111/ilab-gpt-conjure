@@ -1,7 +1,6 @@
 export type TaskStatus = "submitting" | "queued" | "running" | "cancelling" | "completed" | "failed" | "partial_failed" | "cancelled";
 export type TaskMode = "generate" | "edit";
 export type OutputStatus = "running" | "completed" | "failed";
-export type AuthSource = "codex" | "api";
 export type ApiMode = "images" | "responses";
 export type ModelFamilyId = string;
 export type GenerationOperation = "generate" | "edit";
@@ -14,30 +13,6 @@ export interface ProviderModelBindingSettings {
   parameter_codec: string;
   operations: GenerationOperation[];
   transparency_mode?: "native" | "prompt";
-}
-
-export interface ProviderConnectionSettings {
-  id: string;
-  name: string;
-  icon_emoji?: string;
-  base_url: string;
-  concurrency: number;
-  bindings: ProviderModelBindingSettings[];
-  api_key?: string;
-  api_key_set?: boolean;
-  api_key_masked?: string;
-  api_key_source_provider_id?: string;
-  image_model?: string;
-  api_mode?: ApiMode;
-  images_concurrency?: number;
-}
-
-export interface ProviderSettingsV2 {
-  schema_version: 2;
-  codex_mode: ApiMode;
-  active_provider_id: string;
-  default_provider_by_model: Record<string, string>;
-  providers: ProviderConnectionSettings[];
 }
 
 export interface CatalogParameterVisibility {

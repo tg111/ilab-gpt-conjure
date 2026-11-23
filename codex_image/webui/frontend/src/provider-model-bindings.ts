@@ -201,33 +201,6 @@ export function bindingFromProtocol(
   );
 }
 
-export function bindingForProtocolSelection(
-  original: ProviderModelBindingSettings,
-  canonicalModelId: string,
-  remoteModelId: string,
-  protocol: BindingProtocol,
-  protocolChanged: boolean,
-  operations: GenerationOperation[],
-): ProviderModelBindingSettings {
-  if (!protocolChanged && canonicalModelId === original.canonical_model_id) {
-    return {
-      ...original,
-      remote_model_id: remoteModelId,
-      operations: normalizedOperations(operations),
-    };
-  }
-  return {
-    ...bindingFromProtocol(
-      original.id,
-      canonicalModelId,
-      remoteModelId,
-      protocol,
-      operations,
-    ),
-    transparency_mode: isGptImageModel(canonicalModelId) ? original.transparency_mode || "native" : "native",
-  };
-}
-
 export function bindingForCompatibilitySelection(
   original: ProviderModelBindingSettings,
   canonicalModelId: string,
@@ -310,12 +283,6 @@ export function validateProviderBindingOverlaps(
     }
   }
   return null;
-}
-
-export function suggestedTemplateForModel(modelId: string): BindingTemplateId {
-  const protocol = availableProtocolsForModel(modelId)[0];
-  if (!protocol) throw new Error("unsupported_binding_protocol");
-  return bindingTemplateForProtocol(modelId, protocol);
 }
 
 export function bindingTemplateSuggestion(templateId: BindingTemplateId): {

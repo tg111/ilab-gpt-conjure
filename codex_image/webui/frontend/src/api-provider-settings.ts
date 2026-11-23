@@ -82,11 +82,6 @@ function providerById(providerId: any, settings: any = state.apiSettings): any {
   return normalized.providers.find((provider: any) => provider.id === providerId) || normalized.providers[0];
 }
 
-function providerMode(provider: any): string {
-  const binding = provider?.bindings?.find?.((item: any) => item.canonical_model_id === "gpt-image-2") || provider?.bindings?.[0];
-  return binding?.protocol_profile === "openai_responses" ? "responses" : DEFAULT_API_MODE;
-}
-
 export function updateProviderBindingCount(): void {
   const count = readProviderBindingCards(els.apiProviderBindings).length;
   setElementText(els.providerBindingsCount, `(${count})`);
@@ -846,10 +841,6 @@ function backendModeLabel(backend: string): string {
   return "";
 }
 
-export function syncCodexModeNotes(): void {
-  // Kept as a no-op bridge for older extension hooks. Codex protocol selection now lives in the provider menu.
-}
-
 export function selectCodexMode(mode: any, anchor?: HTMLElement | null): boolean {
   if (apiSettingsSaving) return false;
   const normalized = normalizeCodexMode(mode);
@@ -875,13 +866,6 @@ export function queueApiSettingsAutosave(options: { silent?: boolean } = {}): vo
     apiSettingsAutosaveTimerId = null;
     void saveApiSettings({ auto: true, silent: options.silent });
   }, 260);
-}
-
-export function backendForAuthSource(authSource: any, apiMode: any = currentApiMode(), codexMode: any = currentCodexMode()): string {
-  if (authSource === "api") {
-    return apiMode === "responses" ? "openai_responses" : "openai_images";
-  }
-  return codexMode === "responses" ? "codex_responses" : "codex_images";
 }
 
 export function taskBackendValue(task: any): string {

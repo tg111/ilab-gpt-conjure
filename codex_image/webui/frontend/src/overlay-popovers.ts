@@ -398,7 +398,6 @@ export function initOverlayPopoversFeature() {
     promptPopoverSection,
     ensurePromptPopover,
     openPromptPopover,
-    positionPromptPopover,
     promptPopoverHorizontalAnchorRect,
     clampPopoverPosition,
     closePromptPopover,

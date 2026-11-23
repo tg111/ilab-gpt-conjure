@@ -148,8 +148,3 @@ export function currentAuthSource(): string {
   if (state.selectedProviderId) return state.selectedProviderId === "codex" ? "codex" : "api";
   return state.pendingAuthSource || state.authStatus?.selected_source || "codex";
 }
-
-export function isDirectApiMode(authSource: any = currentAuthSource()): boolean {
-  return (authSource === "api" && currentApiMode() !== "responses")
-    || (authSource === "codex" && currentCodexMode() !== "responses");
-}

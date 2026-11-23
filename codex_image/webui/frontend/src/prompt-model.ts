@@ -54,7 +54,6 @@ export function initPromptModelFeature(): void {
   Object.assign(getLegacyBridge().methods, {
     promptTokenReplacement,
     galleryPrompt,
-    buildPromptForModel,
     currentPromptForModel,
   });
 }

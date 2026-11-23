@@ -241,7 +241,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
             const module = {{ exports: {{}} }};
             vm.runInNewContext(code, {{ module, exports: module.exports }});
             const api = module.exports;
-            const extensions = [...api.REFERENCE_FILE_ICON_EXTENSIONS].sort();
+            const extensions = {sorted(expected_specs)!r};
             const signatures = extensions.map((ext) => api.referenceFileIconSpec(`file.${{ext}}`).label);
             if (new Set(signatures).size !== signatures.length) throw new Error("format signatures are not unique");
             const specs = Object.fromEntries(extensions.map((ext) => {{

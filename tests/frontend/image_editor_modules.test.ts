@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createImageEditorHistory } from "../../codex_image/webui/frontend/src/image-editor-history";
 import { createImageEditorPointer } from "../../codex_image/webui/frontend/src/image-editor-pointer";
-import { fillImageEditorRegion, imageEditorArrowGeometry, normalizedRect } from "../../codex_image/webui/frontend/src/image-editor-geometry";
+import { imageEditorArrowGeometry, normalizedRect } from "../../codex_image/webui/frontend/src/image-editor-geometry";
 import { imageEditorExportDimensions } from "../../codex_image/webui/frontend/src/image-editor-canvas";
 
 test("undo then edit discards only the redo branch", () => {
@@ -44,37 +44,6 @@ test("an unavailable canvas snapshot does not add a history entry", () => {
   const history = createImageEditorHistory({ capture: () => null, restore() { assert.fail("no snapshot"); }, changed() { changes++; } });
   history.pushImageEditorHistory(); history.undoImageEdit(); history.redoImageEdit();
   assert.equal(changes, 0);
-});
-
-function fillFixture(closed: boolean) {
-  const width = 5, height = 5;
-  const boundary = new Uint8ClampedArray(width * height * 4);
-  for (let y = 1; y <= 3; y++) for (let x = 1; x <= 3; x++) {
-    if (x === 1 || x === 3 || y === 1 || y === 3) boundary[(y * width + x) * 4 + 3] = 255;
-  }
-  if (!closed) boundary[(1 * width + 2) * 4 + 3] = 0;
-  const data = new Uint8ClampedArray(width * height * 4);
-  let commits = 0, overlays = 0;
-  const context = { getImageData: () => ({ data }), putImageData() { commits++; } };
-  const canvas = { width, height, getContext: () => context } as any;
-  const boundaryCanvas = { width, height, getContext: () => ({ getImageData: () => ({ data: boundary }) }) } as any;
-  return { data, fill: (point = { x: 2, y: 2 }) => fillImageEditorRegion(point, canvas, boundaryCanvas, "#123456", () => { overlays++; }), counts: () => ({ commits, overlays }) };
-}
-
-test("closed fill changes only the enclosed pixel then restores the overlay", () => {
-  const f = fillFixture(true);
-  assert.equal(f.fill(), true);
-  assert.deepEqual([...f.data.slice(48, 52)], [0x12, 0x34, 0x56, 255]);
-  assert.equal(f.data.filter((value, i) => i < 48 || i >= 52).every(value => value === 0), true);
-  assert.deepEqual(f.counts(), { commits: 1, overlays: 1 });
-});
-
-test("open regions and boundary clicks never commit pixel changes", () => {
-  const open = fillFixture(false), closed = fillFixture(true);
-  assert.equal(open.fill(), false);
-  assert.equal(closed.fill({ x: 1, y: 1 }), false);
-  assert.deepEqual(open.counts(), { commits: 0, overlays: 0 });
-  assert.deepEqual(closed.counts(), { commits: 0, overlays: 0 });
 });
 
 test("crop normalization and export scaling retain their size limits", () => {

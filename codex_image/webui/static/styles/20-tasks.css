@@ -277,10 +277,6 @@
   color: var(--primary);
 }
 
-.task-group-toggle-placeholder {
-  opacity: 0;
-}
-
 .task-history-anchor-label,
 .task-group-label-button,
 .task-history-anchor-arrow,
@@ -1454,14 +1450,6 @@
   height: 13px;
   display: block;
   object-fit: contain;
-}
-
-:root[data-theme="dark"] .task-model-family-brand-mark-openai {
-  filter: invert(1) brightness(1.08);
-}
-
-.task-model-family-brand-mark-fallback {
-  fill: currentColor;
 }
 
 .task-card.failed .task-status-label,

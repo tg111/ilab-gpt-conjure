@@ -98,7 +98,7 @@ const editorPointer = createImageEditorPointer({
   drawEditorArrowOnContext: (...args: Parameters<typeof drawEditorArrowOnContext>) => drawEditorArrowOnContext(...args),
   clearImageEditorPreview: (...args: Parameters<typeof clearImageEditorPreview>) => clearImageEditorPreview(...args),
 });
-const { handleImageEditorPointerDown, handleImageEditorPointerMove, handleImageEditorPointerUp, handleImageEditorPointerCancel, captureImageEditorPointer, releaseImageEditorPointer } = editorPointer;
+const { handleImageEditorPointerDown, handleImageEditorPointerMove, handleImageEditorPointerUp, handleImageEditorPointerCancel } = editorPointer;
 
 const { renderImageEditorInsertList, renderImageEditorLayerList } = createImageEditorPanel({
   getSources: () => getState().images,
@@ -121,7 +121,7 @@ const editorDrawing = createImageEditorDrawing({
   imageEditorBrushOverlayContext: (...args: Parameters<typeof imageEditorBrushOverlayContext>) => imageEditorBrushOverlayContext(...args),
   imageEditorContext: (...args: Parameters<typeof imageEditorContext>) => imageEditorContext(...args),
 });
-const { configureImageEditorStroke, drawEditorBrushBoundarySegment, drawEditorBrushOverlaySegment, redrawImageEditorBrushOverlay, drawEditorBrushSegment, drawEditorArrowOnContext, clearImageEditorPreview, previewEditorArrow, imageEditorLayerLocalPoint, imageEditorLayerCanvasPoint, imageEditorLayerCanvasStrokeWidth, applyImageEditorLayerEraseSegment, applyImageEditorLayerEraseDot, applyImageEditorLayerEraseStroke } = editorDrawing;
+const { redrawImageEditorBrushOverlay, drawEditorBrushSegment, drawEditorArrowOnContext, clearImageEditorPreview, previewEditorArrow, applyImageEditorLayerEraseSegment, applyImageEditorLayerEraseDot } = editorDrawing;
 
 function legacyMethod(name: string, ...args: any[]) {
   return getLegacyBridge().methods[name]?.(...args);
@@ -261,10 +261,6 @@ function imageEditorBrushBoundaryContext() {
 
 function imageEditorBrushOverlayContext() {
   return imageEditorState.brushOverlayCanvas?.getContext("2d", { willReadFrequently: true }) || null;
-}
-
-function imageEditorVisibleContext() {
-  return getEls().imageEditorCanvas?.getContext("2d") || null;
 }
 
 function imageEditorSnapshot(): ImageEditorSnapshot | null {
@@ -538,10 +534,6 @@ function createImageEditorLayerFromCanvas(canvas: HTMLCanvasElement, options: an
   });
   imageEditorState.konvaLayer?.add(node);
   return layer;
-}
-
-function imageEditorLayerFromNode(node: any) {
-  return imageEditorState.layers.find((layer) => layer.node === node) || null;
 }
 
 function isImageEditorTransformerTarget(node: any) {

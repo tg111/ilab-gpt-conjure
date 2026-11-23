@@ -10,7 +10,7 @@ import {
   taskOutputSettingsView,
   taskOutputControlValues,
   taskRequestedParameters,
-  taskUsesCanonicalModelSummary,
+  
 } from "../../codex_image/webui/frontend/src/task-model-summary";
 import { modelFamilyBrandMarkHtml } from "../../codex_image/webui/frontend/src/model-family-icons";
 import type { GenerationCatalog } from "../../codex_image/webui/frontend/src/types";
@@ -50,7 +50,6 @@ test("canonical task summaries prefer frozen generation snapshots", () => {
     "canvas.resolution": "2K",
     "output.count": 3,
   });
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
 test("history output controls prefer frozen canonical parameters over stale legacy params", () => {
@@ -106,7 +105,6 @@ test("pending task summaries use canonical request data before a snapshot exists
   assert.equal(taskModelFamilyId(task, catalog), "gemini-image");
   assert.deepEqual(taskCanvasSummaryParts(task), ["16:9", "2K"]);
   assert.deepEqual(taskRequestedParameters(task), task.request.parameters);
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
 test("legacy GPT tasks keep the existing size and provider summary path", () => {
@@ -117,7 +115,6 @@ test("legacy GPT tasks keep the existing size and provider summary path", () => 
   assert.deepEqual(taskRequestedParameters(task), {});
   assert.deepEqual(taskCanvasSummaryParts(task), ["1:1", "1K"]);
   assert.equal(taskModelFamilyId(task, catalog), "gpt-image");
-  assert.equal(taskUsesCanonicalModelSummary(task), false);
 });
 
 test("legacy custom sizes derive an honest ratio and exact pixel resolution", () => {
@@ -138,7 +135,6 @@ test("unknown canonical model IDs remain truthful instead of being guessed", () 
 
   assert.equal(taskModelDisplayName(task, catalog), "future-image-model");
   assert.equal(taskModelFamilyId(task, catalog), "unknown");
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
 test("locked task selection keeps the visual summary while unlocked cross-model history uses the inspector", () => {

@@ -39,42 +39,6 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn("initPromptFidelityHelpFeature", main_source)
         self.assertNotIn("prompt-fidelity-help-panel", html)
 
-    def test_prompt_fidelity_help_module_keeps_transport_specific_copy(self) -> None:
-        # The help module stays in the tree (unmounted) so it can be re-enabled.
-        source = Path("codex_image/webui/frontend/src/prompt-fidelity-help.ts").read_text(encoding="utf-8")
-        styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
-
-        self.assertIn('return currentApiMode() === "responses" ? "responses" : "images";', source)
-        self.assertIn('return currentCodexMode() === "responses" ? "responses" : "images";', source)
-        self.assertIn('return `output.promptHelp.${transport}.${modeKey}`;', source)
-        dictionaries = "\n".join(
-            path.read_text(encoding="utf-8")
-            for path in sorted(Path("codex_image/webui/frontend/src/i18n").glob("*.ts"))
-            if path.name not in {"dictionaries.ts", "types.ts"}
-        )
-        for key in [
-            "output.promptHelp.responses.original",
-            "output.promptHelp.responses.strict",
-            "output.promptHelp.responses.automatic",
-            "output.promptHelp.images.original",
-            "output.promptHelp.images.strict",
-            "output.promptHelp.images.automatic",
-        ]:
-            self.assertIn(key, dictionaries)
-        self.assertIn('trigger.addEventListener("pointerenter"', source)
-        self.assertIn('trigger.addEventListener("focus"', source)
-        self.assertIn('trigger.addEventListener("click"', source)
-        self.assertIn('event.key !== "Escape"', source)
-        self.assertRegex(styles, r"\.prompt-fidelity-help-popover\s*\{[^}]*position:\s*fixed")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-popover\s*\{[^}]*z-index:\s*1400")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-button\s*\{[^}]*border-radius:\s*50%")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-button\s*\{[^}]*box-shadow:\s*none")
-        self.assertRegex(
-            styles,
-            r"\.prompt-fidelity-help-button:hover,\s*\.prompt-fidelity-help-button:focus-visible,\s*"
-            r"\.prompt-fidelity-help-button\[aria-expanded=\"true\"\]\s*\{[^}]*"
-            r"background:\s*transparent[^}]*box-shadow:\s*none",
-        )
     def test_prompt_template_library_has_compact_entry_and_drawer(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
@@ -575,7 +539,6 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
 
         self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*createColorChip\(colorCode\)")
         self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*normalizeHexColor\(match\[0\]\)")
-        self.assertIn("/@([^\\s@，。,.#~～〜∼˜]+)|#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])|(?:^|[\\s\\n，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’])([~～〜∼˜]+)([^\\s~～〜∼˜@#，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’]+)/g", script)
         self.assertNotRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]{0,160}!Array\.isArray\(refs\) \|\| !refs\.length")
     def test_color_chip_swatch_reopens_picker_for_editing(self) -> None:
         script = self._frontend_script_source()
@@ -1092,7 +1055,6 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn("function setModeSpecificElementVisibility", script)
         self.assertIn("function applyModeSettingsVisibility", script)
         self.assertIn("function setModeSettingsVariant", script)
-        self.assertIn("function isDirectApiMode(authSource = currentAuthSource())", script)
         self.assertIn("function updateModeSpecificSettings(authSource = currentAuthSource())", script)
         self.assertIn('authSource === "api" && currentApiMode() !== "responses"', script)
         self.assertIn('authSource === "codex" && currentCodexMode() !== "responses"', script)
@@ -1138,7 +1100,6 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
 
         self.assertIn("GPT_IMAGE_2_SIZE_PRESETS", script)
         self.assertIn("2160, 3840", script)
-        self.assertIn("3840x2160", script)
     def test_gpt_image_2_webui_hides_unsupported_input_fidelity(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()

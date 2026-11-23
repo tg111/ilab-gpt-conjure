@@ -247,45 +247,6 @@ function currentSummaryContext(): OutputSettingsSummaryContext {
   return { responses, task: false, callLabel };
 }
 
-function taskSummaryContext(task: any): OutputSettingsSummaryContext {
-  const params = task?.params || {};
-  const request = task?.request || {};
-  const responses = params.api_mode === "responses"
-    || params.codex_mode === "responses"
-    || request.api_mode === "responses"
-    || request.codex_mode === "responses"
-    || request.endpoint === "/responses"
-    || String(task?.backend || "").includes("responses");
-  const apiTask = Boolean(params.api_mode || request.api_mode || task?.api_provider_id || task?.api_provider_name);
-  return { responses, task: true, callLabel: apiTask ? "Images API" : "Codex Image" };
-}
-
-function snapshotFromTask(task: any): OutputSettingsSnapshot {
-  const params = task?.params || {};
-  const request = task?.request || {};
-  const frozen = record(task?.generation_snapshot);
-  const canonicalModelId = String(frozen.canonical_model_id || request.canonical_model_id || "gpt-image-2");
-  const catalogModel = getLegacyBridge().state.generationCatalog?.models
-    .find((item: any) => item.id === canonicalModelId);
-  const responses = params.api_mode === "responses"
-    || params.codex_mode === "responses"
-    || request.api_mode === "responses"
-    || request.codex_mode === "responses"
-    || request.endpoint === "/responses";
-  return normalizeOutputSettingsSnapshot({
-    ...params,
-    canonical_model_id: canonicalModelId,
-    model_display_name: catalogModel?.display_name || canonicalModelId,
-    parameters: Object.keys(record(frozen.requested_parameters)).length
-      ? record(frozen.requested_parameters)
-      : record(request.parameters),
-    main_model: params.main_model || request.main_model || (responses ? request.model : ""),
-    model: params.model || request.image_model || request.model,
-    size: params.size || request.size,
-    n: params.n || request.n,
-  });
-}
-
 function snapshotFromCurrentSelection(): OutputSettingsSnapshot {
   const bridge = getLegacyBridge();
   const legacy = legacyMethod("currentTaskParams");

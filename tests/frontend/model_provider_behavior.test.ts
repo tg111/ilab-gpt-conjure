@@ -6,7 +6,7 @@ import { eligibleProviders, renderProviderSelection, resolveProviderId, selected
 import { initialCatalogSelection, isGenerationCatalog, persistModelSelection, safeDraftValue } from "../../codex_image/webui/frontend/src/model-catalog";
 import {
   canonicalControlValues,
-  canonicalParametersForSubmission,
+  
   migratePortableModelDraft,
 } from "../../codex_image/webui/frontend/src/model-parameter-drafts";
 import { resolveModeSettingsVisibility } from "../../codex_image/webui/frontend/src/mode-settings-visibility";
@@ -539,27 +539,6 @@ test("canonical controls honor binding protocol and format conditions", () => {
   assert.equal(canonicalControlValues(params, "openai_images")["gpt.web_search"], false);
   assert.equal(canonicalControlValues(params, "openai_images")["gpt.output_compression"], 63);
   assert.equal("gpt.output_compression" in canonicalControlValues({ ...params, output_format: "png" }, "openai_responses"), false);
-});
-
-test("per-model draft is restored but current visible controls win at submission", () => {
-  const model = {
-    ...catalog.models[0],
-    parameters: [
-      { id: "output.format", label_key: "output.format", group: "generation", control: "select", value_type: "string", default: "png", allowed_values: ["png", "webp"], scope: "model", minimum: null, maximum: null, step: null, visible_when: [], operations: ["generate"], full_width: false },
-      { id: "gpt.output_compression", label_key: "output.compression", group: "advanced", control: "slider", value_type: "integer", default: 80, allowed_values: [], scope: "model", minimum: 0, maximum: 100, step: 1, visible_when: [{ parameter_id: "output.format", operator: "in", value: ["jpeg", "webp"] }], operations: ["generate"], full_width: false },
-    ],
-  } as any;
-  assert.deepEqual(canonicalParametersForSubmission(model, "generate", {
-    "output.format": "webp",
-    "gpt.output_compression": 42,
-  }, {
-    "output.format": "webp",
-    "gpt.output_compression": 67,
-  }), { "output.format": "webp", "gpt.output_compression": 67 });
-  assert.deepEqual(canonicalParametersForSubmission(model, "generate", {
-    "output.format": "webp",
-    "gpt.output_compression": 42,
-  }, { "output.format": "png" }), { "output.format": "png" });
 });
 
 test("Codex eligibility is defensive even when catalog data claims another family", () => {

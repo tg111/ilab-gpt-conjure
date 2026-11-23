@@ -21,7 +21,6 @@ function errorMessage(error: unknown, fallback: string): string {
 
 function setStatus(...args: any[]) { return legacyMethod("setStatus", ...args); }
 function renderTasks(...args: any[]) { return legacyMethod("renderTasks", ...args); }
-function renderPreview(...args: any[]) { return legacyMethod("renderPreview", ...args); }
 function closePromptPopover(...args: any[]) { return legacyMethod("closePromptPopover", ...args); }
 function taskThumbHtml(...args: any[]) { return legacyMethod("taskThumbHtml", ...args); }
 function escapeHtml(...args: any[]) { return legacyMethod("escapeHtml", ...args); }

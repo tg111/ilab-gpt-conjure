@@ -530,22 +530,6 @@ export function moveQueueTask(taskId: string | undefined, direction: string | un
   void reorderQueue(nextIds);
 }
 
-export function deleteQueuedTask(button: Element, taskId: string | undefined): void {
-  const bridge = getLegacyBridge();
-  if (!taskId) return;
-  const task = bridge.state.queue.waiting.find((item) => item.task_id === taskId);
-  const title = task ? queueItemTitleText(task, (task as QueueTask).queue_position || null) : taskId;
-  bridge.methods.openConfirmPopover(button, {
-    title: translate("queue.deleteWaitingTitleConfirm"),
-    message: translate("queue.deleteWaitingMessage"),
-    detail: title,
-    confirmText: translate("action.delete"),
-    onConfirm: async () => {
-      await performDeleteQueuedTask(taskId);
-    },
-  });
-}
-
 export async function performCancelWaitingTask(taskId: string): Promise<boolean> {
   const bridge = getLegacyBridge();
   invalidateQueueRequests();
@@ -572,35 +556,6 @@ export async function performCancelWaitingTask(taskId: string): Promise<boolean>
   } catch (error: unknown) {
     bridge.methods.setStatus(errorMessage(error, formatTranslation("batch.cancelFailed")), "error");
     return false;
-  }
-}
-
-export async function performDeleteQueuedTask(taskId: string): Promise<void> {
-  const bridge = getLegacyBridge();
-  const state = bridge.state;
-  invalidateQueueRequests();
-  try {
-    const response = await fetch(`/api/queue/${encodeURIComponent(taskId)}`, { method: "DELETE" });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.detail || translate("queue.deleteQueuedFailed"));
-    state.tasks = state.tasks.filter((item) => item.task_id !== taskId);
-    if (state.selectedTaskId === taskId) {
-      state.selectedTaskId = state.tasks[0]?.task_id || null;
-    }
-    applyQueueState({
-      ...state.queue,
-      waiting: state.queue.waiting.filter((item) => item.task_id !== taskId),
-      summary: {
-        ...(state.queue.summary || {}),
-        waiting_count: Math.max(0, Number(state.queue.summary?.waiting_count || 0) - 1),
-      },
-    });
-    await refreshQueue();
-    await bridge.methods.refreshTasks();
-    bridge.methods.renderPreview();
-    bridge.methods.setStatus(translate("queue.queuedDeleted"), "ok");
-  } catch (error: unknown) {
-    bridge.methods.setStatus(errorMessage(error, translate("queue.deleteQueuedFailed")), "error");
   }
 }
 
@@ -709,10 +664,6 @@ function activeTasksNeedQueueReconcile(queueTaskIds: Set<string>): boolean {
 
 export function updateQueueElapsedDisplays(): void {
   getLegacyBridge().methods.updateTaskElapsedDisplays?.();
-}
-
-function escapeHtml(value: unknown): string {
-  return getLegacyBridge().methods.escapeHtml(value);
 }
 
 function errorMessage(error: unknown, fallback: string): string {

@@ -44,8 +44,6 @@ const FALLBACK_SPEC: ReferenceFileIconSpec = Object.freeze({
   extension: "", label: "FILE", family: "mail", color: "#879993",
 });
 
-export const REFERENCE_FILE_ICON_EXTENSIONS = Object.freeze([...ICON_SPECS.keys()]);
-
 export function referenceFileExtension(filename: unknown): string {
   const value = String(filename || "");
   const separator = value.lastIndexOf(".");

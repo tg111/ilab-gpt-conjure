@@ -171,15 +171,6 @@
   cursor: grab;
 }
 
-.queue-waiting-item.dragging {
-  opacity: 0.55;
-  cursor: grabbing;
-}
-
-.queue-waiting-item.dragging .queue-drag-handle {
-  cursor: grabbing;
-}
-
 .queue-item-actions {
   display: inline-flex;
   align-items: center;

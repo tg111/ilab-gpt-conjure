@@ -62,13 +62,6 @@ class ModelParameterFrontendContractTests(WebUIStaticTestCase):
         self.assertNotIn("#apiDirectSettingsNotice .api-direct-settings-header span", responsive)
         self.assertNotIn("#apiDirectSettingsNotice .api-direct-settings-button > span", responsive)
 
-    def test_collapsed_custom_size_has_no_minimum_height(self) -> None:
-        styles = Path("codex_image/webui/static/styles/70-output-settings.css").read_text(encoding="utf-8")
-
-        collapsed = styles.split(".custom-size.custom-size-collapsed {", 1)[1].split("}", 1)[0]
-        self.assertIn("min-height: 0", collapsed)
-        self.assertIn("max-height: 0", collapsed)
-
     def test_safety_presets_and_aspect_ratios_use_accessible_manifest_renderers(self) -> None:
         parameters = Path("codex_image/webui/frontend/src/model-parameters.ts").read_text(encoding="utf-8")
         ratios = Path("codex_image/webui/frontend/src/aspect-ratio-controls.ts").read_text(encoding="utf-8")

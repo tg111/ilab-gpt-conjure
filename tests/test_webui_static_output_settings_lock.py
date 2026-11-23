@@ -160,7 +160,6 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         required_keys = (
             "output.lock.lock",
             "output.lock.unlock",
-            "output.lock.current",
             "output.lock.task",
             "output.lock.adoptTask",
             "output.lock.frame",

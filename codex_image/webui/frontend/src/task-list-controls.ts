@@ -14,10 +14,6 @@ function legacyMethod(name: string, ...args: any[]): any {
 
 const renderTasks = () => legacyMethod("renderTasks");
 const syncTaskSearchHistoryResults = () => legacyMethod("syncTaskSearchHistoryResults");
-const taskSearchQuery = () => legacyMethod("taskSearchQuery");
-const filteredVisibleTasks = (...args: any[]) => legacyMethod("filteredVisibleTasks", ...args);
-const taskHistoryGroups = (...args: any[]) => legacyMethod("taskHistoryGroups", ...args);
-const taskGroupCount = (...args: any[]) => legacyMethod("taskGroupCount", ...args);
 const setExpandedTaskGroupKey = (...args: any[]) => legacyMethod("setExpandedTaskGroupKey", ...args);
 const scrollExpandedTaskGroupToTop = (...args: any[]) => legacyMethod("scrollExpandedTaskGroupToTop", ...args);
 const captureTaskHistoryLayout = (...args: any[]) => legacyMethod("captureTaskHistoryLayout", ...args);
@@ -238,13 +234,6 @@ function handleTaskSearchInput() {
   updateTaskSearchClearButton();
   renderTasks();
   void syncTaskSearchHistoryResults();
-}
-
-function replacementGroupKey(currentKey: string) {
-  const query = taskSearchQuery();
-  const groups = taskHistoryGroups(filteredVisibleTasks(query), query).filter((group: any) => taskGroupCount(group) > 0);
-  const index = groups.findIndex((group: any) => String(group.key) === String(currentKey));
-  return groups[index + 1]?.key || groups[index - 1]?.key || "";
 }
 
 function bindTaskListEvents() {

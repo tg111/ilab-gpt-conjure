@@ -135,9 +135,6 @@ export function initStorageSettingsFeature() {
   });
   Object.assign(getLegacyBridge().methods, {
     refreshSettings,
-    populateSettingsForm,
-    openSettingsModal,
-    closeSettingsModal,
     saveSettings,
   });
 }

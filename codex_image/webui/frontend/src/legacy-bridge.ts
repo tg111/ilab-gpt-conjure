@@ -58,8 +58,6 @@ export interface LegacyMethods {
   sourcePreviewUrl(source: any): string;
   sourceName(source: any): string;
   isEditableImageSource(source: any): boolean;
-  addImages(event: Event): void;
-  clearImages(): void;
   updateImageStripDensity(): void;
   revokeUploadPreviewUrl(source: any, options?: any): void;
   revokeUploadPreviewUrls(sources: any): void;
@@ -72,7 +70,6 @@ export interface LegacyMethods {
   missingReferenceAssetInputs(): any[];
   addReferenceAssetInput(item: any): void;
   collectReferenceOutput(url: string, options?: any): void;
-  renderReferenceCollector(): void;
   restoreCollectedReferences(): void;
   addPendingTask(task: WebUITask): void;
   replacePendingTask(pendingTaskId: string, completedTask: WebUITask): void;
@@ -97,14 +94,6 @@ export interface WebUIBridge {
 export function installLegacyBridge(bridge: WebUIBridge): WebUIBridge {
   window.__codexImageWebUI = bridge;
   return bridge;
-}
-
-export function callBridgeMethod(name: string, ...args: any[]): any {
-  const method = window.__codexImageWebUI?.methods?.[name];
-  if (typeof method !== "function") {
-    throw new Error("Legacy bridge method " + name + " is not available");
-  }
-  return method(...args);
 }
 
 export function bindBridgeMethod(name: string, options: { required?: boolean } = {}): LegacyMethod {

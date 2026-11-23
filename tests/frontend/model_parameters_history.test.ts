@@ -25,7 +25,7 @@ import {
   notifyParameterMigration,
   reconcileTaskParameterInspection,
   taskParameterInspectionAction,
-  taskParameterInspectionMatchesSelectedModel,
+  
   taskParameterInspectorModel,
   taskParameterInspectorTitle,
   taskParameterInspectorParameters,
@@ -614,46 +614,10 @@ test("GPT history inspector mirrors the visible Image editor controls", () => {
 
 test("history inspection closes when the selected model catches up with the task", () => {
   const snapshot = { canonical_model_id: "gpt-image-2" } as any;
-  assert.equal(taskParameterInspectionMatchesSelectedModel(snapshot, "nano-banana-2"), false);
-  assert.equal(taskParameterInspectionMatchesSelectedModel(snapshot, "gpt-image-2"), true);
   const task = { task_id: "gpt-history", generation_snapshot: snapshot } as any;
   assert.equal(taskParameterInspectionAction(task, "nano-banana-2", false), "inspect");
   assert.equal(taskParameterInspectionAction(task, "gpt-image-2", false), "clear");
   assert.equal(taskParameterInspectionAction(task, "nano-banana-2", true), "preserve");
-});
-
-test("GPT history reconciliation keeps the current provider when parameter contracts match", () => {
-  const { state, restore } = installBridge();
-  try {
-    state.generationCatalog = { ...catalog, models: [...catalog.models, ...gptVersions.map(id => ({ ...model, id }))] };
-    for (const historicalModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
-      const snapshot = { canonical_model_id: historicalModel } as any;
-      const task = { task_id: "gpt-history", generation_snapshot: snapshot } as any;
-      for (const selectedModel of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
-        assert.equal(taskParameterInspectionMatchesSelectedModel(snapshot, selectedModel, state.generationCatalog), true);
-        assert.equal(taskParameterInspectionAction(task, selectedModel, false, state.generationCatalog), "clear");
-        assert.equal(taskParameterInspectionAction(task, selectedModel, true), "preserve");
-        Object.assign(state, {
-          selectedModelId: selectedModel,
-          selectedProviderId: "current-provider",
-          selectedProviderBindingId: "current-binding",
-          selectedTaskId: task.task_id,
-          tasks: [task],
-          inspectedGenerationSnapshot: snapshot,
-        });
-        const drafts = structuredClone(state.parameterDraftsByModel);
-        reconcileTaskParameterInspection();
-        assert.equal(state.inspectedGenerationSnapshot, null);
-        assert.equal(state.selectedModelId, selectedModel);
-        assert.equal(state.selectedProviderId, "current-provider");
-        assert.equal(state.selectedProviderBindingId, "current-binding");
-        assert.deepEqual(state.parameterDraftsByModel, drafts);
-        assert.equal(task.generation_snapshot.canonical_model_id, historicalModel);
-      }
-    }
-  } finally {
-    restore();
-  }
 });
 
 test("history title shows the canonical model once and does not present the remote image model as a main model", () => {

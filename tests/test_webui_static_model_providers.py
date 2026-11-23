@@ -43,7 +43,6 @@ class WebUIStaticModelProviderTests(WebUIStaticTestCase):
             "modelSelection.provider",
             "modelSelection.providerUnavailable",
             "modelSelection.openSettings",
-            "modelSelection.codexUnavailable",
             "modelSelection.catalogUnavailable",
         )
         locale_paths = sorted(Path("codex_image/webui/frontend/src/i18n").glob("*.ts"))

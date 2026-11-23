@@ -160,11 +160,9 @@
     "mobile.more": "More",
     "mobile.parameters": "Parameters",
     "mobile.backToEditor": "Back to edit",
-    "mobile.pickFiles": "Choose photos or files",
     "mobile.pasteHint": "Touch and hold the input to paste, or choose photos or files.",
     "mobile.manualCopy": "Touch and hold to copy",
     "mobile.copyHint": "Automatic copying is unavailable. Select the text below to copy it.",
-    "mobile.gestureHint": "Pinch to zoom \xB7 Swipe to switch images",
     "lanAccess.label": "Allow LAN access",
     "lanAccess.help": "No sign-in. People on the same network share tasks, the gallery and providers, including changing settings and deleting tasks.",
     "lanAccess.loading": "Loading access settings\u2026",
@@ -275,25 +273,13 @@
     "queue.dispatching": "Scheduling \xB7 waiting {waiting}",
     "queue.runningWaiting": "Running {running} \xB7 waiting {waiting}",
     "queue.statusLabel": "Queue status: {text} \xB7 {channelText}. Click to jump to active tasks",
-    "queue.runningActions": "Running task queue actions",
-    "queue.waitingActions": "Waiting task queue actions",
-    "queue.cancelRunning": "Cancel",
     "queue.cancelRunningTitle": "Cancel running task",
     "queue.dragWaiting": "Drag card vertically to reorder",
-    "queue.dragSort": "Drag to sort",
-    "queue.moveUp": "Up",
     "queue.moveUpTitle": "Move waiting task up",
-    "queue.moveDown": "Down",
     "queue.moveDownTitle": "Move waiting task down",
     "queue.promote": "Top",
     "queue.promoteTitle": "Move waiting task to top",
     "queue.promoteFailed": "Move to top failed",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Delete waiting task",
-    "queue.deleteWaitingTitleConfirm": "Delete waiting task?",
-    "queue.deleteWaitingMessage": "This removes it from the queue and history list.",
-    "queue.deleteQueuedFailed": "Failed to delete queued task",
-    "queue.queuedDeleted": "Queued task deleted",
     "queue.cancelRunningConfirm": "Cancel task",
     "queue.cancelRunningTitleConfirm": "Cancel running task?",
     "queue.cancelRunningMessage": "Local requests for this task will be interrupted. Generated images and history will be kept. The provider may still generate and bill for the images.",
@@ -333,9 +319,6 @@
     "taskStatus.runtimeCompleted": "Duration {duration} \xB7 completed {time}",
     "taskStatus.completedAt": "Completed {time}",
     "taskCard.count": "{count} images",
-    "taskCard.successCount": "succeeded {count}",
-    "taskCard.failedCount": "failed {count}",
-    "taskCard.runningCount": "generating {count}",
     "taskCard.waitingCount": "waiting {count}",
     "taskCard.textToImageThumb": "Text-to-image task thumbnail",
     "taskCard.imageToImageThumb": "Image-to-image task thumbnail",
@@ -347,12 +330,9 @@
     "runFeedback.editing": "Editing",
     "runFeedback.generating": "Generating",
     "runFeedback.status": "{action}, elapsed {elapsed}",
-    "footer.archive": "Archive",
-    "footer.archiveCount": "Archive {count}",
     "footer.historyLibrary": "History",
     "historyLibrary.openFull": "Open full history library",
     "history.documentTitle": "History - iLab CONJURE",
-    "history.back": "Back to generator",
     "history.homeAria": "Back to iLab CONJURE generator",
     "history.backToGenerator": "Back to generator",
     "history.title": "History",
@@ -466,9 +446,7 @@
     "history.type.textToImage": "Text to image",
     "history.type.imageToImage": "Image to image",
     "history.month": "Month",
-    "history.status": "Status",
     "history.promptMode": "Prompt handling",
-    "history.size": "Size",
     "history.quality": "Quality",
     "history.ratio": "Ratio",
     "history.orientation": "Orientation",
@@ -477,9 +455,7 @@
     "history.archived": "Archived",
     "history.all": "All",
     "history.allMonths": "All months",
-    "history.allStatuses": "All statuses",
     "history.allPromptModes": "All modes",
-    "history.allSizes": "All sizes",
     "history.allQualities": "All qualities",
     "history.allRatios": "All ratios",
     "history.ratioOther": "Other",
@@ -501,13 +477,10 @@
     "history.selectedCount": "{count} tasks selected",
     "history.confirmDelete": "Confirm delete",
     "history.detail": "Task detail",
-    "history.detailTitle": "History task",
     "history.closeDetail": "Close task detail",
     "history.resizeFilters": "Resize filter sidebar",
     "history.resizeDetail": "Resize detail pane",
-    "history.detailEmpty": "Select a historical task to view details",
     "history.loadingDetail": "Loading detail...",
-    "history.loadMore": "Load more",
     "history.loadingMore": "Loading...",
     "history.noMore": "No more tasks",
     "history.loadFailed": "Load failed. Refresh or keep scrolling to retry",
@@ -516,9 +489,7 @@
     "history.detailFailed": "Failed to load detail",
     "history.noMatches": "No matching tasks",
     "history.loadedCount": "{count} loaded",
-    "history.windowNotice": "The mounted list is limited to {count} tasks; scroll up or down to restore adjacent tasks on demand.",
     "history.selectTask": "Select task",
-    "history.viewing": "Viewing",
     "history.noPreview": "No preview images",
     "history.downloadAll": "Download ZIP",
     "history.downloadImage": "Download image",
@@ -533,11 +504,9 @@
     "history.inputReferences": "Input references",
     "history.inputReferenceIndex": "Input reference {index}",
     "history.copyPrompt": "Copy prompt",
-    "history.copyPrompts": "Copy prompts",
     "history.copyPromptShort": "Copy",
     "history.copyPromptPanel": "Copy {title}",
     "history.copyOutputPromptPanel": "Copy image {index} revised prompt",
-    "history.copyTaskIds": "Copy task IDs",
     "history.reuseTask": "View in generator",
     "history.downloadTask": "Download",
     "history.downloadSelectedTasks": "Batch download",
@@ -555,7 +524,6 @@
     "history.noDownloadableOutputs": "No downloadable images",
     "history.confirmDeleteSelected": "Confirm selected delete",
     "history.openPreview": "Open preview",
-    "history.closePreview": "Close preview",
     "history.untitled": "Untitled",
     "history.promptCompare": "Prompt comparison",
     "history.promptOriginal": "Original prompt",
@@ -573,8 +541,6 @@
     "history.quality.low": "Low",
     "history.quality.auto": "Auto",
     "footer.batch": "Batch",
-    "footer.storage": "Storage",
-    "footer.apiStatus": "API status: OK",
     "footer.version": "Version {version}",
     "footer.versionLoading": "Version ...",
     "notifications.title": "Notifications",
@@ -597,31 +563,11 @@
     "theme.system": "Auto",
     "theme.light": "Light",
     "theme.dark": "Dark",
-    "language.label": "Interface language",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "Simplified Chinese",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Auth source",
     "auth.checking": "Checking auth",
     "auth.missingCodexSession": "No Codex session detected",
     "auth.switchFailed": "Failed to switch auth source",
     "auth.sourceUnavailable": "{source} unavailable",
     "auth.notActive": "Not active",
-    "api.settings": "System Settings",
-    "api.provider": "API provider",
-    "imageInput.title": "Images",
     "imageInput.uploadAria": "Click, drop, or paste images and files",
     "imageInput.uploadImages": "Click, drop, or paste images",
     "imageInput.uploadFull": "Click, drop, or paste images and files",
@@ -718,7 +664,6 @@
     "gallery.categoryFallback": "Gallery category",
     "gallery.imageFallback": "Gallery image",
     "gallery.imageLoadFailed": "Failed to load this image",
-    "gallery.editImageLoadFailed": "Failed to load this image for editing",
     "gallery.cannotAddImage": "This image cannot be added to the gallery",
     "gallery.nameRequired": "Enter a gallery name",
     "gallery.saveFailed": "Failed to save gallery image",
@@ -774,7 +719,6 @@
     "outputSettings.title": "Output",
     "output.lock.lock": "Lock parameters",
     "output.lock.unlock": "Unlock and edit",
-    "output.lock.current": "Current lock",
     "output.lock.task": "Selected task parameters",
     "output.lock.adoptTask": "Use these task parameters",
     "output.lock.frame": "Frame",
@@ -794,9 +738,6 @@
     "output.mainModel": "Main model",
     "output.selectMainModel": "Select main model",
     "output.mainModelCustomForInput": "Use a custom model for the current input",
-    "output.apiDirect": "API Direct",
-    "output.apiToolModel": "Using API image generation model",
-    "output.transparencyFidelityHint": "Transparent background is an output requirement you selected. It is also added in Original and Faithful modes.",
     "output.transparentBackground": "Transparent background",
     "output.transparencyUnavailable": "No transparency",
     "output.transparencyFormat": "Transparent output requires PNG or WebP.",
@@ -807,22 +748,10 @@
     "preview.transparencyMissing": "No transparent pixels detected",
     "preview.transparencyRetryHint": "Try prompt compatibility or another model. Retrying starts a new generation.",
     "output.webSearch": "Web search",
-    "output.webSearchToggle": "On",
     "output.webSearchTitle": "Search the web first, then use it for this generation; Codex and API Responses only",
-    "output.promptMode": "Prompt handling",
     "output.modeOriginal": "Original",
     "output.modeStrict": "Faithful",
     "output.modeCreative": "Automatic",
-    "output.promptHelp": "Explain prompt handling",
-    "output.promptHelpTitle": "Prompt handling",
-    "output.promptHelp.responsesChannel": "Responses \xB7 main model involved",
-    "output.promptHelp.imagesChannel": "Images \xB7 direct generation",
-    "output.promptHelp.responses.original": "Resolves image mentions to reference numbers and sends your original text without app-added prompt rules; the provider may still return a revised prompt or interpret the result differently.",
-    "output.promptHelp.responses.strict": "Lets the main model organize or expand the prompt, while preserving hard constraints such as subjects, text, colors, and composition.",
-    "output.promptHelp.responses.automatic": "Adds no extra constraints, allowing the main model to interpret and optimize the prompt before calling the image tool.",
-    "output.promptHelp.images.original": "Resolves image mentions to reference numbers, adds no app-level prompt rules, and submits the rest of your original text directly.",
-    "output.promptHelp.images.strict": "Submits fidelity rules together with the original prompt to emphasize every hard constraint.",
-    "output.promptHelp.images.automatic": "Uses the image endpoint's default handling; required gallery-reference notes are still included.",
     "output.size": "Output size",
     "output.sizeMode": "Size mode",
     "output.sizeAuto": "Automatic size",
@@ -886,8 +815,6 @@
     "preview.runningTitle": "{mode} running",
     "preview.submittingTitle": "Submitting task",
     "preview.queuedTitle": "Task queued",
-    "preview.submittingDetail": "Saving inputs and adding the task to the queue. Generation will start automatically.",
-    "preview.queuedDetail": "The task is in the queue and waiting for an available channel.",
     "preview.featured": "Selected",
     "preview.addFeatured": "Select result",
     "preview.selectedFeatured": "Selected",
@@ -940,7 +867,6 @@
     "promptPopover.close": "Close prompt comparison",
     "promptPopover.copyOptimized": "Copy optimized prompt",
     "promptPopover.copied": "Copied",
-    "taskContext.menuLabel": "Task context menu",
     "taskContext.view": "View task",
     "taskContext.copyId": "Copy task ID",
     "taskContext.copyPrompt": "Copy prompt",
@@ -969,7 +895,6 @@
     "taskActions.acceptSuccessesFailed": "Failed to accept successful results",
     "taskActions.acceptedSuccesses": "Successful results accepted",
     "taskActions.viewedUpdateFailed": "Failed to update read state",
-    "taskActions.failedFallback": "Task failed",
     "taskList.empty": "No history yet",
     "taskList.selectSession": "Select chat",
     "taskList.unreadUpdate": "Unread update",
@@ -1039,7 +964,6 @@
     "snippets.saveSelection": "Save",
     "snippets.saveSelectionLabel": "Save selected text as a prompt snippet",
     "snippets.popoverLabel": "Prompt snippet",
-    "snippets.defaultCategory": "Common",
     "snippets.loadFailed": "Failed to load prompt snippets",
     "snippets.remove": "Remove ~{tag}",
     "snippets.expand": "Expand",
@@ -1084,7 +1008,6 @@
     "colors.done": "Done",
     "colors.manage": "Manage",
     "colors.favorites": "Favorite colors",
-    "colors.recent": "Recent colors",
     "colors.recentLabel": "Recent",
     "colors.deleteFavorite": "Delete favorite color {name}",
     "colors.modify": "Edit color",
@@ -1094,16 +1017,13 @@
     "taskGroup.current": "Current task",
     "taskGroup.yesterday": "Yesterday",
     "taskGroup.last7": "Last 7 days",
-    "taskGroup.older": "Older",
     "taskGroup.searchResults": "Search results",
-    "taskGroup.active": "Active",
     "taskGroup.running": "Running",
     "taskGroup.waiting": "Waiting",
     "taskGroup.dispatchPending": "Assigning an available channel...",
     "taskGroup.expand": "Expand {label}",
     "taskGroup.collapse": "Collapse {label}",
     "taskGroup.buttonLabel": "{label}, {count} tasks",
-    "taskGroup.loadMore": "Load {count} more",
     "taskGroup.loadFailedRetry": "Load failed. Click to retry",
     "archive.title": "Archive",
     "archive.empty": "No archived chats",
@@ -1116,7 +1036,6 @@
     "archive.restoring": "Restoring...",
     "archive.deleting": "Deleting...",
     "archive.restoredCount": "Restored {count} tasks",
-    "settings.title": "Storage",
     "settings.status": "Restart WebUI after saving storage paths",
     "settings.pathChangeHint": "Changing paths does not move existing data. Before relocating files, back up and quit the app, then copy the complete directories.",
     "settings.previousPaths": "Missing old data? Check the original default folders",
@@ -1198,7 +1117,6 @@
     "userConfigBackup.validating": "Validating backup\u2026",
     "userConfigBackup.validationReady": "Validation complete. Choose how to restore.",
     "userConfigBackup.versionUnsupported": "This backup uses a newer format and can only be previewed.",
-    "userConfigBackup.previewCounts": "{count} in archive \xB7 {duplicate} duplicates \xB7 {conflict} conflicts",
     "userConfigBackup.previewSectionCounts": "Backup {archive} \xB7 current {current}",
     "userConfigBackup.previewGroupCounts": "{group}: backup {archive} / current {current}",
     "userConfigBackup.emptyReplaceGroup": "{group}: backup is empty, current {current}",
@@ -1235,7 +1153,6 @@
     "user_config_restore_version_unsupported": "This backup format is too new to restore.",
     "systemSettings.tabsLabel": "System settings sections",
     "systemSettings.apiTab": "API Settings",
-    "systemSettings.codexTab": "Codex Channel",
     "systemSettings.languageTab": "Language",
     "systemSettings.storageTab": "Storage & Notifications",
     "systemSettings.networkTab": "Network",
@@ -1263,23 +1180,14 @@
     "networkEgress.loadFailed": "Could not load network settings",
     "networkEgress.saveFailed": "Could not save network settings",
     "languageSettings.instantStatus": "Language changes apply immediately",
-    "apiSettings.title": "API Settings",
-    "apiSettings.status": "Saved settings apply immediately in API mode",
-    "apiSettings.codexMode": "Codex channel",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API providers",
     "apiSettings.searchProviders": "Search provider names",
     "apiSettings.noProviderSearchResults": "No matching providers",
     "apiSettings.providerCount": "{count} providers",
-    "apiSettings.provider": "Provider",
     "apiSettings.providerName": "Provider name",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Optional, e.g. \u{1FA84}",
-    "apiSettings.connectionScope": "Connection settings",
-    "apiSettings.connectionPreview": "Connection preview",
     "apiSettings.modelBindings": "Models",
-    "apiSettings.modelBindingsHint": "One provider can bind multiple models and protocols.",
     "apiSettings.addModelBinding": "Add model",
     "apiSettings.remoteModelName": "Provider model name",
     "apiSettings.fetchModels": "Get models",
@@ -1302,7 +1210,6 @@
     "apiSettings.keepOneBinding": "Each provider must keep at least one model binding.",
     "apiSettings.bindingRequiredFields": "Choose a model, enter a remote model name, and select at least one operation for every binding.",
     "apiSettings.bindingOverlap": "{model} {operation} is handled by more than one binding.",
-    "apiSettings.actualRequest": "Actual request",
     "apiSettings.newProviderAction": "New provider",
     "apiSettings.copyProvider": "Copy",
     "apiSettings.copyProviderName": "{name} Copy",
@@ -1313,21 +1220,12 @@
     "apiSettings.sortProviderModeStatus": "Drag the handles to sort, or use the arrow keys",
     "apiSettings.sortProviderHandleAria": "Drag to reorder {provider}, or use the arrow, Home, and End keys",
     "apiSettings.sortProviderStatus": "Provider order changed. Autosaving...",
-    "apiSettings.moveProviderUp": "Up",
-    "apiSettings.moveProviderDown": "Down",
-    "apiSettings.moveProviderUpAria": "Move {provider} up",
-    "apiSettings.moveProviderDownAria": "Move {provider} down",
-    "apiSettings.mode": "Request mode",
-    "apiSettings.images": "Direct Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Direct",
-    "apiSettings.imageModel": "Image generation model",
     "apiSettings.concurrency": "Concurrency limit",
     "apiSettings.svgAuthorModel": "SVG author model",
     "apiSettings.invalidSvgAuthorModel": "Enter a valid SVG model ID without spaces.",
     "apiSettings.concurrencyShort": "Concurrency",
     "apiSettings.advancedSettings": "Advanced settings",
-    "apiSettings.concurrencyValue": "concurrency {concurrency}",
     "apiSettings.keySaved": "API key saved",
     "apiSettings.keyNotSet": "API key not set",
     "apiSettings.showApiKey": "Show API key",
@@ -1335,18 +1233,12 @@
     "apiSettings.editProvider": "Edit provider",
     "apiSettings.newProviderTitle": "New provider",
     "ux.viewPreview": "View preview",
-    "apiSettings.editHint": "Save to apply your changes; cancel to discard them.",
     "apiSettings.finishEditFirst": "Save or cancel the current provider edit first",
     "apiSettings.newDraftStatus": "Creating provider. Save provider to apply.",
     "apiSettings.editDraftStatus": "Editing provider. Save provider to apply.",
-    "apiSettings.cancelEdit": "Cancel edit",
-    "apiSettings.saveProvider": "Save provider",
-    "apiSettings.saveSelection": "Save selection",
     "apiSettings.deleteProviderTitle": "Delete provider?",
     "apiSettings.deleteProviderMessage": 'Delete "{provider}"?',
     "apiSettings.deleteProviderDetail": "This removes it from the provider list and autosaves it to the backend.",
-    "apiSettings.deleteProviderStatus": "Provider deleted. Autosaving...",
-    "apiSettings.save": "Save API settings",
     "apiSettings.loadFailed": "Failed to load API settings",
     "apiSettings.savedKeyPlaceholder": "API key is saved on the backend. Enter a new key to replace it.",
     "apiSettings.apiKeyRequired": "Enter an API key before saving this provider.",
@@ -1367,16 +1259,6 @@
     "apiSettings.savedShort": "Saved",
     "apiSettings.savedStatus": "API settings saved",
     "apiSettings.saveFailedShort": "Save failed",
-    "codexSettings.title": "Codex Channel",
-    "codexSettings.status": "Choose the generation channel for the local Codex sign-in",
-    "codexSettings.notesLabel": "Codex channel notes",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Default channel for normal generation and edits, with size, quality, and edit parameters passed directly.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Compatibility channel for tasks that need web search or the Responses tool chain.",
-    "codexSettings.current": "Current",
-    "codexSettings.save": "Save Codex channel",
-    "codexSettings.saveMode": "Save {mode}",
     "imageEditor.title": "Edit Input Image",
     "imageEditor.promptHint": "Hand-drawn arrows and marks in the image are only instructions. Do not keep them in the final image.",
     "imageEditor.inputFallback": "Input image",
@@ -1456,32 +1338,22 @@
     "addGallery.save": "Save to gallery",
     "close.promptTemplates": "Close prompt templates panel",
     "close.archive": "Close archive panel",
-    "close.settings": "Close storage settings panel",
-    "close.apiSettings": "Close API settings panel",
     "close.systemSettings": "Close system settings panel",
     "close.imageEditor": "Close image editor panel",
     "close.gallery": "Close gallery panel",
     "close.addGallery": "Close add to gallery panel",
     "imageInput.referenceTitle": "Reference input (optional)",
-    "referenceFiles.add": "Add file",
-    "referenceFiles.selected": "Reference files",
-    "referenceFiles.recent": "Recent files",
     "referenceFiles.familyPdf": "Pages + text",
     "referenceFiles.familySpreadsheet": "Spreadsheet",
     "referenceFiles.familyDocument": "Document",
     "referenceFiles.familyText": "Text",
-    "referenceFiles.visualLimit": "Embedded images and charts are not preserved in non-PDF files. Convert to PDF when layout matters.",
     "referenceFiles.remove": "Remove {filename}",
-    "referenceFiles.switchTitle": "Remove reference files?",
-    "referenceFiles.switchMessage": "Reference files work only with Responses. Remove the selected files before switching to Images.",
-    "referenceFiles.removeAndSwitch": "Remove files and switch",
     "referenceFiles.chooseResponses": "Choose a Responses channel",
     "referenceFiles.requiresResponses": "Reference files require Responses",
     "referenceFiles.switchToResponses": "Switch to Responses",
     "referenceFiles.openApiSettings": "Open API settings",
     "referenceFiles.providerMissing": "The original Responses provider is unavailable. Choose one in API settings.",
     "referenceFiles.missing": "File missing",
-    "referenceFiles.loadFailed": "Failed to load reference files",
     "referenceFiles.errorEmpty": "The reference file is empty",
     "referenceFiles.errorUnsupported": "This reference file type is unsupported",
     "referenceFiles.errorMismatch": "The file type does not match its extension",
@@ -1500,13 +1372,11 @@
     "modelSelection.provider": "Provider",
     "modelSelection.providerUnavailable": "No provider is available for this model",
     "modelSelection.openSettings": "Open provider settings",
-    "modelSelection.codexUnavailable": "Codex sign-in is unavailable",
     "modelSelection.catalogUnavailable": "Model catalog is unavailable",
     "output.background": "Background",
     "canvas.aspectRatio": "Aspect ratio",
     "canvas.resolution": "Resolution",
     "gemini.googleSearch": "Google Search",
-    "gemini.googleImageSearch": "Google Image Search",
     "output.modalities": "Output modalities",
     "gemini.safetySettings": "Safety settings",
     "gemini.safety.harassment": "Harassment",
@@ -1634,25 +1504,13 @@
     "queue.dispatching": "Terminplanung \xB7 Warten {waiting}",
     "queue.runningWaiting": "L\xE4uft {running} \xB7 Warten {waiting}",
     "queue.statusLabel": "Warteschlangenstatus: {text} \xB7 {channelText}. Klicken Sie, um zu aktiven Aufgaben zu springen",
-    "queue.runningActions": "Ausf\xFChren von Aufgabenwarteschlangenaktionen",
-    "queue.waitingActions": "Warten auf Aktionen in der Aufgabenwarteschlange",
-    "queue.cancelRunning": "Abbrechen",
     "queue.cancelRunningTitle": "Laufende Aufgabe abbrechen",
     "queue.dragWaiting": "Ziehen Sie, um die wartende Aufgabe neu anzuordnen",
-    "queue.dragSort": "Zum Sortieren ziehen",
-    "queue.moveUp": "Auf",
     "queue.moveUpTitle": "Warteaufgabe nach oben verschieben",
-    "queue.moveDown": "Runter",
     "queue.moveDownTitle": "Warteaufgabe nach unten verschieben",
     "queue.promote": "Top",
     "queue.promoteTitle": "Warteaufgabe nach oben verschieben",
     "queue.promoteFailed": "Das Verschieben nach oben ist fehlgeschlagen",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Wartende Aufgabe l\xF6schen",
-    "queue.deleteWaitingTitleConfirm": "Wartende Aufgabe l\xF6schen?",
-    "queue.deleteWaitingMessage": "Dadurch wird es aus der Warteschlange und der Verlaufsliste entfernt.",
-    "queue.deleteQueuedFailed": "Die Aufgabe in der Warteschlange konnte nicht gel\xF6scht werden",
-    "queue.queuedDeleted": "Aufgabe in der Warteschlange gel\xF6scht",
     "queue.cancelRunningConfirm": "Aufgabe abbrechen",
     "queue.cancelRunningTitleConfirm": "Laufende Aufgabe abbrechen?",
     "queue.cancelRunningMessage": "Ein Abbruch wird angefordert. Der Anbieteraufruf kann bis zur R\xFCckgabe weiterlaufen und weiterhin Kosten verursachen. Der Verlauf bleibt erhalten.",
@@ -1691,9 +1549,6 @@
     "taskStatus.runtimeCompleted": "Dauer {duration} \xB7 abgeschlossen {time}",
     "taskStatus.completedAt": "Abgeschlossen {time}",
     "taskCard.count": "{count} Bilder",
-    "taskCard.successCount": "erfolgreich {count}",
-    "taskCard.failedCount": "fehlgeschlagen {count}",
-    "taskCard.runningCount": "Generieren von {count}",
     "taskCard.waitingCount": "warten {count}",
     "taskCard.textToImageThumb": "Miniaturansicht der Text-zu-Bild-Aufgabe",
     "taskCard.imageToImageThumb": "Miniaturansicht der Bild-zu-Bild-Aufgabe",
@@ -1705,12 +1560,9 @@
     "runFeedback.editing": "Bearbeiten",
     "runFeedback.generating": "Generieren",
     "runFeedback.status": "{action}, verstrichen {elapsed}",
-    "footer.archive": "Archiv",
-    "footer.archiveCount": "Archiv {count}",
     "footer.historyLibrary": "Geschichte",
     "historyLibrary.openFull": "\xD6ffnen Sie die vollst\xE4ndige Geschichtsbibliothek",
     "history.documentTitle": "Geschichte \u2013 iLab CONJURE",
-    "history.back": "Zur\xFCck zum Generator",
     "history.homeAria": "Zur\xFCck zum iLab CONJURE Generator",
     "history.backToGenerator": "Zur\xFCck zum Generator",
     "history.title": "Geschichte",
@@ -1824,9 +1676,7 @@
     "history.type.textToImage": "Text zu Bild",
     "history.type.imageToImage": "Bild zu Bild",
     "history.month": "Monat",
-    "history.status": "Status",
     "history.promptMode": "Prompt-Verarbeitung",
-    "history.size": "Gr\xF6\xDFe",
     "history.quality": "Qualit\xE4t",
     "history.ratio": "Verh\xE4ltnis",
     "history.orientation": "Orientierung",
@@ -1835,9 +1685,7 @@
     "history.archived": "Archiviert",
     "history.all": "Alle",
     "history.allMonths": "Alle Monate",
-    "history.allStatuses": "Alle Status",
     "history.allPromptModes": "Alle Modi",
-    "history.allSizes": "Alle Gr\xF6\xDFen",
     "history.allQualities": "Alle Qualit\xE4ten",
     "history.allRatios": "Alle Verh\xE4ltnisse",
     "history.ratioOther": "Andere",
@@ -1859,13 +1707,10 @@
     "history.selectedCount": "{count} Aufgaben ausgew\xE4hlt",
     "history.confirmDelete": "Best\xE4tigen Sie das L\xF6schen",
     "history.detail": "Aufgabendetails",
-    "history.detailTitle": "Geschichtsaufgabe",
     "history.closeDetail": "Aufgabendetails schlie\xDFen",
     "history.resizeFilters": "Gr\xF6\xDFe der Filterseitenleiste \xE4ndern",
     "history.resizeDetail": "Gr\xF6\xDFe des Detailbereichs \xE4ndern",
-    "history.detailEmpty": "W\xE4hlen Sie eine historische Aufgabe aus, um Details anzuzeigen",
     "history.loadingDetail": "Details werden geladen...",
-    "history.loadMore": "Mehr laden",
     "history.loadingMore": "Laden...",
     "history.noMore": "Keine Aufgaben mehr",
     "history.loadFailed": "Das Laden ist fehlgeschlagen. Aktualisieren Sie die Seite oder scrollen Sie weiter, um es noch einmal zu versuchen",
@@ -1874,9 +1719,7 @@
     "history.detailFailed": "Details konnten nicht geladen werden",
     "history.noMatches": "Keine passenden Aufgaben",
     "history.loadedCount": "{count} geladen",
-    "history.windowNotice": "Die bereitgestellte Liste ist auf {count}-Aufgaben beschr\xE4nkt. Scrollen Sie nach oben oder unten, um bei Bedarf benachbarte Aufgaben wiederherzustellen.",
     "history.selectTask": "Aufgabe ausw\xE4hlen",
-    "history.viewing": "Anzeigen",
     "history.noPreview": "Keine Vorschaubilder",
     "history.downloadAll": "Herunterladen ZIP",
     "history.downloadImage": "Bild herunterladen",
@@ -1891,11 +1734,9 @@
     "history.inputReferences": "Geben Sie Referenzen ein",
     "history.inputReferenceIndex": "Eingabereferenz {index}",
     "history.copyPrompt": "Eingabeaufforderung kopieren",
-    "history.copyPrompts": "Eingabeaufforderungen kopieren",
     "history.copyPromptShort": "Kopieren",
     "history.copyPromptPanel": "Kopieren {title}",
     "history.copyOutputPromptPanel": "Bild kopieren {index} \xFCberarbeitete Eingabeaufforderung",
-    "history.copyTaskIds": "Kopieren Sie die Aufgabe IDs",
     "history.reuseTask": "Im Generator anzeigen",
     "history.downloadTask": "Herunterladen",
     "history.downloadSelectedTasks": "Batch-Download",
@@ -1913,7 +1754,6 @@
     "history.noDownloadableOutputs": "Keine herunterladbaren Bilder",
     "history.confirmDeleteSelected": "Best\xE4tigen Sie den ausgew\xE4hlten L\xF6schvorgang",
     "history.openPreview": "Vorschau \xF6ffnen",
-    "history.closePreview": "Vorschau schlie\xDFen",
     "history.untitled": "Ohne Titel",
     "history.promptCompare": "Prompter Vergleich",
     "history.promptOriginal": "Urspr\xFCngliche Aufforderung",
@@ -1930,8 +1770,6 @@
     "history.quality.low": "Niedrig",
     "history.quality.auto": "Automatisch",
     "footer.batch": "Charge",
-    "footer.storage": "Lagerung",
-    "footer.apiStatus": "API Status: OK",
     "footer.version": "Version {version}",
     "footer.versionLoading": "Version...",
     "notifications.title": "Benachrichtigungen",
@@ -1954,31 +1792,11 @@
     "theme.system": "Automatisch",
     "theme.light": "Hell",
     "theme.dark": "Dunkel",
-    "language.label": "Sprache der Benutzeroberfl\xE4che",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Authentifizierungsquelle",
     "auth.checking": "Authentifizierung pr\xFCfen",
     "auth.missingCodexSession": "Keine Codex-Sitzung erkannt",
     "auth.switchFailed": "Der Wechsel der Authentifizierungsquelle ist fehlgeschlagen",
     "auth.sourceUnavailable": "{source} nicht verf\xFCgbar",
     "auth.notActive": "Nicht aktiv",
-    "api.settings": "Systemeinstellungen",
-    "api.provider": "API Anbieter",
-    "imageInput.title": "Bilder",
     "imageInput.uploadAria": "Bilder und Dateien anklicken, ablegen oder einf\xFCgen",
     "imageInput.uploadImages": "Bilder anklicken, ablegen oder einf\xFCgen",
     "imageInput.uploadFull": "Bilder und Dateien anklicken, ablegen oder einf\xFCgen",
@@ -2074,7 +1892,6 @@
     "gallery.categoryFallback": "Kategorie \u201EGalerie\u201C.",
     "gallery.imageFallback": "Galeriebild",
     "gallery.imageLoadFailed": "Dieses Bild konnte nicht geladen werden",
-    "gallery.editImageLoadFailed": "Dieses Bild konnte nicht zur Bearbeitung geladen werden",
     "gallery.cannotAddImage": "Dieses Bild kann nicht zur Galerie hinzugef\xFCgt werden",
     "gallery.nameRequired": "Geben Sie einen Galerienamen ein",
     "gallery.saveFailed": "Das Galeriebild konnte nicht gespeichert werden",
@@ -2130,7 +1947,6 @@
     "outputSettings.title": "Ausgabe",
     "output.lock.lock": "Parameter sperren",
     "output.lock.unlock": "Entsperren und bearbeiten",
-    "output.lock.current": "Aktuelle Sperre",
     "output.lock.task": "Parameter der Aufgabe",
     "output.lock.adoptTask": "Parameter dieser Aufgabe verwenden",
     "output.lock.frame": "Bildformat",
@@ -2150,25 +1966,11 @@
     "output.mainModel": "Hauptmodell",
     "output.selectMainModel": "Hauptmodell ausw\xE4hlen",
     "output.mainModelCustomForInput": "Verwenden Sie ein benutzerdefiniertes Modell f\xFCr die aktuelle Eingabe",
-    "output.apiDirect": "API Direkt",
-    "output.apiToolModel": "API-Bildgenerierungsmodell wird verwendet",
     "output.webSearch": "Websuche",
-    "output.webSearchToggle": "Auf",
     "output.webSearchTitle": "Durchsuchen Sie zuerst das Internet und nutzen Sie es dann f\xFCr diese Generation. Nur Codex und API Responses",
-    "output.promptMode": "Prompt-Verarbeitung",
     "output.modeOriginal": "Original",
     "output.modeStrict": "Getreu",
     "output.modeCreative": "Automatisch",
-    "output.promptHelp": "Prompt-Verarbeitung erkl\xE4ren",
-    "output.promptHelpTitle": "Prompt-Verarbeitung",
-    "output.promptHelp.responsesChannel": "Responses \xB7 Hauptmodell beteiligt",
-    "output.promptHelp.imagesChannel": "Images \xB7 direkte Generierung",
-    "output.promptHelp.responses.original": "Sendet den exakten Originaltext ohne zus\xE4tzliche App-Regeln; der Anbieter kann dennoch einen revised prompt zur\xFCckgeben oder das Ergebnis anders interpretieren.",
-    "output.promptHelp.responses.strict": "Das Hauptmodell darf ordnen oder erweitern, muss aber feste Vorgaben wie Motive, Text, Farben und Komposition erhalten.",
-    "output.promptHelp.responses.automatic": "F\xFCgt keine zus\xE4tzlichen Vorgaben hinzu; das Hauptmodell interpretiert und optimiert vor dem Aufruf des Bildwerkzeugs.",
-    "output.promptHelp.images.original": "F\xFCgt keine App-Regeln hinzu und sendet den Originaltext direkt an die Bild-API.",
-    "output.promptHelp.images.strict": "Sendet Treueregeln zusammen mit dem Originalprompt, um alle festen Vorgaben zu erhalten.",
-    "output.promptHelp.images.automatic": "Verwendet die Standardverarbeitung der Bild-API; notwendige Galeriehinweise werden weiterhin mitgesendet.",
     "output.size": "Ausgabegr\xF6\xDFe",
     "output.sizeMode": "Gr\xF6\xDFenmodus",
     "output.sizeAuto": "Automatisch",
@@ -2232,8 +2034,6 @@
     "preview.runningTitle": "{mode} l\xE4uft",
     "preview.submittingTitle": "Aufgabe senden",
     "preview.queuedTitle": "Aufgabe in der Warteschlange",
-    "preview.submittingDetail": "Eingaben speichern und die Aufgabe zur Warteschlange hinzuf\xFCgen. Die Generierung startet automatisch.",
-    "preview.queuedDetail": "Die Aufgabe befindet sich in der Warteschlange und wartet auf einen verf\xFCgbaren Kanal.",
     "preview.featured": "Ausgew\xE4hlt",
     "preview.addFeatured": "Ergebnis ausw\xE4hlen",
     "preview.selectedFeatured": "Ausgew\xE4hlt",
@@ -2286,7 +2086,6 @@
     "promptPopover.close": "Schneller Vergleich schlie\xDFen",
     "promptPopover.copyOptimized": "Optimierte Eingabeaufforderung kopieren",
     "promptPopover.copied": "Kopiert",
-    "taskContext.menuLabel": "Aufgabenkontextmen\xFC",
     "taskContext.view": "Aufgabe ansehen",
     "taskContext.copyId": "Kopieraufgabe ID",
     "taskContext.copyPrompt": "Eingabeaufforderung kopieren",
@@ -2315,7 +2114,6 @@
     "taskActions.acceptSuccessesFailed": "Erfolgreiche Ergebnisse konnten nicht akzeptiert werden",
     "taskActions.acceptedSuccesses": "Erfolgreiche Ergebnisse akzeptiert",
     "taskActions.viewedUpdateFailed": "Der Lesestatus konnte nicht aktualisiert werden",
-    "taskActions.failedFallback": "Aufgabe fehlgeschlagen",
     "taskList.empty": "Noch keine Geschichte",
     "taskList.selectSession": "W\xE4hlen Sie Chat aus",
     "taskList.unreadUpdate": "Ungelesenes Update",
@@ -2385,7 +2183,6 @@
     "snippets.saveSelection": "Speichern",
     "snippets.saveSelectionLabel": "Ausgew\xE4hlten Text als Eingabeaufforderungsausschnitt speichern",
     "snippets.popoverLabel": "Prompter Ausschnitt",
-    "snippets.defaultCategory": "Gew\xF6hnlich",
     "snippets.loadFailed": "Eingabeaufforderungsausschnitte konnten nicht geladen werden",
     "snippets.remove": "Entfernen Sie ~{tag}",
     "snippets.expand": "Erweitern",
@@ -2430,7 +2227,6 @@
     "colors.done": "Fertig",
     "colors.manage": "Verwalten",
     "colors.favorites": "Lieblingsfarben",
-    "colors.recent": "Aktuelle Farben",
     "colors.recentLabel": "Neu",
     "colors.deleteFavorite": "Lieblingsfarbe l\xF6schen {name}",
     "colors.modify": "Farbe bearbeiten",
@@ -2440,16 +2236,13 @@
     "taskGroup.current": "Aktuell angezeigt",
     "taskGroup.yesterday": "Gestern",
     "taskGroup.last7": "Letzte 7 Tage",
-    "taskGroup.older": "\xC4lter",
     "taskGroup.searchResults": "Suchergebnisse",
-    "taskGroup.active": "Aktiv",
     "taskGroup.running": "Laufen",
     "taskGroup.waiting": "Warten",
     "taskGroup.dispatchPending": "Einen verf\xFCgbaren Kanal zuweisen...",
     "taskGroup.expand": "Erweitern {label}",
     "taskGroup.collapse": "Zusammenbruch {label}",
     "taskGroup.buttonLabel": "{label}, {count} Aufgaben",
-    "taskGroup.loadMore": "{count} weitere laden",
     "taskGroup.loadFailedRetry": "Laden fehlgeschlagen. Zum Wiederholen klicken",
     "archive.title": "Archiv",
     "archive.empty": "Keine archivierten Chats",
@@ -2462,7 +2255,6 @@
     "archive.restoring": "Wiederherstellung...",
     "archive.deleting": "L\xF6schen...",
     "archive.restoredCount": "{count}-Aufgaben wiederhergestellt",
-    "settings.title": "Lagerung",
     "settings.status": "Starten Sie WebUI neu, nachdem Sie die Speicherpfade gespeichert haben",
     "settings.pathChangeHint": "Ge\xE4nderte Pfade verschieben keine vorhandenen Daten. Vor dem Umzug eine Sicherung erstellen, die App beenden und die vollst\xE4ndigen Ordner kopieren.",
     "settings.previousPaths": "Alte Daten fehlen? Urspr\xFCngliche Standardordner pr\xFCfen",
@@ -2517,7 +2309,6 @@
     "userConfigBackup.restoreComplete": "Wiederherstellung abgeschlossen",
     "systemSettings.tabsLabel": "Abschnitte mit den Systemeinstellungen",
     "systemSettings.apiTab": "API Einstellungen",
-    "systemSettings.codexTab": "Codex Kanal",
     "systemSettings.languageTab": "Sprache / Language",
     "systemSettings.storageTab": "Speicherung und Benachrichtigungen",
     "systemSettings.networkTab": "Netzwerk",
@@ -2543,23 +2334,14 @@
     "networkEgress.loadFailed": "Netzwerkeinstellungen konnten nicht geladen werden",
     "networkEgress.saveFailed": "Netzwerkeinstellungen konnten nicht gespeichert werden",
     "languageSettings.instantStatus": "Sprach\xE4nderungen gelten ab sofort",
-    "apiSettings.title": "API Einstellungen",
-    "apiSettings.status": "Gespeicherte Einstellungen gelten sofort im API-Modus",
-    "apiSettings.codexMode": "Codex Kanal",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API Anbieter",
     "apiSettings.searchProviders": "Anbieternamen suchen",
     "apiSettings.noProviderSearchResults": "Keine passenden Anbieter",
     "apiSettings.providerCount": "{count} Anbieter",
-    "apiSettings.provider": "Anbieter",
     "apiSettings.providerName": "Anbietername",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Optional, z. B. \u{1FA84}",
-    "apiSettings.connectionScope": "Verbindungseinstellungen",
-    "apiSettings.connectionPreview": "Verbindungsvorschau",
     "apiSettings.modelBindings": "Modelle",
-    "apiSettings.modelBindingsHint": "Ein Anbieter kann mehrere Modelle und Protokolle zuordnen.",
     "apiSettings.addModelBinding": "Modell hinzuf\xFCgen",
     "apiSettings.defaultProviderForModel": "Standardanbieter",
     "apiSettings.removeBinding": "Bindung entfernen",
@@ -2567,7 +2349,6 @@
     "apiSettings.keepOneBinding": "Jeder Anbieter ben\xF6tigt mindestens eine Modellzuordnung.",
     "apiSettings.bindingRequiredFields": "F\xFCr jede Zuordnung ein Modell w\xE4hlen, einen entfernten Modellnamen eingeben und mindestens einen Vorgang w\xE4hlen.",
     "apiSettings.bindingOverlap": "{model} {operation} wird von mehreren Zuordnungen abgedeckt.",
-    "apiSettings.actualRequest": "Tats\xE4chliche Anfrage",
     "apiSettings.newProviderAction": "Neuer Anbieter",
     "apiSettings.copyProvider": "Kopieren",
     "apiSettings.copyProviderName": "{name} Kopie",
@@ -2578,15 +2359,7 @@
     "apiSettings.sortProviderModeStatus": "Zum Sortieren am Griff ziehen oder die Pfeiltasten verwenden",
     "apiSettings.sortProviderHandleAria": "{provider} durch Ziehen oder mit Pfeil-, Pos1- und Ende-Taste verschieben",
     "apiSettings.sortProviderStatus": "Anbieterreihenfolge ge\xE4ndert. Wird automatisch gespeichert...",
-    "apiSettings.moveProviderUp": "Auf",
-    "apiSettings.moveProviderDown": "Runter",
-    "apiSettings.moveProviderUpAria": "Verschieben Sie {provider} nach oben",
-    "apiSettings.moveProviderDownAria": "Verschieben Sie {provider} nach unten",
-    "apiSettings.mode": "Anforderungsmodus",
-    "apiSettings.images": "Direktes Bild API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Direkt",
-    "apiSettings.imageModel": "Bildgenerierungsmodell",
     "apiSettings.concurrency": "Parallelit\xE4tslimit",
     "apiSettings.svgAuthorModel": "SVG-Erstellungsmodell",
     "apiSettings.invalidSvgAuthorModel": "Gib eine g\xFCltige SVG-Modell-ID ohne Leerzeichen ein.",
@@ -2594,25 +2367,18 @@
     "apiSettings.remoteModelName": "Modellname beim Anbieter",
     "apiSettings.fetchModels": "Modelle abrufen",
     "apiSettings.advancedSettings": "Erweiterte Einstellungen",
-    "apiSettings.concurrencyValue": "Parallelit\xE4t {concurrency}",
     "apiSettings.keySaved": "API Schl\xFCssel gespeichert",
     "apiSettings.keyNotSet": "Schl\xFCssel API nicht gesetzt",
     "apiSettings.showApiKey": "API-Key anzeigen",
     "apiSettings.hideApiKey": "API-Key ausblenden",
     "apiSettings.editProvider": "Anbieter bearbeiten",
     "apiSettings.newProviderTitle": "Neuer Anbieter",
-    "apiSettings.editHint": "Der Speicheranbieter schreibt diese \xC4nderung in das Backend. Abbrechen verwirft es.",
     "apiSettings.finishEditFirst": "Speichern oder brechen Sie zun\xE4chst die aktuelle Anbieterbearbeitung ab",
     "apiSettings.newDraftStatus": "Anbieter erstellen. Anbieter speichern, um sich zu bewerben.",
     "apiSettings.editDraftStatus": "Bearbeitungsanbieter. Anbieter speichern, um sich zu bewerben.",
-    "apiSettings.cancelEdit": "Bearbeitung abbrechen",
-    "apiSettings.saveProvider": "Anbieter speichern",
-    "apiSettings.saveSelection": "Auswahl speichern",
     "apiSettings.deleteProviderTitle": "Anbieter l\xF6schen?",
     "apiSettings.deleteProviderMessage": "\u201E{provider}\u201C l\xF6schen?",
     "apiSettings.deleteProviderDetail": "Dies entfernt ihn aus der Anbieterliste und speichert die \xC4nderung automatisch im Backend.",
-    "apiSettings.deleteProviderStatus": "Anbieter gel\xF6scht. Wird automatisch gespeichert...",
-    "apiSettings.save": "Speichern Sie die API-Einstellungen",
     "apiSettings.loadFailed": "Die Einstellungen f\xFCr API konnten nicht geladen werden",
     "apiSettings.savedKeyPlaceholder": "Der Schl\xFCssel API wird im Backend gespeichert. Geben Sie einen neuen Schl\xFCssel ein, um ihn zu ersetzen.",
     "apiSettings.apiKeyRequired": "Geben Sie vor dem Speichern des Anbieters einen API-Key ein.",
@@ -2633,16 +2399,6 @@
     "apiSettings.savedShort": "Gespeichert",
     "apiSettings.savedStatus": "API Einstellungen gespeichert",
     "apiSettings.saveFailedShort": "Speichern fehlgeschlagen",
-    "codexSettings.title": "Codex Kanal",
-    "codexSettings.status": "W\xE4hlen Sie den Generierungskanal f\xFCr die lokale Codex-Anmeldung",
-    "codexSettings.notesLabel": "Codex Kanalnotizen",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Standardkanal zur direkten \xDCbergabe von Gr\xF6\xDFe, Qualit\xE4t und Bearbeitungsparametern.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Kompatibilit\xE4tskanal f\xFCr Workflows, die Websuchtools ben\xF6tigen.",
-    "codexSettings.current": "Aktuell",
-    "codexSettings.save": "Speichern Sie den Kanal Codex",
-    "codexSettings.saveMode": "{mode} speichern",
     "imageEditor.title": "Eingabebild bearbeiten",
     "imageEditor.promptHint": "Handgezeichnete Pfeile und Markierungen im Bild sind lediglich Hinweise. Behalten Sie sie nicht im endg\xFCltigen Bild bei.",
     "imageEditor.inputFallback": "Eingabebild",
@@ -2722,31 +2478,21 @@
     "addGallery.save": "In der Galerie speichern",
     "close.promptTemplates": "Schlie\xDFen Sie den Bereich Eingabeaufforderungsvorlagen",
     "close.archive": "Archivfenster schlie\xDFen",
-    "close.settings": "Schlie\xDFen Sie das Speichereinstellungsfeld",
-    "close.apiSettings": "Schlie\xDFen Sie das Einstellungsfeld API",
     "close.systemSettings": "Schlie\xDFen Sie das Systemeinstellungsfeld",
     "close.imageEditor": "Schlie\xDFen Sie das Bildbearbeitungsfenster",
     "close.gallery": "Galeriefenster schlie\xDFen",
     "close.addGallery": "Schlie\xDFen Sie das Fenster \u201EZur Galerie hinzuf\xFCgen\u201C.",
     "imageInput.referenceTitle": "Referenzeingabe (optional)",
-    "referenceFiles.add": "Datei hinzuf\xFCgen",
-    "referenceFiles.selected": "Referenzdateien",
-    "referenceFiles.recent": "Letzte Dateien",
     "referenceFiles.familyPdf": "Seiten + Text",
     "referenceFiles.familySpreadsheet": "Tabelle",
     "referenceFiles.familyDocument": "Dokument",
     "referenceFiles.familyText": "Text",
-    "referenceFiles.visualLimit": "Nicht-PDF-Dateien behalten eingebettete Bilder und Diagramme nicht bei. F\xFCr Layoutreferenzen bitte in PDF umwandeln.",
     "referenceFiles.remove": "{filename} entfernen",
-    "referenceFiles.switchTitle": "Referenzdateien entfernen?",
-    "referenceFiles.switchMessage": "Referenzdateien funktionieren nur mit Responses. Entfernen Sie sie vor dem Wechsel zu Images.",
-    "referenceFiles.removeAndSwitch": "Dateien entfernen und wechseln",
     "referenceFiles.requiresResponses": "Referenzdateien erfordern Responses",
     "referenceFiles.switchToResponses": "Zu Responses wechseln",
     "referenceFiles.openApiSettings": "API-Einstellungen \xF6ffnen",
     "referenceFiles.providerMissing": "Der urspr\xFCngliche Responses-Anbieter ist nicht verf\xFCgbar. W\xE4hlen Sie einen in den API-Einstellungen.",
     "referenceFiles.missing": "Datei fehlt",
-    "referenceFiles.loadFailed": "Referenzdateien konnten nicht geladen werden",
     "referenceFiles.errorEmpty": "Die Referenzdatei ist leer",
     "referenceFiles.errorUnsupported": "Dieser Referenzdateityp wird nicht unterst\xFCtzt",
     "referenceFiles.errorMismatch": "Dateiinhalt und Erweiterung stimmen nicht \xFCberein",
@@ -2765,13 +2511,11 @@
     "modelSelection.provider": "Anbieter",
     "modelSelection.providerUnavailable": "F\xFCr dieses Modell ist kein Anbieter verf\xFCgbar",
     "modelSelection.openSettings": "Anbietereinstellungen \xF6ffnen",
-    "modelSelection.codexUnavailable": "Die Codex-Anmeldung ist nicht verf\xFCgbar",
     "modelSelection.catalogUnavailable": "Der Modellkatalog ist nicht verf\xFCgbar",
     "output.background": "Hintergrund",
     "canvas.aspectRatio": "Seitenverh\xE4ltnis",
     "canvas.resolution": "Aufl\xF6sung",
     "gemini.googleSearch": "Google-Suche",
-    "gemini.googleImageSearch": "Google-Bildersuche",
     "output.modalities": "Ausgabemodalit\xE4ten",
     "gemini.safetySettings": "Sicherheitseinstellungen",
     "gemini.safety.harassment": "Bel\xE4stigung",
@@ -2832,17 +2576,14 @@
     "mobile.backToEditor": "Zur\xFCck zum Bearbeiten",
     "mobile.copyHint": "Automatisches Kopieren nicht verf\xFCgbar. Text unten zum Kopieren ausw\xE4hlen.",
     "mobile.files": "Dateien",
-    "mobile.gestureHint": "Zum Zoomen zwei Finger bewegen \xB7 Zum Bildwechsel wischen",
     "mobile.manualCopy": "Zum Kopieren gedr\xFCckt halten",
     "mobile.more": "Mehr",
     "mobile.parameters": "Parameter",
     "mobile.pasteHint": "Eingabefeld zum Einf\xFCgen gedr\xFCckt halten oder Fotos bzw. Dateien w\xE4hlen.",
     "mobile.photos": "Fotos",
-    "mobile.pickFiles": "Fotos oder Dateien w\xE4hlen",
     "mobile.taskActions": "Aufgabenaktionen",
     "networkEgress.fakeIpDnsFallback": "Fake-IP-DNS-Kompatibilit\xE4t f\xFCr Bilddownloads",
     "networkEgress.fakeIpDnsHelp": "Liefert Bild-DNS eine Fake-IP, fragt die Anwendung Cloudflare DNS nach echten \xF6ffentlichen Adressen. Gilt f\xFCr Downloads sp\xE4ter gestarteter Anfragen; LAN-DNS bleibt unver\xE4ndert. API-Schl\xFCssel, Prompts und vollst\xE4ndige Bild-URLs werden nicht gesendet.",
-    "output.transparencyFidelityHint": "Transparenter Hintergrund ist eine gew\xE4hlte Ausgabeanforderung und wird auch in den Modi Original und Originalgetreu erg\xE4nzt.",
     "output.transparencyFormat": "Transparente Ausgabe erfordert PNG oder WebP.",
     "output.transparencyUnavailable": "Keine Transparenz",
     "output.transparentBackground": "Transparenter Hintergrund",
@@ -2875,7 +2616,6 @@
     "userConfigBackup.incrementalCopy": "Vorhandene Daten behalten, Duplikate \xFCberspringen und Wiederherstellungskopien bei Konflikten anlegen.",
     "userConfigBackup.itemCount": "{count} Eintr\xE4ge",
     "userConfigBackup.modeLabel": "Sichern oder wiederherstellen",
-    "userConfigBackup.previewCounts": "{count} im Archiv \xB7 {duplicate} Duplikate \xB7 {conflict} Konflikte",
     "userConfigBackup.previewTitle": "Wiederherstellungsvorschau",
     "userConfigBackup.providerRetention": "{count} Anbieter mit Zugangsdaten bleiben aus Sicherheitsgr\xFCnden erhalten",
     "userConfigBackup.replaceConfirmCopy": "Nur gew\xE4hlte Bereiche sind betroffen, aber ihre aktuellen Daten werden gel\xF6scht. Dies ist nicht r\xFCckg\xE4ngig zu machen.",
@@ -3052,25 +2792,13 @@
     "queue.dispatching": "Programaci\xF3n \xB7 esperando {waiting}",
     "queue.runningWaiting": "Ejecutando {running} \xB7 esperando {waiting}",
     "queue.statusLabel": "Estado de la cola: {text} \xB7 {channelText}. Haga clic para saltar a las tareas activas",
-    "queue.runningActions": "Ejecutar acciones de la cola de tareas",
-    "queue.waitingActions": "Esperando acciones de la cola de tareas",
-    "queue.cancelRunning": "Cancelar",
     "queue.cancelRunningTitle": "Cancelar tarea en ejecuci\xF3n",
     "queue.dragWaiting": "Arrastre para reordenar la tarea en espera",
-    "queue.dragSort": "Arrastra para ordenar",
-    "queue.moveUp": "arriba",
     "queue.moveUpTitle": "Mover la tarea en espera hacia arriba",
-    "queue.moveDown": "abajo",
     "queue.moveDownTitle": "Mover la tarea en espera hacia abajo",
     "queue.promote": "arriba",
     "queue.promoteTitle": "Mover la tarea en espera al principio",
     "queue.promoteFailed": "Error al subir al principio",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Eliminar tarea en espera",
-    "queue.deleteWaitingTitleConfirm": "\xBFEliminar tarea en espera?",
-    "queue.deleteWaitingMessage": "Esto lo elimina de la cola y de la lista del historial.",
-    "queue.deleteQueuedFailed": "No se pudo eliminar la tarea en cola",
-    "queue.queuedDeleted": "Tarea en cola eliminada",
     "queue.cancelRunningConfirm": "Cancelar tarea",
     "queue.cancelRunningTitleConfirm": "\xBFCancelar tarea en ejecuci\xF3n?",
     "queue.cancelRunningMessage": "Se solicitar\xE1 la cancelaci\xF3n. La llamada al proveedor puede continuar y seguir generando cargos hasta que responda. Se conservar\xE1 el historial.",
@@ -3109,9 +2837,6 @@
     "taskStatus.runtimeCompleted": "Duraci\xF3n {duration} \xB7 completado {time}",
     "taskStatus.completedAt": "Completado {time}",
     "taskCard.count": "{count} im\xE1genes",
-    "taskCard.successCount": "tuvo \xE9xito {count}",
-    "taskCard.failedCount": "fall\xF3 {count}",
-    "taskCard.runningCount": "generando {count}",
     "taskCard.waitingCount": "esperando {count}",
     "taskCard.textToImageThumb": "Miniatura de tarea de conversi\xF3n de texto a imagen",
     "taskCard.imageToImageThumb": "Miniatura de tarea de imagen a imagen",
@@ -3123,12 +2848,9 @@
     "runFeedback.editing": "Edici\xF3n",
     "runFeedback.generating": "generando",
     "runFeedback.status": "{action}, transcurrido {elapsed}",
-    "footer.archive": "Archivo",
-    "footer.archiveCount": "Archivo {count}",
     "footer.historyLibrary": "Historia",
     "historyLibrary.openFull": "Abrir biblioteca de historia completa",
     "history.documentTitle": "Historia - iLab CONJURE",
-    "history.back": "Volver al generador",
     "history.homeAria": "Volver al generador iLab CONJURE",
     "history.backToGenerator": "Volver al generador",
     "history.title": "Historia",
@@ -3242,9 +2964,7 @@
     "history.type.textToImage": "Texto a imagen",
     "history.type.imageToImage": "Imagen a imagen",
     "history.month": "Mes",
-    "history.status": "Estado",
     "history.promptMode": "Tratamiento del prompt",
-    "history.size": "Tama\xF1o",
     "history.quality": "Calidad",
     "history.ratio": "proporci\xF3n",
     "history.orientation": "Orientaci\xF3n",
@@ -3253,9 +2973,7 @@
     "history.archived": "Archivado",
     "history.all": "Todos",
     "history.allMonths": "Todos los meses",
-    "history.allStatuses": "Todos los estados",
     "history.allPromptModes": "Todos los modos",
-    "history.allSizes": "Todos los tama\xF1os",
     "history.allQualities": "Todas las calidades",
     "history.allRatios": "Todas las proporciones",
     "history.ratioOther": "Otro",
@@ -3277,13 +2995,10 @@
     "history.selectedCount": "{count} tareas seleccionadas",
     "history.confirmDelete": "Confirmar eliminaci\xF3n",
     "history.detail": "Detalle de la tarea",
-    "history.detailTitle": "Tarea de historia",
     "history.closeDetail": "Cerrar detalle de tarea",
     "history.resizeFilters": "Cambiar el tama\xF1o de la barra lateral del filtro",
     "history.resizeDetail": "Cambiar el tama\xF1o del panel de detalles",
-    "history.detailEmpty": "Seleccione una tarea hist\xF3rica para ver los detalles",
     "history.loadingDetail": "Cargando detalle...",
-    "history.loadMore": "Cargar m\xE1s",
     "history.loadingMore": "Cargando...",
     "history.noMore": "No m\xE1s tareas",
     "history.loadFailed": "La carga fall\xF3. Actualiza o sigue desplaz\xE1ndote para volver a intentarlo",
@@ -3292,9 +3007,7 @@
     "history.detailFailed": "No se pudo cargar el detalle",
     "history.noMatches": "No hay tareas coincidentes",
     "history.loadedCount": "{count} cargado",
-    "history.windowNotice": "La lista montada est\xE1 limitada a tareas {count}; despl\xE1cese hacia arriba o hacia abajo para restaurar tareas adyacentes a pedido.",
     "history.selectTask": "Seleccionar tarea",
-    "history.viewing": "Visualizaci\xF3n",
     "history.noPreview": "Sin im\xE1genes de vista previa",
     "history.downloadAll": "Descargar ZIP",
     "history.downloadImage": "Descargar imagen",
@@ -3309,11 +3022,9 @@
     "history.inputReferences": "Referencias de entrada",
     "history.inputReferenceIndex": "Referencia de entrada {index}",
     "history.copyPrompt": "Copiar mensaje",
-    "history.copyPrompts": "Copiar indicaciones",
     "history.copyPromptShort": "Copiar",
     "history.copyPromptPanel": "Copiar {title}",
     "history.copyOutputPromptPanel": "Copiar imagen {index} mensaje revisado",
-    "history.copyTaskIds": "Copiar tarea IDs",
     "history.reuseTask": "Ver en generador",
     "history.downloadTask": "Descargar",
     "history.downloadSelectedTasks": "Descarga por lotes",
@@ -3331,7 +3042,6 @@
     "history.noDownloadableOutputs": "No hay im\xE1genes descargables",
     "history.confirmDeleteSelected": "Confirmar eliminaci\xF3n seleccionada",
     "history.openPreview": "Abrir vista previa",
-    "history.closePreview": "Cerrar vista previa",
     "history.untitled": "Sin t\xEDtulo",
     "history.promptCompare": "Comparaci\xF3n r\xE1pida",
     "history.promptOriginal": "Aviso original",
@@ -3348,8 +3058,6 @@
     "history.quality.low": "Bajo",
     "history.quality.auto": "Autom\xE1tico",
     "footer.batch": "lote",
-    "footer.storage": "Almacenamiento",
-    "footer.apiStatus": "Estado API: OK",
     "footer.version": "Versi\xF3n {version}",
     "footer.versionLoading": "Versi\xF3n...",
     "notifications.title": "Notificaciones",
@@ -3372,31 +3080,11 @@
     "theme.system": "Autom\xE1tico",
     "theme.light": "Claro",
     "theme.dark": "Oscuro",
-    "language.label": "Idioma de la interfaz",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Fuente de autenticaci\xF3n",
     "auth.checking": "Comprobando autenticaci\xF3n",
     "auth.missingCodexSession": "No se detect\xF3 ninguna sesi\xF3n Codex",
     "auth.switchFailed": "No se pudo cambiar la fuente de autenticaci\xF3n",
     "auth.sourceUnavailable": "{source} no disponible",
     "auth.notActive": "No activo",
-    "api.settings": "Configuraci\xF3n del sistema",
-    "api.provider": "API proveedor",
-    "imageInput.title": "Im\xE1genes",
     "imageInput.uploadAria": "Haz clic, suelta o pega im\xE1genes y archivos",
     "imageInput.uploadImages": "Haz clic, arrastra o pega im\xE1genes",
     "imageInput.uploadFull": "Haz clic, suelta o pega im\xE1genes y archivos",
@@ -3492,7 +3180,6 @@
     "gallery.categoryFallback": "Categor\xEDa de galer\xEDa",
     "gallery.imageFallback": "Imagen de la galer\xEDa",
     "gallery.imageLoadFailed": "No se pudo cargar esta imagen",
-    "gallery.editImageLoadFailed": "No se pudo cargar esta imagen para editarla",
     "gallery.cannotAddImage": "Esta imagen no se puede agregar a la galer\xEDa.",
     "gallery.nameRequired": "Introduce un nombre de galer\xEDa",
     "gallery.saveFailed": "No se pudo guardar la imagen de la galer\xEDa",
@@ -3548,7 +3235,6 @@
     "outputSettings.title": "Salida",
     "output.lock.lock": "Bloquear par\xE1metros",
     "output.lock.unlock": "Desbloquear y editar",
-    "output.lock.current": "Bloqueo actual",
     "output.lock.task": "Par\xE1metros de la tarea",
     "output.lock.adoptTask": "Usar par\xE1metros de esta tarea",
     "output.lock.frame": "Encuadre",
@@ -3568,25 +3254,11 @@
     "output.mainModel": "modelo principal",
     "output.selectMainModel": "Seleccionar modelo principal",
     "output.mainModelCustomForInput": "Utilice un modelo personalizado para la entrada actual",
-    "output.apiDirect": "API Directo",
-    "output.apiToolModel": "Usando el modelo de generaci\xF3n de im\xE1genes API",
     "output.webSearch": "b\xFAsqueda web",
-    "output.webSearchToggle": "encendido",
     "output.webSearchTitle": "Primero busque en la web y luego \xFAsela para esta generaci\xF3n; Codex y API Responses \xFAnicamente",
-    "output.promptMode": "Tratamiento del prompt",
     "output.modeOriginal": "Original",
     "output.modeStrict": "Fiel",
     "output.modeCreative": "Autom\xE1tico",
-    "output.promptHelp": "Explicar el tratamiento del prompt",
-    "output.promptHelpTitle": "Tratamiento del prompt",
-    "output.promptHelp.responsesChannel": "Responses \xB7 interviene el modelo principal",
-    "output.promptHelp.imagesChannel": "Images \xB7 generaci\xF3n directa",
-    "output.promptHelp.responses.original": "Env\xEDa el texto original exacto sin reglas a\xF1adidas por la aplicaci\xF3n; el proveedor a\xFAn puede devolver un revised prompt o interpretar el resultado de otra forma.",
-    "output.promptHelp.responses.strict": "Permite ordenar o ampliar el prompt, pero conserva restricciones como sujetos, texto, colores y composici\xF3n.",
-    "output.promptHelp.responses.automatic": "No a\xF1ade restricciones; el modelo principal interpreta y optimiza antes de llamar a la herramienta de imagen.",
-    "output.promptHelp.images.original": "No a\xF1ade reglas de la aplicaci\xF3n y env\xEDa el texto original directamente a la API de im\xE1genes.",
-    "output.promptHelp.images.strict": "Env\xEDa reglas de fidelidad junto al prompt original para preservar todas las restricciones.",
-    "output.promptHelp.images.automatic": "Usa el tratamiento predeterminado de la API de im\xE1genes e incluye las notas necesarias de referencias de la galer\xEDa.",
     "output.size": "Tama\xF1o de salida",
     "output.sizeMode": "Modo de tama\xF1o",
     "output.sizeAuto": "Autom\xE1tico",
@@ -3650,8 +3322,6 @@
     "preview.runningTitle": "{mode} funcionando",
     "preview.submittingTitle": "Enviar tarea",
     "preview.queuedTitle": "Tarea en cola",
-    "preview.submittingDetail": "Guardar entradas y agregar la tarea a la cola. La generaci\xF3n comenzar\xE1 autom\xE1ticamente.",
-    "preview.queuedDetail": "La tarea est\xE1 en cola y esperando un canal disponible.",
     "preview.featured": "Seleccionado",
     "preview.addFeatured": "Seleccionar resultado",
     "preview.selectedFeatured": "Seleccionado",
@@ -3704,7 +3374,6 @@
     "promptPopover.close": "Cerrar comparaci\xF3n r\xE1pida",
     "promptPopover.copyOptimized": "Copiar mensaje optimizado",
     "promptPopover.copied": "Copiado",
-    "taskContext.menuLabel": "Men\xFA contextual de tareas",
     "taskContext.view": "Ver tarea",
     "taskContext.copyId": "Copiar tarea ID",
     "taskContext.copyPrompt": "Copiar mensaje",
@@ -3733,7 +3402,6 @@
     "taskActions.acceptSuccessesFailed": "No se pudieron aceptar resultados exitosos",
     "taskActions.acceptedSuccesses": "Se aceptan resultados exitosos.",
     "taskActions.viewedUpdateFailed": "No se pudo actualizar el estado de lectura",
-    "taskActions.failedFallback": "Tarea fallida",
     "taskList.empty": "A\xFAn no hay historial",
     "taskList.selectSession": "Seleccionar chat",
     "taskList.unreadUpdate": "Actualizaci\xF3n no le\xEDda",
@@ -3803,7 +3471,6 @@
     "snippets.saveSelection": "Guardar",
     "snippets.saveSelectionLabel": "Guardar el texto seleccionado como un fragmento de mensaje",
     "snippets.popoverLabel": "Fragmento r\xE1pido",
-    "snippets.defaultCategory": "com\xFAn",
     "snippets.loadFailed": "No se pudieron cargar fragmentos de mensajes",
     "snippets.remove": "Quitar ~{tag}",
     "snippets.expand": "Expandir",
@@ -3848,7 +3515,6 @@
     "colors.done": "hecho",
     "colors.manage": "Administrar",
     "colors.favorites": "colores favoritos",
-    "colors.recent": "Colores recientes",
     "colors.recentLabel": "Reciente",
     "colors.deleteFavorite": "Eliminar color favorito {name}",
     "colors.modify": "Editar color",
@@ -3858,16 +3524,13 @@
     "taskGroup.current": "Tarea actual",
     "taskGroup.yesterday": "ayer",
     "taskGroup.last7": "\xFAltimos 7 d\xEDas",
-    "taskGroup.older": "mayor",
     "taskGroup.searchResults": "Resultados de la b\xFAsqueda",
-    "taskGroup.active": "Activo",
     "taskGroup.running": "corriendo",
     "taskGroup.waiting": "esperando",
     "taskGroup.dispatchPending": "Asignando un canal disponible...",
     "taskGroup.expand": "Ampliar {label}",
     "taskGroup.collapse": "Contraer {label}",
     "taskGroup.buttonLabel": "Tareas {label}, {count}",
-    "taskGroup.loadMore": "Cargar {count} m\xE1s",
     "taskGroup.loadFailedRetry": "Error al cargar. Haz clic para reintentar",
     "archive.title": "Archivo",
     "archive.empty": "No hay chats archivados",
@@ -3880,7 +3543,6 @@
     "archive.restoring": "Restaurando...",
     "archive.deleting": "Eliminando...",
     "archive.restoredCount": "Tareas {count} restauradas",
-    "settings.title": "Almacenamiento",
     "settings.status": "Reinicie WebUI despu\xE9s de guardar las rutas de almacenamiento",
     "settings.pathChangeHint": "Cambiar las rutas no mueve los datos existentes. Antes de trasladarlos, haz una copia de seguridad, cierra la aplicaci\xF3n y copia las carpetas completas.",
     "settings.previousPaths": "\xBFFaltan datos antiguos? Consulta las carpetas predeterminadas originales",
@@ -3935,7 +3597,6 @@
     "userConfigBackup.restoreComplete": "Restauraci\xF3n completada",
     "systemSettings.tabsLabel": "Secciones de configuraci\xF3n del sistema",
     "systemSettings.apiTab": "API Configuraci\xF3n",
-    "systemSettings.codexTab": "Codex Canal",
     "systemSettings.languageTab": "Idioma / Language",
     "systemSettings.storageTab": "Almacenamiento y notificaciones",
     "systemSettings.networkTab": "Red",
@@ -3961,23 +3622,14 @@
     "networkEgress.loadFailed": "No se pudo cargar la configuraci\xF3n de red",
     "networkEgress.saveFailed": "No se pudo guardar la configuraci\xF3n de red",
     "languageSettings.instantStatus": "Los cambios de idioma se aplican inmediatamente.",
-    "apiSettings.title": "API Configuraci\xF3n",
-    "apiSettings.status": "La configuraci\xF3n guardada se aplica inmediatamente en el modo API",
-    "apiSettings.codexMode": "Codex canal",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API proveedores",
     "apiSettings.searchProviders": "Buscar nombres de proveedores",
     "apiSettings.noProviderSearchResults": "No hay proveedores coincidentes",
     "apiSettings.providerCount": "{count} proveedores",
-    "apiSettings.provider": "Proveedor",
     "apiSettings.providerName": "Nombre del proveedor",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Opcional, p. ej. \u{1FA84}",
-    "apiSettings.connectionScope": "Ajustes de conexi\xF3n",
-    "apiSettings.connectionPreview": "Vista previa de conexi\xF3n",
     "apiSettings.modelBindings": "Modelos",
-    "apiSettings.modelBindingsHint": "Un proveedor puede vincular varios modelos y protocolos.",
     "apiSettings.addModelBinding": "A\xF1adir modelo",
     "apiSettings.defaultProviderForModel": "Proveedor predeterminado",
     "apiSettings.removeBinding": "Eliminar v\xEDnculo",
@@ -3985,7 +3637,6 @@
     "apiSettings.keepOneBinding": "Cada proveedor debe conservar al menos una vinculaci\xF3n de modelo.",
     "apiSettings.bindingRequiredFields": "En cada vinculaci\xF3n, elige un modelo, escribe el nombre remoto y selecciona al menos una operaci\xF3n.",
     "apiSettings.bindingOverlap": "{model} {operation} est\xE1 asignado a m\xE1s de una vinculaci\xF3n.",
-    "apiSettings.actualRequest": "Solicitud real",
     "apiSettings.newProviderAction": "Nuevo proveedor",
     "apiSettings.copyProvider": "Copiar",
     "apiSettings.copyProviderName": "{name} Copiar",
@@ -3996,15 +3647,7 @@
     "apiSettings.sortProviderModeStatus": "Arrastra los tiradores para ordenar o usa las flechas",
     "apiSettings.sortProviderHandleAria": "Arrastra para reordenar {provider} o usa las flechas, Inicio y Fin",
     "apiSettings.sortProviderStatus": "El orden del proveedor cambi\xF3. Guardando autom\xE1ticamente...",
-    "apiSettings.moveProviderUp": "arriba",
-    "apiSettings.moveProviderDown": "abajo",
-    "apiSettings.moveProviderUpAria": "Mover {provider} hacia arriba",
-    "apiSettings.moveProviderDownAria": "Mover {provider} hacia abajo",
-    "apiSettings.mode": "Modo de solicitud",
-    "apiSettings.images": "Imagen directa API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "directo",
-    "apiSettings.imageModel": "Modelo de generaci\xF3n de im\xE1genes",
     "apiSettings.concurrency": "L\xEDmite de simultaneidad",
     "apiSettings.svgAuthorModel": "Modelo de creaci\xF3n SVG",
     "apiSettings.invalidSvgAuthorModel": "Introduce un ID de modelo SVG v\xE1lido sin espacios.",
@@ -4012,25 +3655,18 @@
     "apiSettings.remoteModelName": "Modelo del proveedor",
     "apiSettings.fetchModels": "Obtener modelos",
     "apiSettings.advancedSettings": "Configuraci\xF3n avanzada",
-    "apiSettings.concurrencyValue": "concurrencia {concurrency}",
     "apiSettings.keySaved": "API clave guardada",
     "apiSettings.keyNotSet": "API clave no configurada",
     "apiSettings.showApiKey": "Mostrar API Key",
     "apiSettings.hideApiKey": "Ocultar API Key",
     "apiSettings.editProvider": "Editar proveedor",
     "apiSettings.newProviderTitle": "Nuevo proveedor",
-    "apiSettings.editHint": "El proveedor de guardado escribe esta edici\xF3n en el backend. Cancelar lo descarta.",
     "apiSettings.finishEditFirst": "Guarde o cancele primero la edici\xF3n del proveedor actual",
     "apiSettings.newDraftStatus": "Creando proveedor. Guarde el proveedor para aplicar.",
     "apiSettings.editDraftStatus": "Proveedor de edici\xF3n. Guarde el proveedor para aplicar.",
-    "apiSettings.cancelEdit": "Cancelar edici\xF3n",
-    "apiSettings.saveProvider": "Guardar proveedor",
-    "apiSettings.saveSelection": "Guardar selecci\xF3n",
     "apiSettings.deleteProviderTitle": "\xBFEliminar proveedor?",
     "apiSettings.deleteProviderMessage": '\xBFEliminar "{provider}"?',
     "apiSettings.deleteProviderDetail": "Esto lo elimina de la lista de proveedores y lo guarda autom\xE1ticamente en el backend.",
-    "apiSettings.deleteProviderStatus": "Proveedor eliminado. Guardando autom\xE1ticamente...",
-    "apiSettings.save": "Guardar la configuraci\xF3n de API",
     "apiSettings.loadFailed": "No se pudo cargar la configuraci\xF3n API",
     "apiSettings.savedKeyPlaceholder": "La clave API se guarda en el backend. Ingrese una nueva clave para reemplazarla.",
     "apiSettings.apiKeyRequired": "Introduce una API Key antes de guardar este proveedor.",
@@ -4051,16 +3687,6 @@
     "apiSettings.savedShort": "Guardado",
     "apiSettings.savedStatus": "API configuraci\xF3n guardada",
     "apiSettings.saveFailedShort": "Error al guardar",
-    "codexSettings.title": "Codex Canal",
-    "codexSettings.status": "Elija el canal de generaci\xF3n para el inicio de sesi\xF3n local Codex",
-    "codexSettings.notesLabel": "Codex notas del canal",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Canal predeterminado para pasar par\xE1metros de tama\xF1o, calidad y edici\xF3n directamente.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Canal de compatibilidad para flujos de trabajo que necesitan herramientas de b\xFAsqueda web.",
-    "codexSettings.current": "Actual",
-    "codexSettings.save": "Guardar canal Codex",
-    "codexSettings.saveMode": "Guardar {mode}",
     "imageEditor.title": "Editar imagen de entrada",
     "imageEditor.promptHint": "Las flechas y marcas dibujadas a mano en la imagen son solo instrucciones. No los guardes en la imagen final.",
     "imageEditor.inputFallback": "Imagen de entrada",
@@ -4140,31 +3766,21 @@
     "addGallery.save": "Guardar en la galer\xEDa",
     "close.promptTemplates": "Cerrar panel de plantillas de mensajes",
     "close.archive": "Cerrar panel de archivo",
-    "close.settings": "Cerrar el panel de configuraci\xF3n de almacenamiento",
-    "close.apiSettings": "Cerrar el panel de configuraci\xF3n API",
     "close.systemSettings": "Cerrar el panel de configuraci\xF3n del sistema",
     "close.imageEditor": "Cerrar el panel del editor de im\xE1genes",
     "close.gallery": "Cerrar panel de galer\xEDa",
     "close.addGallery": "Cerrar agregar al panel de la galer\xEDa",
     "imageInput.referenceTitle": "Entrada de referencia (opcional)",
-    "referenceFiles.add": "A\xF1adir archivo",
-    "referenceFiles.selected": "Archivos de referencia",
-    "referenceFiles.recent": "Archivos recientes",
     "referenceFiles.familyPdf": "P\xE1ginas + texto",
     "referenceFiles.familySpreadsheet": "Hoja de c\xE1lculo",
     "referenceFiles.familyDocument": "Documento",
     "referenceFiles.familyText": "Texto",
-    "referenceFiles.visualLimit": "Los archivos que no sean PDF no conservan im\xE1genes ni gr\xE1ficos incrustados. Convierte a PDF si importa el dise\xF1o.",
     "referenceFiles.remove": "Quitar {filename}",
-    "referenceFiles.switchTitle": "\xBFQuitar archivos de referencia?",
-    "referenceFiles.switchMessage": "Los archivos de referencia solo funcionan con Responses. Qu\xEDtalos antes de cambiar a Images.",
-    "referenceFiles.removeAndSwitch": "Quitar archivos y cambiar",
     "referenceFiles.requiresResponses": "Los archivos de referencia requieren Responses",
     "referenceFiles.switchToResponses": "Cambiar a Responses",
     "referenceFiles.openApiSettings": "Abrir ajustes de API",
     "referenceFiles.providerMissing": "El proveedor de Responses original no est\xE1 disponible. Elige uno en los ajustes de API.",
     "referenceFiles.missing": "Falta el archivo",
-    "referenceFiles.loadFailed": "No se pudieron cargar los archivos de referencia",
     "referenceFiles.errorEmpty": "El archivo de referencia est\xE1 vac\xEDo",
     "referenceFiles.errorUnsupported": "Este tipo de archivo de referencia no es compatible",
     "referenceFiles.errorMismatch": "El contenido no coincide con la extensi\xF3n",
@@ -4183,13 +3799,11 @@
     "modelSelection.provider": "Proveedor",
     "modelSelection.providerUnavailable": "No hay un proveedor disponible para este modelo",
     "modelSelection.openSettings": "Abrir ajustes de proveedores",
-    "modelSelection.codexUnavailable": "El inicio de sesi\xF3n de Codex no est\xE1 disponible",
     "modelSelection.catalogUnavailable": "El cat\xE1logo de modelos no est\xE1 disponible",
     "output.background": "Fondo",
     "canvas.aspectRatio": "Relaci\xF3n de aspecto",
     "canvas.resolution": "Resoluci\xF3n",
     "gemini.googleSearch": "B\xFAsqueda de Google",
-    "gemini.googleImageSearch": "B\xFAsqueda de im\xE1genes de Google",
     "output.modalities": "Modalidades de salida",
     "gemini.safetySettings": "Ajustes de seguridad",
     "gemini.safety.harassment": "Acoso",
@@ -4250,17 +3864,14 @@
     "mobile.backToEditor": "Volver a editar",
     "mobile.copyHint": "La copia autom\xE1tica no est\xE1 disponible. Selecciona el texto de abajo para copiarlo.",
     "mobile.files": "Archivos",
-    "mobile.gestureHint": "Pellizca para ampliar \xB7 Desliza para cambiar de imagen",
     "mobile.manualCopy": "Mant\xE9n pulsado para copiar",
     "mobile.more": "M\xE1s",
     "mobile.parameters": "Par\xE1metros",
     "mobile.pasteHint": "Mant\xE9n pulsado el campo para pegar o elige fotos o archivos.",
     "mobile.photos": "Fotos",
-    "mobile.pickFiles": "Elegir fotos o archivos",
     "mobile.taskActions": "Acciones de tarea",
     "networkEgress.fakeIpDnsFallback": "Compatibilidad DNS Fake-IP para descargar im\xE1genes",
     "networkEgress.fakeIpDnsHelp": "Si el DNS de la imagen devuelve una Fake-IP, consulta Cloudflare DNS para obtener direcciones p\xFAblicas reales. Se aplica a descargas de solicitudes posteriores; no cambia el DNS de la LAN. No se env\xEDan claves API, prompts ni URL completas de im\xE1genes.",
-    "output.transparencyFidelityHint": "El fondo transparente es un requisito de salida elegido y tambi\xE9n se a\xF1ade en los modos Original y Fiel.",
     "output.transparencyFormat": "La salida transparente requiere PNG o WebP.",
     "output.transparencyUnavailable": "Sin transparencia",
     "output.transparentBackground": "Fondo transparente",
@@ -4293,7 +3904,6 @@
     "userConfigBackup.incrementalCopy": "Conserva los datos actuales, omite duplicados y crea copias de recuperaci\xF3n para conflictos.",
     "userConfigBackup.itemCount": "{count} elementos",
     "userConfigBackup.modeLabel": "Copia o restauraci\xF3n",
-    "userConfigBackup.previewCounts": "{count} en archivo \xB7 {duplicate} duplicados \xB7 {conflict} conflictos",
     "userConfigBackup.previewTitle": "Vista previa de restauraci\xF3n",
     "userConfigBackup.providerRetention": "Se conservar\xE1n {count} proveedores con credenciales por seguridad",
     "userConfigBackup.replaceConfirmCopy": "Solo afecta a las secciones elegidas, pero elimina sus datos actuales. No se puede deshacer.",
@@ -4470,25 +4080,13 @@
     "queue.dispatching": "Planification \xB7 attente {waiting}",
     "queue.runningWaiting": "En cours d'ex\xE9cution {running} \xB7 en attente {waiting}",
     "queue.statusLabel": "\xC9tat de la file d'attente: {text} \xB7 {channelText}. Cliquez pour acc\xE9der aux t\xE2ches actives",
-    "queue.runningActions": "Ex\xE9cuter des actions de file d'attente de t\xE2ches",
-    "queue.waitingActions": "Actions de la file d'attente des t\xE2ches en attente",
-    "queue.cancelRunning": "Annuler",
     "queue.cancelRunningTitle": "Annuler la t\xE2che en cours",
     "queue.dragWaiting": "Faites glisser pour r\xE9organiser la t\xE2che en attente",
-    "queue.dragSort": "Faites glisser pour trier",
-    "queue.moveUp": "Vers le haut",
     "queue.moveUpTitle": "D\xE9placer la t\xE2che en attente vers le haut",
-    "queue.moveDown": "Vers le bas",
     "queue.moveDownTitle": "D\xE9placer la t\xE2che en attente vers le bas",
     "queue.promote": "Haut",
     "queue.promoteTitle": "D\xE9placer la t\xE2che en attente vers le haut",
     "queue.promoteFailed": "\xC9chec du d\xE9placement vers le haut",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Supprimer la t\xE2che en attente",
-    "queue.deleteWaitingTitleConfirm": "Supprimer la t\xE2che en attente?",
-    "queue.deleteWaitingMessage": "Cela le supprime de la file d'attente et de la liste de l'historique.",
-    "queue.deleteQueuedFailed": "\xC9chec de la suppression de la t\xE2che en file d'attente",
-    "queue.queuedDeleted": "T\xE2che en file d'attente supprim\xE9e",
     "queue.cancelRunningConfirm": "Annuler la t\xE2che",
     "queue.cancelRunningTitleConfirm": "Annuler la t\xE2che en cours?",
     "queue.cancelRunningMessage": "Une annulation sera demand\xE9e. L\u2019appel au fournisseur peut continuer et rester factur\xE9 jusqu\u2019\xE0 son retour. L\u2019historique sera conserv\xE9.",
@@ -4527,9 +4125,6 @@
     "taskStatus.runtimeCompleted": "Dur\xE9e {duration} \xB7 compl\xE9t\xE9 {time}",
     "taskStatus.completedAt": "Termin\xE9 {time}",
     "taskCard.count": "Images {count}",
-    "taskCard.successCount": "r\xE9ussi {count}",
-    "taskCard.failedCount": "\xE9chec {count}",
-    "taskCard.runningCount": "g\xE9n\xE9rer {count}",
     "taskCard.waitingCount": "en attente {count}",
     "taskCard.textToImageThumb": "Miniature de la t\xE2che de conversion texte-image",
     "taskCard.imageToImageThumb": "Vignette de la t\xE2che image \xE0 image",
@@ -4541,12 +4136,9 @@
     "runFeedback.editing": "\xC9dition",
     "runFeedback.generating": "G\xE9n\xE9ration",
     "runFeedback.status": "{action}, \xE9coul\xE9 {elapsed}",
-    "footer.archive": "Archiver",
-    "footer.archiveCount": "Archiver {count}",
     "footer.historyLibrary": "Histoire",
     "historyLibrary.openFull": "Ouvrir la biblioth\xE8que d'historique compl\xE8te",
     "history.documentTitle": "Histoire - iLab CONJURE",
-    "history.back": "Retour au g\xE9n\xE9rateur",
     "history.homeAria": "Retour au g\xE9n\xE9rateur iLab CONJURE",
     "history.backToGenerator": "Retour au g\xE9n\xE9rateur",
     "history.title": "Histoire",
@@ -4660,9 +4252,7 @@
     "history.type.textToImage": "Texte vers image",
     "history.type.imageToImage": "Image vers image",
     "history.month": "Mois",
-    "history.status": "Statut",
     "history.promptMode": "Traitement du prompt",
-    "history.size": "Taille",
     "history.quality": "Qualit\xE9",
     "history.ratio": "Rapport",
     "history.orientation": "Orientation",
@@ -4671,9 +4261,7 @@
     "history.archived": "Archiv\xE9",
     "history.all": "Tout",
     "history.allMonths": "Tous les mois",
-    "history.allStatuses": "Tous les statuts",
     "history.allPromptModes": "Tous les modes",
-    "history.allSizes": "Toutes tailles",
     "history.allQualities": "Toutes les qualit\xE9s",
     "history.allRatios": "Tous les ratios",
     "history.ratioOther": "Autre",
@@ -4695,13 +4283,10 @@
     "history.selectedCount": "{count} t\xE2ches s\xE9lectionn\xE9es",
     "history.confirmDelete": "Confirmer la suppression",
     "history.detail": "D\xE9tail de la t\xE2che",
-    "history.detailTitle": "T\xE2che d'historique",
     "history.closeDetail": "Fermer le d\xE9tail de la t\xE2che",
     "history.resizeFilters": "Redimensionner la barre lat\xE9rale du filtre",
     "history.resizeDetail": "Redimensionner le volet de d\xE9tails",
-    "history.detailEmpty": "S\xE9lectionnez une t\xE2che historique pour afficher les d\xE9tails",
     "history.loadingDetail": "Chargement des d\xE9tails...",
-    "history.loadMore": "Charger plus",
     "history.loadingMore": "Chargement...",
     "history.noMore": "Plus de t\xE2ches",
     "history.loadFailed": "Le chargement a \xE9chou\xE9. Actualisez ou continuez \xE0 faire d\xE9filer pour r\xE9essayer",
@@ -4710,9 +4295,7 @@
     "history.detailFailed": "\xC9chec du chargement des d\xE9tails",
     "history.noMatches": "Aucune t\xE2che correspondante",
     "history.loadedCount": "{count} charg\xE9",
-    "history.windowNotice": "La liste mont\xE9e est limit\xE9e aux t\xE2ches {count}; faites d\xE9filer vers le haut ou vers le bas pour restaurer les t\xE2ches adjacentes \xE0 la demande.",
     "history.selectTask": "S\xE9lectionnez une t\xE2che",
-    "history.viewing": "Affichage",
     "history.noPreview": "Aucune image d'aper\xE7u",
     "history.downloadAll": "T\xE9l\xE9charger ZIP",
     "history.downloadImage": "T\xE9l\xE9charger l\u2019image",
@@ -4727,11 +4310,9 @@
     "history.inputReferences": "R\xE9f\xE9rences d'entr\xE9e",
     "history.inputReferenceIndex": "R\xE9f\xE9rence d'entr\xE9e {index}",
     "history.copyPrompt": "Copier l'invite",
-    "history.copyPrompts": "Copier les invites",
     "history.copyPromptShort": "Copier",
     "history.copyPromptPanel": "Copier {title}",
     "history.copyOutputPromptPanel": "Copier l'image {index} invite r\xE9vis\xE9e",
-    "history.copyTaskIds": "Copier la t\xE2che IDs",
     "history.reuseTask": "Afficher dans le g\xE9n\xE9rateur",
     "history.downloadTask": "T\xE9l\xE9charger",
     "history.downloadSelectedTasks": "T\xE9l\xE9chargement par lots",
@@ -4749,7 +4330,6 @@
     "history.noDownloadableOutputs": "Aucune image t\xE9l\xE9chargeable",
     "history.confirmDeleteSelected": "Confirmer la suppression s\xE9lectionn\xE9e",
     "history.openPreview": "Ouvrir l'aper\xE7u",
-    "history.closePreview": "Fermer l'aper\xE7u",
     "history.untitled": "Sans titre",
     "history.promptCompare": "Comparaison rapide",
     "history.promptOriginal": "Invite d'origine",
@@ -4766,8 +4346,6 @@
     "history.quality.low": "Faible",
     "history.quality.auto": "Automatique",
     "footer.batch": "Lot",
-    "footer.storage": "Stockage",
-    "footer.apiStatus": "Statut API: OK",
     "footer.version": "Version {version}",
     "footer.versionLoading": "Version...",
     "notifications.title": "Notifications",
@@ -4790,31 +4368,11 @@
     "theme.system": "Automatique",
     "theme.light": "Clair",
     "theme.dark": "Sombre",
-    "language.label": "Langue de l'interface",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Source d'authentification",
     "auth.checking": "V\xE9rification de l'authentification",
     "auth.missingCodexSession": "Aucune session Codex d\xE9tect\xE9e",
     "auth.switchFailed": "\xC9chec du changement de source d'authentification",
     "auth.sourceUnavailable": "{source} indisponible",
     "auth.notActive": "Pas actif",
-    "api.settings": "Param\xE8tres syst\xE8me",
-    "api.provider": "Fournisseur API",
-    "imageInput.title": "Images",
     "imageInput.uploadAria": "Cliquez, d\xE9posez ou collez des images et des fichiers",
     "imageInput.uploadImages": "Cliquez, d\xE9posez ou collez des images",
     "imageInput.uploadFull": "Cliquez, d\xE9posez ou collez des images et des fichiers",
@@ -4910,7 +4468,6 @@
     "gallery.categoryFallback": "Cat\xE9gorie Galerie",
     "gallery.imageFallback": "Image de la galerie",
     "gallery.imageLoadFailed": "\xC9chec du chargement de cette image",
-    "gallery.editImageLoadFailed": "\xC9chec du chargement de cette image pour la modifier",
     "gallery.cannotAddImage": "Cette image ne peut pas \xEAtre ajout\xE9e \xE0 la galerie",
     "gallery.nameRequired": "Entrez un nom de galerie",
     "gallery.saveFailed": "\xC9chec de l'enregistrement de l'image de la galerie",
@@ -4966,7 +4523,6 @@
     "outputSettings.title": "Sortie",
     "output.lock.lock": "Verrouiller les param\xE8tres",
     "output.lock.unlock": "D\xE9verrouiller et modifier",
-    "output.lock.current": "Verrouillage actuel",
     "output.lock.task": "Param\xE8tres de la t\xE2che",
     "output.lock.adoptTask": "Utiliser les param\xE8tres de cette t\xE2che",
     "output.lock.frame": "Cadrage",
@@ -4986,25 +4542,11 @@
     "output.mainModel": "Mod\xE8le principal",
     "output.selectMainModel": "S\xE9lectionnez le mod\xE8le principal",
     "output.mainModelCustomForInput": "Utiliser un mod\xE8le personnalis\xE9 pour l'entr\xE9e actuelle",
-    "output.apiDirect": "API Direct",
-    "output.apiToolModel": "Utilisation du mod\xE8le de g\xE9n\xE9ration d\u2019images API",
     "output.webSearch": "Recherche sur le Web",
-    "output.webSearchToggle": "Sur",
     "output.webSearchTitle": "Recherchez d'abord sur le Web, puis utilisez-le pour cette g\xE9n\xE9ration; Codex et API Responses uniquement",
-    "output.promptMode": "Traitement du prompt",
     "output.modeOriginal": "Original",
     "output.modeStrict": "Fid\xE8le",
     "output.modeCreative": "Automatique",
-    "output.promptHelp": "Expliquer le traitement du prompt",
-    "output.promptHelpTitle": "Traitement du prompt",
-    "output.promptHelp.responsesChannel": "Responses \xB7 mod\xE8le principal impliqu\xE9",
-    "output.promptHelp.imagesChannel": "Images \xB7 g\xE9n\xE9ration directe",
-    "output.promptHelp.responses.original": "Envoie le texte original exact sans r\xE8gle ajout\xE9e par l\u2019application ; le fournisseur peut n\xE9anmoins renvoyer un revised prompt ou interpr\xE9ter le r\xE9sultat autrement.",
-    "output.promptHelp.responses.strict": "Autorise le mod\xE8le principal \xE0 organiser ou d\xE9velopper le prompt tout en pr\xE9servant les contraintes de sujet, texte, couleur et composition.",
-    "output.promptHelp.responses.automatic": "N\u2019ajoute aucune contrainte ; le mod\xE8le principal interpr\xE8te et optimise avant d\u2019appeler l\u2019outil d\u2019image.",
-    "output.promptHelp.images.original": "N\u2019ajoute aucune r\xE8gle applicative et envoie le texte original directement \xE0 l\u2019API d\u2019images.",
-    "output.promptHelp.images.strict": "Envoie les r\xE8gles de fid\xE9lit\xE9 avec le prompt original afin de pr\xE9server toutes les contraintes.",
-    "output.promptHelp.images.automatic": "Utilise le traitement par d\xE9faut de l\u2019API d\u2019images et conserve les notes n\xE9cessaires pour les r\xE9f\xE9rences de galerie.",
     "output.size": "Taille de sortie",
     "output.sizeMode": "Mode taille",
     "output.sizeAuto": "Automatique",
@@ -5068,8 +4610,6 @@
     "preview.runningTitle": "{mode} en cours d'ex\xE9cution",
     "preview.submittingTitle": "Soumission de la t\xE2che",
     "preview.queuedTitle": "T\xE2che en file d'attente",
-    "preview.submittingDetail": "Sauvegarde des entr\xE9es et ajout de la t\xE2che \xE0 la file d'attente. La g\xE9n\xE9ration d\xE9marrera automatiquement.",
-    "preview.queuedDetail": "La t\xE2che est dans la file d'attente et attend un canal disponible.",
     "preview.featured": "S\xE9lectionn\xE9",
     "preview.addFeatured": "S\xE9lectionner le r\xE9sultat",
     "preview.selectedFeatured": "S\xE9lectionn\xE9",
@@ -5122,7 +4662,6 @@
     "promptPopover.close": "Fermer la comparaison rapide",
     "promptPopover.copyOptimized": "Copier l'invite optimis\xE9e",
     "promptPopover.copied": "Copi\xE9",
-    "taskContext.menuLabel": "Menu contextuel de la t\xE2che",
     "taskContext.view": "Afficher la t\xE2che",
     "taskContext.copyId": "Copier la t\xE2che ID",
     "taskContext.copyPrompt": "Copier l'invite",
@@ -5151,7 +4690,6 @@
     "taskActions.acceptSuccessesFailed": "\xC9chec de l'acceptation des r\xE9sultats positifs",
     "taskActions.acceptedSuccesses": "R\xE9sultats r\xE9ussis accept\xE9s",
     "taskActions.viewedUpdateFailed": "\xC9chec de la mise \xE0 jour de l'\xE9tat de lecture",
-    "taskActions.failedFallback": "La t\xE2che a \xE9chou\xE9",
     "taskList.empty": "Pas encore d'historique",
     "taskList.selectSession": "S\xE9lectionnez le chat",
     "taskList.unreadUpdate": "Mise \xE0 jour non lue",
@@ -5221,7 +4759,6 @@
     "snippets.saveSelection": "Enregistrer",
     "snippets.saveSelectionLabel": "Enregistrer le texte s\xE9lectionn\xE9 sous forme d'extrait d'invite",
     "snippets.popoverLabel": "Extrait d'invite",
-    "snippets.defaultCategory": "Commun",
     "snippets.loadFailed": "\xC9chec du chargement des extraits d'invite",
     "snippets.remove": "Supprimer ~{tag}",
     "snippets.expand": "D\xE9velopper",
@@ -5266,7 +4803,6 @@
     "colors.done": "Termin\xE9",
     "colors.manage": "G\xE9rer",
     "colors.favorites": "Couleurs pr\xE9f\xE9r\xE9es",
-    "colors.recent": "Couleurs r\xE9centes",
     "colors.recentLabel": "R\xE9cent",
     "colors.deleteFavorite": "Supprimer la couleur pr\xE9f\xE9r\xE9e {name}",
     "colors.modify": "Modifier la couleur",
@@ -5276,16 +4812,13 @@
     "taskGroup.current": "T\xE2che actuelle",
     "taskGroup.yesterday": "Hier",
     "taskGroup.last7": "7 derniers jours",
-    "taskGroup.older": "Plus \xE2g\xE9",
     "taskGroup.searchResults": "R\xE9sultats de la recherche",
-    "taskGroup.active": "Actif",
     "taskGroup.running": "Courir",
     "taskGroup.waiting": "En attente",
     "taskGroup.dispatchPending": "Attribution d'un canal disponible...",
     "taskGroup.expand": "D\xE9veloppez {label}",
     "taskGroup.collapse": "R\xE9duire {label}",
     "taskGroup.buttonLabel": "T\xE2ches {label}, {count}",
-    "taskGroup.loadMore": "Charger {count} de plus",
     "taskGroup.loadFailedRetry": "\xC9chec du chargement. Cliquez pour r\xE9essayer",
     "archive.title": "Archiver",
     "archive.empty": "Aucune discussion archiv\xE9e",
@@ -5298,7 +4831,6 @@
     "archive.restoring": "Restauration...",
     "archive.deleting": "Suppression...",
     "archive.restoredCount": "T\xE2ches {count} restaur\xE9es",
-    "settings.title": "Stockage",
     "settings.status": "Red\xE9marrez WebUI apr\xE8s avoir enregistr\xE9 les chemins de stockage",
     "settings.pathChangeHint": "Changer les chemins ne d\xE9place pas les donn\xE9es existantes. Avant de les d\xE9placer, faites une sauvegarde, quittez l\u2019application et copiez les dossiers complets.",
     "settings.previousPaths": "Donn\xE9es anciennes introuvables ? Voir les dossiers par d\xE9faut d\u2019origine",
@@ -5353,7 +4885,6 @@
     "userConfigBackup.restoreComplete": "Restauration termin\xE9e",
     "systemSettings.tabsLabel": "Sections des param\xE8tres syst\xE8me",
     "systemSettings.apiTab": "API Param\xE8tres",
-    "systemSettings.codexTab": "Canal Codex",
     "systemSettings.languageTab": "Langue / Language",
     "systemSettings.storageTab": "Stockage et notifications",
     "systemSettings.networkTab": "R\xE9seau",
@@ -5379,23 +4910,14 @@
     "networkEgress.loadFailed": "Impossible de charger les param\xE8tres r\xE9seau",
     "networkEgress.saveFailed": "Impossible d'enregistrer les param\xE8tres r\xE9seau",
     "languageSettings.instantStatus": "Les changements de langue s'appliquent imm\xE9diatement",
-    "apiSettings.title": "API Param\xE8tres",
-    "apiSettings.status": "Les param\xE8tres enregistr\xE9s s'appliquent imm\xE9diatement en mode API",
-    "apiSettings.codexMode": "Canal Codex",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "Fournisseurs API",
     "apiSettings.searchProviders": "Rechercher un fournisseur",
     "apiSettings.noProviderSearchResults": "Aucun fournisseur correspondant",
     "apiSettings.providerCount": "Fournisseurs {count}",
-    "apiSettings.provider": "Fournisseur",
     "apiSettings.providerName": "Nom du fournisseur",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Facultatif, ex. \u{1FA84}",
-    "apiSettings.connectionScope": "Param\xE8tres de connexion",
-    "apiSettings.connectionPreview": "Aper\xE7u de la connexion",
     "apiSettings.modelBindings": "Mod\xE8les",
-    "apiSettings.modelBindingsHint": "Un fournisseur peut associer plusieurs mod\xE8les et protocoles.",
     "apiSettings.addModelBinding": "Ajouter un mod\xE8le",
     "apiSettings.defaultProviderForModel": "Fournisseur par d\xE9faut",
     "apiSettings.removeBinding": "Supprimer la liaison",
@@ -5403,7 +4925,6 @@
     "apiSettings.keepOneBinding": "Chaque fournisseur doit conserver au moins une association de mod\xE8le.",
     "apiSettings.bindingRequiredFields": "Pour chaque association, choisissez un mod\xE8le, saisissez son nom distant et s\xE9lectionnez au moins une op\xE9ration.",
     "apiSettings.bindingOverlap": "{model} {operation} correspond \xE0 plusieurs associations.",
-    "apiSettings.actualRequest": "Requ\xEAte effective",
     "apiSettings.newProviderAction": "Nouveau fournisseur",
     "apiSettings.copyProvider": "Copier",
     "apiSettings.copyProviderName": "{name} Copie",
@@ -5414,15 +4935,7 @@
     "apiSettings.sortProviderModeStatus": "Faites glisser les poign\xE9es ou utilisez les fl\xE8ches pour trier",
     "apiSettings.sortProviderHandleAria": "Faites glisser pour r\xE9ordonner {provider}, ou utilisez les fl\xE8ches, D\xE9but et Fin",
     "apiSettings.sortProviderStatus": "L'ordre des fournisseurs a \xE9t\xE9 modifi\xE9. Enregistrement automatique...",
-    "apiSettings.moveProviderUp": "Vers le haut",
-    "apiSettings.moveProviderDown": "Vers le bas",
-    "apiSettings.moveProviderUpAria": "D\xE9placer {provider} vers le haut",
-    "apiSettings.moveProviderDownAria": "D\xE9placer {provider} vers le bas",
-    "apiSettings.mode": "Mode demande",
-    "apiSettings.images": "Image directe API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Direct",
-    "apiSettings.imageModel": "Mod\xE8le de g\xE9n\xE9ration d\u2019images",
     "apiSettings.concurrency": "Limite de simultan\xE9it\xE9",
     "apiSettings.svgAuthorModel": "Mod\xE8le de cr\xE9ation SVG",
     "apiSettings.invalidSvgAuthorModel": "Saisissez un identifiant de mod\xE8le SVG valide sans espaces.",
@@ -5430,25 +4943,18 @@
     "apiSettings.remoteModelName": "Nom du mod\xE8le du fournisseur",
     "apiSettings.fetchModels": "Obtenir les mod\xE8les",
     "apiSettings.advancedSettings": "Param\xE8tres avanc\xE9s",
-    "apiSettings.concurrencyValue": "concurrence {concurrency}",
     "apiSettings.keySaved": "Cl\xE9 API enregistr\xE9e",
     "apiSettings.keyNotSet": "Cl\xE9 API non d\xE9finie",
     "apiSettings.showApiKey": "Afficher la cl\xE9 API",
     "apiSettings.hideApiKey": "Masquer la cl\xE9 API",
     "apiSettings.editProvider": "Modifier le fournisseur",
     "apiSettings.newProviderTitle": "Nouveau fournisseur",
-    "apiSettings.editHint": "Le fournisseur de sauvegarde \xE9crit cette modification dans le backend. Annuler le supprime.",
     "apiSettings.finishEditFirst": "Enregistrez ou annulez d'abord la modification du fournisseur actuel",
     "apiSettings.newDraftStatus": "Cr\xE9ation d'un fournisseur. Enregistrez le fournisseur pour postuler.",
     "apiSettings.editDraftStatus": "Fournisseur d'\xE9dition. Enregistrez le fournisseur pour postuler.",
-    "apiSettings.cancelEdit": "Annuler la modification",
-    "apiSettings.saveProvider": "Enregistrer le fournisseur",
-    "apiSettings.saveSelection": "Enregistrer la s\xE9lection",
     "apiSettings.deleteProviderTitle": "Supprimer le fournisseur?",
     "apiSettings.deleteProviderMessage": "Supprimer \xAB\xA0{provider}\xA0\xBB?",
     "apiSettings.deleteProviderDetail": "Cela le supprime de la liste des fournisseurs et l'enregistre automatiquement dans le backend.",
-    "apiSettings.deleteProviderStatus": "Fournisseur supprim\xE9. Enregistrement automatique...",
-    "apiSettings.save": "Enregistrer les param\xE8tres API",
     "apiSettings.loadFailed": "\xC9chec du chargement des param\xE8tres API",
     "apiSettings.savedKeyPlaceholder": "La cl\xE9 API est enregistr\xE9e sur le backend. Entrez une nouvelle cl\xE9 pour la remplacer.",
     "apiSettings.apiKeyRequired": "Saisissez une cl\xE9 API avant d\u2019enregistrer ce fournisseur.",
@@ -5469,16 +4975,6 @@
     "apiSettings.savedShort": "Enregistr\xE9",
     "apiSettings.savedStatus": "Param\xE8tres API enregistr\xE9s",
     "apiSettings.saveFailedShort": "\xC9chec de l'enregistrement",
-    "codexSettings.title": "Canal Codex",
-    "codexSettings.status": "Choisissez le canal de g\xE9n\xE9ration pour la connexion locale Codex",
-    "codexSettings.notesLabel": "Notes de la cha\xEEne Codex",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Canal par d\xE9faut pour transmettre directement les param\xE8tres de taille, de qualit\xE9 et d\u2019\xE9dition.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Canal de compatibilit\xE9 pour les flux de travail n\xE9cessitant des outils de recherche Web.",
-    "codexSettings.current": "Actuel",
-    "codexSettings.save": "Enregistrer la cha\xEEne Codex",
-    "codexSettings.saveMode": "Enregistrer {mode}",
     "imageEditor.title": "Modifier l'image d'entr\xE9e",
     "imageEditor.promptHint": "Les fl\xE8ches et les marques dessin\xE9es \xE0 la main dans l'image ne sont que des instructions. Ne les conservez pas dans l'image finale.",
     "imageEditor.inputFallback": "Image d'entr\xE9e",
@@ -5558,31 +5054,21 @@
     "addGallery.save": "Enregistrer dans la galerie",
     "close.promptTemplates": "Fermer le panneau des mod\xE8les d'invite",
     "close.archive": "Fermer le panneau d'archives",
-    "close.settings": "Fermer le panneau des param\xE8tres de stockage",
-    "close.apiSettings": "Fermez le panneau de param\xE8tres API",
     "close.systemSettings": "Fermer le panneau des param\xE8tres syst\xE8me",
     "close.imageEditor": "Fermer le panneau de l'\xE9diteur d'images",
     "close.gallery": "Fermer le panneau de la galerie",
     "close.addGallery": "Fermer le panneau Ajouter \xE0 la galerie",
     "imageInput.referenceTitle": "Entr\xE9e de r\xE9f\xE9rence (facultative)",
-    "referenceFiles.add": "Ajouter un fichier",
-    "referenceFiles.selected": "Fichiers de r\xE9f\xE9rence",
-    "referenceFiles.recent": "Fichiers r\xE9cents",
     "referenceFiles.familyPdf": "Pages + texte",
     "referenceFiles.familySpreadsheet": "Tableur",
     "referenceFiles.familyDocument": "Document",
     "referenceFiles.familyText": "Texte",
-    "referenceFiles.visualLimit": "Les fichiers non PDF ne conservent pas les images et graphiques int\xE9gr\xE9s. Convertissez en PDF si la mise en page compte.",
     "referenceFiles.remove": "Supprimer {filename}",
-    "referenceFiles.switchTitle": "Supprimer les fichiers de r\xE9f\xE9rence ?",
-    "referenceFiles.switchMessage": "Les fichiers de r\xE9f\xE9rence fonctionnent uniquement avec Responses. Supprimez-les avant de passer \xE0 Images.",
-    "referenceFiles.removeAndSwitch": "Supprimer et changer",
     "referenceFiles.requiresResponses": "Les fichiers de r\xE9f\xE9rence n\xE9cessitent Responses",
     "referenceFiles.switchToResponses": "Passer \xE0 Responses",
     "referenceFiles.openApiSettings": "Ouvrir les param\xE8tres API",
     "referenceFiles.providerMissing": "Le fournisseur Responses d\u2019origine est indisponible. Choisissez-en un dans les param\xE8tres API.",
     "referenceFiles.missing": "Fichier manquant",
-    "referenceFiles.loadFailed": "\xC9chec du chargement des fichiers de r\xE9f\xE9rence",
     "referenceFiles.errorEmpty": "Le fichier de r\xE9f\xE9rence est vide",
     "referenceFiles.errorUnsupported": "Ce type de fichier de r\xE9f\xE9rence n\u2019est pas pris en charge",
     "referenceFiles.errorMismatch": "Le contenu ne correspond pas \xE0 l\u2019extension",
@@ -5601,13 +5087,11 @@
     "modelSelection.provider": "Fournisseur",
     "modelSelection.providerUnavailable": "Aucun fournisseur n\u2019est disponible pour ce mod\xE8le",
     "modelSelection.openSettings": "Ouvrir les r\xE9glages des fournisseurs",
-    "modelSelection.codexUnavailable": "La connexion Codex n\u2019est pas disponible",
     "modelSelection.catalogUnavailable": "Le catalogue de mod\xE8les n\u2019est pas disponible",
     "output.background": "Arri\xE8re-plan",
     "canvas.aspectRatio": "Format d\u2019image",
     "canvas.resolution": "R\xE9solution",
     "gemini.googleSearch": "Recherche Google",
-    "gemini.googleImageSearch": "Recherche d\u2019images Google",
     "output.modalities": "Modalit\xE9s de sortie",
     "gemini.safetySettings": "Param\xE8tres de s\xE9curit\xE9",
     "gemini.safety.harassment": "Harc\xE8lement",
@@ -5668,17 +5152,14 @@
     "mobile.backToEditor": "Retour \xE0 l\u2019\xE9dition",
     "mobile.copyHint": "La copie automatique est indisponible. S\xE9lectionnez le texte ci-dessous pour le copier.",
     "mobile.files": "Fichiers",
-    "mobile.gestureHint": "Pincez pour zoomer \xB7 Balayez pour changer d\u2019image",
     "mobile.manualCopy": "Appuyez longuement pour copier",
     "mobile.more": "Plus",
     "mobile.parameters": "Param\xE8tres",
     "mobile.pasteHint": "Appuyez longuement dans le champ pour coller, ou choisissez des photos ou fichiers.",
     "mobile.photos": "Photos",
-    "mobile.pickFiles": "Choisir des photos ou fichiers",
     "mobile.taskActions": "Actions de la t\xE2che",
     "networkEgress.fakeIpDnsFallback": "Compatibilit\xE9 DNS Fake-IP pour les t\xE9l\xE9chargements d\u2019images",
     "networkEgress.fakeIpDnsHelp": "Si le DNS de l\u2019image renvoie une Fake-IP, interroge Cloudflare DNS pour obtenir de vraies adresses publiques. S\u2019applique aux t\xE9l\xE9chargements des prochaines requ\xEAtes, sans modifier le DNS du LAN. Aucune cl\xE9 API, aucun prompt ni URL compl\xE8te d\u2019image n\u2019est envoy\xE9.",
-    "output.transparencyFidelityHint": "Le fond transparent est une exigence de sortie choisie ; il est aussi ajout\xE9 dans les modes Original et Fid\xE8le.",
     "output.transparencyFormat": "La transparence n\xE9cessite PNG ou WebP.",
     "output.transparencyUnavailable": "Sans transparence",
     "output.transparentBackground": "Fond transparent",
@@ -5711,7 +5192,6 @@
     "userConfigBackup.incrementalCopy": "Conserve les donn\xE9es existantes, ignore les doublons et cr\xE9e des copies de r\xE9cup\xE9ration en cas de conflit.",
     "userConfigBackup.itemCount": "{count} \xE9l\xE9ments",
     "userConfigBackup.modeLabel": "Sauvegarder ou restaurer",
-    "userConfigBackup.previewCounts": "{count} dans l\u2019archive \xB7 {duplicate} doublons \xB7 {conflict} conflits",
     "userConfigBackup.previewTitle": "Aper\xE7u de restauration",
     "userConfigBackup.providerRetention": "{count} fournisseurs avec identifiants seront conserv\xE9s par s\xE9curit\xE9",
     "userConfigBackup.replaceConfirmCopy": "Seules les sections choisies sont concern\xE9es, mais leurs donn\xE9es actuelles seront supprim\xE9es. Cette action est irr\xE9versible.",
@@ -5888,25 +5368,13 @@
     "queue.dispatching": "\u30B9\u30B1\u30B8\u30E5\u30FC\u30EB\u4E2D \xB7 \u5F85\u6A5F {waiting}",
     "queue.runningWaiting": "\u5B9F\u884C\u4E2D {running} \xB7 \u5F85\u6A5F {waiting}",
     "queue.statusLabel": "\u30AD\u30E5\u30FC\u306E\u30B9\u30C6\u30FC\u30BF\u30B9:{text}\xB7{channelText}\u3002\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u30A2\u30AF\u30C6\u30A3\u30D6\u306A\u30BF\u30B9\u30AF\u306B\u30B8\u30E3\u30F3\u30D7\u3057\u307E\u3059",
-    "queue.runningActions": "\u30BF\u30B9\u30AF\u30AD\u30E5\u30FC\u30A2\u30AF\u30B7\u30E7\u30F3\u3092\u5B9F\u884C\u3057\u3066\u3044\u307E\u3059",
-    "queue.waitingActions": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u30AD\u30E5\u30FC\u306E\u30A2\u30AF\u30B7\u30E7\u30F3",
-    "queue.cancelRunning": "\u30AD\u30E3\u30F3\u30BB\u30EB",
     "queue.cancelRunningTitle": "\u5B9F\u884C\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u30AD\u30E3\u30F3\u30BB\u30EB\u3057\u307E\u3059",
     "queue.dragWaiting": "\u30C9\u30E9\u30C3\u30B0\u3057\u3066\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u306E\u9806\u5E8F\u3092\u5909\u66F4\u3057\u307E\u3059",
-    "queue.dragSort": "\u30C9\u30E9\u30C3\u30B0\u3057\u3066\u4E26\u3079\u66FF\u3048\u307E\u3059",
-    "queue.moveUp": "\u4E0A",
     "queue.moveUpTitle": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u4E0A\u306B\u79FB\u52D5",
-    "queue.moveDown": "\u4E0B\u3078",
     "queue.moveDownTitle": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u4E0B\u306B\u79FB\u52D5\u3057\u307E\u3059",
     "queue.promote": "\u5148\u982D\u3078",
     "queue.promoteTitle": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u5148\u982D\u306B\u79FB\u52D5",
     "queue.promoteFailed": "\u5148\u982D\u3078\u306E\u79FB\u52D5\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
-    "queue.deleteWaitingShort": "\u524A\u9664",
-    "queue.deleteWaitingTitle": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u524A\u9664",
-    "queue.deleteWaitingTitleConfirm": "\u5F85\u6A5F\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u524A\u9664\u3057\u307E\u3059\u304B?",
-    "queue.deleteWaitingMessage": "\u30AD\u30E5\u30FC\u3068\u5C65\u6B74\u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664\u3055\u308C\u307E\u3059\u3002",
-    "queue.deleteQueuedFailed": "\u30AD\u30E5\u30FC\u306B\u5165\u308C\u3089\u308C\u305F\u30BF\u30B9\u30AF\u306E\u524A\u9664\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
-    "queue.queuedDeleted": "\u30AD\u30E5\u30FC\u306B\u767B\u9332\u3055\u308C\u305F\u30BF\u30B9\u30AF\u304C\u524A\u9664\u3055\u308C\u307E\u3057\u305F",
     "queue.cancelRunningConfirm": "\u30BF\u30B9\u30AF\u3092\u30AD\u30E3\u30F3\u30BB\u30EB",
     "queue.cancelRunningTitleConfirm": "\u5B9F\u884C\u4E2D\u306E\u30BF\u30B9\u30AF\u3092\u30AD\u30E3\u30F3\u30BB\u30EB\u3057\u307E\u3059\u304B?",
     "queue.cancelRunningMessage": "\u30AD\u30E3\u30F3\u30BB\u30EB\u3092\u8981\u6C42\u3057\u307E\u3059\u3002\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E\u547C\u3073\u51FA\u3057\u306F\u5FDC\u7B54\u3059\u308B\u307E\u3067\u7D99\u7D9A\u3057\u3001\u6599\u91D1\u304C\u767A\u751F\u3059\u308B\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u3002\u5C65\u6B74\u306F\u4FDD\u6301\u3055\u308C\u307E\u3059\u3002",
@@ -5945,9 +5413,6 @@
     "taskStatus.runtimeCompleted": "\u6240\u8981\u6642\u9593 {duration} \xB7 \u5B8C\u4E86 {time}",
     "taskStatus.completedAt": "\u5B8C\u4E86{time}",
     "taskCard.count": "\u753B\u50CF {count} \u679A",
-    "taskCard.successCount": "\u6210\u529F {count}",
-    "taskCard.failedCount": "\u5931\u6557 {count}",
-    "taskCard.runningCount": "\u751F\u6210\u4E2D {count}",
     "taskCard.waitingCount": "\u5F85\u6A5F\u4E2D {count}",
     "taskCard.textToImageThumb": "\u30C6\u30AD\u30B9\u30C8\u304B\u3089\u753B\u50CF\u3078\u306E\u30BF\u30B9\u30AF\u306E\u30B5\u30E0\u30CD\u30A4\u30EB",
     "taskCard.imageToImageThumb": "\u753B\u50CF\u304B\u3089\u753B\u50CF\u3078\u306E\u30BF\u30B9\u30AF\u306E\u30B5\u30E0\u30CD\u30A4\u30EB",
@@ -5959,12 +5424,9 @@
     "runFeedback.editing": "\u7DE8\u96C6\u4E2D",
     "runFeedback.generating": "\u751F\u6210\u4E2D",
     "runFeedback.status": "{action}\u3001{elapsed}\u7D4C\u904E",
-    "footer.archive": "\u30A2\u30FC\u30AB\u30A4\u30D6",
-    "footer.archiveCount": "\u30A2\u30FC\u30AB\u30A4\u30D6 {count}",
     "footer.historyLibrary": "\u5C65\u6B74",
     "historyLibrary.openFull": "\u5C65\u6B74\u30E9\u30A4\u30D6\u30E9\u30EA\u5168\u4F53\u3092\u958B\u304F",
     "history.documentTitle": "\u5C65\u6B74 - iLab CONJURE",
-    "history.back": "\u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u30FC\u306B\u623B\u308B",
     "history.homeAria": "iLab CONJURE \u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u30FC\u306B\u623B\u308B",
     "history.backToGenerator": "\u751F\u6210\u753B\u9762\u306B\u623B\u308B",
     "history.title": "\u5C65\u6B74",
@@ -6078,9 +5540,7 @@
     "history.type.textToImage": "\u30C6\u30AD\u30B9\u30C8\u304B\u3089\u753B\u50CF",
     "history.type.imageToImage": "\u753B\u50CF\u304B\u3089\u753B\u50CF",
     "history.month": "\u6708",
-    "history.status": "\u30B9\u30C6\u30FC\u30BF\u30B9",
     "history.promptMode": "\u30D7\u30ED\u30F3\u30D7\u30C8\u51E6\u7406",
-    "history.size": "\u30B5\u30A4\u30BA",
     "history.quality": "\u54C1\u8CEA",
     "history.ratio": "\u6BD4\u7387",
     "history.orientation": "\u65B9\u5411",
@@ -6089,9 +5549,7 @@
     "history.archived": "\u30A2\u30FC\u30AB\u30A4\u30D6\u6E08\u307F",
     "history.all": "\u3059\u3079\u3066",
     "history.allMonths": "\u3059\u3079\u3066\u306E\u6708",
-    "history.allStatuses": "\u3059\u3079\u3066\u306E\u30B9\u30C6\u30FC\u30BF\u30B9",
     "history.allPromptModes": "\u3059\u3079\u3066\u306E\u30E2\u30FC\u30C9",
-    "history.allSizes": "\u3059\u3079\u3066\u306E\u30B5\u30A4\u30BA",
     "history.allQualities": "\u3059\u3079\u3066\u306E\u54C1\u8CEA",
     "history.allRatios": "\u3059\u3079\u3066\u306E\u6BD4\u7387",
     "history.ratioOther": "\u305D\u306E\u4ED6",
@@ -6113,13 +5571,10 @@
     "history.selectedCount": "{count}\u30BF\u30B9\u30AF\u304C\u9078\u629E\u3055\u308C\u307E\u3057\u305F",
     "history.confirmDelete": "\u524A\u9664\u306E\u78BA\u8A8D",
     "history.detail": "\u30BF\u30B9\u30AF\u306E\u8A73\u7D30",
-    "history.detailTitle": "\u5C65\u6B74\u30BF\u30B9\u30AF",
     "history.closeDetail": "\u30BF\u30B9\u30AF\u306E\u8A73\u7D30\u3092\u9589\u3058\u308B",
     "history.resizeFilters": "\u30D5\u30A3\u30EB\u30BF\u30FC\u30B5\u30A4\u30C9\u30D0\u30FC\u306E\u30B5\u30A4\u30BA\u3092\u5909\u66F4",
     "history.resizeDetail": "\u8A73\u7D30\u30DA\u30A4\u30F3\u306E\u30B5\u30A4\u30BA\u3092\u5909\u66F4\u3059\u308B",
-    "history.detailEmpty": "\u8A73\u7D30\u3092\u8868\u793A\u3059\u308B\u306B\u306F\u5C65\u6B74\u30BF\u30B9\u30AF\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044",
     "history.loadingDetail": "\u8A73\u7D30\u3092\u8AAD\u307F\u8FBC\u307F\u4E2D...",
-    "history.loadMore": "\u3082\u3063\u3068\u8AAD\u307F\u8FBC\u3080",
     "history.loadingMore": "\u8AAD\u307F\u8FBC\u307F\u4E2D...",
     "history.noMore": "\u3053\u308C\u4EE5\u4E0A\u306E\u30BF\u30B9\u30AF\u306F\u3042\u308A\u307E\u305B\u3093",
     "history.loadFailed": "\u30ED\u30FC\u30C9\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\u66F4\u65B0\u3059\u308B\u304B\u30B9\u30AF\u30ED\u30FC\u30EB\u3092\u7D9A\u3051\u3066\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044",
@@ -6128,9 +5583,7 @@
     "history.detailFailed": "\u8A73\u7D30\u306E\u30ED\u30FC\u30C9\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
     "history.noMatches": "\u4E00\u81F4\u3059\u308B\u30BF\u30B9\u30AF\u306F\u3042\u308A\u307E\u305B\u3093",
     "history.loadedCount": "{count} \u4EF6\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u3057\u305F",
-    "history.windowNotice": "\u8868\u793A\u3055\u308C\u308B\u30EA\u30B9\u30C8\u306F {count} \u4EF6\u306E\u30BF\u30B9\u30AF\u306B\u5236\u9650\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u4E0A\u4E0B\u306B\u30B9\u30AF\u30ED\u30FC\u30EB\u3059\u308B\u3068\u3001\u5FC5\u8981\u306A\u5468\u8FBA\u30BF\u30B9\u30AF\u3092\u5FA9\u5143\u3067\u304D\u307E\u3059\u3002",
     "history.selectTask": "\u30BF\u30B9\u30AF\u306E\u9078\u629E",
-    "history.viewing": "\u95B2\u89A7\u4E2D",
     "history.noPreview": "\u30D7\u30EC\u30D3\u30E5\u30FC\u753B\u50CF\u304C\u3042\u308A\u307E\u305B\u3093",
     "history.downloadAll": "ZIP \u3092\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9",
     "history.downloadImage": "\u753B\u50CF\u3092\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9",
@@ -6145,11 +5598,9 @@
     "history.inputReferences": "\u5165\u529B\u30EA\u30D5\u30A1\u30EC\u30F3\u30B9",
     "history.inputReferenceIndex": "\u5165\u529B\u53C2\u7167 {index}",
     "history.copyPrompt": "\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30B3\u30D4\u30FC",
-    "history.copyPrompts": "\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30B3\u30D4\u30FC",
     "history.copyPromptShort": "\u30B3\u30D4\u30FC",
     "history.copyPromptPanel": "{title}\u3092\u30B3\u30D4\u30FC",
     "history.copyOutputPromptPanel": "\u753B\u50CF {index} \u306E\u6539\u8A02\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30B3\u30D4\u30FC",
-    "history.copyTaskIds": "\u30BF\u30B9\u30AF ID \u3092\u30B3\u30D4\u30FC",
     "history.reuseTask": "\u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u30FC\u3067\u8868\u793A",
     "history.downloadTask": "\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9",
     "history.downloadSelectedTasks": "\u30D0\u30C3\u30C1\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9",
@@ -6167,7 +5618,6 @@
     "history.noDownloadableOutputs": "\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u53EF\u80FD\u306A\u753B\u50CF\u306F\u3042\u308A\u307E\u305B\u3093",
     "history.confirmDeleteSelected": "\u9078\u629E\u3057\u305F\u524A\u9664\u3092\u78BA\u8A8D\u3057\u307E\u3059",
     "history.openPreview": "\u30D7\u30EC\u30D3\u30E5\u30FC\u3092\u958B\u304F",
-    "history.closePreview": "\u30D7\u30EC\u30D3\u30E5\u30FC\u3092\u9589\u3058\u308B",
     "history.untitled": "\u7121\u984C",
     "history.promptCompare": "\u5373\u6642\u6BD4\u8F03",
     "history.promptOriginal": "\u5143\u306E\u30D7\u30ED\u30F3\u30D7\u30C8",
@@ -6184,8 +5634,6 @@
     "history.quality.low": "\u4F4E",
     "history.quality.auto": "\u81EA\u52D5",
     "footer.batch": "\u30D0\u30C3\u30C1",
-    "footer.storage": "\u30B9\u30C8\u30EC\u30FC\u30B8",
-    "footer.apiStatus": "API\u30B9\u30C6\u30FC\u30BF\u30B9: OK",
     "footer.version": "\u30D0\u30FC\u30B8\u30E7\u30F3{version}",
     "footer.versionLoading": "\u30D0\u30FC\u30B8\u30E7\u30F3...",
     "notifications.title": "\u30BF\u30B9\u30AF\u901A\u77E5",
@@ -6208,31 +5656,11 @@
     "theme.system": "\u30B7\u30B9\u30C6\u30E0",
     "theme.light": "\u30E9\u30A4\u30C8",
     "theme.dark": "\u30C0\u30FC\u30AF",
-    "language.label": "\u8868\u793A\u8A00\u8A9E",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7C21\u4F53\u5B57\u4E2D\u56FD\u8A9E",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u8A8D\u8A3C\u5143",
     "auth.checking": "\u8A8D\u8A3C\u3092\u78BA\u8A8D\u3057\u3066\u3044\u307E\u3059",
     "auth.missingCodexSession": "Codex \u30BB\u30C3\u30B7\u30E7\u30F3\u304C\u691C\u51FA\u3055\u308C\u307E\u305B\u3093\u3067\u3057\u305F",
     "auth.switchFailed": "\u8A8D\u8A3C\u5143\u306E\u5207\u308A\u66FF\u3048\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
     "auth.sourceUnavailable": "{source}\u306F\u5229\u7528\u3067\u304D\u307E\u305B\u3093",
     "auth.notActive": "\u30A2\u30AF\u30C6\u30A3\u30D6\u3067\u306F\u3042\u308A\u307E\u305B\u3093",
-    "api.settings": "\u30B7\u30B9\u30C6\u30E0\u8A2D\u5B9A",
-    "api.provider": "API \u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
-    "imageInput.title": "\u753B\u50CF\u5165\u529B",
     "imageInput.uploadAria": "\u753B\u50CF\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u30AF\u30EA\u30C3\u30AF\u3001\u30C9\u30ED\u30C3\u30D7\u3001\u307E\u305F\u306F\u8CBC\u308A\u4ED8\u3051",
     "imageInput.uploadImages": "\u30AF\u30EA\u30C3\u30AF\u3001\u30C9\u30ED\u30C3\u30D7\u3001\u8CBC\u308A\u4ED8\u3051\u3067\u753B\u50CF\u3092\u8FFD\u52A0",
     "imageInput.uploadFull": "\u753B\u50CF\u3068\u30D5\u30A1\u30A4\u30EB\u3092\u30AF\u30EA\u30C3\u30AF\u3001\u30C9\u30ED\u30C3\u30D7\u3001\u307E\u305F\u306F\u8CBC\u308A\u4ED8\u3051",
@@ -6328,7 +5756,6 @@
     "gallery.categoryFallback": "\u30AE\u30E3\u30E9\u30EA\u30FC \u30AB\u30C6\u30B4\u30EA",
     "gallery.imageFallback": "\u30AE\u30E3\u30E9\u30EA\u30FC\u753B\u50CF",
     "gallery.imageLoadFailed": "\u3053\u306E\u753B\u50CF\u3092\u30ED\u30FC\u30C9\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F",
-    "gallery.editImageLoadFailed": "\u7DE8\u96C6\u306E\u305F\u3081\u306B\u3053\u306E\u753B\u50CF\u3092\u30ED\u30FC\u30C9\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F",
     "gallery.cannotAddImage": "\u3053\u306E\u753B\u50CF\u306F\u30AE\u30E3\u30E9\u30EA\u30FC\u306B\u8FFD\u52A0\u3067\u304D\u307E\u305B\u3093",
     "gallery.nameRequired": "\u30AE\u30E3\u30E9\u30EA\u30FC\u540D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044",
     "gallery.saveFailed": "\u30AE\u30E3\u30E9\u30EA\u30FC\u753B\u50CF\u306E\u4FDD\u5B58\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
@@ -6384,7 +5811,6 @@
     "outputSettings.title": "\u51FA\u529B\u8A2D\u5B9A",
     "output.lock.lock": "\u30D1\u30E9\u30E1\u30FC\u30BF\u3092\u56FA\u5B9A",
     "output.lock.unlock": "\u56FA\u5B9A\u3092\u89E3\u9664\u3057\u3066\u7DE8\u96C6",
-    "output.lock.current": "\u73FE\u5728\u306E\u56FA\u5B9A\u8A2D\u5B9A",
     "output.lock.task": "\u9078\u629E\u3057\u305F\u30BF\u30B9\u30AF\u306E\u8A2D\u5B9A",
     "output.lock.adoptTask": "\u3053\u306E\u30BF\u30B9\u30AF\u8A2D\u5B9A\u3092\u4F7F\u7528",
     "output.lock.frame": "\u753B\u89D2",
@@ -6404,25 +5830,11 @@
     "output.mainModel": "\u30E1\u30A4\u30F3\u30E2\u30C7\u30EB",
     "output.selectMainModel": "\u30E1\u30A4\u30F3\u30E2\u30C7\u30EB\u3092\u9078\u629E",
     "output.mainModelCustomForInput": "\u73FE\u5728\u306E\u5165\u529B\u306B\u30AB\u30B9\u30BF\u30E0 \u30E2\u30C7\u30EB\u3092\u4F7F\u7528\u3057\u307E\u3059",
-    "output.apiDirect": "API\u76F4\u63A5",
-    "output.apiToolModel": "API \u753B\u50CF\u751F\u6210\u30E2\u30C7\u30EB\u3092\u4F7F\u7528",
     "output.webSearch": "\u30A6\u30A7\u30D6\u691C\u7D22",
-    "output.webSearchToggle": "\u30AA\u30F3",
     "output.webSearchTitle": "\u307E\u305A Web \u3092\u691C\u7D22\u3057\u3066\u304B\u3089\u3001\u3053\u306E\u4E16\u4EE3\u306B\u305D\u308C\u3092\u4F7F\u7528\u3057\u307E\u3059\u3002Codex\u304A\u3088\u3073API\u5FDC\u7B54\u306E\u307F",
-    "output.promptMode": "\u30D7\u30ED\u30F3\u30D7\u30C8\u51E6\u7406",
     "output.modeOriginal": "\u539F\u6587",
     "output.modeStrict": "\u5FE0\u5B9F",
     "output.modeCreative": "\u81EA\u52D5",
-    "output.promptHelp": "\u30D7\u30ED\u30F3\u30D7\u30C8\u51E6\u7406\u306E\u8AAC\u660E\u3092\u8868\u793A",
-    "output.promptHelpTitle": "\u30D7\u30ED\u30F3\u30D7\u30C8\u51E6\u7406",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u30E1\u30A4\u30F3\u30E2\u30C7\u30EB\u304C\u95A2\u4E0E",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u76F4\u63A5\u751F\u6210",
-    "output.promptHelp.responses.original": "\u30A2\u30D7\u30EA\u5074\u306E\u30D7\u30ED\u30F3\u30D7\u30C8\u898F\u5247\u3092\u8FFD\u52A0\u305B\u305A\u3001\u5143\u306E\u6587\u9762\u3092\u305D\u306E\u307E\u307E\u9001\u4FE1\u3057\u307E\u3059\u3002\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u304C revised prompt \u3092\u8FD4\u3057\u305F\u308A\u3001\u7D50\u679C\u3092\u7570\u306A\u308B\u5F62\u3067\u89E3\u91C8\u3057\u305F\u308A\u3059\u308B\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u3002",
-    "output.promptHelp.responses.strict": "\u30E1\u30A4\u30F3\u30E2\u30C7\u30EB\u306B\u3088\u308B\u6574\u7406\u3084\u62E1\u5F35\u3092\u8A31\u53EF\u3057\u3064\u3064\u3001\u88AB\u5199\u4F53\u3001\u6587\u5B57\u3001\u8272\u3001\u69CB\u56F3\u306A\u3069\u306E\u5FC5\u9808\u6761\u4EF6\u3092\u4FDD\u6301\u3057\u307E\u3059\u3002",
-    "output.promptHelp.responses.automatic": "\u8FFD\u52A0\u5236\u7D04\u3092\u4ED8\u3051\u305A\u3001\u30E1\u30A4\u30F3\u30E2\u30C7\u30EB\u304C\u89E3\u91C8\u30FB\u6700\u9069\u5316\u3057\u3066\u304B\u3089\u753B\u50CF\u30C4\u30FC\u30EB\u3092\u547C\u3073\u51FA\u3057\u307E\u3059\u3002",
-    "output.promptHelp.images.original": "\u30A2\u30D7\u30EA\u5074\u306E\u30EB\u30FC\u30EB\u3092\u8FFD\u52A0\u305B\u305A\u3001\u539F\u6587\u3092\u753B\u50CF API \u306B\u76F4\u63A5\u9001\u4FE1\u3057\u307E\u3059\u3002",
-    "output.promptHelp.images.strict": "\u539F\u6587\u3068\u4FDD\u771F\u30EB\u30FC\u30EB\u3092\u4E00\u7DD2\u306B\u9001\u4FE1\u3057\u3001\u3059\u3079\u3066\u306E\u5FC5\u9808\u6761\u4EF6\u306E\u4FDD\u6301\u3092\u5F37\u8ABF\u3057\u307E\u3059\u3002",
-    "output.promptHelp.images.automatic": "\u753B\u50CF API \u306E\u65E2\u5B9A\u51E6\u7406\u3067\u9001\u4FE1\u3057\u3001\u30AE\u30E3\u30E9\u30EA\u30FC\u53C2\u7167\u306A\u3069\u5FC5\u8981\u306A\u8AAC\u660E\u306F\u542B\u3081\u307E\u3059\u3002",
     "output.size": "\u51FA\u529B\u30B5\u30A4\u30BA",
     "output.sizeMode": "\u30B5\u30A4\u30BA\u30E2\u30FC\u30C9",
     "output.sizeAuto": "\u81EA\u52D5",
@@ -6486,8 +5898,6 @@
     "preview.runningTitle": "{mode}\u5B9F\u884C\u4E2D",
     "preview.submittingTitle": "\u30BF\u30B9\u30AF\u3092\u9001\u4FE1\u4E2D",
     "preview.queuedTitle": "\u30BF\u30B9\u30AF\u304C\u30AD\u30E5\u30FC\u306B\u767B\u9332\u3055\u308C\u307E\u3057\u305F",
-    "preview.submittingDetail": "\u5165\u529B\u3092\u4FDD\u5B58\u3057\u3001\u30BF\u30B9\u30AF\u3092\u30AD\u30E5\u30FC\u306B\u8FFD\u52A0\u3057\u307E\u3059\u3002\u751F\u6210\u304C\u81EA\u52D5\u7684\u306B\u958B\u59CB\u3055\u308C\u307E\u3059\u3002",
-    "preview.queuedDetail": "\u30BF\u30B9\u30AF\u306F\u30AD\u30E5\u30FC\u5185\u306B\u3042\u308A\u3001\u4F7F\u7528\u53EF\u80FD\u306A\u30C1\u30E3\u30CD\u30EB\u3092\u5F85\u3063\u3066\u3044\u307E\u3059\u3002",
     "preview.featured": "\u9078\u629E\u6E08\u307F",
     "preview.addFeatured": "\u7D50\u679C\u306E\u9078\u629E",
     "preview.selectedFeatured": "\u9078\u629E\u6E08\u307F",
@@ -6540,7 +5950,6 @@
     "promptPopover.close": "\u30D7\u30ED\u30F3\u30D7\u30C8\u6BD4\u8F03\u3092\u9589\u3058\u308B",
     "promptPopover.copyOptimized": "\u6700\u9069\u5316\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30B3\u30D4\u30FC",
     "promptPopover.copied": "\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F",
-    "taskContext.menuLabel": "\u30BF\u30B9\u30AF\u306E\u30B3\u30F3\u30C6\u30AD\u30B9\u30C8 \u30E1\u30CB\u30E5\u30FC",
     "taskContext.view": "\u30BF\u30B9\u30AF\u306E\u8868\u793A",
     "taskContext.copyId": "\u30BF\u30B9\u30AF ID \u3092\u30B3\u30D4\u30FC",
     "taskContext.copyPrompt": "\u30D7\u30ED\u30F3\u30D7\u30C8\u3092\u30B3\u30D4\u30FC",
@@ -6569,7 +5978,6 @@
     "taskActions.acceptSuccessesFailed": "\u6210\u529F\u3057\u305F\u7D50\u679C\u3092\u53D7\u3051\u5165\u308C\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F",
     "taskActions.acceptedSuccesses": "\u6210\u529F\u3057\u305F\u7D50\u679C\u304C\u53D7\u3051\u5165\u308C\u3089\u308C\u307E\u3057\u305F",
     "taskActions.viewedUpdateFailed": "\u8AAD\u307F\u53D6\u308A\u72B6\u614B\u306E\u66F4\u65B0\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
-    "taskActions.failedFallback": "\u30BF\u30B9\u30AF\u304C\u5931\u6557\u3057\u307E\u3057\u305F",
     "taskList.empty": "\u5C65\u6B74\u306F\u307E\u3060\u3042\u308A\u307E\u305B\u3093",
     "taskList.selectSession": "\u30C1\u30E3\u30C3\u30C8\u3092\u9078\u629E",
     "taskList.unreadUpdate": "\u672A\u8AAD\u306E\u66F4\u65B0",
@@ -6639,7 +6047,6 @@
     "snippets.saveSelection": "\u4FDD\u5B58",
     "snippets.saveSelectionLabel": "\u9078\u629E\u3057\u305F\u30C6\u30AD\u30B9\u30C8\u3092\u30D7\u30ED\u30F3\u30D7\u30C8 \u30B9\u30CB\u30DA\u30C3\u30C8\u3068\u3057\u3066\u4FDD\u5B58\u3057\u307E\u3059",
     "snippets.popoverLabel": "\u30D7\u30ED\u30F3\u30D7\u30C8 \u30B9\u30CB\u30DA\u30C3\u30C8",
-    "snippets.defaultCategory": "\u5171\u901A",
     "snippets.loadFailed": "\u30D7\u30ED\u30F3\u30D7\u30C8 \u30B9\u30CB\u30DA\u30C3\u30C8\u306E\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
     "snippets.remove": "~{tag}\u3092\u524A\u9664",
     "snippets.expand": "\u5C55\u958B\u3059\u308B",
@@ -6684,7 +6091,6 @@
     "colors.done": "\u5B8C\u4E86",
     "colors.manage": "\u7BA1\u7406",
     "colors.favorites": "\u597D\u304D\u306A\u8272",
-    "colors.recent": "\u6700\u8FD1\u306E\u8272",
     "colors.recentLabel": "\u6700\u8FD1\u306E",
     "colors.deleteFavorite": "\u304A\u6C17\u306B\u5165\u308A\u306E\u8272\u3092\u524A\u9664{name}",
     "colors.modify": "\u30AB\u30E9\u30FC\u3092\u7DE8\u96C6",
@@ -6694,16 +6100,13 @@
     "taskGroup.current": "\u73FE\u5728\u8868\u793A\u4E2D",
     "taskGroup.yesterday": "\u6628\u65E5",
     "taskGroup.last7": "\u904E\u53BB 7 \u65E5\u9593",
-    "taskGroup.older": "\u5E74\u4E0A",
     "taskGroup.searchResults": "\u306E\u691C\u7D22\u7D50\u679C",
-    "taskGroup.active": "\u30A2\u30AF\u30C6\u30A3\u30D6",
     "taskGroup.running": "\u5B9F\u884C\u4E2D",
     "taskGroup.waiting": "\u5F85\u3063\u3066\u3044\u307E\u3059",
     "taskGroup.dispatchPending": "\u5229\u7528\u53EF\u80FD\u306A\u30C1\u30E3\u30CD\u30EB\u3092\u5272\u308A\u5F53\u3066\u3066\u3044\u307E\u3059...",
     "taskGroup.expand": "{label}\u3092\u5C55\u958B",
     "taskGroup.collapse": "\u5D29\u58CA{label}",
     "taskGroup.buttonLabel": "{label}\u3001{count}\u30BF\u30B9\u30AF",
-    "taskGroup.loadMore": "\u3055\u3089\u306B {count} \u4EF6\u8AAD\u307F\u8FBC\u3080",
     "taskGroup.loadFailedRetry": "\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u518D\u8A66\u884C",
     "archive.title": "\u30A2\u30FC\u30AB\u30A4\u30D6",
     "archive.empty": "\u30A2\u30FC\u30AB\u30A4\u30D6\u3055\u308C\u305F\u30C1\u30E3\u30C3\u30C8\u306F\u3042\u308A\u307E\u305B\u3093",
@@ -6716,7 +6119,6 @@
     "archive.restoring": "\u5FA9\u5143\u4E2D...",
     "archive.deleting": "\u524A\u9664\u3057\u3066\u3044\u307E\u3059...",
     "archive.restoredCount": "{count}\u30BF\u30B9\u30AF\u3092\u5FA9\u5143\u3057\u307E\u3057\u305F",
-    "settings.title": "\u30B9\u30C8\u30EC\u30FC\u30B8\u8A2D\u5B9A",
     "settings.status": "\u30B9\u30C8\u30EC\u30FC\u30B8\u30D1\u30B9\u306E\u4FDD\u5B58\u5F8C\u3001WebUI \u306E\u518D\u8D77\u52D5\u3067\u53CD\u6620\u3055\u308C\u307E\u3059",
     "settings.pathChangeHint": "\u30D1\u30B9\u3092\u5909\u66F4\u3057\u3066\u3082\u65E2\u5B58\u306E\u30C7\u30FC\u30BF\u306F\u79FB\u52D5\u3057\u307E\u305B\u3093\u3002\u79FB\u884C\u3059\u308B\u524D\u306B\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u3057\u3066\u30A2\u30D7\u30EA\u3092\u7D42\u4E86\u3057\u3001\u95A2\u9023\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u4E38\u3054\u3068\u30B3\u30D4\u30FC\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "settings.previousPaths": "\u4EE5\u524D\u306E\u30C7\u30FC\u30BF\u304C\u898B\u3064\u304B\u3089\u306A\u3044\u5834\u5408\uFF1A\u5143\u306E\u65E2\u5B9A\u30D5\u30A9\u30EB\u30C0\u30FC\u3092\u78BA\u8A8D",
@@ -6771,7 +6173,6 @@
     "userConfigBackup.restoreComplete": "\u5FA9\u5143\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F",
     "systemSettings.tabsLabel": "\u30B7\u30B9\u30C6\u30E0\u8A2D\u5B9A\u30BB\u30AF\u30B7\u30E7\u30F3",
     "systemSettings.apiTab": "API\u8A2D\u5B9A",
-    "systemSettings.codexTab": "Codex\u30C1\u30E3\u30CD\u30EB",
     "systemSettings.languageTab": "\u8A00\u8A9E / Language",
     "systemSettings.storageTab": "\u30B9\u30C8\u30EC\u30FC\u30B8\u3068\u901A\u77E5",
     "systemSettings.networkTab": "\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF",
@@ -6797,23 +6198,14 @@
     "networkEgress.loadFailed": "\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u8A2D\u5B9A\u3092\u8AAD\u307F\u8FBC\u3081\u307E\u305B\u3093\u3067\u3057\u305F",
     "networkEgress.saveFailed": "\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u8A2D\u5B9A\u3092\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F",
     "languageSettings.instantStatus": "\u8A00\u8A9E\u306E\u5909\u66F4\u306F\u3059\u3050\u306B\u53CD\u6620\u3055\u308C\u307E\u3059",
-    "apiSettings.title": "API\u8A2D\u5B9A",
-    "apiSettings.status": "\u4FDD\u5B58\u3057\u305F\u8A2D\u5B9A\u306F API \u30E2\u30FC\u30C9\u306B\u3059\u3050\u53CD\u6620\u3055\u308C\u307E\u3059",
-    "apiSettings.codexMode": "Codex\u30C1\u30E3\u30F3\u30CD\u30EB",
-    "apiSettings.codexImages": "\u753B\u50CF",
-    "apiSettings.codexResponses": "\u5FDC\u7B54",
     "apiSettings.providers": "API \u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.searchProviders": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u540D\u3092\u691C\u7D22",
     "apiSettings.noProviderSearchResults": "\u4E00\u81F4\u3059\u308B\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306F\u3042\u308A\u307E\u305B\u3093",
     "apiSettings.providerCount": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC {count} \u4EF6",
-    "apiSettings.provider": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.providerName": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u540D",
     "apiSettings.providerIcon": "\u7D75\u6587\u5B57\u30A2\u30A4\u30B3\u30F3",
     "apiSettings.providerIconPlaceholder": "\u4EFB\u610F\uFF08\u4F8B: \u{1FA84}\uFF09",
-    "apiSettings.connectionScope": "\u63A5\u7D9A\u8A2D\u5B9A",
-    "apiSettings.connectionPreview": "\u63A5\u7D9A\u30D7\u30EC\u30D3\u30E5\u30FC",
     "apiSettings.modelBindings": "\u30E2\u30C7\u30EB",
-    "apiSettings.modelBindingsHint": "1 \u3064\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306B\u8907\u6570\u306E\u30E2\u30C7\u30EB\u3068\u30D7\u30ED\u30C8\u30B3\u30EB\u3092\u7D10\u4ED8\u3051\u3089\u308C\u307E\u3059\u3002",
     "apiSettings.addModelBinding": "\u30E2\u30C7\u30EB\u3092\u8FFD\u52A0",
     "apiSettings.defaultProviderForModel": "\u65E2\u5B9A\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.removeBinding": "\u30D0\u30A4\u30F3\u30C9\u3092\u524A\u9664",
@@ -6821,7 +6213,6 @@
     "apiSettings.keepOneBinding": "\u5404\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306B\u5C11\u306A\u304F\u3068\u3082 1 \u3064\u306E\u30E2\u30C7\u30EB\u30D0\u30A4\u30F3\u30C9\u304C\u5FC5\u8981\u3067\u3059\u3002",
     "apiSettings.bindingRequiredFields": "\u5404\u30D0\u30A4\u30F3\u30C9\u3067\u30E2\u30C7\u30EB\u3092\u9078\u629E\u3057\u3001\u30EA\u30E2\u30FC\u30C8\u30E2\u30C7\u30EB\u540D\u3068\u5C11\u306A\u304F\u3068\u3082 1 \u3064\u306E\u64CD\u4F5C\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "apiSettings.bindingOverlap": "{model} \u306E {operation} \u304C\u8907\u6570\u306E\u30D0\u30A4\u30F3\u30C9\u306B\u91CD\u8907\u3057\u3066\u3044\u307E\u3059\u3002",
-    "apiSettings.actualRequest": "\u5B9F\u969B\u306E\u30EA\u30AF\u30A8\u30B9\u30C8",
     "apiSettings.newProviderAction": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u65B0\u898F\u4F5C\u6210",
     "apiSettings.copyProvider": "\u30B3\u30D4\u30FC",
     "apiSettings.copyProviderName": "{name} \u3092\u30B3\u30D4\u30FC",
@@ -6832,15 +6223,7 @@
     "apiSettings.sortProviderModeStatus": "\u30CF\u30F3\u30C9\u30EB\u3092\u30C9\u30E9\u30C3\u30B0\u3059\u308B\u304B\u77E2\u5370\u30AD\u30FC\u3067\u4E26\u3079\u66FF\u3048\u307E\u3059",
     "apiSettings.sortProviderHandleAria": "{provider}\u3092\u30C9\u30E9\u30C3\u30B0\u3001\u77E2\u5370\u3001Home\u3001End\u30AD\u30FC\u3067\u4E26\u3079\u66FF\u3048",
     "apiSettings.sortProviderStatus": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E\u9806\u5E8F\u304C\u5909\u66F4\u3055\u308C\u307E\u3057\u305F\u3002\u81EA\u52D5\u4FDD\u5B58\u4E2D...",
-    "apiSettings.moveProviderUp": "\u4E0A",
-    "apiSettings.moveProviderDown": "\u4E0B\u3078",
-    "apiSettings.moveProviderUpAria": "{provider}\u3092\u4E0A\u306B\u79FB\u52D5",
-    "apiSettings.moveProviderDownAria": "{provider}\u3092\u4E0B\u306B\u79FB\u52D5",
-    "apiSettings.mode": "\u547C\u3073\u51FA\u3057\u65B9\u5F0F",
-    "apiSettings.images": "Image API\u306B\u76F4\u63A5\u63A5\u7D9A",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u76F4\u7D50",
-    "apiSettings.imageModel": "\u753B\u50CF\u751F\u6210\u30E2\u30C7\u30EB",
     "apiSettings.concurrency": "\u540C\u6642\u5B9F\u884C\u4E0A\u9650",
     "apiSettings.svgAuthorModel": "SVG \u4F5C\u6210\u30E2\u30C7\u30EB",
     "apiSettings.invalidSvgAuthorModel": "\u30B9\u30DA\u30FC\u30B9\u3092\u542B\u307E\u306A\u3044\u6709\u52B9\u306A SVG \u30E2\u30C7\u30EB ID \u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
@@ -6848,25 +6231,18 @@
     "apiSettings.remoteModelName": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306E\u30E2\u30C7\u30EB\u540D",
     "apiSettings.fetchModels": "\u30E2\u30C7\u30EB\u3092\u53D6\u5F97",
     "apiSettings.advancedSettings": "\u8A73\u7D30\u8A2D\u5B9A",
-    "apiSettings.concurrencyValue": "\u540C\u6642\u5B9F\u884C\u6027{concurrency}",
     "apiSettings.keySaved": "API Key\u304C\u4FDD\u5B58\u3055\u308C\u307E\u3057\u305F",
     "apiSettings.keyNotSet": "API Key\u304C\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u307E\u305B\u3093",
     "apiSettings.showApiKey": "API\u30AD\u30FC\u3092\u8868\u793A",
     "apiSettings.hideApiKey": "API\u30AD\u30FC\u3092\u96A0\u3059",
     "apiSettings.editProvider": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u7DE8\u96C6",
     "apiSettings.newProviderTitle": "\u65B0\u3057\u3044\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
-    "apiSettings.editHint": "\u300C\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4FDD\u5B58\u300D\u3092\u62BC\u3059\u307E\u3067\u3001\u3053\u306E\u7DE8\u96C6\u306F\u30D0\u30C3\u30AF\u30A8\u30F3\u30C9\u306B\u66F8\u304D\u8FBC\u307E\u308C\u307E\u305B\u3093\u3002\u30AD\u30E3\u30F3\u30BB\u30EB\u3059\u308B\u3068\u7834\u68C4\u3055\u308C\u307E\u3059\u3002",
     "apiSettings.finishEditFirst": "\u307E\u305A\u73FE\u5728\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u7DE8\u96C6\u3092\u4FDD\u5B58\u307E\u305F\u306F\u30AD\u30E3\u30F3\u30BB\u30EB\u3057\u3066\u304F\u3060\u3055\u3044",
     "apiSettings.newDraftStatus": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4F5C\u6210\u4E2D\u3067\u3059\u3002\u53CD\u6620\u3059\u308B\u306B\u306F\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4FDD\u5B58\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "apiSettings.editDraftStatus": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u7DE8\u96C6\u4E2D\u3067\u3059\u3002\u53CD\u6620\u3059\u308B\u306B\u306F\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4FDD\u5B58\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-    "apiSettings.cancelEdit": "\u7DE8\u96C6\u3092\u30AD\u30E3\u30F3\u30BB\u30EB",
-    "apiSettings.saveProvider": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4FDD\u5B58",
-    "apiSettings.saveSelection": "\u73FE\u5728\u306E\u9078\u629E\u3092\u4FDD\u5B58",
     "apiSettings.deleteProviderTitle": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F",
     "apiSettings.deleteProviderMessage": "\u300C{provider}\u300D\u3092\u524A\u9664\u3057\u307E\u3059\u304B?",
     "apiSettings.deleteProviderDetail": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC \u30EA\u30B9\u30C8\u304B\u3089\u524A\u9664\u3057\u3001\u30D0\u30C3\u30AF\u30A8\u30F3\u30C9\u3078\u81EA\u52D5\u4FDD\u5B58\u3057\u307E\u3059\u3002",
-    "apiSettings.deleteProviderStatus": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u304C\u524A\u9664\u3055\u308C\u307E\u3057\u305F\u3002\u81EA\u52D5\u4FDD\u5B58\u4E2D...",
-    "apiSettings.save": "API\u8A2D\u5B9A\u3092\u4FDD\u5B58",
     "apiSettings.loadFailed": "API\u8A2D\u5B9A\u306E\u30ED\u30FC\u30C9\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
     "apiSettings.savedKeyPlaceholder": "API Key\u306F\u30D0\u30C3\u30AF\u30A8\u30F3\u30C9\u306B\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002\u65B0\u3057\u3044\u30AD\u30FC\u3092\u5165\u529B\u3057\u3066\u7F6E\u304D\u63DB\u3048\u307E\u3059\u3002",
     "apiSettings.apiKeyRequired": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u4FDD\u5B58\u3059\u308B\u524D\u306B API Key \u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
@@ -6887,16 +6263,6 @@
     "apiSettings.savedShort": "\u4FDD\u5B58\u3057\u307E\u3057\u305F",
     "apiSettings.savedStatus": "API\u8A2D\u5B9A\u304C\u4FDD\u5B58\u3055\u308C\u307E\u3057\u305F",
     "apiSettings.saveFailedShort": "\u4FDD\u5B58\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
-    "codexSettings.title": "Codex\u30C1\u30E3\u30CD\u30EB",
-    "codexSettings.status": "\u30ED\u30FC\u30AB\u30EBCodex\u30B5\u30A4\u30F3\u30A4\u30F3\u306E\u751F\u6210\u30C1\u30E3\u30CD\u30EB\u3092\u9078\u629E\u3057\u307E\u3059",
-    "codexSettings.notesLabel": "Codex\u30C1\u30E3\u30CD\u30EB\u306E\u8AAC\u660E",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u30B5\u30A4\u30BA\u3001\u54C1\u8CEA\u3001\u7DE8\u96C6\u30D1\u30E9\u30E1\u30FC\u30BF\u3092\u76F4\u63A5\u6E21\u3059\u305F\u3081\u306E\u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30C1\u30E3\u30CD\u30EB\u3002",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Web \u691C\u7D22\u30C4\u30FC\u30EB\u3092\u5FC5\u8981\u3068\u3059\u308B\u30EF\u30FC\u30AF\u30D5\u30ED\u30FC\u306E\u4E92\u63DB\u6027\u30C1\u30E3\u30CD\u30EB\u3002",
-    "codexSettings.current": "\u4F7F\u7528\u4E2D",
-    "codexSettings.save": "Codex\u30C1\u30E3\u30CD\u30EB\u3092\u4FDD\u5B58",
-    "codexSettings.saveMode": "{mode}\u3092\u4FDD\u5B58",
     "imageEditor.title": "\u5165\u529B\u753B\u50CF\u306E\u7DE8\u96C6",
     "imageEditor.promptHint": "\u753B\u50CF\u5185\u306E\u624B\u66F8\u304D\u306E\u77E2\u5370\u3084\u30DE\u30FC\u30AF\u306F\u5358\u306A\u308B\u6307\u793A\u3067\u3059\u3002\u305D\u308C\u3089\u3092\u6700\u7D42\u30A4\u30E1\u30FC\u30B8\u306B\u6B8B\u3055\u306A\u3044\u3067\u304F\u3060\u3055\u3044\u3002",
     "imageEditor.inputFallback": "\u5165\u529B\u753B\u50CF",
@@ -6976,31 +6342,21 @@
     "addGallery.save": "\u30AE\u30E3\u30E9\u30EA\u30FC\u306B\u4FDD\u5B58",
     "close.promptTemplates": "\u30D7\u30ED\u30F3\u30D7\u30C8 \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8 \u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "close.archive": "\u30A2\u30FC\u30AB\u30A4\u30D6 \u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
-    "close.settings": "\u30B9\u30C8\u30EC\u30FC\u30B8\u8A2D\u5B9A\u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
-    "close.apiSettings": "API\u8A2D\u5B9A\u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "close.systemSettings": "\u30B7\u30B9\u30C6\u30E0\u8A2D\u5B9A\u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "close.imageEditor": "\u753B\u50CF\u30A8\u30C7\u30A3\u30BF\u30FC \u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "close.gallery": "\u30AE\u30E3\u30E9\u30EA\u30FC \u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "close.addGallery": "\u30AE\u30E3\u30E9\u30EA\u30FC\u8FFD\u52A0\u30D1\u30CD\u30EB\u3092\u9589\u3058\u308B",
     "imageInput.referenceTitle": "\u53C2\u7167\u5165\u529B\uFF08\u4EFB\u610F\uFF09",
-    "referenceFiles.add": "\u30D5\u30A1\u30A4\u30EB\u3092\u8FFD\u52A0",
-    "referenceFiles.selected": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB",
-    "referenceFiles.recent": "\u6700\u8FD1\u306E\u30D5\u30A1\u30A4\u30EB",
     "referenceFiles.familyPdf": "\u30DA\u30FC\u30B8 + \u30C6\u30AD\u30B9\u30C8",
     "referenceFiles.familySpreadsheet": "\u8868\u8A08\u7B97",
     "referenceFiles.familyDocument": "\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8",
     "referenceFiles.familyText": "\u30C6\u30AD\u30B9\u30C8",
-    "referenceFiles.visualLimit": "PDF \u4EE5\u5916\u3067\u306F\u57CB\u3081\u8FBC\u307F\u753B\u50CF\u3084\u30B0\u30E9\u30D5\u306F\u4FDD\u6301\u3055\u308C\u307E\u305B\u3093\u3002\u30EC\u30A4\u30A2\u30A6\u30C8\u53C2\u7167\u304C\u5FC5\u8981\u306A\u5834\u5408\u306F PDF \u306B\u5909\u63DB\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "referenceFiles.remove": "{filename} \u3092\u524A\u9664",
-    "referenceFiles.switchTitle": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u3092\u524A\u9664\u3057\u307E\u3059\u304B\uFF1F",
-    "referenceFiles.switchMessage": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u306F Responses \u3067\u306E\u307F\u5229\u7528\u3067\u304D\u307E\u3059\u3002Images \u306B\u5207\u308A\u66FF\u3048\u308B\u524D\u306B\u9078\u629E\u30D5\u30A1\u30A4\u30EB\u3092\u524A\u9664\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-    "referenceFiles.removeAndSwitch": "\u30D5\u30A1\u30A4\u30EB\u3092\u524A\u9664\u3057\u3066\u5207\u308A\u66FF\u3048",
     "referenceFiles.requiresResponses": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u306B\u306F Responses \u304C\u5FC5\u8981\u3067\u3059",
     "referenceFiles.switchToResponses": "Responses \u306B\u5207\u308A\u66FF\u3048",
     "referenceFiles.openApiSettings": "API \u8A2D\u5B9A\u3092\u958B\u304F",
     "referenceFiles.providerMissing": "\u5143\u306E Responses \u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u5229\u7528\u3067\u304D\u307E\u305B\u3093\u3002API \u8A2D\u5B9A\u3067\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "referenceFiles.missing": "\u30D5\u30A1\u30A4\u30EB\u304C\u3042\u308A\u307E\u305B\u3093",
-    "referenceFiles.loadFailed": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u3092\u8AAD\u307F\u8FBC\u3081\u307E\u305B\u3093\u3067\u3057\u305F",
     "referenceFiles.errorEmpty": "\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u304C\u7A7A\u3067\u3059",
     "referenceFiles.errorUnsupported": "\u3053\u306E\u53C2\u7167\u30D5\u30A1\u30A4\u30EB\u5F62\u5F0F\u306F\u30B5\u30DD\u30FC\u30C8\u3055\u308C\u3066\u3044\u307E\u305B\u3093",
     "referenceFiles.errorMismatch": "\u30D5\u30A1\u30A4\u30EB\u5185\u5BB9\u3068\u62E1\u5F35\u5B50\u304C\u4E00\u81F4\u3057\u307E\u305B\u3093",
@@ -7019,13 +6375,11 @@
     "modelSelection.provider": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "modelSelection.providerUnavailable": "\u3053\u306E\u30E2\u30C7\u30EB\u3067\u5229\u7528\u3067\u304D\u308B\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u304C\u3042\u308A\u307E\u305B\u3093",
     "modelSelection.openSettings": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u8A2D\u5B9A\u3092\u958B\u304F",
-    "modelSelection.codexUnavailable": "Codex \u30ED\u30B0\u30A4\u30F3\u3092\u5229\u7528\u3067\u304D\u307E\u305B\u3093",
     "modelSelection.catalogUnavailable": "\u30E2\u30C7\u30EB\u30AB\u30BF\u30ED\u30B0\u3092\u5229\u7528\u3067\u304D\u307E\u305B\u3093",
     "output.background": "\u80CC\u666F",
     "canvas.aspectRatio": "\u30A2\u30B9\u30DA\u30AF\u30C8\u6BD4",
     "canvas.resolution": "\u89E3\u50CF\u5EA6",
     "gemini.googleSearch": "Google \u691C\u7D22",
-    "gemini.googleImageSearch": "Google \u753B\u50CF\u691C\u7D22",
     "output.modalities": "\u51FA\u529B\u30E2\u30C0\u30EA\u30C6\u30A3",
     "gemini.safetySettings": "\u5B89\u5168\u8A2D\u5B9A",
     "gemini.safety.harassment": "\u30CF\u30E9\u30B9\u30E1\u30F3\u30C8",
@@ -7086,17 +6440,14 @@
     "mobile.backToEditor": "\u7DE8\u96C6\u306B\u623B\u308B",
     "mobile.copyHint": "\u81EA\u52D5\u30B3\u30D4\u30FC\u3092\u5229\u7528\u3067\u304D\u307E\u305B\u3093\u3002\u4E0B\u306E\u30C6\u30AD\u30B9\u30C8\u3092\u9078\u629E\u3057\u3066\u30B3\u30D4\u30FC\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "mobile.files": "\u30D5\u30A1\u30A4\u30EB",
-    "mobile.gestureHint": "\u30D4\u30F3\u30C1\u3067\u62E1\u5927\u7E2E\u5C0F \xB7 \u30B9\u30EF\u30A4\u30D7\u3067\u753B\u50CF\u5207\u66FF",
     "mobile.manualCopy": "\u9577\u62BC\u3057\u3057\u3066\u30B3\u30D4\u30FC",
     "mobile.more": "\u305D\u306E\u4ED6",
     "mobile.parameters": "\u30D1\u30E9\u30E1\u30FC\u30BF\u30FC",
     "mobile.pasteHint": "\u5165\u529B\u6B04\u3092\u9577\u62BC\u3057\u3057\u3066\u8CBC\u308A\u4ED8\u3051\u308B\u304B\u3001\u5199\u771F\u3084\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "mobile.photos": "\u5199\u771F",
-    "mobile.pickFiles": "\u5199\u771F\u3084\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E",
     "mobile.taskActions": "\u30BF\u30B9\u30AF\u64CD\u4F5C",
     "networkEgress.fakeIpDnsFallback": "\u753B\u50CF\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u306E Fake-IP DNS \u4E92\u63DB\u51E6\u7406",
     "networkEgress.fakeIpDnsHelp": "\u753B\u50CF\u306E DNS \u304C Fake-IP \u3092\u8FD4\u3059\u5834\u5408\u3001Cloudflare DNS \u3067\u5B9F\u969B\u306E\u516C\u958B\u30A2\u30C9\u30EC\u30B9\u3092\u53D6\u5F97\u3057\u307E\u3059\u3002\u4ECA\u5F8C\u958B\u59CB\u3059\u308B\u30EA\u30AF\u30A8\u30B9\u30C8\u306E\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u306B\u9069\u7528\u3057\u3001LAN \u306E DNS \u306F\u5909\u66F4\u3057\u307E\u305B\u3093\u3002API \u30AD\u30FC\u3001\u30D7\u30ED\u30F3\u30D7\u30C8\u3001\u5B8C\u5168\u306A\u753B\u50CF URL \u306F\u9001\u4FE1\u3057\u307E\u305B\u3093\u3002",
-    "output.transparencyFidelityHint": "\u900F\u660E\u80CC\u666F\u306F\u9078\u629E\u3055\u308C\u305F\u51FA\u529B\u8981\u4EF6\u306E\u305F\u3081\u3001\u300C\u539F\u6587\u300D\u3068\u300C\u5FE0\u5B9F\u300D\u30E2\u30FC\u30C9\u3067\u3082\u8FFD\u52A0\u3055\u308C\u307E\u3059\u3002",
     "output.transparencyFormat": "\u900F\u660E\u51FA\u529B\u306B\u306F PNG \u307E\u305F\u306F WebP \u304C\u5FC5\u8981\u3067\u3059\u3002",
     "output.transparencyUnavailable": "\u900F\u660E\u975E\u5BFE\u5FDC",
     "output.transparentBackground": "\u900F\u660E\u80CC\u666F",
@@ -7129,7 +6480,6 @@
     "userConfigBackup.incrementalCopy": "\u65E2\u5B58\u30C7\u30FC\u30BF\u3092\u4FDD\u6301\u3057\u3001\u91CD\u8907\u3092\u30B9\u30AD\u30C3\u30D7\u3057\u3001\u7AF6\u5408\u3059\u308B\u9805\u76EE\u306F\u5FA9\u65E7\u7528\u30B3\u30D4\u30FC\u3092\u4F5C\u6210\u3057\u307E\u3059\u3002",
     "userConfigBackup.itemCount": "{count} \u4EF6",
     "userConfigBackup.modeLabel": "\u30D0\u30C3\u30AF\u30A2\u30C3\u30D7\u3068\u5FA9\u5143",
-    "userConfigBackup.previewCounts": "\u30A2\u30FC\u30AB\u30A4\u30D6 {count} \u4EF6 \xB7 \u91CD\u8907 {duplicate} \u4EF6 \xB7 \u7AF6\u5408 {conflict} \u4EF6",
     "userConfigBackup.previewTitle": "\u5FA9\u5143\u30D7\u30EC\u30D3\u30E5\u30FC",
     "userConfigBackup.providerRetention": "\u8A8D\u8A3C\u60C5\u5831\u3092\u6301\u3064 {count} \u4EF6\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306F\u5B89\u5168\u306E\u305F\u3081\u4FDD\u6301\u3057\u307E\u3059",
     "userConfigBackup.replaceConfirmCopy": "\u9078\u629E\u3057\u305F\u30BB\u30AF\u30B7\u30E7\u30F3\u306E\u307F\u304C\u5BFE\u8C61\u3067\u3059\u304C\u3001\u305D\u306E\u73FE\u5728\u306E\u30C7\u30FC\u30BF\u306F\u524A\u9664\u3055\u308C\u307E\u3059\u3002\u5143\u306B\u623B\u305B\u307E\u305B\u3093\u3002",
@@ -7306,25 +6656,13 @@
     "queue.dispatching": "\uC608\uC57D \uC911 \xB7 \uB300\uAE30 {waiting}",
     "queue.runningWaiting": "\uC2E4\uD589 \uC911 {running} \xB7 \uB300\uAE30 {waiting}",
     "queue.statusLabel": "\uB300\uAE30\uC5F4 \uC0C1\uD0DC:{text}\xB7{channelText}. \uD65C\uC131 \uC791\uC5C5\uC73C\uB85C \uC774\uB3D9\uD558\uB824\uBA74 \uD074\uB9AD\uD558\uC138\uC694.",
-    "queue.runningActions": "\uC791\uC5C5 \uB300\uAE30\uC5F4 \uC791\uC5C5 \uC2E4\uD589 \uC911",
-    "queue.waitingActions": "\uC791\uC5C5 \uB300\uAE30\uC5F4 \uC791\uC5C5 \uB300\uAE30 \uC911",
-    "queue.cancelRunning": "\uCDE8\uC18C",
     "queue.cancelRunningTitle": "\uC2E4\uD589 \uC911\uC778 \uC791\uC5C5 \uCDE8\uC18C",
     "queue.dragWaiting": "\uB300\uAE30 \uC791\uC5C5\uC744 \uB2E4\uC2DC \uC815\uB82C\uD558\uB824\uBA74 \uB4DC\uB798\uADF8\uD558\uC138\uC694.",
-    "queue.dragSort": "\uC815\uB82C\uD558\uB824\uBA74 \uB4DC\uB798\uADF8\uD558\uC138\uC694.",
-    "queue.moveUp": "\uC704\uB85C",
     "queue.moveUpTitle": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC744 \uC704\uB85C \uC774\uB3D9",
-    "queue.moveDown": "\uC544\uB798\uB85C",
     "queue.moveDownTitle": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC744 \uC544\uB798\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4.",
     "queue.promote": "\uB9E8 \uC704\uB85C",
     "queue.promoteTitle": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC744 \uB9E8 \uC704\uB85C \uC774\uB3D9",
     "queue.promoteFailed": "\uB9E8 \uC704\uB85C \uC774\uB3D9 \uC2E4\uD328",
-    "queue.deleteWaitingShort": "\uC0AD\uC81C",
-    "queue.deleteWaitingTitle": "\uB300\uAE30 \uC791\uC5C5 \uC0AD\uC81C",
-    "queue.deleteWaitingTitleConfirm": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC744 \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?",
-    "queue.deleteWaitingMessage": "\uB300\uAE30\uC5F4\uACFC \uAE30\uB85D \uBAA9\uB85D\uC5D0\uC11C \uC81C\uAC70\uB429\uB2C8\uB2E4.",
-    "queue.deleteQueuedFailed": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC744 \uC0AD\uC81C\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-    "queue.queuedDeleted": "\uB300\uAE30 \uC911\uC778 \uC791\uC5C5\uC774 \uC0AD\uC81C\uB418\uC5C8\uC2B5\uB2C8\uB2E4.",
     "queue.cancelRunningConfirm": "\uC791\uC5C5 \uCDE8\uC18C",
     "queue.cancelRunningTitleConfirm": "\uC2E4\uD589 \uC911\uC778 \uC791\uC5C5\uC744 \uCDE8\uC18C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?",
     "queue.cancelRunningMessage": "\uCDE8\uC18C \uC694\uCCAD\uC744 \uBCF4\uB0C5\uB2C8\uB2E4. \uACF5\uAE09\uC790 \uD638\uCD9C\uC740 \uC751\uB2F5\uD560 \uB54C\uAE4C\uC9C0 \uACC4\uC18D\uB420 \uC218 \uC788\uC73C\uBA70 \uC694\uAE08\uC774 \uBD80\uACFC\uB420 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uAE30\uB85D\uC740 \uC720\uC9C0\uB429\uB2C8\uB2E4.",
@@ -7363,9 +6701,6 @@
     "taskStatus.runtimeCompleted": "\uC18C\uC694 \uC2DC\uAC04 {duration} \xB7 \uC644\uB8CC {time}",
     "taskStatus.completedAt": "\uC644\uB8CC\uB428{time}",
     "taskCard.count": "\uC774\uBBF8\uC9C0 {count}\uAC1C",
-    "taskCard.successCount": "\uC131\uACF5 {count}",
-    "taskCard.failedCount": "\uC2E4\uD328 {count}",
-    "taskCard.runningCount": "\uC0DD\uC131 \uC911 {count}",
     "taskCard.waitingCount": "\uB300\uAE30 \uC911 {count}",
     "taskCard.textToImageThumb": "\uD14D\uC2A4\uD2B8-\uC774\uBBF8\uC9C0 \uC791\uC5C5 \uCD95\uC18C\uD310",
     "taskCard.imageToImageThumb": "\uC774\uBBF8\uC9C0 \uB300 \uC774\uBBF8\uC9C0 \uC791\uC5C5 \uC378\uB124\uC77C",
@@ -7377,12 +6712,9 @@
     "runFeedback.editing": "\uD3B8\uC9D1 \uC911",
     "runFeedback.generating": "\uC0DD\uC131 \uC911",
     "runFeedback.status": "{action}, \uACBD\uACFC{elapsed}",
-    "footer.archive": "\uBCF4\uAD00\uD568",
-    "footer.archiveCount": "\uBCF4\uAD00\uD568 {count}",
     "footer.historyLibrary": "\uAE30\uB85D",
     "historyLibrary.openFull": "\uC804\uCCB4 \uAE30\uB85D \uB77C\uC774\uBE0C\uB7EC\uB9AC \uC5F4\uAE30",
     "history.documentTitle": "\uAE30\uB85D - iLab CONJURE",
-    "history.back": "\uC0DD\uC131\uAE30\uB85C \uB3CC\uC544\uAC00\uAE30",
     "history.homeAria": "iLab CONJURE \uC0DD\uC131\uAE30\uB85C \uB3CC\uC544\uAC00\uAE30",
     "history.backToGenerator": "\uC0DD\uC131 \uD654\uBA74\uC73C\uB85C \uB3CC\uC544\uAC00\uAE30",
     "history.title": "\uAE30\uB85D",
@@ -7496,9 +6828,7 @@
     "history.type.textToImage": "\uD14D\uC2A4\uD2B8\u2192\uC774\uBBF8\uC9C0",
     "history.type.imageToImage": "\uC774\uBBF8\uC9C0\u2192\uC774\uBBF8\uC9C0",
     "history.month": "\uC6D4",
-    "history.status": "\uC0C1\uD0DC",
     "history.promptMode": "\uD504\uB86C\uD504\uD2B8 \uCC98\uB9AC",
-    "history.size": "\uD06C\uAE30",
     "history.quality": "\uD488\uC9C8",
     "history.ratio": "\uBE44\uC728",
     "history.orientation": "\uBC29\uD5A5",
@@ -7507,9 +6837,7 @@
     "history.archived": "\uBCF4\uAD00\uB428",
     "history.all": "\uBAA8\uB450",
     "history.allMonths": "\uBAA8\uB4E0 \uB2EC",
-    "history.allStatuses": "\uBAA8\uB4E0 \uC0C1\uD0DC",
     "history.allPromptModes": "\uBAA8\uB4E0 \uBAA8\uB4DC",
-    "history.allSizes": "\uBAA8\uB4E0 \uD06C\uAE30",
     "history.allQualities": "\uBAA8\uB4E0 \uD488\uC9C8",
     "history.allRatios": "\uBAA8\uB4E0 \uBE44\uC728",
     "history.ratioOther": "\uAE30\uD0C0",
@@ -7531,13 +6859,10 @@
     "history.selectedCount": "{count}\uAC1C \uC791\uC5C5\uC774 \uC120\uD0DD\uB428",
     "history.confirmDelete": "\uC0AD\uC81C \uD655\uC778",
     "history.detail": "\uC791\uC5C5 \uC138\uBD80\uC815\uBCF4",
-    "history.detailTitle": "\uAE30\uB85D \uC791\uC5C5",
     "history.closeDetail": "\uC791\uC5C5 \uC138\uBD80\uC815\uBCF4 \uB2EB\uAE30",
     "history.resizeFilters": "\uD544\uD130 \uC0AC\uC774\uB4DC\uBC14 \uD06C\uAE30 \uC870\uC815",
     "history.resizeDetail": "\uC138\uBD80\uC815\uBCF4 \uCC3D \uD06C\uAE30 \uC870\uC815",
-    "history.detailEmpty": "\uC138\uBD80\uC815\uBCF4\uB97C \uBCF4\uB824\uBA74 \uAE30\uB85D \uC791\uC5C5\uC744 \uC120\uD0DD\uD558\uC138\uC694.",
     "history.loadingDetail": "\uC138\uBD80\uC815\uBCF4 \uB85C\uB4DC \uC911...",
-    "history.loadMore": "\uB354 \uB85C\uB4DC\uD558\uAE30",
     "history.loadingMore": "\uB85C\uB4DC \uC911...",
     "history.noMore": "\uB354 \uC774\uC0C1 \uC791\uC5C5\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
     "history.loadFailed": "\uB85C\uB4DC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uB824\uBA74 \uC0C8\uB85C\uACE0\uCE68\uD558\uAC70\uB098 \uACC4\uC18D \uC2A4\uD06C\uB864\uD558\uC138\uC694.",
@@ -7546,9 +6871,7 @@
     "history.detailFailed": "\uC138\uBD80\uC815\uBCF4\uB97C \uB85C\uB4DC\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "history.noMatches": "\uC77C\uCE58\uD558\uB294 \uC791\uC5C5\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
     "history.loadedCount": "{count}\uAC1C \uB85C\uB4DC\uB428",
-    "history.windowNotice": "\uD45C\uC2DC\uB418\uB294 \uBAA9\uB85D\uC740 {count}\uAC1C \uC791\uC5C5\uC73C\uB85C \uC81C\uD55C\uB429\uB2C8\uB2E4. \uC704\uC544\uB798\uB85C \uC2A4\uD06C\uB864\uD558\uBA74 \uD544\uC694\uD55C \uC778\uC811 \uC791\uC5C5\uC744 \uBCF5\uC6D0\uD569\uB2C8\uB2E4.",
     "history.selectTask": "\uC791\uC5C5 \uC120\uD0DD",
-    "history.viewing": "\uBCF4\uAE30",
     "history.noPreview": "\uBBF8\uB9AC\uBCF4\uAE30 \uC774\uBBF8\uC9C0 \uC5C6\uC74C",
     "history.downloadAll": "ZIP \uB2E4\uC6B4\uB85C\uB4DC",
     "history.downloadImage": "\uC774\uBBF8\uC9C0 \uB2E4\uC6B4\uB85C\uB4DC",
@@ -7563,11 +6886,9 @@
     "history.inputReferences": "\uC785\uB825 \uCC38\uC870",
     "history.inputReferenceIndex": "\uC785\uB825 \uCC38\uC870 {index}",
     "history.copyPrompt": "\uD504\uB86C\uD504\uD2B8 \uBCF5\uC0AC",
-    "history.copyPrompts": "\uD504\uB86C\uD504\uD2B8 \uBCF5\uC0AC",
     "history.copyPromptShort": "\uBCF5\uC0AC",
     "history.copyPromptPanel": "{title} \uBCF5\uC0AC",
     "history.copyOutputPromptPanel": "\uC774\uBBF8\uC9C0 {index}\uC758 \uC218\uC815\uB41C \uD504\uB86C\uD504\uD2B8 \uBCF5\uC0AC",
-    "history.copyTaskIds": "\uC791\uC5C5 ID \uBCF5\uC0AC",
     "history.reuseTask": "\uC0DD\uC131\uAE30\uC5D0\uC11C \uBCF4\uAE30",
     "history.downloadTask": "\uB2E4\uC6B4\uB85C\uB4DC",
     "history.downloadSelectedTasks": "\uC77C\uAD04 \uB2E4\uC6B4\uB85C\uB4DC",
@@ -7585,7 +6906,6 @@
     "history.noDownloadableOutputs": "\uB2E4\uC6B4\uB85C\uB4DC \uAC00\uB2A5\uD55C \uC774\uBBF8\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
     "history.confirmDeleteSelected": "\uC120\uD0DD\uD55C \uC0AD\uC81C \uD655\uC778",
     "history.openPreview": "\uBBF8\uB9AC\uBCF4\uAE30 \uC5F4\uAE30",
-    "history.closePreview": "\uBBF8\uB9AC\uBCF4\uAE30 \uB2EB\uAE30",
     "history.untitled": "\uC81C\uBAA9 \uC5C6\uC74C",
     "history.promptCompare": "\uD504\uB86C\uD504\uD2B8 \uBE44\uAD50",
     "history.promptOriginal": "\uC6D0\uB798 \uD504\uB86C\uD504\uD2B8",
@@ -7602,8 +6922,6 @@
     "history.quality.low": "\uB0AE\uC74C",
     "history.quality.auto": "\uC790\uB3D9",
     "footer.batch": "\uBC30\uCE58",
-    "footer.storage": "\uC800\uC7A5",
-    "footer.apiStatus": "API\uC0C1\uD0DC: \uC815\uC0C1",
     "footer.version": "\uBC84\uC804{version}",
     "footer.versionLoading": "\uBC84\uC804...",
     "notifications.title": "\uC791\uC5C5 \uC54C\uB9BC",
@@ -7626,31 +6944,11 @@
     "theme.system": "\uC2DC\uC2A4\uD15C",
     "theme.light": "\uB77C\uC774\uD2B8",
     "theme.dark": "\uB2E4\uD06C",
-    "language.label": "\uD45C\uC2DC \uC5B8\uC5B4",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\uC911\uAD6D\uC5B4 \uAC04\uCCB4",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\uC778\uC99D \uC18C\uC2A4",
     "auth.checking": "\uC778\uC99D \uD655\uC778 \uC911",
     "auth.missingCodexSession": "Codex \uC138\uC158\uC774 \uAC10\uC9C0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
     "auth.switchFailed": "\uC778\uC99D \uC18C\uC2A4\uB97C \uC804\uD658\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "auth.sourceUnavailable": "{source}\uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC74C",
     "auth.notActive": "\uD65C\uB3D9\uD558\uC9C0 \uC54A\uC74C",
-    "api.settings": "\uC2DC\uC2A4\uD15C \uC124\uC815",
-    "api.provider": "API \uACF5\uAE09\uC790",
-    "imageInput.title": "\uC774\uBBF8\uC9C0 \uC785\uB825",
     "imageInput.uploadAria": "\uC774\uBBF8\uC9C0\uC640 \uD30C\uC77C\uC744 \uD074\uB9AD, \uB4DC\uB86D \uB610\uB294 \uBD99\uC5EC\uB123\uAE30",
     "imageInput.uploadImages": "\uD074\uB9AD, \uB4DC\uB798\uADF8 \uB610\uB294 \uBD99\uC5EC\uB123\uAE30\uB85C \uC774\uBBF8\uC9C0 \uCD94\uAC00",
     "imageInput.uploadFull": "\uC774\uBBF8\uC9C0\uC640 \uD30C\uC77C\uC744 \uD074\uB9AD, \uB4DC\uB86D \uB610\uB294 \uBD99\uC5EC\uB123\uAE30",
@@ -7746,7 +7044,6 @@
     "gallery.categoryFallback": "\uAC24\uB7EC\uB9AC \uCE74\uD14C\uACE0\uB9AC",
     "gallery.imageFallback": "\uAC24\uB7EC\uB9AC \uC774\uBBF8\uC9C0",
     "gallery.imageLoadFailed": "\uC774 \uC774\uBBF8\uC9C0\uB97C \uB85C\uB4DC\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-    "gallery.editImageLoadFailed": "\uD3B8\uC9D1\uC744 \uC704\uD574 \uC774 \uC774\uBBF8\uC9C0\uB97C \uB85C\uB4DC\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "gallery.cannotAddImage": "\uC774 \uC774\uBBF8\uC9C0\uB294 \uAC24\uB7EC\uB9AC\uC5D0 \uCD94\uAC00\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4",
     "gallery.nameRequired": "\uAC24\uB7EC\uB9AC \uC774\uB984\uC744 \uC785\uB825\uD558\uC138\uC694",
     "gallery.saveFailed": "\uAC24\uB7EC\uB9AC \uC774\uBBF8\uC9C0 \uC800\uC7A5 \uC2E4\uD328",
@@ -7802,7 +7099,6 @@
     "outputSettings.title": "\uCD9C\uB825 \uC124\uC815",
     "output.lock.lock": "\uB9E4\uAC1C\uBCC0\uC218 \uC7A0\uAE08",
     "output.lock.unlock": "\uC7A0\uAE08 \uD574\uC81C \uBC0F \uD3B8\uC9D1",
-    "output.lock.current": "\uD604\uC7AC \uC7A0\uAE08",
     "output.lock.task": "\uC120\uD0DD\uD55C \uC791\uC5C5 \uB9E4\uAC1C\uBCC0\uC218",
     "output.lock.adoptTask": "\uC774 \uC791\uC5C5 \uB9E4\uAC1C\uBCC0\uC218 \uC0AC\uC6A9",
     "output.lock.frame": "\uD654\uBA74 \uBE44\uC728",
@@ -7822,25 +7118,11 @@
     "output.mainModel": "\uBA54\uC778 \uBAA8\uB378",
     "output.selectMainModel": "\uBA54\uC778 \uBAA8\uB378 \uC120\uD0DD",
     "output.mainModelCustomForInput": "\uD604\uC7AC \uC785\uB825\uC5D0 \uC0AC\uC6A9\uC790 \uC815\uC758 \uBAA8\uB378\uC744 \uC0AC\uC6A9\uD569\uB2C8\uB2E4.",
-    "output.apiDirect": "API\uC9C1\uC811",
-    "output.apiToolModel": "API \uC774\uBBF8\uC9C0 \uC0DD\uC131 \uBAA8\uB378 \uC0AC\uC6A9",
     "output.webSearch": "\uC6F9 \uAC80\uC0C9",
-    "output.webSearchToggle": "\uCF1C\uC9D0",
     "output.webSearchTitle": "\uBA3C\uC800 \uC6F9\uC744 \uAC80\uC0C9\uD55C \uB2E4\uC74C \uC774 \uC138\uB300\uB97C \uC704\uD574 \uC0AC\uC6A9\uD558\uC2ED\uC2DC\uC624.Codex\uBC0FAPI\uC751\uB2F5\uB9CC",
-    "output.promptMode": "\uD504\uB86C\uD504\uD2B8 \uCC98\uB9AC",
     "output.modeOriginal": "\uC6D0\uBB38",
     "output.modeStrict": "\uCDA9\uC2E4",
     "output.modeCreative": "\uC790\uB3D9",
-    "output.promptHelp": "\uD504\uB86C\uD504\uD2B8 \uCC98\uB9AC \uC124\uBA85 \uBCF4\uAE30",
-    "output.promptHelpTitle": "\uD504\uB86C\uD504\uD2B8 \uCC98\uB9AC",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \uBA54\uC778 \uBAA8\uB378 \uCC38\uC5EC",
-    "output.promptHelp.imagesChannel": "Images \xB7 \uC9C1\uC811 \uC0DD\uC131",
-    "output.promptHelp.responses.original": "\uC571 \uC218\uC900\uC758 \uD504\uB86C\uD504\uD2B8 \uADDC\uCE59\uC744 \uCD94\uAC00\uD558\uC9C0 \uC54A\uACE0 \uC6D0\uBB38\uC744 \uADF8\uB300\uB85C \uC804\uC1A1\uD569\uB2C8\uB2E4. \uACF5\uAE09\uC790\uAC00 revised prompt\uB97C \uBC18\uD658\uD558\uAC70\uB098 \uACB0\uACFC\uB97C \uB2E4\uB974\uAC8C \uD574\uC11D\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
-    "output.promptHelp.responses.strict": "\uBA54\uC778 \uBAA8\uB378\uC774 \uC815\uB9AC\uD558\uAC70\uB098 \uD655\uC7A5\uD560 \uC218 \uC788\uC9C0\uB9CC \uD53C\uC0AC\uCCB4, \uD14D\uC2A4\uD2B8, \uC0C9\uC0C1, \uAD6C\uB3C4 \uAC19\uC740 \uD544\uC218 \uC870\uAC74\uC740 \uC720\uC9C0\uD569\uB2C8\uB2E4.",
-    "output.promptHelp.responses.automatic": "\uCD94\uAC00 \uC81C\uC57D \uC5C6\uC774 \uBA54\uC778 \uBAA8\uB378\uC774 \uD574\uC11D\uD558\uACE0 \uCD5C\uC801\uD654\uD55C \uB4A4 \uC774\uBBF8\uC9C0 \uB3C4\uAD6C\uB97C \uD638\uCD9C\uD569\uB2C8\uB2E4.",
-    "output.promptHelp.images.original": "\uC571 \uC218\uC900\uC758 \uADDC\uCE59\uC744 \uCD94\uAC00\uD558\uC9C0 \uC54A\uACE0 \uC6D0\uBB38\uC744 \uC774\uBBF8\uC9C0 API\uC5D0 \uC9C1\uC811 \uC81C\uCD9C\uD569\uB2C8\uB2E4.",
-    "output.promptHelp.images.strict": "\uC6D0\uBB38\uACFC \uCDA9\uC2E4\uB3C4 \uADDC\uCE59\uC744 \uD568\uAED8 \uC81C\uCD9C\uD574 \uBAA8\uB4E0 \uD544\uC218 \uC870\uAC74\uC758 \uC720\uC9C0\uB97C \uAC15\uC870\uD569\uB2C8\uB2E4.",
-    "output.promptHelp.images.automatic": "\uC774\uBBF8\uC9C0 API\uC758 \uAE30\uBCF8 \uBC29\uC2DD\uC73C\uB85C \uC81C\uCD9C\uD558\uBA70 \uAC24\uB7EC\uB9AC \uCC38\uC870 \uAC19\uC740 \uD544\uC218 \uC124\uBA85\uC740 \uD3EC\uD568\uD569\uB2C8\uB2E4.",
     "output.size": "\uCD9C\uB825 \uD06C\uAE30",
     "output.sizeMode": "\uD06C\uAE30 \uBAA8\uB4DC",
     "output.sizeAuto": "\uC790\uB3D9",
@@ -7904,8 +7186,6 @@
     "preview.runningTitle": "{mode}\uC2E4\uD589 \uC911",
     "preview.submittingTitle": "\uC791\uC5C5 \uC81C\uCD9C \uC911",
     "preview.queuedTitle": "\uC791\uC5C5\uC774 \uB300\uAE30 \uC911\uC785\uB2C8\uB2E4.",
-    "preview.submittingDetail": "\uC785\uB825\uC744 \uC800\uC7A5\uD558\uACE0 \uC791\uC5C5\uC744 \uB300\uAE30\uC5F4\uC5D0 \uCD94\uAC00\uD569\uB2C8\uB2E4. \uC0DD\uC131\uC774 \uC790\uB3D9\uC73C\uB85C \uC2DC\uC791\uB429\uB2C8\uB2E4.",
-    "preview.queuedDetail": "\uC791\uC5C5\uC774 \uB300\uAE30\uC5F4\uC5D0 \uC788\uC73C\uBA70 \uC0AC\uC6A9 \uAC00\uB2A5\uD55C \uCC44\uB110\uC744 \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4.",
     "preview.featured": "\uC120\uD0DD\uB428",
     "preview.addFeatured": "\uACB0\uACFC \uC120\uD0DD",
     "preview.selectedFeatured": "\uC120\uD0DD\uB428",
@@ -7958,7 +7238,6 @@
     "promptPopover.close": "\uD504\uB86C\uD504\uD2B8 \uBE44\uAD50 \uB2EB\uAE30",
     "promptPopover.copyOptimized": "\uCD5C\uC801\uD654\uB41C \uD504\uB86C\uD504\uD2B8 \uBCF5\uC0AC",
     "promptPopover.copied": "\uBCF5\uC0AC\uB428",
-    "taskContext.menuLabel": "\uC791\uC5C5 \uC0C1\uD669\uC5D0 \uB9DE\uB294 \uBA54\uB274",
     "taskContext.view": "\uC791\uC5C5 \uBCF4\uAE30",
     "taskContext.copyId": "\uC791\uC5C5 ID \uBCF5\uC0AC",
     "taskContext.copyPrompt": "\uD504\uB86C\uD504\uD2B8 \uBCF5\uC0AC",
@@ -7987,7 +7266,6 @@
     "taskActions.acceptSuccessesFailed": "\uC131\uACF5\uC801\uC778 \uACB0\uACFC\uB97C \uC218\uB77D\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "taskActions.acceptedSuccesses": "\uC131\uACF5\uC801\uC778 \uACB0\uACFC\uAC00 \uC2B9\uC778\uB418\uC5C8\uC2B5\uB2C8\uB2E4.",
     "taskActions.viewedUpdateFailed": "\uC77D\uAE30 \uC0C1\uD0DC\uB97C \uC5C5\uB370\uC774\uD2B8\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-    "taskActions.failedFallback": "\uC791\uC5C5\uC774 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4.",
     "taskList.empty": "\uC544\uC9C1 \uAE30\uB85D\uC774 \uC5C6\uC2B5\uB2C8\uB2E4",
     "taskList.selectSession": "\uCC44\uD305 \uC120\uD0DD",
     "taskList.unreadUpdate": "\uC77D\uC9C0 \uC54A\uC740 \uC5C5\uB370\uC774\uD2B8",
@@ -8057,7 +7335,6 @@
     "snippets.saveSelection": "\uC800\uC7A5",
     "snippets.saveSelectionLabel": "\uC120\uD0DD\uD55C \uD14D\uC2A4\uD2B8\uB97C \uD504\uB86C\uD504\uD2B8 \uC870\uAC01\uC73C\uB85C \uC800\uC7A5",
     "snippets.popoverLabel": "\uD504\uB86C\uD504\uD2B8 \uC2A4\uB2C8\uD3AB",
-    "snippets.defaultCategory": "\uACF5\uD1B5",
     "snippets.loadFailed": "\uD504\uB86C\uD504\uD2B8 \uC870\uAC01\uC744 \uB85C\uB4DC\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "snippets.remove": "~{tag}\uC81C\uAC70",
     "snippets.expand": "\uD655\uC7A5",
@@ -8102,7 +7379,6 @@
     "colors.done": "\uC644\uB8CC",
     "colors.manage": "\uAD00\uB9AC",
     "colors.favorites": "\uC88B\uC544\uD558\uB294 \uC0C9\uAE54",
-    "colors.recent": "\uCD5C\uADFC \uC0C9\uC0C1",
     "colors.recentLabel": "\uCD5C\uADFC",
     "colors.deleteFavorite": "\uC88B\uC544\uD558\uB294 \uC0C9\uC0C1 \uC0AD\uC81C{name}",
     "colors.modify": "\uC0C9\uC0C1 \uD3B8\uC9D1",
@@ -8112,16 +7388,13 @@
     "taskGroup.current": "\uD604\uC7AC \uC791\uC5C5",
     "taskGroup.yesterday": "\uC5B4\uC81C",
     "taskGroup.last7": "\uC9C0\uB09C 7\uC77C",
-    "taskGroup.older": "\uC774\uC804",
     "taskGroup.searchResults": "\uAC80\uC0C9 \uACB0\uACFC",
-    "taskGroup.active": "\uD65C\uC131",
     "taskGroup.running": "\uC2E4\uD589 \uC911",
     "taskGroup.waiting": "\uB300\uAE30 \uC911",
     "taskGroup.dispatchPending": "\uC0AC\uC6A9 \uAC00\uB2A5\uD55C \uCC44\uB110\uC744 \uD560\uB2F9\uD558\uB294 \uC911...",
     "taskGroup.expand": "\uD655\uC7A5{label}",
     "taskGroup.collapse": "\uCD95\uC18C{label}",
     "taskGroup.buttonLabel": "{label}, \uC791\uC5C5 {count}\uAC1C",
-    "taskGroup.loadMore": "{count}\uAC1C \uB354 \uBD88\uB7EC\uC624\uAE30",
     "taskGroup.loadFailedRetry": "\uB85C\uB4DC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uD074\uB9AD\uD558\uC5EC \uB2E4\uC2DC \uC2DC\uB3C4",
     "archive.title": "\uBCF4\uAD00\uD568",
     "archive.empty": "\uBCF4\uAD00\uB41C \uCC44\uD305\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
@@ -8134,7 +7407,6 @@
     "archive.restoring": "\uBCF5\uC6D0 \uC911...",
     "archive.deleting": "\uC0AD\uC81C \uC911...",
     "archive.restoredCount": "\uC791\uC5C5 {count}\uAC1C\uC744 \uBCF5\uC6D0\uD588\uC2B5\uB2C8\uB2E4.",
-    "settings.title": "\uC800\uC7A5\uC18C \uC124\uC815",
     "settings.status": "\uC800\uC7A5\uC18C \uACBD\uB85C\uB97C \uC800\uC7A5\uD55C \uB4A4 WebUI\uB97C \uB2E4\uC2DC \uC2DC\uC791\uD558\uBA74 \uC801\uC6A9\uB429\uB2C8\uB2E4",
     "settings.pathChangeHint": "\uACBD\uB85C\uB97C \uBCC0\uACBD\uD574\uB3C4 \uAE30\uC874 \uB370\uC774\uD130\uB294 \uC774\uB3D9\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uC774\uC804\uD558\uB824\uBA74 \uBC31\uC5C5 \uD6C4 \uC571\uC744 \uC885\uB8CC\uD558\uACE0 \uAD00\uB828 \uD3F4\uB354 \uC804\uCCB4\uB97C \uBCF5\uC0AC\uD558\uC138\uC694.",
     "settings.previousPaths": "\uC774\uC804 \uB370\uC774\uD130\uAC00 \uC5C6\uB098\uC694? \uC6D0\uB798 \uAE30\uBCF8 \uD3F4\uB354 \uD655\uC778",
@@ -8189,7 +7461,6 @@
     "userConfigBackup.restoreComplete": "\uBCF5\uC6D0\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4",
     "systemSettings.tabsLabel": "\uC2DC\uC2A4\uD15C \uC124\uC815 \uC139\uC158",
     "systemSettings.apiTab": "API \uC124\uC815",
-    "systemSettings.codexTab": "Codex \uCC44\uB110",
     "systemSettings.languageTab": "\uC5B8\uC5B4 / Language",
     "systemSettings.storageTab": "\uC800\uC7A5\uC18C \uBC0F \uC54C\uB9BC",
     "systemSettings.networkTab": "\uB124\uD2B8\uC6CC\uD06C",
@@ -8215,23 +7486,14 @@
     "networkEgress.loadFailed": "\uB124\uD2B8\uC6CC\uD06C \uC124\uC815\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4",
     "networkEgress.saveFailed": "\uB124\uD2B8\uC6CC\uD06C \uC124\uC815\uC744 \uC800\uC7A5\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4",
     "languageSettings.instantStatus": "\uC5B8\uC5B4 \uBCC0\uACBD \uC0AC\uD56D\uC740 \uC989\uC2DC \uC801\uC6A9\uB429\uB2C8\uB2E4",
-    "apiSettings.title": "API \uC124\uC815",
-    "apiSettings.status": "\uC800\uC7A5\uB41C \uC124\uC815\uC740 API \uBAA8\uB4DC\uC5D0 \uC989\uC2DC \uC801\uC6A9\uB429\uB2C8\uB2E4",
-    "apiSettings.codexMode": "Codex\uCC44\uB110",
-    "apiSettings.codexImages": "\uC774\uBBF8\uC9C0",
-    "apiSettings.codexResponses": "\uC751\uB2F5",
     "apiSettings.providers": "API \uACF5\uAE09\uC790",
     "apiSettings.searchProviders": "\uACF5\uAE09\uC790 \uC774\uB984 \uAC80\uC0C9",
     "apiSettings.noProviderSearchResults": "\uC77C\uCE58\uD558\uB294 \uACF5\uAE09\uC790\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
     "apiSettings.providerCount": "\uACF5\uAE09\uC790 {count}\uAC1C",
-    "apiSettings.provider": "\uACF5\uAE09\uC790",
     "apiSettings.providerName": "\uACF5\uAE09\uC790 \uC774\uB984",
     "apiSettings.providerIcon": "\uC774\uBAA8\uC9C0 \uC544\uC774\uCF58",
     "apiSettings.providerIconPlaceholder": "\uC120\uD0DD \uC0AC\uD56D, \uC608: \u{1FA84}",
-    "apiSettings.connectionScope": "\uC5F0\uACB0 \uC124\uC815",
-    "apiSettings.connectionPreview": "\uC5F0\uACB0 \uBBF8\uB9AC\uBCF4\uAE30",
     "apiSettings.modelBindings": "\uBAA8\uB378",
-    "apiSettings.modelBindingsHint": "\uD55C \uACF5\uAE09\uC790\uC5D0 \uC5EC\uB7EC \uBAA8\uB378\uACFC \uD504\uB85C\uD1A0\uCF5C\uC744 \uC5F0\uACB0\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
     "apiSettings.addModelBinding": "\uBAA8\uB378 \uCD94\uAC00",
     "apiSettings.defaultProviderForModel": "\uAE30\uBCF8 \uACF5\uAE09\uC790",
     "apiSettings.removeBinding": "\uBC14\uC778\uB529 \uC0AD\uC81C",
@@ -8239,7 +7501,6 @@
     "apiSettings.keepOneBinding": "\uAC01 \uACF5\uAE09\uC790\uC5D0\uB294 \uBAA8\uB378 \uBC14\uC778\uB529\uC774 \uD558\uB098 \uC774\uC0C1 \uD544\uC694\uD569\uB2C8\uB2E4.",
     "apiSettings.bindingRequiredFields": "\uAC01 \uBC14\uC778\uB529\uC5D0\uC11C \uBAA8\uB378\uC744 \uC120\uD0DD\uD558\uACE0 \uC6D0\uACA9 \uBAA8\uB378 \uC774\uB984\uC744 \uC785\uB825\uD55C \uB4A4 \uD558\uB098 \uC774\uC0C1\uC758 \uC791\uC5C5\uC744 \uC120\uD0DD\uD558\uC138\uC694.",
     "apiSettings.bindingOverlap": "{model}\uC758 {operation}\uC774 \uC5EC\uB7EC \uBC14\uC778\uB529\uC5D0 \uC911\uBCF5\uB429\uB2C8\uB2E4.",
-    "apiSettings.actualRequest": "\uC2E4\uC81C \uC694\uCCAD",
     "apiSettings.newProviderAction": "\uACF5\uAE09\uC790 \uC0C8\uB85C \uB9CC\uB4E4\uAE30",
     "apiSettings.copyProvider": "\uBCF5\uC0AC",
     "apiSettings.copyProviderName": "{name} \uBCF5\uC0AC",
@@ -8250,15 +7511,7 @@
     "apiSettings.sortProviderModeStatus": "\uD578\uB4E4\uC744 \uB4DC\uB798\uADF8\uD558\uAC70\uB098 \uBC29\uD5A5\uD0A4\uB85C \uC815\uB82C\uD558\uC138\uC694",
     "apiSettings.sortProviderHandleAria": "{provider}\uC744(\uB97C) \uB4DC\uB798\uADF8\uD558\uAC70\uB098 \uBC29\uD5A5\uD0A4, Home, End \uD0A4\uB85C \uC21C\uC11C \uBCC0\uACBD",
     "apiSettings.sortProviderStatus": "\uACF5\uAE09\uC790 \uC21C\uC11C\uAC00 \uBCC0\uACBD\uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC790\uB3D9 \uC800\uC7A5 \uC911...",
-    "apiSettings.moveProviderUp": "\uC704\uB85C",
-    "apiSettings.moveProviderDown": "\uC544\uB798\uB85C",
-    "apiSettings.moveProviderUpAria": "{provider}\uC704\uB85C \uC774\uB3D9",
-    "apiSettings.moveProviderDownAria": "{provider}\uC544\uB798\uB85C \uC774\uB3D9",
-    "apiSettings.mode": "\uD638\uCD9C \uBC29\uC2DD",
-    "apiSettings.images": "Image API \uC9C1\uC811 \uC5F0\uACB0",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\uC9C1\uC811 \uC5F0\uACB0",
-    "apiSettings.imageModel": "\uC774\uBBF8\uC9C0 \uC0DD\uC131 \uBAA8\uB378",
     "apiSettings.concurrency": "\uB3D9\uC2DC \uC2E4\uD589 \uD55C\uB3C4",
     "apiSettings.svgAuthorModel": "SVG \uC791\uC131 \uBAA8\uB378",
     "apiSettings.invalidSvgAuthorModel": "\uACF5\uBC31 \uC5C6\uC774 \uC720\uD6A8\uD55C SVG \uBAA8\uB378 ID\uB97C \uC785\uB825\uD558\uC138\uC694.",
@@ -8266,25 +7519,18 @@
     "apiSettings.remoteModelName": "\uACF5\uAE09\uC790 \uBAA8\uB378 \uC774\uB984",
     "apiSettings.fetchModels": "\uBAA8\uB378 \uAC00\uC838\uC624\uAE30",
     "apiSettings.advancedSettings": "\uACE0\uAE09 \uC124\uC815",
-    "apiSettings.concurrencyValue": "\uB3D9\uC2DC\uC131{concurrency}",
     "apiSettings.keySaved": "API Key\uAC00 \uC800\uC7A5\uB418\uC5C8\uC2B5\uB2C8\uB2E4",
     "apiSettings.keyNotSet": "API Key\uAC00 \uC124\uC815\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
     "apiSettings.showApiKey": "API Key \uD45C\uC2DC",
     "apiSettings.hideApiKey": "API Key \uC228\uAE30\uAE30",
     "apiSettings.editProvider": "\uACF5\uAE09\uC790 \uD3B8\uC9D1",
     "apiSettings.newProviderTitle": "\uC0C8 \uACF5\uAE09\uC790",
-    "apiSettings.editHint": "\uACF5\uAE09\uC790 \uC800\uC7A5\uC744 \uB204\uB974\uAE30 \uC804\uAE4C\uC9C0 \uC774 \uD3B8\uC9D1 \uB0B4\uC6A9\uC740 \uBC31\uC5D4\uB4DC\uC5D0 \uAE30\uB85D\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uCDE8\uC18C\uD558\uBA74 \uD3D0\uAE30\uB429\uB2C8\uB2E4.",
     "apiSettings.finishEditFirst": "\uBA3C\uC800 \uD604\uC7AC \uACF5\uAE09\uC790 \uD3B8\uC9D1 \uB0B4\uC6A9\uC744 \uC800\uC7A5\uD558\uAC70\uB098 \uCDE8\uC18C\uD558\uC138\uC694.",
     "apiSettings.newDraftStatus": "\uACF5\uAE09\uC790\uB97C \uB9CC\uB4DC\uB294 \uC911\uC785\uB2C8\uB2E4. \uC801\uC6A9\uD558\uB824\uBA74 \uACF5\uAE09\uC790\uB97C \uC800\uC7A5\uD558\uC138\uC694.",
     "apiSettings.editDraftStatus": "\uACF5\uAE09\uC790\uB97C \uD3B8\uC9D1 \uC911\uC785\uB2C8\uB2E4. \uC801\uC6A9\uD558\uB824\uBA74 \uACF5\uAE09\uC790\uB97C \uC800\uC7A5\uD558\uC138\uC694.",
-    "apiSettings.cancelEdit": "\uD3B8\uC9D1 \uCDE8\uC18C",
-    "apiSettings.saveProvider": "\uACF5\uAE09\uC790 \uC800\uC7A5",
-    "apiSettings.saveSelection": "\uD604\uC7AC \uC120\uD0DD \uC800\uC7A5",
     "apiSettings.deleteProviderTitle": "\uACF5\uAE09\uC790\uB97C \uC0AD\uC81C\uD560\uAE4C\uC694?",
     "apiSettings.deleteProviderMessage": '"{provider}"\uC744(\uB97C) \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?',
     "apiSettings.deleteProviderDetail": "\uACF5\uAE09\uC790 \uBAA9\uB85D\uC5D0\uC11C \uC81C\uAC70\uB418\uACE0 \uBC31\uC5D4\uB4DC\uC5D0 \uC790\uB3D9 \uC800\uC7A5\uB429\uB2C8\uB2E4.",
-    "apiSettings.deleteProviderStatus": "\uACF5\uAE09\uC790\uAC00 \uC0AD\uC81C\uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC790\uB3D9 \uC800\uC7A5 \uC911...",
-    "apiSettings.save": "API \uC124\uC815 \uC800\uC7A5",
     "apiSettings.loadFailed": "API\uC124\uC815\uC744 \uB85C\uB4DC\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
     "apiSettings.savedKeyPlaceholder": "API Key\uAC00 \uBC31\uC5D4\uB4DC\uC5D0 \uC800\uC7A5\uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uAD50\uCCB4\uD558\uB824\uBA74 \uC0C8 \uD0A4\uB97C \uC785\uB825\uD558\uC138\uC694.",
     "apiSettings.apiKeyRequired": "\uACF5\uAE09\uC790\uB97C \uC800\uC7A5\uD558\uAE30 \uC804\uC5D0 API Key\uB97C \uC785\uB825\uD558\uC138\uC694.",
@@ -8305,16 +7551,6 @@
     "apiSettings.savedShort": "\uC800\uC7A5\uB418\uC5C8\uC2B5\uB2C8\uB2E4",
     "apiSettings.savedStatus": "API \uC124\uC815\uC774 \uC800\uC7A5\uB418\uC5C8\uC2B5\uB2C8\uB2E4.",
     "apiSettings.saveFailedShort": "\uC800\uC7A5 \uC2E4\uD328",
-    "codexSettings.title": "Codex \uCC44\uB110",
-    "codexSettings.status": "\uB85C\uCEECCodex\uB85C\uADF8\uC778\uC744 \uC704\uD55C \uC0DD\uC131 \uCC44\uB110\uC744 \uC120\uD0DD\uD558\uC138\uC694.",
-    "codexSettings.notesLabel": "Codex \uCC44\uB110 \uC124\uBA85",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\uD06C\uAE30, \uD488\uC9C8 \uBC0F \uD3B8\uC9D1 \uB9E4\uAC1C\uBCC0\uC218\uB97C \uC9C1\uC811 \uC804\uB2EC\uD558\uAE30 \uC704\uD55C \uAE30\uBCF8 \uCC44\uB110\uC785\uB2C8\uB2E4.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\uC6F9 \uAC80\uC0C9 \uB3C4\uAD6C\uAC00 \uD544\uC694\uD55C \uC6CC\uD06C\uD50C\uB85C\uB97C \uC704\uD55C \uD638\uD658\uC131 \uCC44\uB110\uC785\uB2C8\uB2E4.",
-    "codexSettings.current": "\uC0AC\uC6A9 \uC911",
-    "codexSettings.save": "Codex \uCC44\uB110 \uC800\uC7A5",
-    "codexSettings.saveMode": "{mode} \uC800\uC7A5",
     "imageEditor.title": "\uC785\uB825 \uC774\uBBF8\uC9C0 \uD3B8\uC9D1",
     "imageEditor.promptHint": "\uC774\uBBF8\uC9C0\uC5D0 \uC190\uC73C\uB85C \uADF8\uB9B0 \uD654\uC0B4\uD45C\uC640 \uD45C\uC2DC\uB294 \uC124\uBA85\uC77C \uBFD0\uC785\uB2C8\uB2E4. \uCD5C\uC885 \uC774\uBBF8\uC9C0\uC5D0 \uBCF4\uAD00\uD558\uC9C0 \uB9C8\uC138\uC694.",
     "imageEditor.inputFallback": "\uC785\uB825 \uC774\uBBF8\uC9C0",
@@ -8394,31 +7630,21 @@
     "addGallery.save": "\uAC24\uB7EC\uB9AC\uC5D0 \uC800\uC7A5",
     "close.promptTemplates": "\uD504\uB86C\uD504\uD2B8 \uD15C\uD50C\uB9BF \uD328\uB110 \uB2EB\uAE30",
     "close.archive": "\uC544\uCE74\uC774\uBE0C \uD328\uB110 \uB2EB\uAE30",
-    "close.settings": "\uC800\uC7A5\uC18C \uC124\uC815 \uD328\uB110 \uB2EB\uAE30",
-    "close.apiSettings": "API\uC124\uC815 \uD328\uB110\uC744 \uB2EB\uC2B5\uB2C8\uB2E4.",
     "close.systemSettings": "\uC2DC\uC2A4\uD15C \uC124\uC815 \uD328\uB110 \uB2EB\uAE30",
     "close.imageEditor": "\uC774\uBBF8\uC9C0 \uD3B8\uC9D1\uAE30 \uD328\uB110 \uB2EB\uAE30",
     "close.gallery": "\uAC24\uB7EC\uB9AC \uD328\uB110 \uB2EB\uAE30",
     "close.addGallery": "\uAC24\uB7EC\uB9AC \uCD94\uAC00 \uD328\uB110 \uB2EB\uAE30",
     "imageInput.referenceTitle": "\uCC38\uC870 \uC785\uB825(\uC120\uD0DD \uC0AC\uD56D)",
-    "referenceFiles.add": "\uD30C\uC77C \uCD94\uAC00",
-    "referenceFiles.selected": "\uCC38\uC870 \uD30C\uC77C",
-    "referenceFiles.recent": "\uCD5C\uADFC \uD30C\uC77C",
     "referenceFiles.familyPdf": "\uD398\uC774\uC9C0 + \uD14D\uC2A4\uD2B8",
     "referenceFiles.familySpreadsheet": "\uC2A4\uD504\uB808\uB4DC\uC2DC\uD2B8",
     "referenceFiles.familyDocument": "\uBB38\uC11C",
     "referenceFiles.familyText": "\uD14D\uC2A4\uD2B8",
-    "referenceFiles.visualLimit": "PDF\uAC00 \uC544\uB2CC \uD30C\uC77C\uC5D0\uC11C\uB294 \uD3EC\uD568\uB41C \uC774\uBBF8\uC9C0\uC640 \uCC28\uD2B8\uAC00 \uC720\uC9C0\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. \uB808\uC774\uC544\uC6C3 \uCC38\uC870\uAC00 \uD544\uC694\uD558\uBA74 PDF\uB85C \uBCC0\uD658\uD558\uC138\uC694.",
     "referenceFiles.remove": "{filename} \uC81C\uAC70",
-    "referenceFiles.switchTitle": "\uCC38\uC870 \uD30C\uC77C\uC744 \uC81C\uAC70\uD560\uAE4C\uC694?",
-    "referenceFiles.switchMessage": "\uCC38\uC870 \uD30C\uC77C\uC740 Responses\uC5D0\uC11C\uB9CC \uC0AC\uC6A9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4. Images\uB85C \uC804\uD658\uD558\uAE30 \uC804\uC5D0 \uC120\uD0DD \uD30C\uC77C\uC744 \uC81C\uAC70\uD558\uC138\uC694.",
-    "referenceFiles.removeAndSwitch": "\uD30C\uC77C \uC81C\uAC70 \uD6C4 \uC804\uD658",
     "referenceFiles.requiresResponses": "\uCC38\uC870 \uD30C\uC77C\uC740 Responses\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4",
     "referenceFiles.switchToResponses": "Responses\uB85C \uC804\uD658",
     "referenceFiles.openApiSettings": "API \uC124\uC815 \uC5F4\uAE30",
     "referenceFiles.providerMissing": "\uC6D0\uB798 Responses \uACF5\uAE09\uC790\uB97C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. API \uC124\uC815\uC5D0\uC11C \uC120\uD0DD\uD558\uC138\uC694.",
     "referenceFiles.missing": "\uD30C\uC77C \uC5C6\uC74C",
-    "referenceFiles.loadFailed": "\uCC38\uC870 \uD30C\uC77C\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4",
     "referenceFiles.errorEmpty": "\uCC38\uC870 \uD30C\uC77C\uC774 \uBE44\uC5B4 \uC788\uC2B5\uB2C8\uB2E4",
     "referenceFiles.errorUnsupported": "\uC9C0\uC6D0\uB418\uC9C0 \uC54A\uB294 \uCC38\uC870 \uD30C\uC77C \uD615\uC2DD\uC785\uB2C8\uB2E4",
     "referenceFiles.errorMismatch": "\uD30C\uC77C \uB0B4\uC6A9\uACFC \uD655\uC7A5\uC790\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4",
@@ -8437,13 +7663,11 @@
     "modelSelection.provider": "\uACF5\uAE09\uC790",
     "modelSelection.providerUnavailable": "\uC774 \uBAA8\uB378\uC5D0 \uC0AC\uC6A9 \uAC00\uB2A5\uD55C \uACF5\uAE09\uC790\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
     "modelSelection.openSettings": "\uACF5\uAE09\uC790 \uC124\uC815 \uC5F4\uAE30",
-    "modelSelection.codexUnavailable": "Codex \uB85C\uADF8\uC778\uC744 \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4",
     "modelSelection.catalogUnavailable": "\uBAA8\uB378 \uCE74\uD0C8\uB85C\uADF8\uB97C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4",
     "output.background": "\uBC30\uACBD",
     "canvas.aspectRatio": "\uD654\uBA74 \uBE44\uC728",
     "canvas.resolution": "\uD574\uC0C1\uB3C4",
     "gemini.googleSearch": "Google \uAC80\uC0C9",
-    "gemini.googleImageSearch": "Google \uC774\uBBF8\uC9C0 \uAC80\uC0C9",
     "output.modalities": "\uCD9C\uB825 \uBAA8\uB2EC\uB9AC\uD2F0",
     "gemini.safetySettings": "\uC548\uC804 \uC124\uC815",
     "gemini.safety.harassment": "\uAD34\uB86D\uD798",
@@ -8504,17 +7728,14 @@
     "mobile.backToEditor": "\uD3B8\uC9D1\uC73C\uB85C \uB3CC\uC544\uAC00\uAE30",
     "mobile.copyHint": "\uC790\uB3D9 \uBCF5\uC0AC\uB97C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uC544\uB798 \uD14D\uC2A4\uD2B8\uB97C \uC120\uD0DD\uD574 \uBCF5\uC0AC\uD558\uC138\uC694.",
     "mobile.files": "\uD30C\uC77C",
-    "mobile.gestureHint": "\uD540\uCE58\uB85C \uD655\uB300/\uCD95\uC18C \xB7 \uC2A4\uC640\uC774\uD504\uB85C \uC774\uBBF8\uC9C0 \uC804\uD658",
     "mobile.manualCopy": "\uAE38\uAC8C \uB20C\uB7EC \uBCF5\uC0AC",
     "mobile.more": "\uB354 \uBCF4\uAE30",
     "mobile.parameters": "\uB9E4\uAC1C\uBCC0\uC218",
     "mobile.pasteHint": "\uC785\uB825\uB780\uC744 \uAE38\uAC8C \uB20C\uB7EC \uBD99\uC5EC\uB123\uAC70\uB098 \uC0AC\uC9C4 \uB610\uB294 \uD30C\uC77C\uC744 \uC120\uD0DD\uD558\uC138\uC694.",
     "mobile.photos": "\uC0AC\uC9C4",
-    "mobile.pickFiles": "\uC0AC\uC9C4 \uB610\uB294 \uD30C\uC77C \uC120\uD0DD",
     "mobile.taskActions": "\uC791\uC5C5 \uBA54\uB274",
     "networkEgress.fakeIpDnsFallback": "\uC774\uBBF8\uC9C0 \uB2E4\uC6B4\uB85C\uB4DC\uC758 Fake-IP DNS \uD638\uD658 \uCC98\uB9AC",
     "networkEgress.fakeIpDnsHelp": "\uC774\uBBF8\uC9C0 DNS\uAC00 Fake-IP\uB97C \uBC18\uD658\uD558\uBA74 Cloudflare DNS\uB85C \uC2E4\uC81C \uACF5\uC778 \uC8FC\uC18C\uB97C \uC870\uD68C\uD569\uB2C8\uB2E4. \uC774\uD6C4 \uC2DC\uC791\uB418\uB294 \uC694\uCCAD\uC758 \uB2E4\uC6B4\uB85C\uB4DC\uC5D0 \uC801\uC6A9\uB418\uBA70 LAN DNS\uB294 \uBCC0\uACBD\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4. API \uD0A4, \uD504\uB86C\uD504\uD2B8, \uC804\uCCB4 \uC774\uBBF8\uC9C0 URL\uC740 \uC804\uC1A1\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
-    "output.transparencyFidelityHint": "\uD22C\uBA85 \uBC30\uACBD\uC740 \uC120\uD0DD\uD55C \uCD9C\uB825 \uC694\uAD6C \uC0AC\uD56D\uC774\uBBC0\uB85C \uC6D0\uBB38 \uBC0F \uCDA9\uC2E4 \uBAA8\uB4DC\uC5D0\uC11C\uB3C4 \uCD94\uAC00\uB429\uB2C8\uB2E4.",
     "output.transparencyFormat": "\uD22C\uBA85 \uCD9C\uB825\uC5D0\uB294 PNG \uB610\uB294 WebP\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.",
     "output.transparencyUnavailable": "\uD22C\uBA85 \uBBF8\uC9C0\uC6D0",
     "output.transparentBackground": "\uD22C\uBA85 \uBC30\uACBD",
@@ -8547,7 +7768,6 @@
     "userConfigBackup.incrementalCopy": "\uAE30\uC874 \uB370\uC774\uD130\uB97C \uC720\uC9C0\uD558\uACE0 \uC911\uBCF5\uC744 \uAC74\uB108\uB6F0\uBA70 \uCDA9\uB3CC \uD56D\uBAA9\uC740 \uBCF5\uAD6C \uC0AC\uBCF8\uC744 \uB9CC\uB4ED\uB2C8\uB2E4.",
     "userConfigBackup.itemCount": "{count}\uAC1C \uD56D\uBAA9",
     "userConfigBackup.modeLabel": "\uBC31\uC5C5 \uB610\uB294 \uBCF5\uC6D0",
-    "userConfigBackup.previewCounts": "\uC555\uCD95 \uD30C\uC77C {count}\uAC1C \xB7 \uC911\uBCF5 {duplicate}\uAC1C \xB7 \uCDA9\uB3CC {conflict}\uAC1C",
     "userConfigBackup.previewTitle": "\uBCF5\uC6D0 \uBBF8\uB9AC\uBCF4\uAE30",
     "userConfigBackup.providerRetention": "\uC778\uC99D \uC815\uBCF4\uAC00 \uC788\uB294 \uACF5\uAE09\uC790 {count}\uAC1C\uB294 \uC548\uC804\uC744 \uC704\uD574 \uC720\uC9C0\uD569\uB2C8\uB2E4",
     "userConfigBackup.replaceConfirmCopy": "\uC120\uD0DD\uD55C \uC139\uC158\uB9CC \uC601\uD5A5\uC744 \uBC1B\uC9C0\uB9CC \uD574\uB2F9 \uC139\uC158\uC758 \uD604\uC7AC \uB370\uC774\uD130\uB294 \uC0AD\uC81C\uB429\uB2C8\uB2E4. \uB418\uB3CC\uB9B4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.",
@@ -8724,25 +7944,13 @@
     "queue.dispatching": "Agendamento \xB7 espera {waiting}",
     "queue.runningWaiting": "Executando {running} \xB7 esperando {waiting}",
     "queue.statusLabel": "Status da fila: {text} \xB7 {channelText}. Clique para ir para as tarefas ativas",
-    "queue.runningActions": "Executando a\xE7\xF5es de fila de tarefas",
-    "queue.waitingActions": "Aguardando a\xE7\xF5es da fila de tarefas",
-    "queue.cancelRunning": "Cancelar",
     "queue.cancelRunningTitle": "Cancelar tarefa em execu\xE7\xE3o",
     "queue.dragWaiting": "Arraste para reordenar a tarefa em espera",
-    "queue.dragSort": "Arraste para classificar",
-    "queue.moveUp": "Acima",
     "queue.moveUpTitle": "Mover tarefa em espera para cima",
-    "queue.moveDown": "Para baixo",
     "queue.moveDownTitle": "Mover tarefa em espera para baixo",
     "queue.promote": "Superior",
     "queue.promoteTitle": "Mover a tarefa em espera para o topo",
     "queue.promoteFailed": "Falha ao mover para o topo",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Excluir tarefa em espera",
-    "queue.deleteWaitingTitleConfirm": "Excluir tarefa em espera?",
-    "queue.deleteWaitingMessage": "Isso o remove da fila e da lista de hist\xF3rico.",
-    "queue.deleteQueuedFailed": "Falha ao excluir tarefa na fila",
-    "queue.queuedDeleted": "Tarefa na fila exclu\xEDda",
     "queue.cancelRunningConfirm": "Cancelar tarefa",
     "queue.cancelRunningTitleConfirm": "Cancelar tarefa em execu\xE7\xE3o?",
     "queue.cancelRunningMessage": "O cancelamento ser\xE1 solicitado. A chamada ao provedor pode continuar e ainda gerar cobran\xE7a at\xE9 retornar. O hist\xF3rico ser\xE1 mantido.",
@@ -8781,9 +7989,6 @@
     "taskStatus.runtimeCompleted": "Dura\xE7\xE3o {duration} \xB7 conclu\xEDdo {time}",
     "taskStatus.completedAt": "Conclu\xEDdo {time}",
     "taskCard.count": "{count} imagens",
-    "taskCard.successCount": "bem sucedido {count}",
-    "taskCard.failedCount": "falhou {count}",
-    "taskCard.runningCount": "gerando {count}",
     "taskCard.waitingCount": "esperando {count}",
     "taskCard.textToImageThumb": "Miniatura da tarefa de texto para imagem",
     "taskCard.imageToImageThumb": "Miniatura da tarefa imagem a imagem",
@@ -8795,12 +8000,9 @@
     "runFeedback.editing": "Edi\xE7\xE3o",
     "runFeedback.generating": "Gerando",
     "runFeedback.status": "{action}, decorrido {elapsed}",
-    "footer.archive": "Arquivo",
-    "footer.archiveCount": "Arquivo {count}",
     "footer.historyLibrary": "Hist\xF3ria",
     "historyLibrary.openFull": "Abra a biblioteca de hist\xF3rico completa",
     "history.documentTitle": "Hist\xF3ria - iLab CONJURE",
-    "history.back": "Voltar ao gerador",
     "history.homeAria": "Voltar ao gerador iLab CONJURE",
     "history.backToGenerator": "Voltar ao gerador",
     "history.title": "Hist\xF3ria",
@@ -8914,9 +8116,7 @@
     "history.type.textToImage": "Texto para imagem",
     "history.type.imageToImage": "Imagem para imagem",
     "history.month": "M\xEAs",
-    "history.status": "Estado",
     "history.promptMode": "Tratamento do prompt",
-    "history.size": "Tamanho",
     "history.quality": "Qualidade",
     "history.ratio": "Propor\xE7\xE3o",
     "history.orientation": "Orienta\xE7\xE3o",
@@ -8925,9 +8125,7 @@
     "history.archived": "Arquivado",
     "history.all": "Todos",
     "history.allMonths": "Todos os meses",
-    "history.allStatuses": "Todos os status",
     "history.allPromptModes": "Todos os modos",
-    "history.allSizes": "Todos os tamanhos",
     "history.allQualities": "Todas as qualidades",
     "history.allRatios": "Todas as propor\xE7\xF5es",
     "history.ratioOther": "Outro",
@@ -8949,13 +8147,10 @@
     "history.selectedCount": "{count} tarefas selecionadas",
     "history.confirmDelete": "Confirmar exclus\xE3o",
     "history.detail": "Detalhe da tarefa",
-    "history.detailTitle": "Tarefa de hist\xF3rico",
     "history.closeDetail": "Fechar detalhes da tarefa",
     "history.resizeFilters": "Redimensionar barra lateral do filtro",
     "history.resizeDetail": "Redimensionar painel de detalhes",
-    "history.detailEmpty": "Selecione uma tarefa hist\xF3rica para visualizar detalhes",
     "history.loadingDetail": "Carregando detalhe...",
-    "history.loadMore": "Carregar mais",
     "history.loadingMore": "Carregando...",
     "history.noMore": "N\xE3o h\xE1 mais tarefas",
     "history.loadFailed": "Falha no carregamento. Atualize ou continue rolando para tentar novamente",
@@ -8964,9 +8159,7 @@
     "history.detailFailed": "Falha ao carregar detalhes",
     "history.noMatches": "Nenhuma tarefa correspondente",
     "history.loadedCount": "{count} carregado",
-    "history.windowNotice": "A lista montada \xE9 limitada a tarefas {count}; role para cima ou para baixo para restaurar tarefas adjacentes sob demanda.",
     "history.selectTask": "Selecione a tarefa",
-    "history.viewing": "Visualizando",
     "history.noPreview": "Nenhuma imagem de visualiza\xE7\xE3o",
     "history.downloadAll": "Baixar ZIP",
     "history.downloadImage": "Baixar imagem",
@@ -8981,11 +8174,9 @@
     "history.inputReferences": "Refer\xEAncias de entrada",
     "history.inputReferenceIndex": "Refer\xEAncia de entrada {index}",
     "history.copyPrompt": "Solicita\xE7\xE3o de c\xF3pia",
-    "history.copyPrompts": "Copiar solicita\xE7\xF5es",
     "history.copyPromptShort": "Copiar",
     "history.copyPromptPanel": "Copiar {title}",
     "history.copyOutputPromptPanel": "Copiar imagem {index} prompt revisado",
-    "history.copyTaskIds": "Copiar tarefa IDs",
     "history.reuseTask": "Ver no gerador",
     "history.downloadTask": "Baixar",
     "history.downloadSelectedTasks": "Download em lote",
@@ -9003,7 +8194,6 @@
     "history.noDownloadableOutputs": "Nenhuma imagem para download",
     "history.confirmDeleteSelected": "Confirmar exclus\xE3o selecionada",
     "history.openPreview": "Abrir visualiza\xE7\xE3o",
-    "history.closePreview": "Fechar visualiza\xE7\xE3o",
     "history.untitled": "Sem t\xEDtulo",
     "history.promptCompare": "Compara\xE7\xE3o imediata",
     "history.promptOriginal": "Solicita\xE7\xE3o original",
@@ -9020,8 +8210,6 @@
     "history.quality.low": "Baixo",
     "history.quality.auto": "Autom\xE1tico",
     "footer.batch": "Lote",
-    "footer.storage": "Armazenamento",
-    "footer.apiStatus": "Estado API: OK",
     "footer.version": "Vers\xE3o {version}",
     "footer.versionLoading": "Vers\xE3o...",
     "notifications.title": "Notifica\xE7\xF5es",
@@ -9044,31 +8232,11 @@
     "theme.system": "Autom\xE1tico",
     "theme.light": "Claro",
     "theme.dark": "Escuro",
-    "language.label": "Idioma da interface",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Fonte de autentica\xE7\xE3o",
     "auth.checking": "Verificando autentica\xE7\xE3o",
     "auth.missingCodexSession": "Nenhuma sess\xE3o Codex detectada",
     "auth.switchFailed": "Falha ao mudar a fonte de autentica\xE7\xE3o",
     "auth.sourceUnavailable": "{source} indispon\xEDvel",
     "auth.notActive": "N\xE3o ativo",
-    "api.settings": "Configura\xE7\xF5es do sistema",
-    "api.provider": "API provedor",
-    "imageInput.title": "Imagens",
     "imageInput.uploadAria": "Clique, solte ou cole imagens e arquivos",
     "imageInput.uploadImages": "Clique, arraste ou cole imagens",
     "imageInput.uploadFull": "Clique, solte ou cole imagens e arquivos",
@@ -9164,7 +8332,6 @@
     "gallery.categoryFallback": "Categoria da galeria",
     "gallery.imageFallback": "Imagem da galeria",
     "gallery.imageLoadFailed": "Falha ao carregar esta imagem",
-    "gallery.editImageLoadFailed": "Falha ao carregar esta imagem para edi\xE7\xE3o",
     "gallery.cannotAddImage": "Esta imagem n\xE3o pode ser adicionada \xE0 galeria",
     "gallery.nameRequired": "Insira um nome de galeria",
     "gallery.saveFailed": "Falha ao salvar a imagem da galeria",
@@ -9220,7 +8387,6 @@
     "outputSettings.title": "Sa\xEDda",
     "output.lock.lock": "Bloquear par\xE2metros",
     "output.lock.unlock": "Desbloquear e editar",
-    "output.lock.current": "Bloqueio atual",
     "output.lock.task": "Par\xE2metros da tarefa",
     "output.lock.adoptTask": "Usar par\xE2metros desta tarefa",
     "output.lock.frame": "Enquadramento",
@@ -9240,25 +8406,11 @@
     "output.mainModel": "Modelo principal",
     "output.selectMainModel": "Selecione o modelo principal",
     "output.mainModelCustomForInput": "Use um modelo personalizado para a entrada atual",
-    "output.apiDirect": "API Direto",
-    "output.apiToolModel": "Usando o modelo de gera\xE7\xE3o de imagens API",
     "output.webSearch": "Pesquisa na web",
-    "output.webSearchToggle": "Ligado",
     "output.webSearchTitle": "Pesquise primeiro na web e depois use-a para esta gera\xE7\xE3o; Codex e API Responses apenas",
-    "output.promptMode": "Tratamento do prompt",
     "output.modeOriginal": "Original",
     "output.modeStrict": "Fiel",
     "output.modeCreative": "Autom\xE1tico",
-    "output.promptHelp": "Explicar o tratamento do prompt",
-    "output.promptHelpTitle": "Tratamento do prompt",
-    "output.promptHelp.responsesChannel": "Responses \xB7 modelo principal envolvido",
-    "output.promptHelp.imagesChannel": "Images \xB7 gera\xE7\xE3o direta",
-    "output.promptHelp.responses.original": "Envia o texto original exato sem regras adicionadas pelo aplicativo; o provedor ainda pode retornar um revised prompt ou interpretar o resultado de outra forma.",
-    "output.promptHelp.responses.strict": "Permite que o modelo principal organize ou expanda o prompt, preservando restri\xE7\xF5es como temas, texto, cores e composi\xE7\xE3o.",
-    "output.promptHelp.responses.automatic": "N\xE3o adiciona restri\xE7\xF5es; o modelo principal interpreta e otimiza antes de chamar a ferramenta de imagem.",
-    "output.promptHelp.images.original": "N\xE3o adiciona regras do aplicativo e envia o texto original diretamente \xE0 API de imagens.",
-    "output.promptHelp.images.strict": "Envia regras de fidelidade junto com o prompt original para preservar todas as restri\xE7\xF5es.",
-    "output.promptHelp.images.automatic": "Usa o tratamento padr\xE3o da API de imagens e inclui as notas necess\xE1rias de refer\xEAncias da galeria.",
     "output.size": "Tamanho da sa\xEDda",
     "output.sizeMode": "Modo de tamanho",
     "output.sizeAuto": "Autom\xE1tico",
@@ -9322,8 +8474,6 @@
     "preview.runningTitle": "{mode} em execu\xE7\xE3o",
     "preview.submittingTitle": "Enviando tarefa",
     "preview.queuedTitle": "Tarefa na fila",
-    "preview.submittingDetail": "Salvando entradas e adicionando a tarefa \xE0 fila. A gera\xE7\xE3o come\xE7ar\xE1 automaticamente.",
-    "preview.queuedDetail": "A tarefa est\xE1 na fila e aguardando um canal dispon\xEDvel.",
     "preview.featured": "Selecionado",
     "preview.addFeatured": "Selecione o resultado",
     "preview.selectedFeatured": "Selecionado",
@@ -9376,7 +8526,6 @@
     "promptPopover.close": "Fechar compara\xE7\xE3o imediata",
     "promptPopover.copyOptimized": "Copiar prompt otimizado",
     "promptPopover.copied": "Copiado",
-    "taskContext.menuLabel": "Menu de contexto da tarefa",
     "taskContext.view": "Ver tarefa",
     "taskContext.copyId": "Copiar tarefa ID",
     "taskContext.copyPrompt": "Solicita\xE7\xE3o de c\xF3pia",
@@ -9405,7 +8554,6 @@
     "taskActions.acceptSuccessesFailed": "Falha ao aceitar resultados bem-sucedidos",
     "taskActions.acceptedSuccesses": "Resultados bem-sucedidos aceitos",
     "taskActions.viewedUpdateFailed": "Falha ao atualizar o estado de leitura",
-    "taskActions.failedFallback": "Falha na tarefa",
     "taskList.empty": "Ainda n\xE3o h\xE1 hist\xF3rico",
     "taskList.selectSession": "Selecione bate-papo",
     "taskList.unreadUpdate": "Atualiza\xE7\xE3o n\xE3o lida",
@@ -9475,7 +8623,6 @@
     "snippets.saveSelection": "Salvar",
     "snippets.saveSelectionLabel": "Salvar o texto selecionado como um trecho de prompt",
     "snippets.popoverLabel": "Trecho de prompt",
-    "snippets.defaultCategory": "Comum",
     "snippets.loadFailed": "Falha ao carregar trechos de prompt",
     "snippets.remove": "Remover ~{tag}",
     "snippets.expand": "Expandir",
@@ -9520,7 +8667,6 @@
     "colors.done": "Conclu\xEDdo",
     "colors.manage": "Gerenciar",
     "colors.favorites": "Cores favoritas",
-    "colors.recent": "Cores recentes",
     "colors.recentLabel": "Recente",
     "colors.deleteFavorite": "Excluir cor favorita {name}",
     "colors.modify": "Editar cor",
@@ -9530,16 +8676,13 @@
     "taskGroup.current": "Tarefa atual",
     "taskGroup.yesterday": "Ontem",
     "taskGroup.last7": "\xDAltimos 7 dias",
-    "taskGroup.older": "Mais velho",
     "taskGroup.searchResults": "Resultados da pesquisa",
-    "taskGroup.active": "Ativo",
     "taskGroup.running": "Correndo",
     "taskGroup.waiting": "Esperando",
     "taskGroup.dispatchPending": "Atribuindo um canal dispon\xEDvel...",
     "taskGroup.expand": "Expandir {label}",
     "taskGroup.collapse": "Recolher {label}",
     "taskGroup.buttonLabel": "Tarefas {label}, {count}",
-    "taskGroup.loadMore": "Carregar mais {count}",
     "taskGroup.loadFailedRetry": "Falha ao carregar. Clique para tentar novamente",
     "archive.title": "Arquivo",
     "archive.empty": "Nenhum bate-papo arquivado",
@@ -9552,7 +8695,6 @@
     "archive.restoring": "Restaurando...",
     "archive.deleting": "Excluindo...",
     "archive.restoredCount": "Tarefas {count} restauradas",
-    "settings.title": "Armazenamento",
     "settings.status": "Reinicie WebUI ap\xF3s salvar os caminhos de armazenamento",
     "settings.pathChangeHint": "Alterar os caminhos n\xE3o move os dados existentes. Antes de transferi-los, fa\xE7a um backup, feche o aplicativo e copie as pastas completas.",
     "settings.previousPaths": "N\xE3o encontra os dados antigos? Veja as pastas padr\xE3o originais",
@@ -9607,7 +8749,6 @@
     "userConfigBackup.restoreComplete": "Restaura\xE7\xE3o conclu\xEDda",
     "systemSettings.tabsLabel": "Se\xE7\xF5es de configura\xE7\xF5es do sistema",
     "systemSettings.apiTab": "API Configura\xE7\xF5es",
-    "systemSettings.codexTab": "Codex Canal",
     "systemSettings.languageTab": "Idioma / Language",
     "systemSettings.storageTab": "Armazenamento e notifica\xE7\xF5es",
     "systemSettings.networkTab": "Rede",
@@ -9633,23 +8774,14 @@
     "networkEgress.loadFailed": "N\xE3o foi poss\xEDvel carregar as configura\xE7\xF5es de rede",
     "networkEgress.saveFailed": "N\xE3o foi poss\xEDvel salvar as configura\xE7\xF5es de rede",
     "languageSettings.instantStatus": "As altera\xE7\xF5es de idioma s\xE3o aplicadas imediatamente",
-    "apiSettings.title": "API Configura\xE7\xF5es",
-    "apiSettings.status": "As configura\xE7\xF5es salvas s\xE3o aplicadas imediatamente no modo API",
-    "apiSettings.codexMode": "canal Codex",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API provedores",
     "apiSettings.searchProviders": "Buscar nomes de provedores",
     "apiSettings.noProviderSearchResults": "Nenhum provedor correspondente",
     "apiSettings.providerCount": "{count} provedores",
-    "apiSettings.provider": "Provedor",
     "apiSettings.providerName": "Nome do provedor",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Opcional, ex.: \u{1FA84}",
-    "apiSettings.connectionScope": "Configura\xE7\xF5es de conex\xE3o",
-    "apiSettings.connectionPreview": "Pr\xE9via da conex\xE3o",
     "apiSettings.modelBindings": "Modelos",
-    "apiSettings.modelBindingsHint": "Um fornecedor pode vincular v\xE1rios modelos e protocolos.",
     "apiSettings.addModelBinding": "Adicionar modelo",
     "apiSettings.defaultProviderForModel": "Provedor padr\xE3o",
     "apiSettings.removeBinding": "Remover v\xEDnculo",
@@ -9657,7 +8789,6 @@
     "apiSettings.keepOneBinding": "Cada fornecedor deve manter pelo menos um v\xEDnculo de modelo.",
     "apiSettings.bindingRequiredFields": "Para cada v\xEDnculo, escolha um modelo, insira o nome remoto e selecione pelo menos uma opera\xE7\xE3o.",
     "apiSettings.bindingOverlap": "{model} {operation} est\xE1 associado a mais de um v\xEDnculo.",
-    "apiSettings.actualRequest": "Solicita\xE7\xE3o efetiva",
     "apiSettings.newProviderAction": "Novo provedor",
     "apiSettings.copyProvider": "Copiar",
     "apiSettings.copyProviderName": "{name} Copiar",
@@ -9668,15 +8799,7 @@
     "apiSettings.sortProviderModeStatus": "Arraste as al\xE7as para ordenar ou use as setas",
     "apiSettings.sortProviderHandleAria": "Arraste para reordenar {provider} ou use as setas, Home e End",
     "apiSettings.sortProviderStatus": "Ordem do provedor alterada. Salvando automaticamente...",
-    "apiSettings.moveProviderUp": "Acima",
-    "apiSettings.moveProviderDown": "Para baixo",
-    "apiSettings.moveProviderUpAria": "Mova {provider} para cima",
-    "apiSettings.moveProviderDownAria": "Mova {provider} para baixo",
-    "apiSettings.mode": "Modo de solicita\xE7\xE3o",
-    "apiSettings.images": "Imagem Direta API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Direto",
-    "apiSettings.imageModel": "Modelo de gera\xE7\xE3o de imagens",
     "apiSettings.concurrency": "Limite de simultaneidade",
     "apiSettings.svgAuthorModel": "Modelo de cria\xE7\xE3o de SVG",
     "apiSettings.invalidSvgAuthorModel": "Insira um ID de modelo SVG v\xE1lido, sem espa\xE7os.",
@@ -9684,25 +8807,18 @@
     "apiSettings.remoteModelName": "Modelo do provedor",
     "apiSettings.fetchModels": "Obter modelos",
     "apiSettings.advancedSettings": "Configura\xE7\xF5es avan\xE7adas",
-    "apiSettings.concurrencyValue": "simultaneidade {concurrency}",
     "apiSettings.keySaved": "Chave API salva",
     "apiSettings.keyNotSet": "Chave API n\xE3o definida",
     "apiSettings.showApiKey": "Mostrar API Key",
     "apiSettings.hideApiKey": "Ocultar API Key",
     "apiSettings.editProvider": "Editar provedor",
     "apiSettings.newProviderTitle": "Novo provedor",
-    "apiSettings.editHint": "O provedor de salvamento grava esta edi\xE7\xE3o no back-end. Cancelar descarta-o.",
     "apiSettings.finishEditFirst": "Salve ou cancele a edi\xE7\xE3o do provedor atual primeiro",
     "apiSettings.newDraftStatus": "Criando provedor. Salve o provedor para se inscrever.",
     "apiSettings.editDraftStatus": "Provedor de edi\xE7\xE3o. Salve o provedor para se inscrever.",
-    "apiSettings.cancelEdit": "Cancelar edi\xE7\xE3o",
-    "apiSettings.saveProvider": "Salvar provedor",
-    "apiSettings.saveSelection": "Salvar sele\xE7\xE3o",
     "apiSettings.deleteProviderTitle": "Excluir provedor?",
     "apiSettings.deleteProviderMessage": 'Excluir "{provider}"?',
     "apiSettings.deleteProviderDetail": "Isso o remove da lista de provedores e salva automaticamente no back-end.",
-    "apiSettings.deleteProviderStatus": "Provedor exclu\xEDdo. Salvando automaticamente...",
-    "apiSettings.save": "Salvar configura\xE7\xF5es de API",
     "apiSettings.loadFailed": "Falha ao carregar configura\xE7\xF5es de API",
     "apiSettings.savedKeyPlaceholder": "A chave API \xE9 salva no backend. Insira uma nova chave para substitu\xED-la.",
     "apiSettings.apiKeyRequired": "Insira uma API Key antes de salvar este provedor.",
@@ -9723,16 +8839,6 @@
     "apiSettings.savedShort": "Salvo",
     "apiSettings.savedStatus": "API configura\xE7\xF5es salvas",
     "apiSettings.saveFailedShort": "Falha ao salvar",
-    "codexSettings.title": "Codex Canal",
-    "codexSettings.status": "Escolha o canal de gera\xE7\xE3o para o login Codex local",
-    "codexSettings.notesLabel": "Codex notas do canal",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Canal padr\xE3o para passar par\xE2metros de tamanho, qualidade e edi\xE7\xE3o diretamente.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Canal de compatibilidade para fluxos de trabalho que necessitam de ferramentas de pesquisa na web.",
-    "codexSettings.current": "Atual",
-    "codexSettings.save": "Salvar canal Codex",
-    "codexSettings.saveMode": "Salvar {mode}",
     "imageEditor.title": "Editar imagem de entrada",
     "imageEditor.promptHint": "Setas e marcas desenhadas \xE0 m\xE3o na imagem s\xE3o apenas instru\xE7\xF5es. N\xE3o os mantenha na imagem final.",
     "imageEditor.inputFallback": "Imagem de entrada",
@@ -9812,31 +8918,21 @@
     "addGallery.save": "Salvar na galeria",
     "close.promptTemplates": "Fechar painel de modelos de prompt",
     "close.archive": "Fechar painel de arquivo",
-    "close.settings": "Fechar painel de configura\xE7\xF5es de armazenamento",
-    "close.apiSettings": "Fechar painel de configura\xE7\xF5es API",
     "close.systemSettings": "Fechar painel de configura\xE7\xF5es do sistema",
     "close.imageEditor": "Fechar painel do editor de imagens",
     "close.gallery": "Fechar painel da galeria",
     "close.addGallery": "Fechar adicionar ao painel da galeria",
     "imageInput.referenceTitle": "Entrada de refer\xEAncia (opcional)",
-    "referenceFiles.add": "Adicionar arquivo",
-    "referenceFiles.selected": "Arquivos de refer\xEAncia",
-    "referenceFiles.recent": "Arquivos recentes",
     "referenceFiles.familyPdf": "P\xE1ginas + texto",
     "referenceFiles.familySpreadsheet": "Planilha",
     "referenceFiles.familyDocument": "Documento",
     "referenceFiles.familyText": "Texto",
-    "referenceFiles.visualLimit": "Arquivos que n\xE3o sejam PDF n\xE3o preservam imagens e gr\xE1ficos incorporados. Converta para PDF quando o layout for importante.",
     "referenceFiles.remove": "Remover {filename}",
-    "referenceFiles.switchTitle": "Remover arquivos de refer\xEAncia?",
-    "referenceFiles.switchMessage": "Arquivos de refer\xEAncia funcionam apenas com Responses. Remova-os antes de mudar para Images.",
-    "referenceFiles.removeAndSwitch": "Remover arquivos e mudar",
     "referenceFiles.requiresResponses": "Arquivos de refer\xEAncia exigem Responses",
     "referenceFiles.switchToResponses": "Mudar para Responses",
     "referenceFiles.openApiSettings": "Abrir configura\xE7\xF5es da API",
     "referenceFiles.providerMissing": "O provedor Responses original n\xE3o est\xE1 dispon\xEDvel. Escolha um nas configura\xE7\xF5es da API.",
     "referenceFiles.missing": "Arquivo ausente",
-    "referenceFiles.loadFailed": "Falha ao carregar arquivos de refer\xEAncia",
     "referenceFiles.errorEmpty": "O arquivo de refer\xEAncia est\xE1 vazio",
     "referenceFiles.errorUnsupported": "Este tipo de arquivo de refer\xEAncia n\xE3o \xE9 compat\xEDvel",
     "referenceFiles.errorMismatch": "O conte\xFAdo n\xE3o corresponde \xE0 extens\xE3o",
@@ -9855,13 +8951,11 @@
     "modelSelection.provider": "Provedor",
     "modelSelection.providerUnavailable": "Nenhum provedor est\xE1 dispon\xEDvel para este modelo",
     "modelSelection.openSettings": "Abrir configura\xE7\xF5es de provedores",
-    "modelSelection.codexUnavailable": "O login do Codex n\xE3o est\xE1 dispon\xEDvel",
     "modelSelection.catalogUnavailable": "O cat\xE1logo de modelos n\xE3o est\xE1 dispon\xEDvel",
     "output.background": "Fundo",
     "canvas.aspectRatio": "Propor\xE7\xE3o",
     "canvas.resolution": "Resolu\xE7\xE3o",
     "gemini.googleSearch": "Pesquisa Google",
-    "gemini.googleImageSearch": "Pesquisa de imagens Google",
     "output.modalities": "Modalidades de sa\xEDda",
     "gemini.safetySettings": "Configura\xE7\xF5es de seguran\xE7a",
     "gemini.safety.harassment": "Ass\xE9dio",
@@ -9922,17 +9016,14 @@
     "mobile.backToEditor": "Voltar \xE0 edi\xE7\xE3o",
     "mobile.copyHint": "C\xF3pia autom\xE1tica indispon\xEDvel. Selecione o texto abaixo para copiar.",
     "mobile.files": "Arquivos",
-    "mobile.gestureHint": "Fa\xE7a pin\xE7a para ampliar \xB7 Deslize para trocar de imagem",
     "mobile.manualCopy": "Toque e segure para copiar",
     "mobile.more": "Mais",
     "mobile.parameters": "Par\xE2metros",
     "mobile.pasteHint": "Toque e segure no campo para colar ou escolha fotos ou arquivos.",
     "mobile.photos": "Fotos",
-    "mobile.pickFiles": "Escolher fotos ou arquivos",
     "mobile.taskActions": "A\xE7\xF5es da tarefa",
     "networkEgress.fakeIpDnsFallback": "Compatibilidade DNS Fake-IP para baixar imagens",
     "networkEgress.fakeIpDnsHelp": "Se o DNS da imagem retornar uma Fake-IP, consulta o Cloudflare DNS para obter endere\xE7os p\xFAblicos reais. Aplica-se aos downloads de solicita\xE7\xF5es futuras; n\xE3o altera o DNS da LAN. N\xE3o envia chaves API, prompts nem URLs completas de imagens.",
-    "output.transparencyFidelityHint": "O fundo transparente \xE9 um requisito de sa\xEDda escolhido e tamb\xE9m \xE9 adicionado nos modos Original e Fiel.",
     "output.transparencyFormat": "A sa\xEDda transparente exige PNG ou WebP.",
     "output.transparencyUnavailable": "Sem transpar\xEAncia",
     "output.transparentBackground": "Fundo transparente",
@@ -9965,7 +9056,6 @@
     "userConfigBackup.incrementalCopy": "Mant\xE9m os dados existentes, ignora duplicatas e cria c\xF3pias de recupera\xE7\xE3o para conflitos.",
     "userConfigBackup.itemCount": "{count} itens",
     "userConfigBackup.modeLabel": "Backup ou restaura\xE7\xE3o",
-    "userConfigBackup.previewCounts": "{count} no arquivo \xB7 {duplicate} duplicatas \xB7 {conflict} conflitos",
     "userConfigBackup.previewTitle": "Pr\xE9via da restaura\xE7\xE3o",
     "userConfigBackup.providerRetention": "{count} fornecedores com credenciais ser\xE3o mantidos por seguran\xE7a",
     "userConfigBackup.replaceConfirmCopy": "Apenas as se\xE7\xF5es selecionadas ser\xE3o afetadas, mas seus dados atuais ser\xE3o removidos. Isso n\xE3o pode ser desfeito.",
@@ -10142,25 +9232,13 @@
     "queue.dispatching": "\u041F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \xB7 \u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435 {waiting}",
     "queue.runningWaiting": "\u0417\u0430\u043F\u0443\u0441\u043A {running} \xB7 \u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435 {waiting}",
     "queue.statusLabel": "\u0421\u0442\u0430\u0442\u0443\u0441 \u043E\u0447\u0435\u0440\u0435\u0434\u0438: {text} \xB7 {channelText}. \u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u0435\u0440\u0435\u0439\u0442\u0438 \u043A \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C \u0437\u0430\u0434\u0430\u0447\u0430\u043C",
-    "queue.runningActions": "\u0417\u0430\u043F\u0443\u0441\u043A \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439 \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u0437\u0430\u0434\u0430\u0447",
-    "queue.waitingActions": "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u0437\u0430\u0434\u0430\u0447 \u043E\u0436\u0438\u0434\u0430\u043D\u0438\u044F",
-    "queue.cancelRunning": "\u041E\u0442\u043C\u0435\u043D\u0430",
     "queue.cancelRunningTitle": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438",
     "queue.dragWaiting": "\u041F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0438\u0445 \u0437\u0430\u0434\u0430\u0447",
-    "queue.dragSort": "\u041F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438",
-    "queue.moveUp": "\u0412\u0432\u0435\u0440\u0445",
     "queue.moveUpTitle": "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443 \u0432\u0432\u0435\u0440\u0445",
-    "queue.moveDown": "\u0412\u043D\u0438\u0437",
     "queue.moveDownTitle": "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443 \u0432\u043D\u0438\u0437",
     "queue.promote": "\u0422\u043E\u043F",
     "queue.promoteTitle": "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443 \u043D\u0430\u0432\u0435\u0440\u0445",
     "queue.promoteFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0435\u0440\u0435\u0439\u0442\u0438 \u043D\u0430\u0432\u0435\u0440\u0445",
-    "queue.deleteWaitingShort": "\u0414\u0435\u043B\u044C",
-    "queue.deleteWaitingTitle": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443",
-    "queue.deleteWaitingTitleConfirm": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043E\u0436\u0438\u0434\u0430\u044E\u0449\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443?",
-    "queue.deleteWaitingMessage": "\u042D\u0442\u043E \u0443\u0434\u0430\u043B\u0438\u0442 \u0435\u0433\u043E \u0438\u0437 \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u0438 \u0441\u043F\u0438\u0441\u043A\u0430 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.",
-    "queue.deleteQueuedFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u0438.",
-    "queue.queuedDeleted": "\u0417\u0430\u0434\u0430\u0447\u0430 \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u0443\u0434\u0430\u043B\u0435\u043D\u0430",
     "queue.cancelRunningConfirm": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443",
     "queue.cancelRunningTitleConfirm": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438?",
     "queue.cancelRunningMessage": "\u0411\u0443\u0434\u0435\u0442 \u0437\u0430\u043F\u0440\u043E\u0448\u0435\u043D\u0430 \u043E\u0442\u043C\u0435\u043D\u0430. \u0412\u044B\u0437\u043E\u0432 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430 \u043C\u043E\u0436\u0435\u0442 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0442\u044C\u0441\u044F \u0438 \u0442\u0430\u0440\u0438\u0444\u0438\u0446\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0434\u043E \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F \u043E\u0442\u0432\u0435\u0442\u0430. \u0418\u0441\u0442\u043E\u0440\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0441\u044F.",
@@ -10199,9 +9277,6 @@
     "taskStatus.runtimeCompleted": "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C {duration} \xB7 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E {time}",
     "taskStatus.completedAt": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E {time}",
     "taskCard.count": "{count} images",
-    "taskCard.successCount": "\u0443\u0434\u0430\u043B\u043E\u0441\u044C {count}",
-    "taskCard.failedCount": "\u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C {count}",
-    "taskCard.runningCount": "\u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0435 {count}",
     "taskCard.waitingCount": "\u0436\u0434\u0443 {count}",
     "taskCard.textToImageThumb": "\u041C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u0430 \u0437\u0430\u0434\u0430\u0447\u0438 \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0442\u0435\u043A\u0441\u0442\u0430 \u0432 image",
     "taskCard.imageToImageThumb": "\u041C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u0430 \u0437\u0430\u0434\u0430\u0447\u0438 \u043E\u0442 Image \u0434\u043E image",
@@ -10213,12 +9288,9 @@
     "runFeedback.editing": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435",
     "runFeedback.generating": "\u0421\u043E\u0437\u0434\u0430\u043D\u0438\u0435",
     "runFeedback.status": "{action}, \u043F\u0440\u043E\u0448\u043B\u043E {elapsed}",
-    "footer.archive": "\u0410\u0440\u0445\u0438\u0432",
-    "footer.archiveCount": "\u0410\u0440\u0445\u0438\u0432 {count}",
     "footer.historyLibrary": "\u0418\u0441\u0442\u043E\u0440\u0438\u044F",
     "historyLibrary.openFull": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u043E\u043B\u043D\u0443\u044E \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0443 \u0438\u0441\u0442\u043E\u0440\u0438\u0438",
     "history.documentTitle": "\u0418\u0441\u0442\u043E\u0440\u0438\u044F - iLab CONJURE",
-    "history.back": "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0443",
     "history.homeAria": "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0443 iLab CONJURE",
     "history.backToGenerator": "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0443",
     "history.title": "\u0418\u0441\u0442\u043E\u0440\u0438\u044F",
@@ -10332,9 +9404,7 @@
     "history.type.textToImage": "\u0422\u0435\u043A\u0441\u0442 \u0432 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
     "history.type.imageToImage": "\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0432 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
     "history.month": "\u041C\u0435\u0441\u044F\u0446",
-    "history.status": "\u0421\u0442\u0430\u0442\u0443\u0441",
     "history.promptMode": "\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u043F\u0440\u043E\u043C\u043F\u0442\u0430",
-    "history.size": "\u0420\u0430\u0437\u043C\u0435\u0440",
     "history.quality": "\u041A\u0430\u0447\u0435\u0441\u0442\u0432\u043E",
     "history.ratio": "\u0421\u043E\u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u0435",
     "history.orientation": "\u041E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044F",
@@ -10343,9 +9413,7 @@
     "history.archived": "\u0412 \u0430\u0440\u0445\u0438\u0432\u0435",
     "history.all": "\u0412\u0441\u0435",
     "history.allMonths": "\u0412\u0441\u0435 \u043C\u0435\u0441\u044F\u0446\u044B",
-    "history.allStatuses": "\u0412\u0441\u0435 \u0441\u0442\u0430\u0442\u0443\u0441\u044B",
     "history.allPromptModes": "\u0412\u0441\u0435 \u0440\u0435\u0436\u0438\u043C\u044B",
-    "history.allSizes": "\u0412\u0441\u0435 \u0440\u0430\u0437\u043C\u0435\u0440\u044B",
     "history.allQualities": "\u0412\u0441\u0435 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0430",
     "history.allRatios": "\u0412\u0441\u0435 \u0441\u043E\u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u044F",
     "history.ratioOther": "\u0414\u0440\u0443\u0433\u043E\u0435",
@@ -10367,13 +9435,10 @@
     "history.selectedCount": "\u0412\u044B\u0431\u0440\u0430\u043D\u043E {count} \u0437\u0430\u0434\u0430\u0447",
     "history.confirmDelete": "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u0435",
     "history.detail": "\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u043E\u0441\u0442\u0438 \u0437\u0430\u0434\u0430\u0447\u0438",
-    "history.detailTitle": "\u0418\u0441\u0442\u043E\u0440\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u0437\u0430\u0434\u0430\u043D\u0438\u0435",
     "history.closeDetail": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u0434\u0435\u0442\u0430\u043B\u0438 \u0437\u0430\u0434\u0430\u0447\u0438",
     "history.resizeFilters": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0440\u0430\u0437\u043C\u0435\u0440\u0430 \u0431\u043E\u043A\u043E\u0432\u043E\u0439 \u043F\u0430\u043D\u0435\u043B\u0438 \u0444\u0438\u043B\u044C\u0442\u0440\u0430",
     "history.resizeDetail": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0440\u0430\u0437\u043C\u0435\u0440\u0430 \u043F\u0430\u043D\u0435\u043B\u0438 \u0441\u0432\u0435\u0434\u0435\u043D\u0438\u0439",
-    "history.detailEmpty": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0447\u0435\u0441\u043A\u0443\u044E \u0437\u0430\u0434\u0430\u0447\u0443, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u043F\u043E\u0434\u0440\u043E\u0431\u043D\u043E\u0441\u0442\u0438",
     "history.loadingDetail": "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0434\u0435\u0442\u0430\u043B\u0435\u0439...",
-    "history.loadMore": "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0435",
     "history.loadingMore": "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430...",
     "history.noMore": "\u0411\u043E\u043B\u044C\u0448\u0435 \u043D\u0438\u043A\u0430\u043A\u0438\u0445 \u0437\u0430\u0434\u0430\u0447",
     "history.loadFailed": "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043D\u0435 \u0443\u0434\u0430\u043B\u0430\u0441\u044C. \u041E\u0431\u043D\u043E\u0432\u0438\u0442\u0435 \u0438\u043B\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0439\u0442\u0435 \u043F\u0440\u043E\u043A\u0440\u0443\u0447\u0438\u0432\u0430\u0442\u044C, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u044C \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
@@ -10382,9 +9447,7 @@
     "history.detailFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0434\u0435\u0442\u0430\u043B\u0438",
     "history.noMatches": "\u041D\u0435\u0442 \u043F\u043E\u0434\u0445\u043E\u0434\u044F\u0449\u0438\u0445 \u0437\u0430\u0434\u0430\u0447",
     "history.loadedCount": "{count} \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D",
-    "history.windowNotice": "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044B\u0439 \u0441\u043F\u0438\u0441\u043E\u043A \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D \u0437\u0430\u0434\u0430\u0447\u0430\u043C\u0438 {count}; \u043F\u0440\u043E\u043A\u0440\u0443\u0442\u0438\u0442\u0435 \u0432\u0432\u0435\u0440\u0445 \u0438\u043B\u0438 \u0432\u043D\u0438\u0437, \u0447\u0442\u043E\u0431\u044B \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u043E\u0441\u0435\u0434\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438 \u043F\u043E \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044E.",
     "history.selectTask": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0437\u0430\u0434\u0430\u0447\u0443",
-    "history.viewing": "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440",
     "history.noPreview": "\u041D\u0435\u0442 \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 images",
     "history.downloadAll": "\u0421\u043A\u0430\u0447\u0430\u0442\u044C ZIP",
     "history.downloadImage": "\u0421\u043A\u0430\u0447\u0430\u0442\u044C \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435",
@@ -10399,11 +9462,9 @@
     "history.inputReferences": "\u0412\u0445\u043E\u0434\u043D\u044B\u0435 \u0441\u0441\u044B\u043B\u043A\u0438",
     "history.inputReferenceIndex": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0441\u0441\u044B\u043B\u043A\u0443 {index}",
     "history.copyPrompt": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0440\u0438\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435",
-    "history.copyPrompts": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438",
     "history.copyPromptShort": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
     "history.copyPromptPanel": "\u0421\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C {title}",
     "history.copyOutputPromptPanel": "\u0421\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435 \u0438\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u043E\u0435 \u043F\u0440\u0438\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435 image {index}.",
-    "history.copyTaskIds": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u044B \u0437\u0430\u0434\u0430\u0447",
     "history.reuseTask": "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0432 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0435",
     "history.downloadTask": "\u0421\u043A\u0430\u0447\u0430\u0442\u044C",
     "history.downloadSelectedTasks": "\u041F\u0430\u043A\u0435\u0442\u043D\u0430\u044F \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0430",
@@ -10421,7 +9482,6 @@
     "history.noDownloadableOutputs": "\u041D\u0435\u0442 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C\u043E\u0433\u043E \u0444\u0430\u0439\u043B\u0430 images",
     "history.confirmDeleteSelected": "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0435 \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u0435",
     "history.openPreview": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440",
-    "history.closePreview": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440",
     "history.untitled": "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F",
     "history.promptCompare": "\u0411\u044B\u0441\u0442\u0440\u043E\u0435 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0435",
     "history.promptOriginal": "\u041E\u0440\u0438\u0433\u0438\u043D\u0430\u043B\u044C\u043D\u0430\u044F \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430",
@@ -10438,8 +9498,6 @@
     "history.quality.low": "\u041D\u0438\u0437\u043A\u0438\u0439",
     "history.quality.auto": "\u0410\u0432\u0442\u043E",
     "footer.batch": "\u041F\u0430\u043A\u0435\u0442\u043D\u044B\u0439",
-    "footer.storage": "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435",
-    "footer.apiStatus": "\u0421\u0442\u0430\u0442\u0443\u0441 API: \u041E\u041A",
     "footer.version": "\u0412\u0435\u0440\u0441\u0438\u044F {version}",
     "footer.versionLoading": "\u0412\u0435\u0440\u0441\u0438\u044F...",
     "notifications.title": "\u0423\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u044F",
@@ -10462,31 +9520,11 @@
     "theme.system": "\u0410\u0432\u0442\u043E",
     "theme.light": "\u0421\u0432\u0435\u0442\u043B\u0430\u044F",
     "theme.dark": "\u0422\u0451\u043C\u043D\u0430\u044F",
-    "language.label": "\u042F\u0437\u044B\u043A \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0430\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438",
     "auth.checking": "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438",
     "auth.missingCodexSession": "\u0421\u0435\u0430\u043D\u0441 Codex \u043D\u0435 \u043E\u0431\u043D\u0430\u0440\u0443\u0436\u0435\u043D",
     "auth.switchFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u0430\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438.",
     "auth.sourceUnavailable": "{source} \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D",
     "auth.notActive": "\u041D\u0435 \u0430\u043A\u0442\u0438\u0432\u0435\u043D",
-    "api.settings": "\u0421\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "api.provider": "API \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A",
-    "imageInput.title": "Images",
     "imageInput.uploadAria": "\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u043F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435 \u0438\u043B\u0438 \u0432\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0444\u0430\u0439\u043B\u044B",
     "imageInput.uploadImages": "\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u043F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435 \u0438\u043B\u0438 \u0432\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
     "imageInput.uploadFull": "\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u043F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435 \u0438\u043B\u0438 \u0432\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0444\u0430\u0439\u043B\u044B",
@@ -10582,7 +9620,6 @@
     "gallery.categoryFallback": "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F \u0413\u0430\u043B\u0435\u0440\u0435\u044F",
     "gallery.imageFallback": "\u0413\u0430\u043B\u0435\u0440\u0435\u044F image",
     "gallery.imageLoadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u044D\u0442\u043E\u0442 image.",
-    "gallery.editImageLoadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u044D\u0442\u043E\u0442 image \u0434\u043B\u044F \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F.",
     "gallery.cannotAddImage": "\u042D\u0442\u043E\u0442 image \u043D\u0435\u043B\u044C\u0437\u044F \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432 \u0433\u0430\u043B\u0435\u0440\u0435\u044E.",
     "gallery.nameRequired": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0433\u0430\u043B\u0435\u0440\u0435\u0438",
     "gallery.saveFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0433\u0430\u043B\u0435\u0440\u0435\u044E image.",
@@ -10638,7 +9675,6 @@
     "outputSettings.title": "\u0412\u044B\u0432\u043E\u0434",
     "output.lock.lock": "\u0417\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B",
     "output.lock.unlock": "\u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0438 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C",
-    "output.lock.current": "\u0422\u0435\u043A\u0443\u0449\u0430\u044F \u0444\u0438\u043A\u0441\u0430\u0446\u0438\u044F",
     "output.lock.task": "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0437\u0430\u0434\u0430\u0447\u0438",
     "output.lock.adoptTask": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0437\u0430\u0434\u0430\u0447\u0438",
     "output.lock.frame": "\u0424\u043E\u0440\u043C\u0430\u0442 \u043A\u0430\u0434\u0440\u0430",
@@ -10658,25 +9694,11 @@
     "output.mainModel": "\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043C\u043E\u0434\u0435\u043B\u044C",
     "output.selectMainModel": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0441\u043D\u043E\u0432\u043D\u0443\u044E \u043C\u043E\u0434\u0435\u043B\u044C",
     "output.mainModelCustomForInput": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0443\u044E \u043C\u043E\u0434\u0435\u043B\u044C \u0434\u043B\u044F \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u0432\u0432\u043E\u0434\u0430",
-    "output.apiDirect": "API \u041F\u0440\u044F\u043C\u043E\u0439",
-    "output.apiToolModel": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435 API-\u043C\u043E\u0434\u0435\u043B\u0438 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
     "output.webSearch": "\u0412\u0435\u0431-\u043F\u043E\u0438\u0441\u043A",
-    "output.webSearchToggle": "\u0412\u043A\u043B.",
     "output.webSearchTitle": "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u043F\u043E\u0438\u0441\u043A \u0432 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0435, \u0430 \u0437\u0430\u0442\u0435\u043C \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0435\u0433\u043E \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u043F\u043E\u043A\u043E\u043B\u0435\u043D\u0438\u044F; \u0422\u043E\u043B\u044C\u043A\u043E Codex \u0438 API Responses",
-    "output.promptMode": "\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u043F\u0440\u043E\u043C\u043F\u0442\u0430",
     "output.modeOriginal": "\u041E\u0440\u0438\u0433\u0438\u043D\u0430\u043B",
     "output.modeStrict": "\u0422\u043E\u0447\u043D\u043E",
     "output.modeCreative": "\u0410\u0432\u0442\u043E",
-    "output.promptHelp": "\u041F\u043E\u044F\u0441\u043D\u0438\u0442\u044C \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0443 \u043F\u0440\u043E\u043C\u043F\u0442\u0430",
-    "output.promptHelpTitle": "\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u043F\u0440\u043E\u043C\u043F\u0442\u0430",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u0443\u0447\u0430\u0441\u0442\u0432\u0443\u0435\u0442 \u043E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043C\u043E\u0434\u0435\u043B\u044C",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u043F\u0440\u044F\u043C\u0430\u044F \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F",
-    "output.promptHelp.responses.original": "\u041F\u0435\u0440\u0435\u0434\u0430\u0451\u0442 \u0442\u043E\u0447\u043D\u044B\u0439 \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u0431\u0435\u0437 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0445 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435\u043C \u043F\u0440\u0430\u0432\u0438\u043B; \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0432\u0441\u0451 \u0440\u0430\u0432\u043D\u043E \u043C\u043E\u0436\u0435\u0442 \u0432\u0435\u0440\u043D\u0443\u0442\u044C revised prompt \u0438\u043B\u0438 \u0438\u043D\u0430\u0447\u0435 \u0438\u043D\u0442\u0435\u0440\u043F\u0440\u0435\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442.",
-    "output.promptHelp.responses.strict": "\u0420\u0430\u0437\u0440\u0435\u0448\u0430\u0435\u0442 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u043C\u043E\u0434\u0435\u043B\u0438 \u0443\u043F\u043E\u0440\u044F\u0434\u043E\u0447\u0438\u0442\u044C \u0438\u043B\u0438 \u0440\u0430\u0441\u0448\u0438\u0440\u0438\u0442\u044C \u043F\u0440\u043E\u043C\u043F\u0442, \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044F \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0443\u0441\u043B\u043E\u0432\u0438\u044F: \u043E\u0431\u044A\u0435\u043A\u0442\u044B, \u0442\u0435\u043A\u0441\u0442, \u0446\u0432\u0435\u0442\u0430 \u0438 \u043A\u043E\u043C\u043F\u043E\u0437\u0438\u0446\u0438\u044E.",
-    "output.promptHelp.responses.automatic": "\u041D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0439; \u043E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043C\u043E\u0434\u0435\u043B\u044C \u0438\u043D\u0442\u0435\u0440\u043F\u0440\u0435\u0442\u0438\u0440\u0443\u0435\u0442 \u0438 \u043E\u043F\u0442\u0438\u043C\u0438\u0437\u0438\u0440\u0443\u0435\u0442 \u0437\u0430\u043F\u0440\u043E\u0441 \u043F\u0435\u0440\u0435\u0434 \u0432\u044B\u0437\u043E\u0432\u043E\u043C \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439.",
-    "output.promptHelp.images.original": "\u041D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442 \u043F\u0440\u0430\u0432\u0438\u043B \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442 \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u043D\u0430\u043F\u0440\u044F\u043C\u0443\u044E \u0432 API \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439.",
-    "output.promptHelp.images.strict": "\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0442\u043E\u0447\u043D\u043E\u0441\u0442\u0438 \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u043C \u043F\u0440\u043E\u043C\u043F\u0442\u043E\u043C, \u0447\u0442\u043E\u0431\u044B \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0432\u0441\u0435 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0443\u0441\u043B\u043E\u0432\u0438\u044F.",
-    "output.promptHelp.images.automatic": "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442 \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u0443\u044E \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0443 API \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439 \u0438 \u0432\u043A\u043B\u044E\u0447\u0430\u0435\u0442 \u043D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u044B\u0435 \u043F\u043E\u044F\u0441\u043D\u0435\u043D\u0438\u044F \u043A \u0441\u0441\u044B\u043B\u043A\u0430\u043C \u0438\u0437 \u0433\u0430\u043B\u0435\u0440\u0435\u0438.",
     "output.size": "\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u0432\u043E\u0434\u0430",
     "output.sizeMode": "\u0420\u0435\u0436\u0438\u043C \u0440\u0430\u0437\u043C\u0435\u0440\u0430",
     "output.sizeAuto": "\u0410\u0432\u0442\u043E",
@@ -10740,8 +9762,6 @@
     "preview.runningTitle": "{mode} \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442",
     "preview.submittingTitle": "\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0437\u0430\u0434\u0430\u0447\u0438",
     "preview.queuedTitle": "\u0417\u0430\u0434\u0430\u0447\u0430 \u043F\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430 \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u044C",
-    "preview.submittingDetail": "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0432\u0445\u043E\u0434\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445 \u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438 \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u044C. \u0413\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u043D\u0430\u0447\u043D\u0435\u0442\u0441\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438.",
-    "preview.queuedDetail": "\u0417\u0430\u0434\u0430\u0447\u0430 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u0438 \u0438 \u043E\u0436\u0438\u0434\u0430\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u043A\u0430\u043D\u0430\u043B\u0430.",
     "preview.featured": "\u0412\u044B\u0431\u0440\u0430\u043D\u043E",
     "preview.addFeatured": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442",
     "preview.selectedFeatured": "\u0412\u044B\u0431\u0440\u0430\u043D\u043E",
@@ -10794,7 +9814,6 @@
     "promptPopover.close": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u043E\u0435 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0435",
     "promptPopover.copyOptimized": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043E\u043F\u0442\u0438\u043C\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0435 \u043F\u0440\u0438\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435",
     "promptPopover.copied": "\u0421\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u043E",
-    "taskContext.menuLabel": "\u041A\u043E\u043D\u0442\u0435\u043A\u0441\u0442\u043D\u043E\u0435 \u043C\u0435\u043D\u044E \u0437\u0430\u0434\u0430\u0447\u0438",
     "taskContext.view": "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443",
     "taskContext.copyId": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0443 ID",
     "taskContext.copyPrompt": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u0440\u0438\u0433\u043B\u0430\u0448\u0435\u043D\u0438\u0435",
@@ -10823,7 +9842,6 @@
     "taskActions.acceptSuccessesFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u0438\u043D\u044F\u0442\u044C \u0443\u0441\u043F\u0435\u0448\u043D\u044B\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B",
     "taskActions.acceptedSuccesses": "\u0423\u0441\u043F\u0435\u0448\u043D\u044B\u0435 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u0440\u0438\u043D\u044F\u0442\u044B",
     "taskActions.viewedUpdateFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0447\u0442\u0435\u043D\u0438\u044F.",
-    "taskActions.failedFallback": "\u0417\u0430\u0434\u0430\u0447\u0430 \u043D\u0435 \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0430",
     "taskList.empty": "\u041F\u043E\u043A\u0430 \u043D\u0435\u0442 \u0438\u0441\u0442\u043E\u0440\u0438\u0438",
     "taskList.selectSession": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0447\u0430\u0442",
     "taskList.unreadUpdate": "\u041D\u0435\u043F\u0440\u043E\u0447\u0438\u0442\u0430\u043D\u043D\u043E\u0435 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435",
@@ -10893,7 +9911,6 @@
     "snippets.saveSelection": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C",
     "snippets.saveSelectionLabel": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0432\u044B\u0434\u0435\u043B\u0435\u043D\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u043A\u0430\u043A \u0444\u0440\u0430\u0433\u043C\u0435\u043D\u0442 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438",
     "snippets.popoverLabel": "\u0424\u0440\u0430\u0433\u043C\u0435\u043D\u0442 \u0437\u0430\u043F\u0440\u043E\u0441\u0430",
-    "snippets.defaultCategory": "\u041E\u0431\u0449\u0438\u0439",
     "snippets.loadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0440\u0430\u0433\u043C\u0435\u043D\u0442\u044B \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.",
     "snippets.remove": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C ~{tag}",
     "snippets.expand": "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C",
@@ -10938,7 +9955,6 @@
     "colors.done": "\u0413\u043E\u0442\u043E\u0432\u043E",
     "colors.manage": "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435",
     "colors.favorites": "\u041B\u044E\u0431\u0438\u043C\u044B\u0435 \u0446\u0432\u0435\u0442\u0430",
-    "colors.recent": "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0446\u0432\u0435\u0442\u0430",
     "colors.recentLabel": "\u041D\u0435\u0434\u0430\u0432\u043D\u0438\u0435",
     "colors.deleteFavorite": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043B\u044E\u0431\u0438\u043C\u044B\u0439 \u0446\u0432\u0435\u0442 {name}",
     "colors.modify": "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0446\u0432\u0435\u0442",
@@ -10948,16 +9964,13 @@
     "taskGroup.current": "\u0422\u0435\u043A\u0443\u0449\u0430\u044F \u0437\u0430\u0434\u0430\u0447\u0430",
     "taskGroup.yesterday": "\u0412\u0447\u0435\u0440\u0430",
     "taskGroup.last7": "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 7\xA0\u0434\u043D\u0435\u0439",
-    "taskGroup.older": "\u0421\u0442\u0430\u0440\u0448\u0435",
     "taskGroup.searchResults": "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u044B \u043F\u043E\u0438\u0441\u043A\u0430",
-    "taskGroup.active": "\u0410\u043A\u0442\u0438\u0432\u043D\u044B\u0439",
     "taskGroup.running": "\u0411\u0435\u0433",
     "taskGroup.waiting": "\u041E\u0436\u0438\u0434\u0430\u043D\u0438\u0435",
     "taskGroup.dispatchPending": "\u041D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u043A\u0430\u043D\u0430\u043B\u0430...",
     "taskGroup.expand": "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C {label}",
     "taskGroup.collapse": "\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C {label}",
     "taskGroup.buttonLabel": "{label}, {count} \u0437\u0430\u0434\u0430\u0447",
-    "taskGroup.loadMore": "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0435\u0449\u0451 {count}",
     "taskGroup.loadFailedRetry": "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043D\u0435 \u0443\u0434\u0430\u043B\u0430\u0441\u044C. \u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u044C",
     "archive.title": "\u0410\u0440\u0445\u0438\u0432",
     "archive.empty": "\u041D\u0435\u0442 \u0430\u0440\u0445\u0438\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0445 \u0447\u0430\u0442\u043E\u0432",
@@ -10970,7 +9983,6 @@
     "archive.restoring": "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435...",
     "archive.deleting": "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435...",
     "archive.restoredCount": "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u044B \u0437\u0430\u0434\u0430\u0447\u0438 {count}.",
-    "settings.title": "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435",
     "settings.status": "\u041F\u0435\u0440\u0435\u0437\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435 WebUI \u043F\u043E\u0441\u043B\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043F\u0443\u0442\u0435\u0439 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F.",
     "settings.pathChangeHint": "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u043F\u0443\u0442\u0435\u0439 \u043D\u0435 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u0438\u0442 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435. \u041F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u043E\u043C \u0441\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0443\u044E \u043A\u043E\u043F\u0438\u044E, \u0437\u0430\u043A\u0440\u043E\u0439\u0442\u0435 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u0438 \u0441\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435 \u043F\u0430\u043F\u043A\u0438 \u0446\u0435\u043B\u0438\u043A\u043E\u043C.",
     "settings.previousPaths": "\u041D\u0435 \u0432\u0438\u0434\u043D\u044B \u0441\u0442\u0430\u0440\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435? \u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0435 \u043F\u0430\u043F\u043A\u0438 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
@@ -11025,7 +10037,6 @@
     "userConfigBackup.restoreComplete": "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E",
     "systemSettings.tabsLabel": "\u0420\u0430\u0437\u0434\u0435\u043B\u044B \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0445 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A",
     "systemSettings.apiTab": "API \u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "systemSettings.codexTab": "Codex \u041A\u0430\u043D\u0430\u043B",
     "systemSettings.languageTab": "\u042F\u0437\u044B\u043A / Language",
     "systemSettings.storageTab": "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0438 \u0443\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u044F",
     "systemSettings.networkTab": "\u0421\u0435\u0442\u044C",
@@ -11051,23 +10062,14 @@
     "networkEgress.loadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u0435\u0442\u0435\u0432\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
     "networkEgress.saveFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0441\u0435\u0442\u0435\u0432\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
     "languageSettings.instantStatus": "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043E. \u041F\u0440\u0438\u043C\u0435\u043D\u0435\u043D\u043E \u0441\u0440\u0430\u0437\u0443.",
-    "apiSettings.title": "API \u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "apiSettings.status": "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043D\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u0440\u0438\u043C\u0435\u043D\u044F\u044E\u0442\u0441\u044F \u043D\u0435\u043C\u0435\u0434\u043B\u0435\u043D\u043D\u043E \u0432 \u0440\u0435\u0436\u0438\u043C\u0435 API.",
-    "apiSettings.codexMode": "Codex \u043A\u0430\u043D\u0430\u043B",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0438",
     "apiSettings.searchProviders": "\u041F\u043E\u0438\u0441\u043A \u043F\u043E \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044E \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
     "apiSettings.noProviderSearchResults": "\u041F\u043E\u0434\u0445\u043E\u0434\u044F\u0449\u0438\u0435 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u044B \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B",
     "apiSettings.providerCount": "{count} \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u043E\u0432",
-    "apiSettings.provider": "\u041F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A",
     "apiSettings.providerName": "\u0418\u043C\u044F \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
     "apiSettings.providerIcon": "\u042D\u043C\u043E\u0434\u0437\u0438",
     "apiSettings.providerIconPlaceholder": "\u041D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E, \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440 \u{1FA84}",
-    "apiSettings.connectionScope": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F",
-    "apiSettings.connectionPreview": "\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F",
     "apiSettings.modelBindings": "\u041C\u043E\u0434\u0435\u043B\u0438",
-    "apiSettings.modelBindingsHint": "\u041E\u0434\u0438\u043D \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u043C\u043E\u0436\u0435\u0442 \u0441\u0432\u044F\u0437\u044B\u0432\u0430\u0442\u044C \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u043C\u043E\u0434\u0435\u043B\u0435\u0439 \u0438 \u043F\u0440\u043E\u0442\u043E\u043A\u043E\u043B\u043E\u0432.",
     "apiSettings.addModelBinding": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u044C",
     "apiSettings.defaultProviderForModel": "\u041F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E",
     "apiSettings.removeBinding": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0443",
@@ -11075,7 +10077,6 @@
     "apiSettings.keepOneBinding": "\u0423 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430 \u0434\u043E\u043B\u0436\u043D\u0430 \u043E\u0441\u0442\u0430\u0442\u044C\u0441\u044F \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u043D\u0430 \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0430 \u043C\u043E\u0434\u0435\u043B\u0438.",
     "apiSettings.bindingRequiredFields": "\u0414\u043B\u044F \u043A\u0430\u0436\u0434\u043E\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0438 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u043E\u0434\u0435\u043B\u044C, \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0451\u043D\u043D\u043E\u0435 \u0438\u043C\u044F \u0438 \u0443\u043A\u0430\u0436\u0438\u0442\u0435 \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u043D\u0443 \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u044E.",
     "apiSettings.bindingOverlap": "{model} {operation} \u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u043E \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u043C \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0430\u043C.",
-    "apiSettings.actualRequest": "\u0424\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0437\u0430\u043F\u0440\u043E\u0441",
     "apiSettings.newProviderAction": "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",
     "apiSettings.copyProvider": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
     "apiSettings.copyProviderName": "{name} \u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
@@ -11086,15 +10087,7 @@
     "apiSettings.sortProviderModeStatus": "\u041F\u0435\u0440\u0435\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0439\u0442\u0435 \u043C\u0430\u0440\u043A\u0435\u0440\u044B \u0438\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438",
     "apiSettings.sortProviderHandleAria": "\u041F\u0435\u0440\u0435\u0442\u0430\u0449\u0438\u0442\u0435 {provider} \u0438\u043B\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0440\u0435\u043B\u043A\u0438, Home \u0438 End",
     "apiSettings.sortProviderStatus": "\u041F\u043E\u0440\u044F\u0434\u043E\u043A \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u043E\u0432 \u0438\u0437\u043C\u0435\u043D\u0435\u043D. \u0410\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435...",
-    "apiSettings.moveProviderUp": "\u0412\u0432\u0435\u0440\u0445",
-    "apiSettings.moveProviderDown": "\u0412\u043D\u0438\u0437",
-    "apiSettings.moveProviderUpAria": "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C {provider} \u0432\u0432\u0435\u0440\u0445",
-    "apiSettings.moveProviderDownAria": "\u041F\u0435\u0440\u0435\u043C\u0435\u0441\u0442\u0438\u0442\u044C {provider} \u0432\u043D\u0438\u0437",
-    "apiSettings.mode": "\u0420\u0435\u0436\u0438\u043C \u0437\u0430\u043F\u0440\u043E\u0441\u0430",
-    "apiSettings.images": "\u041F\u0440\u044F\u043C\u043E\u0439 Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u041F\u0440\u044F\u043C\u043E\u0439",
-    "apiSettings.imageModel": "\u041C\u043E\u0434\u0435\u043B\u044C \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
     "apiSettings.concurrency": "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u043F\u0430\u0440\u0430\u043B\u043B\u0435\u043B\u0438\u0437\u043C\u0430",
     "apiSettings.svgAuthorModel": "\u041C\u043E\u0434\u0435\u043B\u044C \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F SVG",
     "apiSettings.invalidSvgAuthorModel": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 ID \u043C\u043E\u0434\u0435\u043B\u0438 SVG \u0431\u0435\u0437 \u043F\u0440\u043E\u0431\u0435\u043B\u043E\u0432.",
@@ -11102,25 +10095,18 @@
     "apiSettings.remoteModelName": "\u041C\u043E\u0434\u0435\u043B\u044C \u0443 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
     "apiSettings.fetchModels": "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u0438",
     "apiSettings.advancedSettings": "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u043D\u044B\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "apiSettings.concurrencyValue": "\u043F\u0430\u0440\u0430\u043B\u043B\u0435\u043B\u0438\u0437\u043C {concurrency}",
     "apiSettings.keySaved": "\u041A\u043B\u044E\u0447 API \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D.",
     "apiSettings.keyNotSet": "\u041A\u043B\u044E\u0447 API \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D",
     "apiSettings.showApiKey": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C API Key",
     "apiSettings.hideApiKey": "\u0421\u043A\u0440\u044B\u0442\u044C API Key",
     "apiSettings.editProvider": "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430",
     "apiSettings.newProviderTitle": "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",
-    "apiSettings.editHint": "\u041F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0437\u0430\u043F\u0438\u0441\u044B\u0432\u0430\u0435\u0442 \u044D\u0442\u043E \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u0443\u044E \u0447\u0430\u0441\u0442\u044C. \u041E\u0442\u043C\u0435\u043D\u0430 \u043E\u0442\u043C\u0435\u043D\u044F\u0435\u0442 \u0435\u0433\u043E.",
     "apiSettings.finishEditFirst": "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u0438\u043B\u0438 \u043E\u0442\u043C\u0435\u043D\u0438\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430.",
     "apiSettings.newDraftStatus": "\u0421\u043E\u0437\u0434\u0430\u043D\u0438\u0435 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430. \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0434\u0430\u0442\u044C \u0437\u0430\u044F\u0432\u043A\u0443.",
     "apiSettings.editDraftStatus": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430. \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0434\u0430\u0442\u044C \u0437\u0430\u044F\u0432\u043A\u0443.",
-    "apiSettings.cancelEdit": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435",
-    "apiSettings.saveProvider": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430",
-    "apiSettings.saveSelection": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0432\u044B\u0431\u043E\u0440",
     "apiSettings.deleteProviderTitle": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430?",
     "apiSettings.deleteProviderMessage": '\u0423\u0434\u0430\u043B\u0438\u0442\u044C "{provider}"?',
     "apiSettings.deleteProviderDetail": "\u042D\u0442\u043E \u0443\u0434\u0430\u043B\u0438\u0442 \u0435\u0433\u043E \u0438\u0437 \u0441\u043F\u0438\u0441\u043A\u0430 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u043E\u0432 \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435.",
-    "apiSettings.deleteProviderStatus": "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0443\u0434\u0430\u043B\u0435\u043D. \u0410\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435...",
-    "apiSettings.save": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 API",
     "apiSettings.loadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 API.",
     "apiSettings.savedKeyPlaceholder": "\u041A\u043B\u044E\u0447 API \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442\u0441\u044F \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0435. \u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u043E\u0432\u044B\u0439 \u043A\u043B\u044E\u0447 \u0434\u043B\u044F \u0435\u0433\u043E \u0437\u0430\u043C\u0435\u043D\u044B.",
     "apiSettings.apiKeyRequired": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 API Key \u043F\u0435\u0440\u0435\u0434 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u043C \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430.",
@@ -11141,16 +10127,6 @@
     "apiSettings.savedShort": "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043E",
     "apiSettings.savedStatus": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 API \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B.",
     "apiSettings.saveFailedShort": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C",
-    "codexSettings.title": "Codex \u041A\u0430\u043D\u0430\u043B",
-    "codexSettings.status": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u0430\u043D\u0430\u043B \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 \u0434\u043B\u044F \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u0432\u0445\u043E\u0434\u0430 Codex.",
-    "codexSettings.notesLabel": "Codex \u043F\u0440\u0438\u043C\u0435\u0447\u0430\u043D\u0438\u044F \u043A \u043A\u0430\u043D\u0430\u043B\u0443",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u041A\u0430\u043D\u0430\u043B \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\u043B\u044F \u043F\u0440\u044F\u043C\u043E\u0439 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0438 \u0440\u0430\u0437\u043C\u0435\u0440\u0430, \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0430 \u0438 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u043E\u0432.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\u041A\u0430\u043D\u0430\u043B \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u0438\u043C\u043E\u0441\u0442\u0438 \u0434\u043B\u044F \u0440\u0430\u0431\u043E\u0447\u0438\u0445 \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0432, \u0442\u0440\u0435\u0431\u0443\u044E\u0449\u0438\u0445 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u043E\u0432 \u0432\u0435\u0431-\u043F\u043E\u0438\u0441\u043A\u0430.",
-    "codexSettings.current": "\u0422\u0435\u043A\u0443\u0449\u0438\u0439",
-    "codexSettings.save": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043A\u0430\u043D\u0430\u043B Codex",
-    "codexSettings.saveMode": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C {mode}",
     "imageEditor.title": "\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u0432\u043E\u0434 Image",
     "imageEditor.promptHint": "\u041D\u0430\u0440\u0438\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u0435 \u043E\u0442 \u0440\u0443\u043A\u0438 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0438 \u043C\u0435\u0442\u043A\u0438 \u0432 image \u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C \u0438\u043D\u0441\u0442\u0440\u0443\u043A\u0446\u0438\u044F\u043C\u0438. \u041D\u0435 \u043E\u0441\u0442\u0430\u0432\u043B\u044F\u0439\u0442\u0435 \u0438\u0445 \u0432 \u043A\u043E\u043D\u0435\u0447\u043D\u043E\u043C \u0444\u0430\u0439\u043B\u0435 image.",
     "imageEditor.inputFallback": "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 image",
@@ -11230,31 +10206,21 @@
     "addGallery.save": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0432 \u0433\u0430\u043B\u0435\u0440\u0435\u044E",
     "close.promptTemplates": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u0432 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A",
     "close.archive": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u0430\u0440\u0445\u0438\u0432\u0430",
-    "close.settings": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A \u0445\u0440\u0430\u043D\u0438\u043B\u0438\u0449\u0430",
-    "close.apiSettings": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A API",
     "close.systemSettings": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A \u0441\u0438\u0441\u0442\u0435\u043C\u044B",
     "close.imageEditor": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u0430 image",
     "close.gallery": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u0433\u0430\u043B\u0435\u0440\u0435\u0438",
     "close.addGallery": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0430\u043D\u0435\u043B\u044C \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0432 \u0433\u0430\u043B\u0435\u0440\u0435\u044E",
     "imageInput.referenceTitle": "\u0412\u0445\u043E\u0434\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)",
-    "referenceFiles.add": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0444\u0430\u0439\u043B",
-    "referenceFiles.selected": "\u0424\u0430\u0439\u043B\u044B-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438",
-    "referenceFiles.recent": "\u041D\u0435\u0434\u0430\u0432\u043D\u0438\u0435 \u0444\u0430\u0439\u043B\u044B",
     "referenceFiles.familyPdf": "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u044B + \u0442\u0435\u043A\u0441\u0442",
     "referenceFiles.familySpreadsheet": "\u0422\u0430\u0431\u043B\u0438\u0446\u0430",
     "referenceFiles.familyDocument": "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442",
     "referenceFiles.familyText": "\u0422\u0435\u043A\u0441\u0442",
-    "referenceFiles.visualLimit": "\u0412 \u0444\u0430\u0439\u043B\u0430\u0445 \u043D\u0435-PDF \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u043D\u044B\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0438 \u0434\u0438\u0430\u0433\u0440\u0430\u043C\u043C\u044B \u043D\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044E\u0442\u0441\u044F. \u0415\u0441\u043B\u0438 \u0432\u0430\u0436\u0435\u043D \u043C\u0430\u043A\u0435\u0442, \u043F\u0440\u0435\u043E\u0431\u0440\u0430\u0437\u0443\u0439\u0442\u0435 \u0444\u0430\u0439\u043B \u0432 PDF.",
     "referenceFiles.remove": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C {filename}",
-    "referenceFiles.switchTitle": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0444\u0430\u0439\u043B\u044B-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438?",
-    "referenceFiles.switchMessage": "\u0424\u0430\u0439\u043B\u044B-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0441 Responses. \u0423\u0434\u0430\u043B\u0438\u0442\u0435 \u0438\u0445 \u043F\u0435\u0440\u0435\u0434 \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435\u043C \u043D\u0430 Images.",
-    "referenceFiles.removeAndSwitch": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0444\u0430\u0439\u043B\u044B \u0438 \u043F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438\u0442\u044C",
     "referenceFiles.requiresResponses": "\u0414\u043B\u044F \u0444\u0430\u0439\u043B\u043E\u0432-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u043E\u0432 \u043D\u0443\u0436\u0435\u043D Responses",
     "referenceFiles.switchToResponses": "\u041F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043D\u0430 Responses",
     "referenceFiles.openApiSettings": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 API",
     "referenceFiles.providerMissing": "\u0418\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A Responses \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D. \u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u0432 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u0445 API.",
     "referenceFiles.missing": "\u0424\u0430\u0439\u043B \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442",
-    "referenceFiles.loadFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0444\u0430\u0439\u043B\u044B-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438",
     "referenceFiles.errorEmpty": "\u0424\u0430\u0439\u043B-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A \u043F\u0443\u0441\u0442",
     "referenceFiles.errorUnsupported": "\u042D\u0442\u043E\u0442 \u0442\u0438\u043F \u0444\u0430\u0439\u043B\u0430-\u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0430 \u043D\u0435 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442\u0441\u044F",
     "referenceFiles.errorMismatch": "\u0421\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0435 \u0444\u0430\u0439\u043B\u0430 \u043D\u0435 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044E",
@@ -11273,13 +10239,11 @@
     "modelSelection.provider": "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",
     "modelSelection.providerUnavailable": "\u0414\u043B\u044F \u044D\u0442\u043E\u0439 \u043C\u043E\u0434\u0435\u043B\u0438 \u043D\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430",
     "modelSelection.openSettings": "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u043E\u0432",
-    "modelSelection.codexUnavailable": "\u0412\u0445\u043E\u0434 \u0432 Codex \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D",
     "modelSelection.catalogUnavailable": "\u041A\u0430\u0442\u0430\u043B\u043E\u0433 \u043C\u043E\u0434\u0435\u043B\u0435\u0439 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D",
     "output.background": "\u0424\u043E\u043D",
     "canvas.aspectRatio": "\u0421\u043E\u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u0435 \u0441\u0442\u043E\u0440\u043E\u043D",
     "canvas.resolution": "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u0435",
     "gemini.googleSearch": "\u041F\u043E\u0438\u0441\u043A Google",
-    "gemini.googleImageSearch": "\u041F\u043E\u0438\u0441\u043A \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439 Google",
     "output.modalities": "\u041C\u043E\u0434\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u0438 \u0432\u044B\u0432\u043E\u0434\u0430",
     "gemini.safetySettings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u0438",
     "gemini.safety.harassment": "\u0414\u043E\u043C\u043E\u0433\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430",
@@ -11340,17 +10304,14 @@
     "mobile.backToEditor": "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044E",
     "mobile.copyHint": "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E. \u0412\u044B\u0434\u0435\u043B\u0438\u0442\u0435 \u0442\u0435\u043A\u0441\u0442 \u043D\u0438\u0436\u0435 \u0438 \u0441\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435.",
     "mobile.files": "\u0424\u0430\u0439\u043B\u044B",
-    "mobile.gestureHint": "\u0429\u0438\u043F\u043E\u043A \u2014 \u043C\u0430\u0441\u0448\u0442\u0430\u0431 \xB7 \u0421\u0432\u0430\u0439\u043F \u2014 \u0441\u043C\u0435\u043D\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F",
     "mobile.manualCopy": "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u0438 \u0443\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0439\u0442\u0435 \u0434\u043B\u044F \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F",
     "mobile.more": "\u0415\u0449\u0451",
     "mobile.parameters": "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B",
     "mobile.pasteHint": "\u0423\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0439\u0442\u0435 \u043F\u043E\u043B\u0435 \u0434\u043B\u044F \u0432\u0441\u0442\u0430\u0432\u043A\u0438 \u043B\u0438\u0431\u043E \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u043E\u0442\u043E \u0438\u043B\u0438 \u0444\u0430\u0439\u043B\u044B.",
     "mobile.photos": "\u0424\u043E\u0442\u043E",
-    "mobile.pickFiles": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0444\u043E\u0442\u043E \u0438\u043B\u0438 \u0444\u0430\u0439\u043B\u044B",
     "mobile.taskActions": "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0441 \u0437\u0430\u0434\u0430\u0447\u0435\u0439",
     "networkEgress.fakeIpDnsFallback": "\u0421\u043E\u0432\u043C\u0435\u0441\u0442\u0438\u043C\u043E\u0441\u0442\u044C \u0441 Fake-IP DNS \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
     "networkEgress.fakeIpDnsHelp": "\u0415\u0441\u043B\u0438 DNS \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0435\u0442 Fake-IP, \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0435 \u043F\u0443\u0431\u043B\u0438\u0447\u043D\u044B\u0435 \u0430\u0434\u0440\u0435\u0441\u0430 \u0437\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u0443 Cloudflare DNS. \u041F\u0440\u0438\u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u043A \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0430\u043C \u043D\u043E\u0432\u044B\u0445 \u0437\u0430\u043F\u0440\u043E\u0441\u043E\u0432; DNS \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0439 \u0441\u0435\u0442\u0438 \u043D\u0435 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F. API-\u043A\u043B\u044E\u0447\u0438, \u043F\u0440\u043E\u043C\u043F\u0442\u044B \u0438 \u043F\u043E\u043B\u043D\u044B\u0435 URL \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0439 \u043D\u0435 \u043F\u0435\u0440\u0435\u0434\u0430\u044E\u0442\u0441\u044F.",
-    "output.transparencyFidelityHint": "\u041F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u044B\u0439 \u0444\u043E\u043D \u2014 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u0435 \u043A \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0443; \u043E\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0438 \u0432 \u0440\u0435\u0436\u0438\u043C\u0430\u0445 \xAB\u041E\u0440\u0438\u0433\u0438\u043D\u0430\u043B\xBB \u0438 \xAB\u0422\u043E\u0447\u043D\u044B\u0439\xBB.",
     "output.transparencyFormat": "\u0414\u043B\u044F \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u0438 \u043D\u0443\u0436\u0435\u043D PNG \u0438\u043B\u0438 WebP.",
     "output.transparencyUnavailable": "\u0411\u0435\u0437 \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u0438",
     "output.transparentBackground": "\u041F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u044B\u0439 \u0444\u043E\u043D",
@@ -11383,7 +10344,6 @@
     "userConfigBackup.incrementalCopy": "\u0421\u043E\u0445\u0440\u0430\u043D\u044F\u0435\u0442 \u0442\u0435\u043A\u0443\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435, \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u0434\u0443\u0431\u043B\u0438\u043A\u0430\u0442\u044B \u0438 \u0441\u043E\u0437\u0434\u0430\u0451\u0442 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438 \u043F\u0440\u0438 \u043A\u043E\u043D\u0444\u043B\u0438\u043A\u0442\u0430\u0445.",
     "userConfigBackup.itemCount": "\u042D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432: {count}",
     "userConfigBackup.modeLabel": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0438\u043B\u0438 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435",
-    "userConfigBackup.previewCounts": "\u0412 \u0430\u0440\u0445\u0438\u0432\u0435: {count} \xB7 \u0434\u0443\u0431\u043B\u0438\u043A\u0430\u0442\u043E\u0432: {duplicate} \xB7 \u043A\u043E\u043D\u0444\u043B\u0438\u043A\u0442\u043E\u0432: {conflict}",
     "userConfigBackup.previewTitle": "\u041F\u0440\u0435\u0434\u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F",
     "userConfigBackup.providerRetention": "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u044B \u0441 \u0443\u0447\u0451\u0442\u043D\u044B\u043C\u0438 \u0434\u0430\u043D\u043D\u044B\u043C\u0438 ({count}) \u0431\u0443\u0434\u0443\u0442 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B \u0434\u043B\u044F \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u0438",
     "userConfigBackup.replaceConfirmCopy": "\u0417\u0430\u0442\u0440\u0430\u0433\u0438\u0432\u0430\u044E\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u044B, \u043D\u043E \u0438\u0445 \u0442\u0435\u043A\u0443\u0449\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0435 \u0431\u0443\u0434\u0443\u0442 \u0443\u0434\u0430\u043B\u0435\u043D\u044B. \u042D\u0442\u043E \u043D\u0435\u043E\u0431\u0440\u0430\u0442\u0438\u043C\u043E.",
@@ -11560,25 +10520,13 @@
     "queue.dispatching": "Pianificazione \xB7 attesa {waiting}",
     "queue.runningWaiting": "In esecuzione {running} \xB7 in attesa {waiting}",
     "queue.statusLabel": "Stato della coda: {text} \xB7 {channelText}. Fare clic per passare alle attivit\xE0 attive",
-    "queue.runningActions": "Esecuzione di azioni della coda di attivit\xE0",
-    "queue.waitingActions": "Azioni della coda di attivit\xE0 in attesa",
-    "queue.cancelRunning": "Annulla",
     "queue.cancelRunningTitle": "Annulla l'attivit\xE0 in esecuzione",
     "queue.dragWaiting": "Trascina per riordinare l'attivit\xE0 in attesa",
-    "queue.dragSort": "Trascina per ordinare",
-    "queue.moveUp": "Su",
     "queue.moveUpTitle": "Sposta l'attivit\xE0 in attesa verso l'alto",
-    "queue.moveDown": "Gi\xF9",
     "queue.moveDownTitle": "Sposta l'attivit\xE0 in attesa verso il basso",
     "queue.promote": "In alto",
     "queue.promoteTitle": "Sposta l'attivit\xE0 in attesa in alto",
     "queue.promoteFailed": "Spostamento in alto non riuscito",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "Elimina l'attivit\xE0 in attesa",
-    "queue.deleteWaitingTitleConfirm": "Eliminare l'attivit\xE0 in attesa?",
-    "queue.deleteWaitingMessage": "Questo lo rimuove dalla coda e dall'elenco della cronologia.",
-    "queue.deleteQueuedFailed": "Impossibile eliminare l'attivit\xE0 in coda",
-    "queue.queuedDeleted": "Attivit\xE0 in coda eliminata",
     "queue.cancelRunningConfirm": "Annulla attivit\xE0",
     "queue.cancelRunningTitleConfirm": "Annullare l'attivit\xE0 in esecuzione?",
     "queue.cancelRunningMessage": "Verr\xE0 richiesto l\u2019annullamento. La chiamata al provider pu\xF2 continuare ed essere comunque addebitata fino alla risposta. La cronologia verr\xE0 conservata.",
@@ -11617,9 +10565,6 @@
     "taskStatus.runtimeCompleted": "Durata {duration} \xB7 completato {time}",
     "taskStatus.completedAt": "Completato {time}",
     "taskCard.count": "{count} images",
-    "taskCard.successCount": "riuscito {count}",
-    "taskCard.failedCount": "non riuscito {count}",
-    "taskCard.runningCount": "generando {count}",
     "taskCard.waitingCount": "in attesa {count}",
     "taskCard.textToImageThumb": "Miniatura dell'attivit\xE0 Text-to-image",
     "taskCard.imageToImageThumb": "Miniatura dell'attivit\xE0 Image-to-image",
@@ -11631,12 +10576,9 @@
     "runFeedback.editing": "Modifica",
     "runFeedback.generating": "Generazione",
     "runFeedback.status": "{action}, trascorso {elapsed}",
-    "footer.archive": "Archivio",
-    "footer.archiveCount": "Archivio {count}",
     "footer.historyLibrary": "Storia",
     "historyLibrary.openFull": "Apri la libreria della cronologia completa",
     "history.documentTitle": "Storia - iLab CONJURE",
-    "history.back": "Torniamo al generatore",
     "history.homeAria": "Torna al generatore iLab CONJURE",
     "history.backToGenerator": "Torna al generatore",
     "history.title": "Storia",
@@ -11750,9 +10692,7 @@
     "history.type.textToImage": "Testo in immagine",
     "history.type.imageToImage": "Immagine in immagine",
     "history.month": "Mese",
-    "history.status": "Stato",
     "history.promptMode": "Gestione del prompt",
-    "history.size": "Dimensioni",
     "history.quality": "Qualit\xE0",
     "history.ratio": "Rapporto",
     "history.orientation": "Orientamento",
@@ -11761,9 +10701,7 @@
     "history.archived": "Archiviato",
     "history.all": "Tutto",
     "history.allMonths": "Tutti i mesi",
-    "history.allStatuses": "Tutti gli stati",
     "history.allPromptModes": "Tutte le modalit\xE0",
-    "history.allSizes": "Tutte le taglie",
     "history.allQualities": "Tutte le qualit\xE0",
     "history.allRatios": "Tutti i rapporti",
     "history.ratioOther": "Altro",
@@ -11785,13 +10723,10 @@
     "history.selectedCount": "{count} attivit\xE0 selezionate",
     "history.confirmDelete": "Conferma l'eliminazione",
     "history.detail": "Dettagli del compito",
-    "history.detailTitle": "Compito di storia",
     "history.closeDetail": "Chiudi i dettagli dell'attivit\xE0",
     "history.resizeFilters": "Ridimensiona la barra laterale del filtro",
     "history.resizeDetail": "Ridimensiona il riquadro dei dettagli",
-    "history.detailEmpty": "Seleziona un'attivit\xE0 storica per visualizzare i dettagli",
     "history.loadingDetail": "Caricamento dettaglio...",
-    "history.loadMore": "Carica di pi\xF9",
     "history.loadingMore": "Caricamento...",
     "history.noMore": "Niente pi\xF9 compiti",
     "history.loadFailed": "Caricamento non riuscito. Aggiorna o continua a scorrere per riprovare",
@@ -11800,9 +10735,7 @@
     "history.detailFailed": "Impossibile caricare i dettagli",
     "history.noMatches": "Nessuna attivit\xE0 corrispondente",
     "history.loadedCount": "{count} caricato",
-    "history.windowNotice": "L'elenco montato \xE8 limitato alle attivit\xE0 {count}; scorrere verso l'alto o verso il basso per ripristinare le attivit\xE0 adiacenti su richiesta.",
     "history.selectTask": "Seleziona attivit\xE0",
-    "history.viewing": "Visualizzazione",
     "history.noPreview": "Nessuna anteprima images",
     "history.downloadAll": "Scarica ZIP",
     "history.downloadImage": "Scarica immagine",
@@ -11817,11 +10750,9 @@
     "history.inputReferences": "Riferimenti in ingresso",
     "history.inputReferenceIndex": "Riferimento ingresso {index}",
     "history.copyPrompt": "Copia richiesta",
-    "history.copyPrompts": "Copia le istruzioni",
     "history.copyPromptShort": "Copia",
     "history.copyPromptPanel": "Copia {title}",
     "history.copyOutputPromptPanel": "Copia image {index} richiesta modificata",
-    "history.copyTaskIds": "Copia gli ID attivit\xE0",
     "history.reuseTask": "Visualizza nel generatore",
     "history.downloadTask": "Scarica",
     "history.downloadSelectedTasks": "Scaricamento in batch",
@@ -11839,7 +10770,6 @@
     "history.noDownloadableOutputs": "Non scaricabile images",
     "history.confirmDeleteSelected": "Conferma l'eliminazione selezionata",
     "history.openPreview": "Apri anteprima",
-    "history.closePreview": "Chiudi l'anteprima",
     "history.untitled": "Senza titolo",
     "history.promptCompare": "Confronto immediato",
     "history.promptOriginal": "Richiesta originale",
@@ -11856,8 +10786,6 @@
     "history.quality.low": "Basso",
     "history.quality.auto": "Automatico",
     "footer.batch": "Lotto",
-    "footer.storage": "Stoccaggio",
-    "footer.apiStatus": "Stato API: OK",
     "footer.version": "Versione {version}",
     "footer.versionLoading": "Versione...",
     "notifications.title": "Notifiche",
@@ -11880,31 +10808,11 @@
     "theme.system": "Automatico",
     "theme.light": "Chiaro",
     "theme.dark": "Scuro",
-    "language.label": "Lingua dell'interfaccia",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Origine autenticazione",
     "auth.checking": "Verifica autenticazione",
     "auth.missingCodexSession": "Nessuna sessione Codex rilevata",
     "auth.switchFailed": "Impossibile cambiare la fonte di autenticazione",
     "auth.sourceUnavailable": "{source} non disponibile",
     "auth.notActive": "Non attivo",
-    "api.settings": "Impostazioni di sistema",
-    "api.provider": "API fornitore",
-    "imageInput.title": "Images",
     "imageInput.uploadAria": "Fai clic, rilascia o incolla immagini e file",
     "imageInput.uploadImages": "Fai clic, trascina o incolla immagini",
     "imageInput.uploadFull": "Fai clic, rilascia o incolla immagini e file",
@@ -12000,7 +10908,6 @@
     "gallery.categoryFallback": "Categoria Galleria",
     "gallery.imageFallback": "Galleria image",
     "gallery.imageLoadFailed": "Impossibile caricare questo image",
-    "gallery.editImageLoadFailed": "Impossibile caricare questo image per la modifica",
     "gallery.cannotAddImage": "Questo image non pu\xF2 essere aggiunto alla galleria",
     "gallery.nameRequired": "Inserisci il nome di una galleria",
     "gallery.saveFailed": "Impossibile salvare la galleria image",
@@ -12056,7 +10963,6 @@
     "outputSettings.title": "Output",
     "output.lock.lock": "Blocca parametri",
     "output.lock.unlock": "Sblocca e modifica",
-    "output.lock.current": "Blocco attuale",
     "output.lock.task": "Parametri dell\u2019attivit\xE0",
     "output.lock.adoptTask": "Usa i parametri di questa attivit\xE0",
     "output.lock.frame": "Inquadratura",
@@ -12076,25 +10982,11 @@
     "output.mainModel": "Modello principale",
     "output.selectMainModel": "Seleziona il modello principale",
     "output.mainModelCustomForInput": "Utilizza un modello personalizzato per l'input corrente",
-    "output.apiDirect": "API Diretto",
-    "output.apiToolModel": "Utilizzo del modello API di generazione immagini",
     "output.webSearch": "Ricerca sul Web",
-    "output.webSearchToggle": "Su",
     "output.webSearchTitle": "Cerca prima sul Web, quindi utilizzalo per questa generazione; Solo Codex e API Responses",
-    "output.promptMode": "Gestione del prompt",
     "output.modeOriginal": "Originale",
     "output.modeStrict": "Fedele",
     "output.modeCreative": "Automatico",
-    "output.promptHelp": "Spiega la gestione del prompt",
-    "output.promptHelpTitle": "Gestione del prompt",
-    "output.promptHelp.responsesChannel": "Responses \xB7 modello principale coinvolto",
-    "output.promptHelp.imagesChannel": "Images \xB7 generazione diretta",
-    "output.promptHelp.responses.original": "Invia il testo originale esatto senza regole aggiunte dall\u2019app; il provider pu\xF2 comunque restituire un revised prompt o interpretare diversamente il risultato.",
-    "output.promptHelp.responses.strict": "Consente al modello principale di organizzare o ampliare il prompt, preservando vincoli come soggetti, testo, colori e composizione.",
-    "output.promptHelp.responses.automatic": "Non aggiunge vincoli; il modello principale interpreta e ottimizza prima di chiamare lo strumento immagine.",
-    "output.promptHelp.images.original": "Non aggiunge regole dell\u2019app e invia il testo originale direttamente all\u2019API immagini.",
-    "output.promptHelp.images.strict": "Invia le regole di fedelt\xE0 insieme al prompt originale per preservare tutti i vincoli.",
-    "output.promptHelp.images.automatic": "Usa la gestione predefinita dell\u2019API immagini e include le note necessarie per i riferimenti della galleria.",
     "output.size": "Dimensioni di output",
     "output.sizeMode": "Modalit\xE0 dimensione",
     "output.sizeAuto": "Automatico",
@@ -12158,8 +11050,6 @@
     "preview.runningTitle": "{mode} in esecuzione",
     "preview.submittingTitle": "Invio attivit\xE0",
     "preview.queuedTitle": "Attivit\xE0 in coda",
-    "preview.submittingDetail": "Salvataggio degli input e aggiunta dell'attivit\xE0 alla coda. La generazione inizier\xE0 automaticamente.",
-    "preview.queuedDetail": "L'attivit\xE0 \xE8 in coda e attende un canale disponibile.",
     "preview.featured": "Selezionato",
     "preview.addFeatured": "Seleziona il risultato",
     "preview.selectedFeatured": "Selezionato",
@@ -12212,7 +11102,6 @@
     "promptPopover.close": "Chiudi il confronto immediato",
     "promptPopover.copyOptimized": "Copia prompt ottimizzato",
     "promptPopover.copied": "Copiato",
-    "taskContext.menuLabel": "Menu contestuale delle attivit\xE0",
     "taskContext.view": "Visualizza attivit\xE0",
     "taskContext.copyId": "Copia attivit\xE0 ID",
     "taskContext.copyPrompt": "Copia richiesta",
@@ -12241,7 +11130,6 @@
     "taskActions.acceptSuccessesFailed": "Impossibile accettare risultati positivi",
     "taskActions.acceptedSuccesses": "Risultati positivi accettati",
     "taskActions.viewedUpdateFailed": "Impossibile aggiornare lo stato di lettura",
-    "taskActions.failedFallback": "Attivit\xE0 fallita",
     "taskList.empty": "Nessuna storia ancora",
     "taskList.selectSession": "Seleziona chatta",
     "taskList.unreadUpdate": "Aggiornamento non letto",
@@ -12311,7 +11199,6 @@
     "snippets.saveSelection": "Salva",
     "snippets.saveSelectionLabel": "Salva il testo selezionato come frammento di prompt",
     "snippets.popoverLabel": "Frammento di richiesta",
-    "snippets.defaultCategory": "Comune",
     "snippets.loadFailed": "Impossibile caricare gli snippet del prompt",
     "snippets.remove": "Rimuovi ~{tag}",
     "snippets.expand": "Espandi",
@@ -12356,7 +11243,6 @@
     "colors.done": "Fatto",
     "colors.manage": "Gestisci",
     "colors.favorites": "Colori preferiti",
-    "colors.recent": "Colori recenti",
     "colors.recentLabel": "Recente",
     "colors.deleteFavorite": "Elimina colore preferito {name}",
     "colors.modify": "Modifica colore",
@@ -12366,16 +11252,13 @@
     "taskGroup.current": "Attivit\xE0 corrente",
     "taskGroup.yesterday": "Ieri",
     "taskGroup.last7": "Ultimi 7 giorni",
-    "taskGroup.older": "Pi\xF9 vecchio",
     "taskGroup.searchResults": "Risultati della ricerca",
-    "taskGroup.active": "Attivo",
     "taskGroup.running": "Correre",
     "taskGroup.waiting": "In attesa",
     "taskGroup.dispatchPending": "Assegnazione di un canale disponibile...",
     "taskGroup.expand": "Espandi {label}",
     "taskGroup.collapse": "Comprimi {label}",
     "taskGroup.buttonLabel": "{label}, {count} attivit\xE0",
-    "taskGroup.loadMore": "Carica altri {count}",
     "taskGroup.loadFailedRetry": "Caricamento non riuscito. Fai clic per riprovare",
     "archive.title": "Archivio",
     "archive.empty": "Nessuna chat archiviata",
@@ -12388,7 +11271,6 @@
     "archive.restoring": "Ripristino...",
     "archive.deleting": "Eliminazione...",
     "archive.restoredCount": "Attivit\xE0 {count} ripristinate",
-    "settings.title": "Stoccaggio",
     "settings.status": "Riavvia WebUI dopo aver salvato i percorsi di archiviazione",
     "settings.pathChangeHint": "Cambiare i percorsi non sposta i dati esistenti. Prima di trasferirli, crea un backup, chiudi l\u2019app e copia le cartelle complete.",
     "settings.previousPaths": "Non trovi i vecchi dati? Controlla le cartelle predefinite originali",
@@ -12443,7 +11325,6 @@
     "userConfigBackup.restoreComplete": "Ripristino completato",
     "systemSettings.tabsLabel": "Sezioni delle impostazioni di sistema",
     "systemSettings.apiTab": "API Impostazioni",
-    "systemSettings.codexTab": "Codex Canale",
     "systemSettings.languageTab": "Lingua / Language",
     "systemSettings.storageTab": "Archiviazione e notifiche",
     "systemSettings.networkTab": "Rete",
@@ -12469,23 +11350,14 @@
     "networkEgress.loadFailed": "Impossibile caricare le impostazioni di rete",
     "networkEgress.saveFailed": "Impossibile salvare le impostazioni di rete",
     "languageSettings.instantStatus": "Salvato. Applicato subito.",
-    "apiSettings.title": "API Impostazioni",
-    "apiSettings.status": "Le impostazioni salvate vengono applicate immediatamente in modalit\xE0 API",
-    "apiSettings.codexMode": "canale Codex",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API fornitori",
     "apiSettings.searchProviders": "Cerca nomi fornitori",
     "apiSettings.noProviderSearchResults": "Nessun fornitore corrispondente",
     "apiSettings.providerCount": "{count} fornitori",
-    "apiSettings.provider": "Fornitore",
     "apiSettings.providerName": "Nome del fornitore",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "Facoltativa, es. \u{1FA84}",
-    "apiSettings.connectionScope": "Impostazioni di connessione",
-    "apiSettings.connectionPreview": "Anteprima connessione",
     "apiSettings.modelBindings": "Modelli",
-    "apiSettings.modelBindingsHint": "Un fornitore pu\xF2 associare pi\xF9 modelli e protocolli.",
     "apiSettings.addModelBinding": "Aggiungi modello",
     "apiSettings.defaultProviderForModel": "Fornitore predefinito",
     "apiSettings.removeBinding": "Rimuovi associazione",
@@ -12493,7 +11365,6 @@
     "apiSettings.keepOneBinding": "Ogni fornitore deve mantenere almeno un'associazione di modello.",
     "apiSettings.bindingRequiredFields": "Per ogni associazione, scegli un modello, inserisci il nome remoto e seleziona almeno un'operazione.",
     "apiSettings.bindingOverlap": "{model} {operation} \xE8 gestito da pi\xF9 associazioni.",
-    "apiSettings.actualRequest": "Richiesta effettiva",
     "apiSettings.newProviderAction": "Nuovo fornitore",
     "apiSettings.copyProvider": "Copia",
     "apiSettings.copyProviderName": "{name} Copia",
@@ -12504,15 +11375,7 @@
     "apiSettings.sortProviderModeStatus": "Trascina le maniglie per ordinare o usa i tasti freccia",
     "apiSettings.sortProviderHandleAria": "Trascina per riordinare {provider} o usa frecce, Home e Fine",
     "apiSettings.sortProviderStatus": "L'ordine dei fornitori \xE8 cambiato. Salvataggio automatico...",
-    "apiSettings.moveProviderUp": "Su",
-    "apiSettings.moveProviderDown": "Gi\xF9",
-    "apiSettings.moveProviderUpAria": "Sposta {provider} in alto",
-    "apiSettings.moveProviderDownAria": "Sposta {provider} gi\xF9",
-    "apiSettings.mode": "Modalit\xE0 di richiesta",
-    "apiSettings.images": "Diretto Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Diretto",
-    "apiSettings.imageModel": "Modello di generazione immagini",
     "apiSettings.concurrency": "Limite di concorrenza",
     "apiSettings.svgAuthorModel": "Modello di creazione SVG",
     "apiSettings.invalidSvgAuthorModel": "Inserisci un ID di modello SVG valido senza spazi.",
@@ -12520,25 +11383,18 @@
     "apiSettings.remoteModelName": "Modello del fornitore",
     "apiSettings.fetchModels": "Ottieni modelli",
     "apiSettings.advancedSettings": "Impostazioni avanzate",
-    "apiSettings.concurrencyValue": "concorrenza {concurrency}",
     "apiSettings.keySaved": "Chiave API salvata",
     "apiSettings.keyNotSet": "Chiave API non impostata",
     "apiSettings.showApiKey": "Mostra API Key",
     "apiSettings.hideApiKey": "Nascondi API Key",
     "apiSettings.editProvider": "Modifica fornitore",
     "apiSettings.newProviderTitle": "Nuovo fornitore",
-    "apiSettings.editHint": "Il provider di salvataggio scrive questa modifica sul backend. Annulla lo scarta.",
     "apiSettings.finishEditFirst": "Prima salva o annulla la modifica del fornitore corrente",
     "apiSettings.newDraftStatus": "Creazione fornitore. Salva il fornitore per candidarti.",
     "apiSettings.editDraftStatus": "Fornitore di editing. Salva il fornitore per candidarti.",
-    "apiSettings.cancelEdit": "Annulla modifica",
-    "apiSettings.saveProvider": "Salva fornitore",
-    "apiSettings.saveSelection": "Salva la selezione",
     "apiSettings.deleteProviderTitle": "Eliminare il fornitore?",
     "apiSettings.deleteProviderMessage": 'Eliminare "{provider}"?',
     "apiSettings.deleteProviderDetail": "Questo lo rimuove dall'elenco dei provider e salva automaticamente nel backend.",
-    "apiSettings.deleteProviderStatus": "Fornitore eliminato. Salvataggio automatico...",
-    "apiSettings.save": "Salva le impostazioni API",
     "apiSettings.loadFailed": "Impossibile caricare le impostazioni API",
     "apiSettings.savedKeyPlaceholder": "La chiave API viene salvata sul back-end. Immettere una nuova chiave per sostituirla.",
     "apiSettings.apiKeyRequired": "Inserisci una API Key prima di salvare il fornitore.",
@@ -12559,16 +11415,6 @@
     "apiSettings.savedShort": "Salvato",
     "apiSettings.savedStatus": "API impostazioni salvate",
     "apiSettings.saveFailedShort": "Salvataggio non riuscito",
-    "codexSettings.title": "Codex Canale",
-    "codexSettings.status": "Scegli il canale di generazione per l'accesso Codex locale",
-    "codexSettings.notesLabel": "Codex note sul canale",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "Canale predefinito per il passaggio diretto di dimensioni, qualit\xE0 e modifica dei parametri.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "Canale di compatibilit\xE0 per flussi di lavoro che necessitano di strumenti di ricerca Web.",
-    "codexSettings.current": "Attuale",
-    "codexSettings.save": "Salva il canale Codex",
-    "codexSettings.saveMode": "Salva {mode}",
     "imageEditor.title": "Modifica input Image",
     "imageEditor.promptHint": "Le frecce e i segni disegnati a mano nel image sono solo istruzioni. Non tenerli nel finale image.",
     "imageEditor.inputFallback": "Ingresso image",
@@ -12648,31 +11494,21 @@
     "addGallery.save": "Salva nella galleria",
     "close.promptTemplates": "Chiudi il pannello dei modelli di prompt",
     "close.archive": "Chiudi il pannello archivio",
-    "close.settings": "Chiudi il pannello delle impostazioni di archiviazione",
-    "close.apiSettings": "Chiudi il pannello delle impostazioni API",
     "close.systemSettings": "Chiudi il pannello delle impostazioni di sistema",
     "close.imageEditor": "Chiudi il pannello dell'editor image",
     "close.gallery": "Chiudi il pannello della galleria",
     "close.addGallery": "Chiudi Aggiungi al pannello Galleria",
     "imageInput.referenceTitle": "Input di riferimento (facoltativo)",
-    "referenceFiles.add": "Aggiungi file",
-    "referenceFiles.selected": "File di riferimento",
-    "referenceFiles.recent": "File recenti",
     "referenceFiles.familyPdf": "Pagine + testo",
     "referenceFiles.familySpreadsheet": "Foglio di calcolo",
     "referenceFiles.familyDocument": "Documento",
     "referenceFiles.familyText": "Testo",
-    "referenceFiles.visualLimit": "I file non PDF non mantengono immagini e grafici incorporati. Converti in PDF se il layout \xE8 importante.",
     "referenceFiles.remove": "Rimuovi {filename}",
-    "referenceFiles.switchTitle": "Rimuovere i file di riferimento?",
-    "referenceFiles.switchMessage": "I file di riferimento funzionano solo con Responses. Rimuovili prima di passare a Images.",
-    "referenceFiles.removeAndSwitch": "Rimuovi file e cambia",
     "referenceFiles.requiresResponses": "I file di riferimento richiedono Responses",
     "referenceFiles.switchToResponses": "Passa a Responses",
     "referenceFiles.openApiSettings": "Apri impostazioni API",
     "referenceFiles.providerMissing": "Il provider Responses originale non \xE8 disponibile. Scegline uno nelle impostazioni API.",
     "referenceFiles.missing": "File mancante",
-    "referenceFiles.loadFailed": "Impossibile caricare i file di riferimento",
     "referenceFiles.errorEmpty": "Il file di riferimento \xE8 vuoto",
     "referenceFiles.errorUnsupported": "Questo tipo di file di riferimento non \xE8 supportato",
     "referenceFiles.errorMismatch": "Il contenuto non corrisponde all'estensione",
@@ -12691,13 +11527,11 @@
     "modelSelection.provider": "Fornitore",
     "modelSelection.providerUnavailable": "Nessun fornitore \xE8 disponibile per questo modello",
     "modelSelection.openSettings": "Apri impostazioni fornitori",
-    "modelSelection.codexUnavailable": "L\u2019accesso a Codex non \xE8 disponibile",
     "modelSelection.catalogUnavailable": "Il catalogo dei modelli non \xE8 disponibile",
     "output.background": "Sfondo",
     "canvas.aspectRatio": "Proporzioni",
     "canvas.resolution": "Risoluzione",
     "gemini.googleSearch": "Ricerca Google",
-    "gemini.googleImageSearch": "Ricerca immagini Google",
     "output.modalities": "Modalit\xE0 di output",
     "gemini.safetySettings": "Impostazioni di sicurezza",
     "gemini.safety.harassment": "Molestie",
@@ -12758,17 +11592,14 @@
     "mobile.backToEditor": "Torna alla modifica",
     "mobile.copyHint": "Copia automatica non disponibile. Seleziona il testo qui sotto per copiarlo.",
     "mobile.files": "File",
-    "mobile.gestureHint": "Pizzica per ingrandire \xB7 Scorri per cambiare immagine",
     "mobile.manualCopy": "Tieni premuto per copiare",
     "mobile.more": "Altro",
     "mobile.parameters": "Parametri",
     "mobile.pasteHint": "Tieni premuto nel campo per incollare o scegli foto o file.",
     "mobile.photos": "Foto",
-    "mobile.pickFiles": "Scegli foto o file",
     "mobile.taskActions": "Azioni attivit\xE0",
     "networkEgress.fakeIpDnsFallback": "Compatibilit\xE0 DNS Fake-IP per scaricare immagini",
     "networkEgress.fakeIpDnsHelp": "Se il DNS dell'immagine restituisce una Fake-IP, interroga Cloudflare DNS per ottenere indirizzi pubblici reali. Si applica ai download delle richieste successive; il DNS LAN resta invariato. Non invia chiavi API, prompt o URL completi delle immagini.",
-    "output.transparencyFidelityHint": "Lo sfondo trasparente \xE8 un requisito di output scelto e viene aggiunto anche nelle modalit\xE0 Originale e Fedele.",
     "output.transparencyFormat": "L'output trasparente richiede PNG o WebP.",
     "output.transparencyUnavailable": "Nessuna trasparenza",
     "output.transparentBackground": "Sfondo trasparente",
@@ -12801,7 +11632,6 @@
     "userConfigBackup.incrementalCopy": "Mantiene i dati esistenti, salta i duplicati e crea copie di recupero per i conflitti.",
     "userConfigBackup.itemCount": "{count} elementi",
     "userConfigBackup.modeLabel": "Backup o ripristino",
-    "userConfigBackup.previewCounts": "{count} nell'archivio \xB7 {duplicate} duplicati \xB7 {conflict} conflitti",
     "userConfigBackup.previewTitle": "Anteprima ripristino",
     "userConfigBackup.providerRetention": "{count} fornitori con credenziali saranno conservati per sicurezza",
     "userConfigBackup.replaceConfirmCopy": "Sono interessate solo le sezioni scelte, ma i loro dati attuali verranno rimossi. L'azione \xE8 irreversibile.",
@@ -12978,25 +11808,13 @@
     "queue.dispatching": "\u0936\u0947\u0921\u094D\u092F\u0942\u0932\u093F\u0902\u0917 \xB7 \u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E {waiting}",
     "queue.runningWaiting": "\u091A\u0932 \u0930\u0939\u093E \u0939\u0948 {running} \xB7 \u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u0930 \u0930\u0939\u093E \u0939\u0948 {waiting}",
     "queue.statusLabel": "\u0915\u0924\u093E\u0930 \u0938\u094D\u0925\u093F\u0924\u093F: {text} \xB7 {channelText}. \u0938\u0915\u094D\u0930\u093F\u092F \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u092A\u0930 \u091C\u093E\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902",
-    "queue.runningActions": "\u0915\u093E\u0930\u094D\u092F \u0915\u0924\u093E\u0930 \u0915\u094D\u0930\u093F\u092F\u093E\u090F\u0901 \u091A\u0932\u093E\u0928\u093E",
-    "queue.waitingActions": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E\u0930\u0924 \u0915\u093E\u0930\u094D\u092F \u0915\u0924\u093E\u0930 \u0915\u094D\u0930\u093F\u092F\u093E\u090F\u0901",
-    "queue.cancelRunning": "\u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
     "queue.cancelRunningTitle": "\u091A\u0932 \u0930\u0939\u093E \u0915\u093E\u0930\u094D\u092F \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
     "queue.dragWaiting": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u092A\u0941\u0928: \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093F\u0924 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0916\u0940\u0902\u091A\u0947\u0902",
-    "queue.dragSort": "\u0915\u094D\u0930\u092E\u092C\u0926\u094D\u0927 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0916\u0940\u0902\u091A\u0947\u0902",
-    "queue.moveUp": "\u090A\u092A\u0930",
     "queue.moveUpTitle": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u090A\u092A\u0930 \u0932\u0947 \u091C\u093E\u090F\u0901",
-    "queue.moveDown": "\u0928\u0940\u091A\u0947",
     "queue.moveDownTitle": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u0928\u0940\u091A\u0947 \u0932\u0947 \u091C\u093E\u090F\u0901",
     "queue.promote": "\u0936\u0940\u0930\u094D\u0937",
     "queue.promoteTitle": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u0936\u0940\u0930\u094D\u0937 \u092A\u0930 \u0932\u0947 \u091C\u093E\u090F\u0902",
     "queue.promoteFailed": "\u0936\u0940\u0930\u094D\u0937 \u092A\u0930 \u0932\u0947 \u091C\u093E\u0928\u093E \u0935\u093F\u092B\u0932 \u0930\u0939\u093E",
-    "queue.deleteWaitingShort": "\u0939\u091F\u093E\u090F\u0901",
-    "queue.deleteWaitingTitle": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0939\u091F\u093E\u090F\u0901",
-    "queue.deleteWaitingTitleConfirm": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u093E\u0930\u094D\u092F \u0939\u091F\u093E\u090F\u0902?",
-    "queue.deleteWaitingMessage": "\u092F\u0939 \u0907\u0938\u0947 \u0915\u0924\u093E\u0930 \u0914\u0930 \u0907\u0924\u093F\u0939\u093E\u0938 \u0938\u0942\u091A\u0940 \u0938\u0947 \u0939\u091F\u093E \u0926\u0947\u0924\u093E \u0939\u0948\u0964",
-    "queue.deleteQueuedFailed": "\u092A\u0902\u0915\u094D\u0924\u093F\u092C\u0926\u094D\u0927 \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u0939\u091F\u093E\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
-    "queue.queuedDeleted": "\u0915\u0924\u093E\u0930\u092C\u0926\u094D\u0927 \u0915\u093E\u0930\u094D\u092F \u0939\u091F\u093E \u0926\u093F\u092F\u093E \u0917\u092F\u093E",
     "queue.cancelRunningConfirm": "\u0915\u093E\u0930\u094D\u092F \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
     "queue.cancelRunningTitleConfirm": "\u091A\u0932 \u0930\u0939\u093E \u0915\u093E\u0930\u094D\u092F \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902?",
     "queue.cancelRunningMessage": "\u0930\u0926\u094D\u0926 \u0915\u0930\u0928\u0947 \u0915\u093E \u0905\u0928\u0941\u0930\u094B\u0927 \u092D\u0947\u091C\u093E \u091C\u093E\u090F\u0917\u093E\u0964 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u0949\u0932 \u0932\u094C\u091F\u0928\u0947 \u0924\u0915 \u091C\u093E\u0930\u0940 \u0930\u0939 \u0938\u0915\u0924\u0940 \u0939\u0948 \u0914\u0930 \u0936\u0941\u0932\u094D\u0915 \u0932\u0917 \u0938\u0915\u0924\u093E \u0939\u0948\u0964 \u0907\u0924\u093F\u0939\u093E\u0938 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0930\u0939\u0947\u0917\u093E\u0964",
@@ -13035,9 +11853,6 @@
     "taskStatus.runtimeCompleted": "\u0905\u0935\u0927\u093F {duration} \xB7 \u092A\u0942\u0930\u094D\u0923 {time}",
     "taskStatus.completedAt": "\u092A\u0942\u0930\u094D\u0923 {time}",
     "taskCard.count": "{count} \u091A\u093F\u0924\u094D\u0930",
-    "taskCard.successCount": "\u0938\u092B\u0932 {count}",
-    "taskCard.failedCount": "\u0935\u093F\u092B\u0932 {count}",
-    "taskCard.runningCount": "{count} \u092C\u0928 \u0930\u0939\u0947 \u0939\u0948\u0902",
     "taskCard.waitingCount": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E {count}",
     "taskCard.textToImageThumb": "\u091F\u0947\u0915\u094D\u0938\u094D\u091F-\u0938\u0947-\u091A\u093F\u0924\u094D\u0930 \u0915\u093E\u0930\u094D\u092F \u0925\u0902\u092C\u0928\u0947\u0932",
     "taskCard.imageToImageThumb": "\u091A\u093F\u0924\u094D\u0930-\u0938\u0947-\u091A\u093F\u0924\u094D\u0930 \u0915\u093E\u0930\u094D\u092F \u0925\u0902\u092C\u0928\u0947\u0932",
@@ -13049,12 +11864,9 @@
     "runFeedback.editing": "\u0938\u0902\u092A\u093E\u0926\u0928",
     "runFeedback.generating": "\u091C\u0928\u0930\u0947\u091F \u0939\u094B \u0930\u0939\u093E \u0939\u0948",
     "runFeedback.status": "{action} \xB7 {elapsed}",
-    "footer.archive": "\u0938\u0902\u0917\u094D\u0930\u0939",
-    "footer.archiveCount": "\u0938\u0902\u0917\u094D\u0930\u0939 {count}",
     "footer.historyLibrary": "\u0907\u0924\u093F\u0939\u093E\u0938",
     "historyLibrary.openFull": "\u092A\u0942\u0930\u094D\u0923 \u0907\u0924\u093F\u0939\u093E\u0938 \u092A\u0941\u0938\u094D\u0924\u0915\u093E\u0932\u092F \u0916\u094B\u0932\u0947\u0902",
     "history.documentTitle": "\u0907\u0924\u093F\u0939\u093E\u0938 - iLab CONJURE",
-    "history.back": "\u091C\u0947\u0928\u0930\u0947\u091F\u0930 \u0915\u094B \u0932\u094C\u091F\u0947\u0902",
     "history.homeAria": "iLab CONJURE \u091C\u0947\u0928\u0930\u0947\u091F\u0930 \u092A\u0930 \u0932\u094C\u091F\u0947\u0902",
     "history.backToGenerator": "\u091C\u0947\u0928\u0930\u0947\u091F\u0930 \u092A\u0930 \u0932\u094C\u091F\u0947\u0902",
     "history.title": "\u0907\u0924\u093F\u0939\u093E\u0938",
@@ -13168,9 +11980,7 @@
     "history.type.textToImage": "\u091F\u0947\u0915\u094D\u0938\u094D\u091F \u0938\u0947 \u0907\u092E\u0947\u091C",
     "history.type.imageToImage": "\u0907\u092E\u0947\u091C \u0938\u0947 \u0907\u092E\u0947\u091C",
     "history.month": "\u092E\u0939\u0940\u0928\u093E",
-    "history.status": "\u0938\u094D\u0925\u093F\u0924\u093F",
     "history.promptMode": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092A\u094D\u0930\u094B\u0938\u0947\u0938\u093F\u0902\u0917",
-    "history.size": "\u0906\u0915\u093E\u0930",
     "history.quality": "\u0917\u0941\u0923\u0935\u0924\u094D\u0924\u093E",
     "history.ratio": "\u0905\u0928\u0941\u092A\u093E\u0924",
     "history.orientation": "\u0905\u092D\u093F\u092E\u0941\u0916\u0940\u0915\u0930\u0923",
@@ -13179,9 +11989,7 @@
     "history.archived": "\u0938\u0902\u0917\u094D\u0930\u0939\u0940\u0924",
     "history.all": "\u0938\u092C",
     "history.allMonths": "\u0938\u092D\u0940 \u092E\u0939\u0940\u0928\u0947",
-    "history.allStatuses": "\u0938\u092D\u0940 \u0938\u094D\u0925\u093F\u0924\u093F\u092F\u093E\u0901",
     "history.allPromptModes": "\u0938\u092D\u0940 \u092E\u094B\u0921",
-    "history.allSizes": "\u0938\u092D\u0940 \u0906\u0915\u093E\u0930",
     "history.allQualities": "\u0938\u092D\u0940 \u0917\u0941\u0923",
     "history.allRatios": "\u0938\u092D\u0940 \u0905\u0928\u0941\u092A\u093E\u0924",
     "history.ratioOther": "\u0905\u0928\u094D\u092F",
@@ -13203,13 +12011,10 @@
     "history.selectedCount": "{count} \u0915\u093E\u0930\u094D\u092F \u091A\u092F\u0928\u093F\u0924",
     "history.confirmDelete": "\u0939\u091F\u093E\u0928\u0947 \u0915\u0940 \u092A\u0941\u0937\u094D\u091F\u093F \u0915\u0930\u0947\u0902",
     "history.detail": "\u0915\u093E\u0930\u094D\u092F \u0935\u093F\u0935\u0930\u0923",
-    "history.detailTitle": "\u0907\u0924\u093F\u0939\u093E\u0938 \u0915\u093E\u0930\u094D\u092F",
     "history.closeDetail": "\u0915\u093E\u0930\u094D\u092F \u0935\u093F\u0935\u0930\u0923 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "history.resizeFilters": "\u092B\u093C\u093F\u0932\u094D\u091F\u0930 \u0938\u093E\u0907\u0921\u092C\u093E\u0930 \u0915\u093E \u0906\u0915\u093E\u0930 \u092C\u0926\u0932\u0947\u0902",
     "history.resizeDetail": "\u0935\u093F\u0935\u0930\u0923 \u092B\u0932\u0915 \u0915\u093E \u0906\u0915\u093E\u0930 \u092C\u0926\u0932\u0947\u0902",
-    "history.detailEmpty": "\u0935\u093F\u0935\u0930\u0923 \u0926\u0947\u0916\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u093F\u0938\u0940 \u0910\u0924\u093F\u0939\u093E\u0938\u093F\u0915 \u0915\u093E\u0930\u094D\u092F \u0915\u093E \u091A\u092F\u0928 \u0915\u0930\u0947\u0902",
     "history.loadingDetail": "\u0935\u093F\u0935\u0930\u0923 \u0932\u094B\u0921 \u0939\u094B \u0930\u0939\u093E \u0939\u0948...",
-    "history.loadMore": "\u0914\u0930 \u0905\u0927\u093F\u0915 \u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
     "history.loadingMore": "\u0932\u094B\u0921 \u0939\u094B \u0930\u0939\u093E \u0939\u0948...",
     "history.noMore": "\u0915\u094B\u0908 \u0914\u0930 \u0915\u093E\u0930\u094D\u092F \u0928\u0939\u0940\u0902",
     "history.loadFailed": "\u0932\u094B\u0921 \u0935\u093F\u092B\u0932 \u0930\u0939\u093E. \u092A\u0941\u0928\u0903 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0930\u0940\u092B\u094D\u0930\u0947\u0936 \u0915\u0930\u0947\u0902 \u092F\u093E \u0938\u094D\u0915\u094D\u0930\u0949\u0932 \u0915\u0930\u0924\u0947 \u0930\u0939\u0947\u0902",
@@ -13218,9 +12023,7 @@
     "history.detailFailed": "\u0935\u093F\u0935\u0930\u0923 \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "history.noMatches": "\u0915\u094B\u0908 \u092E\u0947\u0932 \u0916\u093E\u0924\u093E \u0915\u093E\u0930\u094D\u092F \u0928\u0939\u0940\u0902",
     "history.loadedCount": "{count} \u0932\u094B\u0921 \u0915\u093F\u092F\u093E \u0917\u092F\u093E",
-    "history.windowNotice": "\u092E\u093E\u0909\u0902\u091F \u0915\u0940 \u0917\u0908 \u0938\u0942\u091A\u0940 {count} \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u0924\u0915 \u0938\u0940\u092E\u093F\u0924 \u0939\u0948; \u092E\u093E\u0902\u0917 \u092A\u0930 \u0906\u0938\u0928\u094D\u0928 \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u0915\u094B \u092A\u0941\u0928\u0930\u094D\u0938\u094D\u0925\u093E\u092A\u093F\u0924 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u090A\u092A\u0930 \u092F\u093E \u0928\u0940\u091A\u0947 \u0938\u094D\u0915\u094D\u0930\u0949\u0932 \u0915\u0930\u0947\u0902\u0964",
     "history.selectTask": "\u0915\u093E\u0930\u094D\u092F \u091A\u0941\u0928\u0947\u0902",
-    "history.viewing": "\u0926\u0947\u0916\u0928\u093E",
     "history.noPreview": "\u0915\u094B\u0908 \u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u091A\u093F\u0924\u094D\u0930 \u0928\u0939\u0940\u0902",
     "history.downloadAll": "ZIP \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
     "history.downloadImage": "\u091B\u0935\u093F \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
@@ -13235,11 +12038,9 @@
     "history.inputReferences": "\u0907\u0928\u092A\u0941\u091F \u0938\u0902\u0926\u0930\u094D\u092D",
     "history.inputReferenceIndex": "\u0907\u0928\u092A\u0941\u091F \u0938\u0902\u0926\u0930\u094D\u092D {index}",
     "history.copyPrompt": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
-    "history.copyPrompts": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
     "history.copyPromptShort": "\u0915\u0949\u092A\u0940",
     "history.copyPromptPanel": "{title} \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
     "history.copyOutputPromptPanel": "\u091A\u093F\u0924\u094D\u0930 {index} \u0915\u093E \u0938\u0902\u0936\u094B\u0927\u093F\u0924 \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
-    "history.copyTaskIds": "\u0915\u093E\u0930\u094D\u092F \u0906\u0908\u0921\u0940 \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
     "history.reuseTask": "\u091C\u0928\u0930\u0947\u091F\u0930 \u092E\u0947\u0902 \u0926\u0947\u0916\u0947\u0902",
     "history.downloadTask": "\u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
     "history.downloadSelectedTasks": "\u092C\u0948\u091A \u0921\u093E\u0909\u0928\u0932\u094B\u0921",
@@ -13257,7 +12058,6 @@
     "history.noDownloadableOutputs": "\u0915\u094B\u0908 \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092F\u094B\u0917\u094D\u092F \u091A\u093F\u0924\u094D\u0930 \u0928\u0939\u0940\u0902",
     "history.confirmDeleteSelected": "\u091A\u092F\u0928\u093F\u0924 \u0921\u093F\u0932\u0940\u091F \u0915\u0940 \u092A\u0941\u0937\u094D\u091F\u093F \u0915\u0930\u0947\u0902",
     "history.openPreview": "\u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u0916\u094B\u0932\u0947\u0902",
-    "history.closePreview": "\u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "history.untitled": "\u0936\u0940\u0930\u094D\u0937\u0915\u0939\u0940\u0928",
     "history.promptCompare": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0924\u0941\u0932\u0928\u093E",
     "history.promptOriginal": "\u092E\u0942\u0932 \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F",
@@ -13274,8 +12074,6 @@
     "history.quality.low": "\u0928\u093F\u092E\u094D\u0928",
     "history.quality.auto": "\u0911\u091F\u094B",
     "footer.batch": "\u092C\u0948\u091A",
-    "footer.storage": "\u092D\u0902\u0921\u093E\u0930\u0923",
-    "footer.apiStatus": "API \u0938\u094D\u0925\u093F\u0924\u093F: \u0920\u0940\u0915 \u0939\u0948",
     "footer.version": "\u0938\u0902\u0938\u094D\u0915\u0930\u0923 {version}",
     "footer.versionLoading": "\u0938\u0902\u0938\u094D\u0915\u0930\u0923...",
     "notifications.title": "\u0938\u0942\u091A\u0928\u093E\u090F\u0902",
@@ -13298,31 +12096,11 @@
     "theme.system": "\u0911\u091F\u094B",
     "theme.light": "\u0932\u093E\u0907\u091F",
     "theme.dark": "\u0921\u093E\u0930\u094D\u0915",
-    "language.label": "\u0907\u0902\u091F\u0930\u092B\u093C\u0947\u0938 \u092D\u093E\u0937\u093E",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u092A\u094D\u0930\u092E\u093E\u0923\u0940\u0915\u0930\u0923 \u0938\u094D\u0930\u094B\u0924",
     "auth.checking": "\u092A\u094D\u0930\u092E\u093E\u0923\u0940\u0915\u0930\u0923 \u0915\u0940 \u091C\u093E\u0901\u091A \u0915\u0940 \u091C\u093E \u0930\u0939\u0940 \u0939\u0948",
     "auth.missingCodexSession": "\u0915\u094B\u0908 Codex \u0938\u0924\u094D\u0930 \u0928\u0939\u0940\u0902 \u092E\u093F\u0932\u093E",
     "auth.switchFailed": "\u092A\u094D\u0930\u092E\u093E\u0923\u0940\u0915\u0930\u0923 \u0938\u094D\u0930\u094B\u0924 \u0938\u094D\u0935\u093F\u091A \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "auth.sourceUnavailable": "{source} \u0905\u0928\u0941\u092A\u0932\u092C\u094D\u0927",
     "auth.notActive": "\u0938\u0915\u094D\u0930\u093F\u092F \u0928\u0939\u0940\u0902",
-    "api.settings": "\u0938\u093F\u0938\u094D\u091F\u092E \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938",
-    "api.provider": "API \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
-    "imageInput.title": "\u091A\u093F\u0924\u094D\u0930",
     "imageInput.uploadAria": "\u091A\u093F\u0924\u094D\u0930 \u0914\u0930 \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u091C\u094B\u0921\u093C\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902, \u0921\u094D\u0930\u0949\u092A \u0915\u0930\u0947\u0902 \u092F\u093E \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902",
     "imageInput.uploadImages": "\u091A\u093F\u0924\u094D\u0930 \u091C\u094B\u0921\u093C\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902, \u0916\u0940\u0902\u091A\u0947\u0902 \u092F\u093E \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902",
     "imageInput.uploadFull": "\u091A\u093F\u0924\u094D\u0930 \u0914\u0930 \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u091C\u094B\u0921\u093C\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902, \u0921\u094D\u0930\u0949\u092A \u0915\u0930\u0947\u0902 \u092F\u093E \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902",
@@ -13418,7 +12196,6 @@
     "gallery.categoryFallback": "\u0917\u0948\u0932\u0930\u0940 \u0936\u094D\u0930\u0947\u0923\u0940",
     "gallery.imageFallback": "\u0917\u0948\u0932\u0930\u0940 \u091A\u093F\u0924\u094D\u0930",
     "gallery.imageLoadFailed": "\u092F\u0939 \u091A\u093F\u0924\u094D\u0930 \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
-    "gallery.editImageLoadFailed": "\u0938\u0902\u092A\u093E\u0926\u0928 \u0915\u0947 \u0932\u093F\u090F \u092F\u0939 \u091A\u093F\u0924\u094D\u0930 \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "gallery.cannotAddImage": "\u092F\u0939 \u091A\u093F\u0924\u094D\u0930 \u0917\u0948\u0932\u0930\u0940 \u092E\u0947\u0902 \u0928\u0939\u0940\u0902 \u091C\u094B\u0921\u093C\u093E \u091C\u093E \u0938\u0915\u0924\u093E",
     "gallery.nameRequired": "\u0917\u0948\u0932\u0930\u0940 \u0915\u093E \u0928\u093E\u092E \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902",
     "gallery.saveFailed": "\u0917\u0948\u0932\u0930\u0940 \u091A\u093F\u0924\u094D\u0930 \u0938\u0939\u0947\u091C\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
@@ -13474,7 +12251,6 @@
     "outputSettings.title": "\u0906\u0909\u091F\u092A\u0941\u091F",
     "output.lock.lock": "\u092A\u0948\u0930\u093E\u092E\u0940\u091F\u0930 \u0932\u0949\u0915 \u0915\u0930\u0947\u0902",
     "output.lock.unlock": "\u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0915\u0947 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
-    "output.lock.current": "\u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u0932\u0949\u0915",
     "output.lock.task": "\u091A\u0941\u0928\u0947 \u0917\u090F \u0915\u093E\u0930\u094D\u092F \u0915\u0947 \u092A\u0948\u0930\u093E\u092E\u0940\u091F\u0930",
     "output.lock.adoptTask": "\u0907\u0938 \u0915\u093E\u0930\u094D\u092F \u0915\u0947 \u092A\u0948\u0930\u093E\u092E\u0940\u091F\u0930 \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0947\u0902",
     "output.lock.frame": "\u092B\u093C\u094D\u0930\u0947\u092E",
@@ -13494,25 +12270,11 @@
     "output.mainModel": "\u092E\u0941\u0916\u094D\u092F \u092E\u0949\u0921\u0932",
     "output.selectMainModel": "\u092E\u0941\u0916\u094D\u092F \u092E\u0949\u0921\u0932 \u0915\u093E \u091A\u092F\u0928 \u0915\u0930\u0947\u0902",
     "output.mainModelCustomForInput": "\u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u0907\u0928\u092A\u0941\u091F \u0915\u0947 \u0932\u093F\u090F \u090F\u0915 \u0915\u0938\u094D\u091F\u092E \u092E\u0949\u0921\u0932 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0947\u0902",
-    "output.apiDirect": "API \u092A\u094D\u0930\u0924\u094D\u092F\u0915\u094D\u0937",
-    "output.apiToolModel": "API \u091B\u0935\u093F \u0928\u093F\u0930\u094D\u092E\u093E\u0923 \u092E\u0949\u0921\u0932 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0939\u094B \u0930\u0939\u093E \u0939\u0948",
     "output.webSearch": "\u0935\u0947\u092C \u0916\u094B\u091C",
-    "output.webSearchToggle": "\u092A\u0930",
     "output.webSearchTitle": "\u092A\u0939\u0932\u0947 \u0935\u0947\u092C \u0916\u094B\u091C\u0947\u0902, \u092B\u093F\u0930 \u0907\u0938 \u091C\u0928\u0930\u0947\u0936\u0928 \u092E\u0947\u0902 \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0947\u0902; \u0915\u0947\u0935\u0932 Codex \u0914\u0930 API Responses",
-    "output.promptMode": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092A\u094D\u0930\u094B\u0938\u0947\u0938\u093F\u0902\u0917",
     "output.modeOriginal": "\u092E\u0942\u0932 \u092A\u093E\u0920",
     "output.modeStrict": "\u0935\u093F\u0936\u094D\u0935\u0938\u0928\u0940\u092F",
     "output.modeCreative": "\u0938\u094D\u0935\u091A\u093E\u0932\u093F\u0924",
-    "output.promptHelp": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092A\u094D\u0930\u094B\u0938\u0947\u0938\u093F\u0902\u0917 \u0938\u092E\u091D\u093E\u090F\u0901",
-    "output.promptHelpTitle": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092A\u094D\u0930\u094B\u0938\u0947\u0938\u093F\u0902\u0917",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u092E\u0941\u0916\u094D\u092F \u092E\u0949\u0921\u0932 \u0936\u093E\u092E\u093F\u0932",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u0938\u0940\u0927\u093E \u091C\u0928\u0930\u0947\u0936\u0928",
-    "output.promptHelp.responses.original": "\u0910\u092A-\u0938\u094D\u0924\u0930\u0940\u092F \u0928\u093F\u092F\u092E \u091C\u094B\u0921\u093C\u0947 \u092C\u093F\u0928\u093E \u0920\u0940\u0915 \u092E\u0942\u0932 \u092A\u093E\u0920 \u092D\u0947\u091C\u0924\u093E \u0939\u0948; \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u092B\u093F\u0930 \u092D\u0940 revised prompt \u0932\u094C\u091F\u093E \u0938\u0915\u0924\u093E \u0939\u0948 \u092F\u093E \u092A\u0930\u093F\u0923\u093E\u092E \u0915\u0940 \u0905\u0932\u0917 \u0935\u094D\u092F\u093E\u0916\u094D\u092F\u093E \u0915\u0930 \u0938\u0915\u0924\u093E \u0939\u0948\u0964",
-    "output.promptHelp.responses.strict": "\u092E\u0941\u0916\u094D\u092F \u092E\u0949\u0921\u0932 \u0915\u094B \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093F\u0924 \u092F\u093E \u0935\u093F\u0938\u094D\u0924\u0943\u0924 \u0915\u0930\u0928\u0947 \u0926\u0947\u0924\u093E \u0939\u0948, \u0932\u0947\u0915\u093F\u0928 \u0935\u093F\u0937\u092F, \u091F\u0947\u0915\u094D\u0938\u094D\u091F, \u0930\u0902\u0917 \u0914\u0930 \u0930\u091A\u0928\u093E \u091C\u0948\u0938\u0940 \u0905\u0928\u093F\u0935\u093E\u0930\u094D\u092F \u0936\u0930\u094D\u0924\u0947\u0902 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0930\u0916\u0924\u093E \u0939\u0948\u0964",
-    "output.promptHelp.responses.automatic": "\u0915\u094B\u0908 \u0905\u0924\u093F\u0930\u093F\u0915\u094D\u0924 \u0936\u0930\u094D\u0924 \u0928\u0939\u0940\u0902 \u091C\u094B\u0921\u093C\u0924\u093E; \u092E\u0941\u0916\u094D\u092F \u092E\u0949\u0921\u0932 \u0907\u092E\u0947\u091C \u091F\u0942\u0932 \u092C\u0941\u0932\u093E\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u0905\u0930\u094D\u0925 \u0938\u092E\u091D\u0915\u0930 \u0905\u0928\u0941\u0915\u0942\u0932\u093F\u0924 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
-    "output.promptHelp.images.original": "\u0910\u092A \u0938\u094D\u0924\u0930 \u0915\u0947 \u0928\u093F\u092F\u092E \u091C\u094B\u0921\u093C\u0947 \u092C\u093F\u0928\u093E \u092E\u0942\u0932 \u092A\u093E\u0920 \u0938\u0940\u0927\u0947 \u0907\u092E\u0947\u091C API \u0915\u094B \u092D\u0947\u091C\u0924\u093E \u0939\u0948\u0964",
-    "output.promptHelp.images.strict": "\u0938\u092D\u0940 \u0905\u0928\u093F\u0935\u093E\u0930\u094D\u092F \u0936\u0930\u094D\u0924\u0947\u0902 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0930\u0916\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092E\u0942\u0932 \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0947 \u0938\u093E\u0925 \u0935\u093F\u0936\u094D\u0935\u0938\u0928\u0940\u092F\u0924\u093E \u0928\u093F\u092F\u092E \u092D\u0947\u091C\u0924\u093E \u0939\u0948\u0964",
-    "output.promptHelp.images.automatic": "\u0907\u092E\u0947\u091C API \u0915\u0940 \u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u092A\u094D\u0930\u094B\u0938\u0947\u0938\u093F\u0902\u0917 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0924\u093E \u0939\u0948 \u0914\u0930 \u0917\u0948\u0932\u0930\u0940 \u0938\u0902\u0926\u0930\u094D\u092D \u0915\u0940 \u0906\u0935\u0936\u094D\u092F\u0915 \u091F\u093F\u092A\u094D\u092A\u0923\u093F\u092F\u093E\u0901 \u0936\u093E\u092E\u093F\u0932 \u0930\u0916\u0924\u093E \u0939\u0948\u0964",
     "output.size": "\u0906\u0909\u091F\u092A\u0941\u091F \u0906\u0915\u093E\u0930",
     "output.sizeMode": "\u0906\u0915\u093E\u0930 \u092E\u094B\u0921",
     "output.sizeAuto": "\u0938\u094D\u0935\u091A\u093E\u0932\u093F\u0924",
@@ -13576,8 +12338,6 @@
     "preview.runningTitle": "{mode} \u091A\u0932 \u0930\u0939\u093E \u0939\u0948",
     "preview.submittingTitle": "\u0915\u093E\u0930\u094D\u092F \u0938\u092C\u092E\u093F\u091F \u0915\u0930\u0928\u093E",
     "preview.queuedTitle": "\u0915\u093E\u0930\u094D\u092F \u0915\u0924\u093E\u0930\u092C\u0926\u094D\u0927",
-    "preview.submittingDetail": "\u0907\u0928\u092A\u0941\u091F \u0938\u0939\u0947\u091C\u0928\u093E \u0914\u0930 \u0915\u093E\u0930\u094D\u092F \u0915\u094B \u0915\u0924\u093E\u0930 \u092E\u0947\u0902 \u091C\u094B\u0921\u093C\u0928\u093E\u0964 \u091C\u0928\u0930\u0947\u0936\u0928 \u0905\u092A\u0928\u0947 \u0906\u092A \u0936\u0941\u0930\u0942 \u0939\u094B \u091C\u093E\u090F\u0917\u0940.",
-    "preview.queuedDetail": "\u0915\u093E\u0930\u094D\u092F \u0915\u0924\u093E\u0930 \u092E\u0947\u0902 \u0939\u0948 \u0914\u0930 \u0909\u092A\u0932\u092C\u094D\u0927 \u091A\u0948\u0928\u0932 \u0915\u0940 \u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u0915\u0930 \u0930\u0939\u093E \u0939\u0948\u0964",
     "preview.featured": "\u091A\u092F\u0928\u093F\u0924",
     "preview.addFeatured": "\u092A\u0930\u093F\u0923\u093E\u092E \u091A\u0941\u0928\u0947\u0902",
     "preview.selectedFeatured": "\u091A\u092F\u0928\u093F\u0924",
@@ -13630,7 +12390,6 @@
     "promptPopover.close": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0924\u0941\u0932\u0928\u093E \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "promptPopover.copyOptimized": "\u0905\u0928\u0941\u0915\u0942\u0932\u093F\u0924 \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
     "promptPopover.copied": "\u0928\u0915\u0932 \u0915\u0940 \u0917\u0908",
-    "taskContext.menuLabel": "\u0915\u093E\u0930\u094D\u092F \u0938\u0902\u0926\u0930\u094D\u092D \u092E\u0947\u0928\u0942",
     "taskContext.view": "\u0915\u093E\u0930\u094D\u092F \u0926\u0947\u0916\u0947\u0902",
     "taskContext.copyId": "\u0915\u093E\u0930\u094D\u092F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902 ID",
     "taskContext.copyPrompt": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
@@ -13659,7 +12418,6 @@
     "taskActions.acceptSuccessesFailed": "\u0938\u092B\u0932 \u092A\u0930\u093F\u0923\u093E\u092E \u0938\u094D\u0935\u0940\u0915\u093E\u0930 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "taskActions.acceptedSuccesses": "\u0938\u092B\u0932 \u092A\u0930\u093F\u0923\u093E\u092E \u0938\u094D\u0935\u0940\u0915\u093E\u0930 \u0915\u093F\u092F\u0947 \u0917\u092F\u0947",
     "taskActions.viewedUpdateFailed": "\u092A\u0922\u093C\u0928\u0947 \u0915\u0940 \u0938\u094D\u0925\u093F\u0924\u093F \u0905\u092A\u0921\u0947\u091F \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
-    "taskActions.failedFallback": "\u0915\u093E\u0930\u094D\u092F \u0935\u093F\u092B\u0932",
     "taskList.empty": "\u0905\u092D\u0940 \u0924\u0915 \u0915\u094B\u0908 \u0907\u0924\u093F\u0939\u093E\u0938 \u0928\u0939\u0940\u0902",
     "taskList.selectSession": "\u091A\u0948\u091F \u091A\u0941\u0928\u0947\u0902",
     "taskList.unreadUpdate": "\u0905\u092A\u0920\u093F\u0924 \u0905\u0926\u094D\u092F\u0924\u0928",
@@ -13729,7 +12487,6 @@
     "snippets.saveSelection": "\u0938\u0939\u0947\u091C\u0947\u0902",
     "snippets.saveSelectionLabel": "\u091A\u092F\u0928\u093F\u0924 \u091F\u0947\u0915\u094D\u0938\u094D\u091F \u0915\u094B \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0938\u094D\u0928\u093F\u092A\u0947\u091F \u0915\u0947 \u0930\u0942\u092A \u092E\u0947\u0902 \u0938\u0939\u0947\u091C\u0947\u0902",
     "snippets.popoverLabel": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0938\u094D\u0928\u093F\u092A\u0947\u091F",
-    "snippets.defaultCategory": "\u0938\u093E\u092E\u093E\u0928\u094D\u092F",
     "snippets.loadFailed": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u0938\u094D\u0928\u093F\u092A\u0947\u091F \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "snippets.remove": "~{tag} \u0939\u091F\u093E\u090F\u0902",
     "snippets.expand": "\u0935\u093F\u0938\u094D\u0924\u093E\u0930 \u0915\u0930\u0947\u0902",
@@ -13774,7 +12531,6 @@
     "colors.done": "\u0939\u094B \u0917\u092F\u093E",
     "colors.manage": "\u092A\u094D\u0930\u092C\u0902\u0927\u093F\u0924 \u0915\u0930\u0947\u0902",
     "colors.favorites": "\u092A\u0938\u0902\u0926\u0940\u0926\u093E \u0930\u0902\u0917",
-    "colors.recent": "\u0939\u093E\u0932 \u0915\u0947 \u0930\u0902\u0917",
     "colors.recentLabel": "\u0939\u093E\u0932 \u0915\u093E",
     "colors.deleteFavorite": "\u092A\u0938\u0902\u0926\u0940\u0926\u093E \u0930\u0902\u0917 \u0939\u091F\u093E\u090F\u0902 {name}",
     "colors.modify": "\u0930\u0902\u0917 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
@@ -13784,16 +12540,13 @@
     "taskGroup.current": "\u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u0915\u093E\u0930\u094D\u092F",
     "taskGroup.yesterday": "\u0915\u0932",
     "taskGroup.last7": "\u092A\u093F\u091B\u0932\u0947 7 \u0926\u093F\u0928",
-    "taskGroup.older": "\u092A\u0941\u0930\u093E\u0928\u093E",
     "taskGroup.searchResults": "\u0916\u094B\u091C \u092A\u0930\u093F\u0923\u093E\u092E",
-    "taskGroup.active": "\u0938\u0915\u094D\u0930\u093F\u092F",
     "taskGroup.running": "\u091A\u0932 \u0930\u0939\u093E \u0939\u0948",
     "taskGroup.waiting": "\u092A\u094D\u0930\u0924\u0940\u0915\u094D\u0937\u093E \u092E\u0947\u0902",
     "taskGroup.dispatchPending": "\u090F\u0915 \u0909\u092A\u0932\u092C\u094D\u0927 \u091A\u0948\u0928\u0932 \u0905\u0938\u093E\u0907\u0928 \u0915\u093F\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...",
     "taskGroup.expand": "\u0935\u093F\u0938\u094D\u0924\u0943\u0924 \u0915\u0930\u0947\u0902{label}",
     "taskGroup.collapse": "\u0938\u0902\u0915\u094D\u0937\u093F\u092A\u094D\u0924 \u0915\u0930\u0947\u0902 {label}",
     "taskGroup.buttonLabel": "{label}, {count} \u0915\u093E\u0930\u094D\u092F",
-    "taskGroup.loadMore": "{count} \u0914\u0930 \u0932\u094B\u0921 \u0915\u0930\u0947\u0902",
     "taskGroup.loadFailedRetry": "\u0932\u094B\u0921 \u0935\u093F\u092B\u0932 \u0930\u0939\u093E\u0964 \u092A\u0941\u0928\u0903 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902",
     "archive.title": "\u0938\u0902\u0917\u094D\u0930\u0939",
     "archive.empty": "\u0915\u094B\u0908 \u0938\u0902\u0917\u094D\u0930\u0939\u0940\u0924 \u091A\u0948\u091F \u0928\u0939\u0940\u0902",
@@ -13806,7 +12559,6 @@
     "archive.restoring": "\u092A\u0941\u0928\u0930\u094D\u0938\u094D\u0925\u093E\u092A\u093F\u0924 \u0915\u093F\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...",
     "archive.deleting": "\u0939\u091F\u093E\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...",
     "archive.restoredCount": "{count} \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u0915\u094B \u092A\u0941\u0928\u0930\u094D\u0938\u094D\u0925\u093E\u092A\u093F\u0924 \u0915\u093F\u092F\u093E \u0917\u092F\u093E",
-    "settings.title": "\u092D\u0902\u0921\u093E\u0930\u0923",
     "settings.status": "\u092D\u0902\u0921\u093E\u0930\u0923 \u092A\u0925 \u0938\u0939\u0947\u091C\u0928\u0947 \u0915\u0947 \u092C\u093E\u0926 WebUI \u0915\u094B \u092A\u0941\u0928\u0903 \u0906\u0930\u0902\u092D \u0915\u0930\u0947\u0902",
     "settings.pathChangeHint": "\u092A\u0925 \u092C\u0926\u0932\u0928\u0947 \u0938\u0947 \u092E\u094C\u091C\u0942\u0926\u093E \u0921\u0947\u091F\u093E \u0938\u094D\u0925\u093E\u0928\u093E\u0902\u0924\u0930\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u094B\u0924\u093E\u0964 \u0938\u094D\u0925\u093E\u0928\u093E\u0902\u0924\u0930\u093F\u0924 \u0915\u0930\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u092C\u0948\u0915\u0905\u092A \u0932\u0947\u0902, \u0910\u092A \u092C\u0902\u0926 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0938\u0902\u092C\u0902\u0927\u093F\u0924 \u092B\u093C\u094B\u0932\u094D\u0921\u0930\u094B\u0902 \u0915\u0940 \u092A\u0942\u0930\u0940 \u092A\u094D\u0930\u0924\u093F\u0932\u093F\u092A\u093F \u092C\u0928\u093E\u090F\u0901\u0964",
     "settings.previousPaths": "\u092A\u0941\u0930\u093E\u0928\u093E \u0921\u0947\u091F\u093E \u0928\u0939\u0940\u0902 \u0926\u093F\u0916 \u0930\u0939\u093E? \u092E\u0942\u0932 \u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u092B\u093C\u094B\u0932\u094D\u0921\u0930 \u0926\u0947\u0916\u0947\u0902",
@@ -13861,7 +12613,6 @@
     "userConfigBackup.restoreComplete": "\u092A\u0941\u0928\u0930\u094D\u0938\u094D\u0925\u093E\u092A\u0928\u093E \u092A\u0942\u0930\u094D\u0923 \u0939\u0941\u0908",
     "systemSettings.tabsLabel": "\u0938\u093F\u0938\u094D\u091F\u092E \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 \u0905\u0928\u0941\u092D\u093E\u0917",
     "systemSettings.apiTab": "API \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938",
-    "systemSettings.codexTab": "Codex \u091A\u0948\u0928\u0932",
     "systemSettings.languageTab": "\u092D\u093E\u0937\u093E / Language",
     "systemSettings.storageTab": "\u092D\u0902\u0921\u093E\u0930\u0923 \u090F\u0935\u0902 \u0938\u0942\u091A\u0928\u093E\u090F\u0902",
     "systemSettings.networkTab": "\u0928\u0947\u091F\u0935\u0930\u094D\u0915",
@@ -13887,23 +12638,14 @@
     "networkEgress.loadFailed": "\u0928\u0947\u091F\u0935\u0930\u094D\u0915 \u0938\u0947\u091F\u093F\u0902\u0917 \u0932\u094B\u0921 \u0928\u0939\u0940\u0902 \u0939\u094B \u0938\u0915\u0940\u0902",
     "networkEgress.saveFailed": "\u0928\u0947\u091F\u0935\u0930\u094D\u0915 \u0938\u0947\u091F\u093F\u0902\u0917 \u0938\u0939\u0947\u091C\u0940 \u0928\u0939\u0940\u0902 \u091C\u093E \u0938\u0915\u0940\u0902",
     "languageSettings.instantStatus": "\u0938\u0939\u0947\u091C\u093E \u0917\u092F\u093E\u0964 \u0924\u0941\u0930\u0902\u0924 \u0932\u093E\u0917\u0942\u0964",
-    "apiSettings.title": "API \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938",
-    "apiSettings.status": "\u0938\u0939\u0947\u091C\u0940 \u0917\u0908 \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 API \u092E\u094B\u0921 \u092E\u0947\u0902 \u0924\u0941\u0930\u0902\u0924 \u0932\u093E\u0917\u0942 \u0939\u094B\u0924\u0940 \u0939\u0948\u0902",
-    "apiSettings.codexMode": "Codex \u091A\u0948\u0928\u0932",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.searchProviders": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0928\u093E\u092E \u0916\u094B\u091C\u0947\u0902",
     "apiSettings.noProviderSearchResults": "\u0915\u094B\u0908 \u092E\u0947\u0932 \u0916\u093E\u0924\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0928\u0939\u0940\u0902",
     "apiSettings.providerCount": "{count} \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
-    "apiSettings.provider": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.providerName": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u093E \u0928\u093E\u092E",
     "apiSettings.providerIcon": "\u0907\u092E\u094B\u091C\u0940",
     "apiSettings.providerIconPlaceholder": "\u0935\u0948\u0915\u0932\u094D\u092A\u093F\u0915, \u091C\u0948\u0938\u0947 \u{1FA84}",
-    "apiSettings.connectionScope": "\u0915\u0928\u0947\u0915\u094D\u0936\u0928 \u0938\u0947\u091F\u093F\u0902\u0917",
-    "apiSettings.connectionPreview": "\u0915\u0928\u0947\u0915\u094D\u0936\u0928 \u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928",
     "apiSettings.modelBindings": "\u092E\u0949\u0921\u0932",
-    "apiSettings.modelBindingsHint": "\u090F\u0915 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u0908 \u092E\u0949\u0921\u0932 \u0914\u0930 \u092A\u094D\u0930\u094B\u091F\u094B\u0915\u0949\u0932 \u0938\u0947 \u091C\u0941\u0921\u093C \u0938\u0915\u0924\u093E \u0939\u0948\u0964",
     "apiSettings.addModelBinding": "\u092E\u0949\u0921\u0932 \u091C\u094B\u0921\u093C\u0947\u0902",
     "apiSettings.defaultProviderForModel": "\u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.removeBinding": "\u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u0939\u091F\u093E\u090F\u0901",
@@ -13911,7 +12653,6 @@
     "apiSettings.keepOneBinding": "\u0939\u0930 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u092E\u0947\u0902 \u0915\u092E \u0938\u0947 \u0915\u092E \u090F\u0915 \u092E\u0949\u0921\u0932 \u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u0939\u094B\u0928\u0940 \u091A\u093E\u0939\u093F\u090F\u0964",
     "apiSettings.bindingRequiredFields": "\u0939\u0930 \u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u0915\u0947 \u0932\u093F\u090F \u092E\u0949\u0921\u0932 \u091A\u0941\u0928\u0947\u0902, \u0930\u093F\u092E\u094B\u091F \u092E\u0949\u0921\u0932 \u0928\u093E\u092E \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902 \u0914\u0930 \u0915\u092E \u0938\u0947 \u0915\u092E \u090F\u0915 \u0911\u092A\u0930\u0947\u0936\u0928 \u091A\u0941\u0928\u0947\u0902\u0964",
     "apiSettings.bindingOverlap": "{model} {operation} \u090F\u0915 \u0938\u0947 \u0905\u0927\u093F\u0915 \u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u092E\u0947\u0902 \u0939\u0948\u0964",
-    "apiSettings.actualRequest": "\u0935\u093E\u0938\u094D\u0924\u0935\u093F\u0915 \u0905\u0928\u0941\u0930\u094B\u0927",
     "apiSettings.newProviderAction": "\u0928\u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.copyProvider": "\u0915\u0949\u092A\u0940",
     "apiSettings.copyProviderName": "{name} \u0915\u0949\u092A\u0940",
@@ -13922,15 +12663,7 @@
     "apiSettings.sortProviderModeStatus": "\u0915\u094D\u0930\u092E \u092C\u0926\u0932\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0939\u0948\u0902\u0921\u0932 \u0916\u0940\u0902\u091A\u0947\u0902 \u092F\u093E \u0924\u0940\u0930 \u0915\u0941\u0902\u091C\u093F\u092F\u094B\u0902 \u0915\u093E \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0947\u0902",
     "apiSettings.sortProviderHandleAria": "{provider} \u0915\u094B \u0915\u094D\u0930\u092E \u092E\u0947\u0902 \u0932\u0917\u093E\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0916\u0940\u0902\u091A\u0947\u0902 \u092F\u093E \u0924\u0940\u0930, Home \u0914\u0930 End \u0915\u0941\u0902\u091C\u093F\u092F\u093E\u0901 \u0909\u092A\u092F\u094B\u0917 \u0915\u0930\u0947\u0902",
     "apiSettings.sortProviderStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u094D\u0930\u092E \u092C\u0926\u0932 \u0917\u092F\u093E. \u0905\u092A\u0928\u0947 \u0906\u092A \u0938\u0939\u0947\u091C\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...",
-    "apiSettings.moveProviderUp": "\u090A\u092A\u0930",
-    "apiSettings.moveProviderDown": "\u0928\u0940\u091A\u0947",
-    "apiSettings.moveProviderUpAria": "{provider} \u0915\u094B \u090A\u092A\u0930 \u0932\u0947 \u091C\u093E\u090F\u0902",
-    "apiSettings.moveProviderDownAria": "{provider} \u0915\u094B \u0928\u0940\u091A\u0947 \u0932\u0947 \u091C\u093E\u090F\u0901",
-    "apiSettings.mode": "\u0905\u0928\u0941\u0930\u094B\u0927 \u092E\u094B\u0921",
-    "apiSettings.images": "\u092A\u094D\u0930\u0924\u094D\u092F\u0915\u094D\u0937 Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u092A\u094D\u0930\u0924\u094D\u092F\u0915\u094D\u0937",
-    "apiSettings.imageModel": "\u091B\u0935\u093F \u0928\u093F\u0930\u094D\u092E\u093E\u0923 \u092E\u0949\u0921\u0932",
     "apiSettings.concurrency": "\u0938\u092E\u0935\u0930\u094D\u0924\u0940 \u0938\u0940\u092E\u093E",
     "apiSettings.svgAuthorModel": "SVG \u092C\u0928\u093E\u0928\u0947 \u0935\u093E\u0932\u093E \u092E\u0949\u0921\u0932",
     "apiSettings.invalidSvgAuthorModel": "\u092C\u093F\u0928\u093E \u0938\u094D\u092A\u0947\u0938 \u0935\u093E\u0932\u0940 \u092E\u093E\u0928\u094D\u092F SVG \u092E\u0949\u0921\u0932 \u0906\u0908\u0921\u0940 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964",
@@ -13938,25 +12671,18 @@
     "apiSettings.remoteModelName": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u093E \u092E\u0949\u0921\u0932 \u0928\u093E\u092E",
     "apiSettings.fetchModels": "\u092E\u0949\u0921\u0932 \u092A\u094D\u0930\u093E\u092A\u094D\u0924 \u0915\u0930\u0947\u0902",
     "apiSettings.advancedSettings": "\u0909\u0928\u094D\u0928\u0924 \u0938\u0947\u091F\u093F\u0902\u0917",
-    "apiSettings.concurrencyValue": "\u0938\u092E\u0935\u0930\u094D\u0924\u0940 {concurrency}",
     "apiSettings.keySaved": "API \u0915\u0941\u0902\u091C\u0940 \u0938\u0939\u0947\u091C\u0940 \u0917\u0908",
     "apiSettings.keyNotSet": "API \u0915\u0941\u0902\u091C\u0940 \u0938\u0947\u091F \u0928\u0939\u0940\u0902 \u0939\u0948",
     "apiSettings.showApiKey": "API Key \u0926\u093F\u0916\u093E\u090F\u0902",
     "apiSettings.hideApiKey": "API Key \u091B\u093F\u092A\u093E\u090F\u0902",
     "apiSettings.editProvider": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
     "apiSettings.newProviderTitle": "\u0928\u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
-    "apiSettings.editHint": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0939\u0947\u091C\u0947\u0902 \u0907\u0938 \u0938\u0902\u092A\u093E\u0926\u0928 \u0915\u094B \u092C\u0948\u0915\u090F\u0902\u0921 \u092E\u0947\u0902 \u0932\u093F\u0916\u0924\u093E \u0939\u0948\u0964 \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902 \u0907\u0938\u0947 \u091B\u094B\u0921\u093C \u0926\u0947\u0924\u093E \u0939\u0948\u0964",
     "apiSettings.finishEditFirst": "\u092A\u0939\u0932\u0947 \u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0902\u092A\u093E\u0926\u0928 \u0915\u094B \u0938\u0939\u0947\u091C\u0947\u0902 \u092F\u093E \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
     "apiSettings.newDraftStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u092C\u0928\u093E\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948\u0964 \u0932\u093E\u0917\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0939\u0947\u091C\u0947\u0902\u0964",
     "apiSettings.editDraftStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u093F\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948\u0964 \u0932\u093E\u0917\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0939\u0947\u091C\u0947\u0902\u0964",
-    "apiSettings.cancelEdit": "\u0938\u0902\u092A\u093E\u0926\u0928 \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
-    "apiSettings.saveProvider": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0939\u0947\u091C\u0947\u0902",
-    "apiSettings.saveSelection": "\u091A\u092F\u0928 \u0938\u0939\u0947\u091C\u0947\u0902",
     "apiSettings.deleteProviderTitle": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0939\u091F\u093E\u090F\u0902?",
     "apiSettings.deleteProviderMessage": '"{provider}" \u0939\u091F\u093E\u090F\u0902?',
     "apiSettings.deleteProviderDetail": "\u092F\u0939 \u0907\u0938\u0947 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0942\u091A\u0940 \u0938\u0947 \u0939\u091F\u093E\u0924\u093E \u0939\u0948 \u0914\u0930 \u092C\u0948\u0915\u090F\u0902\u0921 \u092E\u0947\u0902 \u0905\u092A\u0928\u0947 \u0906\u092A \u0938\u0939\u0947\u091C\u0924\u093E \u0939\u0948\u0964",
-    "apiSettings.deleteProviderStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0939\u091F\u093E \u0926\u093F\u092F\u093E \u0917\u092F\u093E. \u0905\u092A\u0928\u0947 \u0906\u092A \u0938\u0939\u0947\u091C\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...",
-    "apiSettings.save": "API \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 \u0938\u0939\u0947\u091C\u0947\u0902",
     "apiSettings.loadFailed": "API \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932",
     "apiSettings.savedKeyPlaceholder": "API \u0915\u0941\u0902\u091C\u0940 \u092C\u0948\u0915\u090F\u0902\u0921 \u092A\u0930 \u0938\u0939\u0947\u091C\u0940 \u0917\u0908 \u0939\u0948\u0964 \u0907\u0938\u0947 \u092C\u0926\u0932\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u090F\u0915 \u0928\u0908 \u0915\u0941\u0902\u091C\u0940 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964",
     "apiSettings.apiKeyRequired": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0939\u0947\u091C\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 API Key \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964",
@@ -13977,16 +12703,6 @@
     "apiSettings.savedShort": "\u0938\u0939\u0947\u091C\u093E \u0917\u092F\u093E",
     "apiSettings.savedStatus": "API \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 \u0938\u0939\u0947\u091C\u0940 \u0917\u0908\u0902",
     "apiSettings.saveFailedShort": "\u0938\u0939\u0947\u091C\u0928\u093E \u0935\u093F\u092B\u0932",
-    "codexSettings.title": "Codex \u091A\u0948\u0928\u0932",
-    "codexSettings.status": "\u0938\u094D\u0925\u093E\u0928\u0940\u092F Codex \u0938\u093E\u0907\u0928-\u0907\u0928 \u0915\u0947 \u0932\u093F\u090F \u091C\u0928\u0930\u0947\u0936\u0928 \u091A\u0948\u0928\u0932 \u091A\u0941\u0928\u0947\u0902",
-    "codexSettings.notesLabel": "Codex \u091A\u0948\u0928\u0932 \u0928\u094B\u091F\u094D\u0938",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u0921\u093F\u092B\u093C\u0949\u0932\u094D\u091F \u091A\u0948\u0928\u0932, \u091C\u094B \u0906\u0915\u093E\u0930, \u0917\u0941\u0923\u0935\u0924\u094D\u0924\u093E \u0914\u0930 \u0938\u0902\u092A\u093E\u0926\u0928 \u092A\u0948\u0930\u093E\u092E\u0940\u091F\u0930 \u0938\u0940\u0927\u0947 \u092A\u093E\u0938 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\u0935\u0947\u092C \u0916\u094B\u091C \u091F\u0942\u0932 \u0915\u0940 \u091C\u0930\u0942\u0930\u0924 \u0935\u093E\u0932\u0947 \u0935\u0930\u094D\u0915\u092B\u093C\u094D\u0932\u094B \u0915\u0947 \u0932\u093F\u090F \u0938\u0902\u0917\u0924\u0924\u093E \u091A\u0948\u0928\u0932\u0964",
-    "codexSettings.current": "\u0935\u0930\u094D\u0924\u092E\u093E\u0928",
-    "codexSettings.save": "Codex \u091A\u0948\u0928\u0932 \u0938\u0939\u0947\u091C\u0947\u0902",
-    "codexSettings.saveMode": "{mode} \u0938\u0939\u0947\u091C\u0947\u0902",
     "imageEditor.title": "\u0907\u0928\u092A\u0941\u091F \u091A\u093F\u0924\u094D\u0930 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
     "imageEditor.promptHint": "\u091A\u093F\u0924\u094D\u0930 \u092E\u0947\u0902 \u0939\u093E\u0925 \u0938\u0947 \u0916\u0940\u0902\u091A\u0947 \u0917\u090F \u0924\u0940\u0930 \u0914\u0930 \u0928\u093F\u0936\u093E\u0928 \u0915\u0947\u0935\u0932 \u0928\u093F\u0930\u094D\u0926\u0947\u0936 \u0939\u0948\u0902\u0964 \u0909\u0928\u094D\u0939\u0947\u0902 \u0905\u0902\u0924\u093F\u092E \u091A\u093F\u0924\u094D\u0930 \u092E\u0947\u0902 \u0928 \u0930\u0916\u0947\u0902.",
     "imageEditor.inputFallback": "\u0907\u0928\u092A\u0941\u091F \u091A\u093F\u0924\u094D\u0930",
@@ -14066,31 +12782,21 @@
     "addGallery.save": "\u0917\u0948\u0932\u0930\u0940 \u092E\u0947\u0902 \u0938\u0939\u0947\u091C\u0947\u0902",
     "close.promptTemplates": "\u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u091F\u0947\u092E\u094D\u092A\u094D\u0932\u0947\u091F \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "close.archive": "\u0938\u0902\u0917\u094D\u0930\u0939 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
-    "close.settings": "\u0938\u094D\u091F\u094B\u0930\u0947\u091C \u0938\u0947\u091F\u093F\u0902\u0917 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
-    "close.apiSettings": "API \u0938\u0947\u091F\u093F\u0902\u0917 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "close.systemSettings": "\u0938\u093F\u0938\u094D\u091F\u092E \u0938\u0947\u091F\u093F\u0902\u0917 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "close.imageEditor": "\u091A\u093F\u0924\u094D\u0930 \u0938\u0902\u092A\u093E\u0926\u0915 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "close.gallery": "\u0917\u0948\u0932\u0930\u0940 \u092A\u0948\u0928\u0932 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "close.addGallery": "\u0917\u0948\u0932\u0930\u0940 \u092A\u0948\u0928\u0932 \u092E\u0947\u0902 \u091C\u094B\u0921\u093C\u0947\u0902 \u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
     "imageInput.referenceTitle": "\u0938\u0902\u0926\u0930\u094D\u092D \u0907\u0928\u092A\u0941\u091F (\u0935\u0948\u0915\u0932\u094D\u092A\u093F\u0915)",
-    "referenceFiles.add": "\u092B\u093C\u093E\u0907\u0932 \u091C\u094B\u0921\u093C\u0947\u0902",
-    "referenceFiles.selected": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u0947\u0902",
-    "referenceFiles.recent": "\u0939\u093E\u0932 \u0915\u0940 \u092B\u093C\u093E\u0907\u0932\u0947\u0902",
     "referenceFiles.familyPdf": "\u092A\u0943\u0937\u094D\u0920 + \u091F\u0947\u0915\u094D\u0938\u094D\u091F",
     "referenceFiles.familySpreadsheet": "\u0938\u094D\u092A\u094D\u0930\u0947\u0921\u0936\u0940\u091F",
     "referenceFiles.familyDocument": "\u0926\u0938\u094D\u0924\u093E\u0935\u0947\u091C\u093C",
     "referenceFiles.familyText": "\u091F\u0947\u0915\u094D\u0938\u094D\u091F",
-    "referenceFiles.visualLimit": "PDF \u0915\u0947 \u0905\u0932\u093E\u0935\u093E \u092B\u093C\u093E\u0907\u0932\u094B\u0902 \u092E\u0947\u0902 \u090F\u092E\u094D\u092C\u0947\u0921\u0947\u0921 \u091A\u093F\u0924\u094D\u0930 \u0914\u0930 \u091A\u093E\u0930\u094D\u091F \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0928\u0939\u0940\u0902 \u0930\u0939\u0924\u0947\u0964 \u0932\u0947\u0906\u0909\u091F \u092E\u0939\u0924\u094D\u0935\u092A\u0942\u0930\u094D\u0923 \u0939\u094B \u0924\u094B PDF \u092E\u0947\u0902 \u092C\u0926\u0932\u0947\u0902\u0964",
     "referenceFiles.remove": "{filename} \u0939\u091F\u093E\u090F\u0901",
-    "referenceFiles.switchTitle": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u0939\u091F\u093E\u090F\u0901?",
-    "referenceFiles.switchMessage": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u0915\u0947\u0935\u0932 Responses \u0915\u0947 \u0938\u093E\u0925 \u0915\u093E\u092E \u0915\u0930\u0924\u0940 \u0939\u0948\u0902\u0964 Images \u092A\u0930 \u091C\u093E\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u0909\u0928\u094D\u0939\u0947\u0902 \u0939\u091F\u093E\u090F\u0901\u0964",
-    "referenceFiles.removeAndSwitch": "\u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u0939\u091F\u093E\u0915\u0930 \u092C\u0926\u0932\u0947\u0902",
     "referenceFiles.requiresResponses": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u094B\u0902 \u0915\u0947 \u0932\u093F\u090F Responses \u0906\u0935\u0936\u094D\u092F\u0915 \u0939\u0948",
     "referenceFiles.switchToResponses": "Responses \u092A\u0930 \u091C\u093E\u090F\u0901",
     "referenceFiles.openApiSettings": "API \u0938\u0947\u091F\u093F\u0902\u0917 \u0916\u094B\u0932\u0947\u0902",
     "referenceFiles.providerMissing": "\u092E\u0942\u0932 Responses \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 API \u0938\u0947\u091F\u093F\u0902\u0917 \u092E\u0947\u0902 \u090F\u0915 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u091A\u0941\u0928\u0947\u0902\u0964",
     "referenceFiles.missing": "\u092B\u093C\u093E\u0907\u0932 \u0905\u0928\u0941\u092A\u0932\u092C\u094D\u0927",
-    "referenceFiles.loadFailed": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u0932\u094B\u0921 \u0928\u0939\u0940\u0902 \u0939\u0941\u0908\u0902",
     "referenceFiles.errorEmpty": "\u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932 \u0916\u093E\u0932\u0940 \u0939\u0948",
     "referenceFiles.errorUnsupported": "\u092F\u0939 \u0938\u0902\u0926\u0930\u094D\u092D \u092B\u093C\u093E\u0907\u0932 \u092A\u094D\u0930\u0915\u093E\u0930 \u0938\u092E\u0930\u094D\u0925\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u0948",
     "referenceFiles.errorMismatch": "\u092B\u093C\u093E\u0907\u0932 \u0915\u0940 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u0914\u0930 \u090F\u0915\u094D\u0938\u091F\u0947\u0902\u0936\u0928 \u092E\u0947\u0932 \u0928\u0939\u0940\u0902 \u0916\u093E\u0924\u0947",
@@ -14109,13 +12815,11 @@
     "modelSelection.provider": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "modelSelection.providerUnavailable": "\u0907\u0938 \u092E\u0949\u0921\u0932 \u0915\u0947 \u0932\u093F\u090F \u0915\u094B\u0908 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948",
     "modelSelection.openSettings": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0947\u091F\u093F\u0902\u0917 \u0916\u094B\u0932\u0947\u0902",
-    "modelSelection.codexUnavailable": "Codex \u0938\u093E\u0907\u0928-\u0907\u0928 \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948",
     "modelSelection.catalogUnavailable": "\u092E\u0949\u0921\u0932 \u0915\u0948\u091F\u0932\u0949\u0917 \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948",
     "output.background": "\u092A\u0943\u0937\u094D\u0920\u092D\u0942\u092E\u093F",
     "canvas.aspectRatio": "\u092A\u0939\u0932\u0942 \u0905\u0928\u0941\u092A\u093E\u0924",
     "canvas.resolution": "\u0930\u093F\u091C\u093C\u0949\u0932\u094D\u092F\u0942\u0936\u0928",
     "gemini.googleSearch": "Google \u0916\u094B\u091C",
-    "gemini.googleImageSearch": "Google \u091B\u0935\u093F \u0916\u094B\u091C",
     "output.modalities": "\u0906\u0909\u091F\u092A\u0941\u091F \u092E\u094B\u0921\u0948\u0932\u093F\u091F\u0940",
     "gemini.safetySettings": "\u0938\u0941\u0930\u0915\u094D\u0937\u093E \u0938\u0947\u091F\u093F\u0902\u0917",
     "gemini.safety.harassment": "\u0909\u0924\u094D\u092A\u0940\u0921\u093C\u0928",
@@ -14176,17 +12880,14 @@
     "mobile.backToEditor": "\u0938\u0902\u092A\u093E\u0926\u0928 \u092A\u0930 \u0932\u094C\u091F\u0947\u0902",
     "mobile.copyHint": "\u0938\u094D\u0935\u091A\u093E\u0932\u093F\u0924 \u0915\u0949\u092A\u0940 \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u0928\u0940\u091A\u0947 \u0915\u093E \u092A\u093E\u0920 \u091A\u0941\u0928\u0915\u0930 \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902\u0964",
     "mobile.files": "\u092B\u093C\u093E\u0907\u0932\u0947\u0902",
-    "mobile.gestureHint": "\u091C\u093C\u0942\u092E \u0915\u0947 \u0932\u093F\u090F \u092A\u093F\u0902\u091A \u0915\u0930\u0947\u0902 \xB7 \u091A\u093F\u0924\u094D\u0930 \u092C\u0926\u0932\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0938\u094D\u0935\u093E\u0907\u092A \u0915\u0930\u0947\u0902",
     "mobile.manualCopy": "\u0915\u0949\u092A\u0940 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0926\u092C\u093E\u0915\u0930 \u0930\u0916\u0947\u0902",
     "mobile.more": "\u0914\u0930",
     "mobile.parameters": "\u092A\u0948\u0930\u093E\u092E\u0940\u091F\u0930",
     "mobile.pasteHint": "\u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0907\u0928\u092A\u0941\u091F \u0926\u092C\u093E\u0915\u0930 \u0930\u0916\u0947\u0902, \u092F\u093E \u092B\u093C\u094B\u091F\u094B \u0905\u0925\u0935\u093E \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u091A\u0941\u0928\u0947\u0902\u0964",
     "mobile.photos": "\u092B\u093C\u094B\u091F\u094B",
-    "mobile.pickFiles": "\u092B\u093C\u094B\u091F\u094B \u092F\u093E \u092B\u093C\u093E\u0907\u0932\u0947\u0902 \u091A\u0941\u0928\u0947\u0902",
     "mobile.taskActions": "\u0915\u093E\u0930\u094D\u092F \u0915\u093E\u0930\u094D\u0930\u0935\u093E\u0907\u092F\u093E\u0901",
     "networkEgress.fakeIpDnsFallback": "\u091A\u093F\u0924\u094D\u0930 \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0947 \u0932\u093F\u090F Fake-IP DNS \u0938\u0902\u0917\u0924\u0924\u093E",
     "networkEgress.fakeIpDnsHelp": "\u091A\u093F\u0924\u094D\u0930 \u0915\u093E DNS Fake-IP \u0932\u094C\u091F\u093E\u090F \u0924\u094B \u0935\u093E\u0938\u094D\u0924\u0935\u093F\u0915 \u0938\u093E\u0930\u094D\u0935\u091C\u0928\u093F\u0915 \u092A\u0924\u0947 Cloudflare DNS \u0938\u0947 \u092A\u0942\u091B\u0947 \u091C\u093E\u0924\u0947 \u0939\u0948\u0902\u0964 \u092F\u0939 \u092C\u093E\u0926 \u092E\u0947\u0902 \u0936\u0941\u0930\u0942 \u0905\u0928\u0941\u0930\u094B\u0927\u094B\u0902 \u0915\u0947 \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u092A\u0930 \u0932\u093E\u0917\u0942 \u0939\u0948; LAN DNS \u0928\u0939\u0940\u0902 \u092C\u0926\u0932\u0924\u093E\u0964 API \u0915\u0941\u0902\u091C\u093F\u092F\u093E\u0901, \u092A\u094D\u0930\u0949\u092E\u094D\u092A\u094D\u091F \u092F\u093E \u091A\u093F\u0924\u094D\u0930\u094B\u0902 \u0915\u0947 \u092A\u0942\u0930\u0947 URL \u0928\u0939\u0940\u0902 \u092D\u0947\u091C\u0947 \u091C\u093E\u0924\u0947\u0964",
-    "output.transparencyFidelityHint": "\u092A\u093E\u0930\u0926\u0930\u094D\u0936\u0940 \u092A\u0943\u0937\u094D\u0920\u092D\u0942\u092E\u093F \u0906\u092A\u0915\u0940 \u091A\u0941\u0928\u0940 \u0906\u0909\u091F\u092A\u0941\u091F \u0906\u0935\u0936\u094D\u092F\u0915\u0924\u093E \u0939\u0948\u0964 \u0907\u0938\u0947 \u092E\u0942\u0932 \u0914\u0930 \u092F\u0925\u093E\u0935\u0924 \u092E\u094B\u0921 \u092E\u0947\u0902 \u092D\u0940 \u091C\u094B\u0921\u093C\u093E \u091C\u093E\u0924\u093E \u0939\u0948\u0964",
     "output.transparencyFormat": "\u092A\u093E\u0930\u0926\u0930\u094D\u0936\u0940 \u0906\u0909\u091F\u092A\u0941\u091F \u0915\u0947 \u0932\u093F\u090F PNG \u092F\u093E WebP \u0906\u0935\u0936\u094D\u092F\u0915 \u0939\u0948\u0964",
     "output.transparencyUnavailable": "\u092A\u093E\u0930\u0926\u0930\u094D\u0936\u093F\u0924\u093E \u0905\u0928\u0941\u092A\u0932\u092C\u094D\u0927",
     "output.transparentBackground": "\u092A\u093E\u0930\u0926\u0930\u094D\u0936\u0940 \u092A\u0943\u0937\u094D\u0920\u092D\u0942\u092E\u093F",
@@ -14219,7 +12920,6 @@
     "userConfigBackup.incrementalCopy": "\u092E\u094C\u091C\u0942\u0926\u093E \u0921\u0947\u091F\u093E \u0930\u0916\u0947\u0902, \u0921\u0941\u092A\u094D\u0932\u093F\u0915\u0947\u091F \u091B\u094B\u0921\u093C\u0947\u0902 \u0914\u0930 \u091F\u0915\u0930\u093E\u0935 \u0915\u0947 \u0932\u093F\u090F \u092A\u0941\u0928\u0930\u094D\u092A\u094D\u0930\u093E\u092A\u094D\u0924\u093F \u092A\u094D\u0930\u0924\u093F\u092F\u093E\u0901 \u092C\u0928\u093E\u090F\u0901\u0964",
     "userConfigBackup.itemCount": "{count} \u0906\u0907\u091F\u092E",
     "userConfigBackup.modeLabel": "\u092C\u0948\u0915\u0905\u092A \u092F\u093E \u092C\u0939\u093E\u0932\u0940",
-    "userConfigBackup.previewCounts": "\u0938\u0902\u0917\u094D\u0930\u0939 \u092E\u0947\u0902 {count} \xB7 {duplicate} \u0921\u0941\u092A\u094D\u0932\u093F\u0915\u0947\u091F \xB7 {conflict} \u091F\u0915\u0930\u093E\u0935",
     "userConfigBackup.previewTitle": "\u092C\u0939\u093E\u0932\u0940 \u0915\u093E \u092A\u0942\u0930\u094D\u0935\u093E\u0935\u0932\u094B\u0915\u0928",
     "userConfigBackup.providerRetention": "\u0938\u0941\u0930\u0915\u094D\u0937\u093E \u0915\u0947 \u0932\u093F\u090F \u0915\u094D\u0930\u0947\u0921\u0947\u0902\u0936\u093F\u092F\u0932 \u0935\u093E\u0932\u0947 {count} \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0930\u0916\u0947 \u091C\u093E\u090F\u0901\u0917\u0947",
     "userConfigBackup.replaceConfirmCopy": "\u0915\u0947\u0935\u0932 \u091A\u0941\u0928\u0947 \u0905\u0928\u0941\u092D\u093E\u0917 \u092A\u094D\u0930\u092D\u093E\u0935\u093F\u0924 \u0939\u094B\u0902\u0917\u0947, \u092A\u0930 \u0909\u0928\u0915\u093E \u092E\u094C\u091C\u0942\u0926\u093E \u0921\u0947\u091F\u093E \u0939\u091F \u091C\u093E\u090F\u0917\u093E\u0964 \u0907\u0938\u0947 \u0935\u093E\u092A\u0938 \u0928\u0939\u0940\u0902 \u0915\u093F\u092F\u093E \u091C\u093E \u0938\u0915\u0924\u093E\u0964",
@@ -14340,11 +13040,9 @@
     "mobile.more": "Th\xEAm",
     "mobile.parameters": "Th\xF4ng s\u1ED1",
     "mobile.backToEditor": "Quay l\u1EA1i ch\u1EC9nh s\u1EEDa",
-    "mobile.pickFiles": "Ch\u1ECDn \u1EA3nh ho\u1EB7c t\u1EC7p",
     "mobile.pasteHint": "Nh\u1EA5n gi\u1EEF v\xF9ng nh\u1EADp \u0111\u1EC3 d\xE1n, ho\u1EB7c ch\u1ECDn \u1EA3nh hay t\u1EC7p.",
     "mobile.manualCopy": "Nh\u1EA5n gi\u1EEF \u0111\u1EC3 sao ch\xE9p",
     "mobile.copyHint": "Kh\xF4ng th\u1EC3 t\u1EF1 \u0111\u1ED9ng sao ch\xE9p. Ch\u1ECDn v\u0103n b\u1EA3n b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 sao ch\xE9p.",
-    "mobile.gestureHint": "Ch\u1EE5m \u0111\u1EC3 thu ph\xF3ng \xB7 Vu\u1ED1t \u0111\u1EC3 chuy\u1EC3n \u1EA3nh",
     "lanAccess.label": "Cho ph\xE9p truy c\u1EADp m\u1EA1ng LAN",
     "lanAccess.help": "Kh\xF4ng c\u1EA7n \u0111\u0103ng nh\u1EADp. Ng\u01B0\u1EDDi d\xF9ng trong c\xF9ng m\u1EA1ng d\xF9ng chung t\xE1c v\u1EE5, th\u01B0 vi\u1EC7n v\xE0 nh\xE0 cung c\u1EA5p, \u0111\u1ED3ng th\u1EDDi c\xF3 th\u1EC3 s\u1EEDa c\xE0i \u0111\u1EB7t v\xE0 x\xF3a t\xE1c v\u1EE5.",
     "lanAccess.loading": "\u0110ang \u0111\u1ECDc c\xE0i \u0111\u1EB7t truy c\u1EADp\u2026",
@@ -14455,25 +13153,13 @@
     "queue.dispatching": "\u0110ang l\xEAn l\u1ECBch \xB7 ch\u1EDD \u0111\u1EE3i {waiting}",
     "queue.runningWaiting": "\u0110ang ch\u1EA1y {running} \xB7 ch\u1EDD {waiting}",
     "queue.statusLabel": "Tr\u1EA1ng th\xE1i h\xE0ng \u0111\u1EE3i: {text} \xB7 {channelText}. B\u1EA5m \u0111\u1EC3 chuy\u1EC3n \u0111\u1EBFn t\xE1c v\u1EE5 \u0111ang ch\u1EA1y",
-    "queue.runningActions": "H\xE0nh \u0111\u1ED9ng cho t\xE1c v\u1EE5 \u0111ang ch\u1EA1y",
-    "queue.waitingActions": "H\xE0nh \u0111\u1ED9ng cho t\xE1c v\u1EE5 \u0111ang ch\u1EDD",
-    "queue.cancelRunning": "H\u1EE7y",
     "queue.cancelRunningTitle": "H\u1EE7y t\xE1c v\u1EE5 \u0111ang ch\u1EA1y",
     "queue.dragWaiting": "K\xE9o \u0111\u1EC3 s\u1EAFp x\u1EBFp l\u1EA1i t\xE1c v\u1EE5 \u0111ang ch\u1EDD",
-    "queue.dragSort": "K\xE9o \u0111\u1EC3 s\u1EAFp x\u1EBFp",
-    "queue.moveUp": "L\xEAn",
     "queue.moveUpTitle": "Di chuy\u1EC3n t\xE1c v\u1EE5 \u0111ang ch\u1EDD l\xEAn",
-    "queue.moveDown": "Xu\u1ED1ng",
     "queue.moveDownTitle": "Di chuy\u1EC3n t\xE1c v\u1EE5 \u0111ang ch\u1EDD xu\u1ED1ng",
     "queue.promote": "L\xEAn \u0111\u1EA7u",
     "queue.promoteTitle": "\u0110\u01B0a t\xE1c v\u1EE5 \u0111ang ch\u1EDD l\xEAn \u0111\u1EA7u",
     "queue.promoteFailed": "Di chuy\u1EC3n l\xEAn \u0111\u1EA7u kh\xF4ng th\xE0nh c\xF4ng",
-    "queue.deleteWaitingShort": "Del",
-    "queue.deleteWaitingTitle": "X\xF3a t\xE1c v\u1EE5 \u0111ang ch\u1EDD",
-    "queue.deleteWaitingTitleConfirm": "X\xF3a t\xE1c v\u1EE5 \u0111ang ch\u1EDD?",
-    "queue.deleteWaitingMessage": "\u0110i\u1EC1u n\xE0y lo\u1EA1i b\u1ECF n\xF3 kh\u1ECFi danh s\xE1ch h\xE0ng \u0111\u1EE3i v\xE0 l\u1ECBch s\u1EED.",
-    "queue.deleteQueuedFailed": "Kh\xF4ng th\u1EC3 x\xF3a t\xE1c v\u1EE5 \u0111\xE3 x\u1EBFp h\xE0ng \u0111\u1EE3i",
-    "queue.queuedDeleted": "\u0110\xE3 x\xF3a t\xE1c v\u1EE5 x\u1EBFp h\xE0ng \u0111\u1EE3i",
     "queue.cancelRunningConfirm": "H\u1EE7y t\xE1c v\u1EE5",
     "queue.cancelRunningTitleConfirm": "H\u1EE7y t\xE1c v\u1EE5 \u0111ang ch\u1EA1y?",
     "queue.cancelRunningMessage": "S\u1EBD g\u1EEDi y\xEAu c\u1EA7u h\u1EE7y. L\u1EC7nh g\u1ECDi nh\xE0 cung c\u1EA5p c\xF3 th\u1EC3 ti\u1EBFp t\u1EE5c v\xE0 v\u1EABn c\xF3 th\u1EC3 b\u1ECB t\xEDnh ph\xED cho \u0111\u1EBFn khi tr\u1EA3 v\u1EC1. L\u1ECBch s\u1EED s\u1EBD \u0111\u01B0\u1EE3c gi\u1EEF l\u1EA1i.",
@@ -14513,9 +13199,6 @@
     "taskStatus.runtimeCompleted": "Th\u1EDDi l\u01B0\u1EE3ng {duration} \xB7 \u0111\xE3 ho\xE0n th\xE0nh {time}",
     "taskStatus.completedAt": "\u0110\xE3 ho\xE0n th\xE0nh {time}",
     "taskCard.count": "{count} h\xECnh \u1EA3nh",
-    "taskCard.successCount": "{count} th\xE0nh c\xF4ng",
-    "taskCard.failedCount": "th\u1EA5t b\u1EA1i {count}",
-    "taskCard.runningCount": "\u0111ang t\u1EA1o {count}",
     "taskCard.waitingCount": "\u0111ang ch\u1EDD {count}",
     "taskCard.textToImageThumb": "H\xECnh thu nh\u1ECF t\xE1c v\u1EE5 chuy\u1EC3n v\u0103n b\u1EA3n th\xE0nh h\xECnh \u1EA3nh",
     "taskCard.imageToImageThumb": "H\xECnh thu nh\u1ECF t\xE1c v\u1EE5 chuy\u1EC3n h\xECnh \u1EA3nh th\xE0nh h\xECnh \u1EA3nh",
@@ -14527,12 +13210,9 @@
     "runFeedback.editing": "Ch\u1EC9nh s\u1EEDa",
     "runFeedback.generating": "\u0110ang t\u1EA1o",
     "runFeedback.status": "{action}, \u0111\xE3 tr\xF4i qua {elapsed}",
-    "footer.archive": "L\u01B0u tr\u1EEF",
-    "footer.archiveCount": "L\u01B0u tr\u1EEF {count}",
     "footer.historyLibrary": "L\u1ECBch s\u1EED",
     "historyLibrary.openFull": "M\u1EDF th\u01B0 vi\u1EC7n l\u1ECBch s\u1EED \u0111\u1EA7y \u0111\u1EE7",
     "history.documentTitle": "L\u1ECBch s\u1EED - iLab CONJURE",
-    "history.back": "Quay l\u1EA1i tr\xECnh t\u1EA1o",
     "history.homeAria": "Quay l\u1EA1i trang t\u1EA1o \u1EA3nh iLab CONJURE",
     "history.backToGenerator": "Quay l\u1EA1i trang t\u1EA1o \u1EA3nh",
     "history.title": "L\u1ECBch s\u1EED",
@@ -14646,9 +13326,7 @@
     "history.type.textToImage": "V\u0103n b\u1EA3n th\xE0nh \u1EA3nh",
     "history.type.imageToImage": "\u1EA2nh th\xE0nh \u1EA3nh",
     "history.month": "Th\xE1ng",
-    "history.status": "Tr\u1EA1ng th\xE1i",
     "history.promptMode": "Ch\u1EBF \u0111\u1ED9 l\u1EDDi nh\u1EAFc",
-    "history.size": "K\xEDch th\u01B0\u1EDBc",
     "history.quality": "Ch\u1EA5t l\u01B0\u1EE3ng",
     "history.ratio": "T\u1EF7 l\u1EC7",
     "history.orientation": "H\u01B0\u1EDBng",
@@ -14657,9 +13335,7 @@
     "history.archived": "\u0110\xE3 l\u01B0u tr\u1EEF",
     "history.all": "T\u1EA5t c\u1EA3",
     "history.allMonths": "T\u1EA5t c\u1EA3 c\xE1c th\xE1ng",
-    "history.allStatuses": "T\u1EA5t c\u1EA3 tr\u1EA1ng th\xE1i",
     "history.allPromptModes": "T\u1EA5t c\u1EA3 c\xE1c ch\u1EBF \u0111\u1ED9",
-    "history.allSizes": "T\u1EA5t c\u1EA3 c\xE1c k\xEDch c\u1EE1",
     "history.allQualities": "T\u1EA5t c\u1EA3 ch\u1EA5t l\u01B0\u1EE3ng",
     "history.allRatios": "T\u1EA5t c\u1EA3 c\xE1c t\u1EF7 l\u1EC7",
     "history.ratioOther": "Kh\xE1c",
@@ -14681,13 +13357,10 @@
     "history.selectedCount": "{count} t\xE1c v\u1EE5 \u0111\xE3 ch\u1ECDn",
     "history.confirmDelete": "X\xE1c nh\u1EADn x\xF3a",
     "history.detail": "Chi ti\u1EBFt t\xE1c v\u1EE5",
-    "history.detailTitle": "T\xE1c v\u1EE5 l\u1ECBch s\u1EED",
     "history.closeDetail": "\u0110\xF3ng chi ti\u1EBFt t\xE1c v\u1EE5",
     "history.resizeFilters": "Thay \u0111\u1ED5i k\xEDch th\u01B0\u1EDBc thanh b\xEAn b\u1ED9 l\u1ECDc",
     "history.resizeDetail": "Thay \u0111\u1ED5i k\xEDch th\u01B0\u1EDBc ng\u0103n chi ti\u1EBFt",
-    "history.detailEmpty": "Ch\u1ECDn m\u1ED9t t\xE1c v\u1EE5 l\u1ECBch s\u1EED \u0111\u1EC3 xem chi ti\u1EBFt",
     "history.loadingDetail": "\u0110ang t\u1EA3i chi ti\u1EBFt...",
-    "history.loadMore": "T\u1EA3i th\xEAm",
     "history.loadingMore": "\u0110ang t\u1EA3i...",
     "history.noMore": "Kh\xF4ng c\xF2n t\xE1c v\u1EE5 n\xE0o n\u1EEFa",
     "history.loadFailed": "T\u1EA3i kh\xF4ng th\xE0nh c\xF4ng. L\xE0m m\u1EDBi ho\u1EB7c ti\u1EBFp t\u1EE5c cu\u1ED9n \u0111\u1EC3 th\u1EED l\u1EA1i",
@@ -14696,9 +13369,7 @@
     "history.detailFailed": "Kh\xF4ng th\u1EC3 t\u1EA3i chi ti\u1EBFt",
     "history.noMatches": "Kh\xF4ng c\xF3 t\xE1c v\u1EE5 ph\xF9 h\u1EE3p",
     "history.loadedCount": "{count} \u0111\xE3 t\u1EA3i",
-    "history.windowNotice": "Danh s\xE1ch hi\u1EC3n th\u1ECB gi\u1EDBi h\u1EA1n \u1EDF {count} t\xE1c v\u1EE5; cu\u1ED9n l\xEAn ho\u1EB7c xu\u1ED1ng \u0111\u1EC3 t\u1EA3i l\u1EA1i c\xE1c t\xE1c v\u1EE5 li\u1EC1n k\u1EC1 khi c\u1EA7n.",
     "history.selectTask": "Ch\u1ECDn t\xE1c v\u1EE5",
-    "history.viewing": "\u0110ang xem",
     "history.noPreview": "Kh\xF4ng c\xF3 h\xECnh \u1EA3nh xem tr\u01B0\u1EDBc",
     "history.downloadAll": "T\u1EA3i xu\u1ED1ng ZIP",
     "history.downloadImage": "T\u1EA3i xu\u1ED1ng h\xECnh \u1EA3nh",
@@ -14713,11 +13384,9 @@
     "history.inputReferences": "Tham chi\u1EBFu \u0111\u1EA7u v\xE0o",
     "history.inputReferenceIndex": "Tham chi\u1EBFu \u0111\u1EA7u v\xE0o {index}",
     "history.copyPrompt": "Sao ch\xE9p l\u1EDDi nh\u1EAFc",
-    "history.copyPrompts": "Sao ch\xE9p l\u1EDDi nh\u1EAFc",
     "history.copyPromptShort": "Sao ch\xE9p",
     "history.copyPromptPanel": "Sao ch\xE9p {title}",
     "history.copyOutputPromptPanel": "Sao ch\xE9p l\u1EDDi nh\u1EAFc \u0111\xE3 ch\u1EC9nh c\u1EE7a \u1EA3nh {index}",
-    "history.copyTaskIds": "Sao ch\xE9p Task ID",
     "history.reuseTask": "Xem trong tr\xECnh t\u1EA1o",
     "history.downloadTask": "T\u1EA3i xu\u1ED1ng",
     "history.downloadSelectedTasks": "T\u1EA3i xu\u1ED1ng h\xE0ng lo\u1EA1t",
@@ -14735,7 +13404,6 @@
     "history.noDownloadableOutputs": "Kh\xF4ng c\xF3 h\xECnh \u1EA3nh c\xF3 th\u1EC3 t\u1EA3i xu\u1ED1ng",
     "history.confirmDeleteSelected": "X\xE1c nh\u1EADn \u0111\xE3 ch\u1ECDn x\xF3a",
     "history.openPreview": "M\u1EDF b\u1EA3n xem tr\u01B0\u1EDBc",
-    "history.closePreview": "\u0110\xF3ng b\u1EA3n xem tr\u01B0\u1EDBc",
     "history.untitled": "Kh\xF4ng c\xF3 ti\xEAu \u0111\u1EC1",
     "history.promptCompare": "So s\xE1nh l\u1EDDi nh\u1EAFc",
     "history.promptOriginal": "L\u1EDDi nh\u1EAFc ban \u0111\u1EA7u",
@@ -14753,8 +13421,6 @@
     "history.quality.low": "Th\u1EA5p",
     "history.quality.auto": "T\u1EF1 \u0111\u1ED9ng",
     "footer.batch": "L\xF4",
-    "footer.storage": "L\u01B0u tr\u1EEF",
-    "footer.apiStatus": "Tr\u1EA1ng th\xE1i API: OK",
     "footer.version": "Phi\xEAn b\u1EA3n {version}",
     "footer.versionLoading": "Phi\xEAn b\u1EA3n...",
     "notifications.title": "Th\xF4ng b\xE1o",
@@ -14777,31 +13443,11 @@
     "theme.system": "T\u1EF1 \u0111\u1ED9ng",
     "theme.light": "S\xE1ng",
     "theme.dark": "T\u1ED1i",
-    "language.label": "Ng\xF4n ng\u1EEF giao di\u1EC7n",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "Ngu\u1ED3n x\xE1c th\u1EF1c",
     "auth.checking": "Ki\u1EC3m tra x\xE1c th\u1EF1c",
     "auth.missingCodexSession": "Kh\xF4ng ph\xE1t hi\u1EC7n th\u1EA5y phi\xEAn Codex n\xE0o",
     "auth.switchFailed": "Kh\xF4ng th\u1EC3 chuy\u1EC3n \u0111\u1ED5i ngu\u1ED3n x\xE1c th\u1EF1c",
     "auth.sourceUnavailable": "{source} kh\xF4ng kh\u1EA3 d\u1EE5ng",
     "auth.notActive": "Kh\xF4ng ho\u1EA1t \u0111\u1ED9ng",
-    "api.settings": "C\xE0i \u0111\u1EB7t h\u1EC7 th\u1ED1ng",
-    "api.provider": "Provider API",
-    "imageInput.title": "H\xECnh \u1EA3nh",
     "imageInput.uploadAria": "Nh\u1EA5p, th\u1EA3 ho\u1EB7c d\xE1n h\xECnh \u1EA3nh v\xE0 t\u1EC7p",
     "imageInput.uploadImages": "Nh\u1EA5p, k\xE9o th\u1EA3 ho\u1EB7c d\xE1n h\xECnh \u1EA3nh",
     "imageInput.uploadFull": "Nh\u1EA5p, th\u1EA3 ho\u1EB7c d\xE1n h\xECnh \u1EA3nh v\xE0 t\u1EC7p",
@@ -14898,7 +13544,6 @@
     "gallery.categoryFallback": "danh m\u1EE5c th\u01B0 vi\u1EC7n",
     "gallery.imageFallback": "H\xECnh \u1EA3nh th\u01B0 vi\u1EC7n",
     "gallery.imageLoadFailed": "Kh\xF4ng th\u1EC3 t\u1EA3i h\xECnh \u1EA3nh n\xE0y",
-    "gallery.editImageLoadFailed": "Kh\xF4ng th\u1EC3 t\u1EA3i h\xECnh \u1EA3nh n\xE0y \u0111\u1EC3 ch\u1EC9nh s\u1EEDa",
     "gallery.cannotAddImage": "Kh\xF4ng th\u1EC3 th\xEAm h\xECnh \u1EA3nh n\xE0y v\xE0o th\u01B0 vi\u1EC7n",
     "gallery.nameRequired": "Nh\u1EADp t\xEAn th\u01B0 vi\u1EC7n",
     "gallery.saveFailed": "Kh\xF4ng l\u01B0u \u0111\u01B0\u1EE3c h\xECnh \u1EA3nh th\u01B0 vi\u1EC7n",
@@ -14954,7 +13599,6 @@
     "outputSettings.title": "\u0110\u1EA7u ra",
     "output.lock.lock": "Kh\xF3a tham s\u1ED1",
     "output.lock.unlock": "M\u1EDF kh\xF3a v\xE0 ch\u1EC9nh s\u1EEDa",
-    "output.lock.current": "Kh\xF3a hi\u1EC7n t\u1EA1i",
     "output.lock.task": "Tham s\u1ED1 t\xE1c v\u1EE5 \u0111\xE3 ch\u1ECDn",
     "output.lock.adoptTask": "D\xF9ng tham s\u1ED1 t\xE1c v\u1EE5 n\xE0y",
     "output.lock.frame": "Khung h\xECnh",
@@ -14974,9 +13618,6 @@
     "output.mainModel": "M\xF4 h\xECnh ch\xEDnh",
     "output.selectMainModel": "Ch\u1ECDn m\xF4 h\xECnh ch\xEDnh",
     "output.mainModelCustomForInput": "S\u1EED d\u1EE5ng m\xF4 h\xECnh t\xF9y ch\u1EC9nh cho \u0111\u1EA7u v\xE0o hi\u1EC7n t\u1EA1i",
-    "output.apiDirect": "API tr\u1EF1c ti\u1EBFp",
-    "output.apiToolModel": "S\u1EED d\u1EE5ng m\xF4 h\xECnh h\xECnh \u1EA3nh API",
-    "output.transparencyFidelityHint": "N\u1EC1n trong su\u1ED1t l\xE0 y\xEAu c\u1EA7u \u0111\u1EA7u ra b\u1EA1n \u0111\xE3 ch\u1ECDn, \u0111\u01B0\u1EE3c b\u1ED5 sung c\u1EA3 \u1EDF ch\u1EBF \u0111\u1ED9 Nguy\xEAn v\u0103n v\xE0 Gi\u1EEF nguy\xEAn \xFD.",
     "output.transparentBackground": "N\u1EC1n trong su\u1ED1t",
     "output.transparencyUnavailable": "Kh\xF4ng h\u1ED7 tr\u1EE3 trong su\u1ED1t",
     "output.transparencyFormat": "N\u1EC1n trong su\u1ED1t c\u1EA7n PNG ho\u1EB7c WebP.",
@@ -14987,22 +13628,10 @@
     "preview.transparencyMissing": "Kh\xF4ng ph\xE1t hi\u1EC7n \u0111i\u1EC3m \u1EA3nh trong su\u1ED1t",
     "preview.transparencyRetryHint": "Th\u1EED ch\u1EBF \u0111\u1ED9 l\u1EDDi nh\u1EAFc ho\u1EB7c m\xF4 h\xECnh kh\xE1c. Th\u1EED l\u1EA1i s\u1EBD t\u1EA1o \u1EA3nh m\u1EDBi.",
     "output.webSearch": "T\xECm ki\u1EBFm tr\xEAn web",
-    "output.webSearchToggle": "B\u1EADt",
     "output.webSearchTitle": "T\xECm ki\u1EBFm web tr\u01B0\u1EDBc, r\u1ED3i d\xF9ng k\u1EBFt qu\u1EA3 cho l\u1EA7n t\u1EA1o n\xE0y; ch\u1EC9 h\u1ED7 tr\u1EE3 Codex v\xE0 API Responses",
-    "output.promptMode": "Ch\u1EBF \u0111\u1ED9 l\u1EDDi nh\u1EAFc",
     "output.modeOriginal": "B\u1EA3n g\u1ED1c",
     "output.modeStrict": "Gi\u1EEF s\xE1t l\u1EDDi nh\u1EAFc",
     "output.modeCreative": "S\xE1ng t\u1EA1o",
-    "output.promptHelp": "Xem gi\u1EA3i th\xEDch c\xE1ch x\u1EED l\xFD l\u1EDDi nh\u1EAFc",
-    "output.promptHelpTitle": "X\u1EED l\xFD l\u1EDDi nh\u1EAFc",
-    "output.promptHelp.responsesChannel": "Responses \xB7 c\xF3 m\xF4 h\xECnh ch\xEDnh tham gia",
-    "output.promptHelp.imagesChannel": "Images \xB7 t\u1EA1o tr\u1EF1c ti\u1EBFp",
-    "output.promptHelp.responses.original": "G\u1EEDi nguy\xEAn v\u0103n ch\xEDnh x\xE1c m\xE0 kh\xF4ng th\xEAm quy t\u1EAFc \u1EDF c\u1EA5p \u1EE9ng d\u1EE5ng; nh\xE0 cung c\u1EA5p v\u1EABn c\xF3 th\u1EC3 tr\u1EA3 v\u1EC1 revised prompt ho\u1EB7c di\u1EC5n gi\u1EA3i k\u1EBFt qu\u1EA3 theo c\xE1ch kh\xE1c.",
-    "output.promptHelp.responses.strict": "Cho ph\xE9p m\xF4 h\xECnh ch\xEDnh s\u1EAFp x\u1EBFp ho\u1EB7c m\u1EDF r\u1ED9ng l\u1EDDi nh\u1EAFc, nh\u01B0ng v\u1EABn gi\u1EEF c\xE1c r\xE0ng bu\u1ED9c b\u1EAFt bu\u1ED9c nh\u01B0 \u0111\u1ED1i t\u01B0\u1EE3ng, v\u0103n b\u1EA3n, m\xE0u s\u1EAFc v\xE0 b\u1ED1 c\u1EE5c.",
-    "output.promptHelp.responses.automatic": "Kh\xF4ng th\xEAm r\xE0ng bu\u1ED9c n\xE0o, \u0111\u1EC3 m\xF4 h\xECnh ch\xEDnh t\u1EF1 hi\u1EC3u v\xE0 t\u1ED1i \u01B0u h\xF3a l\u1EDDi nh\u1EAFc tr\u01B0\u1EDBc khi g\u1ECDi c\xF4ng c\u1EE5 h\xECnh \u1EA3nh.",
-    "output.promptHelp.images.original": "\u1EE8ng d\u1EE5ng kh\xF4ng th\xEAm quy t\u1EAFc l\u1EDDi nh\u1EAFc n\xE0o v\xE0 g\u1EEDi th\u1EB3ng nguy\xEAn v\u0103n c\u1EE7a b\u1EA1n t\u1EDBi API h\xECnh \u1EA3nh.",
-    "output.promptHelp.images.strict": "\u1EE8ng d\u1EE5ng g\u1EEDi k\xE8m quy t\u1EAFc gi\u1EEF nguy\xEAn c\xF9ng v\u1EDBi l\u1EDDi nh\u1EAFc g\u1ED1c \u0111\u1EC3 nh\u1EA5n m\u1EA1nh m\u1ECDi r\xE0ng bu\u1ED9c b\u1EAFt bu\u1ED9c.",
-    "output.promptHelp.images.automatic": "D\xF9ng c\xE1ch x\u1EED l\xFD m\u1EB7c \u0111\u1ECBnh c\u1EE7a API h\xECnh \u1EA3nh; c\xE1c ghi ch\xFA tham chi\u1EBFu th\u01B0 vi\u1EC7n c\u1EA7n thi\u1EBFt v\u1EABn \u0111\u01B0\u1EE3c g\u1EEDi k\xE8m.",
     "output.size": "K\xEDch th\u01B0\u1EDBc \u0111\u1EA7u ra",
     "output.sizeMode": "Ch\u1EBF \u0111\u1ED9 k\xEDch th\u01B0\u1EDBc",
     "output.sizeAuto": "T\u1EF1 \u0111\u1ED9ng",
@@ -15066,8 +13695,6 @@
     "preview.runningTitle": "{mode} \u0111ang ch\u1EA1y",
     "preview.submittingTitle": "\u0110ang g\u1EEDi t\xE1c v\u1EE5",
     "preview.queuedTitle": "T\xE1c v\u1EE5 \u0111\u01B0\u1EE3c x\u1EBFp h\xE0ng \u0111\u1EE3i",
-    "preview.submittingDetail": "\u0110ang l\u01B0u \u0111\u1EA7u v\xE0o v\xE0 th\xEAm t\xE1c v\u1EE5 v\xE0o h\xE0ng \u0111\u1EE3i. Qu\xE1 tr\xECnh t\u1EA1o s\u1EBD t\u1EF1 b\u1EAFt \u0111\u1EA7u.",
-    "preview.queuedDetail": "T\xE1c v\u1EE5 \u0111ang \u1EDF trong h\xE0ng \u0111\u1EE3i v\xE0 \u0111ang ch\u1EDD k\xEAnh kh\u1EA3 d\u1EE5ng.",
     "preview.featured": "\u0110\xE3 ch\u1ECDn",
     "preview.addFeatured": "Ch\u1ECDn k\u1EBFt qu\u1EA3",
     "preview.selectedFeatured": "\u0110\xE3 ch\u1ECDn",
@@ -15120,7 +13747,6 @@
     "promptPopover.close": "\u0110\xF3ng so s\xE1nh l\u1EDDi nh\u1EAFc",
     "promptPopover.copyOptimized": "Sao ch\xE9p l\u1EDDi nh\u1EAFc \u0111\u01B0\u1EE3c t\u1ED1i \u01B0u h\xF3a",
     "promptPopover.copied": "\u0110\xE3 sao ch\xE9p",
-    "taskContext.menuLabel": "Menu ng\u1EEF c\u1EA3nh t\xE1c v\u1EE5",
     "taskContext.view": "Xem t\xE1c v\u1EE5",
     "taskContext.copyId": "Sao ch\xE9p Task ID",
     "taskContext.copyPrompt": "Sao ch\xE9p l\u1EDDi nh\u1EAFc",
@@ -15149,7 +13775,6 @@
     "taskActions.acceptSuccessesFailed": "Kh\xF4ng th\u1EC3 ch\u1EA5p nh\u1EADn k\u1EBFt qu\u1EA3 th\xE0nh c\xF4ng",
     "taskActions.acceptedSuccesses": "\u0110\xE3 ch\u1EA5p nh\u1EADn k\u1EBFt qu\u1EA3 th\xE0nh c\xF4ng",
     "taskActions.viewedUpdateFailed": "Kh\xF4ng c\u1EADp nh\u1EADt \u0111\u01B0\u1EE3c tr\u1EA1ng th\xE1i \u0111\u1ECDc",
-    "taskActions.failedFallback": "T\xE1c v\u1EE5 th\u1EA5t b\u1EA1i",
     "taskList.empty": "Ch\u01B0a c\xF3 l\u1ECBch s\u1EED",
     "taskList.selectSession": "Ch\u1ECDn tr\xF2 chuy\u1EC7n",
     "taskList.unreadUpdate": "C\u1EADp nh\u1EADt ch\u01B0a \u0111\u1ECDc",
@@ -15219,7 +13844,6 @@
     "snippets.saveSelection": "L\u01B0u",
     "snippets.saveSelectionLabel": "L\u01B0u v\u0103n b\u1EA3n \u0111\xE3 ch\u1ECDn d\u01B0\u1EDBi d\u1EA1ng \u0111o\u1EA1n nh\u1EAFc",
     "snippets.popoverLabel": "\u0110o\u1EA1n l\u1EDDi nh\u1EAFc",
-    "snippets.defaultCategory": "Chung",
     "snippets.loadFailed": "Kh\xF4ng t\u1EA3i \u0111\u01B0\u1EE3c \u0111o\u1EA1n l\u1EDDi nh\u1EAFc",
     "snippets.remove": "X\xF3a ~{tag}",
     "snippets.expand": "M\u1EDF r\u1ED9ng",
@@ -15264,7 +13888,6 @@
     "colors.done": "Xong",
     "colors.manage": "Qu\u1EA3n l\xFD",
     "colors.favorites": "M\xE0u s\u1EAFc y\xEAu th\xEDch",
-    "colors.recent": "M\xE0u s\u1EAFc g\u1EA7n \u0111\xE2y",
     "colors.recentLabel": "G\u1EA7n \u0111\xE2y",
     "colors.deleteFavorite": "X\xF3a m\xE0u y\xEAu th\xEDch {name}",
     "colors.modify": "Ch\u1EC9nh s\u1EEDa m\xE0u",
@@ -15274,16 +13897,13 @@
     "taskGroup.current": "T\xE1c v\u1EE5 hi\u1EC7n t\u1EA1i",
     "taskGroup.yesterday": "H\xF4m qua",
     "taskGroup.last7": "7 ng\xE0y qua",
-    "taskGroup.older": "C\u0169 h\u01A1n",
     "taskGroup.searchResults": "K\u1EBFt qu\u1EA3 t\xECm ki\u1EBFm",
-    "taskGroup.active": "\u0110ang ch\u1EA1y",
     "taskGroup.running": "\u0110ang ch\u1EA1y",
     "taskGroup.waiting": "\u0110ang ch\u1EDD",
     "taskGroup.dispatchPending": "\u0110ang ch\u1EC9 \u0111\u1ECBnh m\u1ED9t k\xEAnh kh\u1EA3 d\u1EE5ng...",
     "taskGroup.expand": "M\u1EDF r\u1ED9ng {label}",
     "taskGroup.collapse": "Thu g\u1ECDn {label}",
     "taskGroup.buttonLabel": "{label}, {count} t\xE1c v\u1EE5",
-    "taskGroup.loadMore": "T\u1EA3i th\xEAm {count}",
     "taskGroup.loadFailedRetry": "T\u1EA3i th\u1EA5t b\u1EA1i. Nh\u1EA5p \u0111\u1EC3 th\u1EED l\u1EA1i",
     "archive.title": "L\u01B0u tr\u1EEF",
     "archive.empty": "Kh\xF4ng c\xF3 cu\u1ED9c tr\xF2 chuy\u1EC7n n\xE0o \u0111\u01B0\u1EE3c l\u01B0u tr\u1EEF",
@@ -15296,7 +13916,6 @@
     "archive.restoring": "\u0110ang kh\xF4i ph\u1EE5c...",
     "archive.deleting": "\u0110ang x\xF3a...",
     "archive.restoredCount": "\u0110\xE3 kh\xF4i ph\u1EE5c c\xE1c t\xE1c v\u1EE5 {count}",
-    "settings.title": "L\u01B0u tr\u1EEF",
     "settings.status": "Kh\u1EDFi \u0111\u1ED9ng l\u1EA1i WebUI sau khi l\u01B0u \u0111\u01B0\u1EDDng d\u1EABn l\u01B0u tr\u1EEF",
     "settings.pathChangeHint": "\u0110\u1ED5i \u0111\u01B0\u1EDDng d\u1EABn kh\xF4ng di chuy\u1EC3n d\u1EEF li\u1EC7u c\u0169. Tr\u01B0\u1EDBc khi di chuy\u1EC3n, h\xE3y sao l\u01B0u, tho\xE1t \u1EE9ng d\u1EE5ng r\u1ED3i sao ch\xE9p to\xE0n b\u1ED9 th\u01B0 m\u1EE5c li\xEAn quan.",
     "settings.previousPaths": "Kh\xF4ng th\u1EA5y d\u1EEF li\u1EC7u c\u0169? Ki\u1EC3m tra th\u01B0 m\u1EE5c m\u1EB7c \u0111\u1ECBnh ban \u0111\u1EA7u",
@@ -15378,7 +13997,6 @@
     "userConfigBackup.validating": "\u0110ang x\xE1c th\u1EF1c b\u1EA3n sao l\u01B0u\u2026",
     "userConfigBackup.validationReady": "X\xE1c th\u1EF1c ho\xE0n t\u1EA5t. H\xE3y ch\u1ECDn c\xE1ch kh\xF4i ph\u1EE5c.",
     "userConfigBackup.versionUnsupported": "B\u1EA3n sao l\u01B0u d\xF9ng \u0111\u1ECBnh d\u1EA1ng m\u1EDBi h\u01A1n v\xE0 ch\u1EC9 c\xF3 th\u1EC3 xem tr\u01B0\u1EDBc.",
-    "userConfigBackup.previewCounts": "{count} m\u1EE5c trong g\xF3i \xB7 {duplicate} tr\xF9ng \xB7 {conflict} xung \u0111\u1ED9t",
     "userConfigBackup.previewSectionCounts": "B\u1EA3n sao l\u01B0u {archive} \xB7 hi\u1EC7n t\u1EA1i {current}",
     "userConfigBackup.previewGroupCounts": "{group}: sao l\u01B0u {archive} / hi\u1EC7n t\u1EA1i {current}",
     "userConfigBackup.emptyReplaceGroup": "{group}: b\u1EA3n sao l\u01B0u tr\u1ED1ng, hi\u1EC7n t\u1EA1i {current}",
@@ -15415,7 +14033,6 @@
     "user_config_restore_version_unsupported": "\u0110\u1ECBnh d\u1EA1ng sao l\u01B0u n\xE0y qu\xE1 m\u1EDBi \u0111\u1EC3 kh\xF4i ph\u1EE5c.",
     "systemSettings.tabsLabel": "Ph\u1EA7n c\xE0i \u0111\u1EB7t h\u1EC7 th\u1ED1ng",
     "systemSettings.apiTab": "C\xE0i \u0111\u1EB7t API",
-    "systemSettings.codexTab": "K\xEAnh Codex",
     "systemSettings.languageTab": "Ng\xF4n ng\u1EEF",
     "systemSettings.storageTab": "L\u01B0u tr\u1EEF & Th\xF4ng b\xE1o",
     "systemSettings.networkTab": "M\u1EA1ng",
@@ -15443,23 +14060,14 @@
     "networkEgress.loadFailed": "Kh\xF4ng th\u1EC3 t\u1EA3i c\xE0i \u0111\u1EB7t m\u1EA1ng",
     "networkEgress.saveFailed": "Kh\xF4ng th\u1EC3 l\u01B0u c\xE0i \u0111\u1EB7t m\u1EA1ng",
     "languageSettings.instantStatus": "Thay \u0111\u1ED5i ng\xF4n ng\u1EEF \xE1p d\u1EE5ng ngay l\u1EADp t\u1EE9c",
-    "apiSettings.title": "C\xE0i \u0111\u1EB7t API",
-    "apiSettings.status": "C\xE0i \u0111\u1EB7t \u0111\xE3 l\u01B0u \xE1p d\u1EE5ng ngay l\u1EADp t\u1EE9c \u1EDF ch\u1EBF \u0111\u1ED9 API",
-    "apiSettings.codexMode": "K\xEAnh Codex",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "Provider API",
     "apiSettings.searchProviders": "T\xECm ki\u1EBFm t\xEAn provider",
     "apiSettings.noProviderSearchResults": "Kh\xF4ng c\xF3 provider ph\xF9 h\u1EE3p",
     "apiSettings.providerCount": "{count} provider",
-    "apiSettings.provider": "Provider",
     "apiSettings.providerName": "T\xEAn provider",
     "apiSettings.providerIcon": "Emoji",
     "apiSettings.providerIconPlaceholder": "T\xF9y ch\u1ECDn, v\xED d\u1EE5 \u{1FA84}",
-    "apiSettings.connectionScope": "C\xE0i \u0111\u1EB7t k\u1EBFt n\u1ED1i",
-    "apiSettings.connectionPreview": "Xem tr\u01B0\u1EDBc k\u1EBFt n\u1ED1i",
     "apiSettings.modelBindings": "M\xF4 h\xECnh",
-    "apiSettings.modelBindingsHint": "M\u1ED9t provider c\xF3 th\u1EC3 li\xEAn k\u1EBFt \u0111\u1ED3ng th\u1EDDi nhi\u1EC1u m\xF4 h\xECnh v\xE0 giao th\u1EE9c.",
     "apiSettings.addModelBinding": "Th\xEAm m\xF4 h\xECnh",
     "apiSettings.remoteModelName": "T\xEAn m\xF4 h\xECnh nh\xE0 cung c\u1EA5p",
     "apiSettings.fetchModels": "L\u1EA5y m\xF4 h\xECnh",
@@ -15482,7 +14090,6 @@
     "apiSettings.keepOneBinding": "M\u1ED7i provider ph\u1EA3i gi\u1EEF \xEDt nh\u1EA5t m\u1ED9t li\xEAn k\u1EBFt m\xF4 h\xECnh.",
     "apiSettings.bindingRequiredFields": "V\u1EDBi m\u1ED7i li\xEAn k\u1EBFt, h\xE3y ch\u1ECDn m\xF4 h\xECnh, nh\u1EADp t\xEAn m\xF4 h\xECnh t\u1EEB xa v\xE0 ch\u1ECDn \xEDt nh\u1EA5t m\u1ED9t thao t\xE1c.",
     "apiSettings.bindingOverlap": "Thao t\xE1c {operation} c\u1EE7a {model} b\u1ECB nhi\u1EC1u li\xEAn k\u1EBFt x\u1EED l\xFD tr\xF9ng nhau.",
-    "apiSettings.actualRequest": "Y\xEAu c\u1EA7u th\u1EF1c t\u1EBF",
     "apiSettings.newProviderAction": "Provider m\u1EDBi",
     "apiSettings.copyProvider": "Sao ch\xE9p",
     "apiSettings.copyProviderName": "B\u1EA3n sao {name}",
@@ -15493,21 +14100,12 @@
     "apiSettings.sortProviderModeStatus": "K\xE9o tay n\u1EAFm \u0111\u1EC3 s\u1EAFp x\u1EBFp ho\u1EB7c d\xF9ng c\xE1c ph\xEDm m\u0169i t\xEAn",
     "apiSettings.sortProviderHandleAria": "K\xE9o \u0111\u1EC3 s\u1EAFp x\u1EBFp l\u1EA1i {provider}, ho\u1EB7c d\xF9ng ph\xEDm m\u0169i t\xEAn, Home v\xE0 End",
     "apiSettings.sortProviderStatus": "Th\u1EE9 t\u1EF1 provider \u0111\xE3 thay \u0111\u1ED5i. \u0110ang t\u1EF1 \u0111\u1ED9ng l\u01B0u...",
-    "apiSettings.moveProviderUp": "L\xEAn",
-    "apiSettings.moveProviderDown": "Xu\u1ED1ng",
-    "apiSettings.moveProviderUpAria": "Di chuy\u1EC3n {provider} l\xEAn",
-    "apiSettings.moveProviderDownAria": "Di chuy\u1EC3n {provider} xu\u1ED1ng",
-    "apiSettings.mode": "Ch\u1EBF \u0111\u1ED9 y\xEAu c\u1EA7u",
-    "apiSettings.images": "API h\xECnh \u1EA3nh tr\u1EF1c ti\u1EBFp",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "Tr\u1EF1c ti\u1EBFp",
-    "apiSettings.imageModel": "M\xF4 h\xECnh h\xECnh \u1EA3nh",
     "apiSettings.concurrency": "Gi\u1EDBi h\u1EA1n \u0111\u1ED3ng th\u1EDDi c\u1EE7a provider",
     "apiSettings.svgAuthorModel": "M\xF4 h\xECnh t\u1EA1o SVG",
     "apiSettings.invalidSvgAuthorModel": "Nh\u1EADp ID m\xF4 h\xECnh SVG h\u1EE3p l\u1EC7 kh\xF4ng ch\u1EE9a d\u1EA5u c\xE1ch.",
     "apiSettings.concurrencyShort": "\u0110\u1ED3ng th\u1EDDi",
     "apiSettings.advancedSettings": "C\xE0i \u0111\u1EB7t n\xE2ng cao",
-    "apiSettings.concurrencyValue": "{concurrency} \u0111\u1ED3ng th\u1EDDi",
     "apiSettings.keySaved": "\u0110\xE3 l\u01B0u kh\xF3a API",
     "apiSettings.keyNotSet": "Kh\xF3a API ch\u01B0a \u0111\u01B0\u1EE3c \u0111\u1EB7t",
     "apiSettings.showApiKey": "Hi\u1EC3n th\u1ECB kh\xF3a API",
@@ -15515,18 +14113,12 @@
     "apiSettings.editProvider": "Ch\u1EC9nh s\u1EEDa provider",
     "apiSettings.newProviderTitle": "Provider m\u1EDBi",
     "ux.viewPreview": "Xem tr\u01B0\u1EDBc",
-    "apiSettings.editHint": "L\u01B0u \u0111\u1EC3 \xE1p d\u1EE5ng thay \u0111\u1ED5i; h\u1EE7y \u0111\u1EC3 b\u1ECF thay \u0111\u1ED5i.",
     "apiSettings.finishEditFirst": "L\u01B0u ho\u1EB7c h\u1EE7y ch\u1EC9nh s\u1EEDa provider hi\u1EC7n t\u1EA1i tr\u01B0\u1EDBc",
     "apiSettings.newDraftStatus": "\u0110ang t\u1EA1o provider. L\u01B0u provider \u0111\u1EC3 \xE1p d\u1EE5ng.",
     "apiSettings.editDraftStatus": "\u0110ang ch\u1EC9nh s\u1EEDa provider. L\u01B0u provider \u0111\u1EC3 \xE1p d\u1EE5ng.",
-    "apiSettings.cancelEdit": "H\u1EE7y ch\u1EC9nh s\u1EEDa",
-    "apiSettings.saveProvider": "L\u01B0u provider",
-    "apiSettings.saveSelection": "L\u01B0u l\u1EF1a ch\u1ECDn",
     "apiSettings.deleteProviderTitle": "X\xF3a provider?",
     "apiSettings.deleteProviderMessage": 'X\xF3a "{provider}"?',
     "apiSettings.deleteProviderDetail": "Thao t\xE1c n\xE0y s\u1EBD x\xF3a provider kh\u1ECFi danh s\xE1ch hi\u1EC7n t\u1EA1i v\xE0 t\u1EF1 \u0111\u1ED9ng l\u01B0u v\xE0o backend.",
-    "apiSettings.deleteProviderStatus": "\u0110\xE3 x\xF3a provider. \u0110ang t\u1EF1 \u0111\u1ED9ng l\u01B0u...",
-    "apiSettings.save": "L\u01B0u c\xE0i \u0111\u1EB7t API",
     "apiSettings.loadFailed": "Kh\xF4ng t\u1EA3i \u0111\u01B0\u1EE3c c\xE0i \u0111\u1EB7t API",
     "apiSettings.savedKeyPlaceholder": "Backend \u0111\xE3 l\u01B0u API key. Nh\u1EADp key m\u1EDBi \u0111\u1EC3 thay th\u1EBF.",
     "apiSettings.apiKeyRequired": "H\xE3y nh\u1EADp API Key tr\u01B0\u1EDBc khi l\u01B0u nh\xE0 cung c\u1EA5p.",
@@ -15547,16 +14139,6 @@
     "apiSettings.savedShort": "\u0110\xE3 l\u01B0u",
     "apiSettings.savedStatus": "\u0110\xE3 l\u01B0u c\xE0i \u0111\u1EB7t API",
     "apiSettings.saveFailedShort": "L\u01B0u kh\xF4ng th\xE0nh c\xF4ng",
-    "codexSettings.title": "K\xEAnh Codex",
-    "codexSettings.status": "Ch\u1ECDn k\xEAnh t\u1EA1o \u1EA3nh d\xF9ng \u0111\u0103ng nh\u1EADp Codex c\u1EE5c b\u1ED9",
-    "codexSettings.notesLabel": "Ghi ch\xFA k\xEAnh Codex",
-    "codexSettings.imagesTitle": "H\xECnh \u1EA3nh Codex",
-    "codexSettings.imagesCopy": "K\xEAnh m\u1EB7c \u0111\u1ECBnh \u0111\u1EC3 t\u1EA1o v\xE0 ch\u1EC9nh s\u1EEDa th\xF4ng th\u01B0\u1EDDng, v\u1EDBi c\xE1c tham s\u1ED1 k\xEDch th\u01B0\u1EDBc, ch\u1EA5t l\u01B0\u1EE3ng v\xE0 ch\u1EC9nh s\u1EEDa \u0111\u01B0\u1EE3c truy\u1EC1n tr\u1EF1c ti\u1EBFp.",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "K\xEAnh t\u01B0\u01A1ng th\xEDch cho c\xE1c t\xE1c v\u1EE5 c\u1EA7n t\xECm ki\u1EBFm web ho\u1EB7c chu\u1ED7i c\xF4ng c\u1EE5 Responses.",
-    "codexSettings.current": "hi\u1EC7n t\u1EA1i",
-    "codexSettings.save": "L\u01B0u k\xEAnh Codex",
-    "codexSettings.saveMode": "L\u01B0u {mode}",
     "imageEditor.title": "Ch\u1EC9nh s\u1EEDa h\xECnh \u1EA3nh \u0111\u1EA7u v\xE0o",
     "imageEditor.promptHint": "C\xE1c m\u0169i t\xEAn v\xE0 d\u1EA5u v\u1EBD tay trong \u1EA3nh ch\u1EC9 l\xE0 h\u01B0\u1EDBng d\u1EABn. Kh\xF4ng gi\u1EEF ch\xFAng trong \u1EA3nh cu\u1ED1i c\xF9ng.",
     "imageEditor.inputFallback": "H\xECnh \u1EA3nh \u0111\u1EA7u v\xE0o",
@@ -15636,32 +14218,22 @@
     "addGallery.save": "L\u01B0u v\xE0o th\u01B0 vi\u1EC7n",
     "close.promptTemplates": "\u0110\xF3ng b\u1EA3ng m\u1EABu l\u1EDDi nh\u1EAFc",
     "close.archive": "\u0110\xF3ng b\u1EA3ng l\u01B0u tr\u1EEF",
-    "close.settings": "\u0110\xF3ng b\u1EA3ng c\xE0i \u0111\u1EB7t b\u1ED9 nh\u1EDB",
-    "close.apiSettings": "\u0110\xF3ng b\u1EA3ng c\xE0i \u0111\u1EB7t API",
     "close.systemSettings": "\u0110\xF3ng b\u1EA3ng c\xE0i \u0111\u1EB7t h\u1EC7 th\u1ED1ng",
     "close.imageEditor": "\u0110\xF3ng b\u1EA3ng ch\u1EC9nh s\u1EEDa h\xECnh \u1EA3nh",
     "close.gallery": "\u0110\xF3ng b\u1EA3ng th\u01B0 vi\u1EC7n",
     "close.addGallery": "\u0110\xF3ng b\u1EA3ng th\xEAm v\xE0o th\u01B0 vi\u1EC7n",
     "imageInput.referenceTitle": "\u0110\u1EA7u v\xE0o tham chi\u1EBFu (t\xF9y ch\u1ECDn)",
-    "referenceFiles.add": "Th\xEAm t\u1EC7p",
-    "referenceFiles.selected": "T\u1EC7p tham chi\u1EBFu",
-    "referenceFiles.recent": "T\u1EC7p g\u1EA7n \u0111\xE2y",
     "referenceFiles.familyPdf": "Trang + v\u0103n b\u1EA3n",
     "referenceFiles.familySpreadsheet": "B\u1EA3ng t\xEDnh",
     "referenceFiles.familyDocument": "T\xE0i li\u1EC7u",
     "referenceFiles.familyText": "V\u0103n b\u1EA3n",
-    "referenceFiles.visualLimit": "T\u1EC7p kh\xF4ng ph\u1EA3i PDF s\u1EBD kh\xF4ng gi\u1EEF l\u1EA1i h\xECnh \u1EA3nh v\xE0 bi\u1EC3u \u0111\u1ED3 nh\xFAng. H\xE3y chuy\u1EC3n sang PDF khi c\u1EA7n tham chi\u1EBFu b\u1ED1 c\u1EE5c.",
     "referenceFiles.remove": "X\xF3a t\u1EC7p {filename}",
-    "referenceFiles.switchTitle": "X\xF3a t\u1EC7p tham chi\u1EBFu?",
-    "referenceFiles.switchMessage": "T\u1EC7p tham chi\u1EBFu ch\u1EC9 ho\u1EA1t \u0111\u1ED9ng v\u1EDBi Responses. H\xE3y x\xF3a c\xE1c t\u1EC7p \u0111\xE3 ch\u1ECDn tr\u01B0\u1EDBc khi chuy\u1EC3n sang Images.",
-    "referenceFiles.removeAndSwitch": "X\xF3a t\u1EC7p v\xE0 chuy\u1EC3n",
     "referenceFiles.chooseResponses": "Ch\u1ECDn k\xEAnh Responses",
     "referenceFiles.requiresResponses": "T\u1EC7p tham chi\u1EBFu ch\u1EC9 h\u1ED7 tr\u1EE3 Responses",
     "referenceFiles.switchToResponses": "Chuy\u1EC3n sang Responses",
     "referenceFiles.openApiSettings": "M\u1EDF c\xE0i \u0111\u1EB7t API",
     "referenceFiles.providerMissing": "Provider Responses c\u1EE7a t\xE1c v\u1EE5 g\u1ED1c kh\xF4ng kh\u1EA3 d\u1EE5ng. H\xE3y ch\u1ECDn provider trong c\xE0i \u0111\u1EB7t API.",
     "referenceFiles.missing": "Kh\xF4ng t\xECm th\u1EA5y t\u1EC7p",
-    "referenceFiles.loadFailed": "Kh\xF4ng t\u1EA3i \u0111\u01B0\u1EE3c t\u1EC7p tham chi\u1EBFu",
     "referenceFiles.errorEmpty": "T\u1EC7p tham chi\u1EBFu tr\u1ED1ng",
     "referenceFiles.errorUnsupported": "Kh\xF4ng h\u1ED7 tr\u1EE3 \u0111\u1ECBnh d\u1EA1ng t\u1EC7p tham chi\u1EBFu n\xE0y",
     "referenceFiles.errorMismatch": "N\u1ED9i dung t\u1EC7p kh\xF4ng kh\u1EDBp v\u1EDBi ph\u1EA7n m\u1EDF r\u1ED9ng",
@@ -15680,13 +14252,11 @@
     "modelSelection.provider": "Provider",
     "modelSelection.providerUnavailable": "Kh\xF4ng c\xF3 provider kh\u1EA3 d\u1EE5ng cho m\xF4 h\xECnh n\xE0y",
     "modelSelection.openSettings": "M\u1EDF c\xE0i \u0111\u1EB7t provider",
-    "modelSelection.codexUnavailable": "\u0110\u0103ng nh\u1EADp Codex kh\xF4ng kh\u1EA3 d\u1EE5ng",
     "modelSelection.catalogUnavailable": "Danh m\u1EE5c m\xF4 h\xECnh kh\xF4ng kh\u1EA3 d\u1EE5ng",
     "output.background": "N\u1EC1n",
     "canvas.aspectRatio": "T\u1EF7 l\u1EC7 khung h\xECnh",
     "canvas.resolution": "\u0110\u1ED9 ph\xE2n gi\u1EA3i",
     "gemini.googleSearch": "T\xECm ki\u1EBFm Google",
-    "gemini.googleImageSearch": "T\xECm ki\u1EBFm h\xECnh \u1EA3nh Google",
     "output.modalities": "Ph\u01B0\u01A1ng th\u1EE9c \u0111\u1EA7u ra",
     "gemini.safetySettings": "C\xE0i \u0111\u1EB7t an to\xE0n",
     "gemini.safety.harassment": "Qu\u1EA5y r\u1ED1i",
@@ -15758,11 +14328,9 @@
     "mobile.more": "\u66F4\u591A",
     "mobile.parameters": "\u53C2\u6570",
     "mobile.backToEditor": "\u8FD4\u56DE\u7F16\u8F91",
-    "mobile.pickFiles": "\u9009\u62E9\u7167\u7247\u6216\u6587\u4EF6",
     "mobile.pasteHint": "\u8BF7\u957F\u6309\u8F93\u5165\u533A\u4F7F\u7528\u7CFB\u7EDF\u7C98\u8D34\uFF0C\u6216\u9009\u62E9\u7167\u7247\u3001\u6587\u4EF6\u6DFB\u52A0\u3002",
     "mobile.manualCopy": "\u957F\u6309\u590D\u5236",
     "mobile.copyHint": "\u6682\u65F6\u65E0\u6CD5\u81EA\u52A8\u590D\u5236\uFF0C\u8BF7\u957F\u6309\u4E0B\u65B9\u6587\u5B57\u590D\u5236\u3002",
-    "mobile.gestureHint": "\u53CC\u6307\u7F29\u653E \xB7 \u5DE6\u53F3\u6ED1\u52A8\u5207\u56FE",
     "lanAccess.label": "\u5141\u8BB8\u5C40\u57DF\u7F51\u8BBF\u95EE",
     "lanAccess.help": "\u65E0\u9700\u767B\u5F55\u3002\u540C\u4E00\u7F51\u7EDC\u4E2D\u7684\u7528\u6237\u5171\u7528\u4EFB\u52A1\u3001\u56FE\u5E93\u548C\u4F9B\u5E94\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8BBE\u7F6E\u548C\u5220\u9664\u4EFB\u52A1\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8BFB\u53D6\u8BBF\u95EE\u8BBE\u7F6E\u2026",
@@ -15873,25 +14441,13 @@
     "queue.dispatching": "\u8C03\u5EA6\u4E2D \xB7 \u7B49\u5F85 {waiting}",
     "queue.runningWaiting": "\u8FD0\u884C {running} \xB7 \u7B49\u5F85 {waiting}",
     "queue.statusLabel": "\u961F\u5217\u72B6\u6001\uFF1A{text} \xB7 {channelText}\u3002\u70B9\u51FB\u8DF3\u8F6C\u5230\u8FDB\u884C\u4E2D\u4EFB\u52A1",
-    "queue.runningActions": "\u8FD0\u884C\u4EFB\u52A1\u961F\u5217\u64CD\u4F5C",
-    "queue.waitingActions": "\u7B49\u5F85\u4EFB\u52A1\u961F\u5217\u64CD\u4F5C",
-    "queue.cancelRunning": "\u53D6\u6D88",
     "queue.cancelRunningTitle": "\u53D6\u6D88\u8FD0\u884C\u4EFB\u52A1",
     "queue.dragWaiting": "\u6309\u4F4F\u5361\u7247\u4E0A\u4E0B\u62D6\u52A8\u6392\u5E8F",
-    "queue.dragSort": "\u62D6\u52A8\u6392\u5E8F",
-    "queue.moveUp": "\u4E0A",
     "queue.moveUpTitle": "\u4E0A\u79FB\u7B49\u5F85\u4EFB\u52A1",
-    "queue.moveDown": "\u4E0B",
     "queue.moveDownTitle": "\u4E0B\u79FB\u7B49\u5F85\u4EFB\u52A1",
     "queue.promote": "\u7F6E\u9876",
     "queue.promoteTitle": "\u7F6E\u9876\u7B49\u5F85\u4EFB\u52A1",
     "queue.promoteFailed": "\u7F6E\u9876\u5931\u8D25",
-    "queue.deleteWaitingShort": "\u5220",
-    "queue.deleteWaitingTitle": "\u5220\u9664\u7B49\u5F85\u4EFB\u52A1",
-    "queue.deleteWaitingTitleConfirm": "\u5220\u9664\u7B49\u5F85\u4EFB\u52A1\uFF1F",
-    "queue.deleteWaitingMessage": "\u4F1A\u4ECE\u961F\u5217\u548C\u5386\u53F2\u5217\u8868\u4E2D\u79FB\u9664\u3002",
-    "queue.deleteQueuedFailed": "\u5220\u9664\u961F\u5217\u4EFB\u52A1\u5931\u8D25",
-    "queue.queuedDeleted": "\u961F\u5217\u4EFB\u52A1\u5DF2\u5220\u9664",
     "queue.cancelRunningConfirm": "\u53D6\u6D88\u4EFB\u52A1",
     "queue.cancelRunningTitleConfirm": "\u53D6\u6D88\u8FD0\u884C\u4EFB\u52A1\uFF1F",
     "queue.cancelRunningMessage": "\u5C06\u4E2D\u65AD\u6B64\u4EFB\u52A1\u7684\u672C\u5730\u8BF7\u6C42\uFF0C\u4FDD\u7559\u5DF2\u751F\u6210\u56FE\u7247\u548C\u5386\u53F2\u8BB0\u5F55\u3002\u670D\u52A1\u5546\u53EF\u80FD\u4ECD\u7EE7\u7EED\u751F\u6210\u5E76\u8BA1\u8D39\u3002",
@@ -15931,9 +14487,6 @@
     "taskStatus.runtimeCompleted": "\u8017\u65F6 {duration} \xB7 \u5B8C\u6210 {time}",
     "taskStatus.completedAt": "\u5B8C\u6210 {time}",
     "taskCard.count": "{count} \u5F20",
-    "taskCard.successCount": "\u6210\u529F {count}",
-    "taskCard.failedCount": "\u5931\u8D25 {count}",
-    "taskCard.runningCount": "\u751F\u6210\u4E2D {count}",
     "taskCard.waitingCount": "\u7B49\u5F85 {count}",
     "taskCard.textToImageThumb": "\u6587\u751F\u56FE\u4EFB\u52A1\u7F29\u7565\u56FE",
     "taskCard.imageToImageThumb": "\u56FE\u751F\u56FE\u4EFB\u52A1\u7F29\u7565\u56FE",
@@ -15945,12 +14498,9 @@
     "runFeedback.editing": "\u7F16\u8F91\u4E2D",
     "runFeedback.generating": "\u751F\u6210\u4E2D",
     "runFeedback.status": "{action}\uFF0C\u8BA1\u65F6 {elapsed}",
-    "footer.archive": "\u4F1A\u8BDD\u5F52\u6863",
-    "footer.archiveCount": "\u4F1A\u8BDD\u5F52\u6863 {count}",
     "footer.historyLibrary": "\u5386\u53F2\u5E93",
     "historyLibrary.openFull": "\u6253\u5F00\u5B8C\u6574\u5386\u53F2\u5E93",
     "history.documentTitle": "\u5386\u53F2\u5E93 - iLab CONJURE",
-    "history.back": "\u8FD4\u56DE\u751F\u6210\u9875",
     "history.homeAria": "\u8FD4\u56DE iLab CONJURE \u751F\u6210\u9875",
     "history.backToGenerator": "\u8FD4\u56DE\u751F\u6210\u9875",
     "history.title": "\u5386\u53F2\u5E93",
@@ -16064,9 +14614,7 @@
     "history.type.textToImage": "\u6587\u751F\u56FE",
     "history.type.imageToImage": "\u56FE\u751F\u56FE",
     "history.month": "\u6708\u4EFD",
-    "history.status": "\u72B6\u6001",
     "history.promptMode": "\u63D0\u793A\u8BCD\u5904\u7406",
-    "history.size": "\u5C3A\u5BF8",
     "history.quality": "\u8D28\u91CF",
     "history.ratio": "\u6BD4\u4F8B",
     "history.orientation": "\u65B9\u5411",
@@ -16075,9 +14623,7 @@
     "history.archived": "\u5F52\u6863",
     "history.all": "\u5168\u90E8",
     "history.allMonths": "\u5168\u90E8\u6708\u4EFD",
-    "history.allStatuses": "\u5168\u90E8\u72B6\u6001",
     "history.allPromptModes": "\u5168\u90E8\u6A21\u5F0F",
-    "history.allSizes": "\u5168\u90E8\u5C3A\u5BF8",
     "history.allQualities": "\u5168\u90E8\u8D28\u91CF",
     "history.allRatios": "\u5168\u90E8\u6BD4\u4F8B",
     "history.ratioOther": "\u5176\u4ED6",
@@ -16099,13 +14645,10 @@
     "history.selectedCount": "\u5DF2\u9009\u62E9 {count} \u4E2A\u4EFB\u52A1",
     "history.confirmDelete": "\u786E\u8BA4\u5220\u9664",
     "history.detail": "\u4EFB\u52A1\u8BE6\u60C5",
-    "history.detailTitle": "\u5386\u53F2\u4EFB\u52A1",
     "history.closeDetail": "\u5173\u95ED\u4EFB\u52A1\u8BE6\u60C5",
     "history.resizeFilters": "\u8C03\u6574\u7B5B\u9009\u680F\u5BBD\u5EA6",
     "history.resizeDetail": "\u8C03\u6574\u8BE6\u60C5\u680F\u5BBD\u5EA6",
-    "history.detailEmpty": "\u9009\u62E9\u4E00\u4E2A\u5386\u53F2\u4EFB\u52A1\u67E5\u770B\u8BE6\u60C5",
     "history.loadingDetail": "\u8F7D\u5165\u8BE6\u60C5...",
-    "history.loadMore": "\u7EE7\u7EED\u8F7D\u5165",
     "history.loadingMore": "\u8F7D\u5165\u4E2D...",
     "history.noMore": "\u6CA1\u6709\u66F4\u591A\u4EFB\u52A1",
     "history.loadFailed": "\u8F7D\u5165\u5931\u8D25\uFF0C\u5237\u65B0\u6216\u7EE7\u7EED\u6EDA\u52A8\u91CD\u8BD5",
@@ -16114,9 +14657,7 @@
     "history.detailFailed": "\u8BE6\u60C5\u8F7D\u5165\u5931\u8D25",
     "history.noMatches": "\u6682\u65E0\u5339\u914D\u4EFB\u52A1",
     "history.loadedCount": "{count} \u6761\u5DF2\u8F7D\u5165",
-    "history.windowNotice": "\u5217\u8868\u7A97\u53E3\u5DF2\u9650\u5236\u4E3A {count} \u6761\uFF1B\u4E0A\u4E0B\u6EDA\u52A8\u4F1A\u6309\u9700\u6062\u590D\u76F8\u90BB\u4EFB\u52A1",
     "history.selectTask": "\u9009\u62E9\u4EFB\u52A1",
-    "history.viewing": "\u67E5\u770B\u4E2D",
     "history.noPreview": "\u6682\u65E0\u53EF\u9884\u89C8\u56FE\u7247",
     "history.downloadAll": "\u6253\u5305\u4E0B\u8F7D",
     "history.downloadImage": "\u4E0B\u8F7D\u56FE\u7247",
@@ -16131,11 +14672,9 @@
     "history.inputReferences": "\u8F93\u5165\u53C2\u8003\u56FE",
     "history.inputReferenceIndex": "\u8F93\u5165\u53C2\u8003\u56FE {index}",
     "history.copyPrompt": "\u590D\u5236\u63D0\u793A\u8BCD",
-    "history.copyPrompts": "\u590D\u5236\u63D0\u793A\u8BCD",
     "history.copyPromptShort": "\u590D\u5236",
     "history.copyPromptPanel": "\u590D\u5236{title}",
     "history.copyOutputPromptPanel": "\u590D\u5236\u56FE {index} \u4F18\u5316\u63D0\u793A\u8BCD",
-    "history.copyTaskIds": "\u590D\u5236\u4EFB\u52A1 ID",
     "history.reuseTask": "\u751F\u6210\u9875\u67E5\u770B",
     "history.downloadTask": "\u4E0B\u8F7D",
     "history.downloadSelectedTasks": "\u6279\u91CF\u4E0B\u8F7D",
@@ -16153,7 +14692,6 @@
     "history.noDownloadableOutputs": "\u6CA1\u6709\u53EF\u4E0B\u8F7D\u56FE\u7247",
     "history.confirmDeleteSelected": "\u786E\u8BA4\u5220\u9664\u5DF2\u9009",
     "history.openPreview": "\u653E\u5927\u9884\u89C8",
-    "history.closePreview": "\u5173\u95ED\u9884\u89C8",
     "history.untitled": "Untitled",
     "history.promptCompare": "\u63D0\u793A\u8BCD\u5BF9\u6BD4",
     "history.promptOriginal": "\u539F\u59CB\u63D0\u793A\u8BCD",
@@ -16171,8 +14709,6 @@
     "history.quality.low": "\u4F4E",
     "history.quality.auto": "\u81EA\u52A8",
     "footer.batch": "\u6279\u91CF\u7BA1\u7406",
-    "footer.storage": "\u5B58\u50A8\u8BBE\u7F6E",
-    "footer.apiStatus": "API \u72B6\u6001: \u6B63\u5E38",
     "footer.version": "\u7248\u672C {version}",
     "footer.versionLoading": "\u7248\u672C ...",
     "notifications.title": "\u4EFB\u52A1\u901A\u77E5",
@@ -16195,31 +14731,11 @@
     "theme.system": "\u8DDF\u968F",
     "theme.light": "\u6D45\u8272",
     "theme.dark": "\u6DF1\u8272",
-    "language.label": "\u754C\u9762\u8BED\u8A00",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7B80\u4F53\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u6388\u6743\u6765\u6E90",
     "auth.checking": "\u6388\u6743\u68C0\u67E5\u4E2D",
     "auth.missingCodexSession": "\u6CA1\u6709\u68C0\u6D4B\u5230 Codex \u767B\u5F55\u6001",
     "auth.switchFailed": "\u6388\u6743\u6765\u6E90\u5207\u6362\u5931\u8D25",
     "auth.sourceUnavailable": "{source} \u4E0D\u53EF\u7528",
     "auth.notActive": "\u672A\u751F\u6548",
-    "api.settings": "\u7CFB\u7EDF\u8BBE\u7F6E",
-    "api.provider": "API \u4F9B\u5E94\u5546",
-    "imageInput.title": "\u56FE\u50CF\u8F93\u5165",
     "imageInput.uploadAria": "\u70B9\u51FB\u3001\u62D6\u5165\u6216\u7C98\u8D34\u56FE\u7247\u4E0E\u6587\u4EF6",
     "imageInput.uploadImages": "\u70B9\u51FB\u3001\u62D6\u5165\u6216\u7C98\u8D34\u56FE\u7247",
     "imageInput.uploadFull": "\u70B9\u51FB\u3001\u62D6\u5165\u6216\u7C98\u8D34\u56FE\u7247\u4E0E\u6587\u4EF6",
@@ -16316,7 +14832,6 @@
     "gallery.categoryFallback": "\u56FE\u5E93\u5206\u7C7B",
     "gallery.imageFallback": "\u56FE\u5E93\u56FE\u7247",
     "gallery.imageLoadFailed": "\u65E0\u6CD5\u8F7D\u5165\u8FD9\u5F20\u56FE\u7247",
-    "gallery.editImageLoadFailed": "\u65E0\u6CD5\u8F7D\u5165\u8FD9\u5F20\u56FE\u7247\u8FDB\u884C\u7F16\u8F91",
     "gallery.cannotAddImage": "\u8FD9\u5F20\u56FE\u7247\u65E0\u6CD5\u52A0\u5165\u56FE\u5E93",
     "gallery.nameRequired": "\u8BF7\u8F93\u5165\u56FE\u5E93\u540D\u79F0",
     "gallery.saveFailed": "\u4FDD\u5B58\u56FE\u5E93\u5931\u8D25",
@@ -16372,7 +14887,6 @@
     "outputSettings.title": "\u8F93\u51FA\u8BBE\u7F6E",
     "output.lock.lock": "\u9501\u5B9A\u53C2\u6570",
     "output.lock.unlock": "\u89E3\u9501\u5E76\u4FEE\u6539",
-    "output.lock.current": "\u5F53\u524D\u9501\u5B9A",
     "output.lock.task": "\u6240\u9009\u4EFB\u52A1\u53C2\u6570",
     "output.lock.adoptTask": "\u4F7F\u7528\u6B64\u4EFB\u52A1\u53C2\u6570",
     "output.lock.frame": "\u753B\u5E45",
@@ -16392,9 +14906,6 @@
     "output.mainModel": "\u4E3B\u6A21\u578B",
     "output.selectMainModel": "\u9009\u62E9\u4E3B\u6A21\u578B",
     "output.mainModelCustomForInput": "\u6309\u5F53\u524D\u8F93\u5165\u4F7F\u7528\u81EA\u5B9A\u4E49\u6A21\u578B",
-    "output.apiDirect": "API \u76F4\u8FDE",
-    "output.apiToolModel": "\u4F7F\u7528 API \u56FE\u50CF\u751F\u6210\u6A21\u578B",
-    "output.transparencyFidelityHint": "\u900F\u660E\u80CC\u666F\u662F\u4F60\u9009\u62E9\u7684\u8F93\u51FA\u8981\u6C42\uFF0C\u539F\u6587\u548C\u4FDD\u771F\u6A21\u5F0F\u4E5F\u4F1A\u9644\u52A0\u6B64\u8981\u6C42\u3002",
     "output.transparentBackground": "\u900F\u660E\u80CC\u666F",
     "output.transparencyUnavailable": "\u4E0D\u652F\u6301\u900F\u660E",
     "output.transparencyFormat": "\u900F\u660E\u80CC\u666F\u9700\u4F7F\u7528 PNG \u6216 WebP\u3002",
@@ -16405,22 +14916,10 @@
     "preview.transparencyMissing": "\u672A\u68C0\u6D4B\u5230\u900F\u660E\u50CF\u7D20",
     "preview.transparencyRetryHint": "\u53EF\u5C1D\u8BD5\u63D0\u793A\u8BCD\u517C\u5BB9\u65B9\u5F0F\u6216\u5176\u4ED6\u6A21\u578B\uFF1B\u91CD\u8BD5\u4F1A\u91CD\u65B0\u751F\u6210\u3002",
     "output.webSearch": "\u8054\u7F51\u641C\u7D22",
-    "output.webSearchToggle": "\u5F00\u542F",
     "output.webSearchTitle": "\u5148\u8054\u7F51\u641C\u7D22\uFF0C\u518D\u7528\u4E8E\u672C\u6B21\u751F\u6210\uFF1B\u4EC5 Codex \u548C API Responses \u652F\u6301",
-    "output.promptMode": "\u63D0\u793A\u8BCD\u5904\u7406",
     "output.modeOriginal": "\u539F\u6587",
     "output.modeStrict": "\u4FDD\u771F",
     "output.modeCreative": "\u81EA\u52A8",
-    "output.promptHelp": "\u67E5\u770B\u63D0\u793A\u8BCD\u5904\u7406\u8BF4\u660E",
-    "output.promptHelpTitle": "\u63D0\u793A\u8BCD\u5904\u7406",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u4E3B\u6A21\u578B\u53C2\u4E0E",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u76F4\u63A5\u751F\u6210",
-    "output.promptHelp.responses.original": "\u6309\u539F\u6587\u53D1\u9001\uFF0C\u56FE\u7247\u5F15\u7528\u89E3\u6790\u4E3A\u53C2\u8003\u56FE\u7F16\u53F7\uFF0C\u4E0D\u6DFB\u52A0\u5E94\u7528\u7EA7\u63D0\u793A\u8BCD\u89C4\u5219\uFF1B\u670D\u52A1\u5546\u4ECD\u53EF\u80FD\u8FD4\u56DE revised prompt\uFF0C\u751F\u6210\u7ED3\u679C\u4E5F\u53EF\u80FD\u4E0E\u6587\u5B57\u7EA6\u675F\u6709\u504F\u5DEE\u3002",
-    "output.promptHelp.responses.strict": "\u5141\u8BB8\u4E3B\u6A21\u578B\u6574\u7406\u6216\u6269\u5199\uFF0C\u4F46\u5FC5\u987B\u4FDD\u7559\u5BF9\u8C61\u3001\u6587\u5B57\u3001\u989C\u8272\u3001\u6784\u56FE\u7B49\u786C\u6027\u7EA6\u675F\u3002",
-    "output.promptHelp.responses.automatic": "\u4E0D\u6DFB\u52A0\u989D\u5916\u7EA6\u675F\uFF0C\u7531\u4E3B\u6A21\u578B\u7406\u89E3\u5E76\u4F18\u5316\u540E\u8C03\u7528\u56FE\u50CF\u5DE5\u5177\u3002",
-    "output.promptHelp.images.original": "\u5E94\u7528\u4E0D\u6DFB\u52A0\u63D0\u793A\u8BCD\u89C4\u5219\uFF1B\u56FE\u7247\u5F15\u7528\u89E3\u6790\u4E3A\u53C2\u8003\u56FE\u7F16\u53F7\uFF0C\u5176\u4F59\u539F\u6587\u76F4\u63A5\u63D0\u4EA4\u7ED9\u56FE\u50CF\u63A5\u53E3\u3002",
-    "output.promptHelp.images.strict": "\u5E94\u7528\u5C06\u4FDD\u771F\u89C4\u5219\u4E0E\u539F\u63D0\u793A\u8BCD\u4E00\u5E76\u63D0\u4EA4\uFF0C\u5F3A\u8C03\u4FDD\u7559\u6240\u6709\u786C\u6027\u7EA6\u675F\u3002",
-    "output.promptHelp.images.automatic": "\u6309\u56FE\u50CF\u63A5\u53E3\u9ED8\u8BA4\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u56FE\u5E93\u5F15\u7528\u7B49\u5FC5\u8981\u8BF4\u660E\u4ECD\u4F1A\u968F\u63D0\u793A\u8BCD\u53D1\u9001\u3002",
     "output.size": "\u8F93\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
     "output.sizeAuto": "\u81EA\u52A8\u5C3A\u5BF8",
@@ -16484,8 +14983,6 @@
     "preview.runningTitle": "{mode}\u4EFB\u52A1\u8FD0\u884C\u4E2D",
     "preview.submittingTitle": "\u63D0\u4EA4\u4EFB\u52A1\u4E2D",
     "preview.queuedTitle": "\u4EFB\u52A1\u6392\u961F\u4E2D",
-    "preview.submittingDetail": "\u6B63\u5728\u4FDD\u5B58\u8F93\u5165\u5E76\u5199\u5165\u961F\u5217\uFF0C\u5B8C\u6210\u540E\u4F1A\u81EA\u52A8\u8FDB\u5165\u751F\u6210\u6D41\u7A0B\u3002",
-    "preview.queuedDetail": "\u4EFB\u52A1\u5DF2\u8FDB\u5165\u961F\u5217\uFF0C\u7B49\u5F85\u53EF\u7528\u901A\u9053\u63A5\u624B\u3002",
     "preview.featured": "\u7CBE\u9009",
     "preview.addFeatured": "\u52A0\u5165\u7CBE\u9009",
     "preview.selectedFeatured": "\u5DF2\u7CBE\u9009",
@@ -16538,7 +15035,6 @@
     "promptPopover.close": "\u5173\u95ED\u63D0\u793A\u8BCD",
     "promptPopover.copyOptimized": "\u590D\u5236\u4F18\u5316\u540E\u63D0\u793A\u8BCD",
     "promptPopover.copied": "\u5DF2\u590D\u5236",
-    "taskContext.menuLabel": "\u4EFB\u52A1\u53F3\u952E\u83DC\u5355",
     "taskContext.view": "\u67E5\u770B\u4EFB\u52A1",
     "taskContext.copyId": "\u590D\u5236\u4EFB\u52A1 ID",
     "taskContext.copyPrompt": "\u590D\u5236\u63D0\u793A\u8BCD",
@@ -16567,7 +15063,6 @@
     "taskActions.acceptSuccessesFailed": "\u63A5\u53D7\u6210\u529F\u7ED3\u679C\u5931\u8D25",
     "taskActions.acceptedSuccesses": "\u5DF2\u63A5\u53D7\u6210\u529F\u7ED3\u679C",
     "taskActions.viewedUpdateFailed": "\u5DF2\u8BFB\u72B6\u6001\u66F4\u65B0\u5931\u8D25",
-    "taskActions.failedFallback": "\u4EFB\u52A1\u5931\u8D25",
     "taskList.empty": "\u6682\u65E0\u5386\u53F2\u4EFB\u52A1",
     "taskList.selectSession": "\u9009\u62E9\u4F1A\u8BDD",
     "taskList.unreadUpdate": "\u672A\u8BFB\u66F4\u65B0",
@@ -16637,7 +15132,6 @@
     "snippets.saveSelection": "\u6536\u85CF",
     "snippets.saveSelectionLabel": "\u6536\u85CF\u9009\u4E2D\u7684\u63D0\u793A\u8BCD\u7247\u6BB5",
     "snippets.popoverLabel": "\u63D0\u793A\u8BCD\u7247\u6BB5",
-    "snippets.defaultCategory": "\u5E38\u7528",
     "snippets.loadFailed": "\u63D0\u793A\u8BCD\u7247\u6BB5\u8BFB\u53D6\u5931\u8D25",
     "snippets.remove": "\u79FB\u9664 ~{tag}",
     "snippets.expand": "\u5C55\u5F00",
@@ -16682,7 +15176,6 @@
     "colors.done": "\u5B8C\u6210",
     "colors.manage": "\u7BA1\u7406",
     "colors.favorites": "\u5E38\u7528\u989C\u8272",
-    "colors.recent": "\u6700\u8FD1\u989C\u8272",
     "colors.recentLabel": "\u6700\u8FD1",
     "colors.deleteFavorite": "\u5220\u9664\u5E38\u7528\u8272 {name}",
     "colors.modify": "\u4FEE\u6539\u989C\u8272",
@@ -16692,16 +15185,13 @@
     "taskGroup.current": "\u5F53\u524D\u67E5\u770B",
     "taskGroup.yesterday": "\u6628\u5929",
     "taskGroup.last7": "\u6700\u8FD1 7 \u5929",
-    "taskGroup.older": "\u66F4\u65E9",
     "taskGroup.searchResults": "\u641C\u7D22\u7ED3\u679C",
-    "taskGroup.active": "\u6D3B\u52A8\u4EFB\u52A1",
     "taskGroup.running": "\u8FD0\u884C\u4E2D",
     "taskGroup.waiting": "\u7B49\u5F85\u4E2D",
     "taskGroup.dispatchPending": "\u6B63\u5728\u5206\u914D\u53EF\u7528\u901A\u9053...",
     "taskGroup.expand": "\u5C55\u5F00 {label}",
     "taskGroup.collapse": "\u6536\u8D77 {label}",
     "taskGroup.buttonLabel": "{label}\uFF0C{count} \u4E2A\u4EFB\u52A1",
-    "taskGroup.loadMore": "\u518D\u52A0\u8F7D {count} \u6761",
     "taskGroup.loadFailedRetry": "\u8F7D\u5165\u5931\u8D25\uFF0C\u70B9\u6B64\u91CD\u8BD5",
     "archive.title": "\u4F1A\u8BDD\u5F52\u6863",
     "archive.empty": "\u6682\u65E0\u5F52\u6863\u4F1A\u8BDD",
@@ -16714,7 +15204,6 @@
     "archive.restoring": "\u6B63\u5728\u6062\u590D...",
     "archive.deleting": "\u6B63\u5728\u5220\u9664...",
     "archive.restoredCount": "\u5DF2\u6062\u590D {count} \u4E2A\u4EFB\u52A1",
-    "settings.title": "\u5B58\u50A8\u8BBE\u7F6E",
     "settings.status": "\u4FDD\u5B58\u5B58\u50A8\u8DEF\u5F84\u540E\u91CD\u542F WebUI \u751F\u6548",
     "settings.pathChangeHint": "\u66F4\u6539\u8DEF\u5F84\u4E0D\u4F1A\u642C\u8FC1\u65E7\u6570\u636E\u3002\u642C\u8FC1\u524D\u8BF7\u5907\u4EFD\u5E76\u9000\u51FA\u5E94\u7528\uFF0C\u518D\u5B8C\u6574\u590D\u5236\u76F8\u5173\u76EE\u5F55\u3002",
     "settings.previousPaths": "\u627E\u4E0D\u5230\u65E7\u6570\u636E\uFF1F\u67E5\u770B\u539F\u9ED8\u8BA4\u76EE\u5F55",
@@ -16796,7 +15285,6 @@
     "userConfigBackup.validating": "\u6B63\u5728\u6821\u9A8C\u5907\u4EFD\u5305\u2026",
     "userConfigBackup.validationReady": "\u6821\u9A8C\u5B8C\u6210\uFF0C\u8BF7\u9009\u62E9\u6062\u590D\u65B9\u5F0F",
     "userConfigBackup.versionUnsupported": "\u6B64\u5907\u4EFD\u6765\u81EA\u66F4\u9AD8\u683C\u5F0F\u7248\u672C\uFF0C\u53EA\u80FD\u67E5\u770B\uFF0C\u4E0D\u80FD\u6062\u590D",
-    "userConfigBackup.previewCounts": "\u5305\u5185 {count} \u9879 \xB7 \u91CD\u590D {duplicate} \xB7 \u51B2\u7A81 {conflict}",
     "userConfigBackup.previewSectionCounts": "\u5907\u4EFD {archive} \u9879 \xB7 \u5F53\u524D {current} \u9879",
     "userConfigBackup.previewGroupCounts": "{group}\uFF1A\u5907\u4EFD {archive} / \u5F53\u524D {current}",
     "userConfigBackup.emptyReplaceGroup": "{group}\uFF1A\u5907\u4EFD\u4E3A\u7A7A\uFF0C\u5F53\u524D\u6709 {current} \u9879",
@@ -16833,7 +15321,6 @@
     "user_config_restore_version_unsupported": "\u5907\u4EFD\u683C\u5F0F\u7248\u672C\u8FC7\u9AD8\uFF0C\u4E0D\u80FD\u6062\u590D",
     "systemSettings.tabsLabel": "\u7CFB\u7EDF\u8BBE\u7F6E\u9009\u9879",
     "systemSettings.apiTab": "API \u8BBE\u7F6E",
-    "systemSettings.codexTab": "Codex \u901A\u9053",
     "systemSettings.languageTab": "\u8BED\u8A00 / Language",
     "systemSettings.storageTab": "\u5B58\u50A8\u4E0E\u901A\u77E5",
     "systemSettings.networkTab": "\u7F51\u7EDC",
@@ -16861,23 +15348,14 @@
     "networkEgress.loadFailed": "\u7F51\u7EDC\u8BBE\u7F6E\u52A0\u8F7D\u5931\u8D25",
     "networkEgress.saveFailed": "\u7F51\u7EDC\u8BBE\u7F6E\u4FDD\u5B58\u5931\u8D25",
     "languageSettings.instantStatus": "\u8BED\u8A00\u5207\u6362\u540E\u7ACB\u5373\u751F\u6548",
-    "apiSettings.title": "API \u8BBE\u7F6E",
-    "apiSettings.status": "\u4FDD\u5B58\u540E\u7ACB\u5373\u7528\u4E8E API \u6A21\u5F0F",
-    "apiSettings.codexMode": "Codex \u901A\u9053",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API \u4F9B\u5E94\u5546",
     "apiSettings.searchProviders": "\u641C\u7D22\u4F9B\u5E94\u5546\u540D\u79F0",
     "apiSettings.noProviderSearchResults": "\u672A\u627E\u5230\u5339\u914D\u7684\u4F9B\u5E94\u5546",
     "apiSettings.providerCount": "{count} \u4E2A\u4F9B\u5E94\u5546",
-    "apiSettings.provider": "\u4F9B\u5E94\u5546",
     "apiSettings.providerName": "\u4F9B\u5E94\u5546\u540D\u79F0",
     "apiSettings.providerIcon": "Emoji \u56FE\u6807",
     "apiSettings.providerIconPlaceholder": "\u53EF\u9009\uFF0C\u4F8B\u5982 \u{1FA84}",
-    "apiSettings.connectionScope": "\u8FDE\u63A5\u7EA7\u8BBE\u7F6E",
-    "apiSettings.connectionPreview": "\u8FDE\u63A5\u9884\u89C8",
     "apiSettings.modelBindings": "\u6A21\u578B",
-    "apiSettings.modelBindingsHint": "\u4E00\u4E2A\u4F9B\u5E94\u5546\u53EF\u540C\u65F6\u7ED1\u5B9A\u591A\u4E2A\u578B\u53F7\u548C\u534F\u8BAE\u3002",
     "apiSettings.addModelBinding": "\u6DFB\u52A0\u6A21\u578B",
     "apiSettings.remoteModelName": "\u670D\u52A1\u5546\u6A21\u578B\u540D",
     "apiSettings.fetchModels": "\u83B7\u53D6\u6A21\u578B",
@@ -16900,7 +15378,6 @@
     "apiSettings.keepOneBinding": "\u6BCF\u4E2A\u4F9B\u5E94\u5546\u81F3\u5C11\u4FDD\u7559\u4E00\u6761\u6A21\u578B\u7ED1\u5B9A",
     "apiSettings.bindingRequiredFields": "\u8BF7\u4E3A\u6BCF\u6761\u7ED1\u5B9A\u9009\u62E9\u578B\u53F7\u3001\u586B\u5199\u8FDC\u7AEF\u6A21\u578B\u540D\u5E76\u81F3\u5C11\u9009\u62E9\u4E00\u4E2A\u64CD\u4F5C",
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
-    "apiSettings.actualRequest": "\u5B9E\u9645\u8BF7\u6C42",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u5E94\u5546",
     "apiSettings.copyProvider": "\u590D\u5236",
     "apiSettings.copyProviderName": "{name} \u526F\u672C",
@@ -16911,21 +15388,12 @@
     "apiSettings.sortProviderModeStatus": "\u62D6\u52A8\u624B\u67C4\u6392\u5E8F\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u952E\u8C03\u6574",
     "apiSettings.sortProviderHandleAria": "\u62D6\u52A8\u6392\u5E8F {provider}\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u952E\u6216 Home\u3001End \u952E\u8C03\u6574",
     "apiSettings.sortProviderStatus": "\u4F9B\u5E94\u5546\u6392\u5E8F\u5DF2\u8C03\u6574\uFF0C\u6B63\u5728\u81EA\u52A8\u4FDD\u5B58",
-    "apiSettings.moveProviderUp": "\u4E0A\u79FB",
-    "apiSettings.moveProviderDown": "\u4E0B\u79FB",
-    "apiSettings.moveProviderUpAria": "\u4E0A\u79FB {provider}",
-    "apiSettings.moveProviderDownAria": "\u4E0B\u79FB {provider}",
-    "apiSettings.mode": "\u8C03\u7528\u65B9\u5F0F",
-    "apiSettings.images": "\u76F4\u8FDE Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u76F4\u8FDE",
-    "apiSettings.imageModel": "\u56FE\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u5E76\u53D1\u4E0A\u9650",
     "apiSettings.svgAuthorModel": "SVG \u7ED8\u5236\u6A21\u578B",
     "apiSettings.invalidSvgAuthorModel": "\u8BF7\u8F93\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u5E76\u53D1",
     "apiSettings.advancedSettings": "\u9AD8\u7EA7\u8BBE\u7F6E",
-    "apiSettings.concurrencyValue": "\u5E76\u53D1 {concurrency}",
     "apiSettings.keySaved": "\u5DF2\u4FDD\u5B58 API Key",
     "apiSettings.keyNotSet": "\u672A\u8BBE\u7F6E API Key",
     "apiSettings.showApiKey": "\u663E\u793A API Key",
@@ -16933,18 +15401,12 @@
     "apiSettings.editProvider": "\u7F16\u8F91\u4F9B\u5E94\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u5E94\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9884\u89C8",
-    "apiSettings.editHint": "\u4FDD\u5B58\u540E\u751F\u6548\uFF1B\u53D6\u6D88\u7F16\u8F91\u4F1A\u653E\u5F03\u672C\u6B21\u4FEE\u6539\u3002",
     "apiSettings.finishEditFirst": "\u8BF7\u5148\u4FDD\u5B58\u6216\u53D6\u6D88\u5F53\u524D\u4F9B\u5E94\u5546\u7F16\u8F91",
     "apiSettings.newDraftStatus": "\u6B63\u5728\u65B0\u589E\u4F9B\u5E94\u5546\uFF0C\u4FDD\u5B58\u4F9B\u5E94\u5546\u540E\u751F\u6548",
     "apiSettings.editDraftStatus": "\u6B63\u5728\u7F16\u8F91\u4F9B\u5E94\u5546\uFF0C\u4FDD\u5B58\u4F9B\u5E94\u5546\u540E\u751F\u6548",
-    "apiSettings.cancelEdit": "\u53D6\u6D88\u7F16\u8F91",
-    "apiSettings.saveProvider": "\u4FDD\u5B58\u4F9B\u5E94\u5546",
-    "apiSettings.saveSelection": "\u4FDD\u5B58\u5F53\u524D\u9009\u62E9",
     "apiSettings.deleteProviderTitle": "\u5220\u9664\u4F9B\u5E94\u5546\uFF1F",
     "apiSettings.deleteProviderMessage": "\u786E\u5B9A\u5220\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u4F1A\u4ECE\u5F53\u524D\u4F9B\u5E94\u5546\u5217\u8868\u79FB\u9664\uFF0C\u5E76\u81EA\u52A8\u4FDD\u5B58\u5230\u540E\u7AEF\u3002",
-    "apiSettings.deleteProviderStatus": "\u5DF2\u5220\u9664\u4F9B\u5E94\u5546\uFF0C\u6B63\u5728\u81EA\u52A8\u4FDD\u5B58",
-    "apiSettings.save": "\u4FDD\u5B58 API \u8BBE\u7F6E",
     "apiSettings.loadFailed": "API \u8BBE\u7F6E\u8BFB\u53D6\u5931\u8D25",
     "apiSettings.savedKeyPlaceholder": "\u540E\u7AEF\u5DF2\u4FDD\u5B58 API Key\uFF0C\u8F93\u5165\u65B0 key \u53EF\u8986\u76D6",
     "apiSettings.apiKeyRequired": "\u8BF7\u586B\u5199 API Key \u540E\u518D\u4FDD\u5B58\u4F9B\u5E94\u5546\u3002",
@@ -16965,16 +15427,6 @@
     "apiSettings.savedShort": "\u5DF2\u4FDD\u5B58",
     "apiSettings.savedStatus": "API \u8BBE\u7F6E\u5DF2\u4FDD\u5B58",
     "apiSettings.saveFailedShort": "\u4FDD\u5B58\u5931\u8D25",
-    "codexSettings.title": "Codex \u901A\u9053",
-    "codexSettings.status": "\u9009\u62E9 Codex \u672C\u673A\u767B\u5F55\u6001\u4F7F\u7528\u7684\u751F\u6210\u901A\u9053",
-    "codexSettings.notesLabel": "Codex \u901A\u9053\u8BF4\u660E",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u9ED8\u8BA4\u901A\u9053\uFF0C\u5C3A\u5BF8\u3001\u8D28\u91CF\u548C\u7F16\u8F91\u53C2\u6570\u76F4\u4F20\uFF0C\u9002\u5408\u5E38\u89C4\u751F\u6210\u548C\u7F16\u8F91\u3002",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\u517C\u5BB9\u901A\u9053\uFF0C\u7528\u4E8E\u9700\u8981\u8054\u7F51\u641C\u7D22\u6216 Responses \u5DE5\u5177\u94FE\u7684\u4EFB\u52A1\u3002",
-    "codexSettings.current": "\u5F53\u524D\u4F7F\u7528",
-    "codexSettings.save": "\u4FDD\u5B58 Codex \u901A\u9053",
-    "codexSettings.saveMode": "\u4FDD\u5B58 {mode}",
     "imageEditor.title": "\u7F16\u8F91\u8F93\u5165\u56FE\u7247",
     "imageEditor.promptHint": "\u56FE\u4E2D\u7684\u624B\u7ED8\u7BAD\u5934\u548C\u6807\u8BB0\u4EC5\u7528\u4E8E\u6307\u793A\u7F16\u8F91\u8981\u6C42\uFF0C\u4E0D\u8981\u4FDD\u7559\u5728\u6700\u7EC8\u753B\u9762\u4E2D\u3002",
     "imageEditor.inputFallback": "\u8F93\u5165\u56FE\u7247",
@@ -17054,32 +15506,22 @@
     "addGallery.save": "\u4FDD\u5B58\u5230\u56FE\u5E93",
     "close.promptTemplates": "\u5173\u95ED\u63D0\u793A\u8BCD\u6A21\u677F\u9762\u677F",
     "close.archive": "\u5173\u95ED\u4F1A\u8BDD\u5F52\u6863\u9762\u677F",
-    "close.settings": "\u5173\u95ED\u5B58\u50A8\u8BBE\u7F6E\u9762\u677F",
-    "close.apiSettings": "\u5173\u95ED API \u8BBE\u7F6E\u9762\u677F",
     "close.systemSettings": "\u5173\u95ED\u7CFB\u7EDF\u8BBE\u7F6E\u9762\u677F",
     "close.imageEditor": "\u5173\u95ED\u7F16\u8F91\u8F93\u5165\u56FE\u7247\u9762\u677F",
     "close.gallery": "\u5173\u95ED\u516C\u7528\u56FE\u5E93\u9762\u677F",
     "close.addGallery": "\u5173\u95ED\u6DFB\u52A0\u5230\u56FE\u5E93\u9762\u677F",
     "imageInput.referenceTitle": "\u53C2\u8003\u8F93\u5165\uFF08\u53EF\u9009\uFF09",
-    "referenceFiles.add": "\u6DFB\u52A0\u6587\u4EF6",
-    "referenceFiles.selected": "\u53C2\u8003\u6587\u4EF6",
-    "referenceFiles.recent": "\u6700\u8FD1\u6587\u4EF6",
     "referenceFiles.familyPdf": "\u9875\u9762 + \u6587\u672C",
     "referenceFiles.familySpreadsheet": "\u8868\u683C",
     "referenceFiles.familyDocument": "\u6587\u6863",
     "referenceFiles.familyText": "\u6587\u672C",
-    "referenceFiles.visualLimit": "\u975E PDF \u6587\u4EF6\u4E0D\u4F1A\u4FDD\u7559\u5185\u5D4C\u56FE\u7247\u548C\u56FE\u8868\uFF1B\u9700\u8981\u7248\u5F0F\u53C2\u8003\u65F6\u8BF7\u5148\u8F6C\u4E3A PDF\u3002",
     "referenceFiles.remove": "\u79FB\u9664\u6587\u4EF6 {filename}",
-    "referenceFiles.switchTitle": "\u79FB\u9664\u53C2\u8003\u6587\u4EF6\uFF1F",
-    "referenceFiles.switchMessage": "\u53C2\u8003\u6587\u4EF6\u4EC5\u652F\u6301 Responses\uFF0C\u5207\u6362\u5230 Images \u524D\u9700\u8981\u79FB\u9664\u5DF2\u9009\u6587\u4EF6\u3002",
-    "referenceFiles.removeAndSwitch": "\u79FB\u9664\u6587\u4EF6\u5E76\u5207\u6362",
     "referenceFiles.chooseResponses": "\u9009\u62E9 Responses \u901A\u9053",
     "referenceFiles.requiresResponses": "\u53C2\u8003\u6587\u4EF6\u4EC5\u652F\u6301 Responses",
     "referenceFiles.switchToResponses": "\u5207\u6362\u5230 Responses",
     "referenceFiles.openApiSettings": "\u6253\u5F00 API \u8BBE\u7F6E",
     "referenceFiles.providerMissing": "\u539F\u4EFB\u52A1\u4F7F\u7528\u7684 Responses \u4F9B\u5E94\u5546\u4E0D\u53EF\u7528\uFF0C\u8BF7\u5728 API \u8BBE\u7F6E\u4E2D\u9009\u62E9\u3002",
     "referenceFiles.missing": "\u6587\u4EF6\u5DF2\u7F3A\u5931",
-    "referenceFiles.loadFailed": "\u53C2\u8003\u6587\u4EF6\u8F7D\u5165\u5931\u8D25",
     "referenceFiles.errorEmpty": "\u53C2\u8003\u6587\u4EF6\u4E3A\u7A7A",
     "referenceFiles.errorUnsupported": "\u4E0D\u652F\u6301\u8FD9\u79CD\u53C2\u8003\u6587\u4EF6\u683C\u5F0F",
     "referenceFiles.errorMismatch": "\u6587\u4EF6\u5185\u5BB9\u4E0E\u6269\u5C55\u540D\u4E0D\u5339\u914D",
@@ -17098,13 +15540,11 @@
     "modelSelection.provider": "\u4F9B\u5E94\u5546",
     "modelSelection.providerUnavailable": "\u5F53\u524D\u578B\u53F7\u6CA1\u6709\u53EF\u7528\u4F9B\u5E94\u5546",
     "modelSelection.openSettings": "\u6253\u5F00\u4F9B\u5E94\u5546\u8BBE\u7F6E",
-    "modelSelection.codexUnavailable": "Codex \u767B\u5F55\u4E0D\u53EF\u7528",
     "modelSelection.catalogUnavailable": "\u6A21\u578B\u76EE\u5F55\u4E0D\u53EF\u7528",
     "output.background": "\u80CC\u666F",
     "canvas.aspectRatio": "\u753B\u9762\u6BD4\u4F8B",
     "canvas.resolution": "\u5206\u8FA8\u7387",
     "gemini.googleSearch": "Google \u641C\u7D22",
-    "gemini.googleImageSearch": "Google \u56FE\u7247\u641C\u7D22",
     "output.modalities": "\u8F93\u51FA\u6A21\u6001",
     "gemini.safetySettings": "\u5B89\u5168\u8BBE\u7F6E",
     "gemini.safety.harassment": "\u9A9A\u6270",
@@ -17178,11 +15618,9 @@
     "mobile.more": "\u66F4\u591A",
     "mobile.parameters": "\u53C3\u6578",
     "mobile.backToEditor": "\u8FD4\u56DE\u7DE8\u8F2F",
-    "mobile.pickFiles": "\u9078\u64C7\u76F8\u7247\u6216\u6A94\u6848",
     "mobile.pasteHint": "\u8ACB\u9577\u6309\u8F38\u5165\u5340\u4F7F\u7528\u7CFB\u7D71\u8CBC\u4E0A\uFF0C\u6216\u9078\u64C7\u76F8\u7247\u3001\u6A94\u6848\u52A0\u5165\u3002",
     "mobile.manualCopy": "\u9577\u6309\u8907\u88FD",
     "mobile.copyHint": "\u66AB\u6642\u7121\u6CD5\u81EA\u52D5\u8907\u88FD\uFF0C\u8ACB\u9577\u6309\u4E0B\u65B9\u6587\u5B57\u8907\u88FD\u3002",
-    "mobile.gestureHint": "\u96D9\u6307\u7E2E\u653E \xB7 \u5DE6\u53F3\u6ED1\u52D5\u5207\u5716",
     "lanAccess.label": "\u5141\u8A31\u5340\u57DF\u7DB2\u7D61\u5B58\u53D6",
     "lanAccess.help": "\u7121\u9700\u767B\u5165\u3002\u540C\u4E00\u7DB2\u7D61\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8B80\u53D6\u5B58\u53D6\u8A2D\u5B9A\u2026",
@@ -17263,25 +15701,13 @@
     "queue.dispatching": "\u8ABF\u5EA6\u4E2D \xB7 \u7B49\u5F85{waiting}",
     "queue.runningWaiting": "\u57F7\u884C{running}\xB7 \u7B49\u5F85{waiting}",
     "queue.statusLabel": "\u4F47\u5217\u72C0\u614B\uFF1A{text}\xB7{channelText}\u3002\u9EDE\u64CA\u8DF3\u5230\u9032\u884C\u4E2D\u4EFB\u52D9",
-    "queue.runningActions": "\u57F7\u884C\u4EFB\u52D9\u4F47\u5217\u64CD\u4F5C",
-    "queue.waitingActions": "\u7B49\u5F85\u4EFB\u52D9\u4F47\u5217\u64CD\u4F5C",
-    "queue.cancelRunning": "\u53D6\u6D88",
     "queue.cancelRunningTitle": "\u53D6\u6D88\u57F7\u884C\u4EFB\u52D9",
     "queue.dragWaiting": "\u6309\u4F4F\u5361\u7247\u4E0A\u4E0B\u62D6\u66F3\u6392\u5E8F",
-    "queue.dragSort": "\u62D6\u66F3\u6392\u5E8F",
-    "queue.moveUp": "\u4E0A",
     "queue.moveUpTitle": "\u4E0A\u79FB\u7B49\u5F85\u4EFB\u52D9",
-    "queue.moveDown": "\u4E0B",
     "queue.moveDownTitle": "\u4E0B\u79FB\u7B49\u5F85\u4EFB\u52D9",
     "queue.promote": "\u7F6E\u9802",
     "queue.promoteTitle": "\u7F6E\u9802\u7B49\u5F85\u4EFB\u52D9",
     "queue.promoteFailed": "\u7F6E\u9802\u5931\u6557",
-    "queue.deleteWaitingShort": "\u522A",
-    "queue.deleteWaitingTitle": "\u522A\u9664\u7B49\u5F85\u4EFB\u52D9",
-    "queue.deleteWaitingTitleConfirm": "\u522A\u9664\u7B49\u5F85\u4EFB\u52D9\uFF1F",
-    "queue.deleteWaitingMessage": "\u6703\u5F9E\u4F47\u5217\u548C\u6B77\u53F2\u6E05\u55AE\u4E2D\u79FB\u9664\u3002",
-    "queue.deleteQueuedFailed": "\u522A\u9664\u4F47\u5217\u4EFB\u52D9\u5931\u6557",
-    "queue.queuedDeleted": "\u4F47\u5217\u4EFB\u52D9\u5DF2\u522A\u9664",
     "queue.cancelRunningConfirm": "\u53D6\u6D88\u4EFB\u52D9",
     "queue.cancelRunningTitleConfirm": "\u53D6\u6D88\u57F7\u884C\u4EFB\u52D9\uFF1F",
     "queue.cancelRunningMessage": "\u5C07\u4E2D\u65B7\u6B64\u4EFB\u52D9\u7684\u672C\u6A5F\u8ACB\u6C42\uFF0C\u4FDD\u7559\u5DF2\u751F\u6210\u5716\u7247\u53CA\u6B77\u53F2\u8A18\u9304\u3002\u670D\u52D9\u5546\u53EF\u80FD\u4ECD\u7E7C\u7E8C\u751F\u6210\u4E26\u6536\u8CBB\u3002",
@@ -17320,9 +15746,6 @@
     "taskStatus.runtimeCompleted": "\u8017\u6642 {duration} \xB7 \u5B8C\u6210 {time}",
     "taskStatus.completedAt": "\u5B8C\u6210{time}",
     "taskCard.count": "{count}\u5F35",
-    "taskCard.successCount": "\u6210\u529F{count}",
-    "taskCard.failedCount": "\u5931\u6557{count}",
-    "taskCard.runningCount": "\u751F\u6210\u4E2D{count}",
     "taskCard.waitingCount": "\u7B49\u5F85{count}",
     "taskCard.textToImageThumb": "\u6587\u751F\u5716\u4EFB\u52D9\u7E2E\u5716",
     "taskCard.imageToImageThumb": "\u5716\u751F\u5716\u4EFB\u52D9\u7E2E\u5716",
@@ -17334,12 +15757,9 @@
     "runFeedback.editing": "\u7DE8\u8F2F\u4E2D",
     "runFeedback.generating": "\u751F\u6210\u4E2D",
     "runFeedback.status": "{action}\uFF0C\u8A08\u6642{elapsed}",
-    "footer.archive": "\u6703\u8A71\u6B78\u6A94",
-    "footer.archiveCount": "\u6703\u8A71\u6B78\u6A94{count}",
     "footer.historyLibrary": "\u6B77\u53F2\u5EAB",
     "historyLibrary.openFull": "\u958B\u555F\u5B8C\u6574\u6B77\u53F2\u5EAB",
     "history.documentTitle": "\u6B77\u53F2\u5EAB - iLab CONJURE",
-    "history.back": "\u8FD4\u56DE\u751F\u6210\u9801",
     "history.homeAria": "\u8FD4\u56DE iLab CONJURE \u751F\u6210\u9801",
     "history.backToGenerator": "\u8FD4\u56DE\u751F\u6210\u9801",
     "history.title": "\u6B77\u53F2\u5EAB",
@@ -17453,9 +15873,7 @@
     "history.type.textToImage": "\u6587\u751F\u5716",
     "history.type.imageToImage": "\u5716\u751F\u5716",
     "history.month": "\u6708\u4EFD",
-    "history.status": "\u72C0\u614B",
     "history.promptMode": "\u63D0\u793A\u8A5E\u8655\u7406",
-    "history.size": "\u5C3A\u5BF8",
     "history.quality": "\u8CEA\u91CF",
     "history.ratio": "\u6BD4\u4F8B",
     "history.orientation": "\u65B9\u5411",
@@ -17464,9 +15882,7 @@
     "history.archived": "\u6B78\u6A94",
     "history.all": "\u5168\u90E8",
     "history.allMonths": "\u5168\u90E8\u6708\u4EFD",
-    "history.allStatuses": "\u5168\u90E8\u72C0\u614B",
     "history.allPromptModes": "\u5168\u90E8\u6A21\u5F0F",
-    "history.allSizes": "\u5168\u90E8\u5C3A\u5BF8",
     "history.allQualities": "\u5168\u90E8\u8CEA\u91CF",
     "history.allRatios": "\u5168\u90E8\u6BD4\u4F8B",
     "history.ratioOther": "\u5176\u4ED6",
@@ -17488,13 +15904,10 @@
     "history.selectedCount": "\u5DF2\u9078\u64C7{count}\u500B\u4EFB\u52D9",
     "history.confirmDelete": "\u78BA\u8A8D\u522A\u9664",
     "history.detail": "\u4EFB\u52D9\u8A73\u60C5",
-    "history.detailTitle": "\u6B77\u53F2\u4EFB\u52D9",
     "history.closeDetail": "\u95DC\u9589\u4EFB\u52D9\u8A73\u60C5",
     "history.resizeFilters": "\u8ABF\u6574\u7BE9\u9078\u6B04\u5BEC\u5EA6",
     "history.resizeDetail": "\u8ABF\u6574\u8A73\u60C5\u5217\u5BEC\u5EA6",
-    "history.detailEmpty": "\u9078\u64C7\u4E00\u500B\u6B77\u53F2\u4EFB\u52D9\u6AA2\u8996\u8A73\u60C5",
     "history.loadingDetail": "\u8F09\u5165\u8A73\u60C5...",
-    "history.loadMore": "\u7E7C\u7E8C\u8F09\u5165",
     "history.loadingMore": "\u8F09\u5165...",
     "history.noMore": "\u6C92\u6709\u66F4\u591A\u4EFB\u52D9",
     "history.loadFailed": "\u8F09\u5165\u5931\u6557\uFF0C\u91CD\u65B0\u6574\u7406\u6216\u7E7C\u7E8C\u6EFE\u52D5\u91CD\u8A66",
@@ -17503,9 +15916,7 @@
     "history.detailFailed": "\u8A73\u60C5\u8F09\u5165\u5931\u6557",
     "history.noMatches": "\u66AB\u7121\u5339\u914D\u4EFB\u52D9",
     "history.loadedCount": "{count}\u689D\u5DF2\u8F09\u5165",
-    "history.windowNotice": "\u6E05\u55AE\u8996\u7A97\u5DF2\u9650\u5236\u70BA{count}\u689D\uFF1B\u4E0A\u4E0B\u6EFE\u52D5\u6703\u6309\u9700\u6062\u5FA9\u76F8\u9130\u4EFB\u52D9",
     "history.selectTask": "\u9078\u64C7\u4EFB\u52D9",
-    "history.viewing": "\u67E5\u770B\u4E2D",
     "history.noPreview": "\u66AB\u7121\u53EF\u9810\u89BD\u5716\u7247",
     "history.downloadAll": "\u6253\u5305\u4E0B\u8F09",
     "history.downloadImage": "\u4E0B\u8F09\u5716\u7247",
@@ -17520,11 +15931,9 @@
     "history.inputReferences": "\u8F38\u5165\u53C3\u8003\u5716",
     "history.inputReferenceIndex": "\u8F38\u5165\u53C3\u8003\u5716{index}",
     "history.copyPrompt": "\u8907\u88FD\u63D0\u793A\u8A5E",
-    "history.copyPrompts": "\u8907\u88FD\u63D0\u793A\u8A5E",
     "history.copyPromptShort": "\u8907\u88FD",
     "history.copyPromptPanel": "\u8907\u88FD{title}",
     "history.copyOutputPromptPanel": "\u8907\u88FD\u5716{index}\u6700\u4F73\u5316\u63D0\u793A\u8A5E",
-    "history.copyTaskIds": "\u8907\u88FD\u4EFB\u52D9ID",
     "history.reuseTask": "\u751F\u6210\u9801\u67E5\u770B",
     "history.downloadTask": "\u4E0B\u8F09",
     "history.downloadSelectedTasks": "\u6279\u6B21\u4E0B\u8F09",
@@ -17542,7 +15951,6 @@
     "history.noDownloadableOutputs": "\u6C92\u6709\u53EF\u4E0B\u8F09\u5716\u7247",
     "history.confirmDeleteSelected": "\u78BA\u8A8D\u522A\u9664\u5DF2\u9078",
     "history.openPreview": "\u653E\u5927\u9810\u89BD",
-    "history.closePreview": "\u95DC\u9589\u9810\u89BD",
     "history.untitled": "Untitled",
     "history.promptCompare": "\u63D0\u793A\u8A5E\u5C0D\u6BD4",
     "history.promptOriginal": "\u539F\u59CB\u63D0\u793A\u8A5E",
@@ -17560,8 +15968,6 @@
     "history.quality.low": "\u4F4E",
     "history.quality.auto": "\u81EA\u52D5",
     "footer.batch": "\u6279\u6B21\u7BA1\u7406",
-    "footer.storage": "\u5132\u5B58\u8A2D\u5B9A",
-    "footer.apiStatus": "API\u72C0\u614B: \u6B63\u5E38",
     "footer.version": "\u7248\u672C{version}",
     "footer.versionLoading": "\u7248\u672C...",
     "notifications.title": "\u4EFB\u52D9\u901A\u77E5",
@@ -17584,31 +15990,11 @@
     "theme.system": "\u8DDF\u96A8",
     "theme.light": "\u6DFA\u8272",
     "theme.dark": "\u6DF1\u8272",
-    "language.label": "\u4ECB\u9762\u8A9E\u8A00",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7C21\u9AD4\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u6388\u6B0A\u4F86\u6E90",
     "auth.checking": "\u6388\u6B0A\u6AA2\u67E5\u4E2D",
     "auth.missingCodexSession": "\u6C92\u6709\u5075\u6E2C\u5230Codex\u767B\u5165\u614B",
     "auth.switchFailed": "\u6388\u6B0A\u4F86\u6E90\u5207\u63DB\u5931\u6557",
     "auth.sourceUnavailable": "{source}\u4E0D\u53EF\u7528",
     "auth.notActive": "\u672A\u751F\u6548",
-    "api.settings": "\u7CFB\u7D71\u8A2D\u5B9A",
-    "api.provider": "API\u4F9B\u61C9\u5546",
-    "imageInput.title": "\u5716\u7247\u8F38\u5165",
     "imageInput.uploadAria": "\u9EDE\u9078\u3001\u62D6\u66F3\u6216\u8CBC\u4E0A\u5716\u7247\u8207\u6A94\u6848",
     "imageInput.uploadImages": "\u9EDE\u64CA\u3001\u62D6\u5165\u6216\u8CBC\u4E0A\u5716\u7247",
     "imageInput.uploadFull": "\u9EDE\u9078\u3001\u62D6\u66F3\u6216\u8CBC\u4E0A\u5716\u7247\u8207\u6A94\u6848",
@@ -17704,7 +16090,6 @@
     "gallery.categoryFallback": "\u5716\u5EAB\u5206\u985E",
     "gallery.imageFallback": "\u5716\u5EAB\u5716\u7247",
     "gallery.imageLoadFailed": "\u7121\u6CD5\u8F09\u5165\u9019\u5F35\u5716\u7247",
-    "gallery.editImageLoadFailed": "\u7121\u6CD5\u8F09\u5165\u9019\u5F35\u5716\u7247\u9032\u884C\u7DE8\u8F2F",
     "gallery.cannotAddImage": "\u9019\u5F35\u5716\u7247\u7121\u6CD5\u52A0\u5165\u5716\u5EAB",
     "gallery.nameRequired": "\u8ACB\u8F38\u5165\u5716\u5EAB\u540D\u7A31",
     "gallery.saveFailed": "\u5132\u5B58\u5716\u5EAB\u5931\u6557",
@@ -17760,7 +16145,6 @@
     "outputSettings.title": "\u8F38\u51FA\u8A2D\u5B9A",
     "output.lock.lock": "\u9396\u5B9A\u53C3\u6578",
     "output.lock.unlock": "\u89E3\u9396\u4E26\u4FEE\u6539",
-    "output.lock.current": "\u76EE\u524D\u9396\u5B9A",
     "output.lock.task": "\u6240\u9078\u4EFB\u52D9\u53C3\u6578",
     "output.lock.adoptTask": "\u4F7F\u7528\u6B64\u4EFB\u52D9\u53C3\u6578",
     "output.lock.frame": "\u756B\u5E45",
@@ -17780,9 +16164,6 @@
     "output.mainModel": "\u4E3B\u6A21\u578B",
     "output.selectMainModel": "\u9078\u64C7\u4E3B\u6A21\u578B",
     "output.mainModelCustomForInput": "\u4F9D\u76EE\u524D\u8F38\u5165\u4F7F\u7528\u81EA\u8A02\u6A21\u578B",
-    "output.apiDirect": "API\u76F4\u9023",
-    "output.apiToolModel": "\u4F7F\u7528 API \u5F71\u50CF\u751F\u6210\u6A21\u578B",
-    "output.transparencyFidelityHint": "\u900F\u660E\u80CC\u666F\u662F\u4F60\u9078\u64C7\u7684\u8F38\u51FA\u8981\u6C42\uFF0C\u539F\u6587\u548C\u4FDD\u771F\u6A21\u5F0F\u4E5F\u6703\u9644\u52A0\u6B64\u8981\u6C42\u3002",
     "output.transparentBackground": "\u900F\u660E\u80CC\u666F",
     "output.transparencyUnavailable": "\u4E0D\u652F\u63F4\u900F\u660E",
     "output.transparencyFormat": "\u900F\u660E\u80CC\u666F\u9700\u4F7F\u7528 PNG \u6216 WebP\u3002",
@@ -17793,22 +16174,10 @@
     "preview.transparencyMissing": "\u672A\u5075\u6E2C\u5230\u900F\u660E\u50CF\u7D20",
     "preview.transparencyRetryHint": "\u53EF\u5617\u8A66\u63D0\u793A\u8A5E\u517C\u5BB9\u65B9\u5F0F\u6216\u5176\u4ED6\u6A21\u578B\uFF1B\u91CD\u8A66\u6703\u91CD\u65B0\u751F\u6210\u3002",
     "output.webSearch": "\u806F\u7DB2\u641C\u5C0B",
-    "output.webSearchToggle": "\u958B\u555F",
     "output.webSearchTitle": "\u5148\u806F\u7DB2\u641C\u5C0B\uFF0C\u518D\u7528\u65BC\u672C\u6B21\u751F\u6210\uFF1B\u50C5Codex\u548CAPIResponses \u652F\u6301",
-    "output.promptMode": "\u63D0\u793A\u8A5E\u8655\u7406",
     "output.modeOriginal": "\u539F\u6587",
     "output.modeStrict": "\u4FDD\u771F",
     "output.modeCreative": "\u81EA\u52D5",
-    "output.promptHelp": "\u67E5\u770B\u63D0\u793A\u8A5E\u8655\u7406\u8AAA\u660E",
-    "output.promptHelpTitle": "\u63D0\u793A\u8A5E\u8655\u7406",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u4E3B\u6A21\u578B\u53C3\u8207",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u76F4\u63A5\u751F\u6210",
-    "output.promptHelp.responses.original": "\u6309\u539F\u6587\u50B3\u9001\uFF0C\u4E0D\u52A0\u5165\u61C9\u7528\u7A0B\u5F0F\u5C64\u63D0\u793A\u8A5E\u898F\u5247\uFF1B\u670D\u52D9\u5546\u4ECD\u53EF\u80FD\u50B3\u56DE revised prompt\uFF0C\u751F\u6210\u7D50\u679C\u4EA6\u53EF\u80FD\u8207\u6587\u5B57\u7D04\u675F\u6709\u504F\u5DEE\u3002",
-    "output.promptHelp.responses.strict": "\u5141\u8A31\u4E3B\u6A21\u578B\u6574\u7406\u6216\u64F4\u5BEB\uFF0C\u4F46\u5FC5\u9808\u4FDD\u7559\u7269\u4EF6\u3001\u6587\u5B57\u3001\u984F\u8272\u3001\u69CB\u5716\u7B49\u786C\u6027\u9650\u5236\u3002",
-    "output.promptHelp.responses.automatic": "\u4E0D\u52A0\u5165\u984D\u5916\u9650\u5236\uFF0C\u7531\u4E3B\u6A21\u578B\u7406\u89E3\u4E26\u512A\u5316\u5F8C\u547C\u53EB\u5716\u50CF\u5DE5\u5177\u3002",
-    "output.promptHelp.images.original": "\u61C9\u7528\u7A0B\u5F0F\u4E0D\u52A0\u5165\u63D0\u793A\u8A5E\u898F\u5247\uFF0C\u6309\u7528\u6236\u539F\u6587\u76F4\u63A5\u63D0\u4EA4\u81F3\u5716\u50CF\u4ECB\u9762\u3002",
-    "output.promptHelp.images.strict": "\u61C9\u7528\u7A0B\u5F0F\u5C07\u4FDD\u771F\u898F\u5247\u8207\u539F\u63D0\u793A\u8A5E\u4E00\u4F75\u63D0\u4EA4\uFF0C\u5F37\u8ABF\u4FDD\u7559\u6240\u6709\u786C\u6027\u9650\u5236\u3002",
-    "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
     "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
@@ -17872,8 +16241,6 @@
     "preview.runningTitle": "{mode}\u4EFB\u52D9\u904B\u884C\u4E2D",
     "preview.submittingTitle": "\u63D0\u4EA4\u4EFB\u52D9\u4E2D",
     "preview.queuedTitle": "\u4EFB\u52D9\u6392\u968A\u4E2D",
-    "preview.submittingDetail": "\u6B63\u5728\u5132\u5B58\u8F38\u5165\u4E26\u5BEB\u5165\u4F47\u5217\uFF0C\u5B8C\u6210\u5F8C\u6703\u81EA\u52D5\u9032\u5165\u7522\u751F\u6D41\u7A0B\u3002",
-    "preview.queuedDetail": "\u4EFB\u52D9\u5DF2\u9032\u5165\u4F47\u5217\uFF0C\u7B49\u5F85\u53EF\u7528\u901A\u9053\u63A5\u624B\u3002",
     "preview.featured": "\u7CBE\u9078",
     "preview.addFeatured": "\u52A0\u5165\u7CBE\u9078",
     "preview.selectedFeatured": "\u5DF2\u7CBE\u9078",
@@ -17926,7 +16293,6 @@
     "promptPopover.close": "\u95DC\u9589\u63D0\u793A\u8A5E",
     "promptPopover.copyOptimized": "\u8907\u88FD\u512A\u5316\u5F8C\u63D0\u793A\u8A5E",
     "promptPopover.copied": "\u5DF2\u8907\u88FD",
-    "taskContext.menuLabel": "\u4EFB\u52D9\u53F3\u9375\u9078\u55AE",
     "taskContext.view": "\u67E5\u770B\u4EFB\u52D9",
     "taskContext.copyId": "\u8907\u88FD\u4EFB\u52D9ID",
     "taskContext.copyPrompt": "\u8907\u88FD\u63D0\u793A\u8A5E",
@@ -17955,7 +16321,6 @@
     "taskActions.acceptSuccessesFailed": "\u63A5\u53D7\u6210\u529F\u7D50\u679C\u5931\u6557",
     "taskActions.acceptedSuccesses": "\u5DF2\u63A5\u53D7\u6210\u529F\u7D50\u679C",
     "taskActions.viewedUpdateFailed": "\u5DF2\u8B80\u72C0\u614B\u66F4\u65B0\u5931\u6557",
-    "taskActions.failedFallback": "\u4EFB\u52D9\u5931\u6557",
     "taskList.empty": "\u66AB\u7121\u6B77\u53F2\u4EFB\u52D9",
     "taskList.selectSession": "\u9078\u64C7\u6703\u8A71",
     "taskList.unreadUpdate": "\u672A\u8B80\u66F4\u65B0",
@@ -18025,7 +16390,6 @@
     "snippets.saveSelection": "\u6536\u85CF",
     "snippets.saveSelectionLabel": "\u6536\u85CF\u9078\u53D6\u7684\u63D0\u793A\u8A5E\u7247\u6BB5",
     "snippets.popoverLabel": "\u63D0\u793A\u8A5E\u7247\u6BB5",
-    "snippets.defaultCategory": "\u5E38\u7528",
     "snippets.loadFailed": "\u63D0\u793A\u8A5E\u7247\u6BB5\u8B80\u53D6\u5931\u6557",
     "snippets.remove": "\u79FB\u9664 ~{tag}",
     "snippets.expand": "\u5C55\u958B",
@@ -18070,7 +16434,6 @@
     "colors.done": "\u5B8C\u6210",
     "colors.manage": "\u7BA1\u7406",
     "colors.favorites": "\u5E38\u7528\u984F\u8272",
-    "colors.recent": "\u6700\u8FD1\u984F\u8272",
     "colors.recentLabel": "\u6700\u8FD1",
     "colors.deleteFavorite": "\u522A\u9664\u5E38\u7528\u8272{name}",
     "colors.modify": "\u4FEE\u6539\u984F\u8272",
@@ -18080,16 +16443,13 @@
     "taskGroup.current": "\u76EE\u524D\u6AA2\u8996",
     "taskGroup.yesterday": "\u6628\u5929",
     "taskGroup.last7": "\u6700\u8FD1 7 \u5929",
-    "taskGroup.older": "\u66F4\u65E9",
     "taskGroup.searchResults": "\u641C\u5C0B\u7D50\u679C",
-    "taskGroup.active": "\u6D3B\u52D5\u4EFB\u52D9",
     "taskGroup.running": "\u904B\u4F5C\u4E2D",
     "taskGroup.waiting": "\u7B49\u5F85\u4E2D",
     "taskGroup.dispatchPending": "\u6B63\u5728\u5206\u914D\u53EF\u7528\u901A\u9053...",
     "taskGroup.expand": "\u5C55\u958B{label}",
     "taskGroup.collapse": "\u6536\u8D77{label}",
     "taskGroup.buttonLabel": "{label}\uFF0C{count}\u500B\u4EFB\u52D9",
-    "taskGroup.loadMore": "\u518D\u8F09\u5165{count}\u689D",
     "taskGroup.loadFailedRetry": "\u8F09\u5165\u5931\u6557\uFF0C\u9EDE\u6B64\u91CD\u8A66",
     "archive.title": "\u6703\u8A71\u6B78\u6A94",
     "archive.empty": "\u66AB\u7121\u6B78\u6A94\u6703\u8A71",
@@ -18102,7 +16462,6 @@
     "archive.restoring": "\u6B63\u5728\u6062\u5FA9...",
     "archive.deleting": "\u6B63\u5728\u522A\u9664...",
     "archive.restoredCount": "\u5DF2\u6062\u5FA9{count}\u500B\u4EFB\u52D9",
-    "settings.title": "\u5132\u5B58\u8A2D\u5B9A",
     "settings.status": "\u5132\u5B58\u8DEF\u5F91\u8A2D\u5B9A\u5F8C\u91CD\u555F WebUI \u751F\u6548",
     "settings.pathChangeHint": "\u66F4\u6539\u8DEF\u5F91\u4E0D\u6703\u642C\u79FB\u820A\u8CC7\u6599\u3002\u642C\u79FB\u524D\u8ACB\u5099\u4EFD\u4E26\u7D50\u675F\u61C9\u7528\u7A0B\u5F0F\uFF0C\u518D\u5B8C\u6574\u8907\u88FD\u76F8\u95DC\u76EE\u9304\u3002",
     "settings.previousPaths": "\u627E\u4E0D\u5230\u820A\u8CC7\u6599\uFF1F\u67E5\u770B\u539F\u9810\u8A2D\u76EE\u9304",
@@ -18157,7 +16516,6 @@
     "userConfigBackup.restoreComplete": "\u9084\u539F\u5B8C\u6210",
     "systemSettings.tabsLabel": "\u7CFB\u7D71\u8A2D\u5B9A\u9078\u9805",
     "systemSettings.apiTab": "API \u8A2D\u5B9A",
-    "systemSettings.codexTab": "Codex \u901A\u9053",
     "systemSettings.languageTab": "\u8A9E\u8A00 / Language",
     "systemSettings.storageTab": "\u5132\u5B58\u8207\u901A\u77E5",
     "systemSettings.networkTab": "\u7DB2\u7D61",
@@ -18185,23 +16543,14 @@
     "networkEgress.loadFailed": "\u7121\u6CD5\u8F09\u5165\u7DB2\u7D61\u8A2D\u5B9A",
     "networkEgress.saveFailed": "\u7121\u6CD5\u5132\u5B58\u7DB2\u7D61\u8A2D\u5B9A",
     "languageSettings.instantStatus": "\u8A9E\u8A00\u5207\u63DB\u5F8C\u5373\u6642\u751F\u6548",
-    "apiSettings.title": "API\u8A2D\u5B9A",
-    "apiSettings.status": "\u5132\u5B58\u5F8C\u7ACB\u5373\u7528\u65BCAPI\u6A21\u5F0F",
-    "apiSettings.codexMode": "Codex\u983B\u9053",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API\u4F9B\u61C9\u5546",
     "apiSettings.searchProviders": "\u641C\u5C0B\u4F9B\u61C9\u5546\u540D\u7A31",
     "apiSettings.noProviderSearchResults": "\u627E\u4E0D\u5230\u76F8\u7B26\u7684\u4F9B\u61C9\u5546",
     "apiSettings.providerCount": "{count}\u500B\u4F9B\u61C9\u5546",
-    "apiSettings.provider": "\u4F9B\u61C9\u5546",
     "apiSettings.providerName": "\u4F9B\u61C9\u5546\u540D\u7A31",
     "apiSettings.providerIcon": "Emoji \u5716\u793A",
     "apiSettings.providerIconPlaceholder": "\u53EF\u9078\uFF0C\u4F8B\u5982 \u{1FA84}",
-    "apiSettings.connectionScope": "\u8FDE\u63A5\u7EA7\u8BBE\u7F6E",
-    "apiSettings.connectionPreview": "\u9023\u7DDA\u9810\u89BD",
     "apiSettings.modelBindings": "\u6A21\u578B",
-    "apiSettings.modelBindingsHint": "\u4E00\u4E2A\u4F9B\u5E94\u5546\u53EF\u540C\u65F6\u7ED1\u5B9A\u591A\u4E2A\u578B\u53F7\u548C\u534F\u8BAE\u3002",
     "apiSettings.addModelBinding": "\u65B0\u589E\u6A21\u578B",
     "apiSettings.remoteModelName": "\u670D\u52D9\u5546\u6A21\u578B\u540D\u7A31",
     "apiSettings.fetchModels": "\u53D6\u5F97\u6A21\u578B",
@@ -18224,7 +16573,6 @@
     "apiSettings.keepOneBinding": "\u6BCF\u4E2A\u4F9B\u5E94\u5546\u81F3\u5C11\u4FDD\u7559\u4E00\u6761\u6A21\u578B\u7ED1\u5B9A",
     "apiSettings.bindingRequiredFields": "\u8BF7\u4E3A\u6BCF\u6761\u7ED1\u5B9A\u9009\u62E9\u578B\u53F7\u3001\u586B\u5199\u8FDC\u7AEF\u6A21\u578B\u540D\u5E76\u81F3\u5C11\u9009\u62E9\u4E00\u4E2A\u64CD\u4F5C",
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
-    "apiSettings.actualRequest": "\u5BE6\u969B\u8ACB\u6C42",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u61C9\u5546",
     "apiSettings.copyProvider": "\u8907\u88FD",
     "apiSettings.copyProviderName": "{name}\u526F\u672C",
@@ -18235,21 +16583,12 @@
     "apiSettings.sortProviderModeStatus": "\u62D6\u66F3\u63A7\u5236\u9EDE\u6392\u5E8F\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u9375\u8ABF\u6574",
     "apiSettings.sortProviderHandleAria": "\u62D6\u66F3\u6392\u5E8F {provider}\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u9375\u6216 Home\u3001End \u9375\u8ABF\u6574",
     "apiSettings.sortProviderStatus": "\u4F9B\u61C9\u5546\u6392\u5E8F\u5DF2\u8ABF\u6574\uFF0C\u6B63\u5728\u81EA\u52D5\u5132\u5B58",
-    "apiSettings.moveProviderUp": "\u4E0A\u79FB",
-    "apiSettings.moveProviderDown": "\u4E0B\u79FB",
-    "apiSettings.moveProviderUpAria": "\u4E0A\u79FB{provider}",
-    "apiSettings.moveProviderDownAria": "\u4E0B\u79FB{provider}",
-    "apiSettings.mode": "\u547C\u53EB\u65B9\u5F0F",
-    "apiSettings.images": "\u76F4\u9023Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u76F4\u9023",
-    "apiSettings.imageModel": "\u5F71\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u4E26\u767C\u4E0A\u9650",
     "apiSettings.svgAuthorModel": "SVG \u7E6A\u88FD\u6A21\u578B",
     "apiSettings.invalidSvgAuthorModel": "\u8ACB\u8F38\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u4E26\u767C",
     "apiSettings.advancedSettings": "\u9032\u968E\u8A2D\u5B9A",
-    "apiSettings.concurrencyValue": "\u4F75\u767C{concurrency}",
     "apiSettings.keySaved": "\u5DF2\u5132\u5B58API Key",
     "apiSettings.keyNotSet": "\u672A\u8A2D\u5B9AAPI Key",
     "apiSettings.showApiKey": "\u986F\u793A API Key",
@@ -18257,18 +16596,12 @@
     "apiSettings.editProvider": "\u7DE8\u8F2F\u4F9B\u61C9\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u61C9\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9810\u89BD",
-    "apiSettings.editHint": "\u5132\u5B58\u5F8C\u751F\u6548\uFF1B\u53D6\u6D88\u7DE8\u8F2F\u6703\u653E\u68C4\u672C\u6B21\u4FEE\u6539\u3002",
     "apiSettings.finishEditFirst": "\u8ACB\u5148\u5132\u5B58\u6216\u53D6\u6D88\u76EE\u524D\u4F9B\u61C9\u5546\u7DE8\u8F2F",
     "apiSettings.newDraftStatus": "\u6B63\u5728\u65B0\u589E\u4F9B\u61C9\u5546\uFF0C\u5132\u5B58\u4F9B\u61C9\u5546\u5F8C\u751F\u6548",
     "apiSettings.editDraftStatus": "\u6B63\u5728\u7DE8\u8F2F\u4F9B\u61C9\u5546\uFF0C\u5132\u5B58\u4F9B\u61C9\u5546\u5F8C\u751F\u6548",
-    "apiSettings.cancelEdit": "\u53D6\u6D88\u7DE8\u8F2F",
-    "apiSettings.saveProvider": "\u5132\u5B58\u4F9B\u61C9\u5546",
-    "apiSettings.saveSelection": "\u5132\u5B58\u76EE\u524D\u9078\u64C7",
     "apiSettings.deleteProviderTitle": "\u522A\u9664\u4F9B\u61C9\u5546\uFF1F",
     "apiSettings.deleteProviderMessage": "\u78BA\u5B9A\u522A\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u6703\u5F9E\u76EE\u524D\u4F9B\u61C9\u5546\u6E05\u55AE\u79FB\u9664\uFF0C\u4E26\u81EA\u52D5\u5132\u5B58\u5230\u5F8C\u7AEF\u3002",
-    "apiSettings.deleteProviderStatus": "\u5DF2\u522A\u9664\u4F9B\u61C9\u5546\uFF0C\u6B63\u5728\u81EA\u52D5\u5132\u5B58",
-    "apiSettings.save": "\u5132\u5B58API\u8A2D\u5B9A",
     "apiSettings.loadFailed": "API\u8A2D\u5B9A\u8B80\u53D6\u5931\u6557",
     "apiSettings.savedKeyPlaceholder": "\u5F8C\u7AEF\u5DF2\u5132\u5B58API Key\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
     "apiSettings.apiKeyRequired": "\u8ACB\u586B\u5BEB API Key \u5F8C\u518D\u5132\u5B58\u4F9B\u61C9\u5546\u3002",
@@ -18289,16 +16622,6 @@
     "apiSettings.savedShort": "\u5DF2\u5132\u5B58",
     "apiSettings.savedStatus": "API\u8A2D\u5B9A\u5DF2\u5132\u5B58",
     "apiSettings.saveFailedShort": "\u5132\u5B58\u5931\u6557",
-    "codexSettings.title": "Codex\u983B\u9053",
-    "codexSettings.status": "\u9078\u64C7Codex\u672C\u6A5F\u767B\u5165\u614B\u4F7F\u7528\u7684\u7522\u751F\u901A\u9053",
-    "codexSettings.notesLabel": "Codex\u983B\u9053\u8AAA\u660E",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u9810\u8A2D\u983B\u9053\uFF0C\u5C3A\u5BF8\u3001\u54C1\u8CEA\u548C\u7DE8\u8F2F\u53C3\u6578\u76F4\u50B3\uFF0C\u9069\u5408\u4E00\u822C\u7522\u751F\u548C\u7DE8\u8F2F\u3002",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\u76F8\u5BB9\u983B\u9053\uFF0C\u7528\u65BC\u9700\u8981\u9023\u7DB2\u641C\u5C0B\u6216 Responses \u5DE5\u5177\u93C8\u7684\u4EFB\u52D9\u3002",
-    "codexSettings.current": "\u76EE\u524D\u4F7F\u7528",
-    "codexSettings.save": "\u5132\u5B58Codex\u983B\u9053",
-    "codexSettings.saveMode": "\u5132\u5B58 {mode}",
     "imageEditor.title": "\u7DE8\u8F2F\u8F38\u5165\u5716\u7247",
     "imageEditor.promptHint": "\u5716\u4E2D\u7684\u624B\u7E6A\u7BAD\u982D\u548C\u6A19\u8A18\u50C5\u7528\u65BC\u6307\u793A\u7DE8\u8F2F\u8981\u6C42\uFF0C\u4E0D\u8981\u4FDD\u7559\u5728\u6700\u7D42\u756B\u9762\u4E2D\u3002",
     "imageEditor.inputFallback": "\u8F38\u5165\u5716\u7247",
@@ -18378,31 +16701,21 @@
     "addGallery.save": "\u5132\u5B58\u5230\u5716\u5EAB",
     "close.promptTemplates": "\u95DC\u9589\u63D0\u793A\u5B57\u7BC4\u672C\u9762\u677F",
     "close.archive": "\u95DC\u9589\u6703\u8A71\u6B78\u6A94\u9762\u677F",
-    "close.settings": "\u95DC\u9589\u5132\u5B58\u8A2D\u5B9A\u9762\u677F",
-    "close.apiSettings": "\u95DC\u9589API\u8A2D\u5B9A\u9762\u677F",
     "close.systemSettings": "\u95DC\u9589\u7CFB\u7D71\u8A2D\u5B9A\u9762\u677F",
     "close.imageEditor": "\u95DC\u9589\u7DE8\u8F2F\u8F38\u5165\u5716\u7247\u9762\u677F",
     "close.gallery": "\u95DC\u9589\u516C\u7528\u5716\u5EAB\u9762\u677F",
     "close.addGallery": "\u95DC\u9589\u5DF2\u65B0\u589E\u81F3\u5716\u5EAB\u9762\u677F",
     "imageInput.referenceTitle": "\u53C3\u8003\u8F38\u5165\uFF08\u53EF\u9078\uFF09",
-    "referenceFiles.add": "\u65B0\u589E\u6A94\u6848",
-    "referenceFiles.selected": "\u53C3\u8003\u6A94\u6848",
-    "referenceFiles.recent": "\u6700\u8FD1\u6A94\u6848",
     "referenceFiles.familyPdf": "\u9801\u9762 + \u6587\u5B57",
     "referenceFiles.familySpreadsheet": "\u8A66\u7B97\u8868",
     "referenceFiles.familyDocument": "\u6587\u4EF6",
     "referenceFiles.familyText": "\u6587\u5B57",
-    "referenceFiles.visualLimit": "\u975E PDF \u6A94\u6848\u4E0D\u6703\u4FDD\u7559\u5167\u5D4C\u5716\u7247\u548C\u5716\u8868\uFF1B\u9700\u8981\u7248\u9762\u53C3\u8003\u6642\u8ACB\u5148\u8F49\u70BA PDF\u3002",
     "referenceFiles.remove": "\u79FB\u9664\u6A94\u6848 {filename}",
-    "referenceFiles.switchTitle": "\u79FB\u9664\u53C3\u8003\u6A94\u6848\uFF1F",
-    "referenceFiles.switchMessage": "\u53C3\u8003\u6A94\u6848\u53EA\u652F\u63F4 Responses\uFF0C\u5207\u63DB\u5230 Images \u524D\u9700\u8981\u79FB\u9664\u5DF2\u9078\u6A94\u6848\u3002",
-    "referenceFiles.removeAndSwitch": "\u79FB\u9664\u6A94\u6848\u4E26\u5207\u63DB",
     "referenceFiles.requiresResponses": "\u53C3\u8003\u6A94\u6848\u53EA\u652F\u63F4 Responses",
     "referenceFiles.switchToResponses": "\u5207\u63DB\u5230 Responses",
     "referenceFiles.openApiSettings": "\u958B\u555F API \u8A2D\u5B9A",
     "referenceFiles.providerMissing": "\u539F\u4EFB\u52D9\u4F7F\u7528\u7684 Responses \u4F9B\u61C9\u5546\u7121\u6CD5\u4F7F\u7528\uFF0C\u8ACB\u5728 API \u8A2D\u5B9A\u4E2D\u9078\u64C7\u3002",
     "referenceFiles.missing": "\u6A94\u6848\u5DF2\u907A\u5931",
-    "referenceFiles.loadFailed": "\u53C3\u8003\u6A94\u6848\u8F09\u5165\u5931\u6557",
     "referenceFiles.errorEmpty": "\u53C3\u8003\u6A94\u6848\u662F\u7A7A\u7684",
     "referenceFiles.errorUnsupported": "\u4E0D\u652F\u63F4\u6B64\u53C3\u8003\u6A94\u6848\u683C\u5F0F",
     "referenceFiles.errorMismatch": "\u6A94\u6848\u5167\u5BB9\u8207\u526F\u6A94\u540D\u4E0D\u7B26",
@@ -18421,13 +16734,11 @@
     "modelSelection.provider": "\u4F9B\u61C9\u5546",
     "modelSelection.providerUnavailable": "\u76EE\u524D\u578B\u865F\u6C92\u6709\u53EF\u7528\u4F9B\u61C9\u5546",
     "modelSelection.openSettings": "\u958B\u555F\u4F9B\u61C9\u5546\u8A2D\u5B9A",
-    "modelSelection.codexUnavailable": "Codex \u767B\u5165\u4E0D\u53EF\u7528",
     "modelSelection.catalogUnavailable": "\u6A21\u578B\u76EE\u9304\u4E0D\u53EF\u7528",
     "output.background": "\u80CC\u666F",
     "canvas.aspectRatio": "\u756B\u9762\u6BD4\u4F8B",
     "canvas.resolution": "\u89E3\u50CF\u5EA6",
     "gemini.googleSearch": "Google \u641C\u5C0B",
-    "gemini.googleImageSearch": "Google \u5716\u7247\u641C\u5C0B",
     "output.modalities": "\u8F38\u51FA\u6A21\u614B",
     "gemini.safetySettings": "\u5B89\u5168\u8A2D\u5B9A",
     "gemini.safety.harassment": "\u9A37\u64FE",
@@ -18476,7 +16787,6 @@
     "userConfigBackup.incrementalCopy": "\u4FDD\u7559\u73FE\u6709\u8CC7\u6599\uFF0C\u7565\u904E\u91CD\u8907\u5167\u5BB9\uFF0C\u70BA\u885D\u7A81\u9805\u76EE\u5EFA\u7ACB\u5FA9\u539F\u526F\u672C\u3002",
     "userConfigBackup.itemCount": "{count} \u9805",
     "userConfigBackup.modeLabel": "\u5099\u4EFD\u6216\u9084\u539F",
-    "userConfigBackup.previewCounts": "\u6A94\u5167 {count} \u9805 \xB7 \u91CD\u8907 {duplicate} \xB7 \u885D\u7A81 {conflict}",
     "userConfigBackup.previewTitle": "\u9084\u539F\u9810\u89BD",
     "userConfigBackup.providerRetention": "{count} \u500B\u542B\u6191\u8B49\u7684\u4F9B\u61C9\u5546\u5C07\u4F9D\u5B89\u5168\u898F\u5247\u4FDD\u7559",
     "userConfigBackup.replaceConfirmCopy": "\u53D6\u4EE3\u53EA\u5F71\u97FF\u6240\u9078\u985E\u5225\uFF0C\u4F46\u6703\u522A\u9664\u9019\u4E9B\u985E\u5225\u7684\u73FE\u6709\u5167\u5BB9\u3002\u6B64\u64CD\u4F5C\u5B8C\u6210\u5F8C\u7121\u6CD5\u5FA9\u539F\u3002",
@@ -18596,11 +16906,9 @@
     "mobile.more": "\u66F4\u591A",
     "mobile.parameters": "\u53C3\u6578",
     "mobile.backToEditor": "\u8FD4\u56DE\u7DE8\u8F2F",
-    "mobile.pickFiles": "\u9078\u64C7\u7167\u7247\u6216\u6A94\u6848",
     "mobile.pasteHint": "\u8ACB\u9577\u6309\u8F38\u5165\u5340\u4F7F\u7528\u7CFB\u7D71\u8CBC\u4E0A\uFF0C\u6216\u9078\u64C7\u7167\u7247\u3001\u6A94\u6848\u52A0\u5165\u3002",
     "mobile.manualCopy": "\u9577\u6309\u8907\u88FD",
     "mobile.copyHint": "\u66AB\u6642\u7121\u6CD5\u81EA\u52D5\u8907\u88FD\uFF0C\u8ACB\u9577\u6309\u4E0B\u65B9\u6587\u5B57\u8907\u88FD\u3002",
-    "mobile.gestureHint": "\u96D9\u6307\u7E2E\u653E \xB7 \u5DE6\u53F3\u6ED1\u52D5\u5207\u5716",
     "lanAccess.label": "\u5141\u8A31\u5340\u57DF\u7DB2\u8DEF\u5B58\u53D6",
     "lanAccess.help": "\u7121\u9700\u767B\u5165\u3002\u540C\u4E00\u7DB2\u8DEF\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8B80\u53D6\u5B58\u53D6\u8A2D\u5B9A\u2026",
@@ -18681,25 +16989,13 @@
     "queue.dispatching": "\u8ABF\u5EA6\u4E2D \xB7 \u7B49\u5F85{waiting}",
     "queue.runningWaiting": "\u57F7\u884C{running}\xB7 \u7B49\u5F85{waiting}",
     "queue.statusLabel": "\u4F47\u5217\u72C0\u614B\uFF1A{text}\xB7{channelText}\u3002\u9EDE\u64CA\u8DF3\u5230\u9032\u884C\u4E2D\u4EFB\u52D9",
-    "queue.runningActions": "\u57F7\u884C\u4EFB\u52D9\u4F47\u5217\u64CD\u4F5C",
-    "queue.waitingActions": "\u7B49\u5F85\u4EFB\u52D9\u4F47\u5217\u64CD\u4F5C",
-    "queue.cancelRunning": "\u53D6\u6D88",
     "queue.cancelRunningTitle": "\u53D6\u6D88\u57F7\u884C\u4EFB\u52D9",
     "queue.dragWaiting": "\u6309\u4F4F\u5361\u7247\u4E0A\u4E0B\u62D6\u66F3\u6392\u5E8F",
-    "queue.dragSort": "\u62D6\u66F3\u6392\u5E8F",
-    "queue.moveUp": "\u4E0A",
     "queue.moveUpTitle": "\u4E0A\u79FB\u7B49\u5F85\u4EFB\u52D9",
-    "queue.moveDown": "\u4E0B",
     "queue.moveDownTitle": "\u4E0B\u79FB\u7B49\u5F85\u4EFB\u52D9",
     "queue.promote": "\u7F6E\u9802",
     "queue.promoteTitle": "\u7F6E\u9802\u7B49\u5F85\u4EFB\u52D9",
     "queue.promoteFailed": "\u7F6E\u9802\u5931\u6557",
-    "queue.deleteWaitingShort": "\u522A",
-    "queue.deleteWaitingTitle": "\u522A\u9664\u7B49\u5F85\u4EFB\u52D9",
-    "queue.deleteWaitingTitleConfirm": "\u522A\u9664\u7B49\u5F85\u4EFB\u52D9\uFF1F",
-    "queue.deleteWaitingMessage": "\u6703\u5F9E\u4F47\u5217\u548C\u6B77\u53F2\u6E05\u55AE\u4E2D\u79FB\u9664\u3002",
-    "queue.deleteQueuedFailed": "\u522A\u9664\u4F47\u5217\u4EFB\u52D9\u5931\u6557",
-    "queue.queuedDeleted": "\u4F47\u5217\u4EFB\u52D9\u5DF2\u522A\u9664",
     "queue.cancelRunningConfirm": "\u53D6\u6D88\u4EFB\u52D9",
     "queue.cancelRunningTitleConfirm": "\u53D6\u6D88\u57F7\u884C\u4EFB\u52D9\uFF1F",
     "queue.cancelRunningMessage": "\u5C07\u4E2D\u65B7\u6B64\u4EFB\u52D9\u7684\u672C\u6A5F\u8ACB\u6C42\uFF0C\u4FDD\u7559\u5DF2\u751F\u6210\u5716\u7247\u548C\u6B77\u53F2\u8A18\u9304\u3002\u670D\u52D9\u5546\u53EF\u80FD\u4ECD\u7E7C\u7E8C\u751F\u6210\u4E26\u8A08\u8CBB\u3002",
@@ -18738,9 +17034,6 @@
     "taskStatus.runtimeCompleted": "\u8017\u6642 {duration} \xB7 \u5B8C\u6210 {time}",
     "taskStatus.completedAt": "\u5B8C\u6210{time}",
     "taskCard.count": "{count}\u5F35",
-    "taskCard.successCount": "\u6210\u529F{count}",
-    "taskCard.failedCount": "\u5931\u6557{count}",
-    "taskCard.runningCount": "\u751F\u6210\u4E2D{count}",
     "taskCard.waitingCount": "\u7B49\u5F85{count}",
     "taskCard.textToImageThumb": "\u6587\u751F\u5716\u4EFB\u52D9\u7E2E\u5716",
     "taskCard.imageToImageThumb": "\u5716\u751F\u5716\u4EFB\u52D9\u7E2E\u5716",
@@ -18752,12 +17045,9 @@
     "runFeedback.editing": "\u7DE8\u8F2F\u4E2D",
     "runFeedback.generating": "\u751F\u6210\u4E2D",
     "runFeedback.status": "{action}\uFF0C\u8A08\u6642{elapsed}",
-    "footer.archive": "\u6703\u8A71\u6B78\u6A94",
-    "footer.archiveCount": "\u6703\u8A71\u6B78\u6A94{count}",
     "footer.historyLibrary": "\u6B77\u53F2\u5EAB",
     "historyLibrary.openFull": "\u958B\u555F\u5B8C\u6574\u6B77\u53F2\u5EAB",
     "history.documentTitle": "\u6B77\u53F2\u5EAB - iLab CONJURE",
-    "history.back": "\u8FD4\u56DE\u751F\u6210\u9801",
     "history.homeAria": "\u8FD4\u56DE iLab CONJURE \u751F\u6210\u9801",
     "history.backToGenerator": "\u8FD4\u56DE\u751F\u6210\u9801",
     "history.title": "\u6B77\u53F2\u5EAB",
@@ -18871,9 +17161,7 @@
     "history.type.textToImage": "\u6587\u751F\u5716",
     "history.type.imageToImage": "\u5716\u751F\u5716",
     "history.month": "\u6708\u4EFD",
-    "history.status": "\u72C0\u614B",
     "history.promptMode": "\u63D0\u793A\u8A5E\u8655\u7406",
-    "history.size": "\u5C3A\u5BF8",
     "history.quality": "\u8CEA\u91CF",
     "history.ratio": "\u6BD4\u4F8B",
     "history.orientation": "\u65B9\u5411",
@@ -18882,9 +17170,7 @@
     "history.archived": "\u6B78\u6A94",
     "history.all": "\u5168\u90E8",
     "history.allMonths": "\u5168\u90E8\u6708\u4EFD",
-    "history.allStatuses": "\u5168\u90E8\u72C0\u614B",
     "history.allPromptModes": "\u5168\u90E8\u6A21\u5F0F",
-    "history.allSizes": "\u5168\u90E8\u5C3A\u5BF8",
     "history.allQualities": "\u5168\u90E8\u8CEA\u91CF",
     "history.allRatios": "\u5168\u90E8\u6BD4\u4F8B",
     "history.ratioOther": "\u5176\u4ED6",
@@ -18906,13 +17192,10 @@
     "history.selectedCount": "\u5DF2\u9078\u64C7{count}\u500B\u4EFB\u52D9",
     "history.confirmDelete": "\u78BA\u8A8D\u522A\u9664",
     "history.detail": "\u4EFB\u52D9\u8A73\u60C5",
-    "history.detailTitle": "\u6B77\u53F2\u4EFB\u52D9",
     "history.closeDetail": "\u95DC\u9589\u4EFB\u52D9\u8A73\u60C5",
     "history.resizeFilters": "\u8ABF\u6574\u7BE9\u9078\u6B04\u5BEC\u5EA6",
     "history.resizeDetail": "\u8ABF\u6574\u8A73\u60C5\u5217\u5BEC\u5EA6",
-    "history.detailEmpty": "\u9078\u64C7\u4E00\u500B\u6B77\u53F2\u4EFB\u52D9\u6AA2\u8996\u8A73\u60C5",
     "history.loadingDetail": "\u8F09\u5165\u8A73\u60C5...",
-    "history.loadMore": "\u7E7C\u7E8C\u8F09\u5165",
     "history.loadingMore": "\u8F09\u5165...",
     "history.noMore": "\u6C92\u6709\u66F4\u591A\u4EFB\u52D9",
     "history.loadFailed": "\u8F09\u5165\u5931\u6557\uFF0C\u91CD\u65B0\u6574\u7406\u6216\u7E7C\u7E8C\u6EFE\u52D5\u91CD\u8A66",
@@ -18921,9 +17204,7 @@
     "history.detailFailed": "\u8A73\u60C5\u8F09\u5165\u5931\u6557",
     "history.noMatches": "\u66AB\u7121\u5339\u914D\u4EFB\u52D9",
     "history.loadedCount": "{count}\u689D\u5DF2\u8F09\u5165",
-    "history.windowNotice": "\u6E05\u55AE\u8996\u7A97\u5DF2\u9650\u5236\u70BA{count}\u689D\uFF1B\u4E0A\u4E0B\u6EFE\u52D5\u6703\u6309\u9700\u6062\u5FA9\u76F8\u9130\u4EFB\u52D9",
     "history.selectTask": "\u9078\u64C7\u4EFB\u52D9",
-    "history.viewing": "\u67E5\u770B\u4E2D",
     "history.noPreview": "\u66AB\u7121\u53EF\u9810\u89BD\u5716\u7247",
     "history.downloadAll": "\u6253\u5305\u4E0B\u8F09",
     "history.downloadImage": "\u4E0B\u8F09\u5716\u7247",
@@ -18938,11 +17219,9 @@
     "history.inputReferences": "\u8F38\u5165\u53C3\u8003\u5716",
     "history.inputReferenceIndex": "\u8F38\u5165\u53C3\u8003\u5716{index}",
     "history.copyPrompt": "\u8907\u88FD\u63D0\u793A\u8A5E",
-    "history.copyPrompts": "\u8907\u88FD\u63D0\u793A\u8A5E",
     "history.copyPromptShort": "\u8907\u88FD",
     "history.copyPromptPanel": "\u8907\u88FD{title}",
     "history.copyOutputPromptPanel": "\u8907\u88FD\u5716{index}\u6700\u4F73\u5316\u63D0\u793A\u8A5E",
-    "history.copyTaskIds": "\u8907\u88FD\u4EFB\u52D9ID",
     "history.reuseTask": "\u751F\u6210\u9801\u67E5\u770B",
     "history.downloadTask": "\u4E0B\u8F09",
     "history.downloadSelectedTasks": "\u6279\u6B21\u4E0B\u8F09",
@@ -18960,7 +17239,6 @@
     "history.noDownloadableOutputs": "\u6C92\u6709\u53EF\u4E0B\u8F09\u5716\u7247",
     "history.confirmDeleteSelected": "\u78BA\u8A8D\u522A\u9664\u5DF2\u9078",
     "history.openPreview": "\u653E\u5927\u9810\u89BD",
-    "history.closePreview": "\u95DC\u9589\u9810\u89BD",
     "history.untitled": "Untitled",
     "history.promptCompare": "\u63D0\u793A\u8A5E\u5C0D\u6BD4",
     "history.promptOriginal": "\u539F\u59CB\u63D0\u793A\u8A5E",
@@ -18978,8 +17256,6 @@
     "history.quality.low": "\u4F4E",
     "history.quality.auto": "\u81EA\u52D5",
     "footer.batch": "\u6279\u6B21\u7BA1\u7406",
-    "footer.storage": "\u5132\u5B58\u8A2D\u5B9A",
-    "footer.apiStatus": "API\u72C0\u614B: \u6B63\u5E38",
     "footer.version": "\u7248\u672C{version}",
     "footer.versionLoading": "\u7248\u672C...",
     "notifications.title": "\u4EFB\u52D9\u901A\u77E5",
@@ -19002,31 +17278,11 @@
     "theme.system": "\u8DDF\u96A8",
     "theme.light": "\u6DFA\u8272",
     "theme.dark": "\u6DF1\u8272",
-    "language.label": "\u4ECB\u9762\u8A9E\u8A00",
-    "language.zh": "\u4E2D",
-    "language.zhCN": "\u7C21\u9AD4\u4E2D\u6587",
-    "language.zhTW": "\u6B63\u9AD4\u4E2D\u6587",
-    "language.zhHK": "\u7E41\u4F53\u4E2D\u6587",
-    "language.ja": "\u65E5\u672C\u8A9E",
-    "language.ko": "\uD55C\uAD6D\uC5B4",
-    "language.en": "English",
-    "language.es": "Espa\xF1ol",
-    "language.pt": "Portugu\xEAs",
-    "language.fr": "Fran\xE7ais",
-    "language.de": "Deutsch",
-    "language.ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-    "language.it": "Italiano",
-    "language.hi": "\u0939\u093F\u0928\u094D\u0926\u0940",
-    "language.vi": "Ti\u1EBFng Vi\u1EC7t",
-    "auth.label": "\u6388\u6B0A\u4F86\u6E90",
     "auth.checking": "\u6388\u6B0A\u6AA2\u67E5\u4E2D",
     "auth.missingCodexSession": "\u6C92\u6709\u5075\u6E2C\u5230Codex\u767B\u5165\u614B",
     "auth.switchFailed": "\u6388\u6B0A\u4F86\u6E90\u5207\u63DB\u5931\u6557",
     "auth.sourceUnavailable": "{source}\u4E0D\u53EF\u7528",
     "auth.notActive": "\u672A\u751F\u6548",
-    "api.settings": "\u7CFB\u7D71\u8A2D\u5B9A",
-    "api.provider": "API\u4F9B\u61C9\u5546",
-    "imageInput.title": "\u5716\u7247\u8F38\u5165",
     "imageInput.uploadAria": "\u9EDE\u9078\u3001\u62D6\u66F3\u6216\u8CBC\u4E0A\u5716\u7247\u8207\u6A94\u6848",
     "imageInput.uploadImages": "\u9EDE\u64CA\u3001\u62D6\u5165\u6216\u8CBC\u4E0A\u5716\u7247",
     "imageInput.uploadFull": "\u9EDE\u9078\u3001\u62D6\u66F3\u6216\u8CBC\u4E0A\u5716\u7247\u8207\u6A94\u6848",
@@ -19122,7 +17378,6 @@
     "gallery.categoryFallback": "\u5716\u5EAB\u5206\u985E",
     "gallery.imageFallback": "\u5716\u5EAB\u5716\u7247",
     "gallery.imageLoadFailed": "\u7121\u6CD5\u8F09\u5165\u9019\u5F35\u5716\u7247",
-    "gallery.editImageLoadFailed": "\u7121\u6CD5\u8F09\u5165\u9019\u5F35\u5716\u7247\u9032\u884C\u7DE8\u8F2F",
     "gallery.cannotAddImage": "\u9019\u5F35\u5716\u7247\u7121\u6CD5\u52A0\u5165\u5716\u5EAB",
     "gallery.nameRequired": "\u8ACB\u8F38\u5165\u5716\u5EAB\u540D\u7A31",
     "gallery.saveFailed": "\u5132\u5B58\u5716\u5EAB\u5931\u6557",
@@ -19178,7 +17433,6 @@
     "outputSettings.title": "\u8F38\u51FA\u8A2D\u5B9A",
     "output.lock.lock": "\u9396\u5B9A\u53C3\u6578",
     "output.lock.unlock": "\u89E3\u9396\u4E26\u4FEE\u6539",
-    "output.lock.current": "\u76EE\u524D\u9396\u5B9A",
     "output.lock.task": "\u6240\u9078\u4EFB\u52D9\u53C3\u6578",
     "output.lock.adoptTask": "\u4F7F\u7528\u6B64\u4EFB\u52D9\u53C3\u6578",
     "output.lock.frame": "\u756B\u5E45",
@@ -19198,9 +17452,6 @@
     "output.mainModel": "\u4E3B\u6A21\u578B",
     "output.selectMainModel": "\u9078\u64C7\u4E3B\u6A21\u578B",
     "output.mainModelCustomForInput": "\u4F9D\u76EE\u524D\u8F38\u5165\u4F7F\u7528\u81EA\u8A02\u6A21\u578B",
-    "output.apiDirect": "API\u76F4\u9023",
-    "output.apiToolModel": "\u4F7F\u7528 API \u5F71\u50CF\u751F\u6210\u6A21\u578B",
-    "output.transparencyFidelityHint": "\u900F\u660E\u80CC\u666F\u662F\u4F60\u9078\u64C7\u7684\u8F38\u51FA\u8981\u6C42\uFF0C\u539F\u6587\u548C\u4FDD\u771F\u6A21\u5F0F\u4E5F\u6703\u9644\u52A0\u6B64\u8981\u6C42\u3002",
     "output.transparentBackground": "\u900F\u660E\u80CC\u666F",
     "output.transparencyUnavailable": "\u4E0D\u652F\u63F4\u900F\u660E",
     "output.transparencyFormat": "\u900F\u660E\u80CC\u666F\u9700\u4F7F\u7528 PNG \u6216 WebP\u3002",
@@ -19211,22 +17462,10 @@
     "preview.transparencyMissing": "\u672A\u5075\u6E2C\u5230\u900F\u660E\u50CF\u7D20",
     "preview.transparencyRetryHint": "\u53EF\u5617\u8A66\u63D0\u793A\u8A5E\u76F8\u5BB9\u65B9\u5F0F\u6216\u5176\u4ED6\u6A21\u578B\uFF1B\u91CD\u8A66\u6703\u91CD\u65B0\u751F\u6210\u3002",
     "output.webSearch": "\u806F\u7DB2\u641C\u5C0B",
-    "output.webSearchToggle": "\u958B\u555F",
     "output.webSearchTitle": "\u5148\u806F\u7DB2\u641C\u5C0B\uFF0C\u518D\u7528\u65BC\u672C\u6B21\u751F\u6210\uFF1B\u50C5Codex\u548CAPIResponses \u652F\u6301",
-    "output.promptMode": "\u63D0\u793A\u8A5E\u8655\u7406",
     "output.modeOriginal": "\u539F\u6587",
     "output.modeStrict": "\u4FDD\u771F",
     "output.modeCreative": "\u81EA\u52D5",
-    "output.promptHelp": "\u67E5\u770B\u63D0\u793A\u8A5E\u8655\u7406\u8AAA\u660E",
-    "output.promptHelpTitle": "\u63D0\u793A\u8A5E\u8655\u7406",
-    "output.promptHelp.responsesChannel": "Responses \xB7 \u4E3B\u6A21\u578B\u53C3\u8207",
-    "output.promptHelp.imagesChannel": "Images \xB7 \u76F4\u63A5\u751F\u6210",
-    "output.promptHelp.responses.original": "\u6309\u539F\u6587\u50B3\u9001\uFF0C\u4E0D\u52A0\u5165\u61C9\u7528\u7A0B\u5F0F\u5C64\u63D0\u793A\u8A5E\u898F\u5247\uFF1B\u670D\u52D9\u5546\u4ECD\u53EF\u80FD\u50B3\u56DE revised prompt\uFF0C\u751F\u6210\u7D50\u679C\u4E5F\u53EF\u80FD\u8207\u6587\u5B57\u7D04\u675F\u6709\u504F\u5DEE\u3002",
-    "output.promptHelp.responses.strict": "\u5141\u8A31\u4E3B\u6A21\u578B\u6574\u7406\u6216\u64F4\u5BEB\uFF0C\u4F46\u5FC5\u9808\u4FDD\u7559\u7269\u4EF6\u3001\u6587\u5B57\u3001\u984F\u8272\u3001\u69CB\u5716\u7B49\u786C\u6027\u9650\u5236\u3002",
-    "output.promptHelp.responses.automatic": "\u4E0D\u52A0\u5165\u984D\u5916\u9650\u5236\uFF0C\u7531\u4E3B\u6A21\u578B\u7406\u89E3\u4E26\u6700\u4F73\u5316\u5F8C\u547C\u53EB\u5716\u50CF\u5DE5\u5177\u3002",
-    "output.promptHelp.images.original": "\u61C9\u7528\u7A0B\u5F0F\u4E0D\u52A0\u5165\u63D0\u793A\u8A5E\u898F\u5247\uFF0C\u6309\u4F7F\u7528\u8005\u539F\u6587\u76F4\u63A5\u63D0\u4EA4\u81F3\u5716\u50CF\u4ECB\u9762\u3002",
-    "output.promptHelp.images.strict": "\u61C9\u7528\u7A0B\u5F0F\u5C07\u4FDD\u771F\u898F\u5247\u8207\u539F\u63D0\u793A\u8A5E\u4E00\u4F75\u63D0\u4EA4\uFF0C\u5F37\u8ABF\u4FDD\u7559\u6240\u6709\u786C\u6027\u9650\u5236\u3002",
-    "output.promptHelp.images.automatic": "\u6309\u5716\u50CF\u4ECB\u9762\u7684\u9810\u8A2D\u65B9\u5F0F\u63D0\u4EA4\uFF1B\u5716\u5EAB\u5F15\u7528\u7B49\u5FC5\u8981\u8AAA\u660E\u4ECD\u6703\u96A8\u63D0\u793A\u8A5E\u50B3\u9001\u3002",
     "output.size": "\u8F38\u51FA\u5C3A\u5BF8",
     "output.sizeMode": "\u5C3A\u5BF8\u6A21\u5F0F",
     "output.sizeAuto": "\u81EA\u52D5\u5C3A\u5BF8",
@@ -19290,8 +17529,6 @@
     "preview.runningTitle": "{mode}\u4EFB\u52D9\u904B\u884C\u4E2D",
     "preview.submittingTitle": "\u63D0\u4EA4\u4EFB\u52D9\u4E2D",
     "preview.queuedTitle": "\u4EFB\u52D9\u6392\u968A\u4E2D",
-    "preview.submittingDetail": "\u6B63\u5728\u5132\u5B58\u8F38\u5165\u4E26\u5BEB\u5165\u4F47\u5217\uFF0C\u5B8C\u6210\u5F8C\u6703\u81EA\u52D5\u9032\u5165\u7522\u751F\u6D41\u7A0B\u3002",
-    "preview.queuedDetail": "\u4EFB\u52D9\u5DF2\u9032\u5165\u4F47\u5217\uFF0C\u7B49\u5F85\u53EF\u7528\u901A\u9053\u63A5\u624B\u3002",
     "preview.featured": "\u7CBE\u9078",
     "preview.addFeatured": "\u52A0\u5165\u7CBE\u9078",
     "preview.selectedFeatured": "\u5DF2\u7CBE\u9078",
@@ -19344,7 +17581,6 @@
     "promptPopover.close": "\u95DC\u9589\u63D0\u793A\u8A5E",
     "promptPopover.copyOptimized": "\u8907\u88FD\u512A\u5316\u5F8C\u63D0\u793A\u8A5E",
     "promptPopover.copied": "\u5DF2\u8907\u88FD",
-    "taskContext.menuLabel": "\u4EFB\u52D9\u53F3\u9375\u9078\u55AE",
     "taskContext.view": "\u67E5\u770B\u4EFB\u52D9",
     "taskContext.copyId": "\u8907\u88FD\u4EFB\u52D9ID",
     "taskContext.copyPrompt": "\u8907\u88FD\u63D0\u793A\u8A5E",
@@ -19373,7 +17609,6 @@
     "taskActions.acceptSuccessesFailed": "\u63A5\u53D7\u6210\u529F\u7D50\u679C\u5931\u6557",
     "taskActions.acceptedSuccesses": "\u5DF2\u63A5\u53D7\u6210\u529F\u7D50\u679C",
     "taskActions.viewedUpdateFailed": "\u5DF2\u8B80\u72C0\u614B\u66F4\u65B0\u5931\u6557",
-    "taskActions.failedFallback": "\u4EFB\u52D9\u5931\u6557",
     "taskList.empty": "\u66AB\u7121\u6B77\u53F2\u4EFB\u52D9",
     "taskList.selectSession": "\u9078\u64C7\u6703\u8A71",
     "taskList.unreadUpdate": "\u672A\u8B80\u66F4\u65B0",
@@ -19443,7 +17678,6 @@
     "snippets.saveSelection": "\u6536\u85CF",
     "snippets.saveSelectionLabel": "\u6536\u85CF\u9078\u53D6\u7684\u63D0\u793A\u8A5E\u7247\u6BB5",
     "snippets.popoverLabel": "\u63D0\u793A\u8A5E\u7247\u6BB5",
-    "snippets.defaultCategory": "\u5E38\u7528",
     "snippets.loadFailed": "\u63D0\u793A\u8A5E\u7247\u6BB5\u8B80\u53D6\u5931\u6557",
     "snippets.remove": "\u79FB\u9664 ~{tag}",
     "snippets.expand": "\u5C55\u958B",
@@ -19488,7 +17722,6 @@
     "colors.done": "\u5B8C\u6210",
     "colors.manage": "\u7BA1\u7406",
     "colors.favorites": "\u5E38\u7528\u984F\u8272",
-    "colors.recent": "\u6700\u8FD1\u984F\u8272",
     "colors.recentLabel": "\u6700\u8FD1",
     "colors.deleteFavorite": "\u522A\u9664\u5E38\u7528\u8272{name}",
     "colors.modify": "\u4FEE\u6539\u984F\u8272",
@@ -19498,16 +17731,13 @@
     "taskGroup.current": "\u76EE\u524D\u6AA2\u8996",
     "taskGroup.yesterday": "\u6628\u5929",
     "taskGroup.last7": "\u6700\u8FD1 7 \u5929",
-    "taskGroup.older": "\u66F4\u65E9",
     "taskGroup.searchResults": "\u641C\u5C0B\u7D50\u679C",
-    "taskGroup.active": "\u6D3B\u52D5\u4EFB\u52D9",
     "taskGroup.running": "\u904B\u4F5C\u4E2D",
     "taskGroup.waiting": "\u7B49\u5F85\u4E2D",
     "taskGroup.dispatchPending": "\u6B63\u5728\u5206\u914D\u53EF\u7528\u901A\u9053...",
     "taskGroup.expand": "\u5C55\u958B{label}",
     "taskGroup.collapse": "\u6536\u8D77{label}",
     "taskGroup.buttonLabel": "{label}\uFF0C{count}\u500B\u4EFB\u52D9",
-    "taskGroup.loadMore": "\u518D\u8F09\u5165{count}\u7B46",
     "taskGroup.loadFailedRetry": "\u8F09\u5165\u5931\u6557\uFF0C\u9EDE\u6B64\u91CD\u8A66",
     "archive.title": "\u6703\u8A71\u6B78\u6A94",
     "archive.empty": "\u66AB\u7121\u6B78\u6A94\u6703\u8A71",
@@ -19520,7 +17750,6 @@
     "archive.restoring": "\u6B63\u5728\u6062\u5FA9...",
     "archive.deleting": "\u6B63\u5728\u522A\u9664...",
     "archive.restoredCount": "\u5DF2\u6062\u5FA9{count}\u500B\u4EFB\u52D9",
-    "settings.title": "\u5132\u5B58\u8A2D\u5B9A",
     "settings.status": "\u5132\u5B58\u8DEF\u5F91\u8A2D\u5B9A\u5F8C\u91CD\u555F WebUI \u751F\u6548",
     "settings.pathChangeHint": "\u8B8A\u66F4\u8DEF\u5F91\u4E0D\u6703\u642C\u79FB\u820A\u8CC7\u6599\u3002\u642C\u79FB\u524D\u8ACB\u5099\u4EFD\u4E26\u7D50\u675F\u61C9\u7528\u7A0B\u5F0F\uFF0C\u518D\u5B8C\u6574\u8907\u88FD\u76F8\u95DC\u76EE\u9304\u3002",
     "settings.previousPaths": "\u627E\u4E0D\u5230\u820A\u8CC7\u6599\uFF1F\u67E5\u770B\u539F\u9810\u8A2D\u76EE\u9304",
@@ -19575,7 +17804,6 @@
     "userConfigBackup.restoreComplete": "\u9084\u539F\u5B8C\u6210",
     "systemSettings.tabsLabel": "\u7CFB\u7D71\u8A2D\u5B9A\u9078\u9805",
     "systemSettings.apiTab": "API \u8A2D\u5B9A",
-    "systemSettings.codexTab": "Codex \u901A\u9053",
     "systemSettings.languageTab": "\u8A9E\u8A00 / Language",
     "systemSettings.storageTab": "\u5132\u5B58\u8207\u901A\u77E5",
     "systemSettings.networkTab": "\u7DB2\u8DEF",
@@ -19603,23 +17831,14 @@
     "networkEgress.loadFailed": "\u7121\u6CD5\u8F09\u5165\u7DB2\u8DEF\u8A2D\u5B9A",
     "networkEgress.saveFailed": "\u7121\u6CD5\u5132\u5B58\u7DB2\u8DEF\u8A2D\u5B9A",
     "languageSettings.instantStatus": "\u8A9E\u8A00\u5207\u63DB\u5F8C\u7ACB\u5373\u751F\u6548",
-    "apiSettings.title": "API\u8A2D\u5B9A",
-    "apiSettings.status": "\u5132\u5B58\u5F8C\u7ACB\u5373\u7528\u65BCAPI\u6A21\u5F0F",
-    "apiSettings.codexMode": "Codex\u983B\u9053",
-    "apiSettings.codexImages": "Image",
-    "apiSettings.codexResponses": "Responses",
     "apiSettings.providers": "API\u4F9B\u61C9\u5546",
     "apiSettings.searchProviders": "\u641C\u5C0B\u4F9B\u61C9\u5546\u540D\u7A31",
     "apiSettings.noProviderSearchResults": "\u627E\u4E0D\u5230\u76F8\u7B26\u7684\u4F9B\u61C9\u5546",
     "apiSettings.providerCount": "{count}\u500B\u4F9B\u61C9\u5546",
-    "apiSettings.provider": "\u4F9B\u61C9\u5546",
     "apiSettings.providerName": "\u4F9B\u61C9\u5546\u540D\u7A31",
     "apiSettings.providerIcon": "Emoji \u5716\u793A",
     "apiSettings.providerIconPlaceholder": "\u9078\u586B\uFF0C\u4F8B\u5982 \u{1FA84}",
-    "apiSettings.connectionScope": "\u8FDE\u63A5\u7EA7\u8BBE\u7F6E",
-    "apiSettings.connectionPreview": "\u9023\u7DDA\u9810\u89BD",
     "apiSettings.modelBindings": "\u6A21\u578B",
-    "apiSettings.modelBindingsHint": "\u4E00\u4E2A\u4F9B\u5E94\u5546\u53EF\u540C\u65F6\u7ED1\u5B9A\u591A\u4E2A\u578B\u53F7\u548C\u534F\u8BAE\u3002",
     "apiSettings.addModelBinding": "\u65B0\u589E\u6A21\u578B",
     "apiSettings.remoteModelName": "\u670D\u52D9\u5546\u6A21\u578B\u540D\u7A31",
     "apiSettings.fetchModels": "\u53D6\u5F97\u6A21\u578B",
@@ -19642,7 +17861,6 @@
     "apiSettings.keepOneBinding": "\u6BCF\u4E2A\u4F9B\u5E94\u5546\u81F3\u5C11\u4FDD\u7559\u4E00\u6761\u6A21\u578B\u7ED1\u5B9A",
     "apiSettings.bindingRequiredFields": "\u8BF7\u4E3A\u6BCF\u6761\u7ED1\u5B9A\u9009\u62E9\u578B\u53F7\u3001\u586B\u5199\u8FDC\u7AEF\u6A21\u578B\u540D\u5E76\u81F3\u5C11\u9009\u62E9\u4E00\u4E2A\u64CD\u4F5C",
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
-    "apiSettings.actualRequest": "\u5BE6\u969B\u8ACB\u6C42",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u61C9\u5546",
     "apiSettings.copyProvider": "\u8907\u88FD",
     "apiSettings.copyProviderName": "{name}\u526F\u672C",
@@ -19653,21 +17871,12 @@
     "apiSettings.sortProviderModeStatus": "\u62D6\u66F3\u63A7\u5236\u9EDE\u6392\u5E8F\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u9375\u8ABF\u6574",
     "apiSettings.sortProviderHandleAria": "\u62D6\u66F3\u6392\u5E8F {provider}\uFF0C\u4E5F\u53EF\u4F7F\u7528\u65B9\u5411\u9375\u6216 Home\u3001End \u9375\u8ABF\u6574",
     "apiSettings.sortProviderStatus": "\u4F9B\u61C9\u5546\u6392\u5E8F\u5DF2\u8ABF\u6574\uFF0C\u6B63\u5728\u81EA\u52D5\u5132\u5B58",
-    "apiSettings.moveProviderUp": "\u4E0A\u79FB",
-    "apiSettings.moveProviderDown": "\u4E0B\u79FB",
-    "apiSettings.moveProviderUpAria": "\u4E0A\u79FB{provider}",
-    "apiSettings.moveProviderDownAria": "\u4E0B\u79FB{provider}",
-    "apiSettings.mode": "\u547C\u53EB\u65B9\u5F0F",
-    "apiSettings.images": "\u76F4\u9023Image API",
-    "apiSettings.responses": "Responses API",
     "apiSettings.modeImagesShort": "\u76F4\u9023",
-    "apiSettings.imageModel": "\u5F71\u50CF\u751F\u6210\u6A21\u578B",
     "apiSettings.concurrency": "\u4E26\u767C\u4E0A\u9650",
     "apiSettings.svgAuthorModel": "SVG \u7E6A\u88FD\u6A21\u578B",
     "apiSettings.invalidSvgAuthorModel": "\u8ACB\u8F38\u5165\u4E0D\u542B\u7A7A\u683C\u7684\u6709\u6548 SVG \u6A21\u578B ID\u3002",
     "apiSettings.concurrencyShort": "\u4E26\u767C",
     "apiSettings.advancedSettings": "\u9032\u968E\u8A2D\u5B9A",
-    "apiSettings.concurrencyValue": "\u4F75\u767C{concurrency}",
     "apiSettings.keySaved": "\u5DF2\u5132\u5B58API Key",
     "apiSettings.keyNotSet": "\u672A\u8A2D\u5B9AAPI Key",
     "apiSettings.showApiKey": "\u986F\u793A API Key",
@@ -19675,18 +17884,12 @@
     "apiSettings.editProvider": "\u7DE8\u8F2F\u4F9B\u61C9\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u61C9\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9810\u89BD",
-    "apiSettings.editHint": "\u5132\u5B58\u5F8C\u751F\u6548\uFF1B\u53D6\u6D88\u7DE8\u8F2F\u6703\u653E\u68C4\u672C\u6B21\u4FEE\u6539\u3002",
     "apiSettings.finishEditFirst": "\u8ACB\u5148\u5132\u5B58\u6216\u53D6\u6D88\u76EE\u524D\u4F9B\u61C9\u5546\u7DE8\u8F2F",
     "apiSettings.newDraftStatus": "\u6B63\u5728\u65B0\u589E\u4F9B\u61C9\u5546\uFF0C\u5132\u5B58\u4F9B\u61C9\u5546\u5F8C\u751F\u6548",
     "apiSettings.editDraftStatus": "\u6B63\u5728\u7DE8\u8F2F\u4F9B\u61C9\u5546\uFF0C\u5132\u5B58\u4F9B\u61C9\u5546\u5F8C\u751F\u6548",
-    "apiSettings.cancelEdit": "\u53D6\u6D88\u7DE8\u8F2F",
-    "apiSettings.saveProvider": "\u5132\u5B58\u4F9B\u61C9\u5546",
-    "apiSettings.saveSelection": "\u5132\u5B58\u76EE\u524D\u9078\u64C7",
     "apiSettings.deleteProviderTitle": "\u522A\u9664\u4F9B\u61C9\u5546\uFF1F",
     "apiSettings.deleteProviderMessage": "\u78BA\u5B9A\u522A\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u6703\u5F9E\u76EE\u524D\u4F9B\u61C9\u5546\u6E05\u55AE\u79FB\u9664\uFF0C\u4E26\u81EA\u52D5\u5132\u5B58\u5230\u5F8C\u7AEF\u3002",
-    "apiSettings.deleteProviderStatus": "\u5DF2\u522A\u9664\u4F9B\u61C9\u5546\uFF0C\u6B63\u5728\u81EA\u52D5\u5132\u5B58",
-    "apiSettings.save": "\u5132\u5B58API\u8A2D\u5B9A",
     "apiSettings.loadFailed": "API\u8A2D\u5B9A\u8B80\u53D6\u5931\u6557",
     "apiSettings.savedKeyPlaceholder": "\u5F8C\u7AEF\u5DF2\u5132\u5B58API Key\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
     "apiSettings.apiKeyRequired": "\u8ACB\u586B\u5BEB API Key \u5F8C\u518D\u5132\u5B58\u4F9B\u61C9\u5546\u3002",
@@ -19707,16 +17910,6 @@
     "apiSettings.savedShort": "\u5DF2\u5132\u5B58",
     "apiSettings.savedStatus": "API\u8A2D\u5B9A\u5DF2\u5132\u5B58",
     "apiSettings.saveFailedShort": "\u5132\u5B58\u5931\u6557",
-    "codexSettings.title": "Codex\u983B\u9053",
-    "codexSettings.status": "\u9078\u64C7Codex\u672C\u6A5F\u767B\u5165\u614B\u4F7F\u7528\u7684\u7522\u751F\u901A\u9053",
-    "codexSettings.notesLabel": "Codex\u983B\u9053\u8AAA\u660E",
-    "codexSettings.imagesTitle": "Codex Image",
-    "codexSettings.imagesCopy": "\u9810\u8A2D\u983B\u9053\uFF0C\u5C3A\u5BF8\u3001\u54C1\u8CEA\u548C\u7DE8\u8F2F\u53C3\u6578\u76F4\u50B3\uFF0C\u9069\u5408\u4E00\u822C\u7522\u751F\u548C\u7DE8\u8F2F\u3002",
-    "codexSettings.responsesTitle": "Codex Responses",
-    "codexSettings.responsesCopy": "\u76F8\u5BB9\u983B\u9053\uFF0C\u7528\u65BC\u9700\u8981\u9023\u7DB2\u641C\u5C0B\u6216 Responses \u5DE5\u5177\u93C8\u7684\u4EFB\u52D9\u3002",
-    "codexSettings.current": "\u76EE\u524D\u4F7F\u7528",
-    "codexSettings.save": "\u5132\u5B58Codex\u983B\u9053",
-    "codexSettings.saveMode": "\u5132\u5B58 {mode}",
     "imageEditor.title": "\u7DE8\u8F2F\u8F38\u5165\u5716\u7247",
     "imageEditor.promptHint": "\u5716\u4E2D\u7684\u624B\u7E6A\u7BAD\u982D\u548C\u6A19\u8A18\u50C5\u7528\u65BC\u6307\u793A\u7DE8\u8F2F\u8981\u6C42\uFF0C\u4E0D\u8981\u4FDD\u7559\u5728\u6700\u7D42\u756B\u9762\u4E2D\u3002",
     "imageEditor.inputFallback": "\u8F38\u5165\u5716\u7247",
@@ -19796,31 +17989,21 @@
     "addGallery.save": "\u5132\u5B58\u5230\u5716\u5EAB",
     "close.promptTemplates": "\u95DC\u9589\u63D0\u793A\u5B57\u7BC4\u672C\u9762\u677F",
     "close.archive": "\u95DC\u9589\u6703\u8A71\u6B78\u6A94\u9762\u677F",
-    "close.settings": "\u95DC\u9589\u5132\u5B58\u8A2D\u5B9A\u9762\u677F",
-    "close.apiSettings": "\u95DC\u9589API\u8A2D\u5B9A\u9762\u677F",
     "close.systemSettings": "\u95DC\u9589\u7CFB\u7D71\u8A2D\u5B9A\u9762\u677F",
     "close.imageEditor": "\u95DC\u9589\u7DE8\u8F2F\u8F38\u5165\u5716\u7247\u9762\u677F",
     "close.gallery": "\u95DC\u9589\u516C\u7528\u5716\u5EAB\u9762\u677F",
     "close.addGallery": "\u95DC\u9589\u5DF2\u65B0\u589E\u81F3\u5716\u5EAB\u9762\u677F",
     "imageInput.referenceTitle": "\u53C3\u8003\u8F38\u5165\uFF08\u53EF\u9078\uFF09",
-    "referenceFiles.add": "\u65B0\u589E\u6A94\u6848",
-    "referenceFiles.selected": "\u53C3\u8003\u6A94\u6848",
-    "referenceFiles.recent": "\u6700\u8FD1\u6A94\u6848",
     "referenceFiles.familyPdf": "\u9801\u9762 + \u6587\u5B57",
     "referenceFiles.familySpreadsheet": "\u8A66\u7B97\u8868",
     "referenceFiles.familyDocument": "\u6587\u4EF6",
     "referenceFiles.familyText": "\u6587\u5B57",
-    "referenceFiles.visualLimit": "\u975E PDF \u6A94\u6848\u4E0D\u6703\u4FDD\u7559\u5167\u5D4C\u5716\u7247\u548C\u5716\u8868\uFF1B\u9700\u8981\u7248\u9762\u53C3\u8003\u6642\u8ACB\u5148\u8F49\u70BA PDF\u3002",
     "referenceFiles.remove": "\u79FB\u9664\u6A94\u6848 {filename}",
-    "referenceFiles.switchTitle": "\u79FB\u9664\u53C3\u8003\u6A94\u6848\uFF1F",
-    "referenceFiles.switchMessage": "\u53C3\u8003\u6A94\u6848\u50C5\u652F\u63F4 Responses\uFF0C\u5207\u63DB\u5230 Images \u524D\u9700\u8981\u79FB\u9664\u5DF2\u9078\u6A94\u6848\u3002",
-    "referenceFiles.removeAndSwitch": "\u79FB\u9664\u6A94\u6848\u4E26\u5207\u63DB",
     "referenceFiles.requiresResponses": "\u53C3\u8003\u6A94\u6848\u50C5\u652F\u63F4 Responses",
     "referenceFiles.switchToResponses": "\u5207\u63DB\u5230 Responses",
     "referenceFiles.openApiSettings": "\u958B\u555F API \u8A2D\u5B9A",
     "referenceFiles.providerMissing": "\u539F\u4EFB\u52D9\u4F7F\u7528\u7684 Responses \u4F9B\u61C9\u5546\u7121\u6CD5\u4F7F\u7528\uFF0C\u8ACB\u5728 API \u8A2D\u5B9A\u4E2D\u9078\u64C7\u3002",
     "referenceFiles.missing": "\u6A94\u6848\u5DF2\u907A\u5931",
-    "referenceFiles.loadFailed": "\u53C3\u8003\u6A94\u6848\u8F09\u5165\u5931\u6557",
     "referenceFiles.errorEmpty": "\u53C3\u8003\u6A94\u6848\u662F\u7A7A\u7684",
     "referenceFiles.errorUnsupported": "\u4E0D\u652F\u63F4\u6B64\u53C3\u8003\u6A94\u6848\u683C\u5F0F",
     "referenceFiles.errorMismatch": "\u6A94\u6848\u5167\u5BB9\u8207\u526F\u6A94\u540D\u4E0D\u7B26",
@@ -19839,13 +18022,11 @@
     "modelSelection.provider": "\u4F9B\u61C9\u5546",
     "modelSelection.providerUnavailable": "\u76EE\u524D\u578B\u865F\u6C92\u6709\u53EF\u7528\u4F9B\u61C9\u5546",
     "modelSelection.openSettings": "\u958B\u555F\u4F9B\u61C9\u5546\u8A2D\u5B9A",
-    "modelSelection.codexUnavailable": "Codex \u767B\u5165\u4E0D\u53EF\u7528",
     "modelSelection.catalogUnavailable": "\u6A21\u578B\u76EE\u9304\u4E0D\u53EF\u7528",
     "output.background": "\u80CC\u666F",
     "canvas.aspectRatio": "\u756B\u9762\u6BD4\u4F8B",
     "canvas.resolution": "\u89E3\u6790\u5EA6",
     "gemini.googleSearch": "Google \u641C\u5C0B",
-    "gemini.googleImageSearch": "Google \u5716\u7247\u641C\u5C0B",
     "output.modalities": "\u8F38\u51FA\u6A21\u614B",
     "gemini.safetySettings": "\u5B89\u5168\u8A2D\u5B9A",
     "gemini.safety.harassment": "\u9A37\u64FE",
@@ -19894,7 +18075,6 @@
     "userConfigBackup.incrementalCopy": "\u4FDD\u7559\u73FE\u6709\u8CC7\u6599\uFF0C\u7565\u904E\u91CD\u8907\u5167\u5BB9\uFF0C\u70BA\u885D\u7A81\u9805\u76EE\u5EFA\u7ACB\u5FA9\u539F\u526F\u672C\u3002",
     "userConfigBackup.itemCount": "{count} \u9805",
     "userConfigBackup.modeLabel": "\u5099\u4EFD\u6216\u9084\u539F",
-    "userConfigBackup.previewCounts": "\u6A94\u5167 {count} \u9805 \xB7 \u91CD\u8907 {duplicate} \xB7 \u885D\u7A81 {conflict}",
     "userConfigBackup.previewTitle": "\u9084\u539F\u9810\u89BD",
     "userConfigBackup.providerRetention": "{count} \u500B\u542B\u6191\u8B49\u7684\u4F9B\u61C9\u5546\u5C07\u4F9D\u5B89\u5168\u898F\u5247\u4FDD\u7559",
     "userConfigBackup.replaceConfirmCopy": "\u53D6\u4EE3\u53EA\u5F71\u97FF\u6240\u9078\u985E\u5225\uFF0C\u4F46\u6703\u522A\u9664\u9019\u4E9B\u985E\u5225\u7684\u73FE\u6709\u5167\u5BB9\u3002\u6B64\u64CD\u4F5C\u5B8C\u6210\u5F8C\u7121\u6CD5\u5FA9\u539F\u3002",
@@ -20913,12 +19093,12 @@
     return chip;
   }
   function captureImageMentions() {
-    const { els: els42, state: state33, methods } = getLegacyBridge();
-    if (!els42.promptEditor) return null;
+    const { els: els41, state: state33, methods } = getLegacyBridge();
+    if (!els41.promptEditor) return null;
     const mentions = [];
     let marker = "\0image-mention:";
     while (methods.getPromptText().includes(marker)) marker += ":";
-    const marked = methods.promptTextFromNode(els42.promptEditor, (chip) => {
+    const marked = methods.promptTextFromNode(els41.promptEditor, (chip) => {
       const key2 = chip.dataset.imageRefKey;
       const stored = chip.dataset.imageRefSource ? JSON.parse(chip.dataset.imageRefSource) : null;
       const source = !stored?.missing && state33.images.find((item) => key2 ? imageReferenceKey(item) === key2 : item.kind === "gallery" && item.id === chip.dataset.galleryId);
@@ -20962,15 +19142,15 @@
     return (captureImageMentions()?.parts || []).every((part) => typeof part === "string" || Boolean(findSource(part.source, state33.images) && !findSource(part.source, state33.images).missing));
   }
   function restoreImageMentions(context, sources, appendText) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     for (const part of context.parts) {
       if (typeof part === "string") appendText(part);
-      else els42.promptEditor.append(createImageMentionChip(findSource(part.source, sources), part));
+      else els41.promptEditor.append(createImageMentionChip(findSource(part.source, sources), part));
     }
   }
   function refreshImageMentionChips(removeMissing = false) {
-    const { els: els42, state: state33, methods } = getLegacyBridge();
-    els42.promptEditor?.querySelectorAll(".image-mention-chip").forEach((chip) => {
+    const { els: els41, state: state33, methods } = getLegacyBridge();
+    els41.promptEditor?.querySelectorAll(".image-mention-chip").forEach((chip) => {
       if (chip.dataset.imageRefSource && JSON.parse(chip.dataset.imageRefSource).missing) {
         return;
       }
@@ -20989,10 +19169,10 @@
     methods.updatePromptCount?.();
   }
   function rebindEditedImageMentions(previous, next) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const previousKey = imageReferenceKey(previous);
     next.prompt_ref_key = previous.kind === "upload" ? previousKey : void 0;
-    els42.promptEditor?.querySelectorAll(".gallery-chip").forEach((chip) => {
+    els41.promptEditor?.querySelectorAll(".gallery-chip").forEach((chip) => {
       if (chip.dataset.imageRefKey === previousKey || previous.kind === "gallery" && chip.dataset.galleryId === previous.id) {
         chip.replaceWith(createImageMentionChip(next));
       }
@@ -21162,8 +19342,8 @@
     methods.updateRequestPreview?.();
   }
   function hasUnsavedEditor() {
-    const { state: state33, els: els42 } = getLegacyBridge();
-    return Boolean(state33.apiProviderEditingId || els42.imageEditorModal && !els42.imageEditorModal.classList.contains("hidden"));
+    const { state: state33, els: els41 } = getLegacyBridge();
+    return Boolean(state33.apiProviderEditingId || els41.imageEditorModal && !els41.imageEditorModal.classList.contains("hidden"));
   }
   function snapshot() {
     return { current: capture(), drafts: [...drafts], baseline };
@@ -21275,76 +19455,76 @@
       "#promptTemplateDrawer.open, #galleryDrawer.open, .modal-overlay:not(.hidden), .prompt-popover:not(.hidden), .confirm-popover:not(.hidden), .compression-popover:not(.hidden), .task-notification-center:not(.hidden)"
     ));
   }
-  function handleRunTaskShortcut(event, els42, methods) {
+  function handleRunTaskShortcut(event, els41, methods) {
     if (!isRunTaskShortcut(event)) return;
-    if (hasOpenShortcutBlockingLayer() || els42.runButton.disabled) return;
+    if (hasOpenShortcutBlockingLayer() || els41.runButton.disabled) return;
     event.preventDefault();
     void call(methods, "runTask");
   }
   var systemSettingsBackdropPointerDown = false;
-  function bindSharedTopNavSettingsEvents(els42, methods) {
-    els42.systemSettingsModalClose?.addEventListener("click", () => call(methods, "closeSystemSettingsModal"));
-    els42.systemSettingsModal?.addEventListener("pointerdown", (event) => {
-      systemSettingsBackdropPointerDown = event.target === els42.systemSettingsModal;
+  function bindSharedTopNavSettingsEvents(els41, methods) {
+    els41.systemSettingsModalClose?.addEventListener("click", () => call(methods, "closeSystemSettingsModal"));
+    els41.systemSettingsModal?.addEventListener("pointerdown", (event) => {
+      systemSettingsBackdropPointerDown = event.target === els41.systemSettingsModal;
     });
-    els42.systemSettingsModal?.addEventListener("click", (event) => {
-      if (event.target === els42.systemSettingsModal && systemSettingsBackdropPointerDown) {
+    els41.systemSettingsModal?.addEventListener("click", (event) => {
+      if (event.target === els41.systemSettingsModal && systemSettingsBackdropPointerDown) {
         call(methods, "closeSystemSettingsModal");
       }
       systemSettingsBackdropPointerDown = false;
     });
-    els42.saveSettingsButton?.addEventListener("click", () => call(methods, "saveSettings"));
-    els42.authSourceGroup?.addEventListener("click", (event) => call(methods, "handleAuthSourceClick", event));
-    els42.modelFamilyOptions?.addEventListener("click", (event) => {
+    els41.saveSettingsButton?.addEventListener("click", () => call(methods, "saveSettings"));
+    els41.authSourceGroup?.addEventListener("click", (event) => call(methods, "handleAuthSourceClick", event));
+    els41.modelFamilyOptions?.addEventListener("click", (event) => {
       const item = event.target?.closest?.("[data-family-id]");
       if (item?.dataset.familyId) call(methods, "selectModelFamily", item.dataset.familyId);
     });
-    els42.modelFamilyOptions?.addEventListener("keydown", (event) => call(methods, "handleModelFamilyOptionsKeydown", event));
-    els42.concreteModelSelect?.addEventListener("change", () => call(methods, "selectConcreteModel", els42.concreteModelSelect.value));
-    els42.generationProviderSelect?.addEventListener("change", () => call(methods, "selectGenerationProvider", els42.generationProviderSelect.value));
-    els42.generationProviderSettingsButton?.addEventListener("click", () => call(methods, "openGenerationProviderSettings"));
-    els42.apiProviderQuick?.addEventListener("change", () => {
-      call(methods, "selectApiProvider", els42.apiProviderQuick?.value || call(methods, "currentApiProviderId"));
+    els41.modelFamilyOptions?.addEventListener("keydown", (event) => call(methods, "handleModelFamilyOptionsKeydown", event));
+    els41.concreteModelSelect?.addEventListener("change", () => call(methods, "selectConcreteModel", els41.concreteModelSelect.value));
+    els41.generationProviderSelect?.addEventListener("change", () => call(methods, "selectGenerationProvider", els41.generationProviderSelect.value));
+    els41.generationProviderSettingsButton?.addEventListener("click", () => call(methods, "openGenerationProviderSettings"));
+    els41.apiProviderQuick?.addEventListener("change", () => {
+      call(methods, "selectApiProvider", els41.apiProviderQuick?.value || call(methods, "currentApiProviderId"));
     });
-    els42.apiProvider?.addEventListener("change", () => {
-      call(methods, "selectApiProvider", els42.apiProvider?.value || call(methods, "currentApiProviderId"));
+    els41.apiProvider?.addEventListener("change", () => {
+      call(methods, "selectApiProvider", els41.apiProvider?.value || call(methods, "currentApiProviderId"));
     });
-    els42.apiProviderSearch?.addEventListener("input", () => call(methods, "renderApiProviderList"));
-    els42.apiProviderList?.addEventListener("click", (event) => {
+    els41.apiProviderSearch?.addEventListener("input", () => call(methods, "renderApiProviderList"));
+    els41.apiProviderList?.addEventListener("click", (event) => {
       if (event.target?.closest?.("[data-api-provider-sort-handle]")) return;
       const button = event.target?.closest?.("[data-api-provider-id]");
       if (!button) return;
       call(methods, "selectApiProvider", button.dataset.apiProviderId);
     });
-    els42.editApiProviderButton?.addEventListener("click", () => call(methods, "editApiProvider"));
-    els42.copyApiProviderButton?.addEventListener("click", () => call(methods, "copyApiProvider"));
-    els42.addApiProviderButton?.addEventListener("click", () => call(methods, "addApiProvider"));
-    els42.sortApiProvidersButton?.addEventListener("click", () => call(methods, "toggleApiProviderSortMode"));
-    els42.deleteApiProviderButton?.addEventListener("click", () => call(methods, "confirmDeleteApiProvider", els42.deleteApiProviderButton));
-    els42.cancelApiProviderEditButton?.addEventListener("click", () => call(methods, "cancelApiProviderEdit"));
-    els42.saveApiProviderEditButton?.addEventListener("click", () => call(methods, "saveApiProviderEdit"));
-    els42.addProviderBindingButton?.addEventListener("click", () => call(methods, "addProviderBinding"));
-    els42.apiProviderBindings?.addEventListener("click", (event) => {
+    els41.editApiProviderButton?.addEventListener("click", () => call(methods, "editApiProvider"));
+    els41.copyApiProviderButton?.addEventListener("click", () => call(methods, "copyApiProvider"));
+    els41.addApiProviderButton?.addEventListener("click", () => call(methods, "addApiProvider"));
+    els41.sortApiProvidersButton?.addEventListener("click", () => call(methods, "toggleApiProviderSortMode"));
+    els41.deleteApiProviderButton?.addEventListener("click", () => call(methods, "confirmDeleteApiProvider", els41.deleteApiProviderButton));
+    els41.cancelApiProviderEditButton?.addEventListener("click", () => call(methods, "cancelApiProviderEdit"));
+    els41.saveApiProviderEditButton?.addEventListener("click", () => call(methods, "saveApiProviderEdit"));
+    els41.addProviderBindingButton?.addEventListener("click", () => call(methods, "addProviderBinding"));
+    els41.apiProviderBindings?.addEventListener("click", (event) => {
       const button = event.target?.closest?.("[data-remove-provider-binding]");
       if (button?.dataset.removeProviderBinding) call(methods, "removeProviderBinding", button.dataset.removeProviderBinding);
     });
-    els42.apiProviderBindings?.addEventListener("change", (event) => call(methods, "handleProviderBindingEditorChange", event));
-    els42.apiKeyRevealButton?.addEventListener("pointerdown", (event) => call(methods, "revealApiKeyWhilePressed", event));
-    els42.apiKeyRevealButton?.addEventListener("pointerup", () => call(methods, "hideApiKeyReveal"));
-    els42.apiKeyRevealButton?.addEventListener("pointercancel", () => call(methods, "hideApiKeyReveal"));
-    els42.apiKeyRevealButton?.addEventListener("pointerleave", () => call(methods, "hideApiKeyReveal"));
-    els42.apiKeyRevealButton?.addEventListener("blur", () => call(methods, "hideApiKeyReveal"));
-    els42.apiKeyRevealButton?.addEventListener("keydown", (event) => {
+    els41.apiProviderBindings?.addEventListener("change", (event) => call(methods, "handleProviderBindingEditorChange", event));
+    els41.apiKeyRevealButton?.addEventListener("pointerdown", (event) => call(methods, "revealApiKeyWhilePressed", event));
+    els41.apiKeyRevealButton?.addEventListener("pointerup", () => call(methods, "hideApiKeyReveal"));
+    els41.apiKeyRevealButton?.addEventListener("pointercancel", () => call(methods, "hideApiKeyReveal"));
+    els41.apiKeyRevealButton?.addEventListener("pointerleave", () => call(methods, "hideApiKeyReveal"));
+    els41.apiKeyRevealButton?.addEventListener("blur", () => call(methods, "hideApiKeyReveal"));
+    els41.apiKeyRevealButton?.addEventListener("keydown", (event) => {
       if (event.key === " " || event.key === "Enter") call(methods, "revealApiKeyWhilePressed", event);
     });
-    els42.apiKeyRevealButton?.addEventListener("keyup", () => call(methods, "hideApiKeyReveal"));
-    els42.apiKey?.addEventListener("input", () => call(methods, "updateApiKeyRevealButton"));
+    els41.apiKeyRevealButton?.addEventListener("keyup", () => call(methods, "hideApiKeyReveal"));
+    els41.apiKey?.addEventListener("input", () => call(methods, "updateApiKeyRevealButton"));
     call(methods, "bindOverlayPopoverEvents");
   }
-  function bindWebUIEvents(state33, els42, methods) {
+  function bindWebUIEvents(state33, els41, methods) {
     call(methods, "bindShellUiEvents");
     call(methods, "bindFormControlEvents");
-    els42.clearPromptButton.addEventListener("click", () => {
+    els41.clearPromptButton.addEventListener("click", () => {
       preserveComposerDraft();
       call(methods, "setPromptText", "");
       markComposerBaseline();
@@ -21352,21 +19532,21 @@
       call(methods, "updatePromptCount");
       call(methods, "updateRequestPreview");
     });
-    els42.quickGalleryRail?.addEventListener("mouseover", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
-    els42.quickGalleryRail?.addEventListener("focusin", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
-    els42.quickGalleryRail?.addEventListener("click", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
-    els42.quickGalleryList?.addEventListener("scroll", () => call(methods, "scheduleQuickGalleryFocusUpdate"));
-    els42.quickGalleryList?.addEventListener("wheel", (event) => call(methods, "handleQuickGalleryBoundaryWheel", event), { passive: false });
-    els42.addGalleryCategoryButton?.addEventListener("click", () => call(methods, "createGalleryCategory"));
-    els42.addToGalleryClose?.addEventListener("click", () => call(methods, "closeAddToGallery"));
-    els42.addToGalleryModal?.addEventListener("click", (event) => {
-      if (event.target === els42.addToGalleryModal) call(methods, "closeAddToGallery");
+    els41.quickGalleryRail?.addEventListener("mouseover", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
+    els41.quickGalleryRail?.addEventListener("focusin", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
+    els41.quickGalleryRail?.addEventListener("click", (event) => call(methods, "handleQuickGalleryCategoryEvent", event));
+    els41.quickGalleryList?.addEventListener("scroll", () => call(methods, "scheduleQuickGalleryFocusUpdate"));
+    els41.quickGalleryList?.addEventListener("wheel", (event) => call(methods, "handleQuickGalleryBoundaryWheel", event), { passive: false });
+    els41.addGalleryCategoryButton?.addEventListener("click", () => call(methods, "createGalleryCategory"));
+    els41.addToGalleryClose?.addEventListener("click", () => call(methods, "closeAddToGallery"));
+    els41.addToGalleryModal?.addEventListener("click", (event) => {
+      if (event.target === els41.addToGalleryModal) call(methods, "closeAddToGallery");
     });
-    els42.saveToGalleryButton?.addEventListener("click", () => call(methods, "saveUploadToGallery"));
-    bindSharedTopNavSettingsEvents(els42, methods);
-    els42.runButton.addEventListener("click", () => call(methods, "runTask"));
-    document.addEventListener("keydown", (event) => handleRunTaskShortcut(event, els42, methods));
-    els42.refreshButton.addEventListener("click", () => {
+    els41.saveToGalleryButton?.addEventListener("click", () => call(methods, "saveUploadToGallery"));
+    bindSharedTopNavSettingsEvents(els41, methods);
+    els41.runButton.addEventListener("click", () => call(methods, "runTask"));
+    document.addEventListener("keydown", (event) => handleRunTaskShortcut(event, els41, methods));
+    els41.refreshButton.addEventListener("click", () => {
       void handleRefreshButtonClick(methods);
     });
     call(methods, "bindTaskListControlEvents");
@@ -21376,8 +19556,8 @@
   function call2(methods, name, ...args) {
     return methods[name]?.(...args);
   }
-  function bootWebUI(state33, els42, methods) {
-    bindWebUIEvents(state33, els42, methods);
+  function bootWebUI(state33, els41, methods) {
+    bindWebUIEvents(state33, els41, methods);
     call2(methods, "restoreThemePreference");
     call2(methods, "restoreSidebarWidth");
     call2(methods, "restoreMainModel");
@@ -21982,12 +20162,12 @@
     });
   }
   function updateTaskElapsedDisplays() {
-    const { state: state33, els: els42 } = getLegacyBridge();
+    const { state: state33, els: els41 } = getLegacyBridge();
     const activeTasks = state33.tasks.filter((task) => taskNeedsElapsedTick(task));
     if (!activeTasks.length) return;
     const tasksById = new Map(activeTasks.map((task) => [String(task.task_id || ""), task]));
     const visited = /* @__PURE__ */ new Set();
-    for (const root of /* @__PURE__ */ new Set([els42.taskActiveList, els42.taskList])) {
+    for (const root of /* @__PURE__ */ new Set([els41.taskActiveList, els41.taskList])) {
       if (!(root instanceof HTMLElement)) continue;
       root.querySelectorAll(".task-card[data-task-id]").forEach((card) => {
         if (visited.has(card)) return;
@@ -21998,9 +20178,9 @@
     }
   }
   function updatePreviewElapsedDisplay() {
-    const { els: els42 } = getLegacyBridge();
-    if (!els42.previewGrid) return;
-    els42.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
+    const { els: els41 } = getLegacyBridge();
+    if (!els41.previewGrid) return;
+    els41.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
       updateElapsedTimerElement(element3, elapsedMillisecondsSince(element3.dataset.previewStart));
     });
   }
@@ -22036,16 +20216,16 @@
     }
   }
   function updatePromptCount() {
-    const { els: els42 } = getLegacyBridge();
-    if (!els42.charCount) return;
-    els42.charCount.textContent = `${getPromptText().length}`;
+    const { els: els41 } = getLegacyBridge();
+    if (!els41.charCount) return;
+    els41.charCount.textContent = `${getPromptText().length}`;
     if (getPromptText().trim()) {
-      els42.promptEditor?.removeAttribute("aria-invalid");
+      els41.promptEditor?.removeAttribute("aria-invalid");
       const fieldError = document.getElementById("promptValidationError");
       if (fieldError) fieldError.hidden = true;
-      if (els42.statusText?.textContent === translate("status.emptyPrompt")) {
-        els42.statusText.textContent = "";
-        els42.statusText.classList.remove("error");
+      if (els41.statusText?.textContent === translate("status.emptyPrompt")) {
+        els41.statusText.textContent = "";
+        els41.statusText.classList.remove("error");
       }
     }
   }
@@ -22300,7 +20480,6 @@
     applyTaskUpdate: proxy("applyTaskUpdate"),
     applyTasksSnapshot: proxy("applyTasksSnapshot"),
     assetSource: proxy("assetSource"),
-    backendForAuthSource: proxy("backendForAuthSource"),
     bindFormControlEvents: proxy("bindFormControlEvents"),
     bindOverlayPopoverEvents: proxy("bindOverlayPopoverEvents"),
     bindShellUiEvents: proxy("bindShellUiEvents"),
@@ -22313,16 +20492,11 @@
     closeConfirmPopover: proxy("closeConfirmPopover"),
     closeGallery: proxy("closeGallery"),
     closePromptPopover: proxy("closePromptPopover"),
-    closeSettingsModal: proxy("closeSettingsModal"),
     cleanupSessionSelections: proxy("cleanupSessionSelections"),
     consumeLatestTaskNavigationScrollAnchor: proxy("consumeLatestTaskNavigationScrollAnchor"),
     collectReferenceOutput: proxy("collectReferenceOutput"),
-    colorNameForHex: proxy("colorNameForHex"),
-    colorSwatchButton: proxy("colorSwatchButton"),
-    buildPromptForModel: proxy("buildPromptForModel"),
     createGalleryChip: proxy("createGalleryChip"),
     createPromptSnippetChip: proxy("createPromptSnippetChip"),
-    currentApiImagesConcurrency: proxy("currentApiImagesConcurrency"),
     currentApiMode: proxy("currentApiMode"),
     currentApiProviderId: proxy("currentApiProviderId"),
     currentApiProviderLabel: proxy("currentApiProviderLabel"),
@@ -22345,12 +20519,10 @@
     gallerySource: proxy("gallerySource"),
     getPromptText: proxy("getPromptText"),
     handleAuthSourceClick: proxy("handleAuthSourceClick"),
-    handleCustomDimensionInput: proxy("handleCustomDimensionInput"),
     handleQuickGalleryBoundaryWheel: proxy("handleQuickGalleryBoundaryWheel"),
     handleQuickGalleryCategoryEvent: proxy("handleQuickGalleryCategoryEvent"),
     imageFileFromUrl: proxy("imageFileFromUrl"),
     importColorPalette: proxy("importColorPalette"),
-    isDirectApiMode: proxy("isDirectApiMode"),
     isQueueDispatchPending: proxy("isQueueDispatchPending"),
     isEditableImageSource: proxy("isEditableImageSource"),
     isTaskArchived: proxy("isTaskArchived"),
@@ -22359,23 +20531,16 @@
     migrateLegacyArchivedTasks: proxy("migrateLegacyArchivedTasks"),
     missingGalleryInputs: proxy("missingGalleryInputs"),
     missingReferenceAssetInputs: proxy("missingReferenceAssetInputs"),
-    normalizeApiImagesConcurrency: proxy("normalizeApiImagesConcurrency"),
-    normalizeApiSettings: proxy("normalizeApiSettings"),
     normalizeHexColor: proxy("normalizeHexColor"),
     notifyLatestTaskAvailable: proxy("notifyLatestTaskAvailable"),
     notifyTaskUpdate: proxy("notifyTaskUpdate"),
     openAddToGallery: proxy("openAddToGallery"),
     openApiSettingsModal: proxy("openApiSettingsModal"),
     openConfirmPopover: proxy("openConfirmPopover"),
-    openGallery: proxy("openGallery"),
     openPromptPopover: proxy("openPromptPopover"),
-    openSettingsModal: proxy("openSettingsModal"),
     persistApiSettings: proxy("persistApiSettings"),
     persistMainModel: proxy("persistMainModel"),
     populateApiSettingsForm: proxy("populateApiSettingsForm"),
-    populateSettingsForm: proxy("populateSettingsForm"),
-    positionPromptPopover: proxy("positionPromptPopover"),
-    readApiSettingsForm: proxy("readApiSettingsForm"),
     recentColorsForDisplay: proxy("recentColorsForDisplay"),
     refreshApiSettings: proxy("refreshApiSettings"),
     refreshColorPalette: proxy("refreshColorPalette"),
@@ -22402,7 +20567,6 @@
     renderImageStrip: proxy("renderImageStrip"),
     renderPreview: proxy("renderPreview"),
     renderTaskHistoryAnchors: proxy("renderTaskHistoryAnchors"),
-    renderReferenceCollector: proxy("renderReferenceCollector"),
     renderTasks: proxy("renderTasks"),
     scheduleLatestTaskNavigationRefresh: proxy("scheduleLatestTaskNavigationRefresh"),
     replacePendingTask,
@@ -22418,12 +20582,10 @@
     revokeUploadPreviewUrl: proxy("revokeUploadPreviewUrl"),
     revokeUploadPreviewUrls: proxy("revokeUploadPreviewUrls"),
     runTask: proxy("runTask"),
-    saveApiSettings: proxy("saveApiSettings"),
     saveFavoriteColor: proxy("saveFavoriteColor"),
     saveSettings: proxy("saveSettings"),
     saveUploadToGallery: proxy("saveUploadToGallery"),
     scheduleQuickGalleryFocusUpdate: proxy("scheduleQuickGalleryFocusUpdate"),
-    queueApiSettingsAutosave: proxy("queueApiSettingsAutosave"),
     selectCodexMode: proxy("selectCodexMode"),
     selectTask: proxy("selectTask"),
     ensureExpandedTaskGroupKey: proxy("ensureExpandedTaskGroupKey"),
@@ -22443,7 +20605,6 @@
     syncGalleryInputsFromPrompt: proxy("syncGalleryInputsFromPrompt"),
     syncPromptFromEditor: proxy("syncPromptFromEditor"),
     syncPromptGalleryMentionsFromInputs: proxy("syncPromptGalleryMentionsFromInputs"),
-    syncCodexModeNotes: proxy("syncCodexModeNotes"),
     syncRadioButtons: proxy("syncRadioButtons"),
     syncSizeControlsFromSize: proxy("syncSizeControlsFromSize"),
     taskApiProviderId: proxy("taskApiProviderId"),
@@ -22454,13 +20615,9 @@
     taskTotalCount: proxy("taskTotalCount"),
     toggleColorPaletteManageMode: proxy("toggleColorPaletteManageMode"),
     updateCompression: proxy("updateCompression"),
-    applyFirstReferenceImageAspectRatio: proxy("applyFirstReferenceImageAspectRatio"),
-    updateCustomRatioFieldState: proxy("updateCustomRatioFieldState"),
     updateCustomRatioReferenceButtonState: proxy("updateCustomRatioReferenceButtonState"),
     updateCustomSize: proxy("updateCustomSize"),
     updateDocumentTitle: proxy("updateDocumentTitle"),
-    addImages: proxy("addImages"),
-    clearImages: proxy("clearImages"),
     updateImageStripDensity: proxy("updateImageStripDensity"),
     updatePreviewElapsedDisplay,
     updatePromptCount,
@@ -22501,7 +20658,7 @@
 
   // codex_image/webui/frontend/src/gpt-model-controls.ts
   function syncGptModelControls(model) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const quality = model.parameters.find((parameter) => parameter.id === "gpt.quality");
     const format = model.parameters.find((parameter) => parameter.id === "output.format");
     const extended = !!quality?.allowed_values.includes("max");
@@ -22511,17 +20668,17 @@
     root?.classList.toggle("extended-quality", extended);
     root?.classList.toggle("image26-controls", complexity);
     document.getElementById("complexityField")?.classList.toggle("hidden", !complexity);
-    if (els42.complexity) els42.complexity.disabled = !complexity;
+    if (els41.complexity) els41.complexity.disabled = !complexity;
     document.querySelectorAll("#qualityGroup [data-val]").forEach((button) => {
       const supported = quality?.allowed_values.includes(button.dataset.val) ?? true;
       button.hidden = !supported;
       button.classList.toggle("hidden", !supported);
       button.disabled = !supported;
     });
-    for (const option2 of Array.from(els42.quality?.options || [])) {
+    for (const option2 of Array.from(els41.quality?.options || [])) {
       option2.disabled = !(quality?.allowed_values.includes(option2.value) ?? true);
     }
-    const select = els42.outputFormat;
+    const select = els41.outputFormat;
     if (!select) return;
     for (const option2 of Array.from(select.options)) {
       const supported = format?.allowed_values.includes(option2.value) ?? ["png", "jpeg", "webp"].includes(option2.value);
@@ -22531,33 +20688,33 @@
     if (select.selectedOptions[0]?.disabled) select.value = "png";
     if (complexity) mountThemedSelect(select);
     select.closest(".themed-select")?.classList.toggle("hidden", !complexity);
-    els42.outputFormatGroup?.classList.toggle("hidden", complexity);
+    els41.outputFormatGroup?.classList.toggle("hidden", complexity);
     syncThemedSelect(select);
   }
 
   // codex_image/webui/frontend/src/background-controls.ts
   var transparentPreference = false;
   function setBackgroundControl(value) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const background = value === "transparent" || value === "opaque" ? value : "auto";
     transparentPreference = background === "transparent";
-    if (els42.background) els42.background.value = background;
-    if (els42.transparentBackground) els42.transparentBackground.checked = background === "transparent";
+    if (els41.background) els41.background.value = background;
+    if (els41.transparentBackground) els41.transparentBackground.checked = background === "transparent";
   }
   function updateTransparencyControls() {
-    const { els: els42, state: state33 } = getLegacyBridge();
-    if (!els42.transparentBackground) return;
+    const { els: els41, state: state33 } = getLegacyBridge();
+    if (!els41.transparentBackground) return;
     const supported = !state33.generationCatalog || isGptImageModel(state33.selectedModelId || "");
-    const formatSupported = ["png", "webp", "svg"].includes(els42.outputFormat?.value || "png");
-    if (els42.background?.value === "transparent") transparentPreference = true;
+    const formatSupported = ["png", "webp", "svg"].includes(els41.outputFormat?.value || "png");
+    if (els41.background?.value === "transparent") transparentPreference = true;
     const enabled = supported && formatSupported && transparentPreference;
-    if (supported && els42.background) {
-      if (enabled) els42.background.value = "transparent";
-      else if (els42.background.value === "transparent") els42.background.value = "auto";
+    if (supported && els41.background) {
+      if (enabled) els41.background.value = "transparent";
+      else if (els41.background.value === "transparent") els41.background.value = "auto";
     }
-    els42.transparentBackground.checked = enabled;
-    els42.transparentBackground.disabled = !supported || !formatSupported;
-    els42.transparentBackgroundField?.classList.toggle("hidden", !supported || state33.selectedModelId?.startsWith("gpt-image-2.6-") && !formatSupported);
+    els41.transparentBackground.checked = enabled;
+    els41.transparentBackground.disabled = !supported || !formatSupported;
+    els41.transparentBackgroundField?.classList.toggle("hidden", !supported || state33.selectedModelId?.startsWith("gpt-image-2.6-") && !formatSupported);
     const label = document.getElementById("transparentBackgroundLabel");
     const labelKey = formatSupported ? "output.transparentBackground" : "output.transparencyUnavailable";
     if (label) {
@@ -22565,13 +20722,13 @@
       label.textContent = translate(labelKey);
       label.title = label.textContent;
     }
-    if (els42.transparentBackgroundField) {
-      els42.transparentBackgroundField.title = formatSupported ? "" : translate("output.transparencyFormat");
+    if (els41.transparentBackgroundField) {
+      els41.transparentBackgroundField.title = formatSupported ? "" : translate("output.transparencyFormat");
     }
   }
   function handleTransparentBackgroundChange() {
-    const { els: els42, methods } = getLegacyBridge();
-    setBackgroundControl(els42.transparentBackground?.checked ? "transparent" : "auto");
+    const { els: els41, methods } = getLegacyBridge();
+    setBackgroundControl(els41.transparentBackground?.checked ? "transparent" : "auto");
     updateTransparencyControls();
     methods.updateCompression?.();
     methods.saveCurrentModelParameterDraft?.();
@@ -22770,9 +20927,9 @@
     getLegacyBridge().methods.updateRequestPreview?.();
   }
   function updateConcreteModelSelection(modelId) {
-    const { state: state33, els: els42 } = getLegacyBridge();
-    const modelSelect = els42.concreteModelSelect;
-    const modelOptions = els42.concreteModelOptions;
+    const { state: state33, els: els41 } = getLegacyBridge();
+    const modelSelect = els41.concreteModelSelect;
+    const modelOptions = els41.concreteModelOptions;
     if (modelSelect) modelSelect.value = modelId;
     modelOptions?.querySelectorAll("[data-model-id]").forEach((button) => {
       const active = button.dataset.modelId === modelId;
@@ -22784,11 +20941,11 @@
     refreshSegmentedIndicators();
   }
   function renderModelSelectors() {
-    const { state: state33, els: els42 } = getLegacyBridge();
+    const { state: state33, els: els41 } = getLegacyBridge();
     const catalog = state33.generationCatalog;
-    const familyOptions = els42.modelFamilyOptions;
-    const modelSelect = els42.concreteModelSelect;
-    const modelOptions = els42.concreteModelOptions;
+    const familyOptions = els41.modelFamilyOptions;
+    const modelSelect = els41.concreteModelSelect;
+    const modelOptions = els41.concreteModelOptions;
     const modelField = modelSelect?.closest(".concrete-model-field");
     if (!catalog) {
       if (familyOptions) {
@@ -22983,8 +21140,8 @@
     }
   }
   function renderProviderSelection() {
-    const { state: state33, els: els42 } = getLegacyBridge();
-    const select = els42.generationProviderSelect;
+    const { state: state33, els: els41 } = getLegacyBridge();
+    const select = els41.generationProviderSelect;
     const catalog = state33.generationCatalog;
     const entries = catalog ? providerMenuBindings(catalog, state33.selectedModelId, state33.mode) : [];
     const resolved = catalog ? resolveProviderSelection(
@@ -23021,10 +21178,10 @@
       select.setAttribute("aria-invalid", resolved ? "false" : "true");
       syncThemedSelect(select);
     }
-    if (catalog && els42.statusText?.dataset.statusSource === "codex-health") {
+    if (catalog && els41.statusText?.dataset.statusSource === "codex-health") {
       getLegacyBridge().methods.setStatus?.("", "");
     }
-    if (els42.runButton) els42.runButton.disabled = !resolved;
+    if (els41.runButton) els41.runButton.disabled = !resolved;
   }
   function selectGenerationProvider(selectionOrProviderId) {
     const { state: state33 } = getLegacyBridge();
@@ -23067,17 +21224,17 @@
 
   // codex_image/webui/frontend/src/output-size-layout.ts
   function setCustomSizeModeLayout(isCustom) {
-    const { els: els42, state: state33 } = getLegacyBridge();
+    const { els: els41, state: state33 } = getLegacyBridge();
     const preset = document.getElementById("presetSizeFields");
     if (preset) {
       preset.inert = isCustom;
       preset.setAttribute("aria-hidden", String(isCustom));
     }
-    if (els42.customSize) {
-      els42.customSize.inert = !isCustom;
-      els42.customSize.setAttribute("aria-hidden", String(!isCustom));
+    if (els41.customSize) {
+      els41.customSize.inert = !isCustom;
+      els41.customSize.setAttribute("aria-hidden", String(!isCustom));
     }
-    els42.settingsGrid?.classList.toggle("custom-size-mode", isCustom);
+    els41.settingsGrid?.classList.toggle("custom-size-mode", isCustom);
     state33.customSizeMode = isCustom;
   }
 
@@ -23512,12 +21669,12 @@
     return renderNumeric(definition, value, context, false);
   }
   function setValidationError(modelId, parameterId, message) {
-    const { state: state33, els: els42 } = getLegacyBridge();
+    const { state: state33, els: els41 } = getLegacyBridge();
     const errors = state33.parameterValidationErrorsByModel[modelId] || {};
     if (message) errors[parameterId] = message;
     else delete errors[parameterId];
     state33.parameterValidationErrorsByModel[modelId] = errors;
-    if (els42.runButton) els42.runButton.disabled = !state33.authAvailable || Object.keys(errors).length > 0;
+    if (els41.runButton) els41.runButton.disabled = !state33.authAvailable || Object.keys(errors).length > 0;
   }
   function renderText(definition, value, context) {
     const field = fieldShell(definition);
@@ -23795,8 +21952,8 @@
     return report;
   }
   function renderModelParameters(model, options = { readOnly: false }) {
-    const { state: state33, els: els42 } = getLegacyBridge();
-    const root = options.root || els42.modelParameterGrid;
+    const { state: state33, els: els41 } = getLegacyBridge();
+    const root = options.root || els41.modelParameterGrid;
     if (!root) return;
     if (options.readOnly) {
       renderParameterDefinitionsInto(root, model, options.values || {}, { readOnly: true, operation: state33.mode });
@@ -23804,34 +21961,34 @@
     }
     ensureModelDraft(model);
     syncGptModelControls(model);
-    const visibility = legacyParameterVisibility(model.id, els42.size?.value);
+    const visibility = legacyParameterVisibility(model.id, els41.size?.value);
     const legacyGpt = visibility.legacyGpt;
     state33.customSizeTransitionSeq += 1;
     state33.customSizeMode = visibility.customSize;
     const legacyElements = [
       document.getElementById("outputSizeSettings"),
       document.getElementById("outputFileSettings"),
-      els42.sizeModeGroup?.closest(".custom-size-control"),
-      els42.orientation?.closest(".orientation-field"),
-      els42.resolution?.closest(".resolution-field"),
-      els42.quality?.closest(".quantity-quality-row"),
-      els42.outputFormatField,
-      els42.moderation?.closest(".moderation-field")
+      els41.sizeModeGroup?.closest(".custom-size-control"),
+      els41.orientation?.closest(".orientation-field"),
+      els41.resolution?.closest(".resolution-field"),
+      els41.quality?.closest(".quantity-quality-row"),
+      els41.outputFormatField,
+      els41.moderation?.closest(".moderation-field")
     ].filter(Boolean);
     legacyElements.forEach((element3) => {
       element3.classList.toggle("hidden", !legacyGpt);
     });
-    const automaticSize = els42.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
-    [els42.orientation?.closest(".orientation-field"), els42.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element3) => element3?.classList.toggle("hidden", !legacyGpt || automaticSize));
-    const ratioField = els42.ratio?.closest(".ratio-field");
+    const automaticSize = els41.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
+    [els41.orientation?.closest(".orientation-field"), els41.resolution?.closest(".resolution-field")].filter(Boolean).forEach((element3) => element3?.classList.toggle("hidden", !legacyGpt || automaticSize));
+    const ratioField = els41.ratio?.closest(".ratio-field");
     if (ratioField) {
       const ratioVisible = legacyGpt && !automaticSize;
       ratioField.classList.toggle("hidden", !ratioVisible);
       ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
     }
     setCustomSizeModeLayout(visibility.customSize);
-    els42.webSearchField?.classList.toggle("hidden", !legacyGpt);
-    els42.transparentBackgroundField?.classList.toggle("hidden", !legacyGpt);
+    els41.webSearchField?.classList.toggle("hidden", !legacyGpt);
+    els41.transparentBackgroundField?.classList.toggle("hidden", !legacyGpt);
     root.classList.toggle("hidden", legacyGpt);
     if (legacyGpt) root.replaceChildren();
     else renderInteractiveParameterDefinitionsInto(
@@ -23956,7 +22113,7 @@
     methods.persistModelSelection?.();
   }
   function restoreCurrentModelParameterDraft() {
-    const { state: state33, els: els42, methods } = getLegacyBridge();
+    const { state: state33, els: els41, methods } = getLegacyBridge();
     const modelId = state33.selectedModelId || "";
     const model = state33.generationCatalog?.models.find((item) => item.id === modelId);
     if (!model) return;
@@ -23969,26 +22126,26 @@
       ...Object.fromEntries(model.parameters.map((parameter) => [parameter.id, parameter.default])),
       ...state33.parameterDraftsByModel[modelId] || {}
     };
-    if (typeof draft2["canvas.resolution"] === "string" && els42.resolution) els42.resolution.value = draft2["canvas.resolution"];
-    if (typeof draft2["canvas.aspect_ratio"] === "string" && els42.ratio) els42.ratio.value = draft2["canvas.aspect_ratio"];
+    if (typeof draft2["canvas.resolution"] === "string" && els41.resolution) els41.resolution.value = draft2["canvas.resolution"];
+    if (typeof draft2["canvas.aspect_ratio"] === "string" && els41.ratio) els41.ratio.value = draft2["canvas.aspect_ratio"];
     if ((draft2["canvas.resolution"] || draft2["canvas.aspect_ratio"]) && typeof methods.updateSizeFromPreset === "function") {
       methods.updateSizeFromPreset();
     }
     if (typeof draft2["canvas.size"] === "string") methods.syncSizeControlsFromSize?.(draft2["canvas.size"]);
-    if (typeof draft2["gpt.quality"] === "string" && els42.quality) els42.quality.value = draft2["gpt.quality"];
-    if (typeof draft2["output.format"] === "string" && els42.outputFormat) els42.outputFormat.value = draft2["output.format"];
-    if (els42.outputFormat?.selectedOptions?.[0]?.disabled) els42.outputFormat.value = "png";
-    if (els42.complexity) els42.complexity.value = String(draft2["gpt.complexity"] || "high");
-    if (els42.frameCount) els42.frameCount.value = String(draft2["gpt.frame_count"] ?? 9);
-    if (els42.frameDuration) els42.frameDuration.value = String(draft2["gpt.frame_duration_ms"] ?? 200);
+    if (typeof draft2["gpt.quality"] === "string" && els41.quality) els41.quality.value = draft2["gpt.quality"];
+    if (typeof draft2["output.format"] === "string" && els41.outputFormat) els41.outputFormat.value = draft2["output.format"];
+    if (els41.outputFormat?.selectedOptions?.[0]?.disabled) els41.outputFormat.value = "png";
+    if (els41.complexity) els41.complexity.value = String(draft2["gpt.complexity"] || "high");
+    if (els41.frameCount) els41.frameCount.value = String(draft2["gpt.frame_count"] ?? 9);
+    if (els41.frameDuration) els41.frameDuration.value = String(draft2["gpt.frame_duration_ms"] ?? 200);
     setBackgroundControl(draft2["gpt.background"]);
-    if (typeof draft2["gpt.moderation"] === "string" && els42.moderation) els42.moderation.value = draft2["gpt.moderation"];
-    if (typeof draft2["gpt.output_compression"] === "number" && els42.compression) els42.compression.value = String(draft2["gpt.output_compression"]);
-    if (typeof draft2["gpt.web_search"] === "boolean" && els42.webSearch) {
-      els42.webSearch.checked = draft2["gpt.web_search"] && (selectedProviderBinding()?.protocol_profile || "").endsWith("_responses");
+    if (typeof draft2["gpt.moderation"] === "string" && els41.moderation) els41.moderation.value = draft2["gpt.moderation"];
+    if (typeof draft2["gpt.output_compression"] === "number" && els41.compression) els41.compression.value = String(draft2["gpt.output_compression"]);
+    if (typeof draft2["gpt.web_search"] === "boolean" && els41.webSearch) {
+      els41.webSearch.checked = draft2["gpt.web_search"] && (selectedProviderBinding()?.protocol_profile || "").endsWith("_responses");
     }
-    if (typeof draft2["output.count"] === "number" && els42.nInput) els42.nInput.value = String(draft2["output.count"]);
-    methods.syncRadioButtons?.(els42.complexity, els42.quality, els42.outputFormat, els42.moderation, els42.nInput);
+    if (typeof draft2["output.count"] === "number" && els41.nInput) els41.nInput.value = String(draft2["output.count"]);
+    methods.syncRadioButtons?.(els41.complexity, els41.quality, els41.outputFormat, els41.moderation, els41.nInput);
     methods.updateQuantity?.();
     methods.updateCompression?.();
     renderCurrentModelParameters();
@@ -24287,7 +22444,6 @@
     family: "mail",
     color: "#879993"
   });
-  var REFERENCE_FILE_ICON_EXTENSIONS = Object.freeze([...ICON_SPECS.keys()]);
   function referenceFileExtension(filename) {
     const value = String(filename || "");
     const separator = value.lastIndexOf(".");
@@ -24512,8 +22668,8 @@
     legacyMethod3("updateRequestPreview");
   }
   function renderReferenceFiles() {
-    const els42 = getEls();
-    const container = els42.referenceFileSelection;
+    const els41 = getEls();
+    const container = els41.referenceFileSelection;
     if (!container) return;
     requirementFeedback?.remove();
     requirementFeedback = null;
@@ -24560,7 +22716,7 @@
         });
         feedback3.append(select);
       } else feedback3.append(action);
-      els42.imageUploaderGrid?.after(feedback3);
+      els41.imageUploaderGrid?.after(feedback3);
       requirementFeedback = feedback3;
     }
     sources.forEach((source, index) => {
@@ -24586,7 +22742,7 @@
     });
     legacyMethod3("updateImageStripDensity");
     if (requirementActionVisible) {
-      els42.imageUploaderGrid?.classList.add("has-inputs");
+      els41.imageUploaderGrid?.classList.add("has-inputs");
     }
   }
   function syncReferenceFileAvailability() {
@@ -24618,12 +22774,12 @@
   function initReferenceFileInputsFeature() {
     if (initialized) return;
     initialized = true;
-    const els42 = getEls();
+    const els41 = getEls();
     document.addEventListener("change", (event) => {
       const target = event.target;
       if (target?.matches?.("#generationProviderSelect, #apiMode")) syncReferenceFileAvailability();
     });
-    els42.authSourceGroup?.addEventListener("click", () => queueMicrotask(syncReferenceFileAvailability));
+    els41.authSourceGroup?.addEventListener("click", () => queueMicrotask(syncReferenceFileAvailability));
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
       renderReferenceFiles();
       syncReferenceFileAvailability();
@@ -24950,12 +23106,12 @@
     });
   }
   function focusImagePasteTarget() {
-    const els42 = getEls();
+    const els41 = getEls();
     if (window.matchMedia?.("(pointer: coarse), (max-width: 600px)").matches) {
-      els42.promptEditor?.focus();
+      els41.promptEditor?.focus();
       return;
     }
-    els42.imageUploadSource?.focus({ preventScroll: true });
+    els41.imageUploadSource?.focus({ preventScroll: true });
   }
   function handleImagePaste(event) {
     const files = imageFilesFromClipboardItems(event.clipboardData?.items);
@@ -25026,13 +23182,13 @@
     return files;
   }
   async function pasteClipboardImages() {
-    const els42 = getEls();
+    const els41 = getEls();
     if (!navigator.clipboard?.read) {
       focusImagePasteTarget();
       setStatus2(clipboardReadFallbackMessage(translate("inputSource.clipboardUnsupported")), "error");
       return;
     }
-    els42.pasteClipboardButton.disabled = true;
+    els41.pasteClipboardButton.disabled = true;
     try {
       const files = await readClipboardImageFiles();
       const added = addImageFiles(files, {
@@ -25045,7 +23201,7 @@
       const reason = ["NotAllowedError", "SecurityError"].includes(String(error?.name || "")) ? translate("inputSource.clipboardDenied") : translate("inputSource.clipboardReadFailed");
       setStatus2(clipboardReadFallbackMessage(reason), "error");
     } finally {
-      els42.pasteClipboardButton.disabled = false;
+      els41.pasteClipboardButton.disabled = false;
     }
   }
   function missingGalleryInputs() {
@@ -25085,17 +23241,17 @@
   }
   function renderReferenceCollector() {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const items = state33.collectedReferences;
-    els42.imageUploaderGrid?.classList.toggle("has-collected-references", Boolean(items.length));
-    if (!els42.referenceCollector) return;
+    els41.imageUploaderGrid?.classList.toggle("has-collected-references", Boolean(items.length));
+    if (!els41.referenceCollector) return;
     if (!items.length) {
-      els42.referenceCollector.classList.add("hidden");
-      els42.referenceCollector.innerHTML = "";
+      els41.referenceCollector.classList.add("hidden");
+      els41.referenceCollector.innerHTML = "";
       return;
     }
-    els42.referenceCollector.classList.remove("hidden");
-    els42.referenceCollector.innerHTML = `
+    els41.referenceCollector.classList.remove("hidden");
+    els41.referenceCollector.innerHTML = `
     <div class="reference-collector-summary">
       <span>${escapeHtml2(formatTranslation("referenceCollector.title", { count: items.length }))}</span>
     </div>
@@ -25113,14 +23269,14 @@
       <button class="ghost-button text-sm quiet-danger-button" type="button" data-reference-collector-clear>${escapeHtml2(translate("action.clear"))}</button>
     </div>
   `;
-    els42.referenceCollector.querySelector("[data-reference-collector-add-all]")?.addEventListener("click", () => {
+    els41.referenceCollector.querySelector("[data-reference-collector-add-all]")?.addEventListener("click", () => {
       void addCollectedReferencesToInput();
     });
-    els42.referenceCollector.querySelector("[data-reference-collector-replace-all]")?.addEventListener("click", () => {
+    els41.referenceCollector.querySelector("[data-reference-collector-replace-all]")?.addEventListener("click", () => {
       void addCollectedReferencesToInput({ replace: true });
     });
-    els42.referenceCollector.querySelector("[data-reference-collector-clear]")?.addEventListener("click", () => clearCollectedReferences());
-    els42.referenceCollector.querySelectorAll("[data-reference-collector-remove]").forEach((button) => {
+    els41.referenceCollector.querySelector("[data-reference-collector-clear]")?.addEventListener("click", () => clearCollectedReferences());
+    els41.referenceCollector.querySelectorAll("[data-reference-collector-remove]").forEach((button) => {
       button.addEventListener("click", () => removeCollectedReference(button.dataset.referenceCollectorRemove));
     });
   }
@@ -25185,10 +23341,10 @@
   }
   async function addCollectedReferencesToInput(options = {}) {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const items = state33.collectedReferences.slice();
     if (!items.length) return;
-    const actionButtons = els42.referenceCollector?.querySelectorAll(
+    const actionButtons = els41.referenceCollector?.querySelectorAll(
       "[data-reference-collector-add-all], [data-reference-collector-replace-all]"
     );
     actionButtons?.forEach((button) => {
@@ -25280,8 +23436,8 @@
     }
   }
   function bindInputSourceEvents() {
-    const els42 = getEls();
-    if (els42.imageUploadSource) {
+    const els41 = getEls();
+    if (els41.imageUploadSource) {
       const actions = document.createElement("div");
       actions.className = "mobile-input-actions";
       const photos = document.createElement("button");
@@ -25302,27 +23458,27 @@
       label();
       document.addEventListener(LOCALE_CHANGE_EVENT, label);
       photos.addEventListener("click", () => photoInput.click());
-      files.addEventListener("click", () => els42.imageInput?.click());
+      files.addEventListener("click", () => els41.imageInput?.click());
       photoInput.addEventListener("change", () => {
         addImageFiles(Array.from(photoInput.files || []));
         photoInput.value = "";
       });
       actions.append(photos, files, photoInput);
-      els42.imageUploadSource.after(actions);
+      els41.imageUploadSource.after(actions);
     }
-    els42.imageUploadSource?.addEventListener("keydown", (event) => {
-      if (event.target !== els42.imageUploadSource || event.repeat) return;
+    els41.imageUploadSource?.addEventListener("keydown", (event) => {
+      if (event.target !== els41.imageUploadSource || event.repeat) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        els42.imageInput?.click();
+        els41.imageInput?.click();
       }
     });
-    els42.pasteClipboardButton?.addEventListener("click", pasteClipboardImages);
+    els41.pasteClipboardButton?.addEventListener("click", pasteClipboardImages);
     document.addEventListener("paste", handleImagePaste);
-    els42.imageUploaderGrid?.addEventListener("dragenter", handleImageDragEnter);
-    els42.imageUploaderGrid?.addEventListener("dragover", handleImageDragOver);
-    els42.imageUploaderGrid?.addEventListener("dragleave", handleImageDragLeave);
-    els42.imageUploaderGrid?.addEventListener("drop", handleImageDrop);
+    els41.imageUploaderGrid?.addEventListener("dragenter", handleImageDragEnter);
+    els41.imageUploaderGrid?.addEventListener("dragover", handleImageDragOver);
+    els41.imageUploaderGrid?.addEventListener("dragleave", handleImageDragLeave);
+    els41.imageUploaderGrid?.addEventListener("drop", handleImageDrop);
   }
   function initInputSourcesFeature() {
     if (inputSourcesFeatureInitialized) return;
@@ -25351,7 +23507,6 @@
       missingReferenceAssetInputs,
       addReferenceAssetInput,
       collectReferenceOutput,
-      renderReferenceCollector,
       restoreCollectedReferences,
       addCollectedReferencesToInput,
       imageFileFromUrl,
@@ -37212,7 +35367,7 @@ js: import "konva/skia-backend";
   function createImageEditorDrawing(dependencies) {
     const { getBrushSettings, getOverlayCanvas, getKonvaLayer, imageEditorBrushBoundaryContext: imageEditorBrushBoundaryContext2, imageEditorBrushOverlayContext: imageEditorBrushOverlayContext2, imageEditorContext: imageEditorContext2 } = dependencies;
     let previewNode = null;
-    function configureImageEditorStroke2(ctx, options = {}) {
+    function configureImageEditorStroke(ctx, options = {}) {
       if (!ctx) return;
       ctx.strokeStyle = getBrushSettings().color;
       ctx.fillStyle = getBrushSettings().color;
@@ -37221,7 +35376,7 @@ js: import "konva/skia-backend";
       ctx.lineJoin = options.lineJoin || "round";
       ctx.miterLimit = options.miterLimit || 10;
     }
-    function drawEditorBrushBoundarySegment2(from, to) {
+    function drawEditorBrushBoundarySegment(from, to) {
       const ctx = imageEditorBrushBoundaryContext2();
       if (!ctx) return;
       ctx.strokeStyle = "#000";
@@ -37235,10 +35390,10 @@ js: import "konva/skia-backend";
       ctx.stroke();
       markImageEditorCanvasChanged(ctx.canvas);
     }
-    function drawEditorBrushOverlaySegment2(from, to) {
+    function drawEditorBrushOverlaySegment(from, to) {
       const ctx = imageEditorBrushOverlayContext2();
       if (!ctx) return;
-      configureImageEditorStroke2(ctx);
+      configureImageEditorStroke(ctx);
       ctx.beginPath();
       ctx.moveTo(from.x, from.y);
       ctx.lineTo(to.x, to.y);
@@ -37252,18 +35407,18 @@ js: import "konva/skia-backend";
     function drawEditorBrushSegment2(from, to) {
       const ctx = imageEditorContext2();
       if (!ctx) return;
-      configureImageEditorStroke2(ctx);
+      configureImageEditorStroke(ctx);
       ctx.beginPath();
       ctx.moveTo(from.x, from.y);
       ctx.lineTo(to.x, to.y);
       ctx.stroke();
       markImageEditorCanvasChanged(ctx.canvas);
-      drawEditorBrushBoundarySegment2(from, to);
-      drawEditorBrushOverlaySegment2(from, to);
+      drawEditorBrushBoundarySegment(from, to);
+      drawEditorBrushOverlaySegment(from, to);
     }
     function drawEditorArrowOnContext2(ctx, start, end) {
       if (!ctx) return;
-      configureImageEditorStroke2(ctx, { lineCap: "butt", lineJoin: "miter" });
+      configureImageEditorStroke(ctx, { lineCap: "butt", lineJoin: "miter" });
       const geometry = imageEditorArrowGeometry(start, end, getBrushSettings().strokeWidth);
       ctx.beginPath();
       ctx.moveTo(start.x, start.y);
@@ -37312,13 +35467,13 @@ js: import "konva/skia-backend";
       previewNode.moveToTop?.();
       layer.batchDraw?.();
     }
-    function imageEditorLayerLocalPoint2(layer, point) {
+    function imageEditorLayerLocalPoint(layer, point) {
       const transform = layer.node.getAbsoluteTransform().copy();
       transform.invert();
       return transform.point(point);
     }
-    function imageEditorLayerCanvasPoint2(layer, point) {
-      const local = imageEditorLayerLocalPoint2(layer, point);
+    function imageEditorLayerCanvasPoint(layer, point) {
+      const local = imageEditorLayerLocalPoint(layer, point);
       const widthScale = layer.canvas.width / Math.max(1, layer.node.width());
       const heightScale = layer.canvas.height / Math.max(1, layer.node.height());
       return {
@@ -37326,7 +35481,7 @@ js: import "konva/skia-backend";
         y: local.y * heightScale
       };
     }
-    function imageEditorLayerCanvasStrokeWidth2(layer) {
+    function imageEditorLayerCanvasStrokeWidth(layer) {
       const widthScale = layer.canvas.width / Math.max(1, layer.node.width());
       const heightScale = layer.canvas.height / Math.max(1, layer.node.height());
       return Math.max(1, getBrushSettings().strokeWidth * ((widthScale + heightScale) / 2));
@@ -37334,11 +35489,11 @@ js: import "konva/skia-backend";
     function applyImageEditorLayerEraseSegment2(layer, from, to) {
       const ctx = layer.canvas.getContext("2d");
       if (!ctx) return false;
-      const start = imageEditorLayerCanvasPoint2(layer, from);
-      const end = imageEditorLayerCanvasPoint2(layer, to);
+      const start = imageEditorLayerCanvasPoint(layer, from);
+      const end = imageEditorLayerCanvasPoint(layer, to);
       ctx.save();
       ctx.globalCompositeOperation = "destination-out";
-      ctx.lineWidth = imageEditorLayerCanvasStrokeWidth2(layer);
+      ctx.lineWidth = imageEditorLayerCanvasStrokeWidth(layer);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.beginPath();
@@ -37355,11 +35510,11 @@ js: import "konva/skia-backend";
     function applyImageEditorLayerEraseDot2(layer, point) {
       const ctx = layer.canvas.getContext("2d");
       if (!ctx) return false;
-      const local = imageEditorLayerCanvasPoint2(layer, point);
+      const local = imageEditorLayerCanvasPoint(layer, point);
       ctx.save();
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(local.x, local.y, imageEditorLayerCanvasStrokeWidth2(layer) / 2, 0, Math.PI * 2);
+      ctx.arc(local.x, local.y, imageEditorLayerCanvasStrokeWidth(layer) / 2, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
       markImageEditorCanvasChanged(layer.canvas);
@@ -37368,7 +35523,7 @@ js: import "konva/skia-backend";
       layer.node.getLayer()?.batchDraw?.();
       return true;
     }
-    function applyImageEditorLayerEraseStroke2(layer, points) {
+    function applyImageEditorLayerEraseStroke(layer, points) {
       if (!layer || points.length < 2) return false;
       let changed = false;
       for (let index = 1; index < points.length; index += 1) {
@@ -37376,7 +35531,7 @@ js: import "konva/skia-backend";
       }
       return changed;
     }
-    return { configureImageEditorStroke: configureImageEditorStroke2, drawEditorBrushBoundarySegment: drawEditorBrushBoundarySegment2, drawEditorBrushOverlaySegment: drawEditorBrushOverlaySegment2, redrawImageEditorBrushOverlay: redrawImageEditorBrushOverlay2, drawEditorBrushSegment: drawEditorBrushSegment2, drawEditorArrowOnContext: drawEditorArrowOnContext2, clearImageEditorPreview: clearImageEditorPreview2, previewEditorArrow: previewEditorArrow2, imageEditorLayerLocalPoint: imageEditorLayerLocalPoint2, imageEditorLayerCanvasPoint: imageEditorLayerCanvasPoint2, imageEditorLayerCanvasStrokeWidth: imageEditorLayerCanvasStrokeWidth2, applyImageEditorLayerEraseSegment: applyImageEditorLayerEraseSegment2, applyImageEditorLayerEraseDot: applyImageEditorLayerEraseDot2, applyImageEditorLayerEraseStroke: applyImageEditorLayerEraseStroke2, promotePreview: () => previewNode?.moveToTop(), resetPreview: () => {
+    return { configureImageEditorStroke, drawEditorBrushBoundarySegment, drawEditorBrushOverlaySegment, redrawImageEditorBrushOverlay: redrawImageEditorBrushOverlay2, drawEditorBrushSegment: drawEditorBrushSegment2, drawEditorArrowOnContext: drawEditorArrowOnContext2, clearImageEditorPreview: clearImageEditorPreview2, previewEditorArrow: previewEditorArrow2, imageEditorLayerLocalPoint, imageEditorLayerCanvasPoint, imageEditorLayerCanvasStrokeWidth, applyImageEditorLayerEraseSegment: applyImageEditorLayerEraseSegment2, applyImageEditorLayerEraseDot: applyImageEditorLayerEraseDot2, applyImageEditorLayerEraseStroke, promotePreview: () => previewNode?.moveToTop(), resetPreview: () => {
       previewNode = null;
     } };
   }
@@ -37626,7 +35781,7 @@ js: import "konva/skia-backend";
           setImageEditorStatus2(translate("imageEditor.selectLayerFirst"), "error");
           return;
         }
-        const captureTarget2 = captureImageEditorPointer2(event);
+        const captureTarget2 = captureImageEditorPointer(event);
         const changed = applyImageEditorLayerEraseDot2(layer, point);
         drawingState = {
           pointerId: event.pointerId,
@@ -37639,7 +35794,7 @@ js: import "konva/skia-backend";
         };
         return;
       }
-      const captureTarget = captureImageEditorPointer2(event);
+      const captureTarget = captureImageEditorPointer(event);
       drawingState = {
         pointerId: event.pointerId,
         captureTarget,
@@ -37691,7 +35846,7 @@ js: import "konva/skia-backend";
       if (drawing.pointerId !== void 0 && event.pointerId !== void 0 && drawing.pointerId !== event.pointerId) return;
       event.preventDefault?.();
       const point = imageEditorPoint2(event);
-      releaseImageEditorPointer2(event, drawing.captureTarget);
+      releaseImageEditorPointer(event, drawing.captureTarget);
       if (getTool() === "eraser") {
         drawing.points.push(point);
         const layer = selectedImageEditorLayer2();
@@ -37723,7 +35878,7 @@ js: import "konva/skia-backend";
       const drawing = drawingState;
       if (!drawing) return;
       if (drawing.pointerId !== void 0 && event.pointerId !== void 0 && drawing.pointerId !== event.pointerId) return;
-      releaseImageEditorPointer2(event, drawing.captureTarget);
+      releaseImageEditorPointer(event, drawing.captureTarget);
       if (getTool() === "brush") {
         pushImageEditorHistory2();
       } else if (getTool() === "eraser") {
@@ -37736,7 +35891,7 @@ js: import "konva/skia-backend";
       drawingState = null;
       renderImageEditor2();
     }
-    function captureImageEditorPointer2(event) {
+    function captureImageEditorPointer(event) {
       if (event?.pointerId === void 0) return null;
       const target = event.currentTarget || event.target || getStageContainer();
       try {
@@ -37746,14 +35901,14 @@ js: import "konva/skia-backend";
         return null;
       }
     }
-    function releaseImageEditorPointer2(event, target) {
+    function releaseImageEditorPointer(event, target) {
       if (event?.pointerId === void 0 || !target) return;
       try {
         target.releasePointerCapture?.(event.pointerId);
       } catch {
       }
     }
-    return { handleImageEditorPointerDown: handleImageEditorPointerDown2, handleImageEditorPointerMove: handleImageEditorPointerMove2, handleImageEditorPointerUp: handleImageEditorPointerUp2, handleImageEditorPointerCancel: handleImageEditorPointerCancel2, captureImageEditorPointer: captureImageEditorPointer2, releaseImageEditorPointer: releaseImageEditorPointer2, clearDrawing: () => {
+    return { handleImageEditorPointerDown: handleImageEditorPointerDown2, handleImageEditorPointerMove: handleImageEditorPointerMove2, handleImageEditorPointerUp: handleImageEditorPointerUp2, handleImageEditorPointerCancel: handleImageEditorPointerCancel2, captureImageEditorPointer, releaseImageEditorPointer, clearDrawing: () => {
       dependencies.cancelPendingFill?.();
       drawingState = null;
     } };
@@ -37853,7 +36008,7 @@ js: import "konva/skia-backend";
     drawEditorArrowOnContext: (...args) => drawEditorArrowOnContext(...args),
     clearImageEditorPreview: (...args) => clearImageEditorPreview(...args)
   });
-  var { handleImageEditorPointerDown, handleImageEditorPointerMove, handleImageEditorPointerUp, handleImageEditorPointerCancel, captureImageEditorPointer, releaseImageEditorPointer } = editorPointer;
+  var { handleImageEditorPointerDown, handleImageEditorPointerMove, handleImageEditorPointerUp, handleImageEditorPointerCancel } = editorPointer;
   var { renderImageEditorInsertList, renderImageEditorLayerList } = createImageEditorPanel({
     getSources: () => getState().images,
     getEditorSnapshot: () => ({ sourceIndex: imageEditorState.sourceIndex, layers: imageEditorState.layers, selectedLayerId: imageEditorState.selectedLayerId }),
@@ -37874,7 +36029,7 @@ js: import "konva/skia-backend";
     imageEditorBrushOverlayContext: (...args) => imageEditorBrushOverlayContext(...args),
     imageEditorContext: (...args) => imageEditorContext(...args)
   });
-  var { configureImageEditorStroke, drawEditorBrushBoundarySegment, drawEditorBrushOverlaySegment, redrawImageEditorBrushOverlay, drawEditorBrushSegment, drawEditorArrowOnContext, clearImageEditorPreview, previewEditorArrow, imageEditorLayerLocalPoint, imageEditorLayerCanvasPoint, imageEditorLayerCanvasStrokeWidth, applyImageEditorLayerEraseSegment, applyImageEditorLayerEraseDot, applyImageEditorLayerEraseStroke } = editorDrawing;
+  var { redrawImageEditorBrushOverlay, drawEditorBrushSegment, drawEditorArrowOnContext, clearImageEditorPreview, previewEditorArrow, applyImageEditorLayerEraseSegment, applyImageEditorLayerEraseDot } = editorDrawing;
   function legacyMethod5(name, ...args) {
     return getLegacyBridge().methods[name]?.(...args);
   }
@@ -37905,10 +36060,10 @@ js: import "konva/skia-backend";
     return remoteImageSourceFile(source);
   }
   function setImageEditorStatus(message, type = "") {
-    const els42 = getEls();
-    if (!els42.imageEditorStatus) return;
-    els42.imageEditorStatus.textContent = message || "";
-    els42.imageEditorStatus.className = `image-editor-status ${type || ""}`.trim();
+    const els41 = getEls();
+    if (!els41.imageEditorStatus) return;
+    els41.imageEditorStatus.textContent = message || "";
+    els41.imageEditorStatus.className = `image-editor-status ${type || ""}`.trim();
   }
   function nextImageEditorSession() {
     imageEditorState.sessionId += 1;
@@ -37939,18 +36094,18 @@ js: import "konva/skia-backend";
     return !!state33.generationCatalog?.models.find((model) => model.id === state33.selectedModelId)?.input_constraints.supports_markup && selectedProviderBinding()?.protocol_profile === "openai_images" && imageEditorState.sourceIndex === 0;
   }
   function updateEditorModeControls() {
-    const els42 = getEls();
+    const els41 = getEls();
     document.getElementById("imageEditorModeGroup")?.classList.toggle("hidden", !markupSupported() && !imageEditorState.source?.markupFile);
     document.querySelectorAll("[data-image-editor-mode]").forEach((button) => {
       const active = button.dataset.imageEditorMode === "markup" === markupMode;
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", String(active));
     });
-    els42.imageEditorModal?.classList.toggle("markup-mode", markupMode);
-    if (els42.imageEditorSave) {
+    els41.imageEditorModal?.classList.toggle("markup-mode", markupMode);
+    if (els41.imageEditorSave) {
       const key2 = markupMode ? "imageEditor.saveMarkup" : "action.save";
-      els42.imageEditorSave.dataset.i18n = key2;
-      els42.imageEditorSave.textContent = translate(key2);
+      els41.imageEditorSave.dataset.i18n = key2;
+      els41.imageEditorSave.textContent = translate(key2);
     }
   }
   async function loadExistingMarkup() {
@@ -38309,8 +36464,8 @@ js: import "konva/skia-backend";
     editorDrawing.resetPreview();
   }
   function initializeImageEditorKonva(width, height) {
-    const els42 = getEls();
-    const container = els42.imageEditorKonvaMount;
+    const els41 = getEls();
+    const container = els41.imageEditorKonvaMount;
     if (!container) throw new Error(translate("imageEditor.canvasCreateFailed"));
     destroyImageEditorKonva();
     container.innerHTML = "";
@@ -38387,8 +36542,8 @@ js: import "konva/skia-backend";
     pushImageEditorHistory();
   }
   function renderImageEditor() {
-    const els42 = getEls();
-    const visible = els42.imageEditorCanvas;
+    const els41 = getEls();
+    const visible = els41.imageEditorCanvas;
     const stage = imageEditorState.konvaStage;
     const work = imageEditorState.workCanvas;
     if (visible && work) {
@@ -38407,16 +36562,16 @@ js: import "konva/skia-backend";
     stage?.batchDraw?.();
   }
   function updateImageEditorControls() {
-    const els42 = getEls();
+    const els41 = getEls();
     const canUndo = editorHistory.canUndo();
     const canRedo = editorHistory.canRedo();
     const selectedLayer = selectedImageEditorLayer();
-    if (els42.imageEditorUndo) els42.imageEditorUndo.disabled = !canUndo;
-    if (els42.imageEditorRedo) els42.imageEditorRedo.disabled = !canRedo;
-    if (els42.imageEditorLayerUp) els42.imageEditorLayerUp.disabled = !selectedLayer || imageEditorState.layers.indexOf(selectedLayer) >= imageEditorState.layers.length - 1;
-    if (els42.imageEditorLayerDown) els42.imageEditorLayerDown.disabled = !selectedLayer || imageEditorState.layers.indexOf(selectedLayer) <= 0;
-    if (els42.imageEditorLayerDelete) els42.imageEditorLayerDelete.disabled = !selectedLayer || imageEditorState.layers.length <= 1;
-    if (els42.imageEditorStrokeValue) els42.imageEditorStrokeValue.textContent = `${imageEditorState.strokeWidth}px`;
+    if (els41.imageEditorUndo) els41.imageEditorUndo.disabled = !canUndo;
+    if (els41.imageEditorRedo) els41.imageEditorRedo.disabled = !canRedo;
+    if (els41.imageEditorLayerUp) els41.imageEditorLayerUp.disabled = !selectedLayer || imageEditorState.layers.indexOf(selectedLayer) >= imageEditorState.layers.length - 1;
+    if (els41.imageEditorLayerDown) els41.imageEditorLayerDown.disabled = !selectedLayer || imageEditorState.layers.indexOf(selectedLayer) <= 0;
+    if (els41.imageEditorLayerDelete) els41.imageEditorLayerDelete.disabled = !selectedLayer || imageEditorState.layers.length <= 1;
+    if (els41.imageEditorStrokeValue) els41.imageEditorStrokeValue.textContent = `${imageEditorState.strokeWidth}px`;
     document.querySelectorAll("[data-image-editor-tool]").forEach((button) => {
       button.classList.toggle("active", button.dataset.imageEditorTool === imageEditorState.tool);
       button.setAttribute("aria-pressed", String(button.dataset.imageEditorTool === imageEditorState.tool));
@@ -38449,9 +36604,9 @@ js: import "konva/skia-backend";
     transformer.rotateAnchorOffset?.(Math.max(28, Math.round(28 / safeScale)));
   }
   function updateImageEditorDisplayScale() {
-    const els42 = getEls();
-    const wrap = els42.imageEditorCanvasWrap;
-    const mount = els42.imageEditorKonvaMount;
+    const els41 = getEls();
+    const wrap = els41.imageEditorCanvasWrap;
+    const mount = els41.imageEditorKonvaMount;
     const stage = imageEditorState.konvaStage;
     if (!wrap || !mount || !stage) return;
     const width = stage.width();
@@ -38474,16 +36629,16 @@ js: import "konva/skia-backend";
     mount.style.setProperty("--image-editor-stage-scale", String(displayScale));
   }
   function updateImageEditorCropBox() {
-    const els42 = getEls();
-    const box = els42.imageEditorCropBox;
-    const wrap = els42.imageEditorCanvasWrap;
+    const els41 = getEls();
+    const box = els41.imageEditorCropBox;
+    const wrap = els41.imageEditorCanvasWrap;
     const stage = imageEditorState.konvaStage;
     const crop = imageEditorState.crop;
     if (!box || !wrap || !stage || !crop) {
       box?.classList.add("hidden");
       return;
     }
-    const content = els42.imageEditorKonvaMount?.querySelector(".konvajs-content");
+    const content = els41.imageEditorKonvaMount?.querySelector(".konvajs-content");
     const rect = content?.getBoundingClientRect() || wrap.getBoundingClientRect();
     const wrapRect = wrap.getBoundingClientRect();
     const scaleX = rect.width / Math.max(1, stage.width());
@@ -38564,7 +36719,7 @@ ${hint}` : hint);
   }
   async function saveImageEdit() {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const sessionId = imageEditorState.sessionId;
     const source = imageEditorState.source;
     if (pendingFill) {
@@ -38581,7 +36736,7 @@ ${hint}` : hint);
       setImageEditorStatus(translate("imageEditor.saveFailed"), "error");
       return;
     }
-    if (els42.imageEditorSave) els42.imageEditorSave.disabled = true;
+    if (els41.imageEditorSave) els41.imageEditorSave.disabled = true;
     try {
       const blob = await imageEditorExportBlob(saveCanvas);
       const sourceIndex = state33.images.indexOf(source);
@@ -38622,7 +36777,7 @@ ${hint}` : hint);
     } catch (error) {
       setImageEditorStatus(error.message || translate("imageEditor.saveFailed"), "error");
     } finally {
-      if (els42.imageEditorSave) els42.imageEditorSave.disabled = false;
+      if (els41.imageEditorSave) els41.imageEditorSave.disabled = false;
     }
   }
   function sourcePreviewUrlForEditor(source) {
@@ -38697,7 +36852,7 @@ ${hint}` : hint);
   }
   async function openImageEditor(index) {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const source = state33.images[index];
     if (!source || !isEditableImageSource(source)) {
       legacyMethod5("setStatus", translate("imageEditor.uneditable"), "error");
@@ -38709,16 +36864,16 @@ ${hint}` : hint);
     imageEditorState.source = source;
     imageEditorState.originalFile = null;
     imageEditorState.tool = "crop";
-    imageEditorState.color = els42.imageEditorColor?.value || "#ff3b30";
-    imageEditorState.strokeWidth = Number(els42.imageEditorStroke?.value || 8);
+    imageEditorState.color = els41.imageEditorColor?.value || "#ff3b30";
+    imageEditorState.strokeWidth = Number(els41.imageEditorStroke?.value || 8);
     imageEditorState.hasInstructionMarks = false;
     editorPointer.clearDrawing();
     imageEditorState.canvasScope = "base";
     setImageEditorStatus("");
-    if (els42.imageEditorSubtitle) {
-      els42.imageEditorSubtitle.textContent = legacyMethod5("sourceName", source) || translate("imageEditor.inputFallback");
+    if (els41.imageEditorSubtitle) {
+      els41.imageEditorSubtitle.textContent = legacyMethod5("sourceName", source) || translate("imageEditor.inputFallback");
     }
-    els42.imageEditorModal?.classList.remove("hidden");
+    els41.imageEditorModal?.classList.remove("hidden");
     try {
       const file = await imageEditorSourceFile(source);
       if (sessionId !== imageEditorState.sessionId || imageEditorState.source !== source) return;
@@ -38739,9 +36894,9 @@ ${hint}` : hint);
     }
   }
   function closeImageEditor(force = false) {
-    const els42 = getEls();
+    const els41 = getEls();
     if (force !== true && (editorHistory.canUndo() || Boolean(imageEditorState.crop?.width && imageEditorState.crop?.height))) {
-      legacyMethod5("openConfirmPopover", els42.imageEditorClose, {
+      legacyMethod5("openConfirmPopover", els41.imageEditorClose, {
         title: translate("ux.discardEdits"),
         focusCancel: true,
         message: translate("ux.imageUnsaved"),
@@ -38751,7 +36906,7 @@ ${hint}` : hint);
       return;
     }
     nextImageEditorSession();
-    els42.imageEditorModal?.classList.add("hidden");
+    els41.imageEditorModal?.classList.add("hidden");
     destroyImageEditorKonva();
     imageEditorState.sourceIndex = null;
     imageEditorState.source = null;
@@ -38814,8 +36969,8 @@ ${hint}` : hint);
     }
   }
   function isImageEditorModalOpen() {
-    const els42 = getEls();
-    return Boolean(els42.imageEditorModal && !els42.imageEditorModal.classList.contains("hidden"));
+    const els41 = getEls();
+    return Boolean(els41.imageEditorModal && !els41.imageEditorModal.classList.contains("hidden"));
   }
   function handleImageEditorHistoryShortcut(event) {
     if (!isImageEditorModalOpen()) return false;
@@ -38860,14 +37015,14 @@ ${hint}` : hint);
     });
   }
   function bindImageEditorEvents() {
-    const els42 = getEls();
+    const els41 = getEls();
     document.querySelectorAll("[data-image-editor-mode]").forEach((button) => {
       button.addEventListener("click", () => requestEditorMode(button.dataset.imageEditorMode === "markup", button));
     });
-    els42.imageEditorClose?.addEventListener("click", () => closeImageEditor());
-    els42.imageEditorCancel?.addEventListener("click", () => closeImageEditor());
-    els42.imageEditorModal?.addEventListener("click", (event) => {
-      if (event.target === els42.imageEditorModal) closeImageEditor();
+    els41.imageEditorClose?.addEventListener("click", () => closeImageEditor());
+    els41.imageEditorCancel?.addEventListener("click", () => closeImageEditor());
+    els41.imageEditorModal?.addEventListener("click", (event) => {
+      if (event.target === els41.imageEditorModal) closeImageEditor();
     });
     document.querySelectorAll("[data-image-editor-tool]").forEach((button) => {
       button.addEventListener("click", () => setImageEditorTool(button.dataset.imageEditorTool));
@@ -38875,32 +37030,32 @@ ${hint}` : hint);
     document.querySelectorAll("[data-image-editor-color]").forEach((button) => {
       button.addEventListener("click", () => {
         imageEditorState.color = button.dataset.imageEditorColor || imageEditorState.color;
-        if (els42.imageEditorColor) els42.imageEditorColor.value = imageEditorState.color;
+        if (els41.imageEditorColor) els41.imageEditorColor.value = imageEditorState.color;
         updateImageEditorControls();
       });
     });
     document.querySelectorAll("[data-image-editor-canvas-scope]").forEach((button) => {
       button.addEventListener("click", () => setImageEditorCanvasScope(button.dataset.imageEditorCanvasScope));
     });
-    els42.imageEditorColor?.addEventListener("input", () => {
-      imageEditorState.color = els42.imageEditorColor.value || imageEditorState.color;
+    els41.imageEditorColor?.addEventListener("input", () => {
+      imageEditorState.color = els41.imageEditorColor.value || imageEditorState.color;
       updateImageEditorControls();
     });
-    els42.imageEditorStroke?.addEventListener("input", () => {
-      imageEditorState.strokeWidth = Number(els42.imageEditorStroke.value || 8);
+    els41.imageEditorStroke?.addEventListener("input", () => {
+      imageEditorState.strokeWidth = Number(els41.imageEditorStroke.value || 8);
       updateImageEditorControls();
     });
-    els42.imageEditorUndo?.addEventListener("click", undoImageEdit);
-    els42.imageEditorRedo?.addEventListener("click", redoImageEdit);
-    els42.imageEditorReset?.addEventListener("click", resetImageEdit);
-    els42.imageEditorSave?.addEventListener("click", saveImageEdit);
-    els42.imageEditorLayerUp?.addEventListener("click", () => moveImageEditorLayer("up"));
-    els42.imageEditorLayerDown?.addEventListener("click", () => moveImageEditorLayer("down"));
-    els42.imageEditorLayerDelete?.addEventListener("click", deleteSelectedImageEditorLayer);
-    els42.imageEditorCanvas?.addEventListener("pointerdown", handleImageEditorPointerDown);
-    els42.imageEditorCanvas?.addEventListener("pointermove", handleImageEditorPointerMove);
-    els42.imageEditorCanvas?.addEventListener("pointerup", handleImageEditorPointerUp);
-    els42.imageEditorCanvas?.addEventListener("pointercancel", handleImageEditorPointerCancel);
+    els41.imageEditorUndo?.addEventListener("click", undoImageEdit);
+    els41.imageEditorRedo?.addEventListener("click", redoImageEdit);
+    els41.imageEditorReset?.addEventListener("click", resetImageEdit);
+    els41.imageEditorSave?.addEventListener("click", saveImageEdit);
+    els41.imageEditorLayerUp?.addEventListener("click", () => moveImageEditorLayer("up"));
+    els41.imageEditorLayerDown?.addEventListener("click", () => moveImageEditorLayer("down"));
+    els41.imageEditorLayerDelete?.addEventListener("click", deleteSelectedImageEditorLayer);
+    els41.imageEditorCanvas?.addEventListener("pointerdown", handleImageEditorPointerDown);
+    els41.imageEditorCanvas?.addEventListener("pointermove", handleImageEditorPointerMove);
+    els41.imageEditorCanvas?.addEventListener("pointerup", handleImageEditorPointerUp);
+    els41.imageEditorCanvas?.addEventListener("pointercancel", handleImageEditorPointerCancel);
   }
   function initImageEditorFeature() {
     if (imageEditorFeatureInitialized) return;
@@ -39003,10 +37158,10 @@ ${hint}` : hint);
   }
   function imageStripNeedsCompactGrid() {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const thumbCount = state33.images.length + state33.referenceFiles.length;
-    if (!els42.imageUploaderGrid || !thumbCount) return false;
-    const availableWidth = Math.max(0, els42.imageUploaderGrid.clientWidth - 24);
+    if (!els41.imageUploaderGrid || !thumbCount) return false;
+    const availableWidth = Math.max(0, els41.imageUploaderGrid.clientWidth - 24);
     if (!availableWidth) return false;
     const fullSizeThumbsWidth = thumbCount * 116 + Math.max(0, thumbCount - 1) * 10;
     const fullSizeUploadWidth = 118;
@@ -39015,26 +37170,26 @@ ${hint}` : hint);
   }
   function updateImageStripDensity() {
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const hasImages = Boolean(state33.images.length);
     const hasInputs = Boolean(state33.images.length + state33.referenceFiles.length);
     const compactGrid = imageStripNeedsCompactGrid();
-    els42.imageUploaderGrid?.classList.toggle("has-images", hasImages);
-    els42.imageUploaderGrid?.classList.toggle("has-inputs", hasInputs);
-    els42.imageUploaderGrid?.classList.toggle("compact-grid", compactGrid);
+    els41.imageUploaderGrid?.classList.toggle("has-images", hasImages);
+    els41.imageUploaderGrid?.classList.toggle("has-inputs", hasInputs);
+    els41.imageUploaderGrid?.classList.toggle("compact-grid", compactGrid);
   }
   function wheelDeltaInPixels(event) {
     const dominantDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
     if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) return dominantDelta * 16;
     if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-      const els42 = getEls();
-      return dominantDelta * Math.max(1, els42.imageStrip?.clientWidth || 1);
+      const els41 = getEls();
+      return dominantDelta * Math.max(1, els41.imageStrip?.clientWidth || 1);
     }
     return dominantDelta;
   }
   function handleImageStripWheel(event) {
-    const els42 = getEls();
-    const scrollTarget = els42.imageThumbList;
+    const els41 = getEls();
+    const scrollTarget = els41.imageThumbList;
     if (!scrollTarget) return;
     const maxScrollLeft = Math.max(0, scrollTarget.scrollWidth - scrollTarget.clientWidth);
     if (!maxScrollLeft) return;
@@ -39048,9 +37203,9 @@ ${hint}` : hint);
   function renderImageStrip() {
     refreshImageMentionChips();
     const state33 = getState();
-    const els42 = getEls();
+    const els41 = getEls();
     const hasImages = Boolean(state33.images.length);
-    const thumbItems = els42.imageThumbItems;
+    const thumbItems = els41.imageThumbItems;
     updateImageStripDensity();
     if (!thumbItems) return;
     if (!hasImages) {
@@ -39153,10 +37308,10 @@ ${hint}` : hint);
     legacyMethod6("updateCustomRatioReferenceButtonState");
   }
   function bindImageStripEvents() {
-    const els42 = getEls();
-    els42.imageInput?.addEventListener("change", addImages);
-    els42.clearImagesButton?.addEventListener("click", clearImages);
-    els42.imageStrip?.addEventListener("wheel", handleImageStripWheel, { passive: false });
+    const els41 = getEls();
+    els41.imageInput?.addEventListener("change", addImages);
+    els41.clearImagesButton?.addEventListener("click", clearImages);
+    els41.imageStrip?.addEventListener("wheel", handleImageStripWheel, { passive: false });
     window.addEventListener("resize", updateImageStripDensity);
     document.addEventListener(LOCALE_CHANGE_EVENT, renderImageStrip);
   }
@@ -39165,8 +37320,6 @@ ${hint}` : hint);
     imageStripFeatureInitialized = true;
     bindImageStripEvents();
     Object.assign(getLegacyBridge().methods, {
-      addImages,
-      clearImages,
       updateImageStripDensity,
       handleImageStripWheel,
       renderImageStrip
@@ -41479,7 +39632,6 @@ ${hint}` : hint);
       sortGalleryItems,
       filterGalleryItems: filterGalleryItems3,
       refreshGallery: refreshGallery3,
-      openGallery,
       closeGallery: closeGallery2,
       findGalleryItem: findGalleryItem4,
       applyGalleryItemOrder: applyGalleryItemOrder2,
@@ -41901,9 +40053,6 @@ ${hint}` : hint);
   function currentAuthSource2() {
     if (state9.selectedProviderId) return state9.selectedProviderId === "codex" ? "codex" : "api";
     return state9.pendingAuthSource || state9.authStatus?.selected_source || "codex";
-  }
-  function isDirectApiMode(authSource = currentAuthSource2()) {
-    return authSource === "api" && currentApiMode2() !== "responses" || authSource === "codex" && currentCodexMode2() !== "responses";
   }
 
   // codex_image/webui/frontend/src/api-advanced-settings.ts
@@ -42566,7 +40715,7 @@ ${hint}` : hint);
 
   // codex_image/webui/frontend/src/api-provider-binding-editor.ts
   function handleProviderBindingEditorChange(event, context) {
-    const { state: state33, els: els42, updateProviderBindingCount: updateProviderBindingCount2 } = context;
+    const { state: state33, els: els41, updateProviderBindingCount: updateProviderBindingCount2 } = context;
     const target = event.target;
     const card = target?.closest("[data-binding-id]");
     if (!target || !card) return;
@@ -42600,8 +40749,8 @@ ${hint}` : hint);
       card.dataset.bindingCompatibilityChanged = "true";
       if (state33.apiProviderDraftIsNew && defaultProtocol) {
         const suggestion = bindingTemplateSuggestion(bindingTemplateForProtocol(modelId, defaultProtocol));
-        const currentBase = String(els42.apiBaseUrl?.value || "").trim();
-        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els42.apiBaseUrl.value = suggestion.base_url;
+        const currentBase = String(els41.apiBaseUrl?.value || "").trim();
+        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els41.apiBaseUrl.value = suggestion.base_url;
       }
       const remoteInput = card.querySelector("[data-binding-remote-model]");
       const model = state33.generationCatalog?.models.find((item) => item.id === modelId);
@@ -42619,7 +40768,7 @@ ${hint}` : hint);
     if (target.matches("[data-binding-default]")) {
       const modelId = card.querySelector("[data-binding-model]")?.value;
       if (modelId) {
-        els42.apiProviderBindings?.querySelectorAll("[data-binding-id]").forEach((item) => {
+        els41.apiProviderBindings?.querySelectorAll("[data-binding-id]").forEach((item) => {
           if (item === card) return;
           if (item.querySelector("[data-binding-model]")?.value !== modelId) return;
           const checkbox = item.querySelector("[data-binding-default]");
@@ -42646,8 +40795,8 @@ ${hint}` : hint);
       if (state33.apiProviderDraftIsNew) {
         const templateId = bindingTemplateForProtocol(modelId, protocol);
         const suggestion = bindingTemplateSuggestion(templateId);
-        const currentBase = String(els42.apiBaseUrl?.value || "").trim();
-        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els42.apiBaseUrl.value = suggestion.base_url;
+        const currentBase = String(els41.apiBaseUrl?.value || "").trim();
+        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els41.apiBaseUrl.value = suggestion.base_url;
       }
     }
     if (target.matches("[data-binding-compatibility]")) {
@@ -42661,8 +40810,8 @@ ${hint}` : hint);
           target.value
         );
         const suggestion = bindingTemplateSuggestion(templateId);
-        const currentBase = String(els42.apiBaseUrl?.value || "").trim();
-        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els42.apiBaseUrl.value = suggestion.base_url;
+        const currentBase = String(els41.apiBaseUrl?.value || "").trim();
+        if (!currentBase || isBindingTemplateBaseUrl(currentBase)) els41.apiBaseUrl.value = suggestion.base_url;
       }
     }
     updateProviderBindingCount2();
@@ -43868,12 +42017,12 @@ ${hint}` : hint);
     return void 0;
   }
   function systemSettingsPanel() {
-    const { els: els42 } = getLegacyBridge();
-    return els42.systemSettingsModal?.querySelector(".system-settings-modal-panel") || null;
+    const { els: els41 } = getLegacyBridge();
+    return els41.systemSettingsModal?.querySelector(".system-settings-modal-panel") || null;
   }
   function shouldAnimateSystemSettingsHeight() {
-    const { els: els42 } = getLegacyBridge();
-    if (els42.systemSettingsModal?.classList.contains("hidden")) return false;
+    const { els: els41 } = getLegacyBridge();
+    if (els41.systemSettingsModal?.classList.contains("hidden")) return false;
     return !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   }
   function clearSystemSettingsHeightAnimation(panel) {
@@ -43887,8 +42036,8 @@ ${hint}` : hint);
     panel.style.height = "";
   }
   function positionSystemSettingsModal() {
-    const { els: els42 } = getLegacyBridge();
-    const modal = els42.systemSettingsModal;
+    const { els: els41 } = getLegacyBridge();
+    const modal = els41.systemSettingsModal;
     const panel = systemSettingsPanel();
     if (!modal || !panel || modal.classList.contains("hidden")) return;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
@@ -43939,13 +42088,13 @@ ${hint}` : hint);
   }
   function setSystemSettingsTab(tab, options = {}) {
     const selected = normalizedTab(tab);
-    const { els: els42 } = getLegacyBridge();
-    if (userConfigBackupViewIsOpen()) userConfigBackupScrollTop = els42.userConfigBackupView.scrollTop;
+    const { els: els41 } = getLegacyBridge();
+    if (userConfigBackupViewIsOpen()) userConfigBackupScrollTop = els41.userConfigBackupView.scrollTop;
     const panel = systemSettingsPanel();
     const animateHeight = Boolean(panel && shouldAnimateSystemSettingsHeight());
     const beforeHeight = animateHeight && panel ? panel.getBoundingClientRect().height : 0;
     if (animateHeight && panel) clearSystemSettingsHeightAnimation(panel);
-    const buttons = Array.from(els42.systemSettingsTabs?.querySelectorAll("[data-system-settings-tab]") || []);
+    const buttons = Array.from(els41.systemSettingsTabs?.querySelectorAll("[data-system-settings-tab]") || []);
     buttons.forEach((button) => {
       const active = button.dataset.systemSettingsTab === selected;
       button.classList.toggle("active", active);
@@ -43953,17 +42102,17 @@ ${hint}` : hint);
       button.tabIndex = active ? 0 : -1;
     });
     [
-      ["api", els42.systemSettingsApiPanel],
-      ["network", els42.systemSettingsNetworkPanel],
-      ["language", els42.systemSettingsLanguagePanel],
-      ["storage", els42.systemSettingsStoragePanel]
+      ["api", els41.systemSettingsApiPanel],
+      ["network", els41.systemSettingsNetworkPanel],
+      ["language", els41.systemSettingsLanguagePanel],
+      ["storage", els41.systemSettingsStoragePanel]
     ].forEach(([name, panel2]) => {
       if (!panel2) return;
       const active = name === selected;
       panel2.hidden = !active;
       panel2.setAttribute("aria-hidden", active ? "false" : "true");
     });
-    if (selected === "storage" && userConfigBackupOpen) els42.userConfigBackupView.scrollTop = userConfigBackupScrollTop;
+    if (selected === "storage" && userConfigBackupOpen) els41.userConfigBackupView.scrollTop = userConfigBackupScrollTop;
     if (options.refresh === false) return;
     if (selected === "storage" && !userConfigBackupOpen) maybeCall("refreshSettings");
     if (selected === "network") {
@@ -43981,25 +42130,25 @@ ${hint}` : hint);
     if (animateHeight && panel) animateSystemSettingsPanelHeight(panel, beforeHeight);
   }
   function userConfigBackupViewIsOpen() {
-    const { els: els42 } = getLegacyBridge();
-    return userConfigBackupOpen && !els42.systemSettingsStoragePanel?.hidden && !els42.systemSettingsModal?.classList.contains("hidden");
+    const { els: els41 } = getLegacyBridge();
+    return userConfigBackupOpen && !els41.systemSettingsStoragePanel?.hidden && !els41.systemSettingsModal?.classList.contains("hidden");
   }
   function showStorageChild(backup) {
-    const { els: els42 } = getLegacyBridge();
-    for (const child of Array.from(els42.systemSettingsStoragePanel?.children || [])) {
+    const { els: els41 } = getLegacyBridge();
+    for (const child of Array.from(els41.systemSettingsStoragePanel?.children || [])) {
       if (!(child instanceof HTMLElement)) continue;
-      const visible = child === els42.userConfigBackupView === backup;
+      const visible = child === els41.userConfigBackupView === backup;
       child.hidden = !visible;
       child.inert = !visible;
       child.setAttribute("aria-hidden", String(!visible));
     }
   }
   function openUserConfigBackupView(trigger) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     setSystemSettingsTab("storage", { refresh: false });
     if (userConfigBackupOpen) return;
     userConfigBackupTrigger = trigger ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
-    const scroll = els42.systemSettingsStoragePanel?.querySelector(".system-settings-scroll");
+    const scroll = els41.systemSettingsStoragePanel?.querySelector(".system-settings-scroll");
     storagePanelScrollTop = Number(scroll?.scrollTop || 0);
     const panel = systemSettingsPanel();
     const animateHeight = Boolean(panel && shouldAnimateSystemSettingsHeight());
@@ -44007,27 +42156,27 @@ ${hint}` : hint);
     if (animateHeight && panel) clearSystemSettingsHeightAnimation(panel);
     userConfigBackupOpen = true;
     showStorageChild(true);
-    els42.userConfigBackupView.scrollTop = userConfigBackupScrollTop;
+    els41.userConfigBackupView.scrollTop = userConfigBackupScrollTop;
     if (!userConfigBackupControllerActive) {
       userConfigBackupControllerActive = true;
       maybeCall("openUserConfigBackupController");
     }
     refreshSegmentedIndicators();
     if (animateHeight && panel) animateSystemSettingsPanelHeight(panel, beforeHeight);
-    els42.userConfigBackupBackButton?.focus({ preventScroll: true });
+    els41.userConfigBackupBackButton?.focus({ preventScroll: true });
   }
   function closeUserConfigBackupView(options = {}) {
     if (!userConfigBackupOpen) return true;
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const panel = systemSettingsPanel();
     const animateHeight = Boolean(panel && shouldAnimateSystemSettingsHeight());
     const beforeHeight = animateHeight && panel ? panel.getBoundingClientRect().height : 0;
     if (animateHeight && panel) clearSystemSettingsHeightAnimation(panel);
-    if (userConfigBackupViewIsOpen()) userConfigBackupScrollTop = els42.userConfigBackupView.scrollTop;
+    if (userConfigBackupViewIsOpen()) userConfigBackupScrollTop = els41.userConfigBackupView.scrollTop;
     userConfigBackupOpen = false;
     showStorageChild(false);
     setSystemSettingsTab("storage", { refresh: false });
-    const scroll = els42.systemSettingsStoragePanel?.querySelector(".system-settings-scroll");
+    const scroll = els41.systemSettingsStoragePanel?.querySelector(".system-settings-scroll");
     if (scroll) scroll.scrollTop = storagePanelScrollTop;
     refreshSegmentedIndicators();
     if (animateHeight && panel) animateSystemSettingsPanelHeight(panel, beforeHeight);
@@ -44039,8 +42188,8 @@ ${hint}` : hint);
   }
   function openSystemSettingsModal(tab = "api") {
     closeAppearancePopover(false);
-    const { els: els42 } = getLegacyBridge();
-    const modal = els42.systemSettingsModal;
+    const { els: els41 } = getLegacyBridge();
+    const modal = els41.systemSettingsModal;
     const wasHidden = modal?.classList.contains("hidden") ?? true;
     if (wasHidden) {
       const activeElement = document.activeElement;
@@ -44057,8 +42206,8 @@ ${hint}` : hint);
     closeUserConfigBackupView({ restoreFocus: false });
     if (userConfigBackupControllerActive) maybeCall("closeUserConfigBackupController");
     userConfigBackupControllerActive = false;
-    const { els: els42 } = getLegacyBridge();
-    const modal = els42.systemSettingsModal;
+    const { els: els41 } = getLegacyBridge();
+    const modal = els41.systemSettingsModal;
     const activeElement = document.activeElement;
     if (modal && activeElement instanceof HTMLElement && modal.contains(activeElement)) {
       const returnFocus2 = systemSettingsReturnFocus;
@@ -44121,11 +42270,11 @@ ${hint}` : hint);
       closeSystemSettingsModal();
       return Boolean(getLegacyBridge().els.systemSettingsModal?.classList.contains("hidden"));
     });
-    const { els: els42 } = getLegacyBridge();
-    els42.systemSettingsTabs?.addEventListener("click", handleSystemSettingsTabClick);
-    els42.systemSettingsTabs?.addEventListener("keydown", handleSystemSettingsTabKeydown);
-    els42.openUserConfigBackupButton?.addEventListener("click", handleUserConfigBackupEntry);
-    els42.userConfigBackupBackButton?.addEventListener("click", () => closeUserConfigBackupView());
+    const { els: els41 } = getLegacyBridge();
+    els41.systemSettingsTabs?.addEventListener("click", handleSystemSettingsTabClick);
+    els41.systemSettingsTabs?.addEventListener("keydown", handleSystemSettingsTabKeydown);
+    els41.openUserConfigBackupButton?.addEventListener("click", handleUserConfigBackupEntry);
+    els41.userConfigBackupBackButton?.addEventListener("click", () => closeUserConfigBackupView());
     window.addEventListener("resize", handleSystemSettingsResize);
     document.addEventListener("keydown", handleSystemSettingsKeydown, true);
     Object.assign(getLegacyBridge().methods, {
@@ -44871,8 +43020,6 @@ ${hint}` : hint);
     if (backend === "codex_responses" || backend === "openai_responses") return "Responses";
     return "";
   }
-  function syncCodexModeNotes() {
-  }
   function selectCodexMode(mode, anchor) {
     if (apiSettingsSaving) return false;
     const normalized = normalizeCodexMode(mode);
@@ -44897,12 +43044,6 @@ ${hint}` : hint);
       apiSettingsAutosaveTimerId = null;
       void saveApiSettings({ auto: true, silent: options.silent });
     }, 260);
-  }
-  function backendForAuthSource(authSource, apiMode = currentApiMode3(), codexMode = currentCodexMode3()) {
-    if (authSource === "api") {
-      return apiMode === "responses" ? "openai_responses" : "openai_images";
-    }
-    return codexMode === "responses" ? "codex_responses" : "codex_images";
   }
   function taskBackendValue(task) {
     return String(task?.backend || task?.requested_backend || "").trim();
@@ -45122,16 +43263,16 @@ ${hint}` : hint);
   function initApiSettingsFeature() {
     if (apiSettingsFeatureInitialized) return;
     apiSettingsFeatureInitialized = true;
-    const { els: els42, state: state33 } = getLegacyBridge();
-    els42.apiBaseUrl?.addEventListener("input", syncSvgAuthorModelVisibility);
+    const { els: els41, state: state33 } = getLegacyBridge();
+    els41.apiBaseUrl?.addEventListener("input", syncSvgAuthorModelVisibility);
     initProviderModelDiscovery({
-      container: els42.apiProviderBindings,
-      connectionInputs: [els42.apiBaseUrl, els42.apiKey],
+      container: els41.apiProviderBindings,
+      connectionInputs: [els41.apiBaseUrl, els41.apiKey],
       getConnection: () => ({
         provider_id: String(state33.apiProviderDraft?.id || ""),
         api_key_source_provider_id: String(state33.apiProviderDraft?.api_key_source_provider_id || ""),
-        base_url: String(els42.apiBaseUrl?.value || "").trim(),
-        api_key: String(els42.apiKey?.value || "").trim()
+        base_url: String(els41.apiBaseUrl?.value || "").trim(),
+        api_key: String(els41.apiKey?.value || "").trim()
       })
     });
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
@@ -45150,13 +43291,10 @@ ${hint}` : hint);
       authSourceDetailText,
       sourceLabel,
       currentAuthSource: currentAuthSource2,
-      isDirectApiMode,
       setModeSpecificElementVisibility,
       setModeSettingsVariant,
       updateModeSpecificSettings,
       normalizeApiProvider,
-      normalizeApiImagesConcurrency,
-      normalizeApiSettings,
       activeApiProvider,
       addProviderBinding,
       restoreApiSettings,
@@ -45164,8 +43302,6 @@ ${hint}` : hint);
       mergeApiProviderKeys,
       refreshApiSettings,
       populateApiSettingsForm,
-      queueApiSettingsAutosave,
-      readApiSettingsForm,
       currentApiProviderId,
       currentApiProviderLabel: currentApiProviderLabel2,
       addApiProvider,
@@ -45184,7 +43320,6 @@ ${hint}` : hint);
       updateProviderBindingCount,
       revealApiKeyWhilePressed,
       renderApiProviderList,
-      syncCodexModeNotes,
       reorderApiProviders,
       removeProviderBinding,
       toggleApiProviderSortMode,
@@ -45194,16 +43329,13 @@ ${hint}` : hint);
       currentApiImageModel,
       currentApiMode: currentApiMode3,
       currentCodexMode: currentCodexMode3,
-      currentApiImagesConcurrency,
       apiModeLabel: apiModeLabel2,
       codexModeLabel: codexModeLabel2,
-      backendForAuthSource,
       taskBackendValue,
       taskApiProviderId,
       taskApiProviderLabel,
       taskBackendLabel,
-      setApiSettingsFeedback,
-      saveApiSettings
+      setApiSettingsFeedback
     });
     initApiProviderSortFeature();
   }
@@ -45447,35 +43579,35 @@ ${hint}` : hint);
   function renderTaskNotifications() {
     const bridge39 = getLegacyBridge();
     const state33 = bridge39.state;
-    const els42 = bridge39.els;
+    const els41 = bridge39.els;
     const unreadCount = state33.taskNotifications.filter((notification) => notification.unread).length;
     state33.taskNotificationUnreadCount = unreadCount;
     const unreadLabel = unreadCount > 0 ? formatTranslation("notifications.unread", { count: unreadCount }) : translate("notifications.title");
-    if (els42.taskNotificationBadge) {
-      els42.taskNotificationBadge.textContent = "";
-      els42.taskNotificationBadge.setAttribute("aria-hidden", "true");
-      els42.taskNotificationBadge.classList.toggle("hidden", unreadCount === 0);
+    if (els41.taskNotificationBadge) {
+      els41.taskNotificationBadge.textContent = "";
+      els41.taskNotificationBadge.setAttribute("aria-hidden", "true");
+      els41.taskNotificationBadge.classList.toggle("hidden", unreadCount === 0);
     }
-    if (els42.taskNotificationButton) {
-      els42.taskNotificationButton.classList.toggle("has-unread", unreadCount > 0);
-      els42.taskNotificationButton.setAttribute("aria-label", unreadLabel);
-      els42.taskNotificationButton.title = unreadLabel;
-      els42.taskNotificationButton.setAttribute("aria-expanded", state33.taskNotificationCenterOpen ? "true" : "false");
+    if (els41.taskNotificationButton) {
+      els41.taskNotificationButton.classList.toggle("has-unread", unreadCount > 0);
+      els41.taskNotificationButton.setAttribute("aria-label", unreadLabel);
+      els41.taskNotificationButton.title = unreadLabel;
+      els41.taskNotificationButton.setAttribute("aria-expanded", state33.taskNotificationCenterOpen ? "true" : "false");
     }
-    if (els42.taskNotificationUnreadSummary) {
-      els42.taskNotificationUnreadSummary.textContent = formatTranslation("notifications.unreadSummary", { count: unreadCount });
-      els42.taskNotificationUnreadSummary.classList.toggle("hidden", unreadCount === 0);
+    if (els41.taskNotificationUnreadSummary) {
+      els41.taskNotificationUnreadSummary.textContent = formatTranslation("notifications.unreadSummary", { count: unreadCount });
+      els41.taskNotificationUnreadSummary.classList.toggle("hidden", unreadCount === 0);
     }
-    if (els42.taskNotificationCenter) {
-      els42.taskNotificationCenter.classList.toggle("hidden", !state33.taskNotificationCenterOpen);
-      els42.taskNotificationCenter.setAttribute("aria-hidden", state33.taskNotificationCenterOpen ? "false" : "true");
+    if (els41.taskNotificationCenter) {
+      els41.taskNotificationCenter.classList.toggle("hidden", !state33.taskNotificationCenterOpen);
+      els41.taskNotificationCenter.setAttribute("aria-hidden", state33.taskNotificationCenterOpen ? "false" : "true");
     }
-    if (!els42.taskNotificationList) return;
+    if (!els41.taskNotificationList) return;
     if (!state33.taskNotifications.length) {
-      els42.taskNotificationList.innerHTML = `<div class="task-notification-empty">${translate("notifications.empty")}</div>`;
+      els41.taskNotificationList.innerHTML = `<div class="task-notification-empty">${translate("notifications.empty")}</div>`;
       return;
     }
-    els42.taskNotificationList.innerHTML = state33.taskNotifications.map((notification) => taskNotificationItemHtml(notification)).join("");
+    els41.taskNotificationList.innerHTML = state33.taskNotifications.map((notification) => taskNotificationItemHtml(notification)).join("");
   }
   async function requestSystemNotificationPermission() {
     if (typeof Notification === "undefined") {
@@ -45496,23 +43628,23 @@ ${hint}` : hint);
     return true;
   }
   function bindTaskNotificationEvents() {
-    const els42 = getLegacyBridge().els;
-    els42.taskNotificationButton?.addEventListener("click", (event) => {
+    const els41 = getLegacyBridge().els;
+    els41.taskNotificationButton?.addEventListener("click", (event) => {
       event.stopPropagation();
       toggleTaskNotificationCenter();
     });
-    els42.taskNotificationClearButton?.addEventListener("click", (event) => {
+    els41.taskNotificationClearButton?.addEventListener("click", (event) => {
       event.stopPropagation();
       clearTaskNotifications();
     });
-    els42.taskNotificationList?.addEventListener("click", (event) => {
+    els41.taskNotificationList?.addEventListener("click", (event) => {
       const item = eventTargetElement(event)?.closest("[data-task-notification-id]");
       if (!(item instanceof HTMLElement)) return;
       const notification = notificationById(item.dataset.taskNotificationId);
       if (notification) void openNotificationTask(notification);
     });
-    els42.taskNotificationInApp?.addEventListener("change", handleTaskNotificationInAppChange);
-    els42.taskNotificationSystem?.addEventListener("change", (event) => {
+    els41.taskNotificationInApp?.addEventListener("change", handleTaskNotificationInAppChange);
+    els41.taskNotificationSystem?.addEventListener("change", (event) => {
       void handleTaskNotificationSystemChange(event);
     });
     document.addEventListener("click", handleTaskNotificationDocumentClick);
@@ -45544,9 +43676,9 @@ ${hint}` : hint);
   }
   function handleTaskNotificationDocumentClick(event) {
     const target = event.target;
-    const els42 = getLegacyBridge().els;
+    const els41 = getLegacyBridge().els;
     if (!(target instanceof Node)) return;
-    if (els42.taskNotificationCenter?.contains(target) || els42.taskNotificationButton?.contains(target)) return;
+    if (els41.taskNotificationCenter?.contains(target) || els41.taskNotificationButton?.contains(target)) return;
     closeTaskNotificationCenter();
   }
   function handleTaskNotificationKeydown(event) {
@@ -45863,9 +43995,6 @@ ${hint}` : hint);
   function setStatus10(message, type) {
     legacyMethod17("setStatus", message, type);
   }
-  function closePromptPopover3() {
-    legacyMethod17("closePromptPopover");
-  }
   async function refreshSettings(options = {}) {
     if (!els13.settingsInputRoot) return;
     try {
@@ -45893,15 +44022,6 @@ ${hint}` : hint);
     if (els13.settingsSourceDataRoot) els13.settingsSourceDataRoot.value = settings.source_data_root || "";
     lastRenderedStorageForm = storageFormSnapshot();
     restoredStorageDraft = false;
-  }
-  function openSettingsModal() {
-    closePromptPopover3();
-    refreshSettings();
-    if (els13.settingsStatus) els13.settingsStatus.textContent = restoredStorageDraft ? translate("userConfigBackup.settingsUpdatedDraftKept") : translate("settings.status");
-    openSystemSettingsModal("storage");
-  }
-  function closeSettingsModal() {
-    closeSystemSettingsModal();
   }
   async function saveSettings() {
     if (!els13.saveSettingsButton) return;
@@ -45942,9 +44062,6 @@ ${hint}` : hint);
     });
     Object.assign(getLegacyBridge().methods, {
       refreshSettings,
-      populateSettingsForm,
-      openSettingsModal,
-      closeSettingsModal,
       saveSettings
     });
   }
@@ -46002,13 +44119,13 @@ ${hint}` : hint);
   var lastRenderedNetworkForm = null;
   var restoredNetworkDraft = false;
   function networkFormSnapshot() {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     return JSON.stringify([
-      els42.networkEgressMode?.value,
-      els42.networkEgressCustomProxy?.value,
-      els42.networkEgressTimeoutMinutes?.value,
-      els42.networkEgressRetryCount?.value,
-      els42.networkEgressFakeIpDnsFallback?.checked
+      els41.networkEgressMode?.value,
+      els41.networkEgressCustomProxy?.value,
+      els41.networkEgressTimeoutMinutes?.value,
+      els41.networkEgressRetryCount?.value,
+      els41.networkEgressFakeIpDnsFallback?.checked
     ]);
   }
   function normalizedMode(value) {
@@ -46018,32 +44135,32 @@ ${hint}` : hint);
     return `networkEgress.${mode}`;
   }
   function setNetworkEgressFeedback(message, type = "") {
-    const { els: els42 } = getLegacyBridge();
-    if (!els42.networkEgressStatus) return;
-    els42.networkEgressStatus.textContent = message;
-    els42.networkEgressStatus.classList.toggle("ok", type === "ok");
-    els42.networkEgressStatus.classList.toggle("error", type === "error");
-    els42.networkEgressStatus.classList.toggle("running", type === "running");
+    const { els: els41 } = getLegacyBridge();
+    if (!els41.networkEgressStatus) return;
+    els41.networkEgressStatus.textContent = message;
+    els41.networkEgressStatus.classList.toggle("ok", type === "ok");
+    els41.networkEgressStatus.classList.toggle("error", type === "error");
+    els41.networkEgressStatus.classList.toggle("running", type === "running");
   }
   function selectedNetworkEgressMode() {
-    const { els: els42 } = getLegacyBridge();
-    return normalizedMode(els42.networkEgressMode?.value);
+    const { els: els41 } = getLegacyBridge();
+    return normalizedMode(els41.networkEgressMode?.value);
   }
   function clearNetworkRequestPolicyError(field) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const fields = field ? [field] : ["timeout", "retry"];
     fields.forEach((name) => {
-      const input = name === "timeout" ? els42.networkEgressTimeoutMinutes : els42.networkEgressRetryCount;
-      const error = name === "timeout" ? els42.networkEgressTimeoutError : els42.networkEgressRetryError;
+      const input = name === "timeout" ? els41.networkEgressTimeoutMinutes : els41.networkEgressRetryCount;
+      const error = name === "timeout" ? els41.networkEgressTimeoutError : els41.networkEgressRetryError;
       input?.removeAttribute("aria-invalid");
       if (error) error.hidden = true;
     });
   }
   function showNetworkRequestPolicyError(result) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     clearNetworkRequestPolicyError();
-    const input = result.field === "timeout" ? els42.networkEgressTimeoutMinutes : els42.networkEgressRetryCount;
-    const error = result.field === "timeout" ? els42.networkEgressTimeoutError : els42.networkEgressRetryError;
+    const input = result.field === "timeout" ? els41.networkEgressTimeoutMinutes : els41.networkEgressRetryCount;
+    const error = result.field === "timeout" ? els41.networkEgressTimeoutError : els41.networkEgressRetryError;
     input?.setAttribute("aria-invalid", "true");
     if (error) {
       error.textContent = translate(result.errorKey);
@@ -46052,58 +44169,58 @@ ${hint}` : hint);
     input?.focus();
   }
   function renderNetworkEgressMode(mode) {
-    const { els: els42 } = getLegacyBridge();
-    if (els42.networkEgressMode) els42.networkEgressMode.value = mode;
+    const { els: els41 } = getLegacyBridge();
+    if (els41.networkEgressMode) els41.networkEgressMode.value = mode;
     const buttons = Array.from(
-      els42.systemSettingsNetworkPanel?.querySelectorAll("[data-network-egress-mode]") || []
+      els41.systemSettingsNetworkPanel?.querySelectorAll("[data-network-egress-mode]") || []
     );
     buttons.forEach((button) => {
       const active = button.dataset.networkEgressMode === mode;
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
     });
-    if (els42.networkEgressCustomProxyField) {
-      els42.networkEgressCustomProxyField.hidden = mode !== "custom";
+    if (els41.networkEgressCustomProxyField) {
+      els41.networkEgressCustomProxyField.hidden = mode !== "custom";
     }
   }
   function renderNetworkEgress(payload2, preserveDraft = false) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const keepDraft = preserveDraft && lastRenderedNetworkForm !== null && networkFormSnapshot() !== lastRenderedNetworkForm;
     currentNetworkEgress = payload2;
     if (!keepDraft) {
       const mode = normalizedMode(payload2.settings?.mode);
       renderNetworkEgressMode(mode);
-      if (els42.networkEgressCustomProxy) {
-        els42.networkEgressCustomProxy.value = payload2.settings?.custom_proxy_url || "";
+      if (els41.networkEgressCustomProxy) {
+        els41.networkEgressCustomProxy.value = payload2.settings?.custom_proxy_url || "";
       }
-      if (els42.networkEgressTimeoutMinutes) {
-        els42.networkEgressTimeoutMinutes.value = String(
+      if (els41.networkEgressTimeoutMinutes) {
+        els41.networkEgressTimeoutMinutes.value = String(
           editableTimeoutMinutes(payload2.settings?.image_request_timeout_seconds)
         );
       }
-      if (els42.networkEgressRetryCount) {
-        els42.networkEgressRetryCount.value = String(
+      if (els41.networkEgressRetryCount) {
+        els41.networkEgressRetryCount.value = String(
           payload2.settings?.image_request_retry_count ?? 2
         );
       }
-      if (els42.networkEgressFakeIpDnsFallback) {
-        els42.networkEgressFakeIpDnsFallback.checked = payload2.settings?.asset_fake_ip_dns_fallback === true;
-        els42.networkEgressFakeIpDnsFallback.disabled = false;
+      if (els41.networkEgressFakeIpDnsFallback) {
+        els41.networkEgressFakeIpDnsFallback.checked = payload2.settings?.asset_fake_ip_dns_fallback === true;
+        els41.networkEgressFakeIpDnsFallback.disabled = false;
       }
       clearNetworkRequestPolicyError();
       lastRenderedNetworkForm = networkFormSnapshot();
       restoredNetworkDraft = false;
     }
-    if (els42.networkEgressCompatibilityNotice) {
+    if (els41.networkEgressCompatibilityNotice) {
       const environmentFallback = payload2.resolved?.image_request_timeout_source === "environment";
-      els42.networkEgressCompatibilityNotice.hidden = !environmentFallback;
-      els42.networkEgressCompatibilityNotice.textContent = environmentFallback ? formatTranslation("networkEgress.environmentTimeoutActive", {
+      els41.networkEgressCompatibilityNotice.hidden = !environmentFallback;
+      els41.networkEgressCompatibilityNotice.textContent = environmentFallback ? formatTranslation("networkEgress.environmentTimeoutActive", {
         seconds: payload2.resolved.image_request_timeout_seconds
       }) : "";
     }
-    if (els42.networkEgressCurrentRoute) {
+    if (els41.networkEgressCurrentRoute) {
       const resolvedMode = normalizedMode(payload2.resolved?.mode);
-      els42.networkEgressCurrentRoute.textContent = formatTranslation(
+      els41.networkEgressCurrentRoute.textContent = formatTranslation(
         "networkEgress.currentRoute",
         { route: translate(modeTranslationKey(resolvedMode)) }
       );
@@ -46111,25 +44228,25 @@ ${hint}` : hint);
     return keepDraft;
   }
   function networkEgressRouteFormPayload() {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     return {
       mode: selectedNetworkEgressMode(),
-      custom_proxy_url: String(els42.networkEgressCustomProxy?.value || "").trim()
+      custom_proxy_url: String(els41.networkEgressCustomProxy?.value || "").trim()
     };
   }
   function networkEgressFormPayload() {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     const routePayload = networkEgressRouteFormPayload();
     const commonPayload = {
       ...routePayload,
-      asset_fake_ip_dns_fallback: els42.networkEgressFakeIpDnsFallback?.checked === true
+      asset_fake_ip_dns_fallback: els41.networkEgressFakeIpDnsFallback?.checked === true
     };
-    if (!els42.networkEgressTimeoutMinutes && !els42.networkEgressRetryCount) {
+    if (!els41.networkEgressTimeoutMinutes && !els41.networkEgressRetryCount) {
       return { ok: true, payload: commonPayload };
     }
     const policy = parseNetworkRequestPolicy(
-      String(els42.networkEgressTimeoutMinutes?.value || ""),
-      String(els42.networkEgressRetryCount?.value || "")
+      String(els41.networkEgressTimeoutMinutes?.value || ""),
+      String(els41.networkEgressRetryCount?.value || "")
     );
     if (!policy.ok) return policy;
     return {
@@ -46165,8 +44282,8 @@ ${hint}` : hint);
     }
   }
   async function saveNetworkEgress() {
-    const { els: els42 } = getLegacyBridge();
-    if (!els42.saveNetworkEgressButton) return;
+    const { els: els41 } = getLegacyBridge();
+    if (!els41.saveNetworkEgressButton) return;
     const routePayload = networkEgressRouteFormPayload();
     if (!networkEgressPayloadIsValid(routePayload)) {
       setNetworkEgressFeedback(translate("networkEgress.saveFailed"), "error");
@@ -46179,8 +44296,8 @@ ${hint}` : hint);
       return;
     }
     clearNetworkRequestPolicyError();
-    els42.saveNetworkEgressButton.disabled = true;
-    if (els42.networkEgressFakeIpDnsFallback) els42.networkEgressFakeIpDnsFallback.disabled = true;
+    els41.saveNetworkEgressButton.disabled = true;
+    if (els41.networkEgressFakeIpDnsFallback) els41.networkEgressFakeIpDnsFallback.disabled = true;
     try {
       const response = await fetch("/api/network-egress", {
         method: "PATCH",
@@ -46197,19 +44314,19 @@ ${hint}` : hint);
         "error"
       );
     } finally {
-      els42.saveNetworkEgressButton.disabled = false;
-      if (els42.networkEgressFakeIpDnsFallback) els42.networkEgressFakeIpDnsFallback.disabled = false;
+      els41.saveNetworkEgressButton.disabled = false;
+      if (els41.networkEgressFakeIpDnsFallback) els41.networkEgressFakeIpDnsFallback.disabled = false;
     }
   }
   async function testNetworkEgress() {
-    const { els: els42, state: state33 } = getLegacyBridge();
-    if (!els42.testNetworkEgressButton) return;
+    const { els: els41, state: state33 } = getLegacyBridge();
+    if (!els41.testNetworkEgressButton) return;
     const routePayload = networkEgressRouteFormPayload();
     if (!networkEgressPayloadIsValid(routePayload)) {
       setNetworkEgressFeedback(translate("networkEgress.testFailed"), "error");
       return;
     }
-    els42.testNetworkEgressButton.disabled = true;
+    els41.testNetworkEgressButton.disabled = true;
     setNetworkEgressFeedback(translate("networkEgress.test"), "running");
     try {
       const selectedProviderId = String(state33.selectedProviderId || "").trim();
@@ -46240,7 +44357,7 @@ ${hint}` : hint);
         "error"
       );
     } finally {
-      els42.testNetworkEgressButton.disabled = false;
+      els41.testNetworkEgressButton.disabled = false;
     }
   }
   function handleNetworkEgressModeClick(event) {
@@ -46253,17 +44370,17 @@ ${hint}` : hint);
   function initNetworkEgressSettingsFeature() {
     if (networkEgressFeatureInitialized) return;
     networkEgressFeatureInitialized = true;
-    const { els: els42 } = getLegacyBridge();
-    els42.systemSettingsNetworkPanel?.addEventListener(
+    const { els: els41 } = getLegacyBridge();
+    els41.systemSettingsNetworkPanel?.addEventListener(
       "click",
       handleNetworkEgressModeClick
     );
-    els42.testNetworkEgressButton?.addEventListener("click", testNetworkEgress);
-    els42.saveNetworkEgressButton?.addEventListener("click", saveNetworkEgress);
-    els42.networkEgressTimeoutMinutes?.addEventListener("input", () => {
+    els41.testNetworkEgressButton?.addEventListener("click", testNetworkEgress);
+    els41.saveNetworkEgressButton?.addEventListener("click", saveNetworkEgress);
+    els41.networkEgressTimeoutMinutes?.addEventListener("input", () => {
       clearNetworkRequestPolicyError("timeout");
     });
-    els42.networkEgressRetryCount?.addEventListener("input", () => {
+    els41.networkEgressRetryCount?.addEventListener("input", () => {
       clearNetworkRequestPolicyError("retry");
     });
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
@@ -46283,10 +44400,10 @@ ${hint}` : hint);
   var saving = false;
   var initialized4 = false;
   function feedback2(message, error = false) {
-    const { els: els42 } = getLegacyBridge();
-    if (!els42.lanAccessStatus) return;
-    els42.lanAccessStatus.textContent = message;
-    els42.lanAccessStatus.classList.toggle("error", error);
+    const { els: els41 } = getLegacyBridge();
+    if (!els41.lanAccessStatus) return;
+    els41.lanAccessStatus.textContent = message;
+    els41.lanAccessStatus.classList.toggle("error", error);
   }
   async function copyAddress(input, button) {
     try {
@@ -46305,15 +44422,15 @@ ${hint}` : hint);
     }
   }
   function render(settings) {
-    const { els: els42 } = getLegacyBridge();
+    const { els: els41 } = getLegacyBridge();
     currentSettings = settings;
-    if (els42.lanAccessEnabled) els42.lanAccessEnabled.checked = settings.enabled;
+    if (els41.lanAccessEnabled) els41.lanAccessEnabled.checked = settings.enabled;
     const key2 = settings.host_override ? "hostOverride" : settings.restart_required ? settings.enabled ? "pendingEnable" : "pendingDisable" : settings.active ? "active" : "localOnly";
     feedback2(translate(`lanAccess.${key2}`));
-    if (!els42.lanAccessAddresses) return;
-    els42.lanAccessAddresses.replaceChildren();
-    els42.lanAccessAddresses.hidden = !settings.enabled && !settings.active;
-    if (els42.lanAccessAddresses.hidden) return;
+    if (!els41.lanAccessAddresses) return;
+    els41.lanAccessAddresses.replaceChildren();
+    els41.lanAccessAddresses.hidden = !settings.enabled && !settings.active;
+    if (els41.lanAccessAddresses.hidden) return;
     const addresses = settings.addresses.filter((address) => {
       try {
         return !/^198\.(18|19)\./.test(new URL(address).hostname);
@@ -46325,7 +44442,7 @@ ${hint}` : hint);
       const note = document.createElement("p");
       note.className = "lan-access-help";
       note.textContent = translate("lanAccess.noAddress");
-      els42.lanAccessAddresses.append(note);
+      els41.lanAccessAddresses.append(note);
     }
     for (const address of addresses) {
       const row = document.createElement("div");
@@ -46342,14 +44459,14 @@ ${hint}` : hint);
       button.setAttribute("aria-label", formatTranslation("lanAccess.copyAddress", { address }));
       button.addEventListener("click", () => void copyAddress(input, button));
       row.append(input, button);
-      els42.lanAccessAddresses.append(row);
+      els41.lanAccessAddresses.append(row);
     }
   }
   async function refreshLanAccess() {
     if (saving) return;
     const sequence = ++requestSequence;
-    const { els: els42 } = getLegacyBridge();
-    if (els42.lanAccessEnabled) els42.lanAccessEnabled.disabled = true;
+    const { els: els41 } = getLegacyBridge();
+    if (els41.lanAccessEnabled) els41.lanAccessEnabled.disabled = true;
     try {
       const response = await fetch("/api/lan-access");
       if (!response.ok) throw new Error("read failed");
@@ -46358,19 +44475,19 @@ ${hint}` : hint);
     } catch {
       if (sequence === requestSequence) feedback2(translate("lanAccess.failed"), true);
     } finally {
-      if (sequence === requestSequence && els42.lanAccessEnabled) {
-        els42.lanAccessEnabled.disabled = currentSettings === null;
+      if (sequence === requestSequence && els41.lanAccessEnabled) {
+        els41.lanAccessEnabled.disabled = currentSettings === null;
       }
     }
   }
   async function saveLanAccess() {
-    const { els: els42 } = getLegacyBridge();
-    if (saving || !els42.lanAccessEnabled || !currentSettings) return;
+    const { els: els41 } = getLegacyBridge();
+    if (saving || !els41.lanAccessEnabled || !currentSettings) return;
     saving = true;
-    const restoreFocus = document.activeElement === els42.lanAccessEnabled;
+    const restoreFocus = document.activeElement === els41.lanAccessEnabled;
     ++requestSequence;
-    els42.lanAccessEnabled.disabled = true;
-    const enabled = els42.lanAccessEnabled.checked;
+    els41.lanAccessEnabled.disabled = true;
+    const enabled = els41.lanAccessEnabled.checked;
     feedback2(translate("lanAccess.saving"));
     try {
       const response = await fetch("/api/lan-access", {
@@ -46381,19 +44498,19 @@ ${hint}` : hint);
       if (!response.ok) throw new Error("save failed");
       render(await response.json());
     } catch {
-      els42.lanAccessEnabled.checked = currentSettings.enabled;
+      els41.lanAccessEnabled.checked = currentSettings.enabled;
       feedback2(translate("lanAccess.failed"), true);
     } finally {
       saving = false;
-      els42.lanAccessEnabled.disabled = false;
-      if (restoreFocus && document.activeElement === document.body) els42.lanAccessEnabled.focus();
+      els41.lanAccessEnabled.disabled = false;
+      if (restoreFocus && document.activeElement === document.body) els41.lanAccessEnabled.focus();
     }
   }
   function initLanAccessSettingsFeature() {
     if (initialized4) return;
     initialized4 = true;
-    const { els: els42, methods } = getLegacyBridge();
-    els42.lanAccessEnabled?.addEventListener("change", () => void saveLanAccess());
+    const { els: els41, methods } = getLegacyBridge();
+    els41.lanAccessEnabled?.addEventListener("change", () => void saveLanAccess());
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
       if (currentSettings && !saving) render(currentSettings);
     });
@@ -47797,27 +45914,27 @@ ${hint}` : hint);
     if (!restoreApplying) transferController.dispose();
   }
   function bindEvents() {
-    const els42 = getLegacyBridge().els;
-    els42.userConfigTransferMode?.addEventListener("click", (event) => {
+    const els41 = getLegacyBridge().els;
+    els41.userConfigTransferMode?.addEventListener("click", (event) => {
       const target = event.target;
       const button = target?.closest("[data-user-config-view-mode]");
       const mode = button?.dataset.userConfigViewMode;
       if (mode === "backup" || mode === "restore") setTransferView(mode);
     });
-    els42.userConfigBackupSectionList?.addEventListener("change", syncBackupSelection);
-    els42.createUserConfigBackupButton?.addEventListener("click", () => void createBackup());
-    els42.cancelUserConfigBackupButton?.addEventListener("click", () => void cancelBackup());
-    els42.downloadUserConfigBackupButton?.addEventListener("click", downloadBackup);
-    els42.userConfigRestoreFile?.addEventListener("change", (event) => void chooseRestoreFile(event));
-    els42.userConfigRestoreMode?.addEventListener("click", (event) => {
+    els41.userConfigBackupSectionList?.addEventListener("change", syncBackupSelection);
+    els41.createUserConfigBackupButton?.addEventListener("click", () => void createBackup());
+    els41.cancelUserConfigBackupButton?.addEventListener("click", () => void cancelBackup());
+    els41.downloadUserConfigBackupButton?.addEventListener("click", downloadBackup);
+    els41.userConfigRestoreFile?.addEventListener("change", (event) => void chooseRestoreFile(event));
+    els41.userConfigRestoreMode?.addEventListener("click", (event) => {
       const target = event.target;
       const button = target?.closest("[data-user-config-restore-mode]");
       const mode = button?.dataset.userConfigRestoreMode;
       if (mode === "incremental" || mode === "replace") setRestoreMode(mode);
     });
-    els42.userConfigRestoreSectionList?.addEventListener("change", updateRestoreSelection);
-    els42.startUserConfigRestoreButton?.addEventListener("click", () => void startRestore());
-    els42.backToUserConfigPreviewButton?.addEventListener("click", () => {
+    els41.userConfigRestoreSectionList?.addEventListener("change", updateRestoreSelection);
+    els41.startUserConfigRestoreButton?.addEventListener("click", () => void startRestore());
+    els41.backToUserConfigPreviewButton?.addEventListener("click", () => {
       if (confirmation) confirmation = updateReplacementConfirmation(confirmation, { acknowledged: false });
       const acknowledge = inputElement("userConfigReplaceAcknowledge");
       if (acknowledge) acknowledge.checked = false;
@@ -47826,13 +45943,13 @@ ${hint}` : hint);
       setHidden(bridgeElement("userConfigReplaceConfirmation"), true);
       setHidden(bridgeElement("userConfigRestorePreview"), false);
     });
-    els42.userConfigReplaceAcknowledge?.addEventListener("change", () => {
+    els41.userConfigReplaceAcknowledge?.addEventListener("change", () => {
       const checked = inputElement("userConfigReplaceAcknowledge")?.checked === true;
       if (confirmation) confirmation = updateReplacementConfirmation(confirmation, { acknowledged: checked });
       const button = bridgeElement("confirmUserConfigReplaceButton");
       if (button) button.disabled = !checked;
     });
-    els42.confirmUserConfigReplaceButton?.addEventListener("click", () => void applyRestore());
+    els41.confirmUserConfigReplaceButton?.addEventListener("click", () => void applyRestore());
   }
   function initUserConfigBackupFeature() {
     if (initialized5) return;
@@ -48259,11 +46376,6 @@ ${hint}` : hint);
   `;
     bindColorSuggestEvents();
   }
-  function colorNameForHex(colorCode) {
-    const normalized = normalizeHexColor2(colorCode);
-    if (!normalized) return "";
-    return favoriteColorsForDisplay2().find((item) => item.hex === normalized)?.name || "";
-  }
   function colorSwatchButton(color2, label = "", { removable = false } = {}) {
     const normalized = normalizeHexColor2(color2) || DEFAULT_COLOR_CODE2;
     const deleteLabel = escapeHtml10(formatTranslation("colors.deleteFavorite", { name: label || normalized }));
@@ -48568,8 +46680,6 @@ ${hint}` : hint);
       positionColorSuggestAtCaret,
       openColorChipEditor,
       positionColorSuggestAtChip,
-      colorNameForHex,
-      colorSwatchButton,
       createColorChip,
       updateColorChip,
       readableTextColor,
@@ -50510,7 +48620,7 @@ ${hint}` : hint);
   var candidates = [];
   var mentionRange = null;
   function updateImageMentionMenu() {
-    const { els: els42, state: state33, methods } = getLegacyBridge();
+    const { els: els41, state: state33, methods } = getLegacyBridge();
     const match = methods.activeMentionMatch();
     if (!match) {
       methods.hideMentionSuggest();
@@ -50518,7 +48628,7 @@ ${hint}` : hint);
     }
     mentionRange = match.range.cloneRange();
     const query = match.query.toLocaleLowerCase();
-    if (query !== lastQuery || els42.mentionSuggest.classList.contains("hidden")) {
+    if (query !== lastQuery || els41.mentionSuggest.classList.contains("hidden")) {
       activeIndex = 0;
       limit = 8;
     }
@@ -50534,40 +48644,40 @@ ${hint}` : hint);
       return `<button type="button" role="option" id="image-mention-option-${index}" class="mention-option" data-image-mention-index="${index}">
       <img src="${escape(source.previewUrl || source.image_url || "")}" alt=""><span>${escape(label)}</span><small>${escape(badge)}</small></button>`;
     };
-    els42.mentionSuggest.setAttribute("role", "listbox");
-    els42.mentionSuggest.setAttribute("aria-label", translate("promptMention.choose"));
-    els42.mentionSuggest.innerHTML = (current.length ? `<div class="mention-group-label">${escape(translate("promptMention.current"))}</div>${current.map(row).join("")}` : "") + (galleries.length ? `<div class="mention-group-label">${escape(translate("promptMention.gallery"))}</div>${candidates.slice(current.length).map((item, index) => row(item, index + current.length)).join("")}` : "") + (!candidates.length ? `<div class="mention-group-label">${escape(translate("promptMention.empty"))}</div>` : "") + (galleries.length > limit ? `<button type="button" class="mention-more">${escape(translate("promptMention.more"))}</button>` : "");
-    els42.mentionSuggest.querySelectorAll("[data-image-mention-index]").forEach((button) => {
+    els41.mentionSuggest.setAttribute("role", "listbox");
+    els41.mentionSuggest.setAttribute("aria-label", translate("promptMention.choose"));
+    els41.mentionSuggest.innerHTML = (current.length ? `<div class="mention-group-label">${escape(translate("promptMention.current"))}</div>${current.map(row).join("")}` : "") + (galleries.length ? `<div class="mention-group-label">${escape(translate("promptMention.gallery"))}</div>${candidates.slice(current.length).map((item, index) => row(item, index + current.length)).join("")}` : "") + (!candidates.length ? `<div class="mention-group-label">${escape(translate("promptMention.empty"))}</div>` : "") + (galleries.length > limit ? `<button type="button" class="mention-more">${escape(translate("promptMention.more"))}</button>` : "");
+    els41.mentionSuggest.querySelectorAll("[data-image-mention-index]").forEach((button) => {
       button.addEventListener("mousedown", (event) => event.preventDefault());
       button.addEventListener("click", () => selectImageMention(Number(button.dataset.imageMentionIndex)));
     });
-    const more = els42.mentionSuggest.querySelector(".mention-more");
+    const more = els41.mentionSuggest.querySelector(".mention-more");
     more?.addEventListener("mousedown", (event) => event.preventDefault());
     more?.addEventListener("click", () => {
       restoreMentionSelection();
       limit += 24;
       updateImageMentionMenu();
-      els42.promptEditor.focus({ preventScroll: true });
+      els41.promptEditor.focus({ preventScroll: true });
     });
     activeIndex = Math.min(activeIndex, Math.max(0, candidates.length - 1));
     methods.positionMentionSuggestAtCaret(match);
-    els42.mentionSuggest.classList.remove("hidden");
-    els42.promptEditor.setAttribute("aria-controls", "mentionSuggest");
-    els42.promptEditor.setAttribute("aria-expanded", "true");
+    els41.mentionSuggest.classList.remove("hidden");
+    els41.promptEditor.setAttribute("aria-controls", "mentionSuggest");
+    els41.promptEditor.setAttribute("aria-expanded", "true");
     highlight();
   }
   function highlight() {
-    const { els: els42 } = getLegacyBridge();
-    els42.mentionSuggest.querySelectorAll("[data-image-mention-index]").forEach((button, index) => {
+    const { els: els41 } = getLegacyBridge();
+    els41.mentionSuggest.querySelectorAll("[data-image-mention-index]").forEach((button, index) => {
       button.classList.toggle("is-active", index === activeIndex);
       button.setAttribute("aria-selected", String(index === activeIndex));
     });
-    if (candidates.length) els42.promptEditor.setAttribute("aria-activedescendant", `image-mention-option-${activeIndex}`);
-    else els42.promptEditor.removeAttribute("aria-activedescendant");
+    if (candidates.length) els41.promptEditor.setAttribute("aria-activedescendant", `image-mention-option-${activeIndex}`);
+    else els41.promptEditor.removeAttribute("aria-activedescendant");
   }
   function handleImageMentionKey(event) {
-    const { els: els42 } = getLegacyBridge();
-    if (event.isComposing || event.keyCode === 229 || els42.mentionSuggest?.classList.contains("hidden")) return false;
+    const { els: els41 } = getLegacyBridge();
+    if (event.isComposing || event.keyCode === 229 || els41.mentionSuggest?.classList.contains("hidden")) return false;
     if (!candidates.length) return false;
     if (!["ArrowUp", "ArrowDown", "Enter"].includes(event.key) || event.metaKey || event.ctrlKey) return false;
     event.preventDefault();
@@ -50606,14 +48716,14 @@ ${hint}` : hint);
     methods.setCaretAfterNode(space);
   }
   function restoreMentionSelection() {
-    const { els: els42, methods } = getLegacyBridge();
+    const { els: els41, methods } = getLegacyBridge();
     if (methods.activeMentionMatch()) return true;
-    if (!mentionRange || !els42.promptEditor.contains(mentionRange.startContainer) || !mentionRange.toString().startsWith("@")) return false;
+    if (!mentionRange || !els41.promptEditor.contains(mentionRange.startContainer) || !mentionRange.toString().startsWith("@")) return false;
     const selection = window.getSelection();
     selection?.removeAllRanges();
     selection?.addRange(mentionRange.cloneRange());
     selection?.collapseToEnd();
-    els42.promptEditor.focus({ preventScroll: true });
+    els41.promptEditor.focus({ preventScroll: true });
     return Boolean(methods.activeMentionMatch());
   }
 
@@ -51560,7 +49670,6 @@ ${hint}` : hint);
     Object.assign(getLegacyBridge().methods, {
       promptTokenReplacement,
       galleryPrompt,
-      buildPromptForModel,
       currentPromptForModel
     });
   }
@@ -52599,7 +50708,6 @@ ${hint}` : hint);
       syncSizeControlsFromSize,
       updateSizeFromPreset,
       updateCustomSize,
-      updateCustomRatioFieldState,
       updateCustomRatioReferenceButtonState,
       customSizeValidationMessage,
       syncRadioButtons,
@@ -52611,9 +50719,7 @@ ${hint}` : hint);
       selectMainModelOption,
       handleMainModelKeydown,
       handleSizeModeEvent,
-      handleCustomDimensionInput,
       handleCustomRatioInput,
-      applyFirstReferenceImageAspectRatio,
       swapCustomSizeDimensions,
       handleOutputFormatDoubleClick
     });
@@ -52838,12 +50944,12 @@ ${hint}` : hint);
     return card;
   }
   function renderSummary(snapshot2, context) {
-    const els42 = getLegacyBridge().els;
-    const root = els42.outputSettingsSummaryContent;
+    const els41 = getLegacyBridge().els;
+    const root = els41.outputSettingsSummaryContent;
     if (!root) return;
     const model = buildOutputSettingsSummaryModel(snapshot2, context);
     root.replaceChildren();
-    els42.outputSettingsLockedSummary?.classList.toggle("is-task-context", context.task);
+    els41.outputSettingsLockedSummary?.classList.toggle("is-task-context", context.task);
     const intro = createElement("div", "output-settings-summary-intro");
     if (model.contextLabel) {
       intro.append(createElement("span", "output-settings-summary-context", model.contextLabel));
@@ -52874,9 +50980,9 @@ ${hint}` : hint);
     const footer = createElement("div", "output-settings-summary-footer");
     const hint = createElement("p", "output-settings-summary-hint", model.hint);
     footer.append(hint);
-    if (els42.outputSettingsTaskAction) {
-      els42.outputSettingsTaskAction.classList.toggle("hidden", !context.task);
-      footer.append(els42.outputSettingsTaskAction);
+    if (els41.outputSettingsTaskAction) {
+      els41.outputSettingsTaskAction.classList.toggle("hidden", !context.task);
+      footer.append(els41.outputSettingsTaskAction);
     }
     root.append(main, footer);
   }
@@ -52890,13 +50996,13 @@ ${hint}` : hint);
     button.title = label;
   }
   function setLockedViewVisible(visible) {
-    const els42 = getLegacyBridge().els;
-    const panel = els42.outputSettingsHeader?.closest(".output-panel");
+    const els41 = getLegacyBridge().els;
+    const panel = els41.outputSettingsHeader?.closest(".output-panel");
     panel?.classList.toggle("is-locked-view", visible);
-    els42.settingsGrid?.toggleAttribute("inert", visible);
-    els42.settingsGrid?.setAttribute("aria-hidden", visible ? "true" : "false");
-    els42.outputSettingsLockedSummary?.classList.toggle("hidden", !visible);
-    els42.outputSettingsLockedSummary?.setAttribute("aria-hidden", visible ? "false" : "true");
+    els41.settingsGrid?.toggleAttribute("inert", visible);
+    els41.settingsGrid?.setAttribute("aria-hidden", visible ? "true" : "false");
+    els41.outputSettingsLockedSummary?.classList.toggle("hidden", !visible);
+    els41.outputSettingsLockedSummary?.setAttribute("aria-hidden", visible ? "false" : "true");
   }
   function persistLockState() {
     try {
@@ -53464,11 +51570,11 @@ ${hint}` : hint);
     </section>
   `;
     }
-    function activeTaskSectionHtml2(key2, label, tasks) {
+    function activeTaskSectionHtml(key2, label, tasks) {
       if (!tasks.length) return "";
       const sectionClass = key2 === "running" ? 'class="task-active-section task-active-section-running"' : 'class="task-active-section task-active-section-waiting"';
       const sectionData = key2 === "running" ? 'data-active-task-section="running"' : 'data-active-task-section="waiting"';
-      const reorderHint = key2 === "waiting" ? taskQueueReorderHintHtml2(tasks.length) : "";
+      const reorderHint = key2 === "waiting" ? taskQueueReorderHintHtml(tasks.length) : "";
       return `
     <div ${sectionClass} ${sectionData}>
       <div class="task-active-section-title">
@@ -53485,7 +51591,7 @@ ${hint}` : hint);
     </div>
   `;
     }
-    function activeTaskDispatchPendingHtml2() {
+    function activeTaskDispatchPendingHtml() {
       return `
     <div class="task-active-empty" data-active-task-section="dispatch-pending">
       ${translate("taskGroup.dispatchPending")}
@@ -53499,9 +51605,9 @@ ${hint}` : hint);
       const dispatchPending = Boolean(isQueueDispatchPending2());
       const collapsed = Boolean(state33.activeTaskGroupCollapsed);
       const body = [
-        activeTaskSectionHtml2("running", translate("taskGroup.running"), sections.running),
-        activeTaskSectionHtml2("waiting", translate("taskGroup.waiting"), sections.waiting),
-        !sections.running.length && !sections.waiting.length && dispatchPending ? activeTaskDispatchPendingHtml2() : ""
+        activeTaskSectionHtml("running", translate("taskGroup.running"), sections.running),
+        activeTaskSectionHtml("waiting", translate("taskGroup.waiting"), sections.waiting),
+        !sections.running.length && !sections.waiting.length && dispatchPending ? activeTaskDispatchPendingHtml() : ""
       ].join("");
       const activeLabel = escapeHtml20(group.label);
       const activeCount = group.tasks.length;
@@ -53551,7 +51657,7 @@ ${hint}` : hint);
     function taskGroupButtonLabel2(group) {
       return formatTranslation("taskGroup.buttonLabel", { label: group.label, count: taskGroupCount3(group) });
     }
-    function taskQueueReorderHintVisible2(waitingCount) {
+    function taskQueueReorderHintVisible(waitingCount) {
       if (waitingCount < 2) return false;
       try {
         return window.localStorage.getItem(TASK_QUEUE_REORDER_HINT_STORAGE_KEY) !== "1";
@@ -53559,40 +51665,40 @@ ${hint}` : hint);
         return true;
       }
     }
-    function taskQueueReorderHintHtml2(waitingCount) {
-      if (!taskQueueReorderHintVisible2(waitingCount)) return "";
+    function taskQueueReorderHintHtml(waitingCount) {
+      if (!taskQueueReorderHintVisible(waitingCount)) return "";
       return `<span class="task-queue-reorder-hint">${escapeHtml20(translate("queue.dragWaiting"))}</span>`;
     }
-    function taskCardSwipeActionLabel2(action) {
+    function taskCardSwipeActionLabel(action) {
       if (action === "archive") return translate("action.archive");
       if (action === "delete") return translate("action.delete");
       if (action === "stop") return translate("action.stop");
       if (action === "promote") return translate("queue.promote");
       return translate("action.cancel");
     }
-    function taskCardSwipeActionTitle2(action) {
+    function taskCardSwipeActionTitle(action) {
       if (action === "stop") return translate("queue.cancelRunningTitle");
       if (action === "promote") return translate("queue.promoteTitle");
       if (action === "cancel") return translate("batch.cancelSelected");
-      return taskCardSwipeActionLabel2(action);
+      return taskCardSwipeActionLabel(action);
     }
-    function taskCardSwipeActionHtml2(action) {
+    function taskCardSwipeActionHtml(action) {
       if (!action) return "";
-      const label = escapeHtml20(taskCardSwipeActionLabel2(action));
-      const title = escapeHtml20(taskCardSwipeActionTitle2(action));
+      const label = escapeHtml20(taskCardSwipeActionLabel(action));
+      const title = escapeHtml20(taskCardSwipeActionTitle(action));
       return `<button class="task-card-swipe-action task-card-swipe-${action}" type="button" data-task-card-action="${action}" aria-label="${title}" title="${title}" tabindex="-1" disabled>${label}</button>`;
     }
-    function taskCardSwipeActionsHtml2(actions) {
+    function taskCardSwipeActionsHtml(actions) {
       if (!actions.positive && !actions.negative) return "";
       const actionGroupLabel = escapeHtml20(translate("taskActions.group"));
       return `
       <div class="task-card-swipe-actions" role="group" aria-label="${actionGroupLabel}" aria-hidden="true" inert>
-        ${taskCardSwipeActionHtml2(actions.positive)}
-        ${taskCardSwipeActionHtml2(actions.negative)}
+        ${taskCardSwipeActionHtml(actions.positive)}
+        ${taskCardSwipeActionHtml(actions.negative)}
       </div>
   `;
     }
-    function taskCardSwipeKeyboardShortcuts2(actions, queueReorderable = false) {
+    function taskCardSwipeKeyboardShortcuts(actions, queueReorderable = false) {
       const shortcuts = ["Shift+F10"];
       if (actions.negative) shortcuts.push("Delete", "Shift+ArrowLeft");
       if (actions.positive) shortcuts.push("Shift+ArrowRight");
@@ -53609,7 +51715,7 @@ ${hint}` : hint);
       const statusClass = task.status ? ` ${escapeHtml20(task.status)}` : "";
       const title = escapeHtml20(task.prompt || task.mode || "Untitled");
       const taskId = escapeHtml20(task.task_id);
-      const showImageSummary = taskImageSummaryVisible2(task);
+      const showImageSummary = taskImageSummaryVisible(task);
       const imageBlocks = showImageSummary ? taskImageBlocksHtml2(task) : "";
       const imageSummary = showImageSummary ? escapeHtml20(taskImageSummaryText2(task)) : "";
       const imageSummaryHtml = imageSummary ? `<span class="task-image-summary">${imageSummary}</span>` : "";
@@ -53617,12 +51723,12 @@ ${hint}` : hint);
       const groundingHtml = groundingCount > 0 ? `<span class="task-grounding-badge">${escapeHtml20(formatTranslation("grounding.sourceCount", { count: groundingCount }))}</span>` : "";
       const retryFullText = taskRetryStateText5(task);
       const retryText = taskCardRetryStateText3(task) || retryFullText;
-      const runningTimerHtml = taskCardRunningTimerHtml2(task, taskId);
+      const runningTimerHtml = taskCardRunningTimerHtml(task, taskId);
       const statusLabel = taskStatusLabelHtml2(task);
-      const modelFamilyIcon = taskModelFamilyIconHtml2(task);
-      const statusMetaText = retryText ? taskMetaDetailsWithCompletionText2(task) : taskMetaDetailsText3(task);
+      const modelFamilyIcon = taskModelFamilyIconHtml(task);
+      const statusMetaText = retryText ? taskMetaDetailsWithCompletionText(task) : taskMetaDetailsText3(task);
       const statusMeta = escapeHtml20(statusMetaText);
-      const taskTime = taskCardCompletionTimeText2(task);
+      const taskTime = taskCardCompletionTimeText(task);
       const runtime = taskCardRuntimeText3(task);
       const runtimeFullText = taskRuntimeText3(task);
       const completionTitle = taskCompletionTimestampTitle3(task);
@@ -53668,8 +51774,8 @@ ${hint}` : hint);
         Boolean(task.local_pending)
       );
       const swipeEnabled = Boolean(swipeActions.positive || swipeActions.negative);
-      const swipeActionsHtml = taskCardSwipeActionsHtml2(swipeActions);
-      const swipeKeyboardShortcuts = escapeHtml20(taskCardSwipeKeyboardShortcuts2(swipeActions, queueReorderable));
+      const swipeActionsHtml = taskCardSwipeActionsHtml(swipeActions);
+      const swipeKeyboardShortcuts = escapeHtml20(taskCardSwipeKeyboardShortcuts(swipeActions, queueReorderable));
       const batchSelect = state33.batchMode ? `
       <button class="task-select-button" type="button" role="checkbox" data-batch-select-task-id="${taskId}" aria-checked="${batchSelected ? "true" : "false"}" aria-label="${escapeHtml20(translate("taskList.selectSession"))}">
         <span></span>
@@ -53743,11 +51849,11 @@ ${hint}` : hint);
     ></div>
   `;
     }
-    function taskThumbShowsLoading2(task) {
+    function taskThumbShowsLoading(task) {
       const status = String(task?.status || "");
       return Boolean(task?.local_pending || ["submitting", "queued", "running"].includes(status));
     }
-    function taskThumbSpinnerStyle2(task) {
+    function taskThumbSpinnerStyle(task) {
       const origin = timestampMs4(task?.created_at);
       if (origin === null) return "";
       const elapsed = Math.max(0, Date.now() - origin);
@@ -53759,11 +51865,11 @@ ${hint}` : hint);
       const outputUrl = taskOutputUrls5(task)[0];
       const outputThumbnailUrl = taskThumbnailUrls3(task)[0];
       const inputPreviewUrl = taskInputPreviewUrls3(task)[0];
-      const loading = taskThumbShowsLoading2(task);
+      const loading = taskThumbShowsLoading(task);
       const outputImageUrl = outputThumbnailUrl || outputUrl || (!loading ? task.preview_url : "");
       const imageUrl = outputImageUrl || inputPreviewUrl || task.preview_url;
       const safeClassName = escapeHtml20(className);
-      const loadingSpinner = loading ? `<span class="task-thumb-stack-spinner" aria-hidden="true"${taskThumbSpinnerStyle2(task)}></span>` : "";
+      const loadingSpinner = loading ? `<span class="task-thumb-stack-spinner" aria-hidden="true"${taskThumbSpinnerStyle(task)}></span>` : "";
       if (outputImageUrl && inputPreviewUrl && outputImageUrl !== inputPreviewUrl) {
         const imageToImageLabel = escapeHtml20(translate("taskCard.imageToImageThumb"));
         return `
@@ -53799,14 +51905,14 @@ ${hint}` : hint);
       if (task.status === "failed") {
         return `<div class="${safeClassName} failed-thumb" aria-label="${escapeHtml20(translate("taskCard.failedThumb"))}"><span>!</span></div>`;
       }
-      return `<div class="${safeClassName} running-thumb"><span${taskThumbSpinnerStyle2(task)}></span></div>`;
+      return `<div class="${safeClassName} running-thumb"><span${taskThumbSpinnerStyle(task)}></span></div>`;
     }
     function taskStatusLabelHtml2(task) {
       const label = escapeHtml20(formatTaskCardStatus3(task) || translate("taskStatus.unknown"));
       const taskId = escapeHtml20(task?.task_id || "");
       return `<span class="task-status-label" data-task-status-id="${taskId}">${label}</span>`;
     }
-    function taskModelFamilyIconHtml2(task) {
+    function taskModelFamilyIconHtml(task) {
       const state33 = getState2();
       const familyId = taskModelFamilyId(task, state33.generationCatalog);
       const modelName = taskModelDisplayName(task, state33.generationCatalog);
@@ -53825,25 +51931,25 @@ ${hint}` : hint);
       const backend = taskCardProviderLabel2(task);
       return [...taskCanvasSummaryParts(task), backend].filter(Boolean).join(" \xB7 ");
     }
-    function taskMetaDetailsWithCompletionText2(task) {
+    function taskMetaDetailsWithCompletionText(task) {
       const statusMeta = taskMetaDetailsText3(task);
       const completion = taskCompletionTimestampText3(task);
       return [statusMeta, completion?.shortText].filter(Boolean).join(" \xB7 ");
     }
-    function taskCardCompletionTimeText2(task) {
+    function taskCardCompletionTimeText(task) {
       const completion = taskCompletionTimestampText3(task);
       return completion?.shortText || "";
     }
-    function taskCardElapsedLineHtml2(key2, values, elapsedHtml) {
+    function taskCardElapsedLineHtml(key2, values, elapsedHtml) {
       const marker = "__TASK_CARD_ELAPSED_TIMER__";
       return formatTranslation(key2, { ...values, elapsed: marker }).split(marker).map((part) => escapeHtml20(part)).join(elapsedHtml);
     }
-    function taskCardRunningTimerHtml2(task, taskId) {
+    function taskCardRunningTimerHtml(task, taskId) {
       if (!["running", "cancelling"].includes(String(task?.status || ""))) return "";
       const startedAt = taskProgressStartValue5(task);
       if (!startedAt) return "";
       const elapsed = elapsedTimerSpan4("task-card-running", startedAt);
-      return `<span class="task-card-time task-card-running-timer" data-task-running-timer-id="${taskId}">${taskCardElapsedLineHtml2("preview.elapsedLine", {}, elapsed)}</span>`;
+      return `<span class="task-card-time task-card-running-timer" data-task-running-timer-id="${taskId}">${taskCardElapsedLineHtml("preview.elapsedLine", {}, elapsed)}</span>`;
     }
     function taskCardProviderLabel2(task) {
       const providerLabel = String(taskApiProviderLabel4(task) || "").trim();
@@ -53884,7 +51990,7 @@ ${hint}` : hint);
       }
       return parts.join(" \xB7 ");
     }
-    function taskImageSummaryVisible2(task) {
+    function taskImageSummaryVisible(task) {
       void task;
       return true;
     }
@@ -53893,7 +51999,7 @@ ${hint}` : hint);
       const backend = taskCardProviderLabel2(task);
       return [status, ...taskCanvasSummaryParts(task), backend].filter(Boolean).join(" \xB7 ");
     }
-    return { expandedTaskGroupHeaderHtml: expandedTaskGroupHeaderHtml2, renderExpandedTaskGroupBodyShellHtml: renderExpandedTaskGroupBodyShellHtml2, renderExpandedTaskGroupShellHtml: renderExpandedTaskGroupShellHtml2, activeTaskSectionHtml: activeTaskSectionHtml2, activeTaskDispatchPendingHtml: activeTaskDispatchPendingHtml2, activeTaskGroupHtml: activeTaskGroupHtml2, expandedTaskGroupHtml: expandedTaskGroupHtml2, taskGroupHtml: taskGroupHtml2, taskGroupButtonLabel: taskGroupButtonLabel2, taskQueueReorderHintVisible: taskQueueReorderHintVisible2, taskQueueReorderHintHtml: taskQueueReorderHintHtml2, taskCardSwipeActionLabel: taskCardSwipeActionLabel2, taskCardSwipeActionTitle: taskCardSwipeActionTitle2, taskCardSwipeActionHtml: taskCardSwipeActionHtml2, taskCardSwipeActionsHtml: taskCardSwipeActionsHtml2, taskCardSwipeKeyboardShortcuts: taskCardSwipeKeyboardShortcuts2, taskCardHtml: taskCardHtml2, taskGroupLoadMoreHtml: taskGroupLoadMoreHtml2, taskThumbShowsLoading: taskThumbShowsLoading2, taskThumbSpinnerStyle: taskThumbSpinnerStyle2, taskThumbHtml: taskThumbHtml3, taskStatusLabelHtml: taskStatusLabelHtml2, taskModelFamilyIconHtml: taskModelFamilyIconHtml2, taskStatusAccessibleLabel: taskStatusAccessibleLabel3, taskMetaDetailsText: taskMetaDetailsText3, taskMetaDetailsWithCompletionText: taskMetaDetailsWithCompletionText2, taskCardCompletionTimeText: taskCardCompletionTimeText2, taskCardElapsedLineHtml: taskCardElapsedLineHtml2, taskCardRunningTimerHtml: taskCardRunningTimerHtml2, taskCardProviderLabel: taskCardProviderLabel2, taskCardRuntimeText: taskCardRuntimeText3, taskImageBlocksHtml: taskImageBlocksHtml2, taskImageSummaryText: taskImageSummaryText2, taskImageSummaryVisible: taskImageSummaryVisible2, taskMetaText: taskMetaText2 };
+    return { expandedTaskGroupHeaderHtml: expandedTaskGroupHeaderHtml2, renderExpandedTaskGroupBodyShellHtml: renderExpandedTaskGroupBodyShellHtml2, renderExpandedTaskGroupShellHtml: renderExpandedTaskGroupShellHtml2, activeTaskSectionHtml, activeTaskDispatchPendingHtml, activeTaskGroupHtml: activeTaskGroupHtml2, expandedTaskGroupHtml: expandedTaskGroupHtml2, taskGroupHtml: taskGroupHtml2, taskGroupButtonLabel: taskGroupButtonLabel2, taskQueueReorderHintVisible, taskQueueReorderHintHtml, taskCardSwipeActionLabel, taskCardSwipeActionTitle, taskCardSwipeActionHtml, taskCardSwipeActionsHtml, taskCardSwipeKeyboardShortcuts, taskCardHtml: taskCardHtml2, taskGroupLoadMoreHtml: taskGroupLoadMoreHtml2, taskThumbShowsLoading, taskThumbSpinnerStyle, taskThumbHtml: taskThumbHtml3, taskStatusLabelHtml: taskStatusLabelHtml2, taskModelFamilyIconHtml, taskStatusAccessibleLabel: taskStatusAccessibleLabel3, taskMetaDetailsText: taskMetaDetailsText3, taskMetaDetailsWithCompletionText, taskCardCompletionTimeText, taskCardElapsedLineHtml, taskCardRunningTimerHtml, taskCardProviderLabel: taskCardProviderLabel2, taskCardRuntimeText: taskCardRuntimeText3, taskImageBlocksHtml: taskImageBlocksHtml2, taskImageSummaryText: taskImageSummaryText2, taskImageSummaryVisible, taskMetaText: taskMetaText2 };
   }
 
   // codex_image/webui/frontend/src/history-task-reveal-model.ts
@@ -53972,7 +52078,7 @@ ${hint}` : hint);
         queryMode: false
       };
     }
-    function taskSearchHistoryResultMatches2(taskId, query) {
+    function taskSearchHistoryResultMatches(taskId, query) {
       const state33 = getState2();
       if (!taskId || !query) return false;
       if (String(state33.taskSearchHistoryResultQuery || "") !== query) return false;
@@ -53981,7 +52087,7 @@ ${hint}` : hint);
     function taskMatchesSearch2(task, query) {
       const normalizedQuery = String(query || "").trim().toLowerCase();
       const taskId = String(task?.task_id || "");
-      if (taskSearchHistoryResultMatches2(taskId, normalizedQuery)) {
+      if (taskSearchHistoryResultMatches(taskId, normalizedQuery)) {
         return true;
       }
       const text = `${task.task_id || ""} ${task.prompt || ""} ${task.status || ""} ${task.mode || ""} ${taskBackendLabel3(task)}`.toLowerCase();
@@ -54013,7 +52119,7 @@ ${hint}` : hint);
     }
     function activeTaskGroup2(tasks, query = "") {
       if (query) return null;
-      const activeTasks = activeTasksForGroup2(tasks);
+      const activeTasks = activeTasksForGroup(tasks);
       if (!activeTasks.length) return null;
       return {
         key: "active",
@@ -54135,7 +52241,7 @@ ${hint}` : hint);
       if (String(task?.status || "") === "queued") return 4e3;
       return 5e3;
     }
-    function activeTasksForGroup2(tasks) {
+    function activeTasksForGroup(tasks) {
       const sectionIds = queueTaskIdsBySection2();
       return tasks.filter((task) => isAlwaysVisibleTask2(task)).slice().sort((left, right) => activeTaskOrderIndex2(left, sectionIds) - activeTaskOrderIndex2(right, sectionIds));
     }
@@ -54155,7 +52261,7 @@ ${hint}` : hint);
       return JSON.stringify({
         query,
         filters,
-        activeQueue: activeQueueTaskListRenderKey2(),
+        activeQueue: activeQueueTaskListRenderKey(),
         activeGroup: activeGroup ? [activeGroup.key, activeGroup.label, activeGroup.tasks.length] : null,
         activeTaskGroupCollapsed: Boolean(state33.activeTaskGroupCollapsed),
         batchMode: state33.batchMode,
@@ -54205,19 +52311,19 @@ ${hint}` : hint);
         ])
       });
     }
-    function activeQueueTaskListRenderKey2() {
+    function activeQueueTaskListRenderKey() {
       const state33 = getState2();
       return {
         running: (state33.queue.running || []).map((task) => String(task.task_id || "")),
         waiting: (state33.queue.waiting || []).map((task) => String(task.task_id || ""))
       };
     }
-    return { taskAnchorLayout: taskAnchorLayout2, taskSearchHistoryResultMatches: taskSearchHistoryResultMatches2, taskMatchesSearch: taskMatchesSearch2, taskMatchesFilters: taskMatchesFilters2, activeTaskSections: activeTaskSections2, activeTaskGroup: activeTaskGroup2, taskQueueSection: taskQueueSection2, waitingQueueIndex: waitingQueueIndex2, taskHasUnreadUpdate: taskHasUnreadUpdate2, taskHasViewableUpdate: taskHasViewableUpdate3, taskHistoryGroups: taskHistoryGroups2, isAlwaysVisibleTask: isAlwaysVisibleTask2, queueTaskIdsBySection: queueTaskIdsBySection2, activeTaskOrderIndex: activeTaskOrderIndex2, activeTasksForGroup: activeTasksForGroup2, taskHistoryActivityTimestamp: taskHistoryActivityTimestamp2, taskDateBucket: taskDateBucket2, taskGroupCount: taskGroupCount3, taskListRenderKey: taskListRenderKey2, activeQueueTaskListRenderKey: activeQueueTaskListRenderKey2 };
+    return { taskAnchorLayout: taskAnchorLayout2, taskSearchHistoryResultMatches, taskMatchesSearch: taskMatchesSearch2, taskMatchesFilters: taskMatchesFilters2, activeTaskSections: activeTaskSections2, activeTaskGroup: activeTaskGroup2, taskQueueSection: taskQueueSection2, waitingQueueIndex: waitingQueueIndex2, taskHasUnreadUpdate: taskHasUnreadUpdate2, taskHasViewableUpdate: taskHasViewableUpdate3, taskHistoryGroups: taskHistoryGroups2, isAlwaysVisibleTask: isAlwaysVisibleTask2, queueTaskIdsBySection: queueTaskIdsBySection2, activeTaskOrderIndex: activeTaskOrderIndex2, activeTasksForGroup, taskHistoryActivityTimestamp: taskHistoryActivityTimestamp2, taskDateBucket: taskDateBucket2, taskGroupCount: taskGroupCount3, taskListRenderKey: taskListRenderKey2, activeQueueTaskListRenderKey };
   }
 
   // codex_image/webui/frontend/src/task-list-viewport.ts
   function createTaskListViewport(dependencies) {
-    const { getState: getState2, els: els42, consumeLatestTaskNavigationScrollAnchor: consumeLatestTaskNavigationScrollAnchor3, expandedTaskGroupHeaderHtml: expandedTaskGroupHeaderHtml2, scheduleLatestTaskNavigationRefresh: scheduleLatestTaskNavigationRefresh3, scheduleSidebarTaskGroupAutoLoad: scheduleSidebarTaskGroupAutoLoad3, taskCardHtml: taskCardHtml2, taskGroupCount: taskGroupCount3, taskGroupLoadMoreHtml: taskGroupLoadMoreHtml2, updateTaskElapsedDisplays: updateTaskElapsedDisplays3, cancelActiveTaskQueueReorder: cancelActiveTaskQueueReorder2, consumeExpansionAnimation } = dependencies;
+    const { getState: getState2, els: els41, consumeLatestTaskNavigationScrollAnchor: consumeLatestTaskNavigationScrollAnchor3, expandedTaskGroupHeaderHtml: expandedTaskGroupHeaderHtml2, scheduleLatestTaskNavigationRefresh: scheduleLatestTaskNavigationRefresh3, scheduleSidebarTaskGroupAutoLoad: scheduleSidebarTaskGroupAutoLoad3, taskCardHtml: taskCardHtml2, taskGroupCount: taskGroupCount3, taskGroupLoadMoreHtml: taskGroupLoadMoreHtml2, updateTaskElapsedDisplays: updateTaskElapsedDisplays3, cancelActiveTaskQueueReorder: cancelActiveTaskQueueReorder2, consumeExpansionAnimation } = dependencies;
     let expandedTaskGroupRenderToken = 0;
     let deferredActiveTaskHtml = null;
     const pendingScrollRestorations = /* @__PURE__ */ new WeakMap();
@@ -54225,17 +52331,17 @@ ${hint}` : hint);
     const EXPANDED_TASK_GROUP_CHUNK_SIZE = 48;
     const EXPANDED_TASK_GROUP_ANIMATION_FALLBACK_MS = 320;
     function captureTaskListScrollAnchors2() {
-      const historyAnchor = captureTaskListScrollAnchor2(
-        els42.sidebarContent || els42.taskHistoryShell || els42.taskList,
-        els42.taskList,
+      const historyAnchor = captureTaskListScrollAnchor(
+        els41.sidebarContent || els41.taskHistoryShell || els41.taskList,
+        els41.taskList,
         { retryMissingTask: true }
       );
       return [
-        captureTaskListScrollAnchor2(els42.taskActiveList, els42.taskActiveList),
+        captureTaskListScrollAnchor(els41.taskActiveList, els41.taskActiveList),
         consumeLatestTaskNavigationScrollAnchor3(historyAnchor)
       ].filter((anchor) => Boolean(anchor));
     }
-    function captureTaskListScrollAnchor2(scroller, root, { retryMissingTask = false } = {}) {
+    function captureTaskListScrollAnchor(scroller, root, { retryMissingTask = false } = {}) {
       if (!scroller || !root) return null;
       const pending = pendingScrollRestorations.get(scroller)?.anchor;
       if (pending?.root === root) return pending;
@@ -54259,9 +52365,9 @@ ${hint}` : hint);
       return anchor;
     }
     function restoreTaskListScrollAnchors2(anchors) {
-      anchors.forEach(restoreTaskListScrollAnchor2);
+      anchors.forEach(restoreTaskListScrollAnchor);
     }
-    function restoreTaskListScrollAnchor2(anchor) {
+    function restoreTaskListScrollAnchor(anchor) {
       if (!anchor?.scroller) return;
       const pending = { anchor };
       pendingScrollRestorations.set(anchor.scroller, pending);
@@ -54292,12 +52398,12 @@ ${hint}` : hint);
       };
       restore();
     }
-    function applyActiveTaskGroupHtml2(activeHtml) {
-      if (!els42.taskActiveList) return;
-      els42.taskActiveList.innerHTML = activeHtml;
-      els42.taskActiveList.classList.toggle("hidden", !activeHtml);
+    function applyActiveTaskGroupHtml(activeHtml) {
+      if (!els41.taskActiveList) return;
+      els41.taskActiveList.innerHTML = activeHtml;
+      els41.taskActiveList.classList.toggle("hidden", !activeHtml);
     }
-    function draggedTaskStillWaiting2() {
+    function draggedTaskStillWaiting() {
       const state33 = getState2();
       const taskId = String(state33.queueDragTaskId || "");
       return Boolean(taskId && (state33.queue.waiting || []).some(
@@ -54306,8 +52412,8 @@ ${hint}` : hint);
     }
     function renderActiveTaskGroup2(activeHtml) {
       const state33 = getState2();
-      if (!els42.taskActiveList) return;
-      if (state33.queueDragTaskId && draggedTaskStillWaiting2()) {
+      if (!els41.taskActiveList) return;
+      if (state33.queueDragTaskId && draggedTaskStillWaiting()) {
         deferredActiveTaskHtml = activeHtml;
         return;
       }
@@ -54315,16 +52421,16 @@ ${hint}` : hint);
         cancelActiveTaskQueueReorder2({ flushDeferred: false });
       }
       deferredActiveTaskHtml = null;
-      applyActiveTaskGroupHtml2(activeHtml);
+      applyActiveTaskGroupHtml(activeHtml);
     }
     function flushDeferredActiveTaskGroupRender2() {
       const state33 = getState2();
       if (state33.queueDragTaskId || deferredActiveTaskHtml === null) return false;
       const activeHtml = deferredActiveTaskHtml;
       deferredActiveTaskHtml = null;
-      const anchor = captureTaskListScrollAnchor2(els42.taskActiveList, els42.taskActiveList);
-      applyActiveTaskGroupHtml2(activeHtml);
-      restoreTaskListScrollAnchor2(anchor);
+      const anchor = captureTaskListScrollAnchor(els41.taskActiveList, els41.taskActiveList);
+      applyActiveTaskGroupHtml(activeHtml);
+      restoreTaskListScrollAnchor(anchor);
       updateTaskElapsedDisplays3();
       return true;
     }
@@ -54333,29 +52439,29 @@ ${hint}` : hint);
       deferredActiveTaskHtml = null;
       return true;
     }
-    function expandedTaskGroupBodyElements2(groupKey) {
+    function expandedTaskGroupBodyElements(groupKey) {
       const escapedGroupKey = cssEscape(groupKey);
-      const body = els42.taskList?.querySelector(
+      const body = els41.taskList?.querySelector(
         `.task-group-items-expanded[data-expanded-task-group-items-key="${escapedGroupKey}"]`
       );
-      const headerButton = els42.taskHistoryCurrentAnchor?.querySelector(
+      const headerButton = els41.taskHistoryCurrentAnchor?.querySelector(
         `.task-group-header-split[data-task-group-toggle-key="${escapedGroupKey}"]`
       );
       return { body, headerButton };
     }
-    function finalizeExpandedTaskGroupBody2(groupKey) {
-      const { body, headerButton } = expandedTaskGroupBodyElements2(groupKey);
+    function finalizeExpandedTaskGroupBody(groupKey) {
+      const { body, headerButton } = expandedTaskGroupBodyElements(groupKey);
       headerButton?.setAttribute("aria-expanded", "true");
       if (!body) return;
       body.style.maxHeight = "none";
       body.style.opacity = "1";
     }
-    function animateExpandedTaskGroupBody2(groupKey) {
+    function animateExpandedTaskGroupBody(groupKey) {
       if (prefersReducedMotion()) {
-        finalizeExpandedTaskGroupBody2(groupKey);
+        finalizeExpandedTaskGroupBody(groupKey);
         return;
       }
-      const { body, headerButton } = expandedTaskGroupBodyElements2(groupKey);
+      const { body, headerButton } = expandedTaskGroupBodyElements(groupKey);
       if (!body) return;
       headerButton?.setAttribute("aria-expanded", "false");
       body.style.maxHeight = "0px";
@@ -54380,22 +52486,22 @@ ${hint}` : hint);
       body.addEventListener("transitionend", handleTransitionEnd);
       fallbackTimerId = window.setTimeout(finalize, EXPANDED_TASK_GROUP_ANIMATION_FALLBACK_MS);
     }
-    function expandedTaskGroupItemsContainer2(groupKey) {
-      if (!els42.taskList) return null;
-      return els42.taskList.querySelector(
+    function expandedTaskGroupItemsContainer(groupKey) {
+      if (!els41.taskList) return null;
+      return els41.taskList.querySelector(
         `.task-group-items-expanded[data-expanded-task-group-items-key="${cssEscape(groupKey)}"]`
       );
     }
     function updateExpandedTaskGroupCount2(group) {
-      if (!group || !els42.taskHistoryCurrentAnchor) return;
-      const count = els42.taskHistoryCurrentAnchor.querySelector(".task-group-count");
+      if (!group || !els41.taskHistoryCurrentAnchor) return;
+      const count = els41.taskHistoryCurrentAnchor.querySelector(".task-group-count");
       if (count) count.textContent = String(taskGroupCount3(group));
     }
     function appendExpandedTaskGroupPage2(group, requestedGroupKey, activeGroupKey = null) {
       const groupKey = String(group?.key || "");
       const normalizedActiveGroupKey = String(activeGroupKey || groupKey);
       if (!groupKey || groupKey !== requestedGroupKey || normalizedActiveGroupKey !== groupKey) return false;
-      const body = expandedTaskGroupItemsContainer2(groupKey);
+      const body = expandedTaskGroupItemsContainer(groupKey);
       if (!body || body.dataset.renderComplete !== "true") return false;
       const tasks = Array.isArray(group?.tasks) ? group.tasks : [];
       const existingCards = Array.from(body.querySelectorAll(".task-card[data-task-id]"));
@@ -54424,14 +52530,14 @@ ${hint}` : hint);
       const renderChunk = () => {
         if (token !== expandedTaskGroupRenderToken) return;
         if (normalizedActiveGroupKey !== groupKey) return;
-        const body = expandedTaskGroupItemsContainer2(groupKey);
+        const body = expandedTaskGroupItemsContainer(groupKey);
         if (!body) return;
         const firstChunk = index === startIndex;
         const chunkSize = !preserveExisting && firstChunk ? EXPANDED_TASK_GROUP_INITIAL_CARD_COUNT : EXPANDED_TASK_GROUP_CHUNK_SIZE;
         const nextTasks = tasks.slice(index, index + chunkSize);
         if (!nextTasks.length) {
           body.insertAdjacentHTML("beforeend", taskGroupLoadMoreHtml2(group));
-          finalizeExpandedTaskGroupBody2(groupKey);
+          finalizeExpandedTaskGroupBody(groupKey);
           body.dataset.renderComplete = "true";
           scheduleLatestTaskNavigationRefresh3();
           scheduleSidebarTaskGroupAutoLoad3();
@@ -54441,9 +52547,9 @@ ${hint}` : hint);
         index += nextTasks.length;
         if (firstChunk) {
           if (shouldAnimateExpand) {
-            animateExpandedTaskGroupBody2(groupKey);
+            animateExpandedTaskGroupBody(groupKey);
           } else {
-            finalizeExpandedTaskGroupBody2(groupKey);
+            finalizeExpandedTaskGroupBody(groupKey);
           }
         } else if (body.style.maxHeight && body.style.maxHeight !== "none") {
           body.style.maxHeight = `${body.scrollHeight}px`;
@@ -54460,15 +52566,15 @@ ${hint}` : hint);
       requestAnimationFrame(renderChunk);
     }
     function renderExpandedTaskGroupHeader2(group, options = {}) {
-      if (!els42.taskHistoryCurrentAnchor) return;
+      if (!els41.taskHistoryCurrentAnchor) return;
       const html = group ? expandedTaskGroupHeaderHtml2(group, options) : "";
-      els42.taskHistoryCurrentAnchor.innerHTML = html;
-      els42.taskHistoryCurrentAnchor.classList.toggle("hidden", !html);
+      els41.taskHistoryCurrentAnchor.innerHTML = html;
+      els41.taskHistoryCurrentAnchor.classList.toggle("hidden", !html);
     }
     function invalidateTaskGroupRender2() {
       expandedTaskGroupRenderToken += 1;
     }
-    return { captureTaskListScrollAnchors: captureTaskListScrollAnchors2, captureTaskListScrollAnchor: captureTaskListScrollAnchor2, restoreTaskListScrollAnchors: restoreTaskListScrollAnchors2, restoreTaskListScrollAnchor: restoreTaskListScrollAnchor2, applyActiveTaskGroupHtml: applyActiveTaskGroupHtml2, draggedTaskStillWaiting: draggedTaskStillWaiting2, renderActiveTaskGroup: renderActiveTaskGroup2, flushDeferredActiveTaskGroupRender: flushDeferredActiveTaskGroupRender2, discardDeferredActiveTaskGroupRender: discardDeferredActiveTaskGroupRender2, expandedTaskGroupBodyElements: expandedTaskGroupBodyElements2, finalizeExpandedTaskGroupBody: finalizeExpandedTaskGroupBody2, animateExpandedTaskGroupBody: animateExpandedTaskGroupBody2, expandedTaskGroupItemsContainer: expandedTaskGroupItemsContainer2, updateExpandedTaskGroupCount: updateExpandedTaskGroupCount2, appendExpandedTaskGroupPage: appendExpandedTaskGroupPage2, scheduleExpandedTaskGroupItemsRender: scheduleExpandedTaskGroupItemsRender2, renderExpandedTaskGroupHeader: renderExpandedTaskGroupHeader2, invalidateTaskGroupRender: invalidateTaskGroupRender2 };
+    return { captureTaskListScrollAnchors: captureTaskListScrollAnchors2, captureTaskListScrollAnchor, restoreTaskListScrollAnchors: restoreTaskListScrollAnchors2, restoreTaskListScrollAnchor, applyActiveTaskGroupHtml, draggedTaskStillWaiting, renderActiveTaskGroup: renderActiveTaskGroup2, flushDeferredActiveTaskGroupRender: flushDeferredActiveTaskGroupRender2, discardDeferredActiveTaskGroupRender: discardDeferredActiveTaskGroupRender2, expandedTaskGroupBodyElements, finalizeExpandedTaskGroupBody, animateExpandedTaskGroupBody, expandedTaskGroupItemsContainer, updateExpandedTaskGroupCount: updateExpandedTaskGroupCount2, appendExpandedTaskGroupPage: appendExpandedTaskGroupPage2, scheduleExpandedTaskGroupItemsRender: scheduleExpandedTaskGroupItemsRender2, renderExpandedTaskGroupHeader: renderExpandedTaskGroupHeader2, invalidateTaskGroupRender: invalidateTaskGroupRender2 };
   }
 
   // codex_image/webui/frontend/src/task-list-render.ts
@@ -54562,7 +52668,7 @@ ${hint}` : hint);
   var taskCompletionTimestampText = (...args) => legacyMethod30("taskCompletionTimestampText", ...args);
   var taskCompletionTimestampTitle = (...args) => legacyMethod30("taskCompletionTimestampTitle", ...args);
   var timestampMs2 = (...args) => legacyMethod30("timestampMs", ...args);
-  var { taskAnchorLayout, taskSearchHistoryResultMatches, taskMatchesSearch, taskMatchesFilters, activeTaskSections, activeTaskGroup, taskQueueSection, waitingQueueIndex, taskHasUnreadUpdate, taskHasViewableUpdate, taskHistoryGroups, isAlwaysVisibleTask, queueTaskIdsBySection, activeTaskOrderIndex, activeTasksForGroup, taskHistoryActivityTimestamp, taskDateBucket, taskGroupCount, taskListRenderKey, activeQueueTaskListRenderKey } = createTaskListModel({
+  var { taskAnchorLayout, taskMatchesSearch, taskMatchesFilters, activeTaskSections, activeTaskGroup, taskQueueSection, waitingQueueIndex, taskHasUnreadUpdate, taskHasViewableUpdate, taskHistoryGroups, isAlwaysVisibleTask, queueTaskIdsBySection, activeTaskOrderIndex, taskHistoryActivityTimestamp, taskDateBucket, taskGroupCount, taskListRenderKey } = createTaskListModel({
     getState: () => ({ activeTaskGroupCollapsed: state19.activeTaskGroupCollapsed, batchMode: state19.batchMode, batchSelectedTaskIds: state19.batchSelectedTaskIds, expandedTaskGroupKey: state19.expandedTaskGroupKey, historyTaskReveal: state19.historyTaskReveal, queue: state19.queue, selectedTaskId: state19.selectedTaskId, taskSearchHistoryResultIds: state19.taskSearchHistoryResultIds, taskSearchHistoryResultQuery: state19.taskSearchHistoryResultQuery, taskSidebarGroupCounts: state19.taskSidebarGroupCounts, tasks: state19.tasks }),
     taskArchived: (...args) => taskArchived(...args),
     taskBackendLabel: (...args) => taskBackendLabel2(...args),
@@ -54574,7 +52680,7 @@ ${hint}` : hint);
     taskResolution: (...args) => taskResolution(...args),
     timestampMs: (...args) => timestampMs2(...args)
   });
-  var { expandedTaskGroupHeaderHtml, renderExpandedTaskGroupBodyShellHtml, renderExpandedTaskGroupShellHtml, activeTaskSectionHtml, activeTaskDispatchPendingHtml, activeTaskGroupHtml, expandedTaskGroupHtml, taskGroupHtml, taskGroupButtonLabel, taskQueueReorderHintVisible, taskQueueReorderHintHtml, taskCardSwipeActionLabel, taskCardSwipeActionTitle, taskCardSwipeActionHtml, taskCardSwipeActionsHtml, taskCardSwipeKeyboardShortcuts, taskCardHtml, taskGroupLoadMoreHtml, taskThumbShowsLoading, taskThumbSpinnerStyle, taskThumbHtml, taskStatusLabelHtml, taskModelFamilyIconHtml, taskStatusAccessibleLabel: taskStatusAccessibleLabel2, taskMetaDetailsText: taskMetaDetailsText2, taskMetaDetailsWithCompletionText, taskCardCompletionTimeText, taskCardElapsedLineHtml, taskCardRunningTimerHtml, taskCardProviderLabel, taskCardRuntimeText: taskCardRuntimeText2, taskImageBlocksHtml, taskImageSummaryText, taskImageSummaryVisible, taskMetaText } = createTaskCardView({
+  var { expandedTaskGroupHeaderHtml, renderExpandedTaskGroupBodyShellHtml, renderExpandedTaskGroupShellHtml, activeTaskGroupHtml, expandedTaskGroupHtml, taskGroupHtml, taskGroupButtonLabel, taskCardHtml, taskGroupLoadMoreHtml, taskThumbHtml, taskStatusLabelHtml, taskStatusAccessibleLabel: taskStatusAccessibleLabel2, taskMetaDetailsText: taskMetaDetailsText2, taskCardProviderLabel, taskCardRuntimeText: taskCardRuntimeText2, taskImageBlocksHtml, taskImageSummaryText, taskMetaText } = createTaskCardView({
     getState: () => ({ activeTaskGroupCollapsed: state19.activeTaskGroupCollapsed, batchMode: state19.batchMode, batchSelectedTaskIds: state19.batchSelectedTaskIds, generationCatalog: state19.generationCatalog, queue: state19.queue, selectedTaskId: state19.selectedTaskId, taskSidebarGroupLoadError: state19.taskSidebarGroupLoadError, taskSidebarGroupLoadedCounts: state19.taskSidebarGroupLoadedCounts, taskSidebarGroupLoading: state19.taskSidebarGroupLoading }),
     activeTaskSections: (...args) => activeTaskSections(...args),
     compressTaskImageBlockStates: (...args) => compressTaskImageBlockStates(...args),
@@ -54604,7 +52710,7 @@ ${hint}` : hint);
     waitingQueueIndex: (...args) => waitingQueueIndex(...args),
     isQueueDispatchPending: () => legacyMethod30("isQueueDispatchPending")
   });
-  var { captureTaskListScrollAnchors, captureTaskListScrollAnchor, restoreTaskListScrollAnchors, restoreTaskListScrollAnchor, applyActiveTaskGroupHtml, draggedTaskStillWaiting, renderActiveTaskGroup, flushDeferredActiveTaskGroupRender, discardDeferredActiveTaskGroupRender, expandedTaskGroupBodyElements, finalizeExpandedTaskGroupBody, animateExpandedTaskGroupBody, expandedTaskGroupItemsContainer, updateExpandedTaskGroupCount, appendExpandedTaskGroupPage, scheduleExpandedTaskGroupItemsRender, renderExpandedTaskGroupHeader, invalidateTaskGroupRender } = createTaskListViewport({
+  var { captureTaskListScrollAnchors, restoreTaskListScrollAnchors, renderActiveTaskGroup, flushDeferredActiveTaskGroupRender, discardDeferredActiveTaskGroupRender, updateExpandedTaskGroupCount, appendExpandedTaskGroupPage, scheduleExpandedTaskGroupItemsRender, renderExpandedTaskGroupHeader, invalidateTaskGroupRender } = createTaskListViewport({
     getState: () => ({ queue: state19.queue, queueDragTaskId: state19.queueDragTaskId }),
     els: { taskHistoryShell: els27.taskHistoryShell, sidebarContent: els27.sidebarContent, taskActiveList: els27.taskActiveList, taskList: els27.taskList, taskHistoryCurrentAnchor: els27.taskHistoryCurrentAnchor },
     consumeLatestTaskNavigationScrollAnchor: (...args) => consumeLatestTaskNavigationScrollAnchor(...args),
@@ -55293,7 +53399,7 @@ ${hint}` : hint);
   function renderTasks3(...args) {
     return legacyMethod32("renderTasks", ...args);
   }
-  function closePromptPopover4(...args) {
+  function closePromptPopover3(...args) {
     return legacyMethod32("closePromptPopover", ...args);
   }
   function taskThumbHtml2(...args) {
@@ -55404,7 +53510,7 @@ ${hint}` : hint);
     }
   }
   function openArchiveModal() {
-    closePromptPopover4();
+    closePromptPopover3();
     renderArchiveModal();
     els29.archiveModal?.classList.remove("hidden");
     els29.archiveModal?.setAttribute("aria-hidden", "false");
@@ -56065,7 +54171,6 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-actions.ts
   var bridge28 = getLegacyBridge();
   var state23 = bridge28.state;
-  var els31 = bridge28.els;
   var TASK_CARD_REMOVING_CLASS = "task-card-removing";
   var TASK_CARD_REMOVAL_FALLBACK_MS = 320;
   var TASK_CARD_REFLOW_DURATION_MS = 180;
@@ -56095,7 +54200,7 @@ ${hint}` : hint);
   function setStatus18(...args) {
     return legacyMethod34("setStatus", ...args);
   }
-  function closePromptPopover5(...args) {
+  function closePromptPopover4(...args) {
     return legacyMethod34("closePromptPopover", ...args);
   }
   function setTaskArchiveState3(...args) {
@@ -56295,7 +54400,7 @@ ${hint}` : hint);
     if (isTaskDeletionPending(taskId)) return false;
     pendingTaskDeletions.add(taskId);
     try {
-      closePromptPopover5();
+      closePromptPopover4();
       await deleteTaskById(taskId);
       await runTaskCardRemovalTransition2([taskId], renderTasks5, "delete");
       await refreshTasksAfterDeletion2();
@@ -56326,7 +54431,7 @@ ${hint}` : hint);
     }
   }
   async function retryFailedTask(taskId) {
-    closePromptPopover5();
+    closePromptPopover4();
     const task = state23.tasks.find((item) => String(item.task_id) === String(taskId));
     if (!task || !canRetryFailedTask(task)) {
       if (await refreshTaskAfterActionConflict(taskId)) return;
@@ -56354,7 +54459,7 @@ ${hint}` : hint);
     }
   }
   async function acceptTaskSuccesses(taskId) {
-    closePromptPopover5();
+    closePromptPopover4();
     const task = state23.tasks.find((item) => String(item.task_id) === String(taskId));
     if (!task || !canAcceptTaskSuccesses(task)) {
       if (await refreshTaskAfterActionConflict(taskId)) return;
@@ -56418,7 +54523,7 @@ ${hint}` : hint);
   }
   function openTaskDeleteConfirm2(anchor, taskId, onCancel) {
     if (isTaskDeletionPending(taskId)) return;
-    closePromptPopover5();
+    closePromptPopover4();
     const task = state23.tasks.find((item) => String(item.task_id) === String(taskId));
     if (!task) return;
     if (task.status === "running" || task.status === "cancelling" || task.local_pending) {
@@ -56454,7 +54559,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-submit.ts
   var bridge29 = getLegacyBridge();
   var state24 = bridge29.state;
-  var els32 = bridge29.els;
+  var els31 = bridge29.els;
   function legacyMethod35(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
@@ -56631,34 +54736,34 @@ ${hint}` : hint);
     const output = taskOutputControlValues(task);
     const usesResponses = params.api_mode === "responses" || params.codex_mode === "responses" || request.api_mode === "responses" || request.codex_mode === "responses" || request.endpoint === "/responses";
     const mainModel = params.main_model || request.main_model || (usesResponses ? request.model : "");
-    if (mainModel && els32.mainModel) {
-      els32.mainModel.value = mainModel;
+    if (mainModel && els31.mainModel) {
+      els31.mainModel.value = mainModel;
       persistMainModel2();
     }
-    if (els32.webSearch) {
-      els32.webSearch.checked = Boolean(output.web_search);
-      els32.webSearch.dispatchEvent(new Event("input"));
+    if (els31.webSearch) {
+      els31.webSearch.checked = Boolean(output.web_search);
+      els31.webSearch.dispatchEvent(new Event("input"));
     }
-    if (params.model && els32.model) els32.model.value = params.model;
+    if (params.model && els31.model) els31.model.value = params.model;
     if (output.size) syncSizeControlsFromSize2(output.size);
-    if (output.n && els32.nInput) {
-      els32.nInput.value = String(output.n);
+    if (output.n && els31.nInput) {
+      els31.nInput.value = String(output.n);
     }
-    if (output.quality && els32.quality) els32.quality.value = output.quality;
-    if (output.output_format && els32.outputFormat) els32.outputFormat.value = output.output_format;
-    if (els32.complexity) els32.complexity.value = String(output.complexity || "high");
-    if (els32.frameCount) els32.frameCount.value = String(output.frame_count ?? 9);
-    if (els32.frameDuration) els32.frameDuration.value = String(output.frame_duration_ms ?? 200);
+    if (output.quality && els31.quality) els31.quality.value = output.quality;
+    if (output.output_format && els31.outputFormat) els31.outputFormat.value = output.output_format;
+    if (els31.complexity) els31.complexity.value = String(output.complexity || "high");
+    if (els31.frameCount) els31.frameCount.value = String(output.frame_count ?? 9);
+    if (els31.frameDuration) els31.frameDuration.value = String(output.frame_duration_ms ?? 200);
     setBackgroundControl(output.background);
-    if (output.moderation && els32.moderation) els32.moderation.value = output.moderation;
-    if (output.output_compression !== null && output.output_compression !== void 0 && els32.compression) {
-      els32.compression.value = output.output_compression;
+    if (output.moderation && els31.moderation) els31.moderation.value = output.moderation;
+    if (output.output_compression !== null && output.output_compression !== void 0 && els31.compression) {
+      els31.compression.value = output.output_compression;
     }
-    [els32.complexity, els32.quality, els32.outputFormat, els32.moderation].forEach((element3) => {
+    [els31.complexity, els31.quality, els31.outputFormat, els31.moderation].forEach((element3) => {
       element3?.dispatchEvent(new Event("change"));
     });
     updateQuantity2();
-    syncRadioButtons2(els32.nInput);
+    syncRadioButtons2(els31.nInput);
     updateCompression2();
     updateCustomSize2();
     updateRequestPreview11();
@@ -56775,9 +54880,9 @@ ${hint}` : hint);
     const fileUploads = referenceFileUploads2();
     const storedFiles = storedReferenceFileInputs2();
     updateCompression2();
-    if (els32.outputFormat?.value === "gif" && [els32.frameCount, els32.frameDuration].some((input) => input && !input.checkValidity())) {
+    if (els31.outputFormat?.value === "gif" && [els31.frameCount, els31.frameDuration].some((input) => input && !input.checkValidity())) {
       getLegacyBridge().methods.openCompressionPopover?.();
-      [els32.frameCount, els32.frameDuration].find((input) => input && !input.checkValidity())?.reportValidity();
+      [els31.frameCount, els31.frameDuration].find((input) => input && !input.checkValidity())?.reportValidity();
       return;
     }
     const marked = state24.images.filter((source) => source.markupFile);
@@ -56814,9 +54919,9 @@ ${hint}` : hint);
         fieldError.hidden = false;
         fieldError.textContent = translate("status.emptyPrompt");
       }
-      els32.promptEditor?.setAttribute("aria-invalid", "true");
-      els32.promptEditor?.setAttribute("aria-describedby", "promptValidationError");
-      els32.promptEditor?.focus();
+      els31.promptEditor?.setAttribute("aria-invalid", "true");
+      els31.promptEditor?.setAttribute("aria-describedby", "promptValidationError");
+      els31.promptEditor?.focus();
       setStatus19(translate("status.emptyPrompt"), "error");
       return;
     }
@@ -56828,10 +54933,10 @@ ${hint}` : hint);
       setStatus19(translate("status.editNeedsImage"), "error");
       return;
     }
-    const customSizeError = els32.size?.value === "custom" ? customSizeValidationMessage2() : "";
+    const customSizeError = els31.size?.value === "custom" ? customSizeValidationMessage2() : "";
     if (customSizeError) {
       updateCustomSize2();
-      els32.customWidth?.focus();
+      els31.customWidth?.focus();
       setStatus19(customSizeError, "error");
       return;
     }
@@ -56861,8 +54966,8 @@ ${hint}` : hint);
     const submittedComposer = composerFingerprint();
     const pendingTask = { ...createPendingTask(), prompt_image_mentions: captureImageMentions() };
     addPendingTask2(pendingTask);
-    if (els32.requestJson) {
-      els32.requestJson.textContent = JSON.stringify(pendingTask.request, null, 2);
+    if (els31.requestJson) {
+      els31.requestJson.textContent = JSON.stringify(pendingTask.request, null, 2);
     }
     startRunFeedback2(pendingTask, translate("taskStatus.submitting"));
     taskSubmissionPending = true;
@@ -56880,8 +54985,8 @@ ${hint}` : hint);
       }
       addQueuedTask(data.task);
       markComposerSubmitted(submittedComposer);
-      if (els32.requestJson) {
-        els32.requestJson.textContent = JSON.stringify(data.request || {}, null, 2);
+      if (els31.requestJson) {
+        els31.requestJson.textContent = JSON.stringify(data.request || {}, null, 2);
       }
       stopRunFeedback2();
       setStatus19(translate("taskSubmit.queued"), "ok");
@@ -56915,7 +55020,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-list-controls.ts
   var bridge30 = getLegacyBridge();
   var state25 = bridge30.state;
-  var els33 = bridge30.els;
+  var els32 = bridge30.els;
   function legacyMethod36(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
@@ -56949,7 +55054,7 @@ ${hint}` : hint);
   var taskSearchAcceptManualInput = false;
   var sidebarTaskGroupAutoLoadScheduled = false;
   function taskFilterControls() {
-    return [els33.taskStatusFilter, els33.taskRatioFilter, els33.taskOrientationFilter, els33.taskPromptFidelityFilter, els33.taskResolutionFilter].filter(Boolean);
+    return [els32.taskStatusFilter, els32.taskRatioFilter, els32.taskOrientationFilter, els32.taskPromptFidelityFilter, els32.taskResolutionFilter].filter(Boolean);
   }
   function activeTaskFilterCount() {
     return taskFilterControls().filter((element3) => Boolean(element3.value)).length;
@@ -56958,8 +55063,8 @@ ${hint}` : hint);
     return Boolean(String(state25.taskSearchQuery || "").trim());
   }
   function updateTaskSearchClearButton() {
-    if (!els33.taskSearchClearButton) return;
-    els33.taskSearchClearButton.hidden = !taskSearchHasValue();
+    if (!els32.taskSearchClearButton) return;
+    els32.taskSearchClearButton.hidden = !taskSearchHasValue();
   }
   function clearTaskSearch() {
     if (!taskSearchHasValue()) {
@@ -56972,10 +55077,10 @@ ${hint}` : hint);
     syncTaskSearchInput();
     renderTasks6();
     void syncTaskSearchHistoryResults();
-    els33.taskSearch?.focus({ preventScroll: true });
+    els32.taskSearch?.focus({ preventScroll: true });
   }
   function syncTaskSearchInput() {
-    const input = els33.taskSearch;
+    const input = els32.taskSearch;
     if (!input) {
       updateTaskSearchClearButton();
       return;
@@ -56985,7 +55090,7 @@ ${hint}` : hint);
     updateTaskSearchClearButton();
   }
   function setTaskSearchLocked(locked2) {
-    const input = els33.taskSearch;
+    const input = els32.taskSearch;
     if (!input) return;
     input.readOnly = locked2;
     if (locked2) {
@@ -57000,13 +55105,13 @@ ${hint}` : hint);
     });
   }
   function setTaskFilterPopoverOpen(open) {
-    if (!els33.taskFilterPopover || !els33.taskFilterButton) return;
-    els33.taskFilterPopover.hidden = !open;
-    els33.taskFilterButton.setAttribute("aria-expanded", open ? "true" : "false");
-    els33.taskFilterButton.classList.toggle("is-open", open);
+    if (!els32.taskFilterPopover || !els32.taskFilterButton) return;
+    els32.taskFilterPopover.hidden = !open;
+    els32.taskFilterButton.setAttribute("aria-expanded", open ? "true" : "false");
+    els32.taskFilterButton.classList.toggle("is-open", open);
   }
   function toggleTaskFilterPopover() {
-    setTaskFilterPopoverOpen(Boolean(els33.taskFilterPopover?.hidden));
+    setTaskFilterPopoverOpen(Boolean(els32.taskFilterPopover?.hidden));
   }
   function clearTaskFilters(options = {}) {
     let changed = false;
@@ -57023,46 +55128,46 @@ ${hint}` : hint);
   }
   function updateTaskFilterSummary() {
     const activeCount = activeTaskFilterCount();
-    if (els33.taskFilterActiveCount) {
-      els33.taskFilterActiveCount.hidden = activeCount === 0;
-      els33.taskFilterActiveCount.textContent = activeCount ? String(activeCount) : "";
+    if (els32.taskFilterActiveCount) {
+      els32.taskFilterActiveCount.hidden = activeCount === 0;
+      els32.taskFilterActiveCount.textContent = activeCount ? String(activeCount) : "";
     }
-    els33.taskFilterButton?.classList.toggle("has-active-filters", activeCount > 0);
-    if (els33.taskFilterClearButton) {
-      els33.taskFilterClearButton.disabled = activeCount === 0;
+    els32.taskFilterButton?.classList.toggle("has-active-filters", activeCount > 0);
+    if (els32.taskFilterClearButton) {
+      els32.taskFilterClearButton.disabled = activeCount === 0;
     }
   }
   function handleTaskFilterKeydown(event) {
-    if (event.key !== "Escape" || els33.taskFilterPopover?.hidden) return;
+    if (event.key !== "Escape" || els32.taskFilterPopover?.hidden) return;
     event.preventDefault();
     event.stopImmediatePropagation();
     setTaskFilterPopoverOpen(false);
-    els33.taskFilterButton?.focus?.();
+    els32.taskFilterButton?.focus?.();
   }
   function bindTaskListControlEvents() {
     if (taskListControlEventsBound) return;
     taskListControlEventsBound = true;
-    els33.archiveModalClose?.addEventListener("click", closeArchiveModal2);
-    els33.archiveModal?.addEventListener("click", (event) => {
-      if (event.target === els33.archiveModal) closeArchiveModal2();
+    els32.archiveModalClose?.addEventListener("click", closeArchiveModal2);
+    els32.archiveModal?.addEventListener("click", (event) => {
+      if (event.target === els32.archiveModal) closeArchiveModal2();
     });
-    els33.batchCancelTasksButton?.addEventListener("click", selectActiveTasksForBatchCancel2);
-    els33.batchManageButton?.addEventListener("click", () => toggleBatchMode2());
-    els33.batchSelectGroupButton?.addEventListener("click", selectAllMatchingTasksInExpandedGroup2);
-    els33.batchSelectWaitingButton?.addEventListener("click", selectWaitingTasksForBatch2);
-    els33.batchArchiveButton?.addEventListener("click", archiveSelectedTasks2);
-    els33.batchCancelSelectedButton?.addEventListener("click", openBatchCancelConfirm2);
-    els33.batchDeleteButton?.addEventListener("click", openBatchDeleteConfirm2);
-    els33.taskSearch?.addEventListener("pointerdown", (event) => {
-      const input = els33.taskSearch;
+    els32.batchCancelTasksButton?.addEventListener("click", selectActiveTasksForBatchCancel2);
+    els32.batchManageButton?.addEventListener("click", () => toggleBatchMode2());
+    els32.batchSelectGroupButton?.addEventListener("click", selectAllMatchingTasksInExpandedGroup2);
+    els32.batchSelectWaitingButton?.addEventListener("click", selectWaitingTasksForBatch2);
+    els32.batchArchiveButton?.addEventListener("click", archiveSelectedTasks2);
+    els32.batchCancelSelectedButton?.addEventListener("click", openBatchCancelConfirm2);
+    els32.batchDeleteButton?.addEventListener("click", openBatchDeleteConfirm2);
+    els32.taskSearch?.addEventListener("pointerdown", (event) => {
+      const input = els32.taskSearch;
       if (!input?.readOnly) return;
       event.preventDefault();
       setTaskSearchLocked(false);
       syncTaskSearchInput();
       input.focus({ preventScroll: true });
     });
-    els33.taskSearch?.addEventListener("keydown", (event) => {
-      const input = els33.taskSearch;
+    els32.taskSearch?.addEventListener("keydown", (event) => {
+      const input = els32.taskSearch;
       if (input?.readOnly && !event.metaKey && !event.ctrlKey && !event.altKey) {
         const key2 = event.key || "";
         const isPrintable = key2.length === 1;
@@ -57082,26 +55187,26 @@ ${hint}` : hint);
       }
       taskSearchAcceptManualInput = true;
     });
-    els33.taskSearch?.addEventListener("paste", () => {
+    els32.taskSearch?.addEventListener("paste", () => {
       taskSearchAcceptManualInput = true;
       setTaskSearchLocked(false);
     });
-    els33.taskSearch?.addEventListener("drop", () => {
+    els32.taskSearch?.addEventListener("drop", () => {
       taskSearchAcceptManualInput = true;
       setTaskSearchLocked(false);
     });
-    els33.taskSearch?.addEventListener("blur", () => {
+    els32.taskSearch?.addEventListener("blur", () => {
       taskSearchAcceptManualInput = false;
       setTaskSearchLocked(true);
     });
-    els33.taskSearch.addEventListener("input", handleTaskSearchInput);
-    els33.taskSearch?.addEventListener("focus", () => {
+    els32.taskSearch.addEventListener("input", handleTaskSearchInput);
+    els32.taskSearch?.addEventListener("focus", () => {
       taskSearchAcceptManualInput = false;
       guardTaskSearchInput();
     });
-    els33.taskSearchClearButton?.addEventListener("click", clearTaskSearch);
-    els33.taskFilterButton?.addEventListener("click", toggleTaskFilterPopover);
-    els33.taskFilterClearButton?.addEventListener("click", () => clearTaskFilters());
+    els32.taskSearchClearButton?.addEventListener("click", clearTaskSearch);
+    els32.taskFilterButton?.addEventListener("click", toggleTaskFilterPopover);
+    els32.taskFilterClearButton?.addEventListener("click", () => clearTaskFilters());
     document.addEventListener("keydown", handleTaskFilterKeydown);
     taskFilterControls().forEach((element3) => {
       element3.addEventListener("change", () => {
@@ -57124,22 +55229,22 @@ ${hint}` : hint);
       guardTaskSearchInput([120, 360, 900, 1800]);
       return;
     }
-    state25.taskSearchQuery = els33.taskSearch?.value || "";
+    state25.taskSearchQuery = els32.taskSearch?.value || "";
     updateTaskSearchClearButton();
     renderTasks6();
     void syncTaskSearchHistoryResults();
   }
   function bindTaskListEvents() {
-    const interactiveRoot = els33.taskHistoryShell || els33.sidebarContent || els33.taskList;
+    const interactiveRoot = els32.taskHistoryShell || els32.sidebarContent || els32.taskList;
     interactiveRoot?.addEventListener("click", handleTaskListClick);
     interactiveRoot?.addEventListener("keydown", handleTaskListKeydown);
-    els33.taskList?.addEventListener("pointerdown", handleTaskListPointerDown2);
-    els33.sidebarContent?.addEventListener("scroll", scheduleSidebarTaskGroupAutoLoad2, { passive: true });
+    els32.taskList?.addEventListener("pointerdown", handleTaskListPointerDown2);
+    els32.sidebarContent?.addEventListener("scroll", scheduleSidebarTaskGroupAutoLoad2, { passive: true });
   }
   function maybeAutoLoadSidebarTaskGroup() {
-    const scroller = els33.sidebarContent;
+    const scroller = els32.sidebarContent;
     if (!scroller || state25.taskSidebarGroupLoading) return false;
-    const loadMore = els33.taskList?.querySelector?.("[data-load-more-task-group]");
+    const loadMore = els32.taskList?.querySelector?.("[data-load-more-task-group]");
     const groupKey = String(loadMore?.dataset?.loadMoreTaskGroup || "");
     if (!groupKey || String(state25.taskSidebarGroupLoadError || "") === groupKey) return false;
     const remaining = Number(scroller.scrollHeight || 0) - Number(scroller.scrollTop || 0) - Number(scroller.clientHeight || 0);
@@ -57156,7 +55261,7 @@ ${hint}` : hint);
     });
   }
   function taskHistoryInteractiveRoot() {
-    return els33.taskHistoryShell || els33.sidebarContent || els33.taskList;
+    return els32.taskHistoryShell || els32.sidebarContent || els32.taskList;
   }
   function taskNavigationCards() {
     const root = taskHistoryInteractiveRoot();
@@ -57331,8 +55436,8 @@ ${hint}` : hint);
     window.updateQueueElapsedDisplays = updateQueueElapsedDisplays;
   }
   function bindQueueControls() {
-    const els42 = getEls();
-    els42.queueButton?.addEventListener("click", jumpToActiveTaskGroup);
+    const els41 = getEls();
+    els41.queueButton?.addEventListener("click", jumpToActiveTaskGroup);
   }
   function startRealtimeUpdates({ migrateLegacyArchives = false } = {}) {
     const state33 = getState();
@@ -57637,16 +55742,16 @@ ${hint}` : hint);
     usableChannelCount,
     dispatchPending
   }) {
-    const els42 = getEls();
+    const els41 = getEls();
     const total = waitingCount + runningCount;
     const channelText = usableChannelCount === channelCount ? formatTranslation("queue.channel", { count: channelCount }) : formatTranslation("queue.availableChannels", { usable: usableChannelCount, total: channelCount });
     const text = dispatchPending ? formatTranslation("queue.dispatching", { waiting: waitingCount }) : total ? formatTranslation("queue.runningWaiting", { running: runningCount, waiting: waitingCount }) : translate("queue.empty");
     const label = total ? formatTranslation("queue.statusLabel", { text, channelText }) : translate("queue.emptyAria");
-    if (els42.queueStatusText) els42.queueStatusText.textContent = text;
-    if (els42.queueButton) {
-      els42.queueButton.setAttribute("aria-label", label);
-      els42.queueButton.title = total ? translate("queue.jumpTitle") : translate("queue.emptyTitle");
-      els42.queueButton.classList.toggle("has-queue", total > 0 || dispatchPending);
+    if (els41.queueStatusText) els41.queueStatusText.textContent = text;
+    if (els41.queueButton) {
+      els41.queueButton.setAttribute("aria-label", label);
+      els41.queueButton.title = total ? translate("queue.jumpTitle") : translate("queue.emptyTitle");
+      els41.queueButton.classList.toggle("has-queue", total > 0 || dispatchPending);
     }
   }
   function jumpToActiveTaskGroup() {
@@ -57885,7 +55990,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-card-swipe.ts
   var bridge31 = getLegacyBridge();
   var state26 = bridge31.state;
-  var els34 = bridge31.els;
+  var els33 = bridge31.els;
   var TASK_CARD_SWIPE_SETTLE_MS = 180;
   var taskCardSwipeInitialized = false;
   var activeSwipe = null;
@@ -57898,7 +56003,7 @@ ${hint}` : hint);
     return method(...args);
   }
   function taskCardSwipeRoot() {
-    return els34.taskHistoryShell || els34.sidebarContent || els34.taskList;
+    return els33.taskHistoryShell || els33.sidebarContent || els33.taskList;
   }
   function eventTargetElement2(event) {
     return event.target instanceof Element ? event.target : null;
@@ -58279,7 +56384,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-list-queue-controls.ts
   var bridge32 = getLegacyBridge();
   var state27 = bridge32.state;
-  var els35 = bridge32.els;
+  var els34 = bridge32.els;
   var TASK_QUEUE_AUTOSCROLL_EDGE_PX = 32;
   var TASK_QUEUE_AUTOSCROLL_STEP_PX = 12;
   var TASK_QUEUE_TOUCH_MOVE_OPTIONS = { passive: false };
@@ -58290,7 +56395,7 @@ ${hint}` : hint);
     return event.target instanceof Element ? event.target : null;
   }
   function taskListQueueControlRoots() {
-    return [els35.taskActiveList, els35.taskList].filter((root) => root instanceof HTMLElement);
+    return [els34.taskActiveList, els34.taskList].filter((root) => root instanceof HTMLElement);
   }
   function bindTaskListQueueControls() {
     if (taskListQueueControlsBound) return;
@@ -58443,8 +56548,8 @@ ${hint}` : hint);
   }
   function beginQueueReorder(pointer) {
     const section = waitingQueueSectionItems();
-    const dragLayer = els35.taskQueueDragLayer;
-    const sidebar = els35.sidebar;
+    const dragLayer = els34.taskQueueDragLayer;
+    const sidebar = els34.sidebar;
     if (!section || pointer.card.parentElement !== section || !(dragLayer instanceof HTMLElement) || !(sidebar instanceof HTMLElement)) return false;
     getLegacyBridge().methods.cancelActiveTaskCardSwipeTracking?.({ releaseCapture: false });
     getLegacyBridge().methods.closeOpenTaskCardDrawer?.({ immediate: true });
@@ -58689,7 +56794,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-context-menu.ts
   var bridge33 = getLegacyBridge();
   var state28 = bridge33.state;
-  var els36 = bridge33.els;
+  var els35 = bridge33.els;
   var taskContextMenuInitialized = false;
   var taskContextMenuEventsBound = false;
   var taskContextMenuEl = null;
@@ -58707,7 +56812,7 @@ ${hint}` : hint);
   function setStatus20(...args) {
     return legacyMethod38("setStatus", ...args);
   }
-  function closePromptPopover6(...args) {
+  function closePromptPopover5(...args) {
     return legacyMethod38("closePromptPopover", ...args);
   }
   function selectTask(...args) {
@@ -58742,7 +56847,7 @@ ${hint}` : hint);
     }
   }
   function taskContextMenuRoots() {
-    return [els36.taskActiveList, els36.taskList].filter((root) => root instanceof HTMLElement);
+    return [els35.taskActiveList, els35.taskList].filter((root) => root instanceof HTMLElement);
   }
   function taskContextMenuContains(card) {
     return taskContextMenuRoots().some((root) => root.contains(card));
@@ -58778,7 +56883,7 @@ ${hint}` : hint);
     const taskId = String(card.dataset.taskId || "");
     const task = taskById(taskId);
     if (!task) return;
-    closePromptPopover6();
+    closePromptPopover5();
     const menu = ensureTaskContextMenu();
     menu.dataset.taskContextTaskId = taskId;
     menu.innerHTML = taskContextMenuHtml(task);
@@ -59763,7 +57868,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-preview.ts
   var bridge34 = getLegacyBridge();
   var state29 = bridge34.state;
-  var els37 = bridge34.els;
+  var els36 = bridge34.els;
   var previewGridEventsBound = false;
   var pendingPreviewRenderToken = 0;
   function legacyMethod40(name, ...args) {
@@ -59782,7 +57887,7 @@ ${hint}` : hint);
   function updatePreviewElapsedDisplay2(...args) {
     return legacyMethod40("updatePreviewElapsedDisplay", ...args);
   }
-  function closePromptPopover7(...args) {
+  function closePromptPopover6(...args) {
     return legacyMethod40("closePromptPopover", ...args);
   }
   function currentSize2(...args) {
@@ -59866,7 +57971,7 @@ ${hint}` : hint);
     const visibleSelectedTask = selectedTask && !isTaskArchived4(selectedTask.task_id) ? selectedTask : null;
     const selected = task || visibleSelectedTask || state29.tasks.find((item) => !isTaskArchived4(item.task_id)) || selectedTask || state29.tasks[0];
     const status = taskPreviewStatus(selected);
-    syncGroundingAttribution(els37.previewGrid, selected, "preview");
+    syncGroundingAttribution(els36.previewGrid, selected, "preview");
     updatePreviewDownloadActions(selected);
     const nextPreviewKey = previewStructureKey(selected);
     if (state29.previewRenderKey === nextPreviewKey) {
@@ -59878,7 +57983,7 @@ ${hint}` : hint);
         renderOutputPreview(selected, { running: true });
         return;
       }
-      closePromptPopover7();
+      closePromptPopover6();
       cancelDeferredPreviewRender();
       renderRunningPreview(selected);
       return;
@@ -59888,7 +57993,7 @@ ${hint}` : hint);
         renderOutputPreview(selected, { waiting: true });
         return;
       }
-      closePromptPopover7();
+      closePromptPopover6();
       cancelDeferredPreviewRender();
       renderWaitingPreview(selected);
       return;
@@ -59898,10 +58003,10 @@ ${hint}` : hint);
         renderOutputPreview(selected, { failure: true });
         return;
       }
-      closePromptPopover7();
+      closePromptPopover6();
       cancelDeferredPreviewRender();
       clearPreviewGridLayout();
-      els37.previewGrid.innerHTML = `
+      els36.previewGrid.innerHTML = `
       <div class="empty-preview error-preview">
         <strong>${escapeHtml18(translate("preview.taskFailed"))}</strong>
         ${retryFailureSummaryButton(selected)}
@@ -59913,10 +58018,10 @@ ${hint}` : hint);
     }
     const outputUrls = taskOutputUrls3(selected);
     if (!selected || !outputUrls.length) {
-      closePromptPopover7();
+      closePromptPopover6();
       cancelDeferredPreviewRender();
       clearPreviewGridLayout();
-      els37.previewGrid.innerHTML = `<div class="empty-preview">${escapeHtml18(translate("preview.empty"))}</div>`;
+      els36.previewGrid.innerHTML = `<div class="empty-preview">${escapeHtml18(translate("preview.empty"))}</div>`;
       return;
     }
     renderOutputPreview(selected);
@@ -60035,24 +58140,24 @@ ${hint}` : hint);
     window.requestAnimationFrame(syncPreviewImageOrientation);
   }
   function reconcilePreviewOutputCards(task, outputUrls, totalCount, { preservePreviousImages = true, imageAlreadyLoaded = false } = {}) {
-    if (!els37.previewGrid) return;
+    if (!els36.previewGrid) return;
     const desiredKeys = new Set(outputUrls.map((url, index) => previewOutputCardKey(task, url, index)));
     removeStalePreviewNodes(desiredKeys);
     outputUrls.forEach((url, index) => {
       const key2 = previewOutputCardKey(task, url, index);
       const card = ensurePreviewOutputCard(key2);
-      if (els37.previewGrid.children[index] !== card) {
-        els37.previewGrid.insertBefore(card, els37.previewGrid.children[index] || null);
+      if (els36.previewGrid.children[index] !== card) {
+        els36.previewGrid.insertBefore(card, els36.previewGrid.children[index] || null);
       }
       updatePreviewOutputCard(card, task, url, index, totalCount, { preservePreviousImage: preservePreviousImages, imageAlreadyLoaded });
     });
   }
   function currentPreviewOutputCardCount() {
-    if (!els37.previewGrid) return 0;
-    return els37.previewGrid.querySelectorAll(".preview-card[data-preview-card-key]").length;
+    if (!els36.previewGrid) return 0;
+    return els36.previewGrid.querySelectorAll(".preview-card[data-preview-card-key]").length;
   }
   function removeStalePreviewNodes(desiredKeys) {
-    [...els37.previewGrid.children].forEach((child) => {
+    [...els36.previewGrid.children].forEach((child) => {
       if (!(child instanceof HTMLElement)) return;
       const key2 = child.dataset.previewCardKey;
       if (key2) {
@@ -60067,7 +58172,7 @@ ${hint}` : hint);
     return `slot-${taskOutputIndex2(task, url, index) || index + 1}`;
   }
   function ensurePreviewOutputCard(key2) {
-    const existing = [...els37.previewGrid.querySelectorAll(".preview-card[data-preview-card-key]")].find((card2) => {
+    const existing = [...els36.previewGrid.querySelectorAll(".preview-card[data-preview-card-key]")].find((card2) => {
       return card2 instanceof HTMLElement && card2.dataset.previewCardKey === key2;
     });
     if (existing instanceof HTMLElement) return existing;
@@ -60238,7 +58343,7 @@ ${hint}` : hint);
     });
   }
   function reconcilePreviewStatusCard(task, flags, visibleOutputCount) {
-    const existing = els37.previewGrid.querySelector("[data-preview-status-card]");
+    const existing = els36.previewGrid.querySelector("[data-preview-status-card]");
     const html = flags.running ? runningProgressCard(task, visibleOutputCount) : flags.waiting ? waitingProgressCard(task, visibleOutputCount) : flags.failure ? failureSummaryCard(task, visibleOutputCount) : "";
     if (!html) {
       existing?.remove();
@@ -60252,13 +58357,13 @@ ${hint}` : hint);
     if (existing) {
       existing.replaceWith(next);
     } else {
-      els37.previewGrid.append(next);
+      els36.previewGrid.append(next);
     }
   }
   function bindPreviewGridEvents() {
-    if (previewGridEventsBound || !els37.previewGrid) return;
+    if (previewGridEventsBound || !els36.previewGrid) return;
     previewGridEventsBound = true;
-    els37.previewGrid.addEventListener("click", handlePreviewGridClick);
+    els36.previewGrid.addEventListener("click", handlePreviewGridClick);
   }
   function handlePreviewGridClick(event) {
     const target = event.target instanceof Element ? event.target : null;
@@ -60316,7 +58421,7 @@ ${hint}` : hint);
     }
     const image = target.closest("[data-lightbox-url]");
     if (!image) return;
-    const images = [...els37.previewGrid.querySelectorAll("[data-lightbox-url]")];
+    const images = [...els36.previewGrid.querySelectorAll("[data-lightbox-url]")];
     const urls = images.map((item) => item.dataset.lightboxUrl || item.currentSrc || item.src).filter((url) => Boolean(url));
     const currentUrl = image.dataset.lightboxUrl || image.currentSrc || image.src;
     if (!currentUrl) return;
@@ -60331,16 +58436,16 @@ ${hint}` : hint);
   function updatePreviewDownloadActions(task) {
     updatePreviewSelectionActions(task);
     const outputUrls = taskOutputUrls3(task);
-    if (!els37.downloadAllButton) return;
+    if (!els36.downloadAllButton) return;
     if (!task?.task_id || outputUrls.length < 2) {
-      els37.downloadAllButton.classList.add("hidden");
-      els37.downloadAllButton.removeAttribute("href");
-      els37.downloadAllButton.removeAttribute("download");
+      els36.downloadAllButton.classList.add("hidden");
+      els36.downloadAllButton.removeAttribute("href");
+      els36.downloadAllButton.removeAttribute("download");
       return;
     }
-    els37.downloadAllButton.href = taskOutputZipUrl(task);
-    els37.downloadAllButton.download = `${task.task_id}-images.zip`;
-    els37.downloadAllButton.classList.remove("hidden");
+    els36.downloadAllButton.href = taskOutputZipUrl(task);
+    els36.downloadAllButton.download = `${task.task_id}-images.zip`;
+    els36.downloadAllButton.classList.remove("hidden");
   }
   function updatePreviewSelectionActions(task) {
     const outputUrls = taskOutputUrls3(task);
@@ -60348,28 +58453,28 @@ ${hint}` : hint);
     const selectedCount = selectedUrls.length;
     const totalCount = outputUrls.length;
     const hasSelection = Boolean(task?.task_id && selectedCount > 0 && totalCount > 1);
-    els37.previewSelectionActions?.classList.toggle("hidden", !hasSelection);
-    if (els37.previewSelectionCount) {
-      els37.previewSelectionCount.textContent = selectedCount ? formatTranslation("preview.selectedCount", { selected: selectedCount, total: totalCount }) : translate("preview.selectedZero");
+    els36.previewSelectionActions?.classList.toggle("hidden", !hasSelection);
+    if (els36.previewSelectionCount) {
+      els36.previewSelectionCount.textContent = selectedCount ? formatTranslation("preview.selectedCount", { selected: selectedCount, total: totalCount }) : translate("preview.selectedZero");
     }
-    if (els37.downloadSelectedButton) {
+    if (els36.downloadSelectedButton) {
       if (!hasSelection) {
-        els37.downloadSelectedButton.classList.add("hidden");
-        els37.downloadSelectedButton.removeAttribute("href");
-        els37.downloadSelectedButton.removeAttribute("download");
+        els36.downloadSelectedButton.classList.add("hidden");
+        els36.downloadSelectedButton.removeAttribute("href");
+        els36.downloadSelectedButton.removeAttribute("download");
       } else {
-        els37.downloadSelectedButton.href = taskSelectedOutputDownloadUrl(task);
-        els37.downloadSelectedButton.download = taskSelectedOutputDownloadName(task);
-        els37.downloadSelectedButton.classList.remove("hidden");
+        els36.downloadSelectedButton.href = taskSelectedOutputDownloadUrl(task);
+        els36.downloadSelectedButton.download = taskSelectedOutputDownloadName(task);
+        els36.downloadSelectedButton.classList.remove("hidden");
       }
     }
-    if (els37.deleteUnselectedOutputsButton) {
+    if (els36.deleteUnselectedOutputsButton) {
       const canDeleteUnselected = hasSelection && selectedCount < totalCount;
-      els37.deleteUnselectedOutputsButton.classList.toggle("hidden", !canDeleteUnselected);
+      els36.deleteUnselectedOutputsButton.classList.toggle("hidden", !canDeleteUnselected);
       if (canDeleteUnselected) {
-        els37.deleteUnselectedOutputsButton.dataset.deleteUnselectedTaskId = String(task.task_id || "");
+        els36.deleteUnselectedOutputsButton.dataset.deleteUnselectedTaskId = String(task.task_id || "");
       } else {
-        delete els37.deleteUnselectedOutputsButton.dataset.deleteUnselectedTaskId;
+        delete els36.deleteUnselectedOutputsButton.dataset.deleteUnselectedTaskId;
       }
     }
   }
@@ -60435,7 +58540,7 @@ ${hint}` : hint);
     });
   }
   async function deleteUnselectedOutputs(taskId) {
-    closePromptPopover7();
+    closePromptPopover6();
     try {
       const response = await fetch(`/api/tasks/${encodeURIComponent(taskId)}/outputs/delete-unselected`, {
         method: "POST",
@@ -60475,36 +58580,36 @@ ${hint}` : hint);
     return String(value || "image").replace(/[^\w.-]+/g, "-") || "image";
   }
   function clearPreviewGridLayout() {
-    if (!els37.previewGrid) return;
-    els37.previewGrid.classList.remove("multi-output");
-    [...els37.previewGrid.classList].forEach((className) => {
+    if (!els36.previewGrid) return;
+    els36.previewGrid.classList.remove("multi-output");
+    [...els36.previewGrid.classList].forEach((className) => {
       if (className.startsWith("preview-count-") || className.startsWith("preview-orientation-")) {
-        els37.previewGrid.classList.remove(className);
+        els36.previewGrid.classList.remove(className);
       }
     });
   }
   function applyPreviewGridLayout(outputCount, itemCount) {
     const previousOrientationClass = currentPreviewOrientationClass();
     clearPreviewGridLayout();
-    if (!els37.previewGrid) return;
-    els37.previewGrid.classList.toggle("multi-output", itemCount > 1);
-    els37.previewGrid.classList.add(`preview-count-${outputCount}`);
-    els37.previewGrid.classList.add(previousOrientationClass || "preview-orientation-unknown");
+    if (!els36.previewGrid) return;
+    els36.previewGrid.classList.toggle("multi-output", itemCount > 1);
+    els36.previewGrid.classList.add(`preview-count-${outputCount}`);
+    els36.previewGrid.classList.add(previousOrientationClass || "preview-orientation-unknown");
   }
   function currentPreviewOrientationClass() {
-    if (!els37.previewGrid) return "";
-    return [...els37.previewGrid.classList].find((className) => className.startsWith("preview-orientation-")) || "";
+    if (!els36.previewGrid) return "";
+    return [...els36.previewGrid.classList].find((className) => className.startsWith("preview-orientation-")) || "";
   }
   function syncPreviewImageOrientation() {
-    if (!els37.previewGrid) return;
-    const images = [...els37.previewGrid.querySelectorAll("[data-lightbox-url]")];
+    if (!els36.previewGrid) return;
+    const images = [...els36.previewGrid.querySelectorAll("[data-lightbox-url]")];
     const loadedImages = images.filter((image) => image.naturalWidth > 0 && image.naturalHeight > 0);
     if (!loadedImages.length) return;
     const portraitCount = loadedImages.filter((image) => image.naturalHeight > image.naturalWidth).length;
     const landscapeCount = loadedImages.filter((image) => image.naturalWidth > image.naturalHeight).length;
     const orientation = portraitCount > landscapeCount ? "portrait" : landscapeCount > portraitCount ? "landscape" : "square";
-    els37.previewGrid.classList.remove("preview-orientation-unknown", "preview-orientation-portrait", "preview-orientation-landscape", "preview-orientation-square");
-    els37.previewGrid.classList.add(`preview-orientation-${orientation}`);
+    els36.previewGrid.classList.remove("preview-orientation-unknown", "preview-orientation-portrait", "preview-orientation-landscape", "preview-orientation-square");
+    els36.previewGrid.classList.add(`preview-orientation-${orientation}`);
   }
   function promptPopoverData(task, index) {
     const originalPrompt = task.prompt || task.prompt_for_model || "";
@@ -60614,7 +58719,7 @@ ${hint}` : hint);
     const retryState = taskRetryStateText4(task);
     const retryStateHtml = retryState ? `<p data-preview-retry-state>${escapeHtml18(retryState)}</p>` : "";
     const failureNotice = runningFailureNotice(task);
-    els37.previewGrid.innerHTML = `
+    els36.previewGrid.innerHTML = `
     <div class="waiting-preview">
       <div class="waiting-spinner" aria-hidden="true"></div>
       <div>
@@ -60638,7 +58743,7 @@ ${hint}` : hint);
     const retryReason = !submitting && task.last_error ? `<p>${escapeHtml18(formatTranslation("preview.lastError", { error: task.last_error }))}</p>` : "";
     const retryState = taskRetryStateText4(task);
     const retryStateHtml = retryState ? `<p data-preview-retry-state>${escapeHtml18(retryState)}</p>` : "";
-    els37.previewGrid.innerHTML = `
+    els36.previewGrid.innerHTML = `
     <div class="waiting-preview">
       <div class="waiting-spinner" aria-hidden="true"></div>
       <div>
@@ -60653,8 +58758,8 @@ ${hint}` : hint);
   `;
   }
   function initTaskPreviewFeature() {
-    els37.deleteUnselectedOutputsButton?.addEventListener("click", () => {
-      openDeleteUnselectedOutputsConfirm(els37.deleteUnselectedOutputsButton);
+    els36.deleteUnselectedOutputsButton?.addEventListener("click", () => {
+      openDeleteUnselectedOutputsConfirm(els36.deleteUnselectedOutputsButton);
     });
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
       state29.previewRenderKey = null;
@@ -60685,7 +58790,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/tasks.ts
   var bridge35 = getLegacyBridge();
   var state30 = bridge35.state;
-  var els38 = bridge35.els;
+  var els37 = bridge35.els;
   function legacyMethod41(name, ...args) {
     const method = getLegacyBridge().methods[name];
     if (typeof method !== "function") {
@@ -60969,7 +59074,7 @@ ${hint}` : hint);
     const selector = `.task-card[data-task-id="${cssEscape(taskId)}"]`;
     const deadline = Date.now() + HISTORY_TASK_REVEAL_LAYOUT_TIMEOUT_MS;
     while (Date.now() <= deadline) {
-      const card = (els38.taskHistoryShell || els38.taskList)?.querySelector?.(selector);
+      const card = (els37.taskHistoryShell || els37.taskList)?.querySelector?.(selector);
       const groupItems = card instanceof HTMLElement ? card.closest("[data-task-group]")?.querySelector(".task-group-items-expanded") : null;
       if (historyTaskRevealLayoutReady({
         cardFound: card instanceof HTMLElement,
@@ -61190,7 +59295,7 @@ ${hint}` : hint);
   // codex_image/webui/frontend/src/task-selection.ts
   var bridge36 = getLegacyBridge();
   var state31 = bridge36.state;
-  var els39 = bridge36.els;
+  var els38 = bridge36.els;
   var taskSelectionInitialized = false;
   var HISTORY_TASK_REUSE_HANDOFF_KEY = "codex-image-history-task-reuse-handoff";
   var selectedTaskDetailRequestSeq = 0;
@@ -61204,7 +59309,7 @@ ${hint}` : hint);
   function setStatus22(message, type) {
     legacyMethod42("setStatus", message, type);
   }
-  function closePromptPopover8() {
+  function closePromptPopover7() {
     legacyMethod42("closePromptPopover");
   }
   function markTaskViewed3(taskId) {
@@ -61283,8 +59388,8 @@ ${hint}` : hint);
   }
   function applySelectedTaskRequestPreview(task) {
     const requestPayload = taskRequestPreviewPayload2(task);
-    if (requestPayload && els39.requestJson) {
-      els39.requestJson.textContent = JSON.stringify(requestPayload, null, 2);
+    if (requestPayload && els38.requestJson) {
+      els38.requestJson.textContent = JSON.stringify(requestPayload, null, 2);
     }
   }
   function applyTaskInputRestoreSources(sources, taskId, restoreSeq) {
@@ -61489,7 +59594,7 @@ ${hint}` : hint);
     return restoreWithMarkup([...files, ...gallerySources]);
   }
   async function selectTask2(taskId) {
-    closePromptPopover8();
+    closePromptPopover7();
     const leavingHistoryReveal = Boolean(
       state31.historyTaskReveal && String(state31.historyTaskReveal.taskId || "") !== String(taskId || "")
     );
@@ -61552,7 +59657,7 @@ ${hint}` : hint);
     setStatus22(translate("ux.editInputsReady"), "ok");
   }
   function mainLightboxTaskIds() {
-    const root = els39.taskHistoryShell || els39.sidebarContent || els39.taskList;
+    const root = els38.taskHistoryShell || els38.sidebarContent || els38.taskList;
     if (!root) return [];
     const seen = /* @__PURE__ */ new Set();
     return Array.from(root.querySelectorAll(".task-card[data-task-id]")).map((card) => String(card.dataset.taskId || "")).filter((taskId) => {
@@ -61596,7 +59701,7 @@ ${hint}` : hint);
       if (!task?.task_id) {
         task = await loadFullTaskDetail(taskId);
       }
-      closePromptPopover8();
+      closePromptPopover7();
       state31.selectedTaskId = taskId;
       await revealHistoryTaskInSidebar2(task);
       const restoreSeq = ++state31.taskInputRestoreSeq;
@@ -61743,7 +59848,7 @@ ${hint}` : hint);
 
   // codex_image/webui/frontend/src/overlay-popovers.ts
   var bridge37 = getLegacyBridge();
-  var els40 = bridge37.els;
+  var els39 = bridge37.els;
   var overlayPopoversInitialized = false;
   var overlayPopoverEventsBound = false;
   var confirmPopoverEl = null;
@@ -61841,7 +59946,7 @@ ${hint}` : hint);
       closeConfirmPopover4();
       return;
     }
-    closePromptPopover9();
+    closePromptPopover8();
     closeGalleryEditPopover4();
     confirmPopoverState.anchor = anchor;
     confirmPopoverState.onConfirm = typeof options.onConfirm === "function" ? options.onConfirm : null;
@@ -61985,7 +60090,7 @@ ${hint}` : hint);
       ${submittedPromptDetails(originalPrompt, submittedPrompt)}
     </div>
   `;
-    popover.querySelector(".prompt-popover-close")?.addEventListener("click", closePromptPopover9);
+    popover.querySelector(".prompt-popover-close")?.addEventListener("click", closePromptPopover8);
     popover.querySelector("[data-copy-optimized-prompt]")?.addEventListener("click", (event) => {
       copyOptimizedPrompt(event.currentTarget);
     });
@@ -62046,7 +60151,7 @@ ${hint}` : hint);
   function clampPopoverPosition2(value, min, max) {
     return Math.min(Math.max(value, min), Math.max(min, max));
   }
-  function closePromptPopover9() {
+  function closePromptPopover8() {
     if (!promptPopoverEl) return;
     disposeProviderResponseDetails?.();
     disposeProviderResponseDetails = null;
@@ -62089,7 +60194,7 @@ ${hint}` : hint);
       const clickedPopover = promptPopoverEl.contains(target);
       const clickedPromptButton = target.closest?.("[data-prompt-popover-index]");
       if (!clickedPopover && !clickedPromptButton) {
-        closePromptPopover9();
+        closePromptPopover8();
       }
     }
     handleGalleryDocumentClick2(event);
@@ -62100,8 +60205,8 @@ ${hint}` : hint);
         closeConfirmPopover4();
       }
     }
-    if (!els40.compressionPopover || els40.compressionPopover.classList.contains("hidden")) return;
-    if (els40.compressionPopover.contains(target) || els40.outputFormatField?.contains(target)) return;
+    if (!els39.compressionPopover || els39.compressionPopover.classList.contains("hidden")) return;
+    if (els39.compressionPopover.contains(target) || els39.outputFormatField?.contains(target)) return;
     closeCompressionPopover2();
   }
   function handleDocumentKeydown(event) {
@@ -62111,19 +60216,19 @@ ${hint}` : hint);
         closeConfirmPopover4();
         return;
       }
-      if (els40.imageEditorModal && !els40.imageEditorModal.classList.contains("hidden")) {
+      if (els39.imageEditorModal && !els39.imageEditorModal.classList.contains("hidden")) {
         closeImageEditor2();
         return;
       }
-      if (els40.systemSettingsModal && !els40.systemSettingsModal.classList.contains("hidden")) {
+      if (els39.systemSettingsModal && !els39.systemSettingsModal.classList.contains("hidden")) {
         closeApiSettingsModal2();
         return;
       }
-      if (els40.promptTemplateDrawer?.classList.contains("open")) {
+      if (els39.promptTemplateDrawer?.classList.contains("open")) {
         closePromptTemplateDrawer2();
         return;
       }
-      if (els40.galleryDrawer?.classList.contains("open")) {
+      if (els39.galleryDrawer?.classList.contains("open")) {
         closeGallery3();
         return;
       }
@@ -62132,7 +60237,7 @@ ${hint}` : hint);
       hidePromptSnippetSuggest5();
       hidePromptSnippetSelectionButton4();
       closeCompressionPopover2();
-      closePromptPopover9();
+      closePromptPopover8();
       closePromptSnippetPopover4();
       closeGalleryEditPopover4();
       closeConfirmPopover4();
@@ -62152,10 +60257,9 @@ ${hint}` : hint);
       promptPopoverSection,
       ensurePromptPopover,
       openPromptPopover: openPromptPopover2,
-      positionPromptPopover,
       promptPopoverHorizontalAnchorRect,
       clampPopoverPosition: clampPopoverPosition2,
-      closePromptPopover: closePromptPopover9,
+      closePromptPopover: closePromptPopover8,
       clearPromptPopoverCopyTimer,
       copyOptimizedPrompt,
       handleDocumentClick,
@@ -62182,7 +60286,7 @@ ${hint}` : hint);
   var COMPACT_SHELL_MAX_WIDTH = 1180;
   var bridge38 = getLegacyBridge();
   var state32 = bridge38.state;
-  var els41 = bridge38.els;
+  var els40 = bridge38.els;
   var shellUiInitialized = false;
   var shellUiEventsBound = false;
   var sidebarResizeFrameId = null;
@@ -62197,7 +60301,7 @@ ${hint}` : hint);
   function formatTaskStatus4(task) {
     return legacyMethod44("formatTaskStatus", task);
   }
-  function closePromptPopover10() {
+  function closePromptPopover9() {
     legacyMethod44("closePromptPopover");
   }
   function closePromptSnippetPopover5() {
@@ -62252,8 +60356,8 @@ ${hint}` : hint);
     legacyMethod44("clearTaskParameterInspection");
   }
   function handleShellLocaleChange() {
-    if (!els41.statusText) return;
-    const current = String(els41.statusText.textContent || "").trim();
+    if (!els40.statusText) return;
+    const current = String(els40.statusText.textContent || "").trim();
     const waitingLabels = [translate("status.waiting", "zh-CN"), translate("status.waiting", "en")];
     if (waitingLabels.includes(current)) {
       markComposerBaseline();
@@ -62264,18 +60368,18 @@ ${hint}` : hint);
     if (shellUiEventsBound) return;
     shellUiEventsBound = true;
     bindThemeSwitcher(
-      els41.themeSwitcher,
+      els40.themeSwitcher,
       (preference) => applyThemePreference(preference)
     );
     bindSystemThemePreference(handleThemeSystemChange);
     document.addEventListener(LOCALE_CHANGE_EVENT, handleShellLocaleChange);
-    if (els41.copyJsonButton) {
-      els41.copyJsonButton.addEventListener("click", copyJson);
+    if (els40.copyJsonButton) {
+      els40.copyJsonButton.addEventListener("click", copyJson);
     }
-    els41.newTaskButton?.addEventListener("click", resetForm);
-    els41.sidebarResizeHandle?.addEventListener("pointerdown", startSidebarResize);
-    els41.sidebarResizeHandle?.addEventListener("keydown", handleSidebarResizeKeydown);
-    els41.sidebarResizeHandle?.addEventListener("dblclick", resetSidebarWidth);
+    els40.newTaskButton?.addEventListener("click", resetForm);
+    els40.sidebarResizeHandle?.addEventListener("pointerdown", startSidebarResize);
+    els40.sidebarResizeHandle?.addEventListener("keydown", handleSidebarResizeKeydown);
+    els40.sidebarResizeHandle?.addEventListener("dblclick", resetSidebarWidth);
     syncSidebarResizeHandleAria();
   }
   function normalizeThemePreference2(value) {
@@ -62288,7 +60392,7 @@ ${hint}` : hint);
   }
   function updateThemeSwitcher() {
     syncThemeSwitcher(
-      els41.themeSwitcher,
+      els40.themeSwitcher,
       state32.themePreference
     );
   }
@@ -62331,7 +60435,7 @@ ${hint}` : hint);
     return Math.min(sidebarMaxWidth(), Math.max(SIDEBAR_MIN_WIDTH, width));
   }
   function sidebarWidthFromCss() {
-    const widthOwner = els41.sidebar || document.documentElement;
+    const widthOwner = els40.sidebar || document.documentElement;
     const inlineWidth = Number.parseInt(widthOwner.style.getPropertyValue("--sidebar-width") || "", 10);
     if (!Number.isNaN(inlineWidth)) return clampSidebarWidth(inlineWidth);
     const tokenWidth = Number.parseInt(getComputedStyle(widthOwner).getPropertyValue("--sidebar-width") || "", 10);
@@ -62341,7 +60445,7 @@ ${hint}` : hint);
     return sidebarWidthFromCss() ?? SIDEBAR_DEFAULT_WIDTH;
   }
   function syncSidebarResizeHandleAria(width = null) {
-    const handle = els41.sidebarResizeHandle;
+    const handle = els40.sidebarResizeHandle;
     if (!handle) return;
     const currentWidth = width !== null ? width : currentSidebarWidth();
     handle.setAttribute("aria-valuemin", String(SIDEBAR_MIN_WIDTH));
@@ -62350,7 +60454,7 @@ ${hint}` : hint);
   }
   function applySidebarWidth(width, { persist = true } = {}) {
     const nextWidth = clampSidebarWidth(width);
-    (els41.sidebar || document.documentElement).style.setProperty("--sidebar-width", `${nextWidth}px`);
+    (els40.sidebar || document.documentElement).style.setProperty("--sidebar-width", `${nextWidth}px`);
     syncSidebarResizeHandleAria(nextWidth);
     if (persist) {
       try {
@@ -62382,7 +60486,7 @@ ${hint}` : hint);
     applySidebarWidth(width, { persist: true });
   }
   function startSidebarResize(event) {
-    if (!els41.sidebar || event.button !== 0) return;
+    if (!els40.sidebar || event.button !== 0) return;
     event.preventDefault();
     const currentWidth = currentSidebarWidth();
     state32.sidebarResize = {
@@ -62391,11 +60495,11 @@ ${hint}` : hint);
       startWidth: currentWidth,
       lastWidth: currentWidth
     };
-    els41.sidebar.classList.add("resizing");
-    if (els41.sidebarResizeShield) {
-      els41.sidebarResizeShield.hidden = false;
+    els40.sidebar.classList.add("resizing");
+    if (els40.sidebarResizeShield) {
+      els40.sidebarResizeShield.hidden = false;
     }
-    els41.sidebarResizeHandle?.setPointerCapture?.(event.pointerId);
+    els40.sidebarResizeHandle?.setPointerCapture?.(event.pointerId);
     window.addEventListener("pointermove", updateSidebarResize);
     window.addEventListener("pointerup", finishSidebarResize);
     window.addEventListener("pointercancel", finishSidebarResize);
@@ -62412,18 +60516,18 @@ ${hint}` : hint);
     if (!resize || event.pointerId !== resize.pointerId) return;
     const nextWidth = resize.lastWidth ?? resize.startWidth;
     state32.sidebarResize = null;
-    els41.sidebar?.classList.remove("resizing");
-    if (els41.sidebarResizeShield) {
-      els41.sidebarResizeShield.hidden = true;
+    els40.sidebar?.classList.remove("resizing");
+    if (els40.sidebarResizeShield) {
+      els40.sidebarResizeShield.hidden = true;
     }
-    els41.sidebarResizeHandle?.releasePointerCapture?.(event.pointerId);
+    els40.sidebarResizeHandle?.releasePointerCapture?.(event.pointerId);
     window.removeEventListener("pointermove", updateSidebarResize);
     window.removeEventListener("pointerup", finishSidebarResize);
     window.removeEventListener("pointercancel", finishSidebarResize);
     flushSidebarResizeWidth(nextWidth);
   }
   function handleSidebarResizeKeydown(event) {
-    if (!els41.sidebar) return;
+    if (!els40.sidebar) return;
     const step = event.shiftKey ? 32 : 16;
     const currentWidth = currentSidebarWidth();
     if (event.key === "ArrowLeft") {
@@ -62459,16 +60563,16 @@ ${hint}` : hint);
     document.title = webAppDocumentTitle(status, fullTitle);
   }
   function setStatus23(message, type) {
-    if (!els41.statusText) return;
-    delete els41.statusText.dataset.statusSource;
-    els41.statusText.textContent = message;
-    els41.statusText.className = `status-text ${type || ""}`;
+    if (!els40.statusText) return;
+    delete els40.statusText.dataset.statusSource;
+    els40.statusText.textContent = message;
+    els40.statusText.className = `status-text ${type || ""}`;
   }
   function resetForm() {
     preserveComposerDraft();
     state32.taskInputRestoreSeq += 1;
     const outputSettingsLocked = Boolean(legacyMethod44("isOutputSettingsLocked"));
-    closePromptPopover10();
+    closePromptPopover9();
     closePromptSnippetPopover5();
     closeArchiveModal4();
     closeGallery4();
@@ -62487,19 +60591,19 @@ ${hint}` : hint);
     finishBatchMarqueeSelection2();
     setPromptText3("");
     if (!outputSettingsLocked) {
-      if (els41.customSizeToggle) els41.customSizeToggle.checked = false;
-      if (els41.nInput) els41.nInput.value = "1";
-      if (els41.resolution) els41.resolution.value = "standard";
-      if (els41.ratio) els41.ratio.value = "1:1";
-      if (els41.orientation) els41.orientation.value = "square";
-      els41.size.value = "1024x1024";
-      els41.quality.value = "auto";
-      els41.outputFormat.value = "png";
+      if (els40.customSizeToggle) els40.customSizeToggle.checked = false;
+      if (els40.nInput) els40.nInput.value = "1";
+      if (els40.resolution) els40.resolution.value = "standard";
+      if (els40.ratio) els40.ratio.value = "1:1";
+      if (els40.orientation) els40.orientation.value = "square";
+      els40.size.value = "1024x1024";
+      els40.quality.value = "auto";
+      els40.outputFormat.value = "png";
       setBackgroundControl("auto");
-      els41.moderation.value = "low";
-      els41.compression.value = "80";
-      if (els41.webSearch) els41.webSearch.checked = false;
-      [els41.nInput, els41.resolution, els41.ratio, els41.orientation, els41.quality, els41.outputFormat, els41.moderation, els41.webSearch].forEach((sel) => {
+      els40.moderation.value = "low";
+      els40.compression.value = "80";
+      if (els40.webSearch) els40.webSearch.checked = false;
+      [els40.nInput, els40.resolution, els40.ratio, els40.orientation, els40.quality, els40.outputFormat, els40.moderation, els40.webSearch].forEach((sel) => {
         if (sel) sel.dispatchEvent(new Event("change"));
       });
       updateSizeFromPreset2();
@@ -62517,8 +60621,8 @@ ${hint}` : hint);
     setStatus23(translate("status.waiting"), "");
   }
   async function copyJson() {
-    if (!els41.requestJson) return;
-    if (!await copyTextToClipboard(els41.requestJson.textContent)) return;
+    if (!els40.requestJson) return;
+    if (!await copyTextToClipboard(els40.requestJson.textContent)) return;
     setStatus23(translate("status.jsonCopied"), "ok");
   }
   function initShellUiFeature() {
@@ -63584,16 +61688,16 @@ ${hint}` : hint);
     else if (action === "clear" && state33.inspectedGenerationSnapshot) clearTaskParameterInspection3();
   }
   function renderTaskParameterInspector() {
-    const { state: state33, els: els42 } = getLegacyBridge();
+    const { state: state33, els: els41 } = getLegacyBridge();
     const snapshot2 = state33.inspectedGenerationSnapshot;
-    const inspector = els42.taskParameterInspector;
+    const inspector = els41.taskParameterInspector;
     if (!inspector) return;
     inspector.classList.toggle("hidden", !snapshot2);
     inspector.setAttribute("aria-hidden", snapshot2 ? "false" : "true");
     if (!snapshot2) {
-      els42.taskParameterInspectorHeader?.replaceChildren();
-      els42.taskParameterInspectorGrid?.replaceChildren();
-      els42.taskParameterInspectorUnknown?.replaceChildren();
+      els41.taskParameterInspectorHeader?.replaceChildren();
+      els41.taskParameterInspectorGrid?.replaceChildren();
+      els41.taskParameterInspectorUnknown?.replaceChildren();
       return;
     }
     const title = document.createElement("strong");
@@ -63609,23 +61713,23 @@ ${hint}` : hint);
       const task = state33.tasks.find((item) => String(item.task_id) === String(state33.selectedTaskId));
       if (task) adoptTaskParameters(task);
     });
-    els42.taskParameterInspectorHeader?.replaceChildren(title, badge, adopt);
+    els41.taskParameterInspectorHeader?.replaceChildren(title, badge, adopt);
     const model = state33.generationCatalog?.models.find((item) => item.id === snapshot2.canonical_model_id);
     const inspectorModel = taskParameterInspectorModel(snapshot2, model);
     const inspectorParameters = taskParameterInspectorParameters(snapshot2);
-    if (inspectorModel && els42.taskParameterInspectorGrid) {
+    if (inspectorModel && els41.taskParameterInspectorGrid) {
       renderParameterDefinitionsInto(
-        els42.taskParameterInspectorGrid,
+        els41.taskParameterInspectorGrid,
         inspectorModel,
         inspectorParameters,
         { readOnly: true, operation: "generate" }
       );
     } else {
-      els42.taskParameterInspectorGrid?.replaceChildren();
+      els41.taskParameterInspectorGrid?.replaceChildren();
     }
     const known = new Set(inspectorModel?.parameters.map((definition) => definition.id) || []);
     const unknown = Object.entries(inspectorParameters).filter(([id]) => !known.has(id));
-    const list = els42.taskParameterInspectorUnknown;
+    const list = els41.taskParameterInspectorUnknown;
     list?.replaceChildren();
     unknown.forEach(([id, value]) => {
       const term = document.createElement("dt");

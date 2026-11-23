@@ -200,14 +200,6 @@ export function taskParameterInspectorParameters(
   );
 }
 
-export function taskParameterInspectionMatchesSelectedModel(
-  snapshot: GenerationSnapshotView | null | undefined,
-  selectedModelId: string,
-  catalog?: GenerationCatalog | null,
-): boolean {
-  return Boolean(snapshot && modelsShareParameterEditor(snapshot.canonical_model_id, selectedModelId, catalog));
-}
-
 export type TaskParameterInspectionAction = "preserve" | "inspect" | "clear";
 
 export function taskParameterInspectionAction(

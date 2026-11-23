@@ -1,7 +1,7 @@
 import { syncGptModelControls } from "./gpt-model-controls";
 import { isGptImageModel } from "./gpt-image-models";
 import { setBackgroundControl } from "./background-controls";
-import type { CatalogModel, CatalogParameterDefinition, GenerationOperation } from "./types";
+import type { CatalogModel, CatalogParameterDefinition } from "./types";
 import { selectedProviderBinding } from "./provider-selection";
 import { getLegacyBridge } from "./state";
 import { renderCurrentModelParameters } from "./model-parameters";
@@ -39,16 +39,6 @@ export function canonicalControlValues(
     values["gpt.output_compression"] = taskParams.output_compression;
   }
   return Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined && value !== null));
-}
-
-function conditionMatches(
-  condition: CatalogParameterDefinition["visible_when"][number],
-  values: Record<string, unknown>,
-): boolean {
-  const actual = values[condition.parameter_id];
-  if (condition.operator === "equals") return actual === condition.value;
-  if (condition.operator === "not_equals") return actual !== condition.value;
-  return Array.isArray(condition.value) && condition.value.includes(actual);
 }
 
 function parameterValueValid(parameter: CatalogParameterDefinition, value: unknown): boolean {
@@ -90,24 +80,6 @@ export function migratePortableModelDraft(
       parameterValueValid(definition, targetValue) ? targetValue : definition.default,
     )];
   }));
-}
-
-export function canonicalParametersForSubmission(
-  model: CatalogModel,
-  operation: GenerationOperation,
-  draft: Record<string, unknown>,
-  currentValues: Record<string, unknown>,
-): Record<string, unknown> {
-  const values = Object.fromEntries(model.parameters.map((parameter) => {
-    const draftValue = draft[parameter.id];
-    const baseValue = parameterValueValid(parameter, draftValue) ? draftValue : parameter.default;
-    const currentValue = currentValues[parameter.id];
-    return [parameter.id, parameterValueValid(parameter, currentValue) ? currentValue : baseValue];
-  }));
-  return Object.fromEntries(model.parameters
-    .filter((parameter) => parameter.operations.includes(operation))
-    .filter((parameter) => parameter.visible_when.every((condition) => conditionMatches(condition, values)))
-    .map((parameter) => [parameter.id, values[parameter.id] ?? parameter.default]));
 }
 
 export function saveCurrentModelParameterDraft(): void {

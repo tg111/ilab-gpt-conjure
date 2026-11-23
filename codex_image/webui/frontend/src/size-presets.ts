@@ -86,21 +86,11 @@ export const GPT_IMAGE_2_SIZE_PRESETS: Record<string, Record<string, [number, nu
   },
 };
 
-export const GPT_IMAGE_2_POPULAR_SIZE_EXAMPLES = ["1024x1024", "1024x1280", "1280x1024", "1024x1536", "1536x1024", "2048x1152", "3840x2160", "2160x3840", "1568x672"];
-
 export const GPT_IMAGE_2_MIN_PIXELS = 655360;
 export const GPT_IMAGE_2_MAX_PIXELS = 8294400;
 export const GPT_IMAGE_2_MAX_LONG_SHORT_RATIO = 3;
 
 const { els } = getLegacyBridge();
-
-function legacyMethod(name: string, ...args: any[]): any {
-  const method = getLegacyBridge().methods[name];
-  if (typeof method !== "function") {
-    throw new Error("Legacy method " + name + " is not initialized");
-  }
-  return method(...args);
-}
 
 function currentCustomRatio(): string {
   const width = String(els.customRatioWidth?.value || "").trim();
@@ -121,10 +111,6 @@ export function presetDimensions(resolution: any, ratio: any): [number, number] 
 export function sizeForPreset(resolution: any, ratio: any): string {
   const [width, height] = presetDimensions(resolution, ratio);
   return `${width}x${height}`;
-}
-
-export function orientationForRatio(ratio: any): string {
-  return RATIO_ORIENTATION[ratio] || DEFAULT_ORIENTATION;
 }
 
 export function orientationForDimensions(width: any, height: any): string {

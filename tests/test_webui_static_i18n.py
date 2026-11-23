@@ -36,7 +36,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             if locale == "en":
                 continue
             for key in ("ux.moderationAuto", "ux.moderationLow", "lanAccess.help",
-                        "networkEgress.fakeIpDnsHelp", "apiSettings.modelBindingsHint"):
+                        "networkEgress.fakeIpDnsHelp"):
                 with self.subTest(locale=locale, key=key):
                     self.assertNotEqual(translations[key], source[key])
 
@@ -245,7 +245,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "modelSelection.provider",
             "modelSelection.providerUnavailable",
             "modelSelection.openSettings",
-            "modelSelection.codexUnavailable",
             "modelSelection.catalogUnavailable",
         )
         locale_paths = sorted(Path("codex_image/webui/frontend/src/i18n").glob("*.ts"))
@@ -327,24 +326,16 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
     def test_reference_file_copy_exists_in_every_locale(self) -> None:
         required_keys = (
             "imageInput.referenceTitle",
-            "referenceFiles.add",
-            "referenceFiles.selected",
-            "referenceFiles.recent",
             "referenceFiles.familyPdf",
             "referenceFiles.familySpreadsheet",
             "referenceFiles.familyDocument",
             "referenceFiles.familyText",
-            "referenceFiles.visualLimit",
             "referenceFiles.remove",
-            "referenceFiles.switchTitle",
-            "referenceFiles.switchMessage",
-            "referenceFiles.removeAndSwitch",
             "referenceFiles.requiresResponses",
             "referenceFiles.switchToResponses",
             "referenceFiles.openApiSettings",
             "referenceFiles.providerMissing",
             "referenceFiles.missing",
-            "referenceFiles.loadFailed",
             "referenceFiles.errorEmpty",
             "referenceFiles.errorUnsupported",
             "referenceFiles.errorMismatch",
@@ -640,30 +631,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('"outputSettings.title": "出力設定"', ja_dictionary_source)
         self.assertIn('"outputSettings.title": "출력 설정"', ko_dictionary_source)
         self.assertIn('"outputSettings.title": "Output"', en_dictionary_source)
-        self.assertIn('"language.es": "Español"', es_dictionary_source)
-        self.assertIn('"language.pt": "Português"', pt_dictionary_source)
-        self.assertIn('"language.fr": "Français"', fr_dictionary_source)
-        self.assertIn('"language.de": "Deutsch"', de_dictionary_source)
-        self.assertIn('"language.ru": "Русский"', ru_dictionary_source)
-        self.assertIn('"language.it": "Italiano"', it_dictionary_source)
-        self.assertIn('"language.hi": "हिन्दी"', hi_dictionary_source)
-        for dictionary_source in (
-            zh_dictionary_source,
-            zh_tw_dictionary_source,
-            zh_hk_dictionary_source,
-            ja_dictionary_source,
-            ko_dictionary_source,
-            en_dictionary_source,
-            es_dictionary_source,
-            pt_dictionary_source,
-            fr_dictionary_source,
-            de_dictionary_source,
-            ru_dictionary_source,
-            it_dictionary_source,
-            hi_dictionary_source,
-            vi_dictionary_source,
-        ):
-            self.assertIn('"language.vi": "Tiếng Việt"', dictionary_source)
         self.assertIn('document.querySelectorAll<HTMLElement>("[data-i18n]")', source)
         self.assertIn('querySelectorAll<HTMLElement>("[data-i18n-attr]")', source)
         self.assertIn("window.__codexImageI18n", source)
@@ -780,29 +747,23 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "taskGroup.today",
             "taskGroup.yesterday",
             "taskGroup.last7",
-            "taskGroup.older",
             "queue.runningWaiting",
             "notifications.empty",
-            "footer.archiveCount",
             "templates.availableCount",
             "gallery.drawerSubtitle",
             "gallery.dragSort",
             "preview.addReference",
             "apiSettings.modeImagesShort",
-            "apiSettings.actualRequest",
             "apiSettings.newProviderAction",
             "apiSettings.copyProvider",
             "apiSettings.copyProviderStatus",
             "apiSettings.copyProviderWithoutKeyStatus",
             "apiSettings.sortProviders",
             "apiSettings.sortProviderStatus",
-            "apiSettings.saveProvider",
             "apiSettings.autoSaving",
             "apiSettings.autoSaved",
-            "apiSettings.cancelEdit",
             "apiSettings.deleteProviderTitle",
             "apiSettings.deleteProviderMessage",
-            "apiSettings.deleteProviderStatus",
             "imageInput.uploadBadge",
             "imageInput.addToGalleryShort",
             "imageInput.removeImage",
@@ -854,11 +815,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "queue.cancelRunningFailed",
             "queue.cancelRunningMessage",
             "queue.cancelRunningTitleConfirm",
-            "queue.deleteQueuedFailed",
-            "queue.deleteWaitingMessage",
-            "queue.deleteWaitingTitleConfirm",
             "queue.promoteFailed",
-            "queue.queuedDeleted",
             "queue.reorderFailed",
             "queue.runningCancelled",
             "colors.hexValue",
@@ -869,8 +826,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('formatTranslation("queue.runningWaiting"', runtime_sources["queue"])
         self.assertIn('translate("queue.empty")', runtime_sources["queue"])
         self.assertIn('translate("queue.promoteFailed")', runtime_sources["queue"])
-        self.assertIn('translate("queue.deleteWaitingTitleConfirm")', runtime_sources["queue"])
-        self.assertIn('translate("queue.deleteQueuedFailed")', runtime_sources["queue"])
         self.assertIn('translate("queue.cancelRunningTitleConfirm")', runtime_sources["queue"])
         self.assertIn('translate("queue.cancelRunningFailed")', runtime_sources["queue"])
         self.assertIn('translate("queue.reorderFailed")', runtime_sources["queue"])

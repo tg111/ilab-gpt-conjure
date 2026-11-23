@@ -174,8 +174,3 @@ export function taskChannelLabel(task: unknown): string {
   }
   return "";
 }
-
-export function taskUsesCanonicalModelSummary(task: unknown): boolean {
-  const modelId = explicitCanonicalModelId(task);
-  return Boolean(modelId && modelId !== "gpt-image-2");
-}

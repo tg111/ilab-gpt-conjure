@@ -1254,7 +1254,8 @@ console.log(JSON.stringify({{
         self.assertIn('asset: "/static/brand/model-marks/gemini.svg"', marks)
         self.assertNotIn("grok", marks.lower())
         self.assertRegex(styles, r"\.task-model-family-brand-mark\s*\{[^}]*width:\s*13px[^}]*height:\s*13px[^}]*object-fit:\s*contain")
-        self.assertRegex(styles, r':root\[data-theme="dark"\]\s+\.task-model-family-brand-mark-openai')
+        sidebar_styles = Path("codex_image/webui/static/styles/10-sidebar.css").read_text(encoding="utf-8")
+        self.assertRegex(sidebar_styles, r':root\[data-theme="dark"\]\s+\.model-family-brand-mark-openai\s*\{[^}]*filter:\s*invert\(1\)')
         self.assertNotIn("task-model-family-brand-mark-grok", styles)
         self.assertNotIn(".task-model-family-glyph", styles)
 
@@ -1782,7 +1783,6 @@ console.log(JSON.stringify({{
         self.assertNotIn("openQueueDrawer", queue_source)
         self.assertNotIn("closeQueueDrawer", queue_source)
         self.assertIn("promoteQueueTask", queue_source)
-        self.assertIn("deleteQueuedTask", queue_source)
         self.assertIn("export function cancelRunningTask", queue_source)
         self.assertNotIn("handleQueueRunningClick", queue_source)
         self.assertNotIn("handleQueueWaitingClick", queue_source)

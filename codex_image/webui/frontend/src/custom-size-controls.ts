@@ -53,10 +53,6 @@ export function setSizeMode(mode: string): void {
   saveCurrentModelParameterDraft();
 }
 
-export function setCustomSizeMode(isCustom: any): void {
-  setSizeMode(isCustom ? "custom" : "preset");
-}
-
 export function swapCustomSizeDimensions(event?: any): void {
   event?.preventDefault?.();
   if (!els.customWidth || !els.customHeight) return;

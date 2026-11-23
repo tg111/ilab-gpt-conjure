@@ -1034,21 +1034,6 @@
   font-size: 10px;
 }
 
-.quick-gallery-preview-empty {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-.quick-gallery-preview-empty span {
-  position: static;
-  background: transparent;
-  color: inherit;
-}
-
 .quick-gallery-picker {
   /* The list scrolls inside its assigned track; item count must not size it. */
   position: absolute;
