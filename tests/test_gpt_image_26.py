@@ -22,6 +22,7 @@ from codex_image.providers.contracts import ProviderConnection, ProviderModelBin
 from codex_image.providers.registry import default_registry
 from codex_image.providers.result_assets import AssetLoadError, load_response_asset
 from codex_image.webui.routes.generation import _generation_request_error
+from tests.canonical_form import canonical_form
 
 
 class GptImage26Tests(unittest.TestCase):
@@ -311,12 +312,12 @@ class GptImage26QueueTests(unittest.TestCase):
                 catalog = client.get("/api/generation-catalog").json()
                 provider = next(provider for provider in catalog["providers"] if provider["id"] == "relay")
                 self.assertEqual(provider.get("gif_edit_max_frames"), limit)
-                response = client.post("/api/edit", files=[image], data={
+                response = client.post("/api/edit", files=[image], data=canonical_form({
                     "prompt": "Synthetic reference GIF", "canonical_model_id": "gpt-image-2.6-flare",
                     "provider_id": "relay", "parameters_json": json.dumps({
                         "canvas.size": "512x512", "output.format": "gif", "gpt.frame_count": 17,
                     }),
-                })
+                }))
                 self.assertEqual(response.status_code, 400 if limit else 200, response.text)
                 if limit:
                     self.assertEqual(response.json()["detail"]["code"], "openai_gif_edit_frame_limit_exceeded")
@@ -334,10 +335,10 @@ class GptImage26QueueTests(unittest.TestCase):
                 ({"output.format": "gif", "gpt.output_compression": 80}, [image], "output_compression_requires_jpeg_or_webp"),
             ):
                 with self.subTest(code=code):
-                    response = client.post("/api/edit", files=files, data={
+                    response = client.post("/api/edit", files=files, data=canonical_form({
                         "prompt": "Synthetic incompatible GIF", "canonical_model_id": "gpt-image-2.6-flare",
                         "provider_id": "relay", "parameters_json": json.dumps(parameters),
-                    })
+                    }))
                     self.assertEqual(response.status_code, 400)
                     self.assertEqual(response.json()["detail"]["code"], code)
                     self.assertNotEqual(response.json()["detail"]["message"], "The generation request is invalid.")

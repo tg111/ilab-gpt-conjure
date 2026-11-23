@@ -10,6 +10,7 @@ from unittest.mock import patch
 from fastapi import FastAPI, Request
 from fastapi.testclient import TestClient
 from PIL import Image
+from tests.canonical_form import canonical_form
 
 
 class WebUISecurityTests(unittest.TestCase):
@@ -403,11 +404,11 @@ class WebUISecurityTests(unittest.TestCase):
             ):
                 response = client.post(
                     "/api/edit",
-                    data={
+                    data=canonical_form({
                         "prompt": "budget",
                         "reference_asset_ids": existing["id"],
                         "gallery_image_ids": gallery["id"],
-                    },
+                    }),
                     files=[
                         ("images", ("uploaded.png", uploaded_bytes, "image/png")),
                         ("mask", ("mask.png", mask_bytes, "image/png")),
@@ -482,7 +483,7 @@ class WebUISecurityTests(unittest.TestCase):
 
             svg_reference = client.post(
                 "/api/generate",
-                data={"prompt": "svg reference"},
+                data=canonical_form({"prompt": "svg reference"}),
                 files={
                     "reference_images": (
                         "active.svg",
@@ -493,7 +494,7 @@ class WebUISecurityTests(unittest.TestCase):
             )
             fake_reference = client.post(
                 "/api/generate",
-                data={"prompt": "fake reference"},
+                data=canonical_form({"prompt": "fake reference"}),
                 files={
                     "reference_images": (
                         "fake.png",
@@ -504,7 +505,7 @@ class WebUISecurityTests(unittest.TestCase):
             )
             svg_mask = client.post(
                 "/api/edit",
-                data={"prompt": "svg mask"},
+                data=canonical_form({"prompt": "svg mask"}),
                 files={
                     "images": ("source.png", self._png_bytes(), "image/png"),
                     "mask": ("mask.svg", svg_bytes, "image/svg+xml"),

@@ -13,7 +13,6 @@ from .task_enrichment import (
     _infer_gallery_refs_from_prompt,
     _input_sources,
     _input_urls,
-    _params,
     _reference_asset_response,
     _with_file_urls,
 )

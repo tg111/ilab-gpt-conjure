@@ -18,18 +18,10 @@ from fastapi.responses import FileResponse, HTMLResponse, Response, StreamingRes
 from fastapi.staticfiles import StaticFiles
 
 from codex_image.client import (
-    DEFAULT_IMAGE_MODEL,
     DEFAULT_MAIN_MODEL,
     CodexImageClient,
-    CodexImagesImageClient,
     ImageResult,
-    OpenAIImagesImageClient,
-    OpenAIResponsesImageClient,
     image_model_supports_input_fidelity,
-)
-from codex_image.prompt_guard import (
-    build_prompt_guard_instructions,
-    extract_prompt_constraints,
 )
 
 from .auth_routing import (
@@ -47,15 +39,11 @@ from .auth_routing import (
     _apply_retry_api_provider,
     _auth_status,
     _backend_for_api_mode,
-    _backend_for_submit,
     _client_for_auth_source,
     _codex_auth_available,
     _default_auth_source,
-    _normalize_api_mode,
-    _normalize_codex_mode,
     _queue_channels_for_source,
     _request_api_images_concurrency,
-    _request_api_mode,
     _request_api_provider_id,
     _request_api_provider_name,
     _request_codex_mode,
@@ -160,7 +148,6 @@ from .executor import (
     _image_mime_type,
     _image_request_timeout_seconds,
     _instructions_for_transport,
-    _normalize_compression,
     _normalize_prompt_fidelity,
     _noop_request_context,
     _parse_optional_int,
@@ -193,7 +180,6 @@ from .task_metadata import (
     _ordered_output_progress,
     _output_file_from_url,
     _output_url,
-    _params,
     _partial_failure_message,
     _positive_int,
     _reference_asset_response,
@@ -548,28 +534,18 @@ def create_app(
             "save_uploads": lambda task_id, files, kind="input": _save_uploads(storage, task_id, files, kind=kind),
             "save_reference_assets": lambda files: _save_reference_assets(reference_asset_storage, files),
             "dedupe_reference_assets": _dedupe_reference_assets,
-            "build_image_request_payload": lambda **kwargs: _build_image_request_payload(**kwargs),
             "slim_request_payload": lambda request_payload, **kwargs: _slim_request_payload(request_payload, **kwargs),
-            "prompt_guard_context": lambda prompt, prompt_fidelity, ui_language=None: _prompt_guard_context(
-                prompt,
-                prompt_fidelity,
-                ui_language,
-            ),
             "model_prompt_for_fidelity": lambda prompt, prompt_for_model, prompt_fidelity: _model_prompt_for_fidelity(
                 prompt,
                 prompt_for_model,
                 prompt_fidelity,
                 prompt_snippets=prompt_snippet_settings.list(),
             ),
-            "backend_for_submit": _backend_for_submit,
             "request_api_provider_id": lambda auth_source, api_provider_id: _request_api_provider_id(
                 auth_source, api_provider_id, api_settings
             ),
             "request_api_provider_name": lambda auth_source, api_provider_id: _request_api_provider_name(
                 auth_source, api_provider_id, api_settings
-            ),
-            "request_api_mode": lambda auth_source, api_mode, api_provider_id=None: _request_api_mode(
-                auth_source, api_mode, api_settings, api_provider_id
             ),
             "request_codex_mode": lambda auth_source, codex_mode=None: _request_codex_mode(
                 auth_source, codex_mode, api_settings
@@ -723,23 +699,6 @@ def _with_stored_request_payload(storage: TaskStorage, task_id: str, metadata: d
     return enriched
 
 
-def _prompt_guard_context(
-    prompt: str,
-    prompt_fidelity: str,
-    ui_language: str | None = None,
-) -> tuple[list[str], str]:
-    mode = _normalize_prompt_fidelity(prompt_fidelity)
-    if mode == "original":
-        return [], ""
-    if mode != "strict":
-        return [], ""
-    constraints = extract_prompt_constraints(prompt)
-    return constraints, build_prompt_guard_instructions(
-        constraints,
-        locale=ui_language,
-    )
-
-
 def _model_prompt_for_fidelity(
     prompt: str,
     prompt_for_model: str | None,
@@ -751,23 +710,6 @@ def _model_prompt_for_fidelity(
         # Snippet chips are user-authored macros, not app-added prompt guidance.
         return expand_prompt_snippets(prompt, prompt_snippets or [])
     return prompt_for_model or prompt
-
-
-def _build_image_request_payload(**kwargs: Any) -> dict[str, Any]:
-    auth_source = str(kwargs.pop("auth_source", "auto"))
-    api_mode = _normalize_api_mode(kwargs.pop("api_mode", None))
-    codex_mode = _normalize_codex_mode(kwargs.pop("codex_mode", None))
-    # Queued submit only needs a request preview; avoid auth/client side effects.
-    if auth_source == "api":
-        client_class = OpenAIResponsesImageClient if api_mode == "responses" else OpenAIImagesImageClient
-        client = object.__new__(client_class)
-        client.image_model = str(kwargs.get("model") or DEFAULT_IMAGE_MODEL)
-        return client_class.build_payload(client, **kwargs)
-    client_class = CodexImageClient if codex_mode == "responses" else CodexImagesImageClient
-    client = object.__new__(client_class)
-    if client_class is CodexImagesImageClient:
-        client.image_model = str(kwargs.get("model") or DEFAULT_IMAGE_MODEL)
-    return client_class.build_payload(client, **kwargs)
 
 
 def _slim_request_payload(

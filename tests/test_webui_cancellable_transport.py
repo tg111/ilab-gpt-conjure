@@ -18,6 +18,7 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 import httpx
 from PIL import Image
+from tests.canonical_form import canonical_form
 
 
 class _DaemonThreadingHTTPServer(ThreadingHTTPServer):
@@ -142,9 +143,9 @@ class WebUICancellableTransportTests(unittest.TestCase):
                         )
                         try:
                             with TestClient(app) as client:
-                                created = client.post("/api/generate", data={
+                                created = client.post("/api/generate", data=canonical_form({
                                     "prompt": "cancel-contract-target", "size": "1024x1024", "n": "4",
-                                })
+                                }))
                                 self.assertEqual(created.status_code, 200, created.text)
                                 task_id = created.json()["task"]["task_id"]
                                 self.assertTrue(held_requests_started.wait(3))
@@ -156,9 +157,9 @@ class WebUICancellableTransportTests(unittest.TestCase):
                                         break
                                     time.sleep(0.01)
                                 self.assertEqual(len(completed), 1, before["outputs"])
-                                queued = client.post("/api/generate", data={
+                                queued = client.post("/api/generate", data=canonical_form({
                                     "prompt": "cancel-contract-next", "size": "1024x1024", "n": "1",
-                                }).json()["task"]
+                                })).json()["task"]
                                 self.assertFalse(next_request_started.is_set())
                                 started_at = time.monotonic()
                                 if stop_route == "single":
@@ -393,11 +394,11 @@ class WebUICancellableTransportTests(unittest.TestCase):
             client = TestClient(app)
             task_id = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "timeout contract",
                     "size": "1024x1024",
                     "codex_mode": "images",
-                },
+                }),
             ).json()["task"]["task_id"]
 
             try:

@@ -22,6 +22,7 @@ from codex_image.http_connection import HTTPTransportFailure
 from codex_image.openai_images_client import OpenAIImagesImageClient
 from codex_image.webui.executor_transport import _call_image_client
 from codex_image.webui.network_egress import NetworkEgressManager, NetworkEgressSettings
+from tests.canonical_form import canonical_form
 
 
 class HTTPConnectionRetryTests(unittest.TestCase):
@@ -245,8 +246,8 @@ class HTTPConnectionRetryTests(unittest.TestCase):
                         (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("198.18.1.2" if failure == "dns" else "8.8.8.8", 443))
                     ]), patch("codex_image.webui.executor._direct_images_concurrent_enabled", return_value=mode == "generate"):
                         files = {"images": ("synthetic.png", png.getvalue(), "image/png")} if mode == "edit" else None
-                        created = client.post(f"/api/{mode}", data={"prompt": "private-prompt", "size": "1024x1024",
-                                                                  "codex_mode": "images"}, files=files)
+                        created = client.post(f"/api/{mode}", data=canonical_form({"prompt": "private-prompt", "size": "1024x1024",
+                                                                  "codex_mode": "images"}), files=files)
                         self.assertEqual(created.status_code, 200, created.text)
                         task_id = created.json()["task"]["task_id"]
                         if failure == "first_connection":
@@ -354,7 +355,7 @@ class HTTPConnectionRetryTests(unittest.TestCase):
                         batch_delay_seconds=0, auto_start_queue=False, auto_retry=True,
                     )
                     with TestClient(app) as client, self.mock_client(handler), patch("socket.getaddrinfo", side_effect=resolve):
-                        created = client.post("/api/generate", data={"prompt": "synthetic", "size": "1024x1024", "codex_mode": "images"})
+                        created = client.post("/api/generate", data=canonical_form({"prompt": "synthetic", "size": "1024x1024", "codex_mode": "images"}))
                         self.assertEqual(created.status_code, 200)
                         task_id = created.json()["task"]["task_id"]
                         for _ in range(2):

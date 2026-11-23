@@ -21,6 +21,7 @@ from tests import test_webui_reference_image_order as ordering
 from codex_image.webui.reference_assets import ReferenceAssetInUseError, ReferenceAssetStorage
 from codex_image.webui.recovery import _recover_queue_state
 from codex_image.webui.storage import TaskStorage
+from tests.canonical_form import canonical_form
 
 
 class ReferenceAssetSubmissionRetentionTests(unittest.TestCase):
@@ -240,7 +241,7 @@ class ReferenceAssetSubmissionRetentionTests(unittest.TestCase):
             transport = httpx.ASGITransport(app=case.app, raise_app_exceptions=False)
             async with httpx.AsyncClient(transport=transport, base_url="http://127.0.0.1") as client:
                 with patch.object(UploadFile, "read", controlled_read):
-                    request = asyncio.create_task(client.post(f"/api/{mode}", data=data, files=files))
+                    request = asyncio.create_task(client.post(f"/api/{mode}", data=canonical_form(data), files=files))
                     try:
                         await asyncio.wait_for(entered.wait(), 5)
                         with patch.object(case, "client", client):

@@ -8,6 +8,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 import httpx
+from tests.canonical_form import canonical_form
 
 
 class WebUIProviderRoutingTests(unittest.TestCase):
@@ -78,13 +79,13 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             client = TestClient(self._app(root))
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "binding selection",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
                     "binding_id": "codex-gpt-image-2-responses",
                     "parameters_json": json.dumps(parameters),
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
             metadata = client.get(f"/api/tasks/{task_id}").json()["task"]
@@ -108,13 +109,13 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     client = TestClient(self._app(Path(tmp)))
                     response = client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": "codex composition",
                             "canonical_model_id": "gpt-image-2",
                             "provider_id": "codex",
                             "binding_id": binding_id,
                             "parameters_json": json.dumps({"canvas.size": size, "output.count": 1}),
-                        },
+                        }),
                     )
                     body = response.json()
                     task = body["task"]
@@ -158,13 +159,13 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 client = TestClient(self._app(Path(tmp), api_settings=settings))
                 response = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api portrait",
                         "canonical_model_id": "gpt-image-2",
                         "provider_id": "relay",
                         "binding_id": binding_id,
                         "parameters_json": json.dumps(parameters),
-                    },
+                    }),
                 )
                 body = response.json()
                 task = body["task"]
@@ -179,8 +180,9 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             )
             self.assertTrue(request_prompt.endswith("api portrait"))
             self.assertNotIn("将宽高比设为", request_prompt)
-            self.assertNotIn("ratio", task["params"])
-            self.assertNotIn("orientation", task["params"])
+            # The ratio is a history label only; it never reaches the prompt.
+            self.assertEqual(task["params"]["ratio"], "9:16")
+            self.assertEqual(task["params"]["orientation"], "portrait")
 
     def test_canonical_api_gpt_bindings_do_not_append_ratio_prompt(self) -> None:
         parameters = {"canvas.size": "864x1536", "output.count": 1}
@@ -208,14 +210,14 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     client = TestClient(self._app(Path(tmp), api_settings=settings))
                     response = client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": "api portrait",
                             "canonical_model_id": "gpt-image-2",
                             "provider_id": "relay",
                             "binding_id": binding_id,
                             "parameters_json": json.dumps(parameters),
                             "ui_language": locale,
-                        },
+                        }),
                     )
                     body = response.json()
                     task = body["task"]
@@ -230,7 +232,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 )
                 self.assertEqual(task["prompt_for_model"], expected_prompt)
                 self.assertTrue(request_prompt.endswith(expected_prompt))
-                self.assertNotIn("ratio", task["params"])
+                self.assertNotIn("9:16", request_prompt)
 
     def test_catalog_codex_availability_uses_real_codex_checker(self) -> None:
         from unittest.mock import patch
@@ -311,11 +313,11 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 client_factory=lambda: object(), auth_checker=lambda: False,
                 auto_start_queue=False,
             )
-            response = TestClient(app).post("/api/generate", data={
+            response = TestClient(app).post("/api/generate", data=canonical_form({
                 "prompt": "external", "canonical_model_id": "gpt-image-2",
                 "provider_id": "relay",
                 "parameters_json": json.dumps({"canvas.size": "1024x1024", "output.count": 1}),
-            })
+            }))
         self.assertEqual(response.status_code, 200)
 
     def test_legacy_form_is_translated_to_gpt_snapshot(self) -> None:
@@ -324,7 +326,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             client = TestClient(self._app(root))
             response = client.post(
                 "/api/generate",
-                data={"prompt": "legacy", "model": "gpt-image-2", "size": "1024x1024", "quality": "high"},
+                data=canonical_form({"prompt": "legacy", "model": "gpt-image-2", "size": "1024x1024", "quality": "high"}),
             )
             task_id = response.json()["task"]["task_id"]
             metadata = client.get(f"/api/tasks/{task_id}").json()["task"]
@@ -342,7 +344,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app = self._app(root)
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "PRIVATE-PROMPT-MARKER", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "PRIVATE-PROMPT-MARKER", "size": "1024x1024", "quality": "low"}),
                 files={
                     "reference_images": (
                         "marker.png",
@@ -378,24 +380,27 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             response = TestClient(self._app(Path(tmp), api_settings=settings)).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "future", "canonical_model_id": "nano-banana-pro",
                     "provider_id": "gpt-only-relay",
                     "parameters_json": json.dumps({"canvas.aspect_ratio": "1:1", "canvas.resolution": "2K", "output.count": 1}),
-                },
+                }),
             )
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()["detail"]["code"], "provider_model_binding_missing")
 
-    def test_new_fields_are_all_or_nothing(self) -> None:
+    def test_omitted_canonical_fields_use_the_configured_defaults(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             response = TestClient(self._app(Path(tmp))).post(
                 "/api/generate",
                 data={"prompt": "partial", "canonical_model_id": "gpt-image-2"},
             )
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json()["detail"]["code"], "generation_request_invalid")
+        self.assertEqual(response.status_code, 200, response.text)
+        snapshot = response.json()["task"]["generation_snapshot"]
+        self.assertEqual(snapshot["provider_id"], "codex")
+        self.assertEqual(snapshot["binding_id"], "codex-gpt-image-2-images")
+        self.assertEqual(snapshot["requested_parameters"], {})
 
     def test_canonical_form_rejects_explicit_legacy_routing_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -410,7 +415,18 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 },
             )
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json()["detail"]["code"], "generation_request_invalid")
+        self.assertEqual(response.json()["detail"]["code"], "legacy_form_fields_removed")
+        self.assertIn("quality", response.json()["detail"]["message"])
+
+    def test_earlier_gpt_form_fields_are_refused_on_their_own(self) -> None:
+        for path, files in (("/api/generate", None), ("/api/edit", {"images": ("input.png", self._png_bytes(), "image/png")})):
+            with self.subTest(path=path), tempfile.TemporaryDirectory() as tmp:
+                response = TestClient(self._app(Path(tmp))).post(
+                    path, data={"prompt": "old client", "size": "1536x1024", "codex_mode": "responses"}, files=files,
+                )
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.json()["detail"]["code"], "legacy_form_fields_removed")
+            self.assertIn("codex_mode, size", response.json()["detail"]["message"])
 
     def test_canonical_generate_runtime_keeps_snapshot_parameters(self) -> None:
         import asyncio
@@ -431,12 +447,12 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "canonical",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
                     "parameters_json": json.dumps(parameters),
-                },
+                }),
             )
             asyncio.run(app.state.queue_manager.run_available_once())
             metadata = app.state.storage.read_metadata(response.json()["task"]["task_id"])
@@ -460,7 +476,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
@@ -470,7 +486,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     ),
                     "prompt_fidelity": "off",
                     "ui_language": "en",
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
             metadata = app.state.storage.read_metadata(task_id)
@@ -499,7 +515,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
@@ -509,7 +525,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     ),
                     "prompt_fidelity": "original",
                     "ui_language": "en",
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
             metadata = app.state.storage.read_metadata(task_id)
@@ -538,14 +554,14 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": prompt_for_model,
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
                     "binding_id": "codex-gpt-image-2-images",
                     "parameters_json": json.dumps({"canvas.size": "864x1536", "output.count": 1}),
-                },
+                }),
             )
             asyncio.run(app.state.queue_manager.run_available_once())
 
@@ -565,7 +581,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
@@ -575,7 +591,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     ),
                     "prompt_fidelity": "strict",
                     "ui_language": "en",
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
 
@@ -610,7 +626,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 fake = AssetFormatClient(output_format)
                 app.state.ctx.client_factory = lambda: fake
                 app.state.client_factory = app.state.ctx.client_factory
-                response = TestClient(app).post("/api/generate", data={
+                response = TestClient(app).post("/api/generate", data=canonical_form({
                     "prompt": "asset format",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
@@ -619,7 +635,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                         "gpt.background": "auto", "output.format": output_format,
                         "gpt.moderation": "auto", "output.count": 1,
                     }),
-                })
+                }))
                 asyncio.run(app.state.queue_manager.run_available_once())
                 metadata = app.state.storage.read_metadata(response.json()["task"]["task_id"])
 
@@ -650,13 +666,13 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             response = TestClient(self._app(Path(tmp), api_settings=settings)).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "main model",
                     "main_model": "gpt-main-custom",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
                     "parameters_json": json.dumps({"canvas.size": "1024x1024", "output.count": 1}),
-                },
+                }),
             )
 
         self.assertEqual(response.status_code, 200)
@@ -690,7 +706,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             response = TestClient(self._app(Path(tmp), api_settings=settings)).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "必须保留蓝色文字",
                     "prompt_for_model": "expanded gallery prompt",
                     "main_model": "gpt-must-not-participate",
@@ -703,7 +719,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                         "gemini.safety_settings": {},
                         "output.count": 1,
                     }),
-                },
+                }),
             )
 
         self.assertEqual(response.status_code, 200)
@@ -727,7 +743,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     },
                 )
             self.assertEqual(response.status_code, 400)
-            self.assertEqual(response.json()["detail"]["code"], "generation_request_invalid")
+            self.assertEqual(response.json()["detail"]["code"], "legacy_form_fields_removed")
 
     def test_canonical_edit_runtime_keeps_inputs_mask_and_fidelity(self) -> None:
         import asyncio
@@ -748,12 +764,12 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.client_factory = app.state.ctx.client_factory
             response = TestClient(app).post(
                 "/api/edit",
-                data={
+                data=canonical_form({
                     "prompt": "canonical edit",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "codex",
                     "parameters_json": json.dumps(parameters),
-                },
+                }),
                 files={
                     "images": ("input.png", self._png_bytes(), "image/png"),
                     "mask": ("mask.png", self._png_bytes(), "image/png"),
@@ -767,40 +783,6 @@ class WebUIProviderRoutingTests(unittest.TestCase):
         self.assertIsNone(fake.edit_calls[0]["input_fidelity"])
         self.assertTrue(fake.edit_calls[0]["images"])
         self.assertTrue(fake.edit_calls[0]["mask_image"].startswith("data:image/png;base64,"))
-
-    def test_legacy_compat_options_are_frozen_in_snapshot_for_worker(self) -> None:
-        import asyncio
-        from tests.webui_helpers import FakeImageClient
-
-        with tempfile.TemporaryDirectory() as tmp:
-            app = self._app(Path(tmp))
-            fake = FakeImageClient()
-            app.state.ctx.client_factory = lambda: fake
-            app.state.client_factory = app.state.ctx.client_factory
-            response = TestClient(app).post(
-                "/api/generate",
-                data={
-                    "prompt": "legacy compat",
-                    "codex_mode": "responses",
-                    "output_format": "jpeg",
-                    "output_compression": "61",
-                    "web_search": "true",
-                },
-            )
-            task_id = response.json()["task"]["task_id"]
-            metadata = app.state.storage.read_metadata(task_id)
-            self.assertEqual(metadata["generation_snapshot"]["legacy_compat_parameters"], {
-                "gpt.output_compression": 61,
-                "gpt.web_search": True,
-            })
-            metadata["params"]["output_compression"] = 5
-            metadata["params"]["web_search"] = False
-            app.state.storage.write_metadata(task_id, metadata)
-            asyncio.run(app.state.queue_manager.run_available_once())
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(fake.generate_calls[0]["output_compression"], 61)
-        self.assertIs(fake.generate_calls[0]["web_search"], True)
 
     def test_gemini_partial_retry_requests_only_remaining_outputs(self) -> None:
         import asyncio
@@ -835,10 +817,10 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                                                  "parameter_codec": codec, "operations": ["generate"]}]}],
                 })
                 client = TestClient(app)
-                created = client.post("/api/generate", data={
+                created = client.post("/api/generate", data=canonical_form({
                     "prompt": "partial count", "canonical_model_id": "nano-banana-pro", "provider_id": "relay",
                     "parameters_json": json.dumps({"canvas.aspect_ratio": "1:1", "canvas.resolution": "1K", "output.count": 2}),
-                })
+                }))
                 self.assertEqual(created.status_code, 200)
                 task_id = created.json()["task"]["task_id"]
                 with patch("codex_image.webui.execution_plan_client.default_registry", return_value=registry):
@@ -891,10 +873,10 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                                                          "parameter_codec": codec, "operations": ["generate"]}]}],
                         })
                         client = TestClient(app)
-                        created = client.post("/api/generate", data={
+                        created = client.post("/api/generate", data=canonical_form({
                             "prompt": "synthetic batch retry", "canonical_model_id": "nano-banana-pro", "provider_id": "relay",
                             "parameters_json": json.dumps({"canvas.aspect_ratio": "1:1", "canvas.resolution": "1K", "output.count": 4}),
-                        })
+                        }))
                         self.assertEqual(created.status_code, 200, created.text)
                         task_id = created.json()["task"]["task_id"]
                         with patch("codex_image.webui.execution_plan_client.default_registry", return_value=registry), \
@@ -931,10 +913,10 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             client = TestClient(app)
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "snapshot", "canonical_model_id": "gpt-image-2", "provider_id": "relay",
                     "parameters_json": json.dumps({"canvas.size": "1024x1024", "gpt.quality": "low", "gpt.background": "auto", "output.format": "png", "gpt.moderation": "auto", "output.count": 1}),
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
             changed = json.loads(json.dumps(settings))
@@ -978,7 +960,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             client = TestClient(app)
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "origin-bound queue",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "relay",
@@ -990,7 +972,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                         "gpt.moderation": "auto",
                         "output.count": 1,
                     }),
-                },
+                }),
             )
             task_id = response.json()["task"]["task_id"]
             metadata = app.state.storage.read_metadata(task_id)
@@ -1042,7 +1024,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app = self._app(root, api_settings=settings)
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "same origin queue",
                     "canonical_model_id": "gpt-image-2",
                     "provider_id": "relay",
@@ -1054,7 +1036,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                         "gpt.moderation": "auto",
                         "output.count": 1,
                     }),
-                },
+                }),
             )
             metadata = app.state.storage.read_metadata(response.json()["task"]["task_id"])
             changed = json.loads(json.dumps(settings))
@@ -1161,7 +1143,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app = self._app(Path(tmp))
             app.state.ctx.client_factory = FailingClient
             app.state.client_factory = FailingClient
-            response = TestClient(app).post("/api/generate", data={"prompt": prompt})
+            response = TestClient(app).post("/api/generate", data=canonical_form({"prompt": prompt}))
             task_id = response.json()["task"]["task_id"]
             with self.assertRaises(Exception):
                 asyncio.run(app.state.queue_manager.run_available_once())
@@ -1197,9 +1179,9 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                 fake = PartialClient()
                 app.state.ctx.client_factory = lambda: fake
                 client = TestClient(app)
-                created = client.post("/api/generate", data={
+                created = client.post("/api/generate", data=canonical_form({
                     "prompt": prompt, "n": 2, "codex_mode": mode,
-                })
+                }))
                 task_id = created.json()["task"]["task_id"]
                 with patch.object(app.state.api_settings, "read_connections", return_value=[SimpleNamespace(api_key=credential)]):
                     asyncio.run(app.state.queue_manager.run_available_once())
@@ -1243,10 +1225,10 @@ class WebUIProviderRoutingTests(unittest.TestCase):
                     fake = RotatingClient()
                     app.state.ctx.client_factory = lambda: fake
                     client = TestClient(app)
-                    response = client.post("/api/generate", data={
+                    response = client.post("/api/generate", data=canonical_form({
                         "prompt": "synthetic rotating credentials", "canonical_model_id": "gpt-image-2", "provider_id": "relay",
                         "parameters_json": json.dumps({"canvas.size": "1024x1024", "output.count": 2 if partial else 1}),
-                    })
+                    }))
                     self.assertEqual(response.status_code, 200, response.text)
                     task_id = response.json()["task"]["task_id"]
                     if legacy:
@@ -1309,7 +1291,7 @@ class WebUIProviderRoutingTests(unittest.TestCase):
             app.state.ctx.client_factory = lambda: fake
             app.state.client_factory = app.state.ctx.client_factory
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "service path", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "service path", "size": "1024x1024", "quality": "low"}))
             with patch.object(GenerationService, "execute_plan_once", recording_execute):
                 asyncio.run(app.state.queue_manager.run_available_once())
 
@@ -1432,18 +1414,6 @@ class GenerationRequestTests(unittest.TestCase):
         import codex_image.providers.codecs.gpt_image as codec_module
 
         self.assertNotIn("object.__new__", inspect.getsource(codec_module))
-
-    def test_legacy_mapping_preserves_compression_fidelity_and_web_search(self) -> None:
-        from codex_image.webui.generation_request import legacy_gpt_compat_parameters
-
-        parameters = legacy_gpt_compat_parameters({
-            "output_compression": 61,
-            "input_fidelity": "high",
-            "web_search": True,
-        })
-        self.assertEqual(parameters["gpt.output_compression"], 61)
-        self.assertEqual(parameters["gpt.input_fidelity"], "high")
-        self.assertIs(parameters["gpt.web_search"], True)
 
     def test_provider_models_share_provider_concurrency_slots(self) -> None:
         import tempfile

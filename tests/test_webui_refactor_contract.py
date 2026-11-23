@@ -78,7 +78,6 @@ class WebUIRefactorContractTests(unittest.TestCase):
             "_gallery_item_response",
             "_reference_asset_response",
             "_with_file_urls",
-                "_params",
         ):
             self.assertTrue(callable(getattr(task_enrichment, name)))
 
@@ -334,7 +333,6 @@ class WebUIRefactorContractTests(unittest.TestCase):
             "_debug_sse_path",
             "_is_usage_limit_error",
             "_parse_optional_int",
-            "_normalize_compression",
         ):
             self.assertIs(getattr(executor, name), getattr(executor_transport, name))
         for name in (

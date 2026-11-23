@@ -58,6 +58,7 @@ from tests.webui_helpers import (
     request_path,
 )
 from tests.helpers import assert_no_api_key
+from tests.canonical_form import canonical_form
 
 
 def _fake_jwt(payload: dict[str, object]) -> str:
@@ -759,7 +760,7 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={"prompt": "api queued", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "api queued", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"}),
             )
             body = response.json()
             task_id = body["task"]["task_id"]
@@ -796,7 +797,7 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={"prompt": "文案标题设计偏儿童Q版卡通化", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low", "prompt_fidelity": "strict"},
+                data=canonical_form({"prompt": "文案标题设计偏儿童Q版卡通化", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low", "prompt_fidelity": "strict"}),
             )
             body = response.json()
 
@@ -830,14 +831,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": f"{prompt}\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
                     "prompt_fidelity": "original",
-                },
+                }),
             )
             body = response.json()
 
@@ -868,13 +869,12 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "codex images default",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
-                    "web_search": "true",
-                },
+                }),
             )
             body = response.json()
             response_text = json.dumps(body, ensure_ascii=False)
@@ -914,13 +914,13 @@ class WebUISettingsTests(unittest.TestCase):
             )
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "codex responses selected",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
                     "web_search": "true",
-                },
+                }),
             )
             body = response.json()
             response_text = json.dumps(body, ensure_ascii=False)
@@ -955,13 +955,13 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/edit",
-                data={
+                data=canonical_form({
                     "prompt": "codex edit default",
                     "size": "1152x2048",
                     "quality": "high",
                     "output_format": "png",
                     "prompt_fidelity": "original",
-                },
+                }),
                 files={"images": ("input.png", self._png_bytes(), "image/png")},
             )
             body = response.json()
@@ -975,7 +975,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertEqual(body["request"]["quality"], "high")
         self.assertRegex(
             body["request"]["images"][0]["image_url"],
-            r"^<redacted image data url, \d+ chars>$",
+            r"^<redacted inline data>$",
         )
         self.assertNotIn("tools", body["request"])
 
@@ -1025,7 +1025,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client = TestClient(app)
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "codex worker", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "codex worker", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1065,7 +1065,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api worker", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "api worker", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1123,12 +1123,12 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api provider",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"active_provider_id": "vendor-a"})
@@ -1188,13 +1188,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "retry with current provider",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "2",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1248,7 +1248,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1326,12 +1326,12 @@ class WebUISettingsTests(unittest.TestCase):
                     client.patch("/api/auth", json={"source": "api"})
                     created = client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": f"recover {label}",
                             "size": "1024x1024",
                             "quality": "low",
                             "n": "1",
-                        },
+                        }),
                     )
                     task_id = created.json()["task"]["task_id"]
 
@@ -1401,12 +1401,12 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "bounded upstream retry",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "1",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1473,12 +1473,12 @@ class WebUISettingsTests(unittest.TestCase):
                 )
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "do not retry upstream failure",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "1",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1523,7 +1523,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api progressive batch", "size": "1024x1024", "quality": "low", "n": "2"},
+                    data=canonical_form({"prompt": "api progressive batch", "size": "1024x1024", "quality": "low", "n": "2"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1597,7 +1597,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api active batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api active batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1674,7 +1674,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api limited batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api limited batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1716,11 +1716,11 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created_a = client.post(
                     "/api/generate",
-                    data={"prompt": "api shared batch a", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api shared batch a", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 created_b = client.post(
                     "/api/generate",
-                    data={"prompt": "api shared batch b", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api shared batch b", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_ids = [created_a.json()["task"]["task_id"], created_b.json()["task"]["task_id"]]
 
@@ -1765,7 +1765,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api partial batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api partial batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1823,7 +1823,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api quota limited", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "api quota limited", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1879,13 +1879,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api provider concurrency",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "4",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"active_provider_id": "vendor-a"})
@@ -1925,14 +1925,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api preview",
                     "main_model": "gpt-5.5",
                     "size": "1024x1536",
                     "quality": "auto",
                     "n": "4",
                     "prompt_fidelity": "off",
-                },
+                }),
             )
             body = response.json()
 
@@ -1942,7 +1942,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertEqual(body["request"]["webui_requested_backend"], "openai_images")
         self.assertEqual(body["request"]["model"], "gpt-image-2")
         self.assertEqual(body["request"]["prompt"], "api preview")
-        self.assertEqual(body["request"]["n"], 1)
+        self.assertEqual(body["request"]["n"], 4)
         self.assertNotIn("tools", body["request"])
         self.assertNotIn("gpt-5.5", json.dumps(body["request"], ensure_ascii=False))
         self.assertNotIn("test-api-key-preview-secret", json.dumps(body, ensure_ascii=False))
@@ -1971,13 +1971,13 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api responses preview",
                     "main_model": "gpt-5.5",
                     "size": "1024x1536",
                     "quality": "auto",
                     "api_mode": "responses",
-                },
+                }),
             )
             body = response.json()
 
@@ -2017,14 +2017,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api responses search preview",
                     "main_model": "gpt-5.5",
                     "size": "1536x864",
                     "quality": "low",
                     "api_mode": "responses",
                     "web_search": "true",
-                },
+                }),
             )
             body = response.json()
 
@@ -2062,13 +2062,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses worker",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"api_mode": "images"})
@@ -2115,14 +2115,14 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses concurrent batch",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -2212,36 +2212,36 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created_a = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch a",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "2",
-                    },
+                    }),
                 )
                 created_b = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch b",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 created_c = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch c",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "2",
-                    },
+                    }),
                 )
                 task_ids = [
                     created_a.json()["task"]["task_id"],
@@ -2356,14 +2356,14 @@ class WebUISettingsTests(unittest.TestCase):
                 task_ids = [
                     client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": f"api responses release batch {index}",
                             "main_model": "gpt-5.5",
                             "size": "1024x1024",
                             "quality": "low",
                             "api_mode": "responses",
                             "n": "4",
-                        },
+                        }),
                     ).json()["task"]["task_id"]
                     for index in ("a", "b")
                 ]
@@ -2497,7 +2497,7 @@ class WebUISettingsTests(unittest.TestCase):
                 task_ids = [
                     client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": prompt,
                             "main_model": "gpt-5.5",
                             "size": "1024x1024",
@@ -2505,7 +2505,7 @@ class WebUISettingsTests(unittest.TestCase):
                             "api_mode": "responses",
                             "api_provider_id": provider_id,
                             "n": "2",
-                        },
+                        }),
                     ).json()["task"]["task_id"]
                     for prompt, provider_id in task_specs
                 ]
@@ -2569,14 +2569,14 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/api-settings", json={"codex_mode": "responses"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "codex responses serial batch",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "codex_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 

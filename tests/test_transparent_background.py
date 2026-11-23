@@ -22,6 +22,7 @@ from codex_image.webui.provider_validation import _validate_binding
 from codex_image.webui.storage import TaskStorage
 from codex_image.webui.task_outputs import _output_thumbnail_fields
 from codex_image.webui.thumbnails import inspect_image_transparency
+from tests.canonical_form import canonical_form
 
 
 class TransparentBackgroundTests(unittest.TestCase):
@@ -46,11 +47,11 @@ class TransparentBackgroundTests(unittest.TestCase):
                         batch_delay_seconds=0, auto_start_queue=False, auto_retry=False,
                     )
                     with TestClient(app) as client:
-                        response = client.post('/api/generate', data={
+                        response = client.post('/api/generate', data=canonical_form({
                             'prompt': 'A glass rabbit.', 'background': 'transparent',
                             'output_format': 'png', 'size': '1024x1024', 'quality': 'auto',
                             'prompt_fidelity': fidelity, 'codex_mode': profile,
-                        })
+                        }))
                         self.assertEqual(response.status_code, 200, response.text)
                         task_id = response.json()['task']['task_id']
                         preview = response.json()['request']
