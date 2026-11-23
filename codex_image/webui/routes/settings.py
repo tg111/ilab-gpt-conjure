@@ -13,9 +13,9 @@ from codex_image.webui.settings_store import (
     MAX_PROMPT_TEMPLATE_IMPORT_BYTES,
     _color_palette_css,
     _parse_color_palette_import,
+    previous_default_storage_paths,
 )
 from codex_image.webui.startup_auth import AUTH_SOURCES
-from codex_image.webui.standard_storage import previous_default_storage_paths
 from codex_image.webui.provider_model_discovery import ModelDiscoveryError, discover_provider_models
 
 

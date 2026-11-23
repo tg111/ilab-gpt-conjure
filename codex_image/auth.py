@@ -11,7 +11,7 @@ from urllib.parse import urlencode
 
 try:
     import fcntl
-except ImportError:  # pragma: no cover - exercised by Windows portable builds.
+except ImportError:  # pragma: no cover - fcntl is unavailable on Windows.
     fcntl = None
 
 from .http import Transport, UrllibTransport
