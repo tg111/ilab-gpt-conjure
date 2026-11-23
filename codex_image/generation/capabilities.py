@@ -18,8 +18,8 @@ from .types import ModelManifest
 RESPONSES_PROTOCOLS = frozenset({"codex_responses", "openai_responses"})
 _IMAGES_API_ONLY_MODEL_PREFIXES = ("gpt-image-2.6-",)
 _CODEC_FAMILY_PREFIXES = {"gpt-image": "gpt_", "gemini-image": "gemini_"}
-# Parameters a protocol accepts in its payload but cannot act on.
-_RESPONSES_ONLY_PARAMETERS = frozenset({"gpt.web_search"})
+# GPT parameters only a Responses protocol can act on.
+_GPT_RESPONSES_ONLY_PARAMETERS = frozenset({"gpt.web_search", "tools.web_search"})
 
 
 @dataclass(frozen=True)
@@ -61,11 +61,11 @@ def binding_capabilities(
     if model.id.startswith(_IMAGES_API_ONLY_MODEL_PREFIXES) and not images_api:
         return _unavailable("image_feature_requires_openai_images")
     responses = protocol_profile in RESPONSES_PROTOCOLS
+    responses_only = _GPT_RESPONSES_ONLY_PARAMETERS if model.family_id == "gpt-image" and not responses else frozenset()
     parameter_ids = tuple(
         definition.id
         for definition in model.parameters
-        if definition.id in codec.mapped_parameter_ids
-        and (responses or definition.id not in _RESPONSES_ONLY_PARAMETERS)
+        if definition.id in codec.mapped_parameter_ids and definition.id not in responses_only
     )
     return BindingCapabilities(
         available=True,

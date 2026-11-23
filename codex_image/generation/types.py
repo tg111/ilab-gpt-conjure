@@ -18,6 +18,7 @@ ParameterControl = Literal[
     "choice_grid",
     "object_presets",
     "aspect_ratio_grid",
+    "image_size",
 ]
 
 
@@ -34,6 +35,15 @@ class ParameterCondition:
     parameter_id: str
     operator: Literal["equals", "not_equals", "in"]
     value: Any
+
+
+@dataclass(frozen=True)
+class ValueRequirement:
+    """A value of a parameter that is only valid while another condition holds."""
+
+    value: Any
+    condition: ParameterCondition
+    reason: str
 
 
 @dataclass(frozen=True)
@@ -71,6 +81,34 @@ class ParameterDefinition:
     full_width: bool = False
     object_choices: tuple[ObjectChoiceRow, ...] = ()
     object_presets: tuple[ObjectPreset, ...] = ()
+    value_requirements: tuple[ValueRequirement, ...] = ()
+
+
+@dataclass(frozen=True)
+class CustomSizeRules:
+    min_edge: int
+    max_edge: int
+    multiple: int
+    max_aspect_ratio: float
+    min_pixels: int
+    max_pixels: int
+    # Output formats that skip the aspect-ratio and pixel-count limits.
+    relaxed_formats: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class ImageSizeSpec:
+    """How a model is sized: ``canvas.mode`` picks auto, a preset or custom pixels.
+
+    Aspect ratios and resolutions are the allowed values of ``canvas.aspect_ratio``
+    and ``canvas.resolution``. ``presets`` maps resolution -> ratio -> pixels for
+    models whose API takes explicit dimensions; models sized by the provider
+    leave it empty.
+    """
+
+    modes: tuple[str, ...]
+    presets: Mapping[str, Mapping[str, tuple[int, int]]] = field(default_factory=dict)
+    custom: CustomSizeRules | None = None
 
 
 @dataclass(frozen=True)
@@ -92,6 +130,10 @@ class ModelManifest:
     parameters: tuple[ParameterDefinition, ...]
     input_constraints: InputConstraints
     expand_advanced_parameters: bool = False
+    size_spec: ImageSizeSpec | None = None
+    # Parameter definitions in the vocabulary the current WebUI form uses.
+    # Served by the catalog API until the unified form replaces that form.
+    legacy_parameters: tuple[ParameterDefinition, ...] = ()
 
     def parameter(self, parameter_id: str) -> ParameterDefinition:
         for definition in self.parameters:

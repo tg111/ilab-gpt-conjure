@@ -112,7 +112,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | codex_images/gpt_codex_images | edit | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2 | codex_images/gpt_codex_images | edit | web-search-off": {
   "content_type": "application/json",
@@ -223,7 +223,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | codex_images/gpt_codex_images | generate | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2 | codex_images/gpt_codex_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -1044,7 +1044,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | openai_images/gpt_openai_images | edit | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2 | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -1155,7 +1155,7 @@
   "repeat_count": 1
  },
  "gpt-image-2 | openai_images/gpt_openai_images | generate | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2 | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -1868,7 +1868,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | edit | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | edit | web-search-off": {
   "content_type": "application/json",
@@ -1979,7 +1979,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | generate | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.5-flare | codex_images/gpt_codex_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -2800,7 +2800,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | edit | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -2911,7 +2911,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | generate | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.5-flare | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",
@@ -3811,7 +3811,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | edit | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | edit | web-search-off": {
   "content_type": "multipart/form-data",
@@ -3974,7 +3974,7 @@
   "repeat_count": 1
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | generate | web-search": {
-  "error": "parameter_not_supported_by_binding: gpt.web_search"
+  "error": "parameter_not_supported_by_binding: tools.web_search"
  },
  "gpt-image-2.6-sunburst | openai_images/gpt_openai_images | generate | web-search-off": {
   "content_type": "application/json",

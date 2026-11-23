@@ -13,6 +13,7 @@ from codex_image.providers.contracts import (
 from codex_image.providers.registry import ProviderRegistry
 
 from .capabilities import binding_capabilities
+from .parameter_vocabulary import custom_size_error, upgrade_parameters
 from .types import GenerationCommand, ModelManifest, ParameterDefinition
 
 
@@ -38,15 +39,17 @@ class BindingResolver:
 
         provider = self._provider(command.provider_id)
         binding = self._binding(provider, model, command)
-        self._validate_parameters(command, model)
+        # Submissions may use the earlier vocabulary; validate the unified form.
+        parameters = upgrade_parameters(model, command.parameters)
+        self._validate_parameters(command.operation, parameters, model)
 
         # Resolving both declarations here makes missing explicit registrations fail
         # before transport work begins. Protocol execution remains a later boundary.
         self._registry.protocol(binding.protocol_profile)
-        self._validate_binding_capabilities(command, model, binding)
+        self._validate_binding_capabilities(command, parameters, model, binding)
         codec = self._registry.codec(binding.parameter_codec)
         mapped_parameter_ids = codec.mapped_parameter_ids(model, command.operation)
-        missing_parameter_ids = sorted(set(command.parameters) - set(mapped_parameter_ids))
+        missing_parameter_ids = sorted(set(parameters) - set(mapped_parameter_ids))
         if missing_parameter_ids:
             raise ValueError(
                 "codec_parameter_mapping_missing: " + ", ".join(missing_parameter_ids)
@@ -124,30 +127,53 @@ class BindingResolver:
     @classmethod
     def _validate_parameters(
         cls,
-        command: GenerationCommand,
+        operation: str,
+        parameters: Mapping[str, Any],
         model: ModelManifest,
     ) -> None:
         definitions = {definition.id: definition for definition in model.parameters}
-        for parameter_id, value in command.parameters.items():
+        for parameter_id, value in parameters.items():
             try:
                 definition = definitions[parameter_id]
             except KeyError as exc:
                 raise ValueError(f"Unknown parameter: {parameter_id}") from exc
-            if command.operation not in definition.operations:
+            if operation not in definition.operations:
                 raise ValueError(
                     "Parameter does not support operation: "
-                    f"{parameter_id}: {command.operation}"
+                    f"{parameter_id}: {operation}"
                 )
             if definition.visible_when and not all(
-                cls._condition_matches(condition, command.parameters, definitions)
+                cls._condition_matches(condition, parameters, definitions)
                 for condition in definition.visible_when
             ):
                 raise ValueError(f"Parameter is not applicable: {parameter_id}")
             cls._validate_parameter_value(definition, value)
+            for requirement in definition.value_requirements:
+                if value == requirement.value and not cls._condition_matches(
+                    requirement.condition, parameters, definitions,
+                ):
+                    raise ValueError(f"{requirement.reason}: {parameter_id}")
+        cls._validate_size(parameters, model, definitions)
+
+    @staticmethod
+    def _validate_size(parameters, model: ModelManifest, definitions) -> None:
+        if model.size_spec is None or "canvas.mode" not in definitions:
+            return
+        mode = parameters.get("canvas.mode", definitions["canvas.mode"].default)
+        if mode != "custom":
+            return
+        output_format = parameters.get("output.format")
+        if output_format is None and "output.format" in definitions:
+            output_format = definitions["output.format"].default
+        size = parameters.get("canvas.size", definitions["canvas.size"].default)
+        error = custom_size_error(model.size_spec, size, output_format)
+        if error:
+            raise ValueError(f"{error}: canvas.size")
 
     @staticmethod
     def _validate_binding_capabilities(
         command: GenerationCommand,
+        parameters: Mapping[str, Any],
         model: ModelManifest,
         binding: ProviderModelBinding,
     ) -> None:
@@ -164,7 +190,7 @@ class BindingResolver:
         # where leaving it out would send the same request.
         unsupported = sorted(
             parameter_id
-            for parameter_id, value in command.parameters.items()
+            for parameter_id, value in parameters.items()
             if parameter_id not in supported and value != model.parameter(parameter_id).default
         )
         if unsupported:

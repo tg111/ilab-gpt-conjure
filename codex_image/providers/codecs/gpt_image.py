@@ -4,6 +4,7 @@ import re
 from typing import Any
 
 from codex_image.codex_responses_client import build_codex_responses_payload
+from codex_image.generation.parameter_vocabulary import requested_image_size, upgrade_parameters
 from codex_image.generation.types import GenerationCommand, GenerationOperation, ModelManifest
 from codex_image.openai_images_client import build_openai_images_payload
 from codex_image.openai_responses_client import build_openai_responses_payload
@@ -12,6 +13,9 @@ from codex_image.providers.transparency import transparency_request
 
 GPT_PARAMETER_IDS = frozenset(
     {
+        "canvas.mode",
+        "canvas.aspect_ratio",
+        "canvas.resolution",
         "canvas.size",
         "gpt.quality",
         "gpt.complexity",
@@ -24,15 +28,18 @@ GPT_PARAMETER_IDS = frozenset(
         "gpt.input_fidelity",
         "gpt.partial_images",
         "gpt.web_search",
+        "tools.web_search",
         "output.count",
     }
 )
 
 
 def gpt_image_parameters(command: GenerationCommand) -> dict[str, Any]:
-    params = {**command.parameters, **command.legacy_compat_parameters}
+    params = upgrade_parameters(
+        command.canonical_model_id, {**command.parameters, **command.legacy_compat_parameters},
+    )
     return {
-        "size": params.get("canvas.size"),
+        "size": requested_image_size(command.canonical_model_id, params),
         "quality": params.get("gpt.quality"),
         "complexity": params.get("gpt.complexity"),
         "frame_count": params.get("gpt.frame_count"),
@@ -43,7 +50,7 @@ def gpt_image_parameters(command: GenerationCommand) -> dict[str, Any]:
         "output_compression": params.get("gpt.output_compression"),
         "input_fidelity": params.get("gpt.input_fidelity"),
         "partial_images": params.get("gpt.partial_images"),
-        "web_search": params.get("gpt.web_search", False),
+        "web_search": params.get("tools.web_search", False),
         "n": params.get("output.count", 1),
     }
 

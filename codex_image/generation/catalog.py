@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import replace
 
 from .types import (
+    CustomSizeRules,
+    ImageSizeSpec,
     InputConstraints,
     ModelFamily,
     ModelManifest,
@@ -10,6 +12,7 @@ from .types import (
     ObjectPreset,
     ParameterCondition,
     ParameterDefinition,
+    ValueRequirement,
 )
 
 MODEL_MANIFEST_VERSION = 1
@@ -403,7 +406,7 @@ def _gpt_version_parameters(version: str) -> tuple[ParameterDefinition, ...]:
     return parameters
 
 
-MODEL_MANIFESTS = (MODEL_MANIFESTS[0], *(
+_LEGACY_MANIFESTS = (MODEL_MANIFESTS[0], *(
     replace(MODEL_MANIFESTS[0], id=f"gpt-image-{version}-{variant}",
             official_model_id=f"gpt-image-{version}-{variant}",
             display_name=f"GPT Image {version} {variant.title()}",
@@ -411,6 +414,127 @@ MODEL_MANIFESTS = (MODEL_MANIFESTS[0], *(
             input_constraints=replace(MODEL_MANIFESTS[0].input_constraints, supports_markup=True))
     for version in ("2.5", "2.6") for variant in ("flare", "sunburst")
 ), *MODEL_MANIFESTS[1:])
+
+
+# Unified parameter vocabulary ------------------------------------------------
+# Size is chosen through canvas.mode (auto, preset, custom); a preset is an
+# aspect ratio plus a resolution; custom pixels go in canvas.size. Web search is
+# tools.web_search for every family. Other parameters keep their ids.
+
+GPT_SIZE_PRESETS: dict[str, dict[str, tuple[int, int]]] = {
+    "1K": {
+        "1:1": (1024, 1024), "4:5": (1024, 1280), "5:4": (1280, 1024),
+        "3:4": (1152, 1536), "4:3": (1536, 1152), "2:3": (1024, 1536),
+        "3:2": (1536, 1024), "9:16": (864, 1536), "16:9": (1536, 864),
+        "9:21": (672, 1568), "21:9": (1568, 672),
+    },
+    "2K": {
+        "1:1": (2048, 2048), "4:5": (1600, 2000), "5:4": (2000, 1600),
+        "3:4": (1536, 2048), "4:3": (2048, 1536), "2:3": (1344, 2016),
+        "3:2": (2016, 1344), "9:16": (1152, 2048), "16:9": (2048, 1152),
+        "9:21": (1152, 2688), "21:9": (2688, 1152),
+    },
+    "4K": {
+        "1:1": (2880, 2880), "4:5": (2560, 3200), "5:4": (3200, 2560),
+        "3:4": (2448, 3264), "4:3": (3264, 2448), "2:3": (2336, 3504),
+        "3:2": (3504, 2336), "9:16": (2160, 3840), "16:9": (3840, 2160),
+        "9:21": (1632, 3808), "21:9": (3808, 1632),
+    },
+}
+GPT_ASPECT_RATIOS = tuple(GPT_SIZE_PRESETS["1K"])
+GPT_CUSTOM_SIZE_RULES = CustomSizeRules(
+    min_edge=16,
+    max_edge=3840,
+    multiple=16,
+    max_aspect_ratio=3,
+    min_pixels=655_360,
+    max_pixels=8_294_400,
+    relaxed_formats=("gif",),
+)
+GPT_SIZE_SPEC = ImageSizeSpec(
+    modes=("auto", "preset", "custom"),
+    presets=GPT_SIZE_PRESETS,
+    custom=GPT_CUSTOM_SIZE_RULES,
+)
+PROVIDER_SIZED_SPEC = ImageSizeSpec(modes=("preset",))
+TRANSPARENT_FORMATS = ("png", "webp", "svg")
+
+_PRESET_ONLY = (ParameterCondition("canvas.mode", "equals", "preset"),)
+
+
+def _canvas_mode(modes: tuple[str, ...]) -> ParameterDefinition:
+    return ParameterDefinition(
+        id="canvas.mode",
+        label_key="output.size",
+        group="canvas",
+        control="image_size",
+        value_type="string",
+        default="preset",
+        allowed_values=modes,
+        full_width=True,
+    )
+
+
+def _web_search(label_key: str) -> ParameterDefinition:
+    return _toggle("tools.web_search", label_key, group="generation")
+
+
+def _unified_gpt_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[ParameterDefinition, ...]:
+    parameters: list[ParameterDefinition] = []
+    for definition in legacy:
+        if definition.id == "canvas.size":
+            parameters += [
+                _canvas_mode(GPT_SIZE_SPEC.modes),
+                replace(
+                    _select("canvas.aspect_ratio", "canvas.aspectRatio", "canvas", "1:1",
+                            GPT_ASPECT_RATIOS, control="aspect_ratio_grid", full_width=True),
+                    visible_when=_PRESET_ONLY,
+                ),
+                replace(
+                    _select("canvas.resolution", "canvas.resolution", "canvas", "1K",
+                            tuple(GPT_SIZE_PRESETS), control="segmented"),
+                    visible_when=_PRESET_ONLY,
+                ),
+                replace(definition, visible_when=(ParameterCondition("canvas.mode", "equals", "custom"),)),
+            ]
+        elif definition.id == "gpt.background":
+            parameters.append(replace(definition, value_requirements=(
+                ValueRequirement(
+                    "transparent",
+                    ParameterCondition("output.format", "in", TRANSPARENT_FORMATS),
+                    "transparent_background_requires_png_webp_or_svg",
+                ),
+            )))
+        elif definition.id == "gpt.web_search":
+            parameters.append(_web_search(definition.label_key))
+        else:
+            parameters.append(definition)
+    return tuple(parameters)
+
+
+def _unified_gemini_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[ParameterDefinition, ...]:
+    parameters: list[ParameterDefinition] = [_canvas_mode(PROVIDER_SIZED_SPEC.modes)]
+    for definition in legacy:
+        if definition.id in ("canvas.aspect_ratio", "canvas.resolution"):
+            parameters.append(replace(definition, visible_when=_PRESET_ONLY))
+        elif definition.id == "gemini.google_search":
+            parameters.append(_web_search(definition.label_key))
+        else:
+            parameters.append(definition)
+    return tuple(parameters)
+
+
+def _unified_manifest(legacy: ModelManifest) -> ModelManifest:
+    gpt = legacy.family_id == "gpt-image"
+    return replace(
+        legacy,
+        parameters=(_unified_gpt_parameters if gpt else _unified_gemini_parameters)(legacy.parameters),
+        size_spec=GPT_SIZE_SPEC if gpt else PROVIDER_SIZED_SPEC,
+        legacy_parameters=legacy.parameters,
+    )
+
+
+MODEL_MANIFESTS = tuple(_unified_manifest(model) for model in _LEGACY_MANIFESTS)
 
 MODEL_MANIFESTS_BY_ID = {model.id: model for model in MODEL_MANIFESTS}
 

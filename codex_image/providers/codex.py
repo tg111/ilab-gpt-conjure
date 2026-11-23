@@ -2,15 +2,16 @@ from __future__ import annotations
 
 from codex_image.codex_images_client import CodexImagesImageClient
 from codex_image.codex_responses_client import CodexImageClient
+from codex_image.generation.parameter_vocabulary import requested_image_size, upgrade_parameters
 from codex_image.providers.contracts import ExecutionPlan
 from codex_image.providers.openai import image_results_to_generation
 from codex_image.providers.transparency import transparency_request
 
 
 def _parameters(plan: ExecutionPlan) -> dict[str, object]:
-    params = plan.command.parameters
+    params = upgrade_parameters(plan.model, plan.command.parameters)
     return {
-        "size": params.get("canvas.size"),
+        "size": requested_image_size(plan.model, params),
         "quality": params.get("gpt.quality"),
         "background": params.get("gpt.background"),
         "output_format": params.get("output.format", "png"),
@@ -18,7 +19,7 @@ def _parameters(plan: ExecutionPlan) -> dict[str, object]:
         "output_compression": params.get("gpt.output_compression"),
         "input_fidelity": params.get("gpt.input_fidelity"),
         "partial_images": params.get("gpt.partial_images"),
-        "web_search": params.get("gpt.web_search", False),
+        "web_search": params.get("tools.web_search", False),
     }
 
 

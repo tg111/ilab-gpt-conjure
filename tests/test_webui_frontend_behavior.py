@@ -15,6 +15,7 @@ class WebUIFrontendBehaviorTests(unittest.TestCase):
 
     def test_real_nano_defaults_survive_fixed_controls_and_resolve(self) -> None:
         from codex_image.webui.app import create_app
+        from codex_image.generation.parameter_vocabulary import upgrade_parameters
         from tests.test_provider_registry import command_fixture, resolver_fixture
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -43,7 +44,8 @@ class WebUIFrontendBehaviorTests(unittest.TestCase):
             with self.subTest(model=model_id):
                 resolver = resolver_fixture(
                     canonical_model_id=model_id,
-                    mapped_parameter_ids=frozenset(parameters),
+                    # The form still submits its own names; the resolver checks the unified ones.
+                    mapped_parameter_ids=frozenset(upgrade_parameters(model_id, parameters)),
                 )
                 plan = resolver.resolve(command_fixture(
                     canonical_model_id=model_id,

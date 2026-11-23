@@ -8,6 +8,7 @@ from typing import Any
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 
+from codex_image.generation.parameter_vocabulary import requested_image_size, upgrade_parameters
 from codex_image.client import DEFAULT_MAIN_MODEL, image_model_supports_input_fidelity
 from codex_image.generation.catalog import GPT_IMAGE_MODEL_IDS
 from codex_image.generation.snapshot import generation_snapshot
@@ -301,7 +302,9 @@ def _prepare_generation_submission(
         and requested_backend in _CODEX_GPT_BACKENDS
         and canonical_parameters is not None
     ):
-        canonical_size = str(canonical_parameters.get("canvas.size") or "").strip()
+        canonical_size = str(requested_image_size(
+            canonical_model_id, upgrade_parameters(canonical_model_id, canonical_parameters),
+        ) or "").strip()
         if canonical_size:
             effective_size = canonical_size
         if not effective_ratio:

@@ -145,18 +145,21 @@ class GenerationCatalogTests(unittest.TestCase):
         )
         self.assertEqual(flash_21.input_constraints.max_images, 14)
         self.assertEqual(flash_21.operations, frozenset({"generate", "edit"}))
-        self.assertIsNotNone(flash_21.parameter("gemini.google_search"))
+        self.assertIsNotNone(flash_21.parameter("tools.web_search"))
         self.assertEqual(pro.input_constraints.max_images, 14)
         self.assertEqual(flash.input_constraints.max_images, 14)
         self.assertEqual(lite.input_constraints.max_images, 14)
-        self.assertIsNotNone(pro.parameter("gemini.google_search"))
-        self.assertIsNotNone(flash.parameter("gemini.google_search"))
+        self.assertIsNotNone(pro.parameter("tools.web_search"))
+        self.assertIsNotNone(flash.parameter("tools.web_search"))
+        self.assertEqual(pro.parameter("tools.web_search").label_key, "gemini.googleSearch")
         with self.assertRaises(KeyError):
             pro.parameter("gemini.google_image_search")
         with self.assertRaises(KeyError):
             flash.parameter("gemini.google_image_search")
         with self.assertRaises(KeyError):
-            lite.parameter("gemini.google_search")
+            lite.parameter("tools.web_search")
+        with self.assertRaises(KeyError):
+            pro.parameter("gemini.google_search")
         with self.assertRaises(KeyError):
             lite.parameter("gemini.google_image_search")
 
@@ -206,8 +209,9 @@ class GenerationCatalogTests(unittest.TestCase):
                     self.assertEqual(len(row.label_keys), len(expected_thresholds))
 
                 parameter_ids = tuple(parameter.id for parameter in model.parameters)
+                self.assertEqual(parameter_ids[0], "canvas.mode")
                 self.assertEqual(
-                    parameter_ids[:4],
+                    parameter_ids[1:5],
                     (
                         "canvas.aspect_ratio",
                         "canvas.resolution",
@@ -216,15 +220,18 @@ class GenerationCatalogTests(unittest.TestCase):
                     ),
                 )
                 if model_id != "nano-banana-2-lite":
-                    self.assertEqual(parameter_ids[4:], ("gemini.google_search",))
-                    google_search = model.parameter("gemini.google_search")
+                    self.assertEqual(parameter_ids[5:], ("tools.web_search",))
+                    google_search = model.parameter("tools.web_search")
                     self.assertEqual(google_search.group, "generation")
-                    self.assertEqual(google_search.control, "boolean_segmented")
+                    self.assertEqual(google_search.control, "toggle")
                     self.assertEqual(google_search.value_type, "boolean")
                     self.assertFalse(google_search.default)
                     self.assertFalse(google_search.full_width)
+                    # The current form keeps its own control until the unified form ships.
+                    legacy = {parameter.id: parameter for parameter in model.legacy_parameters}
+                    self.assertEqual(legacy["gemini.google_search"].control, "boolean_segmented")
                 else:
-                    self.assertEqual(len(parameter_ids), 4)
+                    self.assertEqual(len(parameter_ids), 5)
 
         self.assertFalse(get_model_manifest("gpt-image-2").expand_advanced_parameters)
 
@@ -239,15 +246,20 @@ class GenerationCatalogTests(unittest.TestCase):
 
     def test_gpt_image_2_preserves_current_parameter_contract(self) -> None:
         gpt = get_model_manifest("gpt-image-2")
+        self.assertEqual(gpt.parameter("canvas.mode").allowed_values, ("auto", "preset", "custom"))
+        self.assertEqual(gpt.parameter("canvas.mode").default, "preset")
+        self.assertEqual(gpt.parameter("canvas.aspect_ratio").default, "1:1")
+        self.assertEqual(gpt.parameter("canvas.resolution").allowed_values, ("1K", "2K", "4K"))
         size = gpt.parameter("canvas.size")
         self.assertEqual(size.value_type, "string")
         self.assertEqual(size.default, "1024x1024")
         self.assertEqual(size.allowed_values, ())
+        self.assertEqual(size.visible_when[0].value, "custom")
         self.assertEqual(gpt.parameter("gpt.quality").allowed_values, ("auto", "low", "medium", "high"))
         self.assertEqual(gpt.parameter("gpt.background").allowed_values, ("auto", "transparent", "opaque"))
         self.assertEqual(gpt.parameter("output.format").allowed_values, ("png", "jpeg", "webp"))
         self.assertEqual(gpt.parameter("gpt.moderation").allowed_values, ("auto", "low"))
-        web_search = gpt.parameter("gpt.web_search")
+        web_search = gpt.parameter("tools.web_search")
         self.assertEqual(web_search.value_type, "boolean")
         self.assertFalse(web_search.default)
         compression = gpt.parameter("gpt.output_compression")

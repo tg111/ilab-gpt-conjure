@@ -44,13 +44,15 @@ class BindingCapabilityTests(unittest.TestCase):
         responses = _caps("gpt-image-2.5-flare", "openai_responses", "gpt_openai_responses")
         self.assertTrue(responses.uses_main_model)
         self.assertFalse(responses.supports_markup)
-        self.assertIn("gpt.web_search", responses.parameter_ids)
+        self.assertIn("tools.web_search", responses.parameter_ids)
 
     def test_web_search_is_only_offered_on_responses_protocols(self) -> None:
         for protocol, codec in (("openai_images", "gpt_openai_images"), ("codex_images", "gpt_codex_images")):
             with self.subTest(protocol=protocol):
-                self.assertNotIn("gpt.web_search", _caps("gpt-image-2", protocol, codec).parameter_ids)
-        self.assertIn("gpt.web_search", _caps("gpt-image-2", "codex_responses", "gpt_codex_responses").parameter_ids)
+                self.assertNotIn("tools.web_search", _caps("gpt-image-2", protocol, codec).parameter_ids)
+        self.assertIn("tools.web_search", _caps("gpt-image-2", "codex_responses", "gpt_codex_responses").parameter_ids)
+        # Gemini searches natively on every Gemini protocol.
+        self.assertIn("tools.web_search", _caps("nano-banana-pro", "gemini_generate_content", "gemini_generate_content_image").parameter_ids)
 
     def test_unusable_combinations_are_unavailable_with_a_reason(self) -> None:
         cases = {
@@ -67,7 +69,7 @@ class BindingCapabilityTests(unittest.TestCase):
                 self.assertEqual(caps.parameter_ids, ())
 
     def test_submission_rejects_parameters_the_binding_cannot_act_on(self) -> None:
-        with self.assertRaisesRegex(ValueError, "parameter_not_supported_by_binding: gpt.web_search"):
+        with self.assertRaisesRegex(ValueError, "parameter_not_supported_by_binding: tools.web_search"):
             _preview("gpt-image-2", "openai_images", "gpt_openai_images", {"gpt.web_search": True})
         # The current form always sends the switch; its default value stays accepted.
         plan = _preview("gpt-image-2", "openai_images", "gpt_openai_images", {"gpt.web_search": False})
@@ -97,8 +99,8 @@ class CatalogCapabilityPayloadTests(unittest.TestCase):
         by_id = {binding["id"]: binding for binding in codex["bindings"]}
         self.assertFalse(by_id["codex-gpt-image-2-images"]["capabilities"]["uses_main_model"])
         self.assertTrue(by_id["codex-gpt-image-2-responses"]["capabilities"]["uses_main_model"])
-        self.assertIn("gpt.web_search", by_id["codex-gpt-image-2-responses"]["capabilities"]["parameter_ids"])
-        self.assertNotIn("gpt.web_search", by_id["codex-gpt-image-2-images"]["capabilities"]["parameter_ids"])
+        self.assertIn("tools.web_search", by_id["codex-gpt-image-2-responses"]["capabilities"]["parameter_ids"])
+        self.assertNotIn("tools.web_search", by_id["codex-gpt-image-2-images"]["capabilities"]["parameter_ids"])
 
 
 if __name__ == "__main__":

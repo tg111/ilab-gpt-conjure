@@ -43,6 +43,10 @@ def _parameter_payload(parameter: Any) -> dict[str, Any]:
     payload["allowed_values"] = list(parameter.allowed_values)
     payload["operations"] = sorted(parameter.operations)
     payload["visible_when"] = [asdict(condition) for condition in parameter.visible_when]
+    if parameter.value_requirements:
+        payload["value_requirements"] = [asdict(requirement) for requirement in parameter.value_requirements]
+    else:
+        payload.pop("value_requirements", None)
     payload["object_choices"] = [
         {
             **asdict(row),
@@ -63,7 +67,23 @@ def _parameter_payload(parameter: Any) -> dict[str, Any]:
     return payload
 
 
+def _size_spec_payload(spec: Any) -> dict[str, Any] | None:
+    if spec is None:
+        return None
+    return {
+        "modes": list(spec.modes),
+        "presets": {
+            resolution: {ratio: list(pixels) for ratio, pixels in ratios.items()}
+            for resolution, ratios in spec.presets.items()
+        },
+        "custom": asdict(spec.custom) if spec.custom is not None else None,
+    }
+
+
 def _model_payload(model: Any) -> dict[str, Any]:
+    # "parameters" keeps the vocabulary of the current form; the unified form
+    # reads "unified_parameters" and "size_spec".
+    legacy = model.legacy_parameters or model.parameters
     return {
         "id": model.id,
         "family_id": model.family_id,
@@ -71,7 +91,9 @@ def _model_payload(model: Any) -> dict[str, Any]:
         "official_model_id": model.official_model_id,
         "version": model.version,
         "operations": sorted(model.operations),
-        "parameters": [_parameter_payload(parameter) for parameter in model.parameters],
+        "parameters": [_parameter_payload(parameter) for parameter in legacy],
+        "unified_parameters": [_parameter_payload(parameter) for parameter in model.parameters],
+        "size_spec": _size_spec_payload(model.size_spec),
         "input_constraints": asdict(model.input_constraints),
         "expand_advanced_parameters": model.expand_advanced_parameters,
     }

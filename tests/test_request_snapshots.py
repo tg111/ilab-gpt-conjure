@@ -80,6 +80,39 @@ GEMINI_PARAMETER_SETS: dict[str, dict[str, Any]] = {
 }
 
 
+# The same choices in the unified vocabulary; each must produce the identical request.
+UNIFIED_GPT_PARAMETER_SETS: dict[str, dict[str, Any]] = {
+    "preset": {"canvas.mode": "preset", "canvas.aspect_ratio": "3:2", "canvas.resolution": "1K",
+               "gpt.quality": "high", "gpt.background": "auto", "output.format": "png",
+               "gpt.moderation": "low", "output.count": 2},
+    "auto-size": {"canvas.mode": "auto", "gpt.quality": "auto", "output.format": "png", "output.count": 1},
+    "custom-size": {"canvas.mode": "custom", "canvas.size": "1600x896", "gpt.quality": "medium", "output.format": "png"},
+    "jpeg-compression": {"canvas.mode": "preset", "canvas.aspect_ratio": "1:1", "canvas.resolution": "1K",
+                         "output.format": "jpeg", "gpt.output_compression": 70},
+    "transparent": {"canvas.mode": "preset", "canvas.aspect_ratio": "1:1", "canvas.resolution": "1K",
+                    "gpt.background": "transparent", "output.format": "png"},
+    "web-search": {"canvas.mode": "preset", "tools.web_search": True},
+    "web-search-off": {"canvas.mode": "preset", "tools.web_search": False},
+}
+UNIFIED_GPT_26_PARAMETER_SETS: dict[str, dict[str, Any]] = {
+    "complexity": {"canvas.mode": "preset", "gpt.quality": "max", "gpt.complexity": "medium"},
+    "gif": {"canvas.mode": "preset", "output.format": "gif", "gpt.frame_count": 6, "gpt.frame_duration_ms": 120},
+    "svg": {"canvas.mode": "preset", "output.format": "svg", "output.count": 2},
+}
+UNIFIED_GEMINI_PARAMETER_SETS: dict[str, dict[str, Any]] = {
+    "defaults": {},
+    "wide-2k": {"canvas.mode": "preset", "canvas.aspect_ratio": "16:9", "canvas.resolution": "2K", "output.count": 2},
+    "search": {"canvas.mode": "preset", "canvas.aspect_ratio": "1:1", "canvas.resolution": "1K", "tools.web_search": True},
+    "safety": {"gemini.safety_settings": {"HARM_CATEGORY_HARASSMENT": "BLOCK_ONLY_HIGH"}},
+}
+
+
+def _unified_parameters(model: str, name: str) -> dict[str, Any]:
+    if model.startswith("gpt-image-"):
+        return {**UNIFIED_GPT_PARAMETER_SETS, **UNIFIED_GPT_26_PARAMETER_SETS}[name]
+    return UNIFIED_GEMINI_PARAMETER_SETS[name]
+
+
 def _cases() -> list[tuple[str, str, str, str, str, dict[str, Any]]]:
     cases = []
     for model in GPT_MODELS:
@@ -147,6 +180,20 @@ class RequestSnapshotTests(unittest.TestCase):
         for key in recorded:
             with self.subTest(case=key):
                 self.assertEqual(current[key], recorded[key])
+
+    def test_unified_vocabulary_sends_the_same_requests(self) -> None:
+        recorded = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        for model, protocol, codec, operation, name, _ in _cases():
+            key = f"{model} | {protocol}/{codec} | {operation} | {name}"
+            expected = recorded[key]
+            if "error" in expected:
+                continue
+            with self.subTest(case=key):
+                current = json.loads(json.dumps(
+                    _request_record(model, protocol, codec, operation, _unified_parameters(model, name)),
+                    sort_keys=True, default=str,
+                ))
+                self.assertEqual(current, expected)
 
     def test_snapshot_cover_success_and_error_paths(self) -> None:
         recorded = json.loads(FIXTURE.read_text(encoding="utf-8"))
