@@ -30,7 +30,6 @@ function formatTaskCardStatus(...args: any[]) { return legacyMethod("formatTaskC
 function formatTaskStatus(...args: any[]) { return legacyMethod("formatTaskStatus", ...args); }
 function ensureExpandedTaskGroupKey(...args: any[]) { return legacyMethod("ensureExpandedTaskGroupKey", ...args); }
 function renderTaskHistoryAnchors(...args: any[]) { return legacyMethod("renderTaskHistoryAnchors", ...args); }
-function setExpandedTaskGroupKey(...args: any[]) { return legacyMethod("setExpandedTaskGroupKey", ...args); }
 function scrollExpandedTaskGroupToTop(...args: any[]) { return legacyMethod("scrollExpandedTaskGroupToTop", ...args); }
 function captureTaskHistoryLayout(...args: any[]) { return legacyMethod("captureTaskHistoryLayout", ...args); }
 function animateTaskHistoryLayout(...args: any[]) { return legacyMethod("animateTaskHistoryLayout", ...args); }
@@ -62,7 +61,7 @@ const taskCompletionTimestampTitle = (...args: any[]) => legacyMethod("taskCompl
 const timestampMs = (...args: any[]) => legacyMethod("timestampMs", ...args);
 
 
-const { taskAnchorLayout, taskSearchHistoryResultMatches, taskMatchesSearch, taskMatchesFilters, activeTaskSections, activeTaskGroup, taskQueueSection, waitingQueueIndex, taskHasUnreadUpdate, taskHasViewableUpdate, taskHistoryGroups, isAlwaysVisibleTask, queueTaskIdsBySection, activeTaskOrderIndex, activeTasksForGroup, taskHistoryActivityTimestamp, taskDateBucket, taskGroupCount, taskListRenderKey, activeQueueTaskListRenderKey } = createTaskListModel({
+const { taskAnchorLayout, taskMatchesSearch, taskMatchesFilters, activeTaskSections, activeTaskGroup, taskQueueSection, waitingQueueIndex, taskHasUnreadUpdate, taskHasViewableUpdate, taskHistoryGroups, isAlwaysVisibleTask, queueTaskIdsBySection, activeTaskOrderIndex, taskHistoryActivityTimestamp, taskDateBucket, taskGroupCount, taskListRenderKey } = createTaskListModel({
   getState: () => ({ activeTaskGroupCollapsed: state.activeTaskGroupCollapsed, batchMode: state.batchMode, batchSelectedTaskIds: state.batchSelectedTaskIds, expandedTaskGroupKey: state.expandedTaskGroupKey, historyTaskReveal: state.historyTaskReveal, queue: state.queue, selectedTaskId: state.selectedTaskId, taskSearchHistoryResultIds: state.taskSearchHistoryResultIds, taskSearchHistoryResultQuery: state.taskSearchHistoryResultQuery, taskSidebarGroupCounts: state.taskSidebarGroupCounts, tasks: state.tasks }),
   taskArchived: (...args: Parameters<typeof taskArchived>) => taskArchived(...args),
   taskBackendLabel: (...args: Parameters<typeof taskBackendLabel>) => taskBackendLabel(...args),
@@ -75,7 +74,7 @@ const { taskAnchorLayout, taskSearchHistoryResultMatches, taskMatchesSearch, tas
   timestampMs: (...args: Parameters<typeof timestampMs>) => timestampMs(...args),
 });
 
-const { expandedTaskGroupHeaderHtml, renderExpandedTaskGroupBodyShellHtml, renderExpandedTaskGroupShellHtml, activeTaskSectionHtml, activeTaskDispatchPendingHtml, activeTaskGroupHtml, expandedTaskGroupHtml, taskGroupHtml, taskGroupButtonLabel, taskQueueReorderHintVisible, taskQueueReorderHintHtml, taskCardSwipeActionLabel, taskCardSwipeActionTitle, taskCardSwipeActionHtml, taskCardSwipeActionsHtml, taskCardSwipeKeyboardShortcuts, taskCardHtml, taskGroupLoadMoreHtml, taskThumbShowsLoading, taskThumbSpinnerStyle, taskThumbHtml, taskStatusLabelHtml, taskModelFamilyIconHtml, taskStatusAccessibleLabel, taskMetaDetailsText, taskMetaDetailsWithCompletionText, taskCardCompletionTimeText, taskCardElapsedLineHtml, taskCardRunningTimerHtml, taskCardProviderLabel, taskCardRuntimeText, taskImageBlocksHtml, taskImageSummaryText, taskImageSummaryVisible, taskMetaText } = createTaskCardView({
+const { expandedTaskGroupHeaderHtml, renderExpandedTaskGroupBodyShellHtml, renderExpandedTaskGroupShellHtml, activeTaskGroupHtml, expandedTaskGroupHtml, taskGroupHtml, taskGroupButtonLabel, taskCardHtml, taskGroupLoadMoreHtml, taskThumbHtml, taskStatusLabelHtml, taskStatusAccessibleLabel, taskMetaDetailsText, taskCardProviderLabel, taskCardRuntimeText, taskImageBlocksHtml, taskImageSummaryText, taskMetaText } = createTaskCardView({
   getState: () => ({ activeTaskGroupCollapsed: state.activeTaskGroupCollapsed, batchMode: state.batchMode, batchSelectedTaskIds: state.batchSelectedTaskIds, generationCatalog: state.generationCatalog, queue: state.queue, selectedTaskId: state.selectedTaskId, taskSidebarGroupLoadError: state.taskSidebarGroupLoadError, taskSidebarGroupLoadedCounts: state.taskSidebarGroupLoadedCounts, taskSidebarGroupLoading: state.taskSidebarGroupLoading }),
   activeTaskSections: (...args: Parameters<typeof activeTaskSections>) => activeTaskSections(...args),
   compressTaskImageBlockStates: (...args: Parameters<typeof compressTaskImageBlockStates>) => compressTaskImageBlockStates(...args),
@@ -106,7 +105,7 @@ const { expandedTaskGroupHeaderHtml, renderExpandedTaskGroupBodyShellHtml, rende
   isQueueDispatchPending: () => legacyMethod("isQueueDispatchPending"),
 });
 
-const { captureTaskListScrollAnchors, captureTaskListScrollAnchor, restoreTaskListScrollAnchors, restoreTaskListScrollAnchor, applyActiveTaskGroupHtml, draggedTaskStillWaiting, renderActiveTaskGroup, flushDeferredActiveTaskGroupRender, discardDeferredActiveTaskGroupRender, expandedTaskGroupBodyElements, finalizeExpandedTaskGroupBody, animateExpandedTaskGroupBody, expandedTaskGroupItemsContainer, updateExpandedTaskGroupCount, appendExpandedTaskGroupPage, scheduleExpandedTaskGroupItemsRender, renderExpandedTaskGroupHeader, invalidateTaskGroupRender } = createTaskListViewport({
+const { captureTaskListScrollAnchors, restoreTaskListScrollAnchors, renderActiveTaskGroup, flushDeferredActiveTaskGroupRender, discardDeferredActiveTaskGroupRender, updateExpandedTaskGroupCount, appendExpandedTaskGroupPage, scheduleExpandedTaskGroupItemsRender, renderExpandedTaskGroupHeader, invalidateTaskGroupRender } = createTaskListViewport({
   getState: () => ({ queue: state.queue, queueDragTaskId: state.queueDragTaskId }),
   els: { taskHistoryShell: els.taskHistoryShell, sidebarContent: els.sidebarContent, taskActiveList: els.taskActiveList, taskList: els.taskList, taskHistoryCurrentAnchor: els.taskHistoryCurrentAnchor },
   consumeLatestTaskNavigationScrollAnchor: (...args: Parameters<typeof consumeLatestTaskNavigationScrollAnchor>) => consumeLatestTaskNavigationScrollAnchor(...args),

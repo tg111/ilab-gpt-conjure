@@ -6,17 +6,20 @@ import json
 from typing import Any, Mapping
 from urllib.parse import quote
 
+from codex_image.generation.parameter_vocabulary import upgrade_parameters
 from codex_image.generation.types import GenerationCommand, GenerationOperation, ModelManifest
 from codex_image.providers.contracts import ProtocolRequest, ProviderModelBinding
 
 
 GEMINI_PARAMETER_IDS = frozenset(
     {
+        "canvas.mode",
         "canvas.aspect_ratio",
         "canvas.resolution",
         "output.modalities",
         "gemini.safety_settings",
         "gemini.google_search",
+        "tools.web_search",
         "gemini.google_image_search",
         "output.count",
     }
@@ -34,7 +37,9 @@ class _GeminiImageCodec:
 
 
 def _parameters(command: GenerationCommand) -> dict[str, Any]:
-    return {**command.parameters, **command.legacy_compat_parameters}
+    return upgrade_parameters(
+        command.canonical_model_id, {**command.parameters, **command.legacy_compat_parameters},
+    )
 
 
 def _response_modalities(value: Any) -> list[str]:
@@ -61,7 +66,7 @@ def _safety_settings(value: Any) -> list[dict[str, str]]:
 
 def _tools(params: Mapping[str, Any]) -> list[dict[str, Any]]:
     search_types: dict[str, dict[str, Any]] = {}
-    if params.get("gemini.google_search") is True:
+    if params.get("tools.web_search") is True:
         search_types["webSearch"] = {}
     if params.get("gemini.google_image_search") is True:
         search_types["imageSearch"] = {}

@@ -53,7 +53,6 @@ export function bindSharedTopNavSettingsEvents(
     systemSettingsBackdropPointerDown = false;
   });
   els.saveSettingsButton?.addEventListener("click", () => call(methods, "saveSettings"));
-  els.authSourceGroup?.addEventListener("click", (event: Event) => call(methods, "handleAuthSourceClick", event));
   els.modelFamilyOptions?.addEventListener("click", (event: Event) => {
     const item = (event.target as HTMLElement | null)?.closest?.("[data-family-id]") as HTMLElement | null;
     if (item?.dataset.familyId) call(methods, "selectModelFamily", item.dataset.familyId);
@@ -62,9 +61,6 @@ export function bindSharedTopNavSettingsEvents(
   els.concreteModelSelect?.addEventListener("change", () => call(methods, "selectConcreteModel", els.concreteModelSelect.value));
   els.generationProviderSelect?.addEventListener("change", () => call(methods, "selectGenerationProvider", els.generationProviderSelect.value));
   els.generationProviderSettingsButton?.addEventListener("click", () => call(methods, "openGenerationProviderSettings"));
-  els.apiProviderQuick?.addEventListener("change", () => {
-    call(methods, "selectApiProvider", els.apiProviderQuick?.value || call(methods, "currentApiProviderId"));
-  });
   els.apiProvider?.addEventListener("change", () => {
     call(methods, "selectApiProvider", els.apiProvider?.value || call(methods, "currentApiProviderId"));
   });

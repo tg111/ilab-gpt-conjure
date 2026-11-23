@@ -49,6 +49,7 @@ from tests.webui_helpers import (
     output_url,
     request_path,
 )
+from tests.canonical_form import canonical_form
 
 
 class WebUIGalleryTests(unittest.TestCase):
@@ -319,7 +320,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "asset upload", "size": "1024x1024"},
+                data=canonical_form({"prompt": "asset upload", "size": "1024x1024"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             item = created.json()["task"]["reference_assets"][0]
@@ -341,7 +342,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "asset upload", "size": "1024x1024"},
+                data=canonical_form({"prompt": "asset upload", "size": "1024x1024"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             task_id = created.json()["task"]["task_id"]
@@ -424,13 +425,13 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "seed asset", "size": "1024x1024"},
+                data=canonical_form({"prompt": "seed asset", "size": "1024x1024"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             asset_id = created.json()["task"]["reference_assets"][0]["id"]
             edited = client.post(
                 "/api/edit",
-                data={"prompt": "edit asset", "size": "1024x1024", "reference_asset_ids": asset_id},
+                data=canonical_form({"prompt": "edit asset", "size": "1024x1024", "reference_asset_ids": asset_id}),
             )
             task = edited.json()["task"]
 
@@ -448,7 +449,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "use asset once", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "use asset once", "size": "1024x1024", "quality": "low"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             asset_id = created.json()["task"]["reference_assets"][0]["id"]
@@ -470,7 +471,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "missing asset", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "missing asset", "size": "1024x1024", "quality": "low"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             task_id = created.json()["task"]["task_id"]
@@ -499,7 +500,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "missing asset retry", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "missing asset retry", "size": "1024x1024", "quality": "low"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             task_id = created.json()["task"]["task_id"]
@@ -584,7 +585,7 @@ class WebUIGalleryTests(unittest.TestCase):
             gallery_item = gallery_response.json()["item"]
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "让 @小美 做产品模特",
                     "prompt_for_model": "让 @小美 做产品模特\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。",
                     "model": "gpt-image-2",
@@ -593,7 +594,7 @@ class WebUIGalleryTests(unittest.TestCase):
                     "output_format": "png",
                     "gallery_image_ids": gallery_item["id"],
                     "codex_mode": "responses",
-                },
+                }),
             )
             body = response.json()
             task = body["task"]
@@ -608,7 +609,7 @@ class WebUIGalleryTests(unittest.TestCase):
         self.assertEqual(input_dir_files, [])
         self.assertEqual(task["gallery_refs"][0]["id"], gallery_item["id"])
         self.assertEqual(task["input_sources"][0]["kind"], "gallery")
-        self.assertTrue(input_content[1]["image_url"].startswith("<redacted image data url, "))
+        self.assertTrue(input_content[1]["image_url"] == "<redacted inline data>")
         self.assertEqual(body["request"]["webui_image_refs"]["gallery_refs"][0]["id"], gallery_item["id"])
         self.assertEqual(fake.generate_calls, [])
     def test_generate_route_keeps_gallery_prompt_layer_separate_from_raw_prompt(self) -> None:
@@ -646,7 +647,7 @@ class WebUIGalleryTests(unittest.TestCase):
             )
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": prompt_for_model,
                     "model": "gpt-image-2",
@@ -654,7 +655,7 @@ class WebUIGalleryTests(unittest.TestCase):
                     "quality": "low",
                     "output_format": "png",
                     "gallery_image_ids": gallery_item["id"],
-                },
+                }),
             )
             task = response.json()["task"]
 
@@ -684,14 +685,14 @@ class WebUIGalleryTests(unittest.TestCase):
             ).json()["item"]
             client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "参考 @产品图",
                     "model": "gpt-image-2",
                     "size": "1024x1024",
                     "quality": "low",
                     "output_format": "png",
                     "gallery_image_ids": gallery_item["id"],
-                },
+                }),
             )
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -717,14 +718,14 @@ class WebUIGalleryTests(unittest.TestCase):
             ).json()["item"]
             task = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "参考 @杯子",
                     "model": "gpt-image-2",
                     "size": "1024x1024",
                     "quality": "low",
                     "output_format": "png",
                     "gallery_image_ids": gallery_item["id"],
-                },
+                }),
             ).json()["task"]
             client.delete(f"/api/gallery/{gallery_item['id']}")
             returned = client.get(f"/api/tasks/{task['task_id']}").json()["task"]
@@ -785,7 +786,7 @@ class WebUIGalleryTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "partial then missing asset", "size": "1024x1024", "quality": "low", "n": "4"},
+                data=canonical_form({"prompt": "partial then missing asset", "size": "1024x1024", "quality": "low", "n": "4"}),
                 files={"reference_images": ("source.png", self._image_bytes(), "image/png")},
             )
             task_id = created.json()["task"]["task_id"]

@@ -23,10 +23,6 @@ export function bootWebUI(state: WebUIState, els: WebUIElements, methods: Legacy
   call(methods, "restoreExpandedTaskGroupKey");
   call(methods, "setMode", "generate");
   call(methods, "updatePromptCount");
-  call(methods, "updateQuantity");
-  call(methods, "updateCompression");
-  call(methods, "updateSizeFromPreset");
-  call(methods, "updateCustomSize");
   call(methods, "restoreOutputSettingsLock");
   const restoringDraft = call(methods, "restoreComposerNavigationDraft");
   if (restoringDraft) {

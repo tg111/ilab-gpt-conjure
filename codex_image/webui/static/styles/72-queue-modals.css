@@ -19,7 +19,7 @@
 }
 
 .queue-drawer.open {
-  box-shadow: -18px 0 60px rgba(24, 45, 39, 0.18);
+  box-shadow: -18px 0 60px rgba(var(--shadow-rgb), 0.18);
   transform: translateX(0);
 }
 
@@ -171,15 +171,6 @@
   cursor: grab;
 }
 
-.queue-waiting-item.dragging {
-  opacity: 0.55;
-  cursor: grabbing;
-}
-
-.queue-waiting-item.dragging .queue-drag-handle {
-  cursor: grabbing;
-}
-
 .queue-item-actions {
   display: inline-flex;
   align-items: center;
@@ -261,10 +252,6 @@
   width: min(520px, 94vw);
 }
 
-.version-modal-panel {
-  width: min(520px, 94vw);
-}
-
 .system-settings-modal-panel {
   --settings-control-border: color-mix(in srgb, var(--line) 75%, var(--control-border));
   --settings-button-surface: var(--secondary-action-surface);
@@ -329,88 +316,6 @@
   font-size: 13px;
 }
 
-.version-detail-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.version-detail-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 38px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface-soft);
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.version-detail-row strong {
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.version-onboarding {
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--primary-light);
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.version-onboarding.hidden {
-  display: none;
-}
-
-.version-onboarding strong {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.version-onboarding p {
-  margin: 0;
-}
-
-.version-onboarding ul {
-  display: grid;
-  gap: 5px;
-  margin: 8px 0 0;
-  padding-left: 18px;
-}
-
-.version-onboarding li::marker {
-  color: var(--primary);
-}
-
-.version-modal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.version-modal-actions .run-button,
-.version-modal-actions .ghost-button {
-  width: auto;
-  min-width: 112px;
-  height: 34px;
-}
-
-.version-modal-actions .hidden {
-  display: none;
-}
-
 .api-settings-feedback {
   display: inline-flex;
   max-width: 100%;
@@ -472,7 +377,9 @@
 
 .system-settings-tab {
   min-width: 0;
-  height: 32px;
+  min-height: 32px;
+  height: auto;
+  line-height: 1.25;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -492,7 +399,7 @@
 
 .system-settings-tabs .segmented-indicator {
   border-radius: 999px;
-  box-shadow: 0 5px 14px rgba(40, 116, 85, 0.22);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--primary) 22%, transparent);
 }
 
 .system-settings-tabs.segmented-indicator-host .system-settings-tab.active {

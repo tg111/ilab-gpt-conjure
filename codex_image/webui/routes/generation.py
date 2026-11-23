@@ -8,8 +8,9 @@ from typing import Any
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 
-from codex_image.client import DEFAULT_MAIN_MODEL, image_model_supports_input_fidelity
-from codex_image.generation.catalog import GPT_IMAGE_MODEL_IDS
+from codex_image.client import DEFAULT_MAIN_MODEL
+from codex_image.generation.capabilities import RESPONSES_PROTOCOLS, binding_capabilities
+from codex_image.generation.catalog import get_model_manifest
 from codex_image.generation.snapshot import generation_snapshot
 from codex_image.generation.service import redacted_protocol_request
 from codex_image.client_types import ResponsesInputFile
@@ -17,10 +18,20 @@ from codex_image.generation.types import ImageInput
 from codex_image.webui.context import WebUIContext
 from codex_image.webui.gallery_prompt import resolve_gallery_prompt
 from codex_image.webui.prompt_image_mentions import resolve_prompt_image_mentions
+from codex_image.webui.auth_routing import (
+    BACKEND_CODEX_IMAGES,
+    BACKEND_CODEX_RESPONSES,
+    BACKEND_OPENAI_IMAGES,
+    BACKEND_OPENAI_RESPONSES,
+)
 from codex_image.webui.generation_request import (
+    DEFAULT_CANONICAL_MODEL_ID,
+    REMOVED_FORM_FIELDS,
     generation_command_from_form,
     parse_parameters_json,
     preview_generation_command,
+    resolve_submission_binding,
+    task_params_from_plan,
 )
 from codex_image.webui.image_uploads import (
     InvalidRasterImage,
@@ -35,10 +46,6 @@ from codex_image.webui.resource_limits import (
 )
 from codex_image.webui.executor import (
     _file_to_data_url,
-    _instructions_for_transport,
-    _normalize_compression,
-    _normalize_prompt_fidelity,
-    _prompt_for_transport,
     _resolve_gallery_refs,
     _resolve_reference_assets,
 )
@@ -46,10 +53,6 @@ from codex_image.webui.executor_inputs import (
     _bytes_to_data_url,
     _reference_file_to_responses_input,
     _resolve_reference_files,
-)
-from codex_image.webui.prompt_ratio import (
-    orientation_from_ratio,
-    ratio_from_size,
 )
 from codex_image.webui.reference_file_capabilities import (
     effective_reference_file_main_model,
@@ -69,9 +72,7 @@ from codex_image.webui.reference_image_order import (
     ordered_reference_data_urls,
 )
 from codex_image.webui.storage import utc_now
-from codex_image.webui.task_metadata import _dedupe_preserve_order, _params, _with_file_urls, _write_queued_metadata
-
-DEFAULT_PROMPT_FIDELITY = "off"
+from codex_image.webui.task_metadata import _dedupe_preserve_order, _with_file_urls, _write_queued_metadata
 
 REFERENCE_FILE_ERROR_MESSAGES = {
     "reference_file_empty": "Reference files cannot be empty.",
@@ -94,11 +95,10 @@ TASK_IMAGES_TOTAL_TOO_LARGE_DETAIL = {
     "message": "The combined task images are too large.",
 }
 
-_CODEX_BINDING_MODES = {
-    "codex-gpt-image-2-images": "images",
-    "codex-gpt-image-2-responses": "responses",
-}
-_CODEX_GPT_BACKENDS = frozenset({"codex_images", "codex_responses"})
+LEGACY_FORM_FIELDS_REMOVED_MESSAGE = (
+    "These form fields are no longer accepted: {fields}. Send canonical_model_id, "
+    "provider_id and parameters_json (unified parameter ids) instead."
+)
 
 
 @dataclass(frozen=True)
@@ -107,6 +107,24 @@ class PreparedReferenceFiles:
     selected_asset_ids: tuple[str, ...]
     records: tuple[dict[str, Any], ...]
     response_inputs: tuple[ResponsesInputFile, ...]
+
+
+@dataclass(frozen=True)
+class SubmissionRouting:
+    """Where a submission runs, decided by the selected binding before inputs are read."""
+
+    auth_source: str
+    canonical_model_id: str
+    provider_id: str
+    binding_id: str
+    parameters: dict[str, Any]
+    requested_backend: str
+    api_mode: str | None
+    codex_mode: str | None
+    api_provider_id: str | None
+    api_provider_name: str | None
+    api_images_concurrency: int
+    uses_main_model: bool
 
 
 @dataclass(frozen=True)
@@ -128,22 +146,50 @@ def _request_auth_source(ctx: WebUIContext, provider_id: str | None) -> str:
     return ctx.auth_settings.read_source()
 
 
-def _codex_mode_for_binding(
-    provider_id: str | None,
-    binding_id: str | None,
-    fallback: str | None,
-) -> str | None:
-    if str(provider_id or "").strip() != "codex":
-        return fallback
-    return _CODEX_BINDING_MODES.get(str(binding_id or "").strip(), fallback)
-
+_CUSTOM_SIZE_MESSAGES = {
+    "custom_size_invalid_format": "Custom sizes are written as WIDTHxHEIGHT, for example 1536x1024.",
+    "custom_size_out_of_bounds": "Each custom size edge must be within the model's limits.",
+    "custom_size_not_multiple": "Custom size edges must be multiples of the model's step.",
+    "custom_size_ratio_too_large": "The custom size is too wide or too tall for this model.",
+    "custom_size_pixels_out_of_range": "The custom size has too few or too many pixels for this model.",
+}
 
 
 def _generation_request_error(exc: ValueError) -> HTTPException:
     message = str(exc)
-    if message == "transparent_background_requires_png_or_webp":
+    format_errors = {
+        "openai_gif_edit_frame_limit_exceeded": "OpenAI GIF edits support up to 16 frames. Reduce the frame count.",
+        "gif_output_does_not_support_mask": "GIF output does not support masks. Remove the mask or choose another output format.",
+        "gif_output_does_not_support_compression": "GIF output does not support compression settings. Remove compression or choose JPEG/WebP.",
+        "gif_output_does_not_support_partial_images": "GIF output does not support partial-image previews. Disable partial-image previews or choose another output format.",
+        "output_compression_requires_jpeg_or_webp": "Compression settings require JPEG or WebP output. Remove compression or choose JPEG/WebP.",
+    }
+    if message == "Parameter is not applicable: gpt.output_compression":
+        message = "output_compression_requires_jpeg_or_webp"
+    if message in format_errors:
         code = message
-        safe_message = "Transparent backgrounds require PNG or WebP output."
+        safe_message = format_errors[message]
+    elif message == "gif_frame_pixel_limit_exceeded":
+        code = message
+        safe_message = "Reduce GIF frame count or resolution to stay within the local image decoding limit."
+    elif message == "transparent_background_requires_png_or_webp" or message.startswith(
+        "transparent_background_requires_png_webp_or_svg:"
+    ):
+        code = "transparent_background_requires_png_or_webp"
+        safe_message = "Transparent backgrounds require PNG, WebP or SVG output."
+    elif message.startswith("parameter_not_supported_by_binding:"):
+        code = "parameter_not_supported_by_binding"
+        unsupported = message.split(":", 1)[1].strip()
+        safe_message = f"The selected binding does not support: {unsupported}."
+    elif message.startswith("custom_size_") and message.endswith(": canvas.size"):
+        code = message.split(":", 1)[0]
+        safe_message = _CUSTOM_SIZE_MESSAGES.get(code, "The custom size is not allowed for this model.")
+    elif message == "image_feature_requires_openai_images":
+        code = message
+        safe_message = "This model or feature requires an OpenAI Images binding."
+    elif message.startswith(("Unknown parameter:", "Parameter is not applicable:")):
+        code = "parameter_invalid"
+        safe_message = message + "."
     elif "does not support model" in message:
         code = "provider_model_binding_missing"
         safe_message = "The selected provider does not support this model."
@@ -162,44 +208,101 @@ def _generation_request_error(exc: ValueError) -> HTTPException:
     return HTTPException(status_code=400, detail={"code": code, "message": safe_message})
 
 
-def _preview_form_generation(
+def _submission_routing(
     ctx: WebUIContext,
     *,
     operation: str,
+    form_fields: frozenset[str],
     canonical_model_id: str | None,
     provider_id: str | None,
     binding_id: str | None,
     parameters_json: str | None,
-    prompt: str,
+) -> SubmissionRouting:
+    h = ctx.route_helpers
+    removed = sorted(form_fields & REMOVED_FORM_FIELDS)
+    if removed:
+        raise HTTPException(status_code=400, detail={
+            "code": "legacy_form_fields_removed",
+            "message": LEGACY_FORM_FIELDS_REMOVED_MESSAGE.format(fields=", ".join(removed)),
+        })
+    # Omitted fields fall back to the default model, the configured source, that
+    # provider's default binding and the model's default parameters.
+    try:
+        parameters = parse_parameters_json(parameters_json)
+    except ValueError as exc:
+        raise _generation_request_error(exc) from exc
+    model_id = str(canonical_model_id or DEFAULT_CANONICAL_MODEL_ID).strip()
+    auth_source = _request_auth_source(ctx, provider_id)
+    if auth_source == "codex" and not h["codex_auth_checker"]():
+        raise HTTPException(status_code=401, detail="Codex auth is not available")
+    api_provider_id = h["request_api_provider_id"](auth_source, str(provider_id or "").strip() or None)
+    resolved_provider_id = api_provider_id if auth_source == "api" else "codex"
+    try:
+        binding = resolve_submission_binding(
+            operation=operation,  # type: ignore[arg-type]
+            canonical_model_id=model_id,
+            provider_id=str(resolved_provider_id),
+            binding_id=str(binding_id or "").strip() or None,
+            codex_mode=str(h["request_codex_mode"]("codex", None)),
+            provider_connections=ctx.api_settings.read_connections(),
+        )
+        model = get_model_manifest(model_id)
+    except (KeyError, ValueError) as exc:
+        message = str(exc) if isinstance(exc, ValueError) else f"Unknown image model: {model_id}"
+        raise _generation_request_error(ValueError(message)) from exc
+    responses = binding.protocol_profile in RESPONSES_PROTOCOLS
+    capabilities = binding_capabilities(model, binding.protocol_profile, binding.parameter_codec)
+    if auth_source == "api":
+        requested_backend = BACKEND_OPENAI_RESPONSES if responses else BACKEND_OPENAI_IMAGES
+    else:
+        requested_backend = BACKEND_CODEX_RESPONSES if responses else BACKEND_CODEX_IMAGES
+    return SubmissionRouting(
+        auth_source=auth_source,
+        canonical_model_id=model_id,
+        provider_id=str(resolved_provider_id),
+        binding_id=binding.id,
+        parameters=parameters,
+        requested_backend=requested_backend,
+        api_mode=("responses" if responses else "images") if auth_source == "api" else None,
+        codex_mode=("responses" if responses else "images") if auth_source == "codex" else None,
+        api_provider_id=api_provider_id,
+        api_provider_name=h["request_api_provider_name"](auth_source, api_provider_id),
+        api_images_concurrency=h["request_api_images_concurrency"](auth_source, api_provider_id),
+        uses_main_model=capabilities.uses_main_model,
+    )
+
+
+def _preview_form_generation(
+    ctx: WebUIContext,
+    *,
+    operation: str,
+    routing: SubmissionRouting,
     model_prompt: str,
     main_model: str,
     instructions: str | None,
     image_data_urls: list[str],
     mask_data_url: str | None,
+    markup_data_url: str | None = None,
     reference_file_inputs: list[ResponsesInputFile],
-    legacy_fields: dict[str, Any],
-    explicit_form_fields: frozenset[str],
-    codex_mode: str | None,
 ):
     try:
         command = generation_command_from_form(
             operation=operation,  # type: ignore[arg-type]
-            canonical_model_id=canonical_model_id,
-            provider_id=provider_id,
-            binding_id=binding_id,
-            parameters_json=parameters_json,
+            canonical_model_id=routing.canonical_model_id,
+            provider_id=routing.provider_id,
+            binding_id=routing.binding_id,
+            parameters=routing.parameters,
             prompt=model_prompt,
             image_inputs=tuple(ImageInput(item) for item in image_data_urls),
             reference_files=tuple(reference_file_inputs),
             mask_image=mask_data_url,
+            markup_image=markup_data_url,
             main_model=main_model,
             instructions=instructions,
-            legacy_fields=legacy_fields,
-            explicit_form_fields=explicit_form_fields,
         )
         return preview_generation_command(
             command,
-            codex_mode=str(codex_mode or "images"),
+            codex_mode=str(routing.codex_mode or "images"),
             provider_connections=ctx.api_settings.read_connections(),
         )
     except ValueError as exc:
@@ -228,69 +331,19 @@ def _prepare_generation_submission(
     ctx: WebUIContext,
     *,
     operation: str,
+    routing: SubmissionRouting,
     prompt: str,
     prompt_for_model: str | None,
     ui_language: str,
-    prompt_fidelity: str,
     main_model: str,
-    model: str,
-    size: str,
-    resolution: str | None,
-    ratio: str | None,
-    orientation: str | None,
-    quality: str,
-    background: str | None,
-    output_format: str,
-    input_fidelity: str | None,
-    moderation: str | None,
-    output_compression: str | None,
-    n: int,
-    web_search: bool,
-    auth_source: str,
-    effective_api_mode: str | None,
-    effective_codex_mode: str | None,
-    effective_api_provider_id: str | None,
-    effective_api_provider_name: str | None,
-    effective_api_images_concurrency: int,
-    requested_backend: str,
-    canonical_model_id: str | None,
-    provider_id: str | None,
-    binding_id: str | None,
-    parameters_json: str | None,
-    explicit_form_fields: frozenset[str],
     image_data_urls: list[str],
     mask_data_url: str | None,
+    markup_data_url: str | None = None,
     reference_file_inputs: list[ResponsesInputFile],
     resolved_original_prompt: str | None = None,
 ) -> PreparedGenerationSubmission:
     h = ctx.route_helpers
-    compression = _normalize_compression(output_format, output_compression)
-    uses_gpt_prompt_processing = (canonical_model_id is None or canonical_model_id in GPT_IMAGE_MODEL_IDS)
-    effective_main_model = main_model if uses_gpt_prompt_processing else ""
-    fidelity = _normalize_prompt_fidelity(prompt_fidelity) if uses_gpt_prompt_processing else "off"
-    effective_size = size
-    effective_ratio = ratio
-    effective_orientation = orientation
-    canonical_parameters: dict[str, Any] | None = None
-    if parameters_json is not None:
-        try:
-            canonical_parameters = parse_parameters_json(parameters_json)
-        except ValueError as exc:
-            raise _generation_request_error(exc) from exc
-    if (
-        auth_source == "codex"
-        and canonical_model_id == "gpt-image-2"
-        and requested_backend in _CODEX_GPT_BACKENDS
-        and canonical_parameters is not None
-    ):
-        canonical_size = str(canonical_parameters.get("canvas.size") or "").strip()
-        if canonical_size:
-            effective_size = canonical_size
-        if not effective_ratio:
-            effective_ratio = ratio_from_size(effective_size) or None
-        if not effective_orientation:
-            effective_orientation = orientation_from_ratio(effective_ratio) or None
-    web_search_enabled = bool(web_search) and requested_backend.endswith("_responses")
+    effective_main_model = main_model if routing.uses_main_model else ""
     # Prompt processing is disabled: no ratio or guard instructions are added.
     # The model still gets expanded snippets and gallery reference notes, either
     # from the WebUI composer or by expanding snippets for direct API callers.
@@ -301,103 +354,36 @@ def _prepare_generation_submission(
     if not composed_prompt or composed_prompt in {prompt, original_prompt}:
         composed_prompt = h["model_prompt_for_fidelity"](original_prompt, None, "original")
     model_prompt = str(composed_prompt or "")
-    request_model_prompt = model_prompt
-    request_instructions = None
-    prompt_constraints: list[str] = []
-    resolved_provider_id = effective_api_provider_id if auth_source == "api" else "codex"
     plan = _preview_form_generation(
         ctx,
         operation=operation,
-        canonical_model_id=canonical_model_id,
-        provider_id=provider_id,
-        binding_id=binding_id,
-        parameters_json=parameters_json,
-        prompt=prompt,
-        model_prompt=request_model_prompt,
+        routing=routing,
+        model_prompt=model_prompt,
         main_model=effective_main_model,
-        instructions=request_instructions,
+        instructions=None,
         image_data_urls=image_data_urls,
         mask_data_url=mask_data_url,
+        markup_data_url=markup_data_url,
         reference_file_inputs=reference_file_inputs,
-        legacy_fields={
-            "model": model,
-            "resolved_provider_id": resolved_provider_id,
-            "size": effective_size,
-            "quality": quality,
-            "background": background,
-            "output_format": output_format,
-            "moderation": moderation,
-            "output_compression": compression,
-            "input_fidelity": input_fidelity,
-            "web_search": web_search_enabled,
-            "n": n,
-        },
-        explicit_form_fields=explicit_form_fields,
-        codex_mode=effective_codex_mode,
     )
-    effective_n = int(plan.command.parameters.get("output.count") or n)
-    request_kwargs: dict[str, Any] = {
-        "auth_source": auth_source,
-        "api_mode": effective_api_mode,
-        "codex_mode": effective_codex_mode,
-        "prompt": request_model_prompt,
-        "main_model": effective_main_model,
-        "model": model,
-        "input_images": image_data_urls,
-        "size": effective_size,
-        "quality": quality,
-        "background": background,
-        "output_format": output_format,
-        "moderation": moderation,
-        "output_compression": compression,
-    }
-    if operation == "edit":
-        request_kwargs.update(
-            action="edit",
-            mask_image=mask_data_url,
-            input_fidelity=input_fidelity,
-        )
-    if request_instructions:
-        request_kwargs["instructions"] = request_instructions
-    if web_search_enabled:
-        request_kwargs["web_search"] = True
-    if canonical_model_id is not None or plan.command.parameters.get("gpt.background") == "transparent":
-        protocol_preview = redacted_protocol_request(plan)
-        request_payload = dict(protocol_preview.json_body or protocol_preview.form_fields)
-    else:
-        request_payload = h["build_image_request_payload"](**request_kwargs)
-    params = _params(
-        effective_main_model, model, effective_size, quality, background, output_format,
-        moderation, compression, effective_n,
-    )
-    if not uses_gpt_prompt_processing:
-        params.pop("main_model", None)
-    for key, value in (
-        ("resolution", resolution),
-        ("ratio", effective_ratio),
-        ("orientation", effective_orientation),
-    ):
-        if value:
-            params[key] = value
-    if input_fidelity:
-        params["input_fidelity"] = input_fidelity
-    if web_search_enabled:
-        params["web_search"] = True
-    if effective_codex_mode is not None:
-        params["codex_mode"] = effective_codex_mode
-    if effective_api_mode is not None:
-        params["api_mode"] = effective_api_mode
-    if effective_api_provider_id is not None:
-        params["api_provider_id"] = effective_api_provider_id
-    if effective_api_provider_name:
-        params["api_provider_name"] = effective_api_provider_name
-    if auth_source == "api":
-        params["api_images_concurrency"] = effective_api_images_concurrency
+    protocol_preview = redacted_protocol_request(plan)
+    request_payload = dict(protocol_preview.json_body or protocol_preview.form_fields)
+    params = task_params_from_plan(plan, main_model=effective_main_model)
+    if routing.codex_mode is not None:
+        params["codex_mode"] = routing.codex_mode
+    if routing.api_mode is not None:
+        params["api_mode"] = routing.api_mode
+    if routing.api_provider_id is not None:
+        params["api_provider_id"] = routing.api_provider_id
+    if routing.api_provider_name:
+        params["api_provider_name"] = routing.api_provider_name
+    if routing.auth_source == "api":
+        params["api_images_concurrency"] = routing.api_images_concurrency
     return PreparedGenerationSubmission(
         plan=plan,
         request_payload=request_payload,
         model_prompt=model_prompt,
-        prompt_constraints=prompt_constraints,
+        prompt_constraints=[],
         params=params,
         prompt_locale=str(ui_language or "zh-CN"),
     )
@@ -418,6 +404,7 @@ def _persist_generation_submission(
     effective_api_images_concurrency: int,
     input_files: list[Path],
     mask_file: str | None,
+    markup_file: str | None = None,
     gallery_refs: list[dict[str, Any]],
     reference_assets: list[dict[str, Any]],
     file_references: list[dict[str, Any]],
@@ -432,6 +419,7 @@ def _persist_generation_submission(
         reference_assets=reference_assets,
         reference_files=file_references,
         mask_file=mask_file,
+        markup_file=markup_file,
     )
     if reference_image_order is not None:
         stored_request_payload["webui_image_refs"]["reference_image_order"] = reference_image_order
@@ -460,6 +448,7 @@ def _persist_generation_submission(
         params=prepared.params,
         input_files=[path.name for path in input_files],
         mask_file=mask_file,
+        markup_file=markup_file,
         gallery_refs=gallery_refs,
         reference_assets=reference_assets,
         reference_files=file_references,
@@ -695,6 +684,7 @@ def _validate_task_image_resources(
     reference_assets: list[dict[str, Any]],
     gallery_refs: list[dict[str, Any]],
     mask: ValidatedRasterImage | None = None,
+    markup: ValidatedRasterImage | None = None,
 ) -> None:
     resources: list[TaskImageResource] = []
     for item in [*reference_assets, *gallery_refs]:
@@ -712,6 +702,8 @@ def _validate_task_image_resources(
                 size_bytes=len(mask.data),
             )
         )
+    if markup is not None:
+        resources.append(TaskImageResource(key=f"content:{markup.sha256}", size_bytes=len(markup.data)))
     try:
         validate_task_image_total(
             resources,
@@ -746,21 +738,6 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         prompt: str = Form(...),
         ui_language: str = Form("zh-CN"),
         main_model: str = Form(DEFAULT_MAIN_MODEL),
-        model: str = Form("gpt-image-2"),
-        size: str = Form("auto"),
-        resolution: str | None = Form(None),
-        ratio: str | None = Form(None),
-        orientation: str | None = Form(None),
-        quality: str = Form("low"),
-        background: str | None = Form(None),
-        output_format: str = Form("png"),
-        moderation: str | None = Form(None),
-        output_compression: str | None = Form(None),
-        n: int = Form(1, ge=1, le=4),
-        web_search: bool = Form(False),
-        codex_mode: str | None = Form(None),
-        api_mode: str | None = Form(None),
-        api_provider_id: str | None = Form(None),
         canonical_model_id: str | None = Form(None),
         provider_id: str | None = Form(None),
         binding_id: str | None = Form(None),
@@ -768,7 +745,6 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         prompt_for_model: str | None = Form(None),
         gallery_prompt: str | None = Form(None),
         prompt_image_mentions: str | None = Form(None),
-        prompt_fidelity: str = Form(DEFAULT_PROMPT_FIDELITY),
         gallery_image_ids: list[str] | None = Form(None),
         reference_asset_ids: list[str] | None = Form(None),
         reference_image_order: str | None = Form(None),
@@ -776,23 +752,21 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         reference_images: list[UploadFile] | None = File(None),
         reference_files: list[UploadFile] | None = File(None),
     ) -> dict[str, Any]:
-        explicit_form_fields = frozenset(str(key) for key in (await request.form()).keys())
-        auth_source = _request_auth_source(ctx, provider_id)
-        if auth_source == "codex" and not ctx.route_helpers["codex_auth_checker"]():
-            raise HTTPException(status_code=401, detail="Codex auth is not available")
-        main_model = effective_reference_file_main_model(main_model)
-
-        provider_hint = provider_id if auth_source == "api" and provider_id else api_provider_id
-        effective_api_provider_id = h["request_api_provider_id"](auth_source, provider_hint)
-        effective_api_provider_name = h["request_api_provider_name"](auth_source, effective_api_provider_id)
-        effective_api_mode = h["request_api_mode"](auth_source, api_mode, effective_api_provider_id)
-        effective_codex_mode = _codex_mode_for_binding(
-            provider_id,
-            binding_id,
-            h["request_codex_mode"](auth_source, codex_mode),
+        routing = _submission_routing(
+            ctx,
+            operation="generate",
+            form_fields=frozenset(str(key) for key in (await request.form()).keys()),
+            canonical_model_id=canonical_model_id,
+            provider_id=provider_id,
+            binding_id=binding_id,
+            parameters_json=parameters_json,
         )
-        effective_api_images_concurrency = h["request_api_images_concurrency"](auth_source, effective_api_provider_id)
-        requested_backend = h["backend_for_submit"](auth_source, effective_api_mode, effective_codex_mode)
+        main_model = effective_reference_file_main_model(main_model)
+        auth_source = routing.auth_source
+        requested_backend = routing.requested_backend
+        effective_api_provider_id = routing.api_provider_id
+        effective_api_provider_name = routing.api_provider_name
+        effective_api_images_concurrency = routing.api_images_concurrency
         if (reference_files or reference_file_ids) and not requested_backend.endswith("_responses"):
             raise HTTPException(
                 status_code=400,
@@ -857,36 +831,11 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
             prepared_submission = _prepare_generation_submission(
                 ctx,
                 operation="generate",
+                routing=routing,
                 prompt=prompt,
                 prompt_for_model=prompt_for_model,
                 ui_language=ui_language,
-                prompt_fidelity=prompt_fidelity,
                 main_model=main_model,
-                model=model,
-                size=size,
-                resolution=resolution,
-                ratio=ratio,
-                orientation=orientation,
-                quality=quality,
-                background=background,
-                output_format=output_format,
-                input_fidelity=None,
-                moderation=moderation,
-                output_compression=output_compression,
-                n=n,
-                web_search=web_search,
-                auth_source=auth_source,
-                effective_api_mode=effective_api_mode,
-                effective_codex_mode=effective_codex_mode,
-                effective_api_provider_id=effective_api_provider_id,
-                effective_api_provider_name=effective_api_provider_name,
-                effective_api_images_concurrency=effective_api_images_concurrency,
-                requested_backend=requested_backend,
-                canonical_model_id=canonical_model_id,
-                provider_id=provider_id,
-                binding_id=binding_id,
-                parameters_json=parameters_json,
-                explicit_form_fields=explicit_form_fields,
                 image_data_urls=all_reference_data_urls,
                 mask_data_url=None,
                 reference_file_inputs=list(prepared_reference_files.response_inputs),
@@ -931,22 +880,6 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         prompt: str = Form(...),
         ui_language: str = Form("zh-CN"),
         main_model: str = Form(DEFAULT_MAIN_MODEL),
-        model: str = Form("gpt-image-2"),
-        size: str = Form("auto"),
-        resolution: str | None = Form(None),
-        ratio: str | None = Form(None),
-        orientation: str | None = Form(None),
-        quality: str = Form("low"),
-        background: str | None = Form(None),
-        output_format: str = Form("png"),
-        input_fidelity: str | None = Form(None),
-        moderation: str | None = Form(None),
-        output_compression: str | None = Form(None),
-        n: int = Form(1, ge=1, le=4),
-        web_search: bool = Form(False),
-        codex_mode: str | None = Form(None),
-        api_mode: str | None = Form(None),
-        api_provider_id: str | None = Form(None),
         canonical_model_id: str | None = Form(None),
         provider_id: str | None = Form(None),
         binding_id: str | None = Form(None),
@@ -954,32 +887,30 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
         prompt_for_model: str | None = Form(None),
         gallery_prompt: str | None = Form(None),
         prompt_image_mentions: str | None = Form(None),
-        prompt_fidelity: str = Form(DEFAULT_PROMPT_FIDELITY),
         gallery_image_ids: list[str] | None = Form(None),
         reference_asset_ids: list[str] | None = Form(None),
         reference_image_order: str | None = Form(None),
         reference_file_ids: list[str] | None = Form(None),
         images: list[UploadFile] | None = File(None),
         mask: UploadFile | None = File(None),
+        markup: UploadFile | None = File(None),
         reference_files: list[UploadFile] | None = File(None),
     ) -> dict[str, Any]:
-        explicit_form_fields = frozenset(str(key) for key in (await request.form()).keys())
-        auth_source = _request_auth_source(ctx, provider_id)
-        if auth_source == "codex" and not ctx.route_helpers["codex_auth_checker"]():
-            raise HTTPException(status_code=401, detail="Codex auth is not available")
-        main_model = effective_reference_file_main_model(main_model)
-
-        provider_hint = provider_id if auth_source == "api" and provider_id else api_provider_id
-        effective_api_provider_id = h["request_api_provider_id"](auth_source, provider_hint)
-        effective_api_provider_name = h["request_api_provider_name"](auth_source, effective_api_provider_id)
-        effective_api_mode = h["request_api_mode"](auth_source, api_mode, effective_api_provider_id)
-        effective_codex_mode = _codex_mode_for_binding(
-            provider_id,
-            binding_id,
-            h["request_codex_mode"](auth_source, codex_mode),
+        routing = _submission_routing(
+            ctx,
+            operation="edit",
+            form_fields=frozenset(str(key) for key in (await request.form()).keys()),
+            canonical_model_id=canonical_model_id,
+            provider_id=provider_id,
+            binding_id=binding_id,
+            parameters_json=parameters_json,
         )
-        effective_api_images_concurrency = h["request_api_images_concurrency"](auth_source, effective_api_provider_id)
-        requested_backend = h["backend_for_submit"](auth_source, effective_api_mode, effective_codex_mode)
+        main_model = effective_reference_file_main_model(main_model)
+        auth_source = routing.auth_source
+        requested_backend = routing.requested_backend
+        effective_api_provider_id = routing.api_provider_id
+        effective_api_provider_name = routing.api_provider_name
+        effective_api_images_concurrency = routing.api_images_concurrency
         if (reference_files or reference_file_ids) and not requested_backend.endswith("_responses"):
             raise HTTPException(
                 status_code=400,
@@ -1007,6 +938,13 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 [mask] if mask is not None else []
             )
             prepared_mask = prepared_masks[0] if prepared_masks else None
+            prepared_markups = await _prepare_raster_uploads([markup] if markup is not None else [])
+            prepared_markup = prepared_markups[0] if prepared_markups else None
+            markup_data_url = (
+                _bytes_to_data_url(prepared_markup.data, filename=prepared_markup.filename,
+                                   mime_type=prepared_markup.mime_type)
+                if prepared_markup is not None else None
+            )
             predicted_uploaded_assets = [
                 _prepared_reference_asset(image)
                 for image in uploaded_images
@@ -1033,6 +971,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 reference_assets=predicted_assets,
                 gallery_refs=gallery_refs,
                 mask=prepared_mask,
+                markup=prepared_markup,
             )
             prepared_reference_files = await _prepare_reference_files(
                 ctx.reference_file_storage,
@@ -1057,42 +996,17 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                 if prepared_mask is not None
                 else None
             )
-            effective_input_fidelity = input_fidelity if image_model_supports_input_fidelity(model) else None
             prepared_submission = _prepare_generation_submission(
                 ctx,
                 operation="edit",
+                routing=routing,
                 prompt=prompt,
                 prompt_for_model=prompt_for_model,
                 ui_language=ui_language,
-                prompt_fidelity=prompt_fidelity,
                 main_model=main_model,
-                model=model,
-                size=size,
-                resolution=resolution,
-                ratio=ratio,
-                orientation=orientation,
-                quality=quality,
-                background=background,
-                output_format=output_format,
-                input_fidelity=effective_input_fidelity,
-                moderation=moderation,
-                output_compression=output_compression,
-                n=n,
-                web_search=web_search,
-                auth_source=auth_source,
-                effective_api_mode=effective_api_mode,
-                effective_codex_mode=effective_codex_mode,
-                effective_api_provider_id=effective_api_provider_id,
-                effective_api_provider_name=effective_api_provider_name,
-                effective_api_images_concurrency=effective_api_images_concurrency,
-                requested_backend=requested_backend,
-                canonical_model_id=canonical_model_id,
-                provider_id=provider_id,
-                binding_id=binding_id,
-                parameters_json=parameters_json,
-                explicit_form_fields=explicit_form_fields,
                 image_data_urls=all_image_data_urls,
                 mask_data_url=mask_data_url,
+                markup_data_url=markup_data_url,
                 reference_file_inputs=list(prepared_reference_files.response_inputs),
                 resolved_original_prompt=resolved_original if resolved_mentions is not None else None,
             )
@@ -1122,6 +1036,11 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                     else []
                 )
                 mask_file = mask_files[0].name if mask_files else None
+                markup_file = (
+                    ctx.storage.write_input(task.task_id, "markup.png", prepared_markup.data,
+                                            kind="markup", index=1).name
+                    if prepared_markup is not None else None
+                )
                 return _persist_generation_submission(
                     ctx,
                     prepared=prepared_submission,
@@ -1136,6 +1055,7 @@ def register_generation_routes(app: FastAPI, ctx: WebUIContext) -> None:
                     effective_api_images_concurrency=effective_api_images_concurrency,
                     input_files=[],
                     mask_file=mask_file,
+                    markup_file=markup_file,
                     gallery_refs=gallery_refs,
                     reference_assets=reference_assets,
                     file_references=file_references,

@@ -5,7 +5,7 @@ import {
   availableCompatibilityLayers,
   availableProtocolsForModel,
   bindingForCompatibilitySelection,
-  bindingForProtocolSelection,
+  
   bindingFromProtocol,
   compatibilityForBinding,
   isBindingTemplateBaseUrl,
@@ -156,21 +156,6 @@ test("compatibility layers stay binding-scoped and map to explicit transports", 
   assert.equal(compatibilityForBinding(openrouter), "openrouter");
 });
 
-test("unchanged protocol selection preserves the existing binding", () => {
-  const responses = normalizeProviderBindings([{
-    id: "responses",
-    canonical_model_id: "gpt-image-2",
-    remote_model_id: "relay/gpt-custom",
-    protocol_profile: "openai_responses",
-    parameter_codec: "gpt_openai_responses",
-    operations: ["generate", "edit"],
-  }], "relay")[0];
-  assert.deepEqual(
-    bindingForProtocolSelection(responses, "gpt-image-2", "relay/gpt-custom", "openai_responses", false, ["generate", "edit"]),
-    responses,
-  );
-});
-
 test("legacy aspect-ratio prompt flags are dropped through normalization and protocol changes", () => {
   const original = normalizeProviderBindings([{
     id: "responses",
@@ -183,39 +168,6 @@ test("legacy aspect-ratio prompt flags are dropped through normalization and pro
   }], "relay")[0];
 
   assert.equal("append_aspect_ratio_prompt" in original, false);
-  const changed = bindingForProtocolSelection(
-    original,
-    "gpt-image-2",
-    original.remote_model_id,
-    "openai_images",
-    true,
-    ["generate", "edit"],
-  );
-  assert.equal("append_aspect_ratio_prompt" in changed, false);
-});
-
-test("GPT direct protocol changes normalize only that model binding", () => {
-  const images = bindingFromProtocol("gpt", "gpt-image-2", "relay/gpt", "openai_images");
-  const responses = bindingForProtocolSelection(
-    images,
-    "gpt-image-2",
-    "relay/gpt",
-    "openai_responses",
-    true,
-    ["generate", "edit"],
-  );
-  assert.equal(responses.protocol_profile, "openai_responses");
-  assert.equal(responses.parameter_codec, "gpt_openai_responses");
-  const restored = bindingForProtocolSelection(
-    responses,
-    "gpt-image-2",
-    "relay/gpt",
-    "openai_images",
-    true,
-    ["generate", "edit"],
-  );
-  assert.equal(restored.protocol_profile, "openai_images");
-  assert.equal(restored.parameter_codec, "gpt_openai_images");
 });
 
 test("overlapping model operations are rejected but disjoint operations are allowed", () => {
@@ -280,7 +232,7 @@ test("binding cards preserve legacy split operations while single bindings adopt
   assert.deepEqual(resolvedBindingOperations(edit, [generate, edit], model), ["edit"]);
 });
 
-for (const modelId of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
+for (const modelId of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
   test(`${modelId} shares GPT protocols while retaining its identity and custom remote name`, () => {
     assert.deepEqual(availableProtocolsForModel(modelId), ["openai_images", "openai_responses"]);
     for (const protocol of ["openai_images", "openai_responses"] as const) {
@@ -296,7 +248,7 @@ test("model changes follow defaults across consecutive selections while preservi
   let remote = "gpt-image-2";
   remote = remoteModelAfterSelection(remote, "gpt-image-2", "gpt-image-2.5-flare");
   assert.equal(remote, "gpt-image-2.5-flare");
-  remote = remoteModelAfterSelection(remote, "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst");
+  remote = remoteModelAfterSelection(remote, "gpt-image-2.5-flare", "gpt-image-2.5-sunburst");
   assert.equal(remote, "gpt-image-2.5-sunburst");
   assert.equal(remoteModelAfterSelection(remote, remote, "gpt-image-2"), "gpt-image-2");
   assert.equal(remoteModelAfterSelection("  ", "gpt-image-2", "gpt-image-2.5-flare"), "gpt-image-2.5-flare");
@@ -306,9 +258,7 @@ test("model changes follow defaults across consecutive selections while preservi
 test("transparent compatibility survives provider copies and protocol changes per binding", () => {
   const binding = { ...bindingFromProtocol("b", "gpt-image-2.5-flare", "custom", "openai_images"), transparency_mode: "prompt" as const };
   assert.equal(normalizeProviderBindings([binding], "copy")[0].transparency_mode, "prompt");
-  assert.equal(bindingForProtocolSelection(binding, binding.canonical_model_id, "custom", "openai_responses", true, ["generate", "edit"]).transparency_mode, "prompt");
   assert.equal(bindingForCompatibilitySelection(binding, "gpt-image-2.5-sunburst", "other", "openai_images", "standard", true, ["generate"]).transparency_mode, "prompt");
-  assert.equal(bindingForProtocolSelection(binding, "nano-banana-pro", "nano", "gemini", true, ["generate"]).transparency_mode, "native");
 });
 
 test("provider edits keep complete defaults and retain the submitted form after a save failure", async (t) => {
@@ -360,7 +310,7 @@ test("provider edits keep complete defaults and retain the submitted form after 
     els.apiProviderBindings = { querySelectorAll: () => [card] };
   };
   try {
-    for (const model of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
+    for (const model of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"]) {
       for (const isDefault of [true, false]) {
         await t.test(`${model} saves after changing a ${isDefault ? "default" : "non-default"} provider`, () => {
           prepare(isDefault, model);

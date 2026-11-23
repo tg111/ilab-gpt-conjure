@@ -27,7 +27,7 @@ export function notifyParameterMigration(report: ParameterMigrationReport): void
   );
 }
 
-function snapshotFromTask(task: WebUITask): GenerationSnapshotView {
+export function snapshotFromTask(task: WebUITask): GenerationSnapshotView {
   const raw = record(task.generation_snapshot);
   if (!Object.keys(raw).length) return legacyGenerationSnapshot(task);
   return {
@@ -139,6 +139,9 @@ const TASK_PARAMETER_INSPECTOR_HIDDEN_IDS = new Set([
 const GPT_TASK_PARAMETER_INSPECTOR_ORDER = new Map([
   "canvas.size",
   "gpt.quality",
+  "gpt.complexity",
+  "gpt.frame_count",
+  "gpt.frame_duration_ms",
   "output.format",
   "gpt.background",
   "output.count",
@@ -197,23 +200,17 @@ export function taskParameterInspectorParameters(
   );
 }
 
-export function taskParameterInspectionMatchesSelectedModel(
-  snapshot: GenerationSnapshotView | null | undefined,
-  selectedModelId: string,
-): boolean {
-  return Boolean(snapshot && modelsShareParameterEditor(snapshot.canonical_model_id, selectedModelId));
-}
-
 export type TaskParameterInspectionAction = "preserve" | "inspect" | "clear";
 
 export function taskParameterInspectionAction(
   task: WebUITask | null | undefined,
   selectedModelId: string,
   outputSettingsLocked: boolean,
+  catalog?: GenerationCatalog | null,
 ): TaskParameterInspectionAction {
   if (outputSettingsLocked) return "preserve";
   if (!task) return "clear";
-  return taskOutputSettingsView(task, selectedModelId, false) === "editor" ? "clear" : "inspect";
+  return taskOutputSettingsView(task, selectedModelId, false, catalog) === "editor" ? "clear" : "inspect";
 }
 
 export function reconcileTaskParameterInspection(): void {
@@ -223,6 +220,7 @@ export function reconcileTaskParameterInspection(): void {
     task,
     String(state.selectedModelId || ""),
     Boolean(methods.isOutputSettingsLocked?.()),
+    state.generationCatalog,
   );
   if (action === "inspect" && task) inspectTaskParameters(task);
   else if (action === "clear" && state.inspectedGenerationSnapshot) clearTaskParameterInspection();
@@ -285,7 +283,8 @@ export function renderTaskParameterInspector(): void {
 export function adoptTaskParameters(task: WebUITask): ParameterMigrationReport {
   const { state, methods } = getLegacyBridge();
   const snapshot = snapshotFromTask(task);
-  const keepGptBinding = isGptImageModel(state.selectedModelId) && isGptImageModel(snapshot.canonical_model_id);
+  const keepGptBinding = isGptImageModel(state.selectedModelId)
+    && modelsShareParameterEditor(snapshot.canonical_model_id, String(state.selectedModelId || ""), state.generationCatalog);
   const targetModelId = keepGptBinding ? state.selectedModelId : snapshot.canonical_model_id;
   const model = state.generationCatalog?.models.find((item) => item.id === targetModelId);
   if (!model) {

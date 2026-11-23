@@ -78,7 +78,6 @@ class WebUIRefactorContractTests(unittest.TestCase):
             "_gallery_item_response",
             "_reference_asset_response",
             "_with_file_urls",
-                "_params",
         ):
             self.assertTrue(callable(getattr(task_enrichment, name)))
 
@@ -334,7 +333,6 @@ class WebUIRefactorContractTests(unittest.TestCase):
             "_debug_sse_path",
             "_is_usage_limit_error",
             "_parse_optional_int",
-            "_normalize_compression",
         ):
             self.assertIs(getattr(executor, name), getattr(executor_transport, name))
         for name in (
@@ -367,8 +365,6 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/", "GET"),
                 ("/api/health", "GET"),
                 ("/api/app-version", "GET"),
-                ("/api/app-version/open-updater", "POST"),
-                ("/api/app-version/dismiss-onboarding", "POST"),
                 ("/api/settings", "GET"),
                 ("/api/settings", "PATCH"),
                 ("/api/lan-access", "GET"),
@@ -440,6 +436,7 @@ class WebUIRefactorContractTests(unittest.TestCase):
                 ("/api/tasks/{task_id}/viewed", "PATCH"),
                 ("/api/tasks/{task_id}/outputs.zip", "GET"),
                 ("/api/tasks/{task_id}/reveal-output", "POST"),
+                ("/api/tasks/{task_id}/markup", "GET"),
                 ("/api/tasks/{task_id}/inputs/{input_index}/image", "GET"),
                 ("/api/tasks/{task_id}/inputs/{input_index}/thumbnail", "GET"),
                 ("/api/tasks/{task_id}/reference-files/{file_index}/download", "GET"),

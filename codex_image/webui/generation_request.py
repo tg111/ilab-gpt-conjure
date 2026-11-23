@@ -1,20 +1,26 @@
 from __future__ import annotations
 
 import json
+import math
+import re
 from collections.abc import Mapping
 from dataclasses import replace
 from typing import Any
 
 from codex_image.client_types import ResponsesInputFile
 from codex_image.generation.types import GenerationCommand, GenerationOperation, ImageInput
-from codex_image.generation.catalog import list_model_manifests
+from codex_image.generation.catalog import get_model_manifest, list_model_manifests
+from codex_image.generation.parameter_vocabulary import requested_image_size, upgrade_parameters
 from codex_image.generation.resolver import BindingResolver
 from codex_image.generation.service import GenerationService
 from codex_image.providers.contracts import ProviderConnection, ProviderModelBinding
 from codex_image.providers.registry import default_registry
 
 
-LEGACY_ROUTING_FORM_FIELDS = frozenset({
+# Form fields of the earlier GPT-only submission. Requests now carry the model,
+# provider and unified parameters; these names are refused so an old client
+# learns its options would be ignored instead of silently getting defaults.
+REMOVED_FORM_FIELDS = frozenset({
     "model",
     "size",
     "resolution",
@@ -32,6 +38,7 @@ LEGACY_ROUTING_FORM_FIELDS = frozenset({
     "api_mode",
     "api_provider_id",
 })
+DEFAULT_CANONICAL_MODEL_ID = "gpt-image-2"
 
 
 def parse_parameters_json(raw: str | None) -> dict[str, Any]:
@@ -46,78 +53,34 @@ def parse_parameters_json(raw: str | None) -> dict[str, Any]:
     return {str(key): item for key, item in value.items()}
 
 
-def legacy_gpt_request(legacy_fields: Mapping[str, Any]) -> tuple[str, str, dict[str, Any]]:
-    parameters: dict[str, Any] = {
-        "canvas.size": str(legacy_fields.get("size") or "auto"),
-        "gpt.quality": str(legacy_fields.get("quality") or "low"),
-        "gpt.background": str(legacy_fields.get("background") or "auto"),
-        "output.format": str(legacy_fields.get("output_format") or "png"),
-        "gpt.moderation": str(legacy_fields.get("moderation") or "low"),
-        "output.count": int(legacy_fields.get("n") or 1),
-    }
-    return (
-        str(legacy_fields.get("model") or "gpt-image-2"),
-        str(legacy_fields.get("resolved_provider_id") or "codex"),
-        parameters,
-    )
-
-
-def legacy_gpt_compat_parameters(legacy_fields: Mapping[str, Any]) -> dict[str, Any]:
-    compat: dict[str, Any] = {}
-    if legacy_fields.get("output_compression") is not None:
-        compat["gpt.output_compression"] = legacy_fields["output_compression"]
-    if legacy_fields.get("input_fidelity") is not None:
-        compat["gpt.input_fidelity"] = legacy_fields["input_fidelity"]
-    if bool(legacy_fields.get("web_search")):
-        compat["gpt.web_search"] = True
-    return compat
-
-
 def generation_command_from_form(
     *,
     operation: GenerationOperation,
-    canonical_model_id: str | None,
-    provider_id: str | None,
-    parameters_json: str | None,
+    canonical_model_id: str,
+    provider_id: str,
+    parameters: Mapping[str, Any],
     prompt: str,
     image_inputs: tuple[ImageInput, ...] = (),
     reference_files: tuple[ResponsesInputFile, ...] = (),
     mask_image: str | None = None,
+    markup_image: str | None = None,
     main_model: str | None = None,
     instructions: str | None = None,
-    legacy_fields: Mapping[str, Any],
-    explicit_form_fields: frozenset[str] = frozenset(),
     binding_id: str | None = None,
 ) -> GenerationCommand:
-    supplied = (canonical_model_id is not None, provider_id is not None, parameters_json is not None)
-    if any(supplied):
-        if not all(supplied) or not str(canonical_model_id).strip() or not str(provider_id).strip():
-            raise ValueError("canonical_model_id, provider_id and parameters_json are required together")
-        mixed = sorted(explicit_form_fields.intersection(LEGACY_ROUTING_FORM_FIELDS))
-        if mixed:
-            raise ValueError("canonical fields cannot be mixed with legacy routing fields")
-        parameters = parse_parameters_json(parameters_json)
-        model_id = str(canonical_model_id).strip()
-        resolved_provider_id = str(provider_id).strip()
-        resolved_binding_id = str(binding_id or "").strip() or None
-        legacy_compat: dict[str, Any] = {}
-    else:
-        model_id, resolved_provider_id, parameters = legacy_gpt_request(legacy_fields)
-        resolved_binding_id = None
-        legacy_compat = legacy_gpt_compat_parameters(legacy_fields)
     return GenerationCommand(
         operation=operation,
-        canonical_model_id=model_id,
-        provider_id=resolved_provider_id,
-        binding_id=resolved_binding_id,
+        canonical_model_id=canonical_model_id,
+        provider_id=provider_id,
+        binding_id=binding_id,
         prompt=prompt,
-        parameters=parameters,
+        parameters=dict(parameters),
         image_inputs=image_inputs,
         reference_files=reference_files,
         mask_image=mask_image,
+        markup_image=markup_image,
         main_model=main_model,
         instructions=instructions,
-        legacy_compat_parameters=legacy_compat,
     )
 
 
@@ -154,26 +117,118 @@ def preview_generation_command(
     codex_mode: str,
     provider_connections: list[ProviderConnection],
 ):
-    mode = "responses" if str(codex_mode).strip().lower() == "responses" else "images"
     if command.provider_id == "codex" and not command.binding_id:
-        command = replace(command, binding_id=f"codex-gpt-image-2-{mode}")
+        command = replace(command, binding_id=_codex_default_binding_id(codex_mode))
     registry = default_registry()
-    providers = {provider.id: provider for provider in provider_connections}
-    providers["codex"] = codex_provider_connection(codex_mode)
     resolver = BindingResolver(
         models={model.id: model for model in list_model_manifests()},
-        providers=providers,
+        providers=_connections(codex_mode, provider_connections),
         registry=registry,
     )
     return GenerationService(resolver, registry).preview(command)
 
 
+def _connections(codex_mode: str, provider_connections: list[ProviderConnection]) -> dict[str, ProviderConnection]:
+    providers = {provider.id: provider for provider in provider_connections}
+    providers["codex"] = codex_provider_connection(codex_mode)
+    return providers
+
+
+def _codex_default_binding_id(codex_mode: str) -> str:
+    mode = "responses" if str(codex_mode).strip().lower() == "responses" else "images"
+    return f"codex-gpt-image-2-{mode}"
+
+
+def resolve_submission_binding(
+    *,
+    operation: GenerationOperation,
+    canonical_model_id: str,
+    provider_id: str,
+    binding_id: str | None,
+    codex_mode: str,
+    provider_connections: list[ProviderConnection],
+) -> ProviderModelBinding:
+    """The binding a submission runs on, before any inputs are read; routing follows it."""
+    if provider_id == "codex" and not binding_id:
+        binding_id = _codex_default_binding_id(codex_mode)
+    model = get_model_manifest(canonical_model_id)
+    provider = _connections(codex_mode, provider_connections).get(provider_id)
+    if provider is None:
+        raise ValueError(f"Unknown provider: {provider_id}")
+    probe = GenerationCommand(operation, model.id, provider_id, "", {}, binding_id=binding_id)
+    return BindingResolver._binding(provider, model, probe)
+
+
+def _orientation(ratio: str) -> str:
+    match = re.fullmatch(r"(\d+):(\d+)", ratio)
+    if not match:
+        return ""
+    width, height = int(match[1]), int(match[2])
+    return "square" if width == height else "landscape" if width > height else "portrait"
+
+
+def _ratio_for_size(size: str) -> str:
+    match = re.fullmatch(r"(\d+)x(\d+)", size)
+    if not match:
+        return ""
+    width, height = int(match[1]), int(match[2])
+    divisor = math.gcd(width, height) or 1
+    return f"{width // divisor}:{height // divisor}"
+
+
+# Unified parameter ids copied into task params under the names history uses.
+_TASK_PARAM_FIELDS = (
+    ("gpt.quality", "quality"),
+    ("gpt.background", "background"),
+    ("output.format", "output_format"),
+    ("gpt.moderation", "moderation"),
+    ("gpt.output_compression", "output_compression"),
+    ("gpt.complexity", "complexity"),
+    ("gpt.frame_count", "frame_count"),
+    ("gpt.frame_duration_ms", "frame_duration_ms"),
+)
+
+
+def task_params_from_plan(plan: Any, *, main_model: str) -> dict[str, Any]:
+    """Task fields shown in history and filters, derived from the resolved request.
+
+    Mirrors the frontend's currentTaskParams so a pending card and its stored task agree.
+    """
+    parameters = upgrade_parameters(plan.model, plan.command.parameters)
+    params: dict[str, Any] = {
+        "model": plan.binding.remote_model_id or plan.model.id,
+        "n": int(parameters.get("output.count") or 1),
+    }
+    size = str(requested_image_size(plan.model, parameters) or "")
+    if size:
+        params["size"] = size
+    mode = parameters.get("canvas.mode")
+    if mode != "auto":
+        ratio = str(parameters.get("canvas.aspect_ratio") or "")
+        if mode == "custom":
+            ratio = _ratio_for_size(size)
+        if ratio:
+            params["ratio"] = ratio
+            params["orientation"] = _orientation(ratio)
+        if mode != "custom" and parameters.get("canvas.resolution"):
+            params["resolution"] = parameters["canvas.resolution"]
+    for parameter_id, field_name in _TASK_PARAM_FIELDS:
+        if parameter_id in parameters:
+            params[field_name] = parameters[parameter_id]
+    if parameters.get("tools.web_search"):
+        params["web_search"] = True
+    if main_model:
+        params["main_model"] = main_model
+    return params
+
+
 __all__ = (
     "codex_provider_connection",
+    "DEFAULT_CANONICAL_MODEL_ID",
     "generation_command_from_form",
-    "legacy_gpt_request",
-    "legacy_gpt_compat_parameters",
-    "LEGACY_ROUTING_FORM_FIELDS",
     "parse_parameters_json",
     "preview_generation_command",
+    "REMOVED_FORM_FIELDS",
+    "resolve_submission_binding",
+    "task_params_from_plan",
 )

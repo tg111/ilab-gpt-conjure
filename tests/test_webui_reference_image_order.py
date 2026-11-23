@@ -15,6 +15,7 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 from tests.webui_helpers import FakeImageClient
+from tests.canonical_form import canonical_form
 
 
 class ReferenceImageOrderTests(unittest.TestCase):
@@ -92,7 +93,7 @@ class ReferenceImageOrderTests(unittest.TestCase):
             data["gallery_image_ids"] = gallery_ids
         if send_order:
             data["reference_image_order"] = raw_order if raw_order is not None else json.dumps(order)
-        return self.client.post(f"/api/{mode}", data=data, files=uploads)
+        return self.client.post(f"/api/{mode}", data=canonical_form(data), files=uploads)
 
     def source_names(self, sources):
         names = {value: name for name, value in self.assets.items()}

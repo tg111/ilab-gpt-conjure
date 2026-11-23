@@ -318,7 +318,3 @@ def _parse_optional_int(value: str | None) -> int | None:
     return int(value)
 
 
-def _normalize_compression(output_format: str, value: str | None) -> int | None:
-    if output_format.lower() == "png":
-        return None
-    return _parse_optional_int(value)

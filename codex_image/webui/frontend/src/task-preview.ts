@@ -1,3 +1,4 @@
+import { currentTaskParams } from "./task-params";
 import { taskRecoveryKind, taskRecoveryMessage } from "./task-recovery";
 import { requestedTransparentBackground, submittedPromptForTask, transparencyStatus } from "./transparency-status";
 import { getLegacyBridge } from "./state";
@@ -23,7 +24,7 @@ function escapeHtml(...args: any[]) { return legacyMethod("escapeHtml", ...args)
 function isTaskArchived(...args: any[]) { return legacyMethod("isTaskArchived", ...args); }
 function updatePreviewElapsedDisplay(...args: any[]) { return legacyMethod("updatePreviewElapsedDisplay", ...args); }
 function closePromptPopover(...args: any[]) { return legacyMethod("closePromptPopover", ...args); }
-function currentSize(...args: any[]) { return legacyMethod("currentSize", ...args); }
+function currentSize(): string { return String(currentTaskParams().size || ""); }
 function syncActiveLightboxUrls(...args: any[]) { return legacyMethod("syncActiveLightboxUrls", ...args); }
 function collectReferenceOutput(...args: any[]) { return legacyMethod("collectReferenceOutput", ...args); }
 function openPromptPopover(...args: any[]) { return legacyMethod("openPromptPopover", ...args); }
@@ -150,7 +151,10 @@ function previewStructureKey(task: any) {
   const selectedIndexes = taskSelectedOutputIndexes(task).join(",");
   const size = task.params?.size || task.output_size || currentSize();
   if (status === "failed" || status === "partial_failed") {
-    return ["failed", taskId, status, outputUrls, selectedIndexes, taskFailureMessage(task), taskRetryStateText(task), canRetryFailedTask(task), canAcceptTaskSuccesses(task)].join("|");
+    return [
+      "failed", taskId, status, outputUrls, selectedIndexes, taskRecoveryKind(task),
+      taskFailureMessage(task), taskRetryStateText(task), canRetryFailedTask(task), canAcceptTaskSuccesses(task),
+    ].join("|");
   }
   if (status === "submitting" || status === "queued") {
     return ["waiting", taskId, status, outputUrls, selectedIndexes, taskGeneratedCount(task, 0), taskTotalCount(task), size, task.last_error || task.error || "", taskRetryStateText(task)].join("|");
@@ -868,11 +872,12 @@ function failureDetailsHtml(task: any): string {
 function retryFailureSummaryButton(task: any) {
   const taskId = escapeHtml(task.task_id || "");
   const actions = [];
+  const recoveryKind = taskRecoveryKind(task);
   actions.push(`<p class="recovery-guidance">${escapeHtml(taskRecoveryMessage(task))}</p>`);
-  if (taskRecoveryKind(task) === "credentials" || taskRecoveryKind(task) === "quota") {
+  if (["credentials", "quota", "svgAuthorModel"].includes(recoveryKind)) {
     actions.push(`<button type="button" class="ghost-button text-sm" data-preview-provider-settings>${escapeHtml(translate("ux.checkProvider"))}</button>`);
   }
-  if (taskRecoveryKind(task) === "input") {
+  if (recoveryKind === "input") {
     actions.push(`<button type="button" class="ghost-button text-sm" data-preview-edit-inputs="${taskId}">${escapeHtml(translate("ux.editInputs"))}</button>`);
   }
   if (canRetryFailedTask(task)) {

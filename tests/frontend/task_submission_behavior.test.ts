@@ -62,6 +62,7 @@ const state: any = {
   images: [],
   mode: "generate",
   parameterDraftsByModel: { "gpt-image-2": {} },
+  parameterValidationErrorsByModel: {},
   pendingTaskId: null,
   referenceFiles: [],
   runFeedbackAction: null,
@@ -150,6 +151,7 @@ function resetSubmissionState(): void {
     storedReferenceFileInputs: () => [],
     syncGalleryInputsFromPrompt() {},
     syncPromptFromEditor() {},
+    updateCompression() {},
     uploadInputs: () => [],
   });
   initTaskSubmitFeature();
@@ -495,3 +497,31 @@ for (const mode of ["generate", "edit"]) {
     });
   }
 }
+
+test("restoring a task's settings fills the model draft without switching the API provider", () => {
+  resetSubmissionState();
+  const model = state.generationCatalog.models[0];
+  const previousParameters = model.parameters;
+  const base = { group: "generation", scope: "model", minimum: null, maximum: null, step: null, visible_when: [], operations: ["generate"], full_width: false };
+  model.parameters = [
+    { ...base, id: "output.count", label_key: "output.quantity", control: "segmented", value_type: "integer", default: 1, allowed_values: [1, 2, 3, 4] },
+    { ...base, id: "gpt.quality", label_key: "output.quality", control: "segmented", value_type: "string", default: "auto", allowed_values: ["auto", "low", "high"] },
+  ];
+  state.apiSettings = { active_provider_id: "current", providers: [{ id: "current" }, { id: "old" }] };
+  state.parameterDraftsByModel["gpt-image-2"] = { "gpt.quality": "low" };
+  try {
+    methods.applyTaskOutputParams({
+      mode: "generate",
+      params: { api_provider_id: "old", api_mode: "responses", codex_mode: "responses", n: 2 },
+      generation_snapshot: { canonical_model_id: "gpt-image-2", requested_parameters: { "output.count": 2 } },
+    });
+    assert.deepEqual(state.parameterDraftsByModel["gpt-image-2"], { "output.count": 2, "gpt.quality": "low" });
+    assert.equal(state.apiSettings.active_provider_id, "current");
+    assert.equal(state.selectedProviderId, "provider-a");
+    assert.equal(state.selectedProviderBindingId, "binding-a");
+  } finally {
+    model.parameters = previousParameters;
+    state.parameterDraftsByModel["gpt-image-2"] = {};
+    delete state.apiSettings;
+  }
+});

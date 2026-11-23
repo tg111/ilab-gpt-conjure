@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests.frontend_runner import frontend_test
+
 import json
 import re
 import shutil
@@ -10,48 +12,6 @@ from tests.webui_helpers import WebUIStaticTestCase
 
 
 class WebUIStaticPromptTests(WebUIStaticTestCase):
-    def test_color_palette_feature_has_typescript_source_contract(self) -> None:
-        color_palette_source = self._color_palette_source()
-        legacy_source = self._bootstrap_source()
-        main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-
-        self.assertIn('import { initColorPaletteFeature } from "./color-palette"', main_source)
-        self.assertLess(main_source.index("initStorageSettingsFeature()"), main_source.index("initColorPaletteFeature()"))
-        self.assertLess(main_source.index("initColorPaletteFeature()"), main_source.index("initPromptFeature()"))
-        self.assertIn("export function initColorPaletteFeature", color_palette_source)
-        self.assertIn("const DEFAULT_COLOR_SWATCHES", color_palette_source)
-        self.assertIn("const COLOR_PALETTE_ENDPOINT", color_palette_source)
-        self.assertIn("function defaultColorPalette()", color_palette_source)
-        self.assertIn("async function refreshColorPalette()", color_palette_source)
-        self.assertIn("function normalizeHexColor(value)", color_palette_source)
-        self.assertIn("Object.assign(getLegacyBridge().methods", color_palette_source)
-        for function_name in [
-            "defaultColorPalette",
-            "normalizeColorPalette",
-            "refreshColorPalette",
-            "persistColorPalette",
-            "importColorPalette",
-            "toggleColorPaletteManageMode",
-            "favoriteColorsForDisplay",
-            "recentColorsForDisplay",
-            "rememberRecentColor",
-            "saveFavoriteColor",
-            "removeFavoriteColor",
-            "normalizeHexColor",
-        ]:
-            self.assertNotRegex(legacy_source, rf"\n(?:async\s+)?function {function_name}\(")
-        for function_name in [
-            "refreshColorPalette",
-            "importColorPalette",
-            "toggleColorPaletteManageMode",
-            "favoriteColorsForDisplay",
-            "recentColorsForDisplay",
-            "rememberRecentColor",
-            "saveFavoriteColor",
-            "removeFavoriteColor",
-            "normalizeHexColor",
-        ]:
-            self._assert_bootstrap_proxy(legacy_source, function_name)
     def test_prompt_fidelity_control_is_removed(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -79,259 +39,6 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn("initPromptFidelityHelpFeature", main_source)
         self.assertNotIn("prompt-fidelity-help-panel", html)
 
-    def test_prompt_fidelity_help_module_keeps_transport_specific_copy(self) -> None:
-        # The help module stays in the tree (unmounted) so it can be re-enabled.
-        source = Path("codex_image/webui/frontend/src/prompt-fidelity-help.ts").read_text(encoding="utf-8")
-        styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
-
-        self.assertIn('return currentApiMode() === "responses" ? "responses" : "images";', source)
-        self.assertIn('return currentCodexMode() === "responses" ? "responses" : "images";', source)
-        self.assertIn('return `output.promptHelp.${transport}.${modeKey}`;', source)
-        dictionaries = "\n".join(
-            path.read_text(encoding="utf-8")
-            for path in sorted(Path("codex_image/webui/frontend/src/i18n").glob("*.ts"))
-            if path.name not in {"dictionaries.ts", "types.ts"}
-        )
-        for key in [
-            "output.promptHelp.responses.original",
-            "output.promptHelp.responses.strict",
-            "output.promptHelp.responses.automatic",
-            "output.promptHelp.images.original",
-            "output.promptHelp.images.strict",
-            "output.promptHelp.images.automatic",
-        ]:
-            self.assertIn(key, dictionaries)
-        self.assertIn('trigger.addEventListener("pointerenter"', source)
-        self.assertIn('trigger.addEventListener("focus"', source)
-        self.assertIn('trigger.addEventListener("click"', source)
-        self.assertIn('event.key !== "Escape"', source)
-        self.assertRegex(styles, r"\.prompt-fidelity-help-popover\s*\{[^}]*position:\s*fixed")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-popover\s*\{[^}]*z-index:\s*1400")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-button\s*\{[^}]*border-radius:\s*50%")
-        self.assertRegex(styles, r"\.prompt-fidelity-help-button\s*\{[^}]*box-shadow:\s*none")
-        self.assertRegex(
-            styles,
-            r"\.prompt-fidelity-help-button:hover,\s*\.prompt-fidelity-help-button:focus-visible,\s*"
-            r"\.prompt-fidelity-help-button\[aria-expanded=\"true\"\]\s*\{[^}]*"
-            r"background:\s*transparent[^}]*box-shadow:\s*none",
-        )
-    def test_prompt_chip_logic_has_typescript_source_contract(self) -> None:
-        prompt_source = self._prompt_source()
-        core_source = "\n".join(
-            [
-                prompt_source,
-                self._prompt_serialization_source(),
-                self._prompt_gallery_chips_source(),
-                self._prompt_editor_events_source(),
-                self._prompt_model_source(),
-            ]
-        )
-        legacy_source = self._bootstrap_source()
-        main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-
-        self.assertNotIn("@ts-nocheck", prompt_source)
-        self.assertIn('from "./prompt-serialization"', prompt_source)
-        self.assertIn('from "./prompt-gallery-chips"', prompt_source)
-        self.assertIn('from "./prompt-editor-events"', prompt_source)
-        self.assertIn('from "./prompt-model"', prompt_source)
-        for marker in [
-            "export function initPromptFeature",
-            "function createGalleryChip",
-            "function buildPromptForModel",
-            "function galleryPrompt",
-            "function syncPromptGalleryMentionsFromInputs",
-            "function handlePromptChipDrop",
-            "function getPromptText",
-            "function normalizePromptEditorText",
-            "function createPromptTextFragment",
-            "function setPromptWithGalleryRefs",
-        ]:
-            self.assertIn(marker, core_source)
-        self.assertIn('return String(value || "").replace(/\\r\\n?/g, "\\n");', core_source)
-        self.assertIn('document.createElement("br")', core_source)
-        self.assertIn("document.createDocumentFragment()", core_source)
-        self.assertRegex(
-            core_source,
-            r"function setPromptText\(text: any\): void\s*\{[\s\S]*normalizePromptEditorText\(text\)[\s\S]*createPromptTextFragment\(normalized\)",
-        )
-        self.assertRegex(
-            core_source,
-            r"function setPromptWithGalleryRefs\(text: any,\s*refs: any, mentions\?: ImageMentionContext, sources: any\[\] = \[\]\): void\s*\{[\s\S]*const promptText = normalizePromptEditorText\(text\)",
-        )
-
-        for function_name in [
-            "getPromptText",
-            "setPromptWithGalleryRefs",
-            "syncPromptFromEditor",
-            "createGalleryChip",
-            "createPromptSnippetChip",
-            "buildPromptForModel",
-            "currentPromptForModel",
-            "syncGalleryInputsFromPrompt",
-            "syncPromptGalleryMentionsFromInputs",
-        ]:
-            self._assert_bootstrap_proxy(legacy_source, function_name)
-
-        self.assertIn("Object.assign(getLegacyBridge().methods", core_source)
-        self.assertIn('addEventListener("copy", handlePromptEditorCopy)', core_source)
-        self.assertIn('addEventListener("dragstart", handlePromptChipDragStart)', core_source)
-        self.assertLess(main_source.index('import "../legacy-app.js"'), main_source.index('import { initInputSourcesFeature } from "./input-sources"'))
-        self.assertLess(main_source.index("initInputSourcesFeature()"), main_source.index("initImageEditorFeature()"))
-        self.assertLess(main_source.index("initImageEditorFeature()"), main_source.index("initPromptFeature()"))
-        self.assertLess(main_source.index("initPromptFeature()"), main_source.index("initTaskListControlsFeature()"))
-        self.assertLess(main_source.index("initTaskListControlsFeature()"), main_source.index("initTaskFeature()"))
-        self.assertLess(main_source.index("initTaskFeature()"), main_source.index("initializeQueueFeature()"))
-    def test_prompt_colors_feature_has_typescript_source_contract(self) -> None:
-        source = self._prompt_colors_source()
-        prompt_source = self._prompt_source()
-        main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-
-        self.assertNotIn("@ts-nocheck", source)
-        self.assertIn('import { initPromptColorsFeature } from "./prompt-colors"', main_source)
-        self.assertLess(main_source.index("initPromptColorsFeature()"), main_source.index("initPromptFeature()"))
-        for marker in [
-            "DEFAULT_COLOR_CODE",
-            "COLOR_PALETTE_EXPORT_CSS_ENDPOINT",
-            "export function initPromptColorsFeature",
-            "function activeColorMatch",
-            "function renderColorSuggest",
-            "function insertColorCode",
-            "function createColorChip",
-            "function readableTextColor",
-            "function hideColorSuggest",
-        ]:
-            self.assertIn(marker, source)
-        for function_name in [
-            "updateColorSuggest",
-            "activeColorMatch",
-            "renderColorSuggest",
-            "bindColorSuggestEvents",
-            "insertColorCode",
-            "positionColorSuggestAtCaret",
-            "openColorChipEditor",
-            "positionColorSuggestAtChip",
-            "colorNameForHex",
-            "colorSwatchButton",
-            "createColorChip",
-            "updateColorChip",
-            "readableTextColor",
-            "hexToRgb",
-            "mixRgbWithWhite",
-            "relativeLuminance",
-            "contrastRatio",
-            "hideColorSuggest",
-        ]:
-            self.assertRegex(source, rf"\nfunction {function_name}\(")
-            self.assertNotRegex(prompt_source, rf"\nfunction {function_name}\(")
-        self.assertIn("Object.assign(getLegacyBridge().methods", source)
-    def test_prompt_snippets_feature_has_typescript_source_contract(self) -> None:
-        source = self._prompt_snippets_source()
-        prompt_source = self._prompt_source()
-        main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-
-        self.assertNotIn("@ts-nocheck", source)
-        self.assertIn('import { initPromptSnippetsFeature } from "./prompt-snippets"', main_source)
-        self.assertLess(main_source.index("initPromptSnippetsFeature()"), main_source.index("initPromptFeature()"))
-        for marker in [
-            "PROMPT_SNIPPETS_ENDPOINT",
-            "PROMPT_SNIPPET_TRIGGER_PATTERN",
-            "export function initPromptSnippetsFeature",
-            "function createPromptSnippetChip",
-            "function expandPromptSnippets",
-            "function updatePromptSnippetSuggest",
-            "function getPromptSelectionForSnippet",
-            "function openPromptSnippetSavePopover",
-            "function closePromptSnippetPopover",
-        ]:
-            self.assertIn(marker, source)
-        self.assertIn('candidate.length === 1 && PROMPT_SNIPPET_TRIGGER_CHARS.includes(candidate)', source)
-        for function_name in [
-            "normalizePromptSnippet",
-            "refreshPromptSnippets",
-            "activePromptSnippetMatch",
-            "insertPromptSnippet",
-            "createPromptSnippetChip",
-            "findPromptSnippetRefAt",
-            "findPromptSnippetById",
-            "findPromptSnippetByTag",
-            "expandPromptSnippets",
-            "updatePromptSnippetSelectionButton",
-            "showPromptSnippetSelectionButton",
-            "openPromptSnippetSavePopover",
-            "openPromptSnippetChipPopover",
-            "savePromptSnippetFromPopover",
-            "closePromptSnippetPopover",
-            "hidePromptSnippetSuggest",
-        ]:
-            self.assertRegex(source, rf"\n(?:async\s+)?function {function_name}\(")
-            self.assertNotRegex(prompt_source, rf"\n(?:async\s+)?function {function_name}\(")
-        self.assertIn("Object.assign(getLegacyBridge().methods", source)
-    def test_prompt_templates_feature_has_typescript_source_contract(self) -> None:
-        source = self._prompt_templates_source()
-        prompt_source = self._prompt_source()
-        main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-        boot_source = Path("codex_image/webui/frontend/src/boot.ts").read_text(encoding="utf-8")
-        bootstrap_source = self._bootstrap_source()
-
-        self.assertNotIn("@ts-nocheck", source)
-        self.assertIn('import { initPromptTemplatesFeature } from "./prompt-templates"', main_source)
-        self.assertLess(main_source.index("initPromptSnippetsFeature()"), main_source.index("initPromptTemplatesFeature()"))
-        self.assertLess(main_source.index("initPromptTemplatesFeature()"), main_source.index("initPromptFeature()"))
-        self.assertIn('call(methods, "refreshPromptTemplates")', boot_source)
-        self._assert_bootstrap_proxy(bootstrap_source, "refreshPromptTemplates")
-        for marker in [
-            "PROMPT_TEMPLATES_ENDPOINT",
-            "PROMPT_TEMPLATE_CATEGORIES_ENDPOINT",
-            "export function initPromptTemplatesFeature",
-            "function normalizePromptTemplate",
-            "function normalizePromptTemplateCategory",
-            "function refreshPromptTemplates",
-            "function syncPromptTemplateSearchInput",
-            "function setPromptTemplateSearchLocked",
-            "function guardPromptTemplateSearchInput",
-            "function openPromptTemplateDrawer",
-            "function renderPromptTemplateCategories",
-            "function renderPromptTemplateList",
-            "function historyTemplateThumbnails",
-            "function renderPromptTemplateThumbnailPicker",
-            "function applyPromptTemplate",
-            "function importPromptTemplatePack",
-            "function exportPromptTemplatePack",
-            "function setPromptTemplateSummary",
-            "function savePromptTemplateFromDrawer",
-        ]:
-            self.assertIn(marker, source)
-        for function_name in [
-            "normalizePromptTemplate",
-            "normalizePromptTemplateCategory",
-            "refreshPromptTemplates",
-            "openPromptTemplateDrawer",
-            "closePromptTemplateDrawer",
-            "renderPromptTemplateCategories",
-            "renderPromptTemplateList",
-            "renderPromptTemplateRecentDock",
-            "selectPromptTemplate",
-            "applyPromptTemplate",
-            "copyPromptTemplateContent",
-            "historyTemplateThumbnails",
-            "renderPromptTemplateThumbnailPicker",
-            "importPromptTemplatePack",
-            "exportPromptTemplatePack",
-            "setPromptTemplateSummary",
-            "createPromptTemplateCategory",
-            "updatePromptTemplateCategory",
-            "deletePromptTemplateCategory",
-            "renderPromptTemplateForm",
-            "savePromptTemplateFromDrawer",
-            "deletePromptTemplate",
-        ]:
-            self.assertRegex(source, rf"\n(?:async\s+)?function {function_name}\(")
-            self.assertNotRegex(prompt_source, rf"\n(?:async\s+)?function {function_name}\(")
-        self.assertIn("Object.assign(getLegacyBridge().methods", source)
-        overlay_source = Path("codex_image/webui/frontend/src/overlay-popovers.ts").read_text(encoding="utf-8")
-        self.assertIn("function closePromptTemplateDrawer()", overlay_source)
-        self.assertIn("closePromptTemplateDrawer();", overlay_source)
-        self.assertIn('legacyMethod("closeGallery", { restoreFocus: false })', source)
     def test_prompt_template_library_has_compact_entry_and_drawer(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
@@ -612,68 +319,6 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
             styles,
             r"\.prompt-template-recent-cell\.find-active \.prompt-footer > :not\(\.prompt-find-panel\)\s*\{[^}]*display:\s*none",
         )
-    def test_prompt_editor_core_modules_have_typescript_source_contract(self) -> None:
-        prompt_source = self._prompt_source()
-        serialization_source = self._prompt_serialization_source()
-        gallery_chips_source = self._prompt_gallery_chips_source()
-        editor_events_source = self._prompt_editor_events_source()
-        model_source = self._prompt_model_source()
-
-        for source in (
-            serialization_source,
-            gallery_chips_source,
-            editor_events_source,
-            model_source,
-        ):
-            self.assertNotIn("@ts-nocheck", source)
-            self.assertIn('import { getLegacyBridge } from "./state"', source)
-            self.assertIn("Object.assign(getLegacyBridge().methods", source)
-
-        for symbol in (
-            "getPromptText",
-            "promptTextFromNode",
-            "promptSelectionText",
-            "promptTextFromRange",
-            "rangeIntersectsNode",
-            "selectPromptEditorContents",
-        ):
-            self.assertIn(f"export function {symbol}", serialization_source)
-            self.assertIn(symbol, prompt_source)
-
-        for symbol in (
-            "createGalleryChip",
-            "findGalleryRefMentionAt",
-            "syncGalleryInputsFromPrompt",
-            "syncPromptGalleryMentionsFromInputs",
-            "insertGalleryMention",
-            "hideMentionSuggest",
-        ):
-            self.assertIn(f"export function {symbol}", gallery_chips_source)
-            self.assertIn(symbol, prompt_source)
-
-        for symbol in (
-            "handlePromptEditorCopy",
-            "updatePromptChipSelectionState",
-            "handlePromptEditorDrop",
-            "bindPromptEditorEvents",
-            "syncPromptFromEditor",
-        ):
-            self.assertIn(f"export function {symbol}", editor_events_source)
-            self.assertIn(symbol, prompt_source)
-
-        for symbol in (
-            "currentPromptForModel",
-            "promptTokenReplacement",
-            "galleryPrompt",
-        ):
-            self.assertIn(f"export function {symbol}", model_source)
-            self.assertIn(symbol, prompt_source)
-
-        self.assertIn('from "./prompt-serialization"', prompt_source)
-        self.assertIn('from "./prompt-gallery-chips"', prompt_source)
-        self.assertIn('from "./prompt-editor-events"', prompt_source)
-        self.assertIn('from "./prompt-model"', prompt_source)
-        self.assertLessEqual(len(prompt_source.splitlines()), 220)
     def test_prompt_editor_supports_gallery_mentions(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -849,7 +494,9 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertNotIn("导入 PS", script)
         self.assertNotIn("COLOR_RECENTS_STORAGE_KEY", script)
         self.assertNotIn("codex-image-recent-colors", script)
-        self.assertNotIn("背景色", script)
+        prompt_colors = Path("codex_image/webui/frontend/src/prompt-colors.ts").read_text(encoding="utf-8")
+        self.assertNotIn("背景色", prompt_colors)
+        self.assertNotIn('translate("appearance.background")', prompt_colors)
         self.assertRegex(styles, r"\.color-suggest\s*\{[^}]*position:\s*fixed")
         self.assertRegex(styles, r"\.color-suggest\s*\{[^}]*box-sizing:\s*border-box")
         self.assertRegex(styles, r"\.color-suggest\s*\{[^}]*overflow-x:\s*hidden")
@@ -892,7 +539,6 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
 
         self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*createColorChip\(colorCode\)")
         self.assertRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]*normalizeHexColor\(match\[0\]\)")
-        self.assertIn("/@([^\\s@，。,.#~～〜∼˜]+)|#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])|(?:^|[\\s\\n，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’])([~～〜∼˜]+)([^\\s~～〜∼˜@#，。,.；;：:！？!?、（）()\\[\\]【】\"'“”‘’]+)/g", script)
         self.assertNotRegex(script, r"function setPromptWithGalleryRefs\(text,\s*refs, mentions\?: ImageMentionContext, sources = \[\]\)\s*\{[\s\S]{0,160}!Array\.isArray\(refs\) \|\| !refs\.length")
     def test_color_chip_swatch_reopens_picker_for_editing(self) -> None:
         script = self._frontend_script_source()
@@ -1043,6 +689,7 @@ class WebUIStaticPromptTests(WebUIStaticTestCase):
         self.assertRegex(source, r"function handlePromptEditorPaste\(event:\s*any\)[\s\S]*event\.preventDefault\(\)[\s\S]*insertPlainPromptText\(text\)[\s\S]*syncPromptAfterChipMutation\(\)")
         self.assertNotIn("insertHTML", source)
         self.assertNotIn("createContextualFragment", source)
+    @frontend_test
     def test_color_chip_text_uses_actual_mixed_background_contrast(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -1110,8 +757,8 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
 
-        self.assertRegex(styles, r"\.sidebar-content\s*,[\s\S]*\.dashboard\s*,[\s\S]*\.prompt-editor\s*,[\s\S]*\.modal-panel\s*\{[^}]*scrollbar-color:\s*var\(--scrollbar-thumb\)")
-        self.assertRegex(styles, r"\.sidebar-content::-webkit-scrollbar-thumb\s*,[\s\S]*\.dashboard::-webkit-scrollbar-thumb")
+        self.assertRegex(styles, r":where\(\*\)\s*\{[^}]*scrollbar-color:\s*var\(--scrollbar-thumb\)")
+        self.assertRegex(styles, r":where\(\*\)::-webkit-scrollbar-thumb\s*\{[^}]*background:\s*var\(--scrollbar-thumb\)")
         self.assertRegex(styles, r"\.image-uploader-grid\s*\{[^}]*overflow:\s*hidden")
         self.assertRegex(styles, r"\.image-thumb-list\s*\{[^}]*overflow-x:\s*auto")
         self.assertRegex(styles, r"\.upload-tile\s*\{[^}]*height:\s*100%")
@@ -1270,6 +917,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertRegex(styles, r"\.mode-settings-slot\s*\{[^}]*position:\s*relative")
         self.assertRegex(styles, r"\.mode-settings-slot\s*\{[^}]*z-index:\s*2")
         self.assertNotIn(".mode-settings-slot.is-transitioning", styles)
+    @frontend_test
     def test_main_model_combobox_filters_builtin_options_and_keeps_custom_input(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -1286,9 +934,10 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
                 const gpt56Matches = mainModelOptionsForQuery("gpt-5.6");
                 const customMatches = mainModelOptionsForQuery("future-model-x");
                 for (const [query, expected] of [
-                  ["  ASTRA ", ["gpt-6-astra"]],
-                  ["gpt-6", ["gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna"]],
-                  ["  SOL ", ["gpt-6.1-sol", "gpt-6-sol", "gpt-5.6-sol"]],
+                  ["gpt-6.2", ["gpt-6.2-sol", "gpt-6.2-astra"]],
+                  ["  ASTRA ", ["gpt-6.2-astra", "gpt-6-astra"]],
+                  ["gpt-6", ["gpt-6.2-sol", "gpt-6.2-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna"]],
+                  ["  SOL ", ["gpt-6.2-sol", "gpt-6.1-sol", "gpt-6-sol", "gpt-5.6-sol"]],
                   ["Luna", ["gpt-6-luna", "gpt-5.6-luna"]],
                   ["Terra", ["gpt-6.1-terra", "gpt-5.6-terra"]],
                 ]) {
@@ -1318,6 +967,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         result = subprocess.run([node, "-e", harness], check=False, text=True, capture_output=True)
 
         self.assertEqual(result.returncode, 0, result.stderr)
+    @frontend_test
     def test_main_model_restore_resets_retired_builtin_option(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -1405,11 +1055,10 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn("function setModeSpecificElementVisibility", script)
         self.assertIn("function applyModeSettingsVisibility", script)
         self.assertIn("function setModeSettingsVariant", script)
-        self.assertIn("function isDirectApiMode(authSource = currentAuthSource())", script)
         self.assertIn("function updateModeSpecificSettings(authSource = currentAuthSource())", script)
         self.assertIn('authSource === "api" && currentApiMode() !== "responses"', script)
         self.assertIn('authSource === "codex" && currentCodexMode() !== "responses"', script)
-        self.assertIn("setModeSettingsVariant(isDirectApi, resolveModeSettingsVisibility({", script)
+        self.assertIn("setModeSettingsVariant(isDirectApi, resolveModeSettingsVisibility(binding, isDirectApi))", script)
         self.assertNotIn("slot.style.height = `${fromHeight}px`;", script)
         self.assertNotIn("slot.style.height = `${targetHeight}px`;", script)
         self.assertNotIn("modeTransitionTimers", script)
@@ -1418,7 +1067,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
             r"async function applyAuthSource\(source[^)]*\)[^{]*\{[\s\S]*state\.pendingAuthSource = source;[\s\S]*applyAuthSourceSelection\(source\);[\s\S]*const response = await fetch",
         )
         self.assertIn("function resolveModeSettingsVisibility", script)
-        self.assertIn('if (!isGptImageModel(modelId))', script)
+        self.assertIn("binding.capabilities.uses_main_model", script)
         self.assertIn("setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);", script)
         self.assertIn("setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);", script)
         self.assertNotIn('id="apiDirectSettingsNotice"', html)
@@ -1451,7 +1100,6 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
 
         self.assertIn("GPT_IMAGE_2_SIZE_PRESETS", script)
         self.assertIn("2160, 3840", script)
-        self.assertIn("3840x2160", script)
     def test_gpt_image_2_webui_hides_unsupported_input_fidelity(self) -> None:
         html = Path("codex_image/webui/static/index.html").read_text(encoding="utf-8")
         script = self._frontend_script_source()
@@ -1462,4 +1110,3 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertNotIn("input_fidelity: state.mode", script)
         self.assertNotIn('payload.input_fidelity', script)
         self.assertNotIn('form.append("input_fidelity"', script)
-        self.assertIn('els.size.value = "1024x1024"', script)

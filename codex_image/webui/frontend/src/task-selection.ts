@@ -45,7 +45,7 @@ function revealHistoryTaskInSidebar(task) { return legacyMethod("revealHistoryTa
 
 function applyTaskToFormWithOutputLock(task) {
   const outputSettingsLocked = Boolean(legacyMethod("isOutputSettingsLocked"));
-  const outputView = taskOutputSettingsView(task, String(state.selectedModelId || ""), outputSettingsLocked);
+  const outputView = taskOutputSettingsView(task, String(state.selectedModelId || ""), outputSettingsLocked, state.generationCatalog);
   applyTaskToForm(task, {
     preserveOutputSettings: outputView !== "editor",
     preserveComposer: false,
@@ -68,12 +68,7 @@ function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
   return state.taskInputRestoreSeq === restoreSeq && String(state.selectedTaskId) === String(taskId);
 }
 
-function applySelectedTaskRequestPreview(task) {
-  const requestPayload = taskRequestPreviewPayload(task);
-  if (requestPayload && els.requestJson) {
-    els.requestJson.textContent = JSON.stringify(requestPayload, null, 2);
-  }
-}
+function applySelectedTaskRequestPreview(_task) {}
 
 function applyTaskInputRestoreSources(sources, taskId, restoreSeq) {
   if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) {
@@ -206,8 +201,18 @@ async function fetchHistoryInputBlob(candidateUrls, sourceUrl) {
 async function restoreTaskInputs(task, options = {}) {
   const taskId = options.taskId ?? task?.task_id;
   const restoreSeq = options.restoreSeq;
+  const restoreWithMarkup = async (sources) => {
+    if (task.markup_file && sources[0] && !sources[0].markupFile) {
+      try {
+        const response = await fetch(`/api/tasks/${encodeURIComponent(taskId)}/markup`);
+        if (!response.ok) throw new Error(translate("imageEditor.openFailed"));
+        sources[0] = { ...sources[0], markupFile: new File([await response.blob()], "markup.png", { type: "image/png" }) };
+      } catch (error) { revokeUploadPreviewUrls(sources); throw error; }
+    }
+    return applyTaskInputRestoreSources(sources, taskId, restoreSeq);
+  };
   if (Array.isArray(task.local_input_files)) {
-    return applyTaskInputRestoreSources(task.local_input_files.slice(), taskId, restoreSeq);
+    return restoreWithMarkup(task.local_input_files.slice());
   }
 
   if (Array.isArray(task.input_sources) && task.input_sources.length) {
@@ -245,7 +250,7 @@ async function restoreTaskInputs(task, options = {}) {
       revokeUploadPreviewUrls(restoredSources);
       throw error;
     }
-    return applyTaskInputRestoreSources(restoredSources, taskId, restoreSeq);
+    return restoreWithMarkup(restoredSources);
   }
 
   const urls = taskInputUrls(task);
@@ -253,7 +258,7 @@ async function restoreTaskInputs(task, options = {}) {
     ? task.gallery_refs.map((ref) => gallerySource(ref))
     : [];
   if (!urls.length) {
-    return applyTaskInputRestoreSources(gallerySources, taskId, restoreSeq);
+    return restoreWithMarkup(gallerySources);
   }
 
   if (selectedTaskInputRestoreCurrent(taskId, restoreSeq)) {
@@ -279,7 +284,7 @@ async function restoreTaskInputs(task, options = {}) {
     revokeUploadPreviewUrls(files);
     throw error;
   }
-  return applyTaskInputRestoreSources([...files, ...gallerySources], taskId, restoreSeq);
+  return restoreWithMarkup([...files, ...gallerySources]);
 }
 
 async function selectTask(taskId) {

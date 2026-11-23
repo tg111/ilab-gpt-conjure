@@ -1,6 +1,4 @@
-import { isGptImageModel } from "./gpt-image-models";
-import { canonicalControlValues } from "./model-parameter-drafts";
-import { activeParameterValuesFor } from "./model-parameters";
+import { activeParameterValuesFor, selectedBindingParameterIds } from "./model-parameters";
 import { selectedProviderBinding } from "./provider-selection";
 import { getLegacyBridge } from "./state";
 
@@ -16,24 +14,17 @@ function sortedRecord(values: Record<string, unknown>): Record<string, unknown> 
 }
 
 export function currentGenerationSelection(): CanonicalGenerationSelection {
-  const { state, methods } = getLegacyBridge();
+  const { state } = getLegacyBridge();
   const model = state.generationCatalog?.models.find((item) => item.id === state.selectedModelId);
   if (!model || !state.selectedProviderId) {
     return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
   }
-  let draft = state.parameterDraftsByModel[model.id] || {};
-  if (isGptImageModel(model.id) && typeof methods.currentTaskParams === "function") {
-    draft = {
-      ...draft,
-      ...canonicalControlValues(methods.currentTaskParams(), selectedProviderBinding()?.protocol_profile || ""),
-    };
-    state.parameterDraftsByModel[model.id] = draft;
-  }
+  const draft = state.parameterDraftsByModel[model.id] || {};
   return {
     canonicalModelId: model.id,
     providerId: state.selectedProviderId,
     bindingId: selectedProviderBinding()?.id || "",
-    parameters: activeParameterValuesFor(model, state.mode, draft),
+    parameters: activeParameterValuesFor(model, state.mode, draft, selectedBindingParameterIds(model.id)),
   };
 }
 

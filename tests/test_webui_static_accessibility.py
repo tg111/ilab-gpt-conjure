@@ -89,25 +89,12 @@ class WebUIStaticAccessibilityTests(unittest.TestCase):
         html = Path(
             "codex_image/webui/static/index.html"
         ).read_text(encoding="utf-8")
-        for group_id in (
-            "orientationGroup",
-            "resolutionGroup",
-            "ratioGroup",
-            "qualityGroup",
-            "quantityGroup",
-            "outputFormatGroup",
-            "moderationGroup",
-        ):
-            tag = re.search(
-                rf"<div\b[^>]*\bid=\"{group_id}\"[^>]*>",
-                html,
-            )
-            self.assertIsNotNone(tag, group_id)
-            self.assertIn('role="group"', tag.group(0))
-            self.assertRegex(
-                tag.group(0),
-                r'aria-(?:label|labelledby)="[^"]+"',
-            )
+        # Model parameter choices are rendered from the catalog as labelled groups.
+        renderer = Path("codex_image/webui/frontend/src/model-parameters.ts").read_text(encoding="utf-8")
+        self.assertIn('group.setAttribute("role", "group");\n  group.setAttribute("aria-label", translate(definition.label_key));', renderer)
+        self.assertGreaterEqual(renderer.count('setAttribute("aria-pressed"'), 6)
+        for group_id in ("orientationGroup", "resolutionGroup", "ratioGroup", "qualityGroup", "quantityGroup"):
+            self.assertNotIn(f'id="{group_id}"', html)
 
         inline_script = html[html.index("document.querySelectorAll"):
                              html.index("</script>", html.index("document.querySelectorAll"))]

@@ -1,6 +1,8 @@
 /** Geometry acceptance on the isolated fixture's actual generation page. */
 import { loadAcceptanceFrame, prepareFixtureOrigin } from "./browser_acceptance";
 import { LOCALES } from "../../codex_image/webui/frontend/src/i18n/dictionaries";
+/** Selector for a catalog-rendered parameter field in the composer. */
+const param = (id: string) => `#modelParameterGrid [data-parameter-id="${id}"]`;
 
 const frame = document.querySelector<HTMLIFrameElement>("#historyFrame")!;
 const output = document.querySelector<HTMLElement>("#results")!;
@@ -102,7 +104,7 @@ async function run() {
             Math.abs(rect(selector).height - rect("#quickGalleryDock").height) <= 1));
       }
       const buttons = [...d.querySelectorAll<HTMLElement>(
-        ".output-panel :is(.orientation-field, .resolution-field, .quality-field, .quantity-field, #promptFidelityField, .custom-size-control) .radio-btn")]
+        ".output-panel #modelParameterGrid .radio-btn")]
         .filter(button => button.getBoundingClientRect().height > 0 && !button.closest('[aria-hidden="true"]'));
       check(`${name}: field options are not clipped`, buttons.every(button => button.scrollWidth <= button.clientWidth + 1),
         buttons.filter(button => button.scrollWidth > button.clientWidth + 1).map(button => button.textContent?.trim()));
@@ -143,21 +145,19 @@ async function run() {
           controls.bottom >= availableBottom - 1 && preview.bottom >= availableBottom - 1);
         check(`${name}: compact parameter groups use spacing without separators`,
           parseFloat(w.getComputedStyle(find(".mode-settings-slot")).borderBottomWidth) === 0
-          && parseFloat(w.getComputedStyle(find(".output-file-settings")).borderTopWidth) === 0
           && parseFloat(w.getComputedStyle(find(".mode-settings-slot")).paddingBottom) === 0
-          && parseFloat(w.getComputedStyle(find(".output-file-settings")).paddingTop) === 0);
-        const modeBounds = rect(".mode-settings-slot"), sizeBounds = rect(".output-size-settings"), fileBounds = rect(".output-file-settings");
-        if (modeBounds.height > 0 && sizeBounds.height > 0 && fileBounds.height > 0) {
+          && parseFloat(w.getComputedStyle(find("#modelParameterGrid")).borderTopWidth) === 0);
+        const modeBounds = rect(".mode-settings-slot"), gridBounds = rect("#modelParameterGrid");
+        if (modeBounds.height > 0 && gridBounds.height > 0) {
           const gap = parseFloat(w.getComputedStyle(find(".settings-grid")).rowGap);
-          check(`${name}: compact group spacing is balanced`,
-            Math.abs((sizeBounds.top - modeBounds.bottom) - (fileBounds.top - sizeBounds.bottom)) <= 1);
           check(`${name}: compact group spacing does not absorb unused height`,
-            gap >= 8 && gap <= 16
-            && Math.abs(sizeBounds.top - modeBounds.bottom - gap) <= 1
-            && Math.abs(fileBounds.top - sizeBounds.bottom - gap) <= 1,
-            {gap, first: sizeBounds.top - modeBounds.bottom, second: fileBounds.top - sizeBounds.bottom});
+            gap >= 8 && gap <= 16 && Math.abs(gridBounds.top - modeBounds.bottom - gap) <= 1,
+            {gap, between: gridBounds.top - modeBounds.bottom});
+        }
+        if (gridBounds.height > 0) {
           check(`${name}: unused height is not moved below the last parameter`,
-            rect(".output-panel").bottom - fileBounds.bottom <= parseFloat(w.getComputedStyle(find(".output-panel")).paddingBottom) + 2);
+            rect(".output-panel").bottom - gridBounds.bottom <= parseFloat(w.getComputedStyle(find(".output-panel")).paddingBottom) + 2,
+            {panelBottom: rect(".output-panel").bottom, gridBottom: gridBounds.bottom});
         }
         const choices = [...d.querySelectorAll<HTMLElement>(".output-panel .radio-btn")]
           .filter(button => button.getBoundingClientRect().height > 0 && !button.closest('[aria-hidden="true"]'));
@@ -207,15 +207,15 @@ async function run() {
   }
   const comfortOnly = new URLSearchParams(location.search).has("comfort-only");
   if (new URLSearchParams(location.search).has("density-only") || comfortOnly) {
-    const selectors = ["#sizeModeGroup .radio-btn",
-      "#orientationGroup .radio-btn", "#resolutionGroup .radio-btn", "#ratioGroup .radio-btn[data-val='4:5']",
-      "#qualityGroup .radio-btn", "#quantityGroup .radio-btn", "#outputFormatGroup .radio-btn", "#moderationGroup .radio-btn"];
+    const selectors = [`${param("canvas.mode")} .radio-btn`, `${param("canvas.resolution")} .radio-btn`,
+      `${param("canvas.aspect_ratio")} .radio-btn[data-val='4:5']`, `${param("gpt.quality")} .radio-btn`,
+      `${param("output.count")} .radio-btn`, `${param("output.format")} .radio-btn`];
     const bindings = methods.eligibleProviderBindings!(state.generationCatalog, state.selectedModelId, state.mode);
     for (const theme of ["dark", "light"]) {
       find(`[data-theme-option="${theme}"]`).click();
       for (const {binding, selectionKey} of bindings) {
         methods.selectGenerationProvider!(selectionKey); await pause();
-        find('#outputFormatGroup [data-val="webp"]').click();
+        find(`${param("output.format")} [data-val="webp"]`).click();
         await size(2560, 1323, 280);
         const regular = selectors.map(selector => rect(selector).height);
         geometry(`${theme} ${binding.id} regular density`, true);
@@ -323,12 +323,12 @@ async function run() {
         measurements.push(geometry(`${theme} empty reference ${width}x${height}`, true));
         if (width === 1512 && height === 699) {
           shortOutputHeight = rect(".output-panel").height;
-          shortParameterGap = parseFloat(w.getComputedStyle(find(".preset-size-fields")).rowGap);
+          shortParameterGap = parseFloat(w.getComputedStyle(find("#modelParameterGrid")).rowGap);
         }
         if (width === 1512 && height === 767) {
           check(`${theme}: extra height eases parameter density`, rect(".output-panel").height > shortOutputHeight,
             { shortOutputHeight, tallerOutputHeight: rect(".output-panel").height });
-          const gap = parseFloat(w.getComputedStyle(find(".preset-size-fields")).rowGap);
+          const gap = parseFloat(w.getComputedStyle(find("#modelParameterGrid")).rowGap);
           check(`${theme}: extra height increases actual parameter spacing`, gap >= shortParameterGap + 4,
             { shortParameterGap, tallerParameterGap: gap });
         }
@@ -375,25 +375,23 @@ async function run() {
             check(`${name}: recent uploads fit their footer`,recentBounds.height>0&&recentBounds.top>=footerBounds.top-1&&recentBounds.bottom<=footerBounds.bottom+1,
               {recentBounds:recentBounds.toJSON(),footerBounds:footerBounds.toJSON(),items:state.recentAssets.length});
             check(`${name}: prompt processing control is absent`, !d.querySelector('#promptFidelityGroup'));
-            check(`${name}: redundant size-mode label is absent`, !d.querySelector('.custom-size-control > .field-label'));
+            check(`${name}: redundant size-mode label is visually hidden`, find(`${param("canvas.mode")} .model-parameter-label`).classList.contains('sr-only'));
             for (const format of ['png','jpeg']) {
-              find(`#outputFormatGroup [data-val="${format}"]`).click(); await pause();
-              check(`${name} ${format}: file options fit`,['#outputFormatField','.moderation-field'].every(selector=>find(selector).scrollWidth<=find(selector).clientWidth+1));
+              find(`${param("output.format")} [data-val="${format}"]`).click(); await pause();
+              check(`${name} ${format}: file options fit`,[param("output.format"),param("gpt.background")].every(selector=>find(selector).scrollWidth<=find(selector).clientWidth+1));
             }
-            find('[data-custom-size-mode="custom"]').click();await pause();
-            const card=find('#customSize'),firstImage=find('#customRatioFromImageButton') as HTMLButtonElement;
-            check(`${name}: custom inputs fit`,card.scrollWidth<=card.clientWidth+1&&card.scrollHeight<=card.clientHeight+1,{height:card.clientHeight,content:card.scrollHeight});
-            firstImage.disabled=false;await pause();
-            check(`${name}: first-image action fits`,card.scrollWidth<=card.clientWidth+1&&card.scrollHeight<=card.clientHeight+1,{height:card.clientHeight,content:card.scrollHeight});
-            firstImage.disabled=true;
-            find('[data-custom-size-mode="preset"]').click();await pause();
+            find(`${param("canvas.mode")} [data-val="custom"]`).click();await pause();
+            const card=find(`${param("canvas.size")} .pixel-size-editor`),firstImage=find(`${param("canvas.size")} .pixel-size-from-image`) as HTMLButtonElement;
+            check(`${name}: custom inputs fit`,card.scrollWidth<=card.clientWidth+1,{width:card.clientWidth,content:card.scrollWidth});
+            check(`${name}: first-image action is available with references`,!firstImage.disabled&&firstImage.getBoundingClientRect().right<=card.getBoundingClientRect().right+1);
+            find(`${param("canvas.mode")} [data-val="preset"]`).click();await pause();
           }
         }
       }
     }
     w.__codexImageI18n.setLocale('zh-CN');
     methods.selectGenerationProvider!(bindings[0].selectionKey);
-    find('#outputFormatGroup [data-val="png"]').click();
+    find(`${param("output.format")} [data-val="png"]`).click();
     state.images=Array.from({length:6},(_,index)=>({...state.galleryItems[index%state.galleryItems.length],id:`qa-reference-${index}`,kind:'gallery'}));
     methods.renderImageStrip!();
     for (const [width,height] of [[1512,699],[1280,720]]) {
@@ -507,15 +505,15 @@ async function run() {
   }
   await size(1920, 1080);
   const originalHeight = rect(".output-panel").height;
-  find('[data-custom-size-mode="custom"]').click(); await pause();
+  find(`${param("canvas.mode")} [data-val="custom"]`).click(); await pause();
   check("custom size preserves panel height", Math.abs(rect(".output-panel").height - originalHeight) <= 1);
-  check("custom size fields remain accessible", rect("#customWidth").width > 0
-    && !find("#customWidth").closest("[inert]"));
-  check("custom dimensions fit their editor", find("#customSize").scrollWidth <= find("#customSize").clientWidth + 1);
+  check("custom size fields remain accessible", rect(`${param("canvas.size")} .pixel-size-input`).width > 0
+    && !find(`${param("canvas.size")} .pixel-size-input`).closest("[inert]"));
+  check("custom dimensions fit their editor", find(`${param("canvas.size")} .pixel-size-editor`).scrollWidth <= find(`${param("canvas.size")} .pixel-size-editor`).clientWidth + 1);
   find("#outputSettingsLockButton").click(); await pause();
   check("locking preserves panel height", Math.abs(rect(".output-panel").height - originalHeight) <= 1);
   find("#outputSettingsLockButton").click(); await pause();
-  find('[data-custom-size-mode="preset"]').click(); await pause();
+  find(`${param("canvas.mode")} [data-val="preset"]`).click(); await pause();
   check("prompt processing help is absent", !d.querySelector("#promptFidelityHelpButton"));
   find("#promptFindButton").click(); await pause();
   geometry("expanded prompt tools");

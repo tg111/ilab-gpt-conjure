@@ -1,12 +1,13 @@
-const CACHE_NAME = "ilab-conjure-shell-v399";
+const CACHE_NAME = "ilab-conjure-shell-v416";
 const APP_SHELL_URLS = [
   "/",
   "/history",
   "/manifest.webmanifest",
-  "/static/styles.css?v=runtime-922",
-  "/static/app.js?v=runtime-905",
-  "/static/history.js?v=history-190",
+  "/static/styles.css?v=runtime-934",
+  "/static/app.js?v=runtime-922",
+  "/static/history.js?v=history-202",
   "/static/pwa.js?v=pwa-1",
+  "/static/appearance-bootstrap.js?v=2",
   "/static/icons/ui.svg?v=1",
   "/static/image-editor-fill-worker.js?v=1",
   "/static/brand/favicon.svg",
@@ -37,6 +38,13 @@ self.addEventListener("fetch", (event) => {
 
   const requestUrl = new URL(request.url);
   if (requestUrl.origin !== self.location.origin) return;
+  // Serve custom colors online and use the cached base manifest offline.
+  if (requestUrl.pathname === "/manifest.webmanifest" && requestUrl.search) {
+    event.respondWith(fetch(request).catch(async () => (
+      (await caches.match("/manifest.webmanifest")) || Response.error()
+    )));
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith(

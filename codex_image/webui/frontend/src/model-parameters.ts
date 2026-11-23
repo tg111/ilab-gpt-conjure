@@ -1,13 +1,16 @@
-import { setCustomSizeModeLayout } from "./output-size-layout";
-import { isGptImageModel } from "./gpt-image-models";
-import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
+import { createPixelSizeEditor, customSizeError, gifFrameLimit, refreshFirstImageButtons } from "./image-size-editor";
+import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { aspectRatioSlots, createAspectRatioIcon } from "./aspect-ratio-controls";
 import { refreshSegmentedIndicators } from "./segmented-indicator";
+import { MOBILE_WORKSPACE_QUERY } from "./mobile-shell";
+import { resolveModeSettingsVisibility } from "./mode-settings-visibility";
 import { getLegacyBridge } from "./state";
+import { upgradeParameters, valueRequirementReason } from "./unified-parameters";
 import type {
   CatalogModel,
   CatalogObjectPreset,
   CatalogParameterDefinition,
+  CatalogProviderBinding,
   GenerationOperation,
   ParameterMigrationReport,
 } from "./types";
@@ -33,25 +36,7 @@ function cloneValue(value: unknown): unknown {
   return value;
 }
 
-function gptSizeValid(value: unknown): boolean {
-  if (typeof value !== "string") return false;
-  if (value === "auto") return true;
-  const match = value.match(/^(\d+)x(\d+)$/i);
-  if (!match) return false;
-  const width = Number(match[1]);
-  const height = Number(match[2]);
-  if (!Number.isInteger(width) || !Number.isInteger(height)) return false;
-  if (width < 16 || width > 3840 || height < 16 || height > 3840) return false;
-  if (width % 16 !== 0 || height % 16 !== 0) return false;
-  if (Math.max(width, height) / Math.min(width, height) > 3) return false;
-  const pixels = width * height;
-  return pixels >= 655360 && pixels <= 8294400;
-}
-
 export function parameterValueValid(definition: CatalogParameterDefinition, value: unknown): boolean {
-  if (definition.id === "canvas.size" && definition.allowed_values.length === 0) {
-    return gptSizeValid(value);
-  }
   const typeValid = definition.value_type === "string" ? typeof value === "string"
     : definition.value_type === "integer" ? typeof value === "number" && Number.isInteger(value)
       : definition.value_type === "boolean" ? typeof value === "boolean"
@@ -76,6 +61,24 @@ export function parameterValueValid(definition: CatalogParameterDefinition, valu
     }
   }
   return true;
+}
+
+function modelParameterValueValid(model: CatalogModel, definition: CatalogParameterDefinition, value: unknown, values: Record<string, unknown>): boolean {
+  if (definition.control === "pixel_size" && model.size_spec?.custom) {
+    const outputFormat = values["output.format"] ?? model.parameters.find((item) => item.id === "output.format")?.default;
+    return !customSizeError(model.size_spec.custom, value, outputFormat);
+  }
+  return parameterValueValid(definition, value) && !valueRequirementReason(model, definition, value, values);
+}
+
+// Readable explanations for value requirements reported by the catalog.
+const VALUE_REQUIREMENT_LABEL_KEYS: Readonly<Record<string, string>> = {
+  transparent_background_requires_png_webp_or_svg: "output.transparencyFormat",
+};
+
+function segmentLabel(definition: CatalogParameterDefinition, value: unknown): string {
+  const key = definition.value_label_keys?.[definition.allowed_values.indexOf(value)];
+  return key ? translate(key) : String(value);
 }
 
 export function nextObjectChoiceValue(
@@ -135,8 +138,10 @@ function conditionMatches(
 
 export function initializeParameterDraft(
   model: CatalogModel,
-  previous: Record<string, unknown> = {},
+  stored: Record<string, unknown> = {},
 ): ParameterMigrationReport {
+  // Drafts, locks and history may use earlier parameter names.
+  const previous = upgradeParameters(model, stored);
   const values: Record<string, unknown> = {};
   const defaulted: ParameterMigrationReport["defaulted"] = [];
   const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
@@ -146,7 +151,7 @@ export function initializeParameterDraft(
       continue;
     }
     const prior = previous[definition.id];
-    if (parameterValueValid(definition, prior)) {
+    if (modelParameterValueValid(model, definition, prior, previous)) {
       values[definition.id] = cloneValue(prior);
     } else {
       const replacement = cloneValue(definition.default);
@@ -173,18 +178,38 @@ export function parameterAffectsVisibility(model: CatalogModel, parameterId: str
   ));
 }
 
+/**
+ * Parameter ids the selected provider binding can act on, or null when the
+ * catalog does not say (every model parameter is then offered).
+ */
+function selectedBinding(modelId: string): CatalogProviderBinding | null {
+  const { state } = getLegacyBridge();
+  const binding = state.generationCatalog?.providers
+    .find((provider) => provider.id === state.selectedProviderId)?.bindings
+    .find((item) => item.id === state.selectedProviderBindingId);
+  return binding?.canonical_model_id === modelId ? binding : null;
+}
+
+export function selectedBindingParameterIds(modelId: string): ReadonlySet<string> | null {
+  const binding = selectedBinding(modelId);
+  if (!binding?.capabilities) return null;
+  return new Set(binding.capabilities.parameter_ids);
+}
+
 export function activeParameterValuesFor(
   model: CatalogModel,
   operation: GenerationOperation,
   draft: Record<string, unknown>,
+  supported: ReadonlySet<string> | null = null,
 ): Record<string, unknown> {
   const values = Object.fromEntries(model.parameters.map((definition) => {
     const value = draft[definition.id];
-    return [definition.id, cloneValue(parameterValueValid(definition, value) ? value : definition.default)];
+    return [definition.id, cloneValue(modelParameterValueValid(model, definition, value, draft) ? value : definition.default)];
   }));
   return Object.fromEntries(model.parameters
     .filter((definition) => definition.operations.includes(operation))
     .filter((definition) => definition.control !== "notice")
+    .filter((definition) => !supported || supported.has(definition.id))
     .filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)))
     .map((definition) => [definition.id, cloneValue(values[definition.id])]));
 }
@@ -195,6 +220,7 @@ export function activeParameterValues(model: CatalogModel): Record<string, unkno
     model,
     state.mode as GenerationOperation,
     state.parameterDraftsByModel[model.id] || {},
+    selectedBindingParameterIds(model.id),
   );
 }
 
@@ -202,10 +228,13 @@ function fieldShell(definition: CatalogParameterDefinition): HTMLDivElement {
   const field = document.createElement("div");
   field.className = `field model-parameter-field${definition.full_width ? " full-width" : ""}`;
   field.dataset.parameterId = definition.id;
+  field.dataset.parameterGroup = definition.group;
   const label = document.createElement("span");
   label.className = "model-parameter-label";
   label.textContent = translate(definition.label_key);
   label.classList.toggle("output-label-pair", /^\p{Script=Han}{2}$/u.test(label.textContent));
+  // Four Han characters stack as two pairs beside the control.
+  label.classList.toggle("output-label-quad", /^\p{Script=Han}{4}$/u.test(label.textContent));
   field.append(label);
   return field;
 }
@@ -229,7 +258,10 @@ function commitValue(context: RenderContext, definition: CatalogParameterDefinit
   const currentDefinition = model.parameters.find((item) => item.id === definition.id);
   if (!currentDefinition) return;
   setParameterValue(model.id, currentDefinition.id, value);
+  // Typing pixels must not re-render, which would replace the inputs being edited;
+  // limits that depend on the new value are refreshed in place.
   if (rerender) renderModelParameters(model, { readOnly: false });
+  else refreshDynamicLimits();
 }
 
 function renderSelect(
@@ -282,8 +314,11 @@ function renderSegmented(
     const button = document.createElement("button");
     button.type = "button";
     button.className = `radio-btn${allowed === value ? " active" : ""}`;
-    button.textContent = String(allowed);
-    button.disabled = context.readOnly;
+    button.dataset.val = String(allowed);
+    button.textContent = segmentLabel(definition, allowed);
+    const blockedReason = allowed === value ? "" : valueRequirementReason(context.model, definition, allowed, context.values);
+    if (blockedReason) button.title = translate(VALUE_REQUIREMENT_LABEL_KEYS[blockedReason] || blockedReason);
+    button.disabled = context.readOnly || Boolean(blockedReason);
     button.tabIndex = context.readOnly ? -1 : 0;
     button.setAttribute("aria-pressed", allowed === value ? "true" : "false");
     button.addEventListener("click", () => {
@@ -406,18 +441,87 @@ function renderNumeric(
   const error = document.createElement("span");
   error.className = "model-parameter-error hidden";
   error.setAttribute("role", "alert");
-  input.addEventListener("input", () => {
-    const next = Number(input.value);
-    output.textContent = input.value;
-    const message = parameterValueValid(definition, next) ? "" : translate("modelParameters.invalidValue");
+  const validate = (next: number, commit: boolean) => {
+    const limit = Number(input.dataset.limit || NaN);
+    const message = !parameterValueValid(definition, next)
+      ? translate("modelParameters.invalidValue")
+      : next > limit ? formatTranslation("output.frameCountLimit", { max: limit }) : "";
     error.textContent = message;
     error.classList.toggle("hidden", !message);
+    input.setAttribute("aria-invalid", message ? "true" : "false");
     setValidationError(interactiveModel(context).id, definition.id, message);
-    if (!message) commitValue(context, definition, next);
+    if (!message && commit) commitValue(context, definition, next);
+  };
+  input.addEventListener("input", () => {
+    output.textContent = input.value;
+    validate(Number(input.value), true);
   });
+  if (definition.id === GIF_FRAME_COUNT && !context.readOnly) {
+    // The cap follows the canvas and supplier; keep an over-limit draft editable but blocked.
+    const refresh = () => {
+      const draft = getLegacyBridge().state.parameterDraftsByModel?.[context.model.id] || {};
+      const limit = currentGifFrameLimit(context.model, definition, { ...context.values, ...draft });
+      if (limit === null) delete input.dataset.limit;
+      else input.dataset.limit = input.max = String(limit);
+      validate(Number(input.value), false);
+    };
+    input.dataset.dynamicLimit = "gif-frames";
+    (input as HTMLInputElement & { refreshLimit?: () => void }).refreshLimit = refresh;
+    queueMicrotask(refresh);
+  }
   if (slider) field.append(input, output, error);
   else field.append(input, error);
   return field;
+}
+
+const GIF_FRAME_COUNT = "gpt.frame_count";
+
+function currentGifFrameLimit(
+  model: CatalogModel,
+  definition: CatalogParameterDefinition,
+  values: Record<string, unknown>,
+): number | null {
+  const { state } = getLegacyBridge();
+  const provider = state.generationCatalog?.providers.find((item) => item.id === state.selectedProviderId);
+  const providerLimit = state.mode === "edit" ? provider?.gif_edit_max_frames ?? null : null;
+  return gifFrameLimit(model, definition.maximum, values, providerLimit);
+}
+
+function usesMobileWorkspace(): boolean {
+  return typeof window.matchMedia === "function" && window.matchMedia(MOBILE_WORKSPACE_QUERY).matches;
+}
+
+/**
+ * On desktop the collapsed advanced options open from the output header, like
+ * the earlier extra-options button, so they never add a row to the form.
+ * Mobile keeps them inline in the parameter sheet.
+ */
+function placeAdvancedOptions(root: HTMLElement, slot: HTMLElement, wasOpen: boolean): void {
+  const details = root.querySelector<HTMLDetailsElement>(":scope > details.model-parameter-advanced");
+  const inHeader = Boolean(details) && !usesMobileWorkspace();
+  slot.replaceChildren(...(inHeader && details ? [details] : []));
+  slot.classList.toggle("hidden", !inHeader);
+  if (details && wasOpen) details.open = true;
+}
+
+function closeAdvancedPopover(event: Event): void {
+  const details = document.querySelector<HTMLDetailsElement>("#modelAdvancedSlot > details[open]");
+  if (!details) return;
+  if (event instanceof KeyboardEvent) {
+    if (event.key !== "Escape") return;
+    details.open = false;
+    details.querySelector<HTMLElement>("summary")?.focus();
+    return;
+  }
+  if (!details.contains(event.target as Node)) details.open = false;
+}
+
+/** Re-check controls whose limits depend on other values that changed without a rerender. */
+function refreshDynamicLimits(): void {
+  // Only interactive controls carry the marker; they may sit in the grid or a slot.
+  if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
+  document.querySelectorAll<HTMLInputElement & { refreshLimit?: () => void }>("[data-dynamic-limit]")
+    .forEach((input) => input.refreshLimit?.());
 }
 
 function renderSlider(definition: CatalogParameterDefinition, value: unknown, context: RenderContext): HTMLElement {
@@ -426,6 +530,40 @@ function renderSlider(definition: CatalogParameterDefinition, value: unknown, co
 
 function renderNumber(definition: CatalogParameterDefinition, value: unknown, context: RenderContext): HTMLElement {
   return renderNumeric(definition, value, context, false);
+}
+
+function renderImageSize(
+  definition: CatalogParameterDefinition,
+  value: unknown,
+  context: RenderContext,
+): HTMLElement {
+  const field = renderSegmented(definition, value, context);
+  // The mode buttons name themselves; the group keeps its accessible label.
+  // The resulting pixels are shown in the execution summary above the form.
+  field.querySelector(".model-parameter-label")?.classList.add("sr-only");
+  return field;
+}
+
+function renderPixelSize(
+  definition: CatalogParameterDefinition,
+  value: unknown,
+  context: RenderContext,
+): HTMLElement {
+  const rules = context.model.size_spec?.custom;
+  if (!rules) return renderText(definition, value, context);
+  const field = fieldShell(definition);
+  field.append(createPixelSizeEditor({
+    label: translate(definition.label_key),
+    value,
+    rules,
+    outputFormat: context.values["output.format"],
+    readOnly: context.readOnly,
+    commit: (next) => commitValue(context, definition, next),
+    reportError: (message) => {
+      if (!context.readOnly) setValidationError(interactiveModel(context).id, definition.id, message);
+    },
+  }));
+  return field;
 }
 
 function setValidationError(modelId: string, parameterId: string, message: string): void {
@@ -649,21 +787,17 @@ export const PARAMETER_RENDERERS: Record<CatalogParameterDefinition["control"], 
   choice_grid: renderChoiceGrid,
   object_presets: renderObjectPresets,
   aspect_ratio_grid: renderAspectRatioGrid,
+  image_size: renderImageSize,
+  pixel_size: renderPixelSize,
 };
+
+// A size control with a single mode (provider-sized models) has nothing to choose.
+function parameterHasChoice(definition: CatalogParameterDefinition): boolean {
+  return definition.control !== "image_size" || definition.allowed_values.length > 1;
+}
 
 export function advancedParametersAreExpanded(model: CatalogModel, readOnly: boolean): boolean {
   return readOnly || model.expand_advanced_parameters === true;
-}
-
-export function legacyParameterVisibility(modelId: string, sizeMode: unknown): {
-  legacyGpt: boolean;
-  customSize: boolean;
-} {
-  const legacyGpt = isGptImageModel(modelId);
-  return {
-    legacyGpt,
-    customSize: legacyGpt && sizeMode === "custom",
-  };
 }
 
 function parameterTranslations(definition: CatalogParameterDefinition): string[] {
@@ -677,12 +811,22 @@ function parameterTranslations(definition: CatalogParameterDefinition): string[]
   ];
 }
 
+// Other values a field's rendering reads besides its own.
+const FINGERPRINT_DEPENDENCIES: Readonly<Partial<Record<CatalogParameterDefinition["control"], string[]>>> = {
+  pixel_size: ["output.format"],
+};
+
 export function parameterRenderFingerprint(
   definition: CatalogParameterDefinition,
   value: unknown,
   readOnly: boolean,
+  values: Record<string, unknown> = {},
 ): string {
-  return JSON.stringify([definition, value, readOnly, parameterTranslations(definition)]);
+  const dependencies = [
+    ...(FINGERPRINT_DEPENDENCIES[definition.control] || []),
+    ...(definition.value_requirements || []).map((requirement) => requirement.condition.parameter_id),
+  ].map((id) => values[id]);
+  return JSON.stringify([definition, value, readOnly, parameterTranslations(definition), dependencies]);
 }
 
 function resolvedParameterValues(
@@ -691,7 +835,7 @@ function resolvedParameterValues(
 ): Record<string, unknown> {
   return Object.fromEntries(model.parameters.map((definition) => [
     definition.id,
-    parameterValueValid(definition, values[definition.id]) ? values[definition.id] : cloneValue(definition.default),
+    modelParameterValueValid(model, definition, values[definition.id], values) ? values[definition.id] : cloneValue(definition.default),
   ]));
 }
 
@@ -699,9 +843,12 @@ function visibleParameterDefinitions(
   model: CatalogModel,
   values: Record<string, unknown>,
   operation: GenerationOperation,
+  supported: ReadonlySet<string> | null = null,
 ): CatalogParameterDefinition[] {
   return model.parameters
     .filter((definition) => definition.operations.includes(operation))
+    .filter((definition) => !supported || supported.has(definition.id))
+    .filter(parameterHasChoice)
     .filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
 }
 
@@ -709,13 +856,13 @@ export function renderParameterDefinitionsInto(
   root: HTMLElement,
   model: CatalogModel,
   values: Record<string, unknown>,
-  options: { readOnly: boolean; operation?: GenerationOperation },
+  options: { readOnly: boolean; operation?: GenerationOperation; supported?: ReadonlySet<string> | null },
 ): void {
   const operation = options.operation || "generate";
   const resolvedValues = resolvedParameterValues(model, values);
   root.replaceChildren();
   const context: RenderContext = { readOnly: options.readOnly, model, values: resolvedValues, root };
-  const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation);
+  const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, options.supported || null);
   visibleDefinitions
     .filter((definition) => definition.group !== "advanced")
     .forEach((definition) => root.append(PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context)));
@@ -748,9 +895,10 @@ export function renderInteractiveParameterDefinitionsInto(
   operation: GenerationOperation,
 ): void {
   const resolvedValues = resolvedParameterValues(model, values);
-  const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation);
+  const supported = selectedBindingParameterIds(model.id);
+  const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, supported);
   if (visibleDefinitions.some((definition) => definition.group === "advanced")) {
-    renderParameterDefinitionsInto(root, model, values, { readOnly: false, operation });
+    renderParameterDefinitionsInto(root, model, values, { readOnly: false, operation, supported });
     return;
   }
   const context: RenderContext = { readOnly: false, model, values: resolvedValues, root };
@@ -759,7 +907,7 @@ export function renderInteractiveParameterDefinitionsInto(
     return parameterId ? [[parameterId, child as HTMLElement]] : [];
   }));
   const fields = visibleDefinitions.map((definition) => {
-    const fingerprint = parameterRenderFingerprint(definition, resolvedValues[definition.id], false);
+    const fingerprint = parameterRenderFingerprint(definition, resolvedValues[definition.id], false, resolvedValues);
     const existingField = existingFields.get(definition.id);
     if (existingField?.dataset.renderFingerprint === fingerprint) return existingField;
     const field = PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context);
@@ -791,51 +939,40 @@ export function renderModelParameters(
     return;
   }
   ensureModelDraft(model);
-  const visibility = legacyParameterVisibility(model.id, els.size?.value);
-  const legacyGpt = visibility.legacyGpt;
-  state.customSizeTransitionSeq += 1;
-  state.customSizeMode = visibility.customSize;
-  const legacyElements = [
-    document.getElementById("outputSizeSettings"),
-    document.getElementById("outputFileSettings"),
-    els.sizeModeGroup?.closest(".custom-size-control"),
-    els.orientation?.closest(".orientation-field"),
-    els.resolution?.closest(".resolution-field"),
-    els.quality?.closest(".quantity-quality-row"),
-    els.outputFormatField,
-    els.moderation?.closest(".moderation-field"),
-  ].filter(Boolean) as HTMLElement[];
-  legacyElements.forEach((element) => {
-    element.classList.toggle("hidden", !legacyGpt);
-  });
-  const automaticSize = els.sizeModeGroup?.querySelector?.("[data-custom-size-mode].active")?.dataset?.customSizeMode === "auto";
-  [els.orientation?.closest(".orientation-field"), els.resolution?.closest(".resolution-field")]
-    .filter(Boolean)
-    .forEach((element) => element?.classList.toggle("hidden", !legacyGpt || automaticSize));
-  const ratioField = els.ratio?.closest(".ratio-field") as HTMLElement | null;
-  if (ratioField) {
-    const ratioVisible = legacyGpt && !automaticSize;
-    ratioField.classList.toggle("hidden", !ratioVisible);
-    ratioField.setAttribute("aria-hidden", ratioVisible ? "false" : "true");
+  const draft = state.parameterDraftsByModel[model.id] || {};
+  // A hidden field cannot be corrected, so its error must not block submission.
+  const visible = new Set(visibleParameterDefinitions(
+    model, resolvedParameterValues(model, draft), state.mode as GenerationOperation,
+    selectedBindingParameterIds(model.id),
+  ).map((definition) => definition.id));
+  const errors = state.parameterValidationErrorsByModel[model.id] || {};
+  Object.keys(errors).filter((id) => !visible.has(id)).forEach((id) => setValidationError(model.id, id, ""));
+  root.classList.remove("hidden");
+  // Tool fields render with the rest so unchanged controls are reused, then
+  // move beside the main model when the selected binding shows one.
+  const toolSlot = els.modelToolSlot as HTMLElement | null;
+  if (toolSlot) root.append(...Array.from(toolSlot.children));
+  const advancedSlot = els.modelAdvancedSlot as HTMLElement | null;
+  const advancedWasOpen = Boolean(advancedSlot?.querySelector<HTMLDetailsElement>("details")?.open);
+  renderInteractiveParameterDefinitionsInto(root, model, draft, state.mode as GenerationOperation);
+  if (advancedSlot) placeAdvancedOptions(root, advancedSlot, advancedWasOpen);
+  if (toolSlot) {
+    const binding = selectedBinding(model.id);
+    const besideMainModel = Boolean(binding && resolveModeSettingsVisibility(binding, false).showMainModel);
+    toolSlot.replaceChildren(...(besideMainModel
+      ? Array.from(root.querySelectorAll<HTMLElement>(':scope > [data-parameter-group="tools"]'))
+      : []));
+    toolSlot.classList.toggle("hidden", !toolSlot.children.length);
   }
-  setCustomSizeModeLayout(visibility.customSize);
-  els.webSearchField?.classList.toggle("hidden", !legacyGpt);
-  els.transparentBackgroundField?.classList.toggle("hidden", !legacyGpt);
-  root.classList.toggle("hidden", legacyGpt);
-  if (legacyGpt) root.replaceChildren();
-  else renderInteractiveParameterDefinitionsInto(
-    root,
-    model,
-    state.parameterDraftsByModel[model.id] || {},
-    state.mode as GenerationOperation,
-  );
+  // Reused controls keep their element; their limits may depend on what changed.
+  refreshDynamicLimits();
 }
 
 export function setParameterValue(modelId: string, parameterId: string, value: unknown): void {
   const { state } = getLegacyBridge();
   const model = state.generationCatalog?.models.find((item) => item.id === modelId);
   const definition = model?.parameters.find((item) => item.id === parameterId);
-  if (!model || !definition || !parameterValueValid(definition, value)) return;
+  if (!model || !definition || !modelParameterValueValid(model, definition, value, state.parameterDraftsByModel[modelId] || {})) return;
   state.parameterDraftsByModel[modelId] = {
     ...(state.parameterDraftsByModel[modelId] || {}),
     [parameterId]: cloneValue(value),
@@ -854,6 +991,15 @@ export function setParameterValue(modelId: string, parameterId: string, value: u
   getLegacyBridge().methods.updateRequestPreview?.();
 }
 
+/** Return the selected model's parameters to their defaults (used by "new task"). */
+export function resetCurrentModelParameters(): void {
+  const { state } = getLegacyBridge();
+  if (!state.selectedModelId) return;
+  state.parameterDraftsByModel[state.selectedModelId] = {};
+  getLegacyBridge().methods.persistModelSelection?.();
+  renderCurrentModelParameters();
+}
+
 export function renderCurrentModelParameters(): void {
   const { state } = getLegacyBridge();
   const model = state.generationCatalog?.models.find((item) => item.id === state.selectedModelId);
@@ -863,9 +1009,16 @@ export function renderCurrentModelParameters(): void {
 export function initModelParametersFeature(): void {
   Object.assign(getLegacyBridge().methods, {
     activeParameterValues,
+    refreshFirstImageButtons,
     renderCurrentModelParameters,
     renderModelParameters,
+    resetCurrentModelParameters,
     setParameterValue,
   });
   document.addEventListener(LOCALE_CHANGE_EVENT, renderCurrentModelParameters);
+  document.addEventListener("pointerdown", closeAdvancedPopover);
+  document.addEventListener("keydown", closeAdvancedPopover);
+  if (typeof window.matchMedia === "function") {
+    window.matchMedia(MOBILE_WORKSPACE_QUERY).addEventListener?.("change", renderCurrentModelParameters);
+  }
 }

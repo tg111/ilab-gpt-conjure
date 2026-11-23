@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable, Mapping, Protocol
 
+from codex_image.client_types import OpenAISvgRequestState
 from codex_image.generation.types import (
     GenerationCommand,
     GenerationOperation,
@@ -34,6 +35,7 @@ class ProviderConnection:
     concurrency: int
     bindings: tuple[ProviderModelBinding, ...]
     builtin: bool = False
+    svg_author_model: str = ""
 
     def __post_init__(self) -> None:
         claimed_operations: set[tuple[str, GenerationOperation]] = set()
@@ -71,6 +73,7 @@ class ExecutionPlan:
     binding: ProviderModelBinding
     protocol_request: ProtocolRequest
     progress: ExecutionProgress | None = None
+    openai_svg_state: OpenAISvgRequestState = field(default_factory=OpenAISvgRequestState, compare=False, repr=False)
 
 
 @dataclass

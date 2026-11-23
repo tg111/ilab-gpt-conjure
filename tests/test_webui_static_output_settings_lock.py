@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests.frontend_runner import frontend_test
+
 from pathlib import Path
 import re
 import shutil
@@ -23,6 +25,7 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         self.assertIn('"imageInput.referenceTitle": "Reference input (optional)"', en)
         self.assertIn('does not change the system channel', en)
 
+    @frontend_test
     def test_summary_model_keeps_four_visible_outputs_and_mode_specific_details(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -157,7 +160,6 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         required_keys = (
             "output.lock.lock",
             "output.lock.unlock",
-            "output.lock.current",
             "output.lock.task",
             "output.lock.adoptTask",
             "output.lock.frame",
@@ -177,7 +179,6 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         self.assertIn("export function buildOutputSettingsSummaryModel", source)
         self.assertIn("currentCodexMode", source)
         self.assertIn("currentApiMode", source)
-        self.assertIn('model && !isGptImageModel(model.id)', source)
         self.assertIn("bridge.methods.activeParameterValues(model)", source)
         self.assertIn("codex-image-output-settings-lock-v1", source)
         self.assertNotIn("data-output-settings-channel", source)
@@ -191,7 +192,7 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         self.assertIn('call(methods, "restoreOutputSettingsLock")', boot)
         self.assertGreater(
             boot.index('call(methods, "restoreOutputSettingsLock")'),
-            boot.index('call(methods, "updateCustomSize")'),
+            boot.index('call(methods, "restoreModelSelection")'),
         )
 
     def test_locked_task_selection_preserves_output_controls_and_offers_explicit_adoption(self) -> None:
@@ -429,7 +430,6 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         # variants reuse a band; adding a distinct locked-only band is forbidden.
         height_bands = set(re.findall(r"@media\s*\(max-height:\s*(\d+)px\)", responsive))
         self.assertEqual(height_bands, {"1390", "1100", "900"})
-
 
 
 if __name__ == "__main__":

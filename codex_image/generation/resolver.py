@@ -4,6 +4,7 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
+from codex_image.providers.capabilities import CODEC_CAPABILITIES, openai_gif_edit_frame_limit
 from codex_image.providers.contracts import (
     ExecutionPlan,
     ProviderConnection,
@@ -11,6 +12,8 @@ from codex_image.providers.contracts import (
 )
 from codex_image.providers.registry import ProviderRegistry
 
+from .capabilities import binding_capabilities
+from .parameter_vocabulary import custom_size_error, upgrade_parameters
 from .types import GenerationCommand, ModelManifest, ParameterDefinition
 
 
@@ -36,20 +39,28 @@ class BindingResolver:
 
         provider = self._provider(command.provider_id)
         binding = self._binding(provider, model, command)
-        self._validate_parameters(command, model)
+        # Submissions may use the earlier vocabulary; validate the unified form.
+        parameters = upgrade_parameters(model, command.parameters)
+        self._validate_parameters(command.operation, parameters, model)
 
         # Resolving both declarations here makes missing explicit registrations fail
         # before transport work begins. Protocol execution remains a later boundary.
         self._registry.protocol(binding.protocol_profile)
+        self._validate_binding_capabilities(command, parameters, model, binding)
         codec = self._registry.codec(binding.parameter_codec)
         mapped_parameter_ids = codec.mapped_parameter_ids(model, command.operation)
-        missing_parameter_ids = sorted(set(command.parameters) - set(mapped_parameter_ids))
+        missing_parameter_ids = sorted(set(parameters) - set(mapped_parameter_ids))
         if missing_parameter_ids:
             raise ValueError(
                 "codec_parameter_mapping_missing: " + ", ".join(missing_parameter_ids)
             )
 
         protocol_request = codec.encode(command, model, binding)
+        if binding.parameter_codec == "gpt_openai_images" and protocol_request.path == "/images/edits":
+            payload = protocol_request.json_body or {}
+            limit = openai_gif_edit_frame_limit(provider.base_url)
+            if limit is not None and payload.get("output_format") == "gif" and int(payload.get("frame_count") or 9) > limit:
+                raise ValueError("openai_gif_edit_frame_limit_exceeded")
         return ExecutionPlan(
             command=command,
             model=model,
@@ -116,26 +127,74 @@ class BindingResolver:
     @classmethod
     def _validate_parameters(
         cls,
-        command: GenerationCommand,
+        operation: str,
+        parameters: Mapping[str, Any],
         model: ModelManifest,
     ) -> None:
         definitions = {definition.id: definition for definition in model.parameters}
-        for parameter_id, value in command.parameters.items():
+        for parameter_id, value in parameters.items():
             try:
                 definition = definitions[parameter_id]
             except KeyError as exc:
                 raise ValueError(f"Unknown parameter: {parameter_id}") from exc
-            if command.operation not in definition.operations:
+            if operation not in definition.operations:
                 raise ValueError(
                     "Parameter does not support operation: "
-                    f"{parameter_id}: {command.operation}"
+                    f"{parameter_id}: {operation}"
                 )
             if definition.visible_when and not all(
-                cls._condition_matches(condition, command.parameters, definitions)
+                cls._condition_matches(condition, parameters, definitions)
                 for condition in definition.visible_when
             ):
                 raise ValueError(f"Parameter is not applicable: {parameter_id}")
             cls._validate_parameter_value(definition, value)
+            for requirement in definition.value_requirements:
+                if value == requirement.value and not cls._condition_matches(
+                    requirement.condition, parameters, definitions,
+                ):
+                    raise ValueError(f"{requirement.reason}: {parameter_id}")
+        cls._validate_size(parameters, model, definitions)
+
+    @staticmethod
+    def _validate_size(parameters, model: ModelManifest, definitions) -> None:
+        if model.size_spec is None or "canvas.mode" not in definitions:
+            return
+        mode = parameters.get("canvas.mode", definitions["canvas.mode"].default)
+        if mode != "custom":
+            return
+        output_format = parameters.get("output.format")
+        if output_format is None and "output.format" in definitions:
+            output_format = definitions["output.format"].default
+        size = parameters.get("canvas.size", definitions["canvas.size"].default)
+        error = custom_size_error(model.size_spec, size, output_format)
+        if error:
+            raise ValueError(f"{error}: canvas.size")
+
+    @staticmethod
+    def _validate_binding_capabilities(
+        command: GenerationCommand,
+        parameters: Mapping[str, Any],
+        model: ModelManifest,
+        binding: ProviderModelBinding,
+    ) -> None:
+        if binding.parameter_codec not in CODEC_CAPABILITIES:
+            # Codecs registered outside the built-in table declare their own mapping.
+            return
+        capabilities = binding_capabilities(model, binding.protocol_profile, binding.parameter_codec)
+        if not capabilities.available:
+            raise ValueError(capabilities.unavailable_reason)
+        if command.markup_image and not capabilities.supports_markup:
+            raise ValueError("image_feature_requires_openai_images")
+        supported = set(capabilities.parameter_ids)
+        # A parameter the binding cannot act on is accepted only at its default,
+        # where leaving it out would send the same request.
+        unsupported = sorted(
+            parameter_id
+            for parameter_id, value in parameters.items()
+            if parameter_id not in supported and value != model.parameter(parameter_id).default
+        )
+        if unsupported:
+            raise ValueError("parameter_not_supported_by_binding: " + ", ".join(unsupported))
 
     @staticmethod
     def _condition_matches(condition, values, definitions) -> bool:
@@ -210,3 +269,10 @@ def validate_command_inputs(command: GenerationCommand, model: ModelManifest) ->
         raise ValueError("mask_input_unsupported")
     if command.reference_files and not constraints.supports_reference_files:
         raise ValueError("reference_files_unsupported")
+    if command.markup_image:
+        if not constraints.supports_markup or command.operation != "edit" or not command.image_inputs:
+            raise ValueError("markup_requires_supported_image_edit")
+        if command.mask_image:
+            raise ValueError("markup_cannot_combine_with_mask")
+        from codex_image.markup_validation import validate_markup_image
+        validate_markup_image(command.markup_image, command.image_inputs[0].data_url)

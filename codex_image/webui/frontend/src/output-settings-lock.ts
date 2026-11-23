@@ -118,13 +118,15 @@ export function normalizeOutputSettingsSnapshot(params: any): OutputSettingsSnap
     output_format: String(parameters["output.format"] || params?.output_format || "png").toLowerCase(),
     output_compression: compression === null || compression === undefined ? null : Number(compression),
     moderation: String(parameters["gpt.moderation"] || params?.moderation || "auto"),
-    web_search: Boolean(parameters["gpt.web_search"] ?? params?.web_search),
+    web_search: Boolean(parameters["tools.web_search"] ?? parameters["gpt.web_search"] ?? params?.web_search),
     resolution: String(parameters["canvas.resolution"] || params?.resolution || ""),
     has_safety_settings: hasOwn(parameters, "gemini.safety_settings"),
     safety_settings: record(parameters["gemini.safety_settings"]),
-    google_search: hasOwn(parameters, "gemini.google_search")
-      ? Boolean(parameters["gemini.google_search"])
-      : null,
+    google_search: hasOwn(parameters, "tools.web_search")
+      ? Boolean(parameters["tools.web_search"])
+      : hasOwn(parameters, "gemini.google_search")
+        ? Boolean(parameters["gemini.google_search"])
+        : null,
   };
 }
 
@@ -133,6 +135,8 @@ function promptFidelityLabel(value: OutputSettingsSnapshot["prompt_fidelity"]): 
 }
 
 function qualityLabel(value: string): string {
+  if (value === "xhigh") return translate("output.qualityXhigh");
+  if (value === "max") return translate("output.qualityMax");
   const key = value === "low"
     ? "output.qualityLow"
     : value === "medium"
@@ -174,6 +178,13 @@ export function buildOutputSettingsSummaryModel(
       { label: translate("output.lock.prompt"), value: promptFidelityLabel(snapshot.prompt_fidelity) },
       { label: translate("output.quality"), value: qualityLabel(snapshot.quality) },
     );
+    if (snapshot.parameters["gpt.complexity"]) {
+      details.push({ label: translate("output.complexity"), value: qualityLabel(String(snapshot.parameters["gpt.complexity"])) });
+    }
+    if (snapshot.output_format === "gif") {
+      details.push({ label: translate("output.frameCount"), value: String(snapshot.parameters["gpt.frame_count"] ?? 9) });
+      details.push({ label: translate("output.frameDuration"), value: `${snapshot.parameters["gpt.frame_duration_ms"] ?? 200} ms` });
+    }
     if (context.responses) {
       details.push({
         label: translate("output.lock.search"),
@@ -238,54 +249,13 @@ function currentSummaryContext(): OutputSettingsSummaryContext {
   return { responses, task: false, callLabel };
 }
 
-function taskSummaryContext(task: any): OutputSettingsSummaryContext {
-  const params = task?.params || {};
-  const request = task?.request || {};
-  const responses = params.api_mode === "responses"
-    || params.codex_mode === "responses"
-    || request.api_mode === "responses"
-    || request.codex_mode === "responses"
-    || request.endpoint === "/responses"
-    || String(task?.backend || "").includes("responses");
-  const apiTask = Boolean(params.api_mode || request.api_mode || task?.api_provider_id || task?.api_provider_name);
-  return { responses, task: true, callLabel: apiTask ? "Images API" : "Codex Image" };
-}
-
-function snapshotFromTask(task: any): OutputSettingsSnapshot {
-  const params = task?.params || {};
-  const request = task?.request || {};
-  const frozen = record(task?.generation_snapshot);
-  const canonicalModelId = String(frozen.canonical_model_id || request.canonical_model_id || "gpt-image-2");
-  const catalogModel = getLegacyBridge().state.generationCatalog?.models
-    .find((item: any) => item.id === canonicalModelId);
-  const responses = params.api_mode === "responses"
-    || params.codex_mode === "responses"
-    || request.api_mode === "responses"
-    || request.codex_mode === "responses"
-    || request.endpoint === "/responses";
-  return normalizeOutputSettingsSnapshot({
-    ...params,
-    canonical_model_id: canonicalModelId,
-    model_display_name: catalogModel?.display_name || canonicalModelId,
-    parameters: Object.keys(record(frozen.requested_parameters)).length
-      ? record(frozen.requested_parameters)
-      : record(request.parameters),
-    main_model: params.main_model || request.main_model || (responses ? request.model : ""),
-    model: params.model || request.image_model || request.model,
-    size: params.size || request.size,
-    n: params.n || request.n,
-  });
-}
-
 function snapshotFromCurrentSelection(): OutputSettingsSnapshot {
   const bridge = getLegacyBridge();
   const legacy = legacyMethod("currentTaskParams");
   const model = bridge.state.generationCatalog?.models.find((item: any) => item.id === bridge.state.selectedModelId);
-    const parameters = model && !isGptImageModel(model.id) && typeof bridge.methods.activeParameterValues === "function"
+  const parameters = model && typeof bridge.methods.activeParameterValues === "function"
     ? bridge.methods.activeParameterValues(model)
-    : typeof bridge.methods.currentCanonicalParameters === "function"
-      ? bridge.methods.currentCanonicalParameters()
-      : {};
+    : {};
   return normalizeOutputSettingsSnapshot({
     ...legacy,
     canonical_model_id: model?.id || "gpt-image-2",
@@ -441,7 +411,13 @@ function readPersistedLockState(): OutputSettingsSnapshot | null {
 }
 
 function applySnapshot(snapshot: OutputSettingsSnapshot): void {
-  legacyMethod("applyTaskOutputParams", { params: snapshot });
+  legacyMethod("applyTaskOutputParams", {
+    params: snapshot,
+    generation_snapshot: {
+      canonical_model_id: snapshot.canonical_model_id,
+      requested_parameters: snapshot.parameters,
+    },
+  });
 }
 
 export function isOutputSettingsLocked(): boolean {

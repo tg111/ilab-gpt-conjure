@@ -50,6 +50,7 @@ from tests.webui_helpers import (
     output_url,
     request_path,
 )
+from tests.canonical_form import canonical_form
 
 
 class WebUIGenerationTests(unittest.TestCase):
@@ -58,6 +59,80 @@ class WebUIGenerationTests(unittest.TestCase):
         buffer = BytesIO()
         image.save(buffer, format="PNG")
         return buffer.getvalue()
+
+    def _assert_route_does_not_append_ratio_instruction_to_model_prompt(self, operation: str, prompt: str) -> None:
+        from codex_image.webui.app import create_app
+
+        expected_model_prompt = prompt
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
+            response = TestClient(app).post(
+                f"/api/{operation}",
+                files={"images": ("input.png", self._png_bytes(), "image/png")} if operation == "edit" else None,
+                data=canonical_form({
+                    "prompt": prompt,
+                    "model": "gpt-image-2",
+                    "size": "1536x864",
+                    "ratio": "16:9",
+                    "orientation": "landscape",
+                    "quality": "low",
+                    "output_format": "png",
+                    "prompt_fidelity": "off",
+                    "codex_mode": "responses",
+                }),
+            )
+            body = response.json()
+            task = body["task"]
+            metadata = json.loads(metadata_path(root, task["task_id"]).read_text(encoding="utf-8"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(task["prompt"], prompt)
+        self.assertEqual(task["prompt_for_model"], expected_model_prompt)
+        self.assertEqual(task["params"]["ratio"], "16:9")
+        self.assertEqual(metadata["prompt"], prompt)
+        self.assertEqual(metadata["prompt_for_model"], expected_model_prompt)
+        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expected_model_prompt)
+
+    def _assert_route_enqueues_without_calling_client_inline(self, operation: str, prompt: str) -> None:
+        from codex_image.webui.app import create_app
+
+        fake = FakeImageClient()
+        with tempfile.TemporaryDirectory() as tmp:
+            app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True, auto_start_queue=False)
+            response = TestClient(app).post(
+                f"/api/{operation}",
+                files={"images": ("input.png", self._png_bytes(), "image/png")} if operation == "edit" else None,
+                data=canonical_form({"prompt": prompt, "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"}),
+            )
+            task = response.json()["task"]
+            metadata = json.loads(metadata_path(Path(tmp), task["task_id"]).read_text(encoding="utf-8"))
+            queue_state = app.state.queue_storage.read_state()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(task["status"], "queued")
+        self.assertEqual(metadata["status"], "queued")
+        self.assertEqual(queue_state["waiting"], [task["task_id"]])
+        self.assertEqual(fake.generate_calls, [])
+        self.assertEqual(fake.edit_calls, [])
+
+    def _assert_route_enqueues_without_client_factory(self, operation: str, prompt: str) -> None:
+        from codex_image.webui.app import create_app
+
+        def fail_factory() -> FakeImageClient:
+            raise AssertionError("client factory should not be called")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            app = create_app(output_root=Path(tmp), client_factory=fail_factory, auth_checker=lambda: True, auto_start_queue=False)
+            response = TestClient(app, raise_server_exceptions=False).post(
+                f"/api/{operation}",
+                files={"images": ("input.png", self._png_bytes(), "image/png")} if operation == "edit" else None,
+                data=canonical_form({"prompt": prompt, "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"}),
+            )
+            task = response.json()["task"]
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(task["status"], "queued")
 
     def test_ratio_prompt_instruction_matches_every_supported_interface_language(self) -> None:
         from codex_image.webui.prompt_ratio import ratio_prompt_instruction
@@ -91,7 +166,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "draw a mug",
                     "model": "gpt-image-2",
                     "main_model": "gpt-5.4",
@@ -102,7 +177,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "moderation": "low",
                     "output_compression": "80",
                     "codex_mode": "responses",
-                },
+                }),
             )
 
             body = response.json()
@@ -128,7 +203,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "search then draw",
                     "model": "gpt-image-2",
                     "main_model": "gpt-5.4-mini",
@@ -136,7 +211,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "quality": "low",
                     "web_search": "true",
                     "codex_mode": "responses",
-                },
+                }),
             )
 
             body = response.json()
@@ -171,7 +246,7 @@ class WebUIGenerationTests(unittest.TestCase):
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "thumb", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "thumb", "size": "1024x1024", "quality": "low"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -220,14 +295,14 @@ class WebUIGenerationTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "search then poster",
                     "size": "1024x1024",
                     "quality": "low",
                     "web_search": "true",
                     "prompt_fidelity": "original",
                     "codex_mode": "responses",
-                },
+                }),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -255,7 +330,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(history_response.headers["cache-control"], "no-store")
         self.assertEqual(script_response.headers["cache-control"], "no-store")
         self.assertIn("/static/history.js", history_response.text)
-    def test_generate_route_omits_png_compression(self) -> None:
+    def test_generate_route_refuses_png_compression(self) -> None:
         from codex_image.webui.app import create_app
 
         fake = FakeImageClient()
@@ -263,7 +338,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True)
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "draw a mug",
                     "model": "gpt-image-2",
                     "size": "1024x1024",
@@ -271,35 +346,14 @@ class WebUIGenerationTests(unittest.TestCase):
                     "output_format": "png",
                     "output_compression": "80",
                     "codex_mode": "responses",
-                },
+                }),
             )
             body = response.json()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertNotIn("output_compression", body["request"]["tools"][0])
+        # Compression only applies to JPEG and WebP; the form never offers it for PNG.
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(body["detail"]["code"], "output_compression_requires_jpeg_or_webp")
         self.assertEqual(fake.generate_calls, [])
-    def test_generate_route_uses_late_patched_request_payload_builder(self) -> None:
-        from codex_image.webui.app import create_app
-
-        calls: list[dict[str, Any]] = []
-
-        def patched_payload(**kwargs: Any) -> dict[str, Any]:
-            calls.append(kwargs)
-            return {"patched": True, "prompt": kwargs["prompt"]}
-
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
-            with patch("codex_image.webui.app._build_image_request_payload", patched_payload):
-                response = TestClient(app).post(
-                    "/api/generate",
-                    data={"prompt": "patched builder", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "codex_mode": "responses"},
-                )
-            body = response.json()
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(calls), 1)
-        self.assertTrue(body["request"]["patched"])
-        self.assertEqual(body["request"]["prompt"], "patched builder")
     def test_generate_route_stores_slim_request_without_image_base64(self) -> None:
         from codex_image.webui.app import create_app
 
@@ -308,7 +362,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "reference", "size": "1024x1024", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "reference", "size": "1024x1024", "codex_mode": "responses"}),
                 files={"reference_images": ("input.png", self._png_bytes(), "image/png")},
             )
             task_id = response.json()["task"]["task_id"]
@@ -320,7 +374,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertNotIn("base64", request_text)
         self.assertRegex(
             request_payload["input"][0]["content"][1]["image_url"],
-            r"^<redacted image data url, \d+ chars>$",
+            r"^<redacted inline data>$",
         )
         self.assertEqual(request_payload["webui_image_refs"]["input_files"], [])
         self.assertEqual(request_payload["webui_image_refs"]["reference_assets"][0]["filename"], "input.png")
@@ -332,7 +386,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/edit",
-                data={"prompt": "edit reference", "size": "1024x1024", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "edit reference", "size": "1024x1024", "codex_mode": "responses"}),
                 files={
                     "images": ("input.png", self._png_bytes(), "image/png"),
                     "mask": ("mask.png", self._png_bytes(), "image/png"),
@@ -349,24 +403,7 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertEqual(request_payload["webui_image_refs"]["reference_assets"][0]["filename"], "input.png")
         self.assertEqual(request_payload["webui_image_refs"]["mask_file"], input_name(task_id, "mask.png", kind="mask"))
     def test_generate_route_enqueues_without_calling_client_inline(self) -> None:
-        from codex_image.webui.app import create_app
-
-        fake = FakeImageClient()
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app).post(
-                "/api/generate",
-                data={"prompt": "queued mug", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"},
-            )
-            task = response.json()["task"]
-            metadata = json.loads(metadata_path(Path(tmp), task["task_id"]).read_text(encoding="utf-8"))
-            queue_state = app.state.queue_storage.read_state()
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["status"], "queued")
-        self.assertEqual(metadata["status"], "queued")
-        self.assertEqual(queue_state["waiting"], [task["task_id"]])
-        self.assertEqual(fake.generate_calls, [])
+        self._assert_route_enqueues_without_calling_client_inline('generate', 'queued')
     def test_generate_route_ignores_strict_prompt_fidelity(self) -> None:
         from codex_image.webui.app import create_app
 
@@ -375,7 +412,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": prompt, "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png", "codex_mode": "responses", "prompt_fidelity": "strict"},
+                data=canonical_form({"prompt": prompt, "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png", "codex_mode": "responses", "prompt_fidelity": "strict"}),
             )
             body = response.json()
             task = body["task"]
@@ -410,7 +447,7 @@ class WebUIGenerationTests(unittest.TestCase):
                             if fidelity is not None:
                                 data["prompt_fidelity"] = fidelity
                             files = {"images": ("input.png", self._png_bytes(), "image/png")} if endpoint == "edit" else None
-                            response = client.post(f"/api/{endpoint}", data=data, files=files)
+                            response = client.post(f"/api/{endpoint}", data=canonical_form(data), files=files)
                             self.assertEqual(response.status_code, 200)
                             body = response.json()
                             task = body["task"]
@@ -424,38 +461,7 @@ class WebUIGenerationTests(unittest.TestCase):
                             request_prompt = body["request"]["prompt"] if mode == "images" else body["request"]["input"][0]["content"][0]["text"]
                             self.assertEqual(request_prompt, prompt)
     def test_generate_route_does_not_append_ratio_instruction_to_model_prompt(self) -> None:
-        from codex_image.webui.app import create_app
-
-        prompt = "生成一张极简电影海报"
-        expected_model_prompt = prompt
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app).post(
-                "/api/generate",
-                data={
-                    "prompt": prompt,
-                    "model": "gpt-image-2",
-                    "size": "1536x864",
-                    "ratio": "16:9",
-                    "orientation": "landscape",
-                    "quality": "low",
-                    "output_format": "png",
-                    "prompt_fidelity": "off",
-                    "codex_mode": "responses",
-                },
-            )
-            body = response.json()
-            task = body["task"]
-            metadata = json.loads(metadata_path(root, task["task_id"]).read_text(encoding="utf-8"))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["prompt"], prompt)
-        self.assertEqual(task["prompt_for_model"], expected_model_prompt)
-        self.assertEqual(task["params"]["ratio"], "16:9")
-        self.assertEqual(metadata["prompt"], prompt)
-        self.assertEqual(metadata["prompt_for_model"], expected_model_prompt)
-        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expected_model_prompt)
+        self._assert_route_does_not_append_ratio_instruction_to_model_prompt('generate', '生成一张极简电影海报')
     def test_generate_route_keeps_gallery_notes_for_any_prompt_fidelity(self) -> None:
         from codex_image.webui.app import create_app
 
@@ -465,7 +471,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": prompt_for_model,
                     "model": "gpt-image-2",
@@ -474,7 +480,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "output_format": "png",
                     "prompt_fidelity": "original",
                     "codex_mode": "responses",
-                },
+                }),
             )
             body = response.json()
             task = body["task"]
@@ -512,7 +518,7 @@ class WebUIGenerationTests(unittest.TestCase):
             )
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": expanded_prompt,
                     "model": "gpt-image-2",
@@ -521,7 +527,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "output_format": "png",
                     "prompt_fidelity": "original",
                     "codex_mode": "responses",
-                },
+                }),
             )
             body = response.json()
             task = body["task"]
@@ -555,7 +561,7 @@ class WebUIGenerationTests(unittest.TestCase):
             )
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "model": "gpt-image-2",
                     "size": "1536x864",
@@ -563,7 +569,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "quality": "low",
                     "output_format": "png",
                     "codex_mode": "responses",
-                },
+                }),
             )
             body = response.json()
             task = body["task"]
@@ -575,92 +581,13 @@ class WebUIGenerationTests(unittest.TestCase):
         self.assertFalse(body["request"].get("instructions"))
 
     def test_edit_route_enqueues_without_calling_client_inline(self) -> None:
-        from codex_image.webui.app import create_app
-
-        fake = FakeImageClient()
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), client_factory=lambda: fake, auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app).post(
-                "/api/edit",
-                data={"prompt": "queued edit", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"},
-                files={"images": ("input.png", self._png_bytes(), "image/png")},
-            )
-            task = response.json()["task"]
-            metadata = json.loads(metadata_path(Path(tmp), task["task_id"]).read_text(encoding="utf-8"))
-            queue_state = app.state.queue_storage.read_state()
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["status"], "queued")
-        self.assertEqual(metadata["status"], "queued")
-        self.assertEqual(queue_state["waiting"], [task["task_id"]])
-        self.assertEqual(fake.edit_calls, [])
+        self._assert_route_enqueues_without_calling_client_inline('edit', 'queued edit')
     def test_edit_route_does_not_append_ratio_instruction_to_model_prompt(self) -> None:
-        from codex_image.webui.app import create_app
-
-        prompt = "把参考图改成横版电影海报"
-        expected_model_prompt = prompt
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app).post(
-                "/api/edit",
-                data={
-                    "prompt": prompt,
-                    "model": "gpt-image-2",
-                    "size": "1536x864",
-                    "ratio": "16:9",
-                    "orientation": "landscape",
-                    "quality": "low",
-                    "output_format": "png",
-                    "prompt_fidelity": "off",
-                    "codex_mode": "responses",
-                },
-                files={"images": ("input.png", self._png_bytes(), "image/png")},
-            )
-            body = response.json()
-            task = body["task"]
-            metadata = json.loads(metadata_path(root, task["task_id"]).read_text(encoding="utf-8"))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["prompt"], prompt)
-        self.assertEqual(task["prompt_for_model"], expected_model_prompt)
-        self.assertEqual(task["params"]["ratio"], "16:9")
-        self.assertEqual(metadata["prompt"], prompt)
-        self.assertEqual(metadata["prompt_for_model"], expected_model_prompt)
-        self.assertEqual(body["request"]["input"][0]["content"][0]["text"], expected_model_prompt)
+        self._assert_route_does_not_append_ratio_instruction_to_model_prompt('edit', '把参考图改成横版电影海报')
     def test_generate_route_enqueues_without_client_factory(self) -> None:
-        from codex_image.webui.app import create_app
-
-        def fail_factory() -> FakeImageClient:
-            raise AssertionError("client factory should not be called")
-
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), client_factory=fail_factory, auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app, raise_server_exceptions=False).post(
-                "/api/generate",
-                data={"prompt": "queued without client", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"},
-            )
-            task = response.json()["task"]
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["status"], "queued")
+        self._assert_route_enqueues_without_client_factory('generate', 'queued without client')
     def test_edit_route_enqueues_without_client_factory(self) -> None:
-        from codex_image.webui.app import create_app
-
-        def fail_factory() -> FakeImageClient:
-            raise AssertionError("client factory should not be called")
-
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), client_factory=fail_factory, auth_checker=lambda: True, auto_start_queue=False)
-            response = TestClient(app, raise_server_exceptions=False).post(
-                "/api/edit",
-                data={"prompt": "queued edit without client", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"},
-                files={"images": ("input.png", self._png_bytes(), "image/png")},
-            )
-            task = response.json()["task"]
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(task["status"], "queued")
+        self._assert_route_enqueues_without_client_factory('edit', 'queued edit without client')
     def test_edit_route_without_image_does_not_create_task_directory(self) -> None:
         from codex_image.webui.app import create_app
 
@@ -669,7 +596,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/edit",
-                data={"prompt": "missing image", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"},
+                data=canonical_form({"prompt": "missing image", "model": "gpt-image-2", "size": "1024x1024", "quality": "low", "output_format": "png"}),
             )
             task_files = list((root / "source-data").rglob("*.metadata.json")) if (root / "source-data").exists() else []
 
@@ -707,14 +634,14 @@ class WebUIGenerationTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "must fail before commit",
                     "canonical_model_id": "missing-model",
                     "provider_id": "codex",
                     "binding_id": "codex-gpt-image-2-responses",
                     "parameters_json": "{}",
                     "reference_asset_ids": existing["id"],
-                },
+                }),
                 files=[
                     (
                         "reference_images",
@@ -774,13 +701,13 @@ class WebUIGenerationTests(unittest.TestCase):
             client = TestClient(app)
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "use reference",
                     "model": "gpt-image-2",
                     "size": "1024x1024",
                     "quality": "low",
                     "output_format": "png",
-                },
+                }),
                 files={"reference_images": ("input.png", self._png_bytes(), "image/png")},
             )
             task = response.json()["task"]
@@ -800,7 +727,7 @@ class WebUIGenerationTests(unittest.TestCase):
             app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "dedupe reference", "size": "1024x1024"},
+                data=canonical_form({"prompt": "dedupe reference", "size": "1024x1024"}),
                 files=[
                     ("reference_images", ("one.png", self._png_bytes(), "image/png")),
                     ("reference_images", ("two.png", self._png_bytes(), "image/png")),
@@ -835,14 +762,14 @@ class WebUIGenerationTests(unittest.TestCase):
             )
             response = TestClient(app).post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "draw three mugs",
                     "model": "gpt-image-2",
                     "size": "1024x1024",
                     "quality": "low",
                     "output_format": "png",
                     "n": "3",
-                },
+                }),
             )
             task = response.json()["task"]
             output_files_exist = [(Path(tmp) / output_name(task["task_id"], index)).exists() for index in (1, 2, 3)]
@@ -863,7 +790,7 @@ class WebUIGenerationTests(unittest.TestCase):
             client = TestClient(app)
             response = client.post(
                 "/api/edit",
-                data={
+                data=canonical_form({
                     "prompt": "change background",
                     "model": "gpt-image-2",
                     "size": "1536x1024",
@@ -871,7 +798,7 @@ class WebUIGenerationTests(unittest.TestCase):
                     "output_format": "png",
                     "input_fidelity": "high",
                     "codex_mode": "responses",
-                },
+                }),
                 files={
                     "images": ("input.png", self._png_bytes(), "image/png"),
                     "mask": ("mask.png", self._png_bytes(), "image/png"),
@@ -884,7 +811,7 @@ class WebUIGenerationTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len([item for item in input_content if item["type"] == "input_image"]), 1)
-        self.assertTrue(request_tool["input_image_mask"]["image_url"].startswith("<redacted image data url, "))
+        self.assertTrue(request_tool["input_image_mask"]["image_url"] == "<redacted inline data>")
         self.assertEqual(body["request"]["webui_image_refs"]["mask_file"], input_name(task["task_id"], "mask.png", kind="mask"))
         self.assertNotIn("input_fidelity", request_tool)
         self.assertNotIn("input_fidelity", task["params"])

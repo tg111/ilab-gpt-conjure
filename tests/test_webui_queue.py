@@ -54,6 +54,7 @@ from tests.webui_helpers import (
     output_url,
     request_path,
 )
+from tests.canonical_form import canonical_form
 
 
 class WebUIQueueTests(unittest.TestCase):
@@ -79,7 +80,7 @@ class WebUIQueueTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "queue item", "size": "1024x1024"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "queue item", "size": "1024x1024"}))
             queue = client.get("/api/queue").json()
 
         self.assertEqual(created.status_code, 200)
@@ -1089,7 +1090,7 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "run queued", "main_model": "gpt-5.4", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "run queued", "main_model": "gpt-5.4", "size": "1024x1024", "quality": "low"}),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -1101,7 +1102,8 @@ raise SystemExit(1)
         self.assertEqual(task["backend"], "codex_images")
         self.assertEqual(task["params"]["codex_mode"], "images")
         self.assertEqual(len(fake.generate_calls), 1)
-        self.assertEqual(fake.generate_calls[0]["main_model"], "gpt-5.4")
+        # The Images channel has no main model; only Responses bindings send one.
+        self.assertFalse(fake.generate_calls[0]["main_model"])
         self.assertEqual(task["output_urls"], [output_url(task_id)])
     def test_queue_worker_does_not_append_ratio_instruction_for_older_queued_task_metadata(self) -> None:
         from codex_image.webui.app import create_app
@@ -1125,13 +1127,13 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "size": "1536x864",
                     "ratio": "16:9",
                     "quality": "low",
                     "prompt_fidelity": "off",
-                },
+                }),
             )
             task_id = created.json()["task"]["task_id"]
             metadata_file = metadata_path(root, task_id)
@@ -1167,7 +1169,7 @@ raise SystemExit(1)
             client = TestClient(app)
             client.post(
                 "/api/generate",
-                data={"prompt": prompt, "prompt_for_model": prompt_for_model, "size": "1536x864", "ratio": "16:9", "quality": "low"},
+                data=canonical_form({"prompt": prompt, "prompt_for_model": prompt_for_model, "size": "1536x864", "ratio": "16:9", "quality": "low"}),
             )
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -1193,7 +1195,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            client.post("/api/generate", data={"prompt": prompt, "size": "1024x1024", "quality": "low", "codex_mode": "responses", "prompt_fidelity": "strict"})
+            client.post("/api/generate", data=canonical_form({"prompt": prompt, "size": "1024x1024", "quality": "low", "codex_mode": "responses", "prompt_fidelity": "strict"}))
 
             asyncio.run(app.state.queue_manager.run_available_once())
 
@@ -1214,7 +1216,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "slow queued", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "slow queued", "size": "1024x1024", "quality": "low"}))
             task_id = created.json()["task"]["task_id"]
 
             async def observe_running_state() -> tuple[float, dict[str, Any]]:
@@ -1242,8 +1244,8 @@ raise SystemExit(1)
                 batch_delay_seconds=0,
             )
             with TestClient(app) as client:
-                first = client.post("/api/generate", data={"prompt": "blocked first", "size": "1024x1024"}).json()["task"]
-                second = client.post("/api/generate", data={"prompt": "next task", "size": "1024x1024"}).json()["task"]
+                first = client.post("/api/generate", data=canonical_form({"prompt": "blocked first", "size": "1024x1024"})).json()["task"]
+                second = client.post("/api/generate", data=canonical_form({"prompt": "next task", "size": "1024x1024"})).json()["task"]
                 self.assertTrue(fake.first_call_started.wait(timeout=5))
 
                 deleted = client.delete(f"/api/queue/{first['task_id']}")
@@ -1290,11 +1292,11 @@ raise SystemExit(1)
             with TestClient(app) as client:
                 first = client.post(
                     "/api/generate",
-                    data={"prompt": "blocked fourth", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "blocked fourth", "size": "1024x1024", "quality": "low", "n": "4"}),
                 ).json()["task"]
                 second = client.post(
                     "/api/generate",
-                    data={"prompt": "next after cancel", "size": "1024x1024", "quality": "low", "n": "1"},
+                    data=canonical_form({"prompt": "next after cancel", "size": "1024x1024", "quality": "low", "n": "1"}),
                 ).json()["task"]
                 self.assertTrue(fake.fourth_call_started.wait(timeout=5))
 
@@ -1344,9 +1346,9 @@ raise SystemExit(1)
                 auto_retry=False,
             )
             client = TestClient(app)
-            task_id = client.post("/api/generate", data={
+            task_id = client.post("/api/generate", data=canonical_form({
                 "prompt": "stop during startup", "size": "1024x1024",
-            }).json()["task"]["task_id"]
+            })).json()["task"]["task_id"]
             asyncio.run(app.state.queue_manager.run_available_once())
             task = client.get(f"/api/tasks/{task_id}").json()["task"]
             self.assertTrue(task.get("cancelled_at"))
@@ -1369,9 +1371,9 @@ raise SystemExit(1)
                     auto_retry=False,
                 )
                 client = TestClient(app)
-                task_id = client.post("/api/generate", data={
+                task_id = client.post("/api/generate", data=canonical_form({
                     "prompt": "stop at completion", "size": "1024x1024",
-                }).json()["task"]["task_id"]
+                })).json()["task"]["task_id"]
 
                 async def stop_after_result(**kwargs: Any) -> None:
                     await _execute_stored_task(**kwargs)
@@ -1404,7 +1406,7 @@ raise SystemExit(1)
             )
             fake.storage = app.state.storage
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "cancel late return", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "cancel late return", "size": "1024x1024", "quality": "low"}))
             task_id = created.json()["task"]["task_id"]
             fake.task_id = task_id
 
@@ -1426,8 +1428,8 @@ raise SystemExit(1)
             root = Path(tmp)
             first_app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             first_client = TestClient(first_app)
-            waiting = first_client.post("/api/generate", data={"prompt": "waiting", "size": "1024x1024"}).json()["task"]
-            running = first_client.post("/api/generate", data={"prompt": "running", "size": "1024x1024"}).json()["task"]
+            waiting = first_client.post("/api/generate", data=canonical_form({"prompt": "waiting", "size": "1024x1024"})).json()["task"]
+            running = first_client.post("/api/generate", data=canonical_form({"prompt": "running", "size": "1024x1024"})).json()["task"]
             running_metadata = json.loads(metadata_path(root, running["task_id"]).read_text(encoding="utf-8"))
             running_metadata["status"] = "running"
             metadata_path(root, running["task_id"]).write_text(json.dumps(running_metadata), encoding="utf-8")
@@ -1486,7 +1488,7 @@ raise SystemExit(1)
             root = Path(tmp)
             first_app = create_app(output_root=root, client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             first_client = TestClient(first_app)
-            queued = first_client.post("/api/generate", data={"prompt": "old retry", "size": "1024x1024"}).json()["task"]
+            queued = first_client.post("/api/generate", data=canonical_form({"prompt": "old retry", "size": "1024x1024"})).json()["task"]
             task_id = queued["task_id"]
             metadata = json.loads(metadata_path(root, task_id).read_text(encoding="utf-8"))
             metadata.update(
@@ -1629,7 +1631,7 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/edit",
-                data={"prompt": "edit queued", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "edit queued", "size": "1024x1024", "quality": "low"}),
                 files={
                     "images": ("input.png", self._png_bytes(), "image/png"),
                     "mask": ("mask.png", self._png_bytes(), "image/png"),
@@ -1659,7 +1661,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "many", "size": "1024x1024", "quality": "low", "n": "3"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "many", "size": "1024x1024", "quality": "low", "n": "3"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -1687,7 +1689,7 @@ raise SystemExit(1)
             app.state.queue_manager.channels = [QueueChannel(channel_id="codex:local", auth_source="codex")]
             app.state.queue_manager.max_attempts = 2
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "quota limited", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "quota limited", "size": "1024x1024", "quality": "low"}))
             task_id = created.json()["task"]["task_id"]
 
             with self.assertRaisesRegex(RuntimeError, "usage limit"):
@@ -1717,7 +1719,7 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "bad request", "size": "1024x1024", "quality": "low", "n": "4", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "bad request", "size": "1024x1024", "quality": "low", "n": "4", "codex_mode": "responses"}),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -1755,7 +1757,7 @@ raise SystemExit(1)
             )
             app.state.queue_manager.max_attempts = 2
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "manual retry only", "size": "1024x1024", "quality": "low"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "manual retry only", "size": "1024x1024", "quality": "low"}))
             task_id = created.json()["task"]["task_id"]
 
             with self.assertRaisesRegex(RuntimeError, "temporary server failure") as raised:
@@ -1800,7 +1802,7 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "many", "size": "1024x1024", "quality": "low", "n": "4", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "many", "size": "1024x1024", "quality": "low", "n": "4", "codex_mode": "responses"}),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -1834,7 +1836,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "many", "size": "1024x1024", "quality": "low", "n": "4"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "many", "size": "1024x1024", "quality": "low", "n": "4"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -1874,7 +1876,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "many", "size": "1024x1024", "quality": "low", "n": "2"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "many", "size": "1024x1024", "quality": "low", "n": "2"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -1909,11 +1911,11 @@ raise SystemExit(1)
                 client = TestClient(app)
                 first = client.post(
                     "/api/generate",
-                    data={"prompt": "four images", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "four images", "size": "1024x1024", "quality": "low", "n": "4"}),
                 ).json()["task"]
                 second = client.post(
                     "/api/generate",
-                    data={"prompt": "next image", "size": "1024x1024", "quality": "low", "n": "1"},
+                    data=canonical_form({"prompt": "next image", "size": "1024x1024", "quality": "low", "n": "1"}),
                 ).json()["task"]
 
                 asyncio.run(app.state.queue_manager.run_available_once())
@@ -1988,7 +1990,7 @@ raise SystemExit(1)
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "many", "size": "1024x1024", "quality": "low", "n": "2", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "many", "size": "1024x1024", "quality": "low", "n": "2", "codex_mode": "responses"}),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -2298,7 +2300,7 @@ raise SystemExit(1)
             client = TestClient(app)
             task_id = client.post(
                 "/api/generate",
-                data={"prompt": "shutdown recovery", "size": "1024x1024"},
+                data=canonical_form({"prompt": "shutdown recovery", "size": "1024x1024"}),
             ).json()["task"]["task_id"]
 
             async def cancel_running_worker() -> None:
@@ -2401,7 +2403,7 @@ raise SystemExit(1)
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "retry timer", "size": "1024x1024"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "retry timer", "size": "1024x1024"}))
             task_id = created.json()["task"]["task_id"]
 
             with self.assertRaises(RuntimeError):

@@ -46,7 +46,6 @@ from .executor_transport import (
     _noop_request_context,
     _normalize_api_images_concurrency,
     _normalize_api_mode,
-    _normalize_compression,
     _normalize_prompt_fidelity,
     _parse_optional_int,
     _prompt_for_transport,

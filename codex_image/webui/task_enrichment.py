@@ -4,7 +4,6 @@ import re
 from typing import Any
 from urllib.parse import quote, unquote, urlsplit
 
-from codex_image.client import DEFAULT_MAIN_MODEL
 
 from .reference_files import ReferenceFileStorage, reference_file_task_record
 from .reference_image_order import order_reference_sources
@@ -431,27 +430,3 @@ def _infer_gallery_refs_from_prompt(metadata: dict[str, Any], gallery_storage: G
         if item is not None:
             refs.append(_gallery_ref_response(item))
     return refs
-
-
-def _params(
-    main_model: str,
-    model: str,
-    size: str,
-    quality: str,
-    background: str | None,
-    output_format: str,
-    moderation: str | None,
-    output_compression: int | None,
-    n: int = 1,
-) -> dict[str, Any]:
-    return {
-        "main_model": main_model or DEFAULT_MAIN_MODEL,
-        "model": model,
-        "size": size,
-        "quality": quality,
-        "background": background,
-        "output_format": output_format,
-        "moderation": moderation,
-        "output_compression": output_compression,
-        "n": n,
-    }

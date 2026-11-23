@@ -20,18 +20,24 @@ export function taskCanonicalModelId(task: unknown): string {
 
 export type TaskOutputSettingsView = "locked-summary" | "parameter-inspector" | "editor";
 
-export function modelsShareParameterEditor(leftModelId: string, rightModelId: string): boolean {
-  return leftModelId === rightModelId
-    || (isGptImageModel(leftModelId) && isGptImageModel(rightModelId));
+export function modelsShareParameterEditor(leftModelId: string, rightModelId: string, catalog?: GenerationCatalog | null): boolean {
+  if (leftModelId === rightModelId) return true;
+  if (!isGptImageModel(leftModelId) || !isGptImageModel(rightModelId)) return false;
+  const left = catalog?.models.find(model => model.id === leftModelId);
+  const right = catalog?.models.find(model => model.id === rightModelId);
+  // A shared family no longer guarantees the same formats, quality or timing controls.
+  return Boolean(left?.parameters && right?.parameters
+    && JSON.stringify(left.parameters) === JSON.stringify(right.parameters));
 }
 
 export function taskOutputSettingsView(
   task: unknown,
   selectedModelId: string,
   outputSettingsLocked: boolean,
+  catalog?: GenerationCatalog | null,
 ): TaskOutputSettingsView {
   if (outputSettingsLocked) return "locked-summary";
-  return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId) ? "editor" : "parameter-inspector";
+  return modelsShareParameterEditor(taskCanonicalModelId(task), selectedModelId, catalog) ? "editor" : "parameter-inspector";
 }
 
 export function taskRequestedParameters(task: unknown): Record<string, unknown> {
@@ -40,42 +46,6 @@ export function taskRequestedParameters(task: unknown): Record<string, unknown> 
   const frozen = record(snapshot.requested_parameters);
   if (Object.keys(frozen).length) return { ...frozen };
   return { ...record(record(source.request).parameters) };
-}
-
-function preferredParameter(
-  parameters: Record<string, unknown>,
-  parameterId: string,
-  ...fallbacks: unknown[]
-): unknown {
-  if (parameters[parameterId] !== undefined && parameters[parameterId] !== null) {
-    return parameters[parameterId];
-  }
-  return fallbacks.find((value) => value !== undefined && value !== null);
-}
-
-export function taskOutputControlValues(task: unknown): Record<string, unknown> {
-  const source = record(task);
-  const params = record(source.params);
-  const request = record(source.request);
-  const parameters = taskRequestedParameters(task);
-  const values = {
-    size: preferredParameter(parameters, "canvas.size", params.size, request.size),
-    ratio: preferredParameter(parameters, "canvas.aspect_ratio", params.ratio, request.ratio),
-    resolution: preferredParameter(parameters, "canvas.resolution", params.resolution, request.resolution),
-    quality: preferredParameter(parameters, "gpt.quality", params.quality, request.quality),
-    background: preferredParameter(parameters, "gpt.background", params.background, request.background),
-    moderation: preferredParameter(parameters, "gpt.moderation", params.moderation, request.moderation),
-    web_search: preferredParameter(parameters, "gpt.web_search", params.web_search, request.web_search),
-    n: preferredParameter(parameters, "output.count", params.n, request.n),
-    output_format: preferredParameter(parameters, "output.format", params.output_format, request.output_format),
-    output_compression: preferredParameter(
-      parameters,
-      "gpt.output_compression",
-      params.output_compression,
-      request.output_compression,
-    ),
-  };
-  return Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined && value !== null));
 }
 
 export function taskModelDisplayName(task: unknown, catalog: GenerationCatalog | null | undefined): string {
@@ -164,9 +134,4 @@ export function taskChannelLabel(task: unknown): string {
     if (label) return label;
   }
   return "";
-}
-
-export function taskUsesCanonicalModelSummary(task: unknown): boolean {
-  const modelId = explicitCanonicalModelId(task);
-  return Boolean(modelId && modelId !== "gpt-image-2");
 }

@@ -1,14 +1,5 @@
 /* Shared native checkbox/radio semantics with theme-owned rendering. */
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input {
   appearance: none;
   -webkit-appearance: none;
   box-sizing: border-box;
@@ -26,16 +17,7 @@
   cursor: pointer;
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input::after {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input::after {
   content: "";
   width: 4px;
   height: 7px;
@@ -45,70 +27,25 @@
   visibility: hidden;
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-):hover > input:not(:disabled) {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label):hover > input:not(:disabled) {
   border-color: var(--primary);
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input:checked {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input:checked {
   border-color: var(--primary);
   background: var(--primary);
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input:checked::after {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input:checked::after {
   visibility: visible;
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input:focus-visible {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
-:is(
-  .provider-binding-toggle,
-  .notification-option-row,
-  .prompt-template-check,
-  .user-config-section-row,
-  .user-config-sensitive-row,
-  .user-config-replace-ack,
-  .history-tag-picker-option,
-  .history-backup-scopes label
-) > input:disabled {
+:is(.provider-binding-toggle, .notification-option-row, .prompt-template-check, .user-config-section-row, .user-config-sensitive-row, .user-config-replace-ack, .history-tag-picker-option, .history-backup-scopes label) > input:disabled {
   border-color: var(--line);
   background: var(--surface-soft);
   color: var(--text-muted);
@@ -226,7 +163,7 @@
   font-size: 13px;
   font-weight: 720;
   gap: 7px;
-  box-shadow: 0 7px 16px rgba(51, 93, 77, 0.16);
+  box-shadow: 0 7px 16px var(--action-shadow, rgba(var(--shadow-rgb), 0.16));
 }
 
 .brand-new-icon {
@@ -419,13 +356,6 @@ svg[data-ui-icon] use {
 }
 
 /* Controls */
-.field-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
 
 .control {
   width: 100%;
@@ -564,7 +494,7 @@ select.themed-select-native {
   background: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow-popover);
-  scrollbar-color: color-mix(in srgb, var(--primary) 58%, var(--line)) color-mix(in srgb, var(--surface-soft) 82%, var(--line));
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scrollbar-width: thin;
 }
 
@@ -579,18 +509,18 @@ select.themed-select-native {
 }
 
 .themed-select-menu::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--surface-soft) 82%, var(--line));
+  background: var(--scrollbar-track);
   border-radius: 999px;
 }
 
 .themed-select-menu::-webkit-scrollbar-thumb {
-  border: 2px solid var(--surface);
+  border: 2px solid var(--scrollbar-track);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 58%, var(--line));
+  background: var(--scrollbar-thumb);
 }
 
 .themed-select-menu::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--primary) 76%, var(--line));
+  background: var(--scrollbar-thumb-hover);
 }
 
 .themed-select-option {
@@ -741,27 +671,6 @@ select.themed-select-native {
   border-radius: 6px;
   padding: 2px;
   margin-bottom: 16px;
-}
-
-.segment {
-  flex: 1;
-  height: 30px;
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  border-radius: 4px;
-  font-size: 13px;
-  cursor: pointer;
-  transition:
-    background var(--motion-base),
-    color var(--motion-base),
-    box-shadow var(--motion-base);
-}
-
-.segment.active {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 /* Radio Group */
@@ -934,11 +843,6 @@ select.themed-select-native {
     opacity var(--motion-fast);
 }
 
-.auth-source-group .segmented-indicator {
-  border-radius: 999px;
-  box-shadow: 0 5px 14px rgba(40, 116, 85, 0.22);
-}
-
 .segmented-indicator-host .radio-btn,
 .segmented-indicator-host .auth-source-button,
 .segmented-indicator-host .system-settings-tab,
@@ -954,12 +858,6 @@ select.themed-select-native {
   color: var(--primary-foreground);
 }
 
-.auth-source-group.segmented-indicator-host .auth-source-button.active {
-  background: transparent;
-  color: var(--primary-foreground);
-  box-shadow: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .primary-button,
   .run-button,
@@ -967,7 +865,6 @@ select.themed-select-native {
   .control,
   .themed-select-trigger,
   .themed-select-caret,
-  .segment,
   .slider.round,
   .slider.round:before,
   .radio-btn,
@@ -982,7 +879,7 @@ select.themed-select-native {
 }
 
 /* Required input boundaries are stronger than decorative panel dividers. */
-.control, .custom-size-input, .custom-ratio-digit, .themed-select-trigger {
+.control, .themed-select-trigger {
   border-color: var(--control-border);
 }
 .controls-col .radio-group .segmented-indicator,

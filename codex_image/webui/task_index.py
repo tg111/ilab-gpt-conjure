@@ -8,6 +8,7 @@ from math import gcd
 from pathlib import Path
 from typing import Any, Iterator
 
+from codex_image.generation.catalog import GPT_SIZE_PRESETS
 from codex_image.generation.catalog import GPT_IMAGE_MODEL_IDS
 
 from .history_organizer import HistoryOrganizer
@@ -41,6 +42,7 @@ SUMMARY_KEYS = {
     "input_thumbnail_urls",
     "input_sources",
     "mask_file",
+    "markup_file",
     "gallery_refs",
     "reference_assets",
     "reference_image_order",
@@ -108,51 +110,8 @@ KNOWN_RATIO_ORIENTATIONS = {
     "21:9": "landscape",
 }
 GPT_IMAGE_2_PRESET_SIZES_BY_RESOLUTION = {
-    "1K": frozenset(
-        {
-            "1024x1024",
-            "1024x1280",
-            "1280x1024",
-            "1152x1536",
-            "1536x1152",
-            "1024x1536",
-            "1536x1024",
-            "864x1536",
-            "1536x864",
-            "672x1568",
-            "1568x672",
-        }
-    ),
-    "2K": frozenset(
-        {
-            "2048x2048",
-            "1600x2000",
-            "2000x1600",
-            "1536x2048",
-            "2048x1536",
-            "1344x2016",
-            "2016x1344",
-            "1152x2048",
-            "2048x1152",
-            "1152x2688",
-            "2688x1152",
-        }
-    ),
-    "4K": frozenset(
-        {
-            "2880x2880",
-            "2560x3200",
-            "3200x2560",
-            "2448x3264",
-            "3264x2448",
-            "2336x3504",
-            "3504x2336",
-            "2160x3840",
-            "3840x2160",
-            "1632x3808",
-            "3808x1632",
-        }
-    ),
+    resolution: frozenset(f"{width}x{height}" for width, height in ratios.values())
+    for resolution, ratios in GPT_SIZE_PRESETS.items()
 }
 
 

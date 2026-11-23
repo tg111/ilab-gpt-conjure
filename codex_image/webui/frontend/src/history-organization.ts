@@ -202,13 +202,6 @@ async function historyOrganizationRequest<T>(
   return payload as T;
 }
 
-export async function listHistoryTags(): Promise<HistoryTag[]> {
-  const payload = await historyOrganizationRequest<{
-    tags: HistoryTag[];
-  }>("/api/task-history/tags");
-  return Array.isArray(payload.tags) ? payload.tags : [];
-}
-
 export async function createHistoryTag(
   name: string,
 ): Promise<HistoryTag> {

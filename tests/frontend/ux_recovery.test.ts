@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { suggestLegalSize } from "../../codex_image/webui/frontend/src/size-suggestion";
+import { suggestLegalSize as suggestWithRules } from "../../codex_image/webui/frontend/src/image-size-editor";
+
+const GPT_RULES = { min_edge: 16, max_edge: 3840, multiple: 16, max_aspect_ratio: 3, min_pixels: 655360, max_pixels: 8294400, relaxed_formats: ["gif"] };
+const suggestLegalSize = (width: number, height: number) => suggestWithRules(GPT_RULES, width, height);
 import { taskRecoveryKind } from "../../codex_image/webui/frontend/src/task-recovery";
 
 test("template creation records the current model and edits preserve the stored model hint", async () => {
@@ -132,6 +135,15 @@ test("diagnostic numbers cannot hide retry actions for transient failures", asyn
       const task = { status: "failed", error, total_count: 1, outputs: [{ index: 1, status: "failed", error }] };
       assert.equal(methods.canRetryFailedTask(task), false, error);
     }
+    const authorRejection = {
+      status: "failed",
+      error: "The OpenAI project cannot use the SVG author model.",
+      generation_error: { code: "svg_author_model_rejected", retryable: false },
+      total_count: 1,
+      outputs: [{ index: 1, status: "failed" }],
+    };
+    assert.equal(taskRecoveryKind(authorRejection), "svgAuthorModel");
+    assert.equal(methods.canRetryFailedTask(authorRejection), true);
   } finally { (globalThis as any).window = previousWindow; }
 });
 

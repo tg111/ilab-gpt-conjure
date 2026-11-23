@@ -3,6 +3,7 @@ import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { getLegacyBridge, getState } from "./state";
 import { addReferenceFileInput, partitionReferenceDropFiles } from "./reference-file-inputs";
 import { persistStagedReferences, readStagedReferences } from "./staged-references-session";
+import { svgReferenceFile } from "./svg-reference";
 
 let inputSourcesFeatureInitialized = false;
 const HISTORY_REFERENCE_HANDOFF_KEY = "codex-image-history-reference-handoff";
@@ -261,15 +262,6 @@ function handleImagePaste(event: ClipboardEvent) {
   });
 }
 
-function imageFilesFromDataTransfer(dataTransfer: any) {
-  const files = Array.from(dataTransfer?.files || []).filter(isImageFile) as File[];
-  if (files.length) return files;
-  return Array.from(dataTransfer?.items || [])
-    .filter((item: any) => item?.kind === "file" && (!item.type || item.type.startsWith("image/")))
-    .map((item: any) => item.getAsFile?.())
-    .filter(isImageFile) as File[];
-}
-
 function dataTransferHasFile(dataTransfer: any) {
   if (!dataTransfer) return false;
   if (Array.from(dataTransfer.types || []).includes("Files")) return true;
@@ -499,7 +491,15 @@ async function imageFileFromUrl(url: string, fallbackName: string) {
   }
   const blob = await response.blob();
   const type = blob.type || "image/png";
-  const filename = ensureImageFilenameExtension(filenameFromImageUrl(url, fallbackName), type);
+  const name = filenameFromImageUrl(url, fallbackName);
+  if ((type.split(";", 1)[0] || "").trim().toLowerCase() === "image/svg+xml") {
+    try {
+      return await svgReferenceFile(blob, name);
+    } catch {
+      throw new Error(translate("referenceCollector.svgConversionFailed"));
+    }
+  }
+  const filename = ensureImageFilenameExtension(name, type);
   return new File([blob], filename, { type });
 }
 
@@ -679,7 +679,6 @@ export function initInputSourcesFeature() {
     missingReferenceAssetInputs,
     addReferenceAssetInput,
     collectReferenceOutput,
-    renderReferenceCollector,
     restoreCollectedReferences,
     addCollectedReferencesToInput,
     imageFileFromUrl,

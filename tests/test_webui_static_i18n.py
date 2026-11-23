@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests.frontend_runner import frontend_test
+
 import json
 import re
 import shutil
@@ -34,7 +36,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             if locale == "en":
                 continue
             for key in ("ux.moderationAuto", "ux.moderationLow", "lanAccess.help",
-                        "networkEgress.fakeIpDnsHelp", "apiSettings.modelBindingsHint"):
+                        "networkEgress.fakeIpDnsHelp"):
                 with self.subTest(locale=locale, key=key):
                     self.assertNotEqual(translations[key], source[key])
 
@@ -243,7 +245,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "modelSelection.provider",
             "modelSelection.providerUnavailable",
             "modelSelection.openSettings",
-            "modelSelection.codexUnavailable",
             "modelSelection.catalogUnavailable",
         )
         locale_paths = sorted(Path("codex_image/webui/frontend/src/i18n").glob("*.ts"))
@@ -325,24 +326,16 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
     def test_reference_file_copy_exists_in_every_locale(self) -> None:
         required_keys = (
             "imageInput.referenceTitle",
-            "referenceFiles.add",
-            "referenceFiles.selected",
-            "referenceFiles.recent",
             "referenceFiles.familyPdf",
             "referenceFiles.familySpreadsheet",
             "referenceFiles.familyDocument",
             "referenceFiles.familyText",
-            "referenceFiles.visualLimit",
             "referenceFiles.remove",
-            "referenceFiles.switchTitle",
-            "referenceFiles.switchMessage",
-            "referenceFiles.removeAndSwitch",
             "referenceFiles.requiresResponses",
             "referenceFiles.switchToResponses",
             "referenceFiles.openApiSettings",
             "referenceFiles.providerMissing",
             "referenceFiles.missing",
-            "referenceFiles.loadFailed",
             "referenceFiles.errorEmpty",
             "referenceFiles.errorUnsupported",
             "referenceFiles.errorMismatch",
@@ -431,6 +424,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             self.assertIn(f'<option value="{locale}"', language_panel)
         self.assertNotIn("settings.status", language_panel)
 
+    @frontend_test
     def test_language_bootstrap_ignores_stale_restore_after_a_b_a_selection(self) -> None:
         node = shutil.which("node")
         if node is None:
@@ -637,30 +631,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('"outputSettings.title": "出力設定"', ja_dictionary_source)
         self.assertIn('"outputSettings.title": "출력 설정"', ko_dictionary_source)
         self.assertIn('"outputSettings.title": "Output"', en_dictionary_source)
-        self.assertIn('"language.es": "Español"', es_dictionary_source)
-        self.assertIn('"language.pt": "Português"', pt_dictionary_source)
-        self.assertIn('"language.fr": "Français"', fr_dictionary_source)
-        self.assertIn('"language.de": "Deutsch"', de_dictionary_source)
-        self.assertIn('"language.ru": "Русский"', ru_dictionary_source)
-        self.assertIn('"language.it": "Italiano"', it_dictionary_source)
-        self.assertIn('"language.hi": "हिन्दी"', hi_dictionary_source)
-        for dictionary_source in (
-            zh_dictionary_source,
-            zh_tw_dictionary_source,
-            zh_hk_dictionary_source,
-            ja_dictionary_source,
-            ko_dictionary_source,
-            en_dictionary_source,
-            es_dictionary_source,
-            pt_dictionary_source,
-            fr_dictionary_source,
-            de_dictionary_source,
-            ru_dictionary_source,
-            it_dictionary_source,
-            hi_dictionary_source,
-            vi_dictionary_source,
-        ):
-            self.assertIn('"language.vi": "Tiếng Việt"', dictionary_source)
         self.assertIn('document.querySelectorAll<HTMLElement>("[data-i18n]")', source)
         self.assertIn('querySelectorAll<HTMLElement>("[data-i18n-attr]")', source)
         self.assertIn("window.__codexImageI18n", source)
@@ -758,7 +728,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "api_settings": Path("codex_image/webui/frontend/src/api-provider-settings.ts").read_text(encoding="utf-8"),
             "storage": Path("codex_image/webui/frontend/src/storage-settings.ts").read_text(encoding="utf-8"),
             "image_strip": Path("codex_image/webui/frontend/src/image-strip.ts").read_text(encoding="utf-8"),
-            "custom_size": Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8"),
+            "custom_size": Path("codex_image/webui/frontend/src/image-size-editor.ts").read_text(encoding="utf-8"),
             "batch": Path("codex_image/webui/frontend/src/task-batch-controls.ts").read_text(encoding="utf-8"),
             "form": Path("codex_image/webui/frontend/src/form-controls.ts").read_text(encoding="utf-8"),
             "recent_assets": Path("codex_image/webui/frontend/src/recent-assets.ts").read_text(encoding="utf-8"),
@@ -777,29 +747,23 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "taskGroup.today",
             "taskGroup.yesterday",
             "taskGroup.last7",
-            "taskGroup.older",
             "queue.runningWaiting",
             "notifications.empty",
-            "footer.archiveCount",
             "templates.availableCount",
             "gallery.drawerSubtitle",
             "gallery.dragSort",
             "preview.addReference",
             "apiSettings.modeImagesShort",
-            "apiSettings.actualRequest",
             "apiSettings.newProviderAction",
             "apiSettings.copyProvider",
             "apiSettings.copyProviderStatus",
             "apiSettings.copyProviderWithoutKeyStatus",
             "apiSettings.sortProviders",
             "apiSettings.sortProviderStatus",
-            "apiSettings.saveProvider",
             "apiSettings.autoSaving",
             "apiSettings.autoSaved",
-            "apiSettings.cancelEdit",
             "apiSettings.deleteProviderTitle",
             "apiSettings.deleteProviderMessage",
-            "apiSettings.deleteProviderStatus",
             "imageInput.uploadBadge",
             "imageInput.addToGalleryShort",
             "imageInput.removeImage",
@@ -851,11 +815,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "queue.cancelRunningFailed",
             "queue.cancelRunningMessage",
             "queue.cancelRunningTitleConfirm",
-            "queue.deleteQueuedFailed",
-            "queue.deleteWaitingMessage",
-            "queue.deleteWaitingTitleConfirm",
             "queue.promoteFailed",
-            "queue.queuedDeleted",
             "queue.reorderFailed",
             "queue.runningCancelled",
             "colors.hexValue",
@@ -866,8 +826,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('formatTranslation("queue.runningWaiting"', runtime_sources["queue"])
         self.assertIn('translate("queue.empty")', runtime_sources["queue"])
         self.assertIn('translate("queue.promoteFailed")', runtime_sources["queue"])
-        self.assertIn('translate("queue.deleteWaitingTitleConfirm")', runtime_sources["queue"])
-        self.assertIn('translate("queue.deleteQueuedFailed")', runtime_sources["queue"])
         self.assertIn('translate("queue.cancelRunningTitleConfirm")', runtime_sources["queue"])
         self.assertIn('translate("queue.cancelRunningFailed")', runtime_sources["queue"])
         self.assertIn('translate("queue.reorderFailed")', runtime_sources["queue"])
@@ -875,7 +833,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('translate("notifications.empty")', runtime_sources["notifications"])
         self.assertIn('translate("notifications.taskCompleted")', runtime_sources["notifications"])
         self.assertIn('formatTranslation("notifications.successCount"', runtime_sources["notifications"])
-        self.assertIn('translate("footer.historyLibrary")', runtime_sources["archive"])
         self.assertIn('translate("taskGroup.today")', runtime_sources["task_groups"])
         self.assertIn('translate("taskGroup.last7")', runtime_sources["task_groups"])
         self.assertIn('formatTranslation("templates.availableCount"', runtime_sources["templates"])
@@ -895,7 +852,8 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('translate("imageInput.uploadBadge")', runtime_sources["image_strip"])
         self.assertIn('translate("imageInput.addToGalleryShort")', runtime_sources["image_strip"])
         self.assertIn('translate("imageInput.removeImage")', runtime_sources["image_strip"])
-        self.assertIn('formatTranslation("output.customSizeHint"', runtime_sources["custom_size"])
+        self.assertIn('translate("output.customSizeHint")', runtime_sources["custom_size"])
+        self.assertIn('formatTranslation("output.useSuggestedSize"', runtime_sources["custom_size"])
         self.assertIn('formatTranslation("batch.selectedCount"', runtime_sources["batch"])
         self.assertIn('translate(mode === "edit" ? "prompt.runEdit" : "prompt.run")', runtime_sources["form"])
         self.assertIn('formatTranslation("recentAssets.use"', runtime_sources["recent_assets"])
@@ -930,7 +888,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "api-provider-settings.ts",
             "auth-source.ts",
             "color-palette.ts",
-            "custom-size-controls.ts",
+            "image-size-editor.ts",
             "gallery.ts",
             "gallery-categories.ts",
             "gallery-grid.ts",
@@ -948,7 +906,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "queue.ts",
             "runtime-feedback.ts",
             "shell-ui.ts",
-            "size-presets.ts",
+            "task-params.ts",
             "storage-settings.ts",
             "task-actions.ts",
             "task-archive-controls.ts",

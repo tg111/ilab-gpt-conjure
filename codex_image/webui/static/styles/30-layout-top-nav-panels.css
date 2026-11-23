@@ -63,7 +63,7 @@
 .queue-button:hover {
   border-color: color-mix(in srgb, var(--primary) 45%, transparent);
   background: var(--primary-light);
-  box-shadow: 0 3px 10px rgba(40, 116, 85, 0.1);
+  box-shadow: 0 3px 10px var(--action-shadow, rgba(var(--shadow-rgb), 0.1));
 }
 
 .queue-badge {
@@ -358,17 +358,6 @@
   display: block;
 }
 
-.auth-source-switcher {
-  order: 1;
-  flex: 0 1 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  position: relative;
-}
-
 .generation-provider-control {
   order: 1;
   flex: 0 1 310px;
@@ -440,19 +429,6 @@
   min-width: 100%;
 }
 
-.auth-source-group {
-  height: var(--top-nav-control-height);
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: var(--top-nav-control-padding);
-  border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
-  border-radius: var(--top-nav-control-radius);
-  background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
-  font-size: var(--top-nav-control-font-size);
-  line-height: 1;
-}
-
 .auth-source-button {
   flex: 0 0 auto;
   height: var(--top-nav-segment-height);
@@ -476,11 +452,7 @@
 .auth-source-button.active {
   background: var(--primary);
   color: var(--primary-foreground);
-  box-shadow: 0 2px 8px rgba(40, 116, 85, 0.16);
-}
-
-.auth-source-api-button {
-  gap: 4px;
+  box-shadow: 0 2px 8px var(--action-shadow, rgba(var(--shadow-rgb), 0.16));
 }
 
 .auth-source-settings-icon {
@@ -511,7 +483,7 @@
   border-color: color-mix(in srgb, var(--primary) 45%, transparent);
   background: var(--primary-light);
   color: var(--primary-strong);
-  box-shadow: 0 3px 10px rgba(40, 116, 85, 0.1);
+  box-shadow: 0 3px 10px var(--action-shadow, rgba(var(--shadow-rgb), 0.1));
   outline: none;
 }
 
@@ -522,29 +494,6 @@
   .auth-source-settings-button {
     transition: none;
   }
-}
-
-.api-provider-quick {
-  height: var(--top-nav-control-height);
-  border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
-  border-radius: var(--top-nav-control-radius);
-  padding: 0 14px;
-  background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
-  color: var(--text);
-  font-size: var(--top-nav-control-font-size);
-  line-height: 1;
-}
-
-.auth-source-detail {
-  flex: 0 0 auto;
-  width: 150px;
-  color: var(--text-muted);
-  font-size: 11px;
-  line-height: 1.2;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Dashboard Workspace */
@@ -720,10 +669,4 @@
 
 .danger-action {
   color: var(--danger);
-}
-
-.image-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }

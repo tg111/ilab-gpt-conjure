@@ -4,11 +4,8 @@ import test from "node:test";
 import type { GenerationCatalog } from "../../codex_image/webui/frontend/src/types";
 import { eligibleProviders, renderProviderSelection, resolveProviderId, selectedProviderBinding, selectGenerationProvider, settingsTabForProvider } from "../../codex_image/webui/frontend/src/provider-selection";
 import { initialCatalogSelection, isGenerationCatalog, persistModelSelection, safeDraftValue } from "../../codex_image/webui/frontend/src/model-catalog";
-import {
-  canonicalControlValues,
-  canonicalParametersForSubmission,
-  migratePortableModelDraft,
-} from "../../codex_image/webui/frontend/src/model-parameter-drafts";
+import { migratePortableModelDraft } from "../../codex_image/webui/frontend/src/model-parameter-drafts";
+import { activeParameterValuesFor, selectedBindingParameterIds } from "../../codex_image/webui/frontend/src/model-parameters";
 import { resolveModeSettingsVisibility } from "../../codex_image/webui/frontend/src/mode-settings-visibility";
 import {
   renderModelSelectors,
@@ -219,6 +216,7 @@ test("cross-family concrete model selection rebuilds the active family and its m
   let reconciledInspections = 0;
 
   (globalThis as any).document = {
+    getElementById: () => null,
     createElement: () => new FakeElement(),
     querySelectorAll: () => [],
   };
@@ -369,59 +367,19 @@ test("Gemini model switches carry valid shared values and default unsupported ch
   })["gemini.google_search"], "on", "target-only search keeps its prior draft");
 });
 
-test("GPT-only controls stay hidden for Gemini even without an eligible provider", () => {
-  const legacy = { catalogAvailable: false, modelId: null, protocolProfile: null };
-  assert.deepEqual(resolveModeSettingsVisibility({ ...legacy, legacyDirectApi: false }), {
-    showMainModel: true,
-    showPromptFidelity: true,
-  });
-  assert.deepEqual(resolveModeSettingsVisibility({ ...legacy, legacyDirectApi: true }), {
-    showMainModel: false,
-    showPromptFidelity: true,
-  });
-
-  for (const modelId of ["nano-banana-pro", "nano-banana-2.1", "nano-banana-2", "nano-banana-2-lite"]) {
-    for (const protocolProfile of [null, "gemini_generate_content", "openai_images"]) {
-      assert.deepEqual(resolveModeSettingsVisibility({
-        catalogAvailable: true,
-        modelId,
-        protocolProfile,
-        legacyDirectApi: false,
-      }), {
-        showMainModel: false,
-        showPromptFidelity: false,
-      }, `${modelId} must not expose GPT-only controls for ${protocolProfile || "no binding"}`);
-    }
-  }
-
-  assert.deepEqual(resolveModeSettingsVisibility({
-    catalogAvailable: true,
-    modelId: "gpt-image-2",
-    protocolProfile: "codex_responses",
-    legacyDirectApi: false,
-  }), {
-    showMainModel: true,
-    showPromptFidelity: true,
-  });
-  assert.deepEqual(resolveModeSettingsVisibility({
-    catalogAvailable: true,
-    modelId: "gpt-image-2",
-    protocolProfile: "codex_images",
-    legacyDirectApi: true,
-  }), {
-    showMainModel: false,
-    showPromptFidelity: true,
-  });
-});
-
-test("main model visibility follows the Responses protocol for Codex and relay bindings", () => {
-  for (const modelId of ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
-    for (const protocolProfile of ["codex_responses", "openai_responses", "codex_images", "openai_images", null]) {
-      assert.deepEqual(resolveModeSettingsVisibility({catalogAvailable: true, modelId, protocolProfile, legacyDirectApi: false}), {
-        showMainModel: Boolean(protocolProfile?.endsWith("_responses")),
-        showPromptFidelity: true,
-      }, `${modelId} / ${protocolProfile}`);
-    }
+test("the main model follows the binding's capabilities, then its protocol, then the API mode", () => {
+  const capabilities = (uses_main_model: boolean) => ({ available: true, unavailable_reason: "", parameter_ids: [], uses_main_model, supports_markup: false });
+  // Without a binding only the direct Images API hides the main model.
+  assert.deepEqual(resolveModeSettingsVisibility(null, false), { showMainModel: true });
+  assert.deepEqual(resolveModeSettingsVisibility(null, true), { showMainModel: false });
+  // Capabilities from the catalog decide, whatever the protocol name suggests.
+  assert.deepEqual(resolveModeSettingsVisibility({ protocol_profile: "openai_images", capabilities: capabilities(true) }, true), { showMainModel: true });
+  assert.deepEqual(resolveModeSettingsVisibility({ protocol_profile: "gemini_generate_content", capabilities: capabilities(false) }, false), { showMainModel: false });
+  // Older payloads without capabilities fall back to the Responses protocols.
+  for (const protocol_profile of ["codex_responses", "openai_responses", "codex_images", "openai_images", "gemini_generate_content"]) {
+    assert.deepEqual(resolveModeSettingsVisibility({ protocol_profile } as any, false), {
+      showMainModel: protocol_profile.endsWith("_responses"),
+    }, protocol_profile);
   }
 });
 
@@ -532,33 +490,33 @@ test("persistModelSelection serializes no deeply nested secret compound", () => 
   }
 });
 
-test("canonical controls honor binding protocol and format conditions", () => {
-  const params = { output_format: "webp", output_compression: 63, web_search: true, n: 2 };
-  assert.equal(canonicalControlValues(params, "openai_responses")["gpt.web_search"], true);
-  assert.equal(canonicalControlValues(params, "openai_images")["gpt.web_search"], false);
-  assert.equal(canonicalControlValues(params, "openai_images")["gpt.output_compression"], 63);
-  assert.equal("gpt.output_compression" in canonicalControlValues({ ...params, output_format: "png" }, "openai_responses"), false);
-});
+test("submitted parameters follow the selected binding's capabilities and format conditions", () => {
+  const base = { label_key: "x", group: "advanced", value_type: "string", scope: "model", minimum: null, maximum: null, step: null, operations: ["generate"], full_width: false } as const;
+  const model = { ...catalog.models[0], id: "gpt-x", parameters: [
+    { ...base, id: "output.format", control: "segmented", default: "png", allowed_values: ["png", "webp"], visible_when: [] },
+    { ...base, id: "gpt.output_compression", control: "number", value_type: "integer", default: 100, allowed_values: [], minimum: 0, maximum: 100, step: 1,
+      visible_when: [{ parameter_id: "output.format", operator: "in", value: ["jpeg", "webp"] }] },
+    { ...base, id: "tools.web_search", control: "boolean_segmented", value_type: "boolean", default: false, allowed_values: [], visible_when: [] },
+  ] } as any;
+  const draft = { "output.format": "webp", "gpt.output_compression": 63, "tools.web_search": true };
+  const responses = new Set(["output.format", "gpt.output_compression", "tools.web_search"]);
+  const images = new Set(["output.format", "gpt.output_compression"]);
+  assert.equal(activeParameterValuesFor(model, "generate", draft, responses)["tools.web_search"], true);
+  assert.equal("tools.web_search" in activeParameterValuesFor(model, "generate", draft, images), false);
+  assert.equal(activeParameterValuesFor(model, "generate", draft, images)["gpt.output_compression"], 63);
+  assert.equal("gpt.output_compression" in activeParameterValuesFor(model, "generate", { ...draft, "output.format": "png" }, responses), false);
 
-test("per-model draft is restored but current visible controls win at submission", () => {
-  const model = {
-    ...catalog.models[0],
-    parameters: [
-      { id: "output.format", label_key: "output.format", group: "generation", control: "select", value_type: "string", default: "png", allowed_values: ["png", "webp"], scope: "model", minimum: null, maximum: null, step: null, visible_when: [], operations: ["generate"], full_width: false },
-      { id: "gpt.output_compression", label_key: "output.compression", group: "advanced", control: "slider", value_type: "integer", default: 80, allowed_values: [], scope: "model", minimum: 0, maximum: 100, step: 1, visible_when: [{ parameter_id: "output.format", operator: "in", value: ["jpeg", "webp"] }], operations: ["generate"], full_width: false },
-    ],
-  } as any;
-  assert.deepEqual(canonicalParametersForSubmission(model, "generate", {
-    "output.format": "webp",
-    "gpt.output_compression": 42,
-  }, {
-    "output.format": "webp",
-    "gpt.output_compression": 67,
-  }), { "output.format": "webp", "gpt.output_compression": 67 });
-  assert.deepEqual(canonicalParametersForSubmission(model, "generate", {
-    "output.format": "webp",
-    "gpt.output_compression": 42,
-  }, { "output.format": "png" }), { "output.format": "png" });
+  const previousWindow = (globalThis as any).window;
+  const bound = structuredClone(catalog) as any;
+  bound.providers[0].bindings[0] = { ...bound.providers[0].bindings[0], canonical_model_id: "gpt-x",
+    capabilities: { available: true, unavailable_reason: "", parameter_ids: [...images], uses_main_model: false, supports_markup: false } };
+  (globalThis as any).window = { __codexImageWebUI: { state: {
+    generationCatalog: bound, selectedProviderId: bound.providers[0].id, selectedProviderBindingId: bound.providers[0].bindings[0].id,
+  }, els: {}, methods: {} } };
+  try {
+    assert.deepEqual([...selectedBindingParameterIds("gpt-x")!], [...images]);
+    assert.equal(selectedBindingParameterIds("other-model"), null, "a binding for another model does not filter");
+  } finally { (globalThis as any).window = previousWindow; }
 });
 
 test("Codex eligibility is defensive even when catalog data claims another family", () => {
@@ -632,79 +590,6 @@ test("health/auth races cannot override catalog provider availability", async ()
   }
 });
 
-test("transparent background follows format compatibility and preserves opaque history", async () => {
-  const { setBackgroundControl, updateTransparencyControls, handleTransparentBackgroundChange } = await import("../../codex_image/webui/frontend/src/background-controls");
-  const previousWindow = (globalThis as any).window;
-  const previousDocument = (globalThis as any).document;
-  const field = () => ({ classList: new FakeClassList(), dataset: {} as Record<string, string>, textContent: "" });
-  const label = field();
-  (globalThis as any).document = { getElementById: () => label };
-  const jpegOption = { disabled: false };
-  const jpegButton = { disabled: false, title: "" };
-  let saved = 0;
-  const els: any = {
-    background: { value: "auto" }, transparentBackground: { checked: false, disabled: false },
-    transparentBackgroundField: field(),
-    outputFormat: { value: "jpeg", querySelector: () => jpegOption, dispatchEvent: () => {} },
-    outputFormatGroup: { querySelector: () => jpegButton },
-  };
-  const state: any = { generationCatalog: null, selectedModelId: "gpt-image-2" };
-  (globalThis as any).window = { __codexImageWebUI: { els, state, methods: { saveCurrentModelParameterDraft: () => saved++ } } };
-  try {
-    setBackgroundControl("opaque");
-    updateTransparencyControls();
-    assert.equal(els.background.value, "opaque");
-    assert.equal(els.transparentBackground.checked, false);
-    assert.equal(els.transparentBackground.disabled, true);
-    els.outputFormat.value = "png";
-    updateTransparencyControls();
-    els.transparentBackground.checked = true;
-    handleTransparentBackgroundChange();
-    assert.equal(els.background.value, "transparent");
-    assert.equal(els.outputFormat.value, "png");
-    assert.equal(jpegButton.disabled, false);
-    assert.equal(jpegOption.disabled, false);
-    assert.equal(saved, 1);
-    els.outputFormat.value = "jpeg";
-    updateTransparencyControls();
-    assert.equal(els.outputFormat.value, "jpeg", "all formats remain selectable");
-    assert.equal(els.background.value, "auto", "JPEG cannot submit transparent background");
-    assert.equal(els.transparentBackground.disabled, true);
-    assert.equal(els.transparentBackground.checked, false);
-    assert.equal(label.dataset.i18n, "output.transparencyUnavailable");
-    els.outputFormat.value = "webp";
-    updateTransparencyControls();
-    assert.equal(els.background.value, "transparent", "restore the current-page preference");
-    assert.equal(els.transparentBackground.disabled, false);
-    assert.equal(els.transparentBackground.checked, true);
-    els.transparentBackground.checked = false;
-    handleTransparentBackgroundChange();
-    assert.equal(els.background.value, "auto");
-    assert.equal(els.outputFormat.value, "webp");
-    assert.equal(jpegButton.disabled, false);
-    assert.equal(jpegOption.disabled, false);
-    for (const format of ["jpeg", "png"]) {
-      els.outputFormat.value = format;
-      updateTransparencyControls();
-      assert.equal(els.transparentBackground.checked, false, "explicit off stays off");
-    }
-    setBackgroundControl("transparent");
-    state.generationCatalog = { models: [], providers: [] };
-    state.selectedModelId = "nano-banana-pro";
-    updateTransparencyControls();
-    assert.equal(els.transparentBackgroundField.classList.contains("hidden"), true);
-    assert.equal(jpegOption.disabled, false);
-    assert.equal(els.background.value, "transparent", "hidden GPT draft is preserved");
-    state.selectedModelId = "gpt-image-2";
-    setBackgroundControl("auto");
-    updateTransparencyControls();
-    assert.equal(els.transparentBackground.checked, false, "restoring a draft replaces the preference");
-  } finally {
-    (globalThis as any).window = previousWindow;
-    (globalThis as any).document = previousDocument;
-  }
-});
-
 test("transparency badges use pixel evidence, never request metadata alone", async () => {
   const { transparencyStatus, requestedTransparentBackground } = await import("../../codex_image/webui/frontend/src/transparency-status");
   assert.equal(transparencyStatus(undefined, true), null);
@@ -728,7 +613,7 @@ test("catalog refresh restores saved parameters before request preview, and hono
     restoreCurrentModelParameterDraft: () => order.push("restore"),
     updateRequestPreview: () => order.push("preview"),
   } } };
-  (globalThis as any).document = { querySelectorAll: () => [], createElement: () => new FakeElement() };
+  (globalThis as any).document = { getElementById: () => null, querySelectorAll: () => [], createElement: () => new FakeElement() };
   (globalThis as any).localStorage = { setItem: () => {} };
   globalThis.fetch = (async () => ({ ok: true, json: async () => catalog })) as any;
   try {
@@ -770,7 +655,7 @@ test("catalog refresh follows a changed selected binding instead of switching su
     default_provider_by_model: { "gpt-image-2": "edited" },
   };
   const state: any = {};
-  const els: any = { quality: new FakeElement(), concreteModelSelect: new FakeElement(), generationProviderSelect: new FakeElement() };
+  const els: any = { concreteModelSelect: new FakeElement(), generationProviderSelect: new FakeElement() };
   const previews: string[] = [];
   const prepare = (nextModel: string, locked = false) => {
     Object.assign(state, {
@@ -778,12 +663,11 @@ test("catalog refresh follows a changed selected binding instead of switching su
       selectedProviderId: "edited", selectedProviderBindingId: "edited-binding", mode: "generate",
       lastModelByFamily: { "gpt-image": "gpt-image-2" }, lastProviderByModel: { "gpt-image-2": "edited" },
       lastProviderSelectionByModel: { "gpt-image-2": "edited::edited-binding" },
-      parameterDraftsByModel: {}, parameterDraftVersionsByModel: {}, parameterValidationErrorsByModel: {},
+      parameterDraftsByModel: { "gpt-image-2": { "gpt.quality": "high" } }, parameterDraftVersionsByModel: {}, parameterValidationErrorsByModel: {},
     });
-    els.quality.value = "high";
     previews.length = 0;
     (globalThis as any).window = { __codexImageWebUI: { state, els, methods: {
-      isOutputSettingsLocked: () => locked, currentTaskParams: () => ({ quality: els.quality.value }),
+      isOutputSettingsLocked: () => locked, currentTaskParams: () => ({}),
       restoreCurrentModelParameterDraft, persistModelSelection,
       updateRequestPreview: () => previews.push(`${state.selectedModelId}:${state.selectedProviderId}`),
     } } };
@@ -794,7 +678,7 @@ test("catalog refresh follows a changed selected binding instead of switching su
     globalThis.fetch = (async () => ({ ok: true, json: async () => after })) as any;
     return after;
   };
-  (globalThis as any).document = { querySelectorAll: () => [], createElement: () => new FakeElement() };
+  (globalThis as any).document = { getElementById: () => null, querySelectorAll: () => [], createElement: () => new FakeElement() };
   (globalThis as any).localStorage = { setItem() {} };
   try {
     for (const nextModel of ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"]) {
@@ -808,7 +692,6 @@ test("catalog refresh follows a changed selected binding instead of switching su
           assert.equal(state.lastModelByFamily["gpt-image"], nextModel);
           assert.equal(els.concreteModelSelect.value, nextModel);
           assert.equal(els.generationProviderSelect.value, "edited::edited-binding");
-          assert.equal(els.quality.value, "high");
           assert.equal(state.parameterDraftsByModel[nextModel]["gpt.quality"], "high");
           assert.deepEqual(previews, [`${nextModel}:edited`], "no preview uses a fallback supplier during the transition");
         });
@@ -817,15 +700,12 @@ test("catalog refresh follows a changed selected binding instead of switching su
           state.generationCatalog = null;
           state.selectedProviderId = null;
           state.selectedProviderBindingId = null;
-          state.parameterDraftsByModel["gpt-image-2"] = { "gpt.quality": "high" };
-          els.quality.value = "auto";
           await refreshGenerationCatalog();
           assert.equal(state.selectedModelId, nextModel);
           assert.equal(state.selectedProviderId, "edited");
           assert.equal(state.selectedProviderBindingId, "edited-binding");
           assert.equal(state.lastModelByFamily["gpt-image"], nextModel);
           assert.equal(state.lastProviderSelectionByModel[nextModel], "edited::edited-binding");
-          assert.equal(els.quality.value, "high");
           assert.equal(state.parameterDraftsByModel[nextModel]["gpt.quality"], "high");
           assert.deepEqual(previews, [`${nextModel}:edited`]);
         });
@@ -914,10 +794,9 @@ test("GPT versions share one parameter panel and are selected through provider b
   const field = new FakeElement();
   const els: any = {
     concreteModelSelect: new FakeElement(), concreteModelOptions: new FakeElement(),
-    generationProviderSelect: new FakeElement(), quality: new FakeElement(), runButton: new FakeElement(),
+    generationProviderSelect: new FakeElement(), runButton: new FakeElement(),
   };
   els.concreteModelSelect.closestResult = field;
-  els.quality.value = "high";
   const state: any = {
     generationCatalog: gptCatalog, selectedFamilyId: "gpt-image", selectedModelId: "gpt-image-2", mode: "generate",
     selectedProviderId: "old", selectedProviderBindingId: "old-2", lastModelByFamily: {},
@@ -925,9 +804,9 @@ test("GPT versions share one parameter panel and are selected through provider b
     parameterDraftsByModel: {}, parameterDraftVersionsByModel: {}, parameterValidationErrorsByModel: {},
   };
   (globalThis as any).window = { __codexImageWebUI: { state, els, methods: {
-    currentTaskParams: () => ({ quality: els.quality.value }), persistModelSelection() {},
+    currentTaskParams: () => ({}), persistModelSelection() {},
   } } };
-  (globalThis as any).document = { querySelectorAll: () => [], createElement: () => new FakeElement() };
+  (globalThis as any).document = { getElementById: () => null, querySelectorAll: () => [], createElement: () => new FakeElement() };
   try {
     renderModelSelectors();
     renderProviderSelection();
@@ -942,7 +821,6 @@ test("GPT versions share one parameter panel and are selected through provider b
     assert.equal(state.selectedModelId, "gpt-image-2.5-flare");
     assert.equal(state.selectedProviderId, "modern");
     assert.equal(selectedProviderBinding()?.remote_model_id, "vendor/gpt-image-2.5-flare");
-    assert.equal(els.quality.value, "high");
     assert.equal(field.classList.contains("hidden"), true);
     selectGenerationProvider("codex::codex-responses");
     assert.equal(state.selectedModelId, "gpt-image-2");

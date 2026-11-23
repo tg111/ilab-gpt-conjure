@@ -1,7 +1,6 @@
 export type TaskStatus = "submitting" | "queued" | "running" | "cancelling" | "completed" | "failed" | "partial_failed" | "cancelled";
 export type TaskMode = "generate" | "edit";
 export type OutputStatus = "running" | "completed" | "failed";
-export type AuthSource = "codex" | "api";
 export type ApiMode = "images" | "responses";
 export type ModelFamilyId = string;
 export type GenerationOperation = "generate" | "edit";
@@ -14,30 +13,6 @@ export interface ProviderModelBindingSettings {
   parameter_codec: string;
   operations: GenerationOperation[];
   transparency_mode?: "native" | "prompt";
-}
-
-export interface ProviderConnectionSettings {
-  id: string;
-  name: string;
-  icon_emoji?: string;
-  base_url: string;
-  concurrency: number;
-  bindings: ProviderModelBindingSettings[];
-  api_key?: string;
-  api_key_set?: boolean;
-  api_key_masked?: string;
-  api_key_source_provider_id?: string;
-  image_model?: string;
-  api_mode?: ApiMode;
-  images_concurrency?: number;
-}
-
-export interface ProviderSettingsV2 {
-  schema_version: 2;
-  codex_mode: ApiMode;
-  active_provider_id: string;
-  default_provider_by_model: Record<string, string>;
-  providers: ProviderConnectionSettings[];
 }
 
 export interface CatalogParameterVisibility {
@@ -64,8 +39,8 @@ export interface CatalogObjectPreset {
 export interface CatalogParameterDefinition {
   id: string;
   label_key: string;
-  group: "model" | "canvas" | "generation" | "advanced";
-  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid";
+  group: "model" | "canvas" | "generation" | "tools" | "advanced";
+  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid" | "image_size" | "pixel_size";
   value_type: "string" | "integer" | "boolean" | "object";
   default: unknown;
   allowed_values: unknown[];
@@ -78,6 +53,30 @@ export interface CatalogParameterDefinition {
   full_width: boolean;
   object_choices?: CatalogObjectChoiceRow[];
   object_presets?: CatalogObjectPreset[];
+  value_requirements?: CatalogValueRequirement[];
+  value_label_keys?: string[];
+}
+
+export interface CatalogValueRequirement {
+  value: unknown;
+  condition: CatalogParameterVisibility;
+  reason: string;
+}
+
+export interface CatalogCustomSizeRules {
+  min_edge: number;
+  max_edge: number;
+  multiple: number;
+  max_aspect_ratio: number;
+  min_pixels: number;
+  max_pixels: number;
+  relaxed_formats: string[];
+}
+
+export interface CatalogSizeSpec {
+  modes: string[];
+  presets: Record<string, Record<string, [number, number]>>;
+  custom: CatalogCustomSizeRules | null;
 }
 
 export interface CatalogModel {
@@ -91,9 +90,14 @@ export interface CatalogModel {
   input_constraints: {
     max_images: number;
     supports_mask: boolean;
+    supports_markup?: boolean;
     supports_reference_files: boolean;
   };
   expand_advanced_parameters?: boolean;
+  unified_parameters?: CatalogParameterDefinition[];
+  size_spec?: CatalogSizeSpec | null;
+  // Earlier parameter names of this model's family, attached when the catalog loads.
+  parameter_renames?: Record<string, string>;
 }
 
 export interface CatalogFamily {
@@ -114,6 +118,13 @@ export interface CatalogProviderBinding {
   transparency_instruction?: string;
   available?: boolean;
   display_name?: string;
+  capabilities?: {
+    available: boolean;
+    unavailable_reason: string | null;
+    parameter_ids: string[];
+    uses_main_model: boolean;
+    supports_markup: boolean;
+  };
 }
 
 export interface CatalogProvider {
@@ -123,6 +134,7 @@ export interface CatalogProvider {
   available: boolean;
   bindings: CatalogProviderBinding[];
   icon_emoji?: string;
+  gif_edit_max_frames?: number;
 }
 
 export interface GenerationCatalog {
@@ -133,6 +145,7 @@ export interface GenerationCatalog {
   providers: CatalogProvider[];
   default_provider_by_model: Record<string, string>;
   codex: { available: boolean; mode: ApiMode };
+  parameter_renames?: Record<string, Record<string, string>>;
 }
 
 export interface GenerationSnapshotView {

@@ -102,22 +102,10 @@ export function handleAuthSourceClick(event: any): void {
 export function renderAuthSource(auth: any): void {
   const selected = state.pendingAuthSource || auth?.selected_source || "codex";
   applyAuthSourceSelection(selected);
-  if (els.authSourceDetail) {
-    const text = auth ? authSourceDetailText(auth) : translate("auth.checking");
-    els.authSourceDetail.textContent = text;
-    els.authSourceDetail.title = text;
-  }
 }
 
 export function applyAuthSourceSelection(source: any): void {
-  const selected = source || "codex";
-  els.authSourceGroup?.querySelectorAll("[data-auth-source]").forEach((button: any) => {
-    const active = button.dataset.authSource === selected;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-pressed", active ? "true" : "false");
-  });
-  els.apiProviderQuick?.classList.add("hidden");
-  updateModeSpecificSettings(selected);
+  updateModeSpecificSettings(source || "codex");
 }
 
 export function authSourceDetailText(auth: any): string {
@@ -147,9 +135,4 @@ export function sourceLabel(source: any): string {
 export function currentAuthSource(): string {
   if (state.selectedProviderId) return state.selectedProviderId === "codex" ? "codex" : "api";
   return state.pendingAuthSource || state.authStatus?.selected_source || "codex";
-}
-
-export function isDirectApiMode(authSource: any = currentAuthSource()): boolean {
-  return (authSource === "api" && currentApiMode() !== "responses")
-    || (authSource === "codex" && currentCodexMode() !== "responses");
 }

@@ -33,6 +33,23 @@ Exhausted DNS or connection attempts, unsafe asset URLs, and invalid image
 responses stop the task instead of automatically resubmitting generation.
 A user-requested retry remains available after a failed task.
 
+Downloaded images must pass full raster decoding and byte, dimension, pixel and
+frame limits. If a CDN mislabels one supported raster type as another (for
+example, WebP as PNG), the decoded format takes precedence and determines the
+saved extension. HTML and invalid image bytes are rejected; explicit MIME
+declarations inside provider JSON or data URLs remain strictly checked.
+
+SVG is accepted only for an Images API request explicitly selecting SVG. It
+must be bounded UTF-8 static SVG: no scripts, event handlers, foreign objects,
+embedded raster images, external resources, DTDs or entities. Media responses
+use a sandboxed CSP. Raster inputs remain raster-only; SVG output does not
+relax upload validation. History imports validate SVG outputs under the same
+static-image rules.
+
+Reusing a served SVG output as a reference creates a PNG copy in the browser,
+with bounded dimensions and byte size. The original SVG remains unchanged;
+the copy still passes the regular raster upload validation.
+
 Read/write failures, HTTP 5xx responses and total timeouts after a generation
 request may have been sent never replay that request automatically. Connection
 retries are limited to failures known to occur before sending. Image decoding,
@@ -73,24 +90,6 @@ The optional Codex / ChatGPT OAuth mode calls an internal ChatGPT backend
 endpoint. It is not an officially recommended OpenAI API integration path and
 may change or stop working without notice. Prefer OpenAI-compatible API mode for
 stable integrations.
-
-## Portable updater behavior
-
-Portable startup launchers only start the local WebUI server and open the local
-browser URL by default. They contact GitHub only when the user chooses the
-update check action from the tray/menu-bar menu.
-
-Standard app packages do not silently self-replace app files. Updater-enabled
-macOS standard apps can perform a user-confirmed one-click replacement after
-verifying the signed manifest and DMG SHA256; older macOS apps and Windows
-standard ZIP packages open the matching download for manual replacement.
-
-Portable update scripts can be started by the launcher after user confirmation,
-or run manually from the extracted package. They fetch the published signed
-`latest.json` update manifest and the matching portable zip, verify the Ed25519
-manifest signature and manifest SHA256, preserve local `data/`, only replace
-package-managed files inside the extracted portable folder, keep backups under
-`.backup/`, and restart the launcher when started in automatic mode.
 
 ## Reporting issues
 

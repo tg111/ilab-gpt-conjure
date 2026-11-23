@@ -13,7 +13,6 @@ from .task_enrichment import (
     _infer_gallery_refs_from_prompt,
     _input_sources,
     _input_urls,
-    _params,
     _reference_asset_response,
     _with_file_urls,
 )
@@ -89,6 +88,7 @@ class TaskMetadata(TypedDict, total=False):
     tool_usages: list[dict[str, Any]]
     input_files: list[str]
     mask_file: str | None
+    markup_file: str | None
     input_urls: list[str]
     input_thumbnail_urls: list[str]
     gallery_refs: list[dict[str, Any]]

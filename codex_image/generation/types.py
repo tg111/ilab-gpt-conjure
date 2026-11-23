@@ -18,6 +18,8 @@ ParameterControl = Literal[
     "choice_grid",
     "object_presets",
     "aspect_ratio_grid",
+    "image_size",
+    "pixel_size",
 ]
 
 
@@ -34,6 +36,15 @@ class ParameterCondition:
     parameter_id: str
     operator: Literal["equals", "not_equals", "in"]
     value: Any
+
+
+@dataclass(frozen=True)
+class ValueRequirement:
+    """A value of a parameter that is only valid while another condition holds."""
+
+    value: Any
+    condition: ParameterCondition
+    reason: str
 
 
 @dataclass(frozen=True)
@@ -57,7 +68,7 @@ class ObjectPreset:
 class ParameterDefinition:
     id: str
     label_key: str
-    group: Literal["model", "canvas", "generation", "advanced"]
+    group: Literal["model", "canvas", "generation", "tools", "advanced"]
     control: ParameterControl
     value_type: Literal["string", "integer", "boolean", "object"]
     default: Any
@@ -71,6 +82,36 @@ class ParameterDefinition:
     full_width: bool = False
     object_choices: tuple[ObjectChoiceRow, ...] = ()
     object_presets: tuple[ObjectPreset, ...] = ()
+    value_requirements: tuple[ValueRequirement, ...] = ()
+    # Translation keys for allowed_values, in the same order; empty shows values as written.
+    value_label_keys: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class CustomSizeRules:
+    min_edge: int
+    max_edge: int
+    multiple: int
+    max_aspect_ratio: float
+    min_pixels: int
+    max_pixels: int
+    # Output formats that skip the aspect-ratio and pixel-count limits.
+    relaxed_formats: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class ImageSizeSpec:
+    """How a model is sized: ``canvas.mode`` picks auto, a preset or custom pixels.
+
+    Aspect ratios and resolutions are the allowed values of ``canvas.aspect_ratio``
+    and ``canvas.resolution``. ``presets`` maps resolution -> ratio -> pixels for
+    models whose API takes explicit dimensions; models sized by the provider
+    leave it empty.
+    """
+
+    modes: tuple[str, ...]
+    presets: Mapping[str, Mapping[str, tuple[int, int]]] = field(default_factory=dict)
+    custom: CustomSizeRules | None = None
 
 
 @dataclass(frozen=True)
@@ -78,6 +119,7 @@ class InputConstraints:
     max_images: int
     supports_mask: bool
     supports_reference_files: bool
+    supports_markup: bool = False
 
 
 @dataclass(frozen=True)
@@ -91,6 +133,7 @@ class ModelManifest:
     parameters: tuple[ParameterDefinition, ...]
     input_constraints: InputConstraints
     expand_advanced_parameters: bool = False
+    size_spec: ImageSizeSpec | None = None
 
     def parameter(self, parameter_id: str) -> ParameterDefinition:
         for definition in self.parameters:
@@ -116,6 +159,7 @@ class GenerationCommand:
     image_inputs: tuple[ImageInput, ...] = ()
     reference_files: tuple[ResponsesInputFile, ...] = ()
     mask_image: str | None = None
+    markup_image: str | None = None
     main_model: str | None = None
     instructions: str | None = None
     # Legacy-only transport options which are intentionally outside the

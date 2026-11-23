@@ -7,6 +7,7 @@ from threading import Condition
 from typing import Any, Awaitable, Callable
 
 from codex_image.client import ImageResult
+from codex_image.generation.parameter_vocabulary import requested_image_size, upgrade_parameters
 from codex_image.generation.service import GenerationService
 from codex_image.generation.types import GeneratedAsset, GenerationResult
 from codex_image.generation.errors import GenerationTimeoutError
@@ -22,13 +23,13 @@ class _LegacyClientAdapter:
 
     def execute(self, plan: ExecutionPlan) -> GenerationResult:
         command = plan.command
-        params = {**command.parameters, **command.legacy_compat_parameters}
+        params = upgrade_parameters(plan.model, {**command.parameters, **command.legacy_compat_parameters})
         transparency = transparency_request(command, plan.binding)
         common: dict[str, Any] = {
             "prompt": transparency.prompt,
             "main_model": command.main_model,
             "model": plan.binding.remote_model_id,
-            "size": params.get("canvas.size"),
+            "size": requested_image_size(plan.model, params),
             "quality": params.get("gpt.quality"),
             "background": transparency.background,
             "output_format": params.get("output.format", "png"),
@@ -38,7 +39,7 @@ class _LegacyClientAdapter:
         ephemeral_reference_files: list[Any] = []
         if plan.binding.protocol_profile.endswith("responses"):
             common["instructions"] = transparency.instructions
-            common["web_search"] = bool(params.get("gpt.web_search"))
+            common["web_search"] = bool(params.get("tools.web_search"))
             ephemeral_reference_files = list(command.reference_files)
             common["reference_files"] = ephemeral_reference_files
         try:
@@ -83,7 +84,11 @@ class ExecutionPlanImageClient:
         registry: ProviderRegistry | None = None,
     ) -> None:
         self._plan = plan
-        self._uses_legacy_client_adapter = plan.binding.parameter_codec.startswith("gpt_")
+        self._uses_legacy_client_adapter = (
+            plan.binding.parameter_codec.startswith("gpt_")
+            and not plan.model.id.startswith("gpt-image-2.6-")
+            and not plan.command.markup_image
+        )
         if self._uses_legacy_client_adapter:
             base_registry = registry or default_registry()
             registry = ProviderRegistry(
@@ -243,6 +248,8 @@ class ExecutionPlanImageClient:
         metadata = dict(asset.metadata)
         mime_type = str(asset.mime_type or "").split(";", 1)[0].strip().lower()
         asset_format = mime_type.split("/", 1)[1] if mime_type.startswith("image/") else ""
+        if asset_format == "svg+xml":
+            asset_format = "svg"
         if asset_format == "jpg":
             asset_format = "jpeg"
         output_format = str(

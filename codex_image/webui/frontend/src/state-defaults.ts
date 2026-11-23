@@ -1,18 +1,10 @@
 import type { WebUIState } from "./state";
 
-export const DEFAULT_GALLERY_CATEGORY_LABELS = {
-  portrait: "\u4eba\u50cf",
-  character: "\u89d2\u8272",
-  product: "\u4ea7\u54c1",
-};
-
 export const DEFAULT_GALLERY_CATEGORIES = [
   { id: "portrait", name: "\u4eba\u50cf", prompt_role: "\u4eba\u50cf\u53c2\u8003", order: 10 },
   { id: "character", name: "\u89d2\u8272", prompt_role: "\u89d2\u8272\u53c2\u8003", order: 20 },
   { id: "product", name: "\u4ea7\u54c1", prompt_role: "\u4ea7\u54c1\u53c2\u8003", order: 30 },
 ];
-
-export const PROMPT_SNIPPETS_ENDPOINT = "/api/prompt-snippets";
 export const DEFAULT_API_BASE_URL = "https://api.openai.com/v1";
 export const DEFAULT_API_IMAGE_MODEL = "gpt-image-2";
 export const DEFAULT_API_MODE = "images";
@@ -20,12 +12,7 @@ export const DEFAULT_CODEX_MODE = "images";
 export const DEFAULT_API_IMAGES_CONCURRENCY = 4;
 export const API_SETTINGS_STORAGE_KEY = "codex-image-api-settings";
 export const DEFAULT_DOCUMENT_TITLE = document.title || "iLab CONJURE";
-export const SUBMIT_TASK_TIMEOUT_MS = 45000;
-export const TASK_CARD_SELECTOR = ".task-card[data-task-id]";
 export const TASK_HISTORY_EXPANDED_GROUP_STORAGE_KEY = "codex-image-task-history-expanded-group";
-export const PROMPT_TOKEN_PATTERN = /@([^\s@，。,.#~～〜∼˜]+)|#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])|(?:^|[\s\n，。,.；;：:！？!?、（）()\[\]【】"'“”‘’])([~～〜∼˜]+)([^\s~～〜∼˜@#，。,.；;：:！？!?、（）()\[\]【】"'“”‘’]+)/g;
-export const PROMPT_SNIPPET_TRIGGER_PATTERN = /(^|[\s\n，。,.；;：:！？!?、（）()\[\]【】"'“”‘’])([~～〜∼˜]+)([^\s~～〜∼˜@#，。,.；;：:！？!?、（）()\[\]【】"'“”‘’]*)$/;
-export const QUICK_GALLERY_WHEEL_COOLDOWN_MS = 220;
 
 export function defaultGalleryCategories() {
   return DEFAULT_GALLERY_CATEGORIES.map((category) => ({ ...category }));
@@ -168,5 +155,3 @@ export function createDefaultState(): WebUIState {
   mainModelShowAllOptions: false,
   } as WebUIState;
 }
-
-export const ARCHIVED_TASKS_STORAGE_KEY = "codex-image-archived-task-ids";

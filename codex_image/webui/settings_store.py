@@ -251,6 +251,28 @@ def _validate_webui_paths(paths: dict[str, Path]) -> None:
         raise ValueError("Source data directory must be inside the output directory")
 
 
+def previous_default_storage_paths(
+    settings_path: Path, current: dict[str, Path]
+) -> dict[str, str]:
+    """Locate retained default directories without inspecting or moving their files."""
+    data_dir = settings_path.parent
+    defaults = {
+        "input_root": data_dir / "webui-inputs",
+        "output_root": data_dir / "webui-outputs",
+        "gallery_root": data_dir / "webui-inputs/gallery",
+        "source_data_root": data_dir / "webui-outputs/source-data",
+    }
+    previous = {}
+    for key, path in defaults.items():
+        try:
+            if path.is_dir() and path.resolve() != current[key].resolve():
+                previous[key] = str(path)
+        except (OSError, RuntimeError):
+            # This optional hint must not block settings when an old disk is offline.
+            continue
+    return previous
+
+
 def _is_relative_to(path: Path, parent: Path) -> bool:
     try:
         path.resolve(strict=False).relative_to(parent.resolve(strict=False))

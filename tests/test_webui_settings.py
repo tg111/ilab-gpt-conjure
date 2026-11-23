@@ -58,7 +58,7 @@ from tests.webui_helpers import (
     request_path,
 )
 from tests.helpers import assert_no_api_key
-
+from tests.canonical_form import canonical_form
 
 
 def _fake_jwt(payload: dict[str, object]) -> str:
@@ -203,221 +203,19 @@ class WebUISettingsTests(unittest.TestCase):
             self.assertNotIn(key, payload)
         self.assertNotIn(str(root), json.dumps(payload, ensure_ascii=False))
 
-    def test_app_version_reports_source_version_without_portable_notice(self) -> None:
+    def test_app_version_reports_the_running_source_version(self) -> None:
         from codex_image.version import APP_VERSION
         from codex_image.webui.app import create_app
 
-        with patch.dict(
-            os.environ,
-            {
-                "APP_LAUNCHER_MODE": "",
-                "ILAB_CONJURE_APP_DIR": "",
-                "ILAB_CONJURE_BUNDLE_DIR": "",
-                "ILAB_CONJURE_DATA_DIR": "",
-            },
-        ):
-            app = create_app(output_root=Path(tempfile.mkdtemp()), auto_start_queue=False)
-            response = TestClient(app).get("/api/app-version")
+        app = create_app(output_root=Path(tempfile.mkdtemp()), auto_start_queue=False)
+        response = TestClient(app).get("/api/app-version")
 
         self.assertEqual(response.status_code, 200)
-        payload = response.json()
-        self.assertEqual(payload["current_version"], APP_VERSION)
-        self.assertEqual(payload["current_version_label"], f"v{APP_VERSION}")
-        self.assertEqual(payload["source"], "source")
-        self.assertFalse(payload["portable"])
-        self.assertFalse(payload["standard_app"])
-        self.assertFalse(payload["update_available"])
-        self.assertFalse(payload["updater_available"])
-        self.assertIsNone(payload["post_update_onboarding"])
-
-    def test_app_version_reports_standard_app_version_and_download_notice(self) -> None:
-        from codex_image.webui.app import create_app
-
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            app_dir = root / "iLab GPT CONJURE.app" / "Contents" / "Resources" / "app"
-            resources_dir = app_dir.parent
-            data_dir = root / "data"
-            output_root = data_dir / "webui-outputs"
-            app_dir.mkdir(parents=True)
-            data_dir.mkdir()
-            output_root.mkdir()
-            (resources_dir / "app-version.txt").write_text("0.5.5\n", encoding="utf-8")
-            (data_dir / "update-notice.json").write_text(
-                json.dumps(
-                    {
-                        "current_version": "0.5.5",
-                        "latest_version": "0.5.6",
-                        "checked_at": "2026-07-08T00:00:00Z",
-                        "release_url": "https://github.com/kadevin/ilab-conjure/releases/tag/v0.5.6",
-                        "download_url": "https://example.test/iLab-GPT-CONJURE-macos-arm64-0.5.6.dmg",
-                        "standard_download_url": "https://example.test/iLab-GPT-CONJURE-macos-arm64-0.5.6.dmg",
-                    }
-                ),
-                encoding="utf-8",
-            )
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_LAUNCHER_MODE": "standard",
-                    "ILAB_CONJURE_APP_DIR": str(app_dir),
-                    "ILAB_CONJURE_DATA_DIR": str(data_dir),
-                    "ILAB_CONJURE_BUNDLE_DIR": "",
-                },
-            ):
-                app = create_app(output_root=output_root, auto_start_queue=False)
-                response = TestClient(app).get("/api/app-version")
-
-        self.assertEqual(response.status_code, 200)
-        payload = response.json()
-        self.assertEqual(payload["source"], "standard_app")
-        self.assertFalse(payload["portable"])
-        self.assertTrue(payload["standard_app"])
-        self.assertEqual(payload["current_version"], "0.5.5")
-        self.assertEqual(payload["latest_version"], "0.5.6")
-        self.assertTrue(payload["update_available"])
-        self.assertFalse(payload["updater_available"])
-        self.assertEqual(
-            payload["standard_download_url"],
-            "https://example.test/iLab-GPT-CONJURE-macos-arm64-0.5.6.dmg",
-        )
-
-    def test_app_version_reports_portable_update_notice(self) -> None:
-        from codex_image.webui.app import create_app
-
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            bundle_dir = root / "bundle"
-            data_dir = bundle_dir / "data"
-            output_root = data_dir / "webui-outputs"
-            bundle_dir.mkdir()
-            data_dir.mkdir()
-            output_root.mkdir()
-            (bundle_dir / "portable-version.txt").write_text("0.3.6\n", encoding="utf-8")
-            (bundle_dir / "Update WebUI Portable.command").write_text("#!/bin/zsh\n", encoding="utf-8")
-            (bundle_dir / "Update WebUI Portable.bat").write_text("@echo off\n", encoding="utf-8")
-            (data_dir / "update-notice.json").write_text(
-                json.dumps(
-                    {
-                        "current_version": "0.3.6",
-                        "latest_version": "0.3.7",
-                        "checked_at": "2026-06-14T00:00:00Z",
-                        "release_url": "https://github.com/kadevin/ilab-conjure/releases/tag/v0.3.7",
-                    }
-                ),
-                encoding="utf-8",
-            )
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_LAUNCHER_MODE": "",
-                    "ILAB_CONJURE_APP_DIR": "",
-                    "ILAB_CONJURE_BUNDLE_DIR": str(bundle_dir),
-                    "ILAB_CONJURE_DATA_DIR": str(data_dir),
-                },
-            ):
-                app = create_app(output_root=output_root, auto_start_queue=False)
-                response = TestClient(app).get("/api/app-version")
-
-        self.assertEqual(response.status_code, 200)
-        payload = response.json()
-        self.assertEqual(payload["source"], "portable")
-        self.assertTrue(payload["portable"])
-        self.assertFalse(payload["standard_app"])
-        self.assertEqual(payload["current_version"], "0.3.6")
-        self.assertEqual(payload["latest_version"], "0.3.7")
-        self.assertTrue(payload["update_available"])
-        self.assertTrue(payload["updater_available"])
-        expected_updater = (
-            "Update WebUI Portable.bat"
-            if platform.system().lower() == "windows"
-            else "Update WebUI Portable.command"
-        )
-        self.assertEqual(payload["updater_label"], expected_updater)
-        self.assertIsNone(payload["post_update_onboarding"])
-
-    def test_app_version_reports_portable_standard_app_transition_notice(self) -> None:
-        from codex_image.webui.app import create_app
-
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            bundle_dir = root / "bundle"
-            data_dir = bundle_dir / "data"
-            output_root = data_dir / "webui-outputs"
-            bundle_dir.mkdir()
-            data_dir.mkdir()
-            output_root.mkdir()
-            (bundle_dir / "portable-version.txt").write_text("0.5.5\n", encoding="utf-8")
-            (data_dir / "post-update-onboarding.json").write_text(
-                json.dumps(
-                    {
-                        "kind": "portable_standard_app_transition",
-                        "from_version": "0.5.4",
-                        "to_version": "0.5.5",
-                        "updated_at": "2026-07-01T00:00:00Z",
-                        "dismissed": False,
-                    }
-                ),
-                encoding="utf-8",
-            )
-            with patch.dict(
-                os.environ,
-                {"ILAB_CONJURE_BUNDLE_DIR": str(bundle_dir), "ILAB_CONJURE_DATA_DIR": str(data_dir)},
-            ):
-                app = create_app(output_root=output_root, auto_start_queue=False)
-                client = TestClient(app)
-                reported = client.get("/api/app-version")
-                dismissed = client.post("/api/app-version/dismiss-onboarding")
-                reported_after_dismiss = client.get("/api/app-version")
-                persisted = json.loads((data_dir / "post-update-onboarding.json").read_text(encoding="utf-8"))
-
-        self.assertEqual(reported.status_code, 200)
-        onboarding = reported.json()["post_update_onboarding"]
-        self.assertEqual(onboarding["kind"], "portable_standard_app_transition")
-        self.assertEqual(onboarding["from_version"], "0.5.4")
-        self.assertEqual(onboarding["from_version_label"], "v0.5.4")
-        self.assertEqual(onboarding["to_version"], "0.5.5")
-        self.assertEqual(onboarding["to_version_label"], "v0.5.5")
-        self.assertIn("/tag/v0.5.5", onboarding["release_url"])
-        self.assertIn("/tag/v0.5.5", onboarding["standard_download_url"])
-        self.assertEqual(dismissed.status_code, 200)
-        self.assertIsNone(dismissed.json()["post_update_onboarding"])
-        self.assertIsNone(reported_after_dismiss.json()["post_update_onboarding"])
-        self.assertTrue(persisted["dismissed"])
-        self.assertEqual(persisted["kind"], "portable_standard_app_transition")
-
-    def test_app_version_shows_transition_notice_for_first_055_portable_start_without_marker(self) -> None:
-        from codex_image.webui.app import create_app
-
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            bundle_dir = root / "bundle"
-            data_dir = bundle_dir / "data"
-            output_root = data_dir / "webui-outputs"
-            bundle_dir.mkdir()
-            data_dir.mkdir()
-            output_root.mkdir()
-            (bundle_dir / "portable-version.txt").write_text("0.5.5\n", encoding="utf-8")
-            with patch.dict(
-                os.environ,
-                {"ILAB_CONJURE_BUNDLE_DIR": str(bundle_dir), "ILAB_CONJURE_DATA_DIR": str(data_dir)},
-            ):
-                app = create_app(output_root=output_root, auto_start_queue=False)
-                client = TestClient(app)
-                reported = client.get("/api/app-version")
-                dismissed = client.post("/api/app-version/dismiss-onboarding")
-                reported_after_dismiss = client.get("/api/app-version")
-                persisted = json.loads((data_dir / "post-update-onboarding.json").read_text(encoding="utf-8"))
-
-        self.assertEqual(reported.status_code, 200)
-        onboarding = reported.json()["post_update_onboarding"]
-        self.assertEqual(onboarding["kind"], "portable_standard_app_transition")
-        self.assertEqual(onboarding["to_version"], "0.5.5")
-        self.assertNotIn("from_version", onboarding)
-        self.assertEqual(dismissed.status_code, 200)
-        self.assertIsNone(dismissed.json()["post_update_onboarding"])
-        self.assertIsNone(reported_after_dismiss.json()["post_update_onboarding"])
-        self.assertTrue(persisted["dismissed"])
+        self.assertEqual(response.json(), {
+            "current_version": APP_VERSION,
+            "current_version_label": f"v{APP_VERSION}",
+        })
+        self.assertEqual(TestClient(app).post("/api/app-version/open-updater").status_code, 404)
 
     def test_auth_routes_report_and_persist_codex_or_api_source(self) -> None:
         from codex_image.auth import AuthState
@@ -478,20 +276,6 @@ class WebUISettingsTests(unittest.TestCase):
             self.assertEqual(response.json()["detail"], "source must be codex or api")
         self.assertEqual(persisted["source"], "api")
 
-    def test_account_routes_are_removed(self) -> None:
-        from codex_image.webui.app import create_app
-
-        with tempfile.TemporaryDirectory() as tmp:
-            app = create_app(output_root=Path(tmp), auto_start_queue=False)
-            client = TestClient(app)
-
-            list_response = client.get("/api/accounts")
-            refresh_response = client.post("/api/accounts/refresh")
-            patch_response = client.patch("/api/accounts/codex:local", json={"manual_disabled": True})
-
-        self.assertEqual(list_response.status_code, 404)
-        self.assertEqual(refresh_response.status_code, 404)
-        self.assertEqual(patch_response.status_code, 404)
 
     def test_legacy_auth_setting_falls_back_to_startup_detection(self) -> None:
         from codex_image.auth import AuthState
@@ -976,7 +760,7 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={"prompt": "api queued", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"},
+                data=canonical_form({"prompt": "api queued", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"}),
             )
             body = response.json()
             task_id = body["task"]["task_id"]
@@ -1013,7 +797,7 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={"prompt": "文案标题设计偏儿童Q版卡通化", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low", "prompt_fidelity": "strict"},
+                data=canonical_form({"prompt": "文案标题设计偏儿童Q版卡通化", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low", "prompt_fidelity": "strict"}),
             )
             body = response.json()
 
@@ -1047,14 +831,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": prompt,
                     "prompt_for_model": f"{prompt}\n\n参考图 1 为「小美」（人像），提示词中的 @小美 指这张图。",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
                     "prompt_fidelity": "original",
-                },
+                }),
             )
             body = response.json()
 
@@ -1085,13 +869,12 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "codex images default",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
-                    "web_search": "true",
-                },
+                }),
             )
             body = response.json()
             response_text = json.dumps(body, ensure_ascii=False)
@@ -1131,13 +914,13 @@ class WebUISettingsTests(unittest.TestCase):
             )
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "codex responses selected",
                     "main_model": "gpt-5.5",
                     "size": "1024x1024",
                     "quality": "low",
                     "web_search": "true",
-                },
+                }),
             )
             body = response.json()
             response_text = json.dumps(body, ensure_ascii=False)
@@ -1172,13 +955,13 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/edit",
-                data={
+                data=canonical_form({
                     "prompt": "codex edit default",
                     "size": "1152x2048",
                     "quality": "high",
                     "output_format": "png",
                     "prompt_fidelity": "original",
-                },
+                }),
                 files={"images": ("input.png", self._png_bytes(), "image/png")},
             )
             body = response.json()
@@ -1192,7 +975,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertEqual(body["request"]["quality"], "high")
         self.assertRegex(
             body["request"]["images"][0]["image_url"],
-            r"^<redacted image data url, \d+ chars>$",
+            r"^<redacted inline data>$",
         )
         self.assertNotIn("tools", body["request"])
 
@@ -1242,7 +1025,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client = TestClient(app)
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "codex worker", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "codex worker", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1282,7 +1065,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api worker", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "api worker", "main_model": "gpt-5.5", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1340,12 +1123,12 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api provider",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"active_provider_id": "vendor-a"})
@@ -1405,13 +1188,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "retry with current provider",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "2",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1465,7 +1248,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1543,12 +1326,12 @@ class WebUISettingsTests(unittest.TestCase):
                     client.patch("/api/auth", json={"source": "api"})
                     created = client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": f"recover {label}",
                             "size": "1024x1024",
                             "quality": "low",
                             "n": "1",
-                        },
+                        }),
                     )
                     task_id = created.json()["task"]["task_id"]
 
@@ -1618,12 +1401,12 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "bounded upstream retry",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "1",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1690,12 +1473,12 @@ class WebUISettingsTests(unittest.TestCase):
                 )
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "do not retry upstream failure",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "1",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1740,7 +1523,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api progressive batch", "size": "1024x1024", "quality": "low", "n": "2"},
+                    data=canonical_form({"prompt": "api progressive batch", "size": "1024x1024", "quality": "low", "n": "2"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1814,7 +1597,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api active batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api active batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1891,7 +1674,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api limited batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api limited batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -1933,11 +1716,11 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created_a = client.post(
                     "/api/generate",
-                    data={"prompt": "api shared batch a", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api shared batch a", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 created_b = client.post(
                     "/api/generate",
-                    data={"prompt": "api shared batch b", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api shared batch b", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_ids = [created_a.json()["task"]["task_id"], created_b.json()["task"]["task_id"]]
 
@@ -1982,7 +1765,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api partial batch", "size": "1024x1024", "quality": "low", "n": "4"},
+                    data=canonical_form({"prompt": "api partial batch", "size": "1024x1024", "quality": "low", "n": "4"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -2040,7 +1823,7 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={"prompt": "api quota limited", "size": "1024x1024", "quality": "low"},
+                    data=canonical_form({"prompt": "api quota limited", "size": "1024x1024", "quality": "low"}),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -2096,13 +1879,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api provider concurrency",
                         "size": "1024x1024",
                         "quality": "low",
                         "n": "4",
                         "api_provider_id": "vendor-b",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"active_provider_id": "vendor-a"})
@@ -2142,14 +1925,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api preview",
                     "main_model": "gpt-5.5",
                     "size": "1024x1536",
                     "quality": "auto",
                     "n": "4",
                     "prompt_fidelity": "off",
-                },
+                }),
             )
             body = response.json()
 
@@ -2159,7 +1942,7 @@ class WebUISettingsTests(unittest.TestCase):
         self.assertEqual(body["request"]["webui_requested_backend"], "openai_images")
         self.assertEqual(body["request"]["model"], "gpt-image-2")
         self.assertEqual(body["request"]["prompt"], "api preview")
-        self.assertEqual(body["request"]["n"], 1)
+        self.assertEqual(body["request"]["n"], 4)
         self.assertNotIn("tools", body["request"])
         self.assertNotIn("gpt-5.5", json.dumps(body["request"], ensure_ascii=False))
         self.assertNotIn("test-api-key-preview-secret", json.dumps(body, ensure_ascii=False))
@@ -2188,13 +1971,13 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api responses preview",
                     "main_model": "gpt-5.5",
                     "size": "1024x1536",
                     "quality": "auto",
                     "api_mode": "responses",
-                },
+                }),
             )
             body = response.json()
 
@@ -2234,14 +2017,14 @@ class WebUISettingsTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api responses search preview",
                     "main_model": "gpt-5.5",
                     "size": "1536x864",
                     "quality": "low",
                     "api_mode": "responses",
                     "web_search": "true",
-                },
+                }),
             )
             body = response.json()
 
@@ -2279,13 +2062,13 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses worker",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
                 client.patch("/api/api-settings", json={"api_mode": "images"})
@@ -2332,14 +2115,14 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses concurrent batch",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 
@@ -2429,36 +2212,36 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/auth", json={"source": "api"})
                 created_a = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch a",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "2",
-                    },
+                    }),
                 )
                 created_b = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch b",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 created_c = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "api responses shared batch c",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "api_mode": "responses",
                         "n": "2",
-                    },
+                    }),
                 )
                 task_ids = [
                     created_a.json()["task"]["task_id"],
@@ -2573,14 +2356,14 @@ class WebUISettingsTests(unittest.TestCase):
                 task_ids = [
                     client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": f"api responses release batch {index}",
                             "main_model": "gpt-5.5",
                             "size": "1024x1024",
                             "quality": "low",
                             "api_mode": "responses",
                             "n": "4",
-                        },
+                        }),
                     ).json()["task"]["task_id"]
                     for index in ("a", "b")
                 ]
@@ -2714,7 +2497,7 @@ class WebUISettingsTests(unittest.TestCase):
                 task_ids = [
                     client.post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": prompt,
                             "main_model": "gpt-5.5",
                             "size": "1024x1024",
@@ -2722,7 +2505,7 @@ class WebUISettingsTests(unittest.TestCase):
                             "api_mode": "responses",
                             "api_provider_id": provider_id,
                             "n": "2",
-                        },
+                        }),
                     ).json()["task"]["task_id"]
                     for prompt, provider_id in task_specs
                 ]
@@ -2786,14 +2569,14 @@ class WebUISettingsTests(unittest.TestCase):
                 client.patch("/api/api-settings", json={"codex_mode": "responses"})
                 created = client.post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "codex responses serial batch",
                         "main_model": "gpt-5.5",
                         "size": "1024x1024",
                         "quality": "low",
                         "codex_mode": "responses",
                         "n": "4",
-                    },
+                    }),
                 )
                 task_id = created.json()["task"]["task_id"]
 

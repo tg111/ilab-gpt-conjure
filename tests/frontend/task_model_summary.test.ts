@@ -8,9 +8,9 @@ import {
   taskModelFamilyId,
   taskModelDisplayName,
   taskOutputSettingsView,
-  taskOutputControlValues,
+  
   taskRequestedParameters,
-  taskUsesCanonicalModelSummary,
+  
 } from "../../codex_image/webui/frontend/src/task-model-summary";
 import { modelFamilyBrandMarkHtml } from "../../codex_image/webui/frontend/src/model-family-icons";
 import type { GenerationCatalog } from "../../codex_image/webui/frontend/src/types";
@@ -50,42 +50,6 @@ test("canonical task summaries prefer frozen generation snapshots", () => {
     "canvas.resolution": "2K",
     "output.count": 3,
   });
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
-});
-
-test("history output controls prefer frozen canonical parameters over stale legacy params", () => {
-  const task = {
-    generation_snapshot: {
-      requested_parameters: {
-        "canvas.size": "1024x1536",
-        "gpt.quality": "high",
-        "gpt.moderation": "low",
-        "gpt.web_search": true,
-        "output.count": 4,
-        "output.format": "png",
-        "gpt.output_compression": 90,
-      },
-    },
-    params: {
-      size: "auto",
-      quality: "low",
-      moderation: "auto",
-      web_search: false,
-      n: 1,
-      output_format: "jpeg",
-      output_compression: 55,
-    },
-  };
-
-  assert.deepEqual(taskOutputControlValues(task), {
-    size: "1024x1536",
-    quality: "high",
-    moderation: "low",
-    web_search: true,
-    n: 4,
-    output_format: "png",
-    output_compression: 90,
-  });
 });
 
 test("pending task summaries use canonical request data before a snapshot exists", () => {
@@ -106,7 +70,6 @@ test("pending task summaries use canonical request data before a snapshot exists
   assert.equal(taskModelFamilyId(task, catalog), "gemini-image");
   assert.deepEqual(taskCanvasSummaryParts(task), ["16:9", "2K"]);
   assert.deepEqual(taskRequestedParameters(task), task.request.parameters);
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
 test("legacy GPT tasks keep the existing size and provider summary path", () => {
@@ -117,7 +80,6 @@ test("legacy GPT tasks keep the existing size and provider summary path", () => 
   assert.deepEqual(taskRequestedParameters(task), {});
   assert.deepEqual(taskCanvasSummaryParts(task), ["1:1", "1K"]);
   assert.equal(taskModelFamilyId(task, catalog), "gpt-image");
-  assert.equal(taskUsesCanonicalModelSummary(task), false);
 });
 
 test("legacy custom sizes derive an honest ratio and exact pixel resolution", () => {
@@ -138,7 +100,6 @@ test("unknown canonical model IDs remain truthful instead of being guessed", () 
 
   assert.equal(taskModelDisplayName(task, catalog), "future-image-model");
   assert.equal(taskModelFamilyId(task, catalog), "unknown");
-  assert.equal(taskUsesCanonicalModelSummary(task), true);
 });
 
 test("locked task selection keeps the visual summary while unlocked cross-model history uses the inspector", () => {
@@ -151,19 +112,35 @@ test("locked task selection keeps the visual summary while unlocked cross-model 
   assert.equal(taskOutputSettingsView(geminiTask, "nano-banana-2-lite", false), "editor");
 });
 
-test("GPT history versions share the current parameter editor without changing the historical identity", () => {
-  const versions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"];
+test("GPT models with matching parameter contracts share the editor without changing history", () => {
+  const versions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-sunburst"];
+  const matchingCatalog = { ...catalog, models: versions.map(id => ({ ...catalog.models[0], id, parameters: [] })) } as GenerationCatalog;
   for (const historicalModel of versions) {
     const task = { generation_snapshot: { canonical_model_id: historicalModel } };
     for (const selectedModel of versions) {
-      assert.equal(taskOutputSettingsView(task, selectedModel, false), "editor");
+      assert.equal(taskOutputSettingsView(task, selectedModel, false, matchingCatalog), "editor");
       assert.equal(taskOutputSettingsView(task, selectedModel, true), "locked-summary");
       assert.equal(taskCanonicalModelId(task), historicalModel);
     }
     assert.equal(taskOutputSettingsView(task, "nano-banana-2", false), "parameter-inspector");
     assert.equal(taskOutputSettingsView(task, "gpt-image-future", false), "parameter-inspector");
   }
-  assert.equal(taskOutputSettingsView({ params: { model: "gpt-image-2" } }, "gpt-image-2.5-flare", false), "editor");
+  assert.equal(taskOutputSettingsView({ params: { model: "gpt-image-2" } }, "gpt-image-2.5-flare", false, matchingCatalog), "editor");
+});
+
+test("different GPT parameter contracts require explicit adoption", () => {
+  const versions = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.6-flare", "gpt-image-2.6-sunburst"];
+  const differentCatalog = { ...catalog, models: versions.map(id => ({
+    ...catalog.models[0], id, parameters: [{ id: "output.format", allowed_values: id.includes("2.6") ? ["png", "gif", "svg"] : ["png"] },
+      { id: "gpt.quality", allowed_values: id === "gpt-image-2" ? ["high"] : ["high", "max"] }],
+  })) } as GenerationCatalog;
+  const task = { generation_snapshot: { canonical_model_id: "gpt-image-2.6-flare" } };
+  for (const selected of versions.slice(0, 2)) {
+    assert.equal(taskOutputSettingsView(task, selected, false, differentCatalog), "parameter-inspector");
+  }
+  assert.equal(taskOutputSettingsView(task, "gpt-image-2.6-sunburst", false, differentCatalog), "editor");
+  assert.equal(taskOutputSettingsView(task, "gpt-image-2.6-sunburst", false), "parameter-inspector");
+  assert.equal(taskOutputSettingsView({ generation_snapshot: { canonical_model_id: "gpt-image-2.5-flare" } }, "gpt-image-2", false, differentCatalog), "parameter-inspector");
 });
 
 test("task cards use the shared Gemini brand mark asset", () => {

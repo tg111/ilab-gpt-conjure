@@ -51,6 +51,7 @@ from tests.webui_helpers import (
     output_url,
     request_path,
 )
+from tests.canonical_form import canonical_form
 
 
 class WebUITaskTests(unittest.TestCase):
@@ -1355,7 +1356,7 @@ class WebUITaskTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "delete me", "size": "1024x1024"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "delete me", "size": "1024x1024"}))
             task_id = created.json()["task"]["task_id"]
 
             deleted = client.delete(f"/api/queue/{task_id}")
@@ -1370,8 +1371,8 @@ class WebUITaskTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            first = client.post("/api/generate", data={"prompt": "first", "size": "1024x1024"}).json()["task"]["task_id"]
-            second = client.post("/api/generate", data={"prompt": "second", "size": "1024x1024"}).json()["task"]["task_id"]
+            first = client.post("/api/generate", data=canonical_form({"prompt": "first", "size": "1024x1024"})).json()["task"]["task_id"]
+            second = client.post("/api/generate", data=canonical_form({"prompt": "second", "size": "1024x1024"})).json()["task"]["task_id"]
 
             deleted = client.delete(f"/api/tasks/{first}")
             queue = client.get("/api/queue").json()
@@ -1389,7 +1390,7 @@ class WebUITaskTests(unittest.TestCase):
                 app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(),
                                  auth_checker=lambda: True, auto_start_queue=False)
                 client = TestClient(app)
-                task_id = client.post("/api/generate", data={"prompt": "delete race"}).json()["task"]["task_id"]
+                task_id = client.post("/api/generate", data=canonical_form({"prompt": "delete race"})).json()["task"]["task_id"]
                 entered, release, claim_started, claim_done = (threading.Event() for _ in range(4))
                 original_delete = app.state.storage.delete_task
                 responses, claims = [], []
@@ -1447,7 +1448,7 @@ class WebUITaskTests(unittest.TestCase):
                     auto_start_queue=False,
                 )
                 client = TestClient(app, raise_server_exceptions=False)
-                created = client.post("/api/generate", data={"prompt": "keep queued on failure", "size": "1024x1024"})
+                created = client.post("/api/generate", data=canonical_form({"prompt": "keep queued on failure", "size": "1024x1024"}))
                 task_id = created.json()["task"]["task_id"]
                 output_path = root / output_name(task_id)
                 output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1475,7 +1476,7 @@ class WebUITaskTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "running race", "size": "1024x1024"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "running race", "size": "1024x1024"}))
             task_id = created.json()["task"]["task_id"]
             app.state.queue_storage.remove_waiting(task_id)
             app.state.queue_storage.set_running("codex:local", task_id, auth_source="codex")
@@ -1493,9 +1494,9 @@ class WebUITaskTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            first = client.post("/api/generate", data={"prompt": "first", "size": "1024x1024"}).json()["task"]["task_id"]
-            second = client.post("/api/generate", data={"prompt": "second", "size": "1024x1024"}).json()["task"]["task_id"]
-            third = client.post("/api/generate", data={"prompt": "third", "size": "1024x1024"}).json()["task"]["task_id"]
+            first = client.post("/api/generate", data=canonical_form({"prompt": "first", "size": "1024x1024"})).json()["task"]["task_id"]
+            second = client.post("/api/generate", data=canonical_form({"prompt": "second", "size": "1024x1024"})).json()["task"]["task_id"]
+            third = client.post("/api/generate", data=canonical_form({"prompt": "third", "size": "1024x1024"})).json()["task"]["task_id"]
 
             promoted = client.post(f"/api/queue/{third}/promote").json()
             reordered = client.patch("/api/queue/reorder", json={"task_ids": [second, third, first]}).json()
@@ -1508,7 +1509,7 @@ class WebUITaskTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), client_factory=lambda: FakeImageClient(), auth_checker=lambda: True, auto_start_queue=False)
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "running", "size": "1024x1024"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "running", "size": "1024x1024"}))
             task_id = created.json()["task"]["task_id"]
             app.state.queue_storage.remove_waiting(task_id)
             app.state.queue_storage.set_running("codex:local", task_id, auth_source="codex")
@@ -1538,15 +1539,15 @@ class WebUITaskTests(unittest.TestCase):
             client = TestClient(app)
             running_id = client.post(
                 "/api/generate",
-                data={"prompt": "running batch cancel", "size": "1024x1024"},
+                data=canonical_form({"prompt": "running batch cancel", "size": "1024x1024"}),
             ).json()["task"]["task_id"]
             waiting_id = client.post(
                 "/api/generate",
-                data={"prompt": "waiting batch cancel", "size": "1024x1024"},
+                data=canonical_form({"prompt": "waiting batch cancel", "size": "1024x1024"}),
             ).json()["task"]["task_id"]
             completed_id = client.post(
                 "/api/generate",
-                data={"prompt": "already completed", "size": "1024x1024"},
+                data=canonical_form({"prompt": "already completed", "size": "1024x1024"}),
             ).json()["task"]["task_id"]
             app.state.queue_storage.remove_waiting(running_id)
             app.state.queue_storage.set_running("codex:local", running_id, auth_source="codex")
@@ -1735,7 +1736,7 @@ class WebUITaskTests(unittest.TestCase):
                 app = create_app(output_root=Path(tmp), auth_checker=lambda: True,
                                  client_factory=lambda: FakeImageClient(), auto_start_queue=False)
                 client = TestClient(app)
-                task_id = client.post("/api/generate", data={"prompt": "synthetic accept race", "n": "3"}).json()["task"]["task_id"]
+                task_id = client.post("/api/generate", data=canonical_form({"prompt": "synthetic accept race", "n": "3"})).json()["task"]["task_id"]
                 storage = app.state.storage
                 app.state.queue_storage.remove_waiting(task_id)
                 metadata = storage.read_metadata(task_id)
@@ -1800,7 +1801,7 @@ class WebUITaskTests(unittest.TestCase):
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "accept partial", "size": "1024x1024", "quality": "low", "n": "4"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "accept partial", "size": "1024x1024", "quality": "low", "n": "4"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -2064,7 +2065,7 @@ class WebUITaskTests(unittest.TestCase):
                 app = create_app(output_root=Path(tmp), client_factory=lambda: fake,
                                  auth_checker=lambda: True, batch_delay_seconds=0, auto_start_queue=False)
                 client = TestClient(app)
-                task_id = client.post("/api/generate", data={"prompt": "retry cancelled", "n": 2}).json()["task"]["task_id"]
+                task_id = client.post("/api/generate", data=canonical_form({"prompt": "retry cancelled", "n": 2})).json()["task"]["task_id"]
                 storage = app.state.storage
                 if completed_count:
                     saved_bytes = self._png_bytes()
@@ -2103,7 +2104,7 @@ class WebUITaskTests(unittest.TestCase):
                 auto_start_queue=False,
             )
             client = TestClient(app)
-            created = client.post("/api/generate", data={"prompt": "retry failed slot", "size": "1024x1024", "quality": "low", "n": "4"})
+            created = client.post("/api/generate", data=canonical_form({"prompt": "retry failed slot", "size": "1024x1024", "quality": "low", "n": "4"}))
             task_id = created.json()["task"]["task_id"]
 
             asyncio.run(app.state.queue_manager.run_available_once())
@@ -2316,7 +2317,7 @@ class WebUITaskTests(unittest.TestCase):
             client = TestClient(app)
             created = client.post(
                 "/api/generate",
-                data={"prompt": "bad retry", "size": "1024x1024", "quality": "low", "n": "2", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "bad retry", "size": "1024x1024", "quality": "low", "n": "2", "codex_mode": "responses"}),
             )
             task_id = created.json()["task"]["task_id"]
 
@@ -2369,12 +2370,12 @@ class WebUITaskTests(unittest.TestCase):
 
             response = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "api provider visible",
                     "size": "1024x1024",
                     "quality": "low",
                     "api_provider_id": "vendor-b",
-                },
+                }),
             )
             body = response.json()
             task_id = body["task"]["task_id"]

@@ -2,8 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from codex_image.client_types import is_official_openai_api_url
+
 from .codecs.gpt_image import GPT_PARAMETER_IDS
 from .codecs.gemini_image import GEMINI_PARAMETER_IDS
+
+
+def openai_gif_edit_frame_limit(base_url: str) -> int | None:
+    """The published OpenAI limit applies to its own endpoint."""
+    return 16 if is_official_openai_api_url(base_url) else None
 
 
 @dataclass(frozen=True)
@@ -13,15 +20,17 @@ class CodecCapability:
     mapped_parameter_ids: frozenset[str]
 
 
+_GPT_LEGACY_PARAMETERS = GPT_PARAMETER_IDS - {"gpt.complexity", "gpt.frame_count", "gpt.frame_duration_ms"}
+
 _GEMINI_PARAMETERS = GEMINI_PARAMETER_IDS
 
 CODEC_CAPABILITIES = {
     capability.codec_id: capability
     for capability in (
-        CodecCapability("gpt_codex_images", frozenset({"codex_images"}), GPT_PARAMETER_IDS),
-        CodecCapability("gpt_codex_responses", frozenset({"codex_responses"}), GPT_PARAMETER_IDS),
+        CodecCapability("gpt_codex_images", frozenset({"codex_images"}), _GPT_LEGACY_PARAMETERS),
+        CodecCapability("gpt_codex_responses", frozenset({"codex_responses"}), _GPT_LEGACY_PARAMETERS),
         CodecCapability("gpt_openai_images", frozenset({"openai_images"}), GPT_PARAMETER_IDS),
-        CodecCapability("gpt_openai_responses", frozenset({"openai_responses"}), GPT_PARAMETER_IDS),
+        CodecCapability("gpt_openai_responses", frozenset({"openai_responses"}), _GPT_LEGACY_PARAMETERS),
         CodecCapability(
             "gemini_interactions_image", frozenset({"gemini_interactions"}), _GEMINI_PARAMETERS
         ),

@@ -1,12 +1,8 @@
-const GPT_IMAGE_MODEL_IDS = [
-  "gpt-image-2",
-  "gpt-image-2.5-flare",
-  "gpt-image-2.5-sunburst",
-  "gpt-image-2.6-flare",
-  "gpt-image-2.6-sunburst",
-];
-
-/** Versions sharing the GPT Image controls; Codex bindings remain Image 2 only. */
+/**
+ * GPT Image models share one provider menu and the GPT summary layout. The
+ * family is recognised by its id prefix, so new GPT Image versions need no
+ * frontend change.
+ */
 export function isGptImageModel(modelId: unknown): boolean {
-  return GPT_IMAGE_MODEL_IDS.includes(String(modelId || ""));
+  return String(modelId || "").startsWith("gpt-image-");
 }

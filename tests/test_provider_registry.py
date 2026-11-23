@@ -338,12 +338,13 @@ class ProviderRegistryTests(unittest.TestCase):
     def test_empty_allowed_values_only_enforces_declared_type(self) -> None:
         resolver = resolver_fixture(
             canonical_model_id="gpt-image-2",
-            mapped_parameter_ids=frozenset({"canvas.size"}),
+            mapped_parameter_ids=frozenset({"canvas.mode", "canvas.size"}),
         )
-        plan = resolver.resolve(
-            command_fixture(canonical_model_id="gpt-image-2", parameters={"canvas.size": "1536x1024"})
-        )
-        self.assertEqual(plan.command.parameters["canvas.size"], "1536x1024")
+        plan = resolver.resolve(command_fixture(
+            canonical_model_id="gpt-image-2",
+            parameters={"canvas.mode": "custom", "canvas.size": "1600x896"},
+        ))
+        self.assertEqual(plan.command.parameters["canvas.size"], "1600x896")
 
     def test_parameter_must_support_current_operation(self) -> None:
         definition = replace(

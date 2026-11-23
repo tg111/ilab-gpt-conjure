@@ -1,46 +1,21 @@
-import { isGptImageModel } from "./gpt-image-models";
-export interface ModeSettingsVisibilityInput {
-  catalogAvailable: boolean;
-  modelId: string | null;
-  protocolProfile: string | null;
-  legacyDirectApi: boolean;
-}
+import type { CatalogProviderBinding } from "./types";
 
 export interface ModeSettingsVisibility {
   showMainModel: boolean;
-  showPromptFidelity: boolean;
 }
 
-export function resolveModeSettingsVisibility({
-  catalogAvailable,
-  modelId,
-  protocolProfile,
-  legacyDirectApi,
-}: ModeSettingsVisibilityInput): ModeSettingsVisibility {
-  if (!catalogAvailable) {
-    return {
-      showMainModel: !legacyDirectApi,
-      showPromptFidelity: true,
-    };
-  }
-
-  if (!isGptImageModel(modelId)) {
-    return {
-      showMainModel: false,
-      showPromptFidelity: false,
-    };
-  }
-
-  if (!protocolProfile) {
-    return {
-      showMainModel: false,
-      showPromptFidelity: true,
-    };
-  }
-
-  const usesResponses = protocolProfile.endsWith("_responses");
+/**
+ * The main model belongs to Responses protocols. The catalog says which
+ * bindings use one; without a catalog binding, the direct Images API does not.
+ */
+export function resolveModeSettingsVisibility(
+  binding: Pick<CatalogProviderBinding, "protocol_profile" | "capabilities"> | null,
+  legacyDirectApi: boolean,
+): ModeSettingsVisibility {
+  if (!binding) return { showMainModel: !legacyDirectApi };
   return {
-    showMainModel: usesResponses,
-    showPromptFidelity: true,
+    showMainModel: binding.capabilities
+      ? binding.capabilities.uses_main_model
+      : binding.protocol_profile.endsWith("_responses"),
   };
 }

@@ -295,12 +295,10 @@ export function syncReferenceFileAvailability(): void {
 export function initReferenceFileInputsFeature(): void {
   if (initialized) return;
   initialized = true;
-  const els = getEls();
   document.addEventListener("change", (event) => {
     const target = event.target as HTMLElement | null;
     if (target?.matches?.("#generationProviderSelect, #apiMode")) syncReferenceFileAvailability();
   });
-  els.authSourceGroup?.addEventListener("click", () => queueMicrotask(syncReferenceFileAvailability));
   document.addEventListener(LOCALE_CHANGE_EVENT, () => {
     renderReferenceFiles();
     syncReferenceFileAvailability();

@@ -37,6 +37,7 @@ from codex_image.webui.task_metadata import (
     _write_running_metadata,
 )
 from tests.webui_helpers import CapturingResponsesClient, FakeImageClient, RejectingResponsesClient
+from tests.canonical_form import canonical_form
 
 
 def openxml_bytes(member: str) -> bytes:
@@ -1055,7 +1056,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use the brief", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use the brief", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"UNIQUE-PLAINTEXT", "text/markdown")},
             )
 
@@ -1074,7 +1075,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use the brief", "codex_mode": "images"},
+                data=canonical_form({"prompt": "Use the brief", "codex_mode": "images"}),
                 files={"reference_files": ("brief.md", b"brief", "text/markdown")},
             )
 
@@ -1088,7 +1089,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/edit",
-                data={"prompt": "Edit", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Edit", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"brief", "text/markdown")},
             )
 
@@ -1107,11 +1108,11 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/edit",
-                data={
+                data=canonical_form({
                     "prompt": "Edit",
                     "codex_mode": "responses",
                     "reference_file_ids": selected["id"],
-                },
+                }),
                 files=[
                     ("images", ("empty.png", b"", "image/png")),
                     ("reference_files", ("brief.md", b"brief", "text/markdown")),
@@ -1129,7 +1130,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/edit",
-                data={"prompt": "Edit", "codex_mode": "images"},
+                data=canonical_form({"prompt": "Edit", "codex_mode": "images"}),
                 files=[
                     ("images", ("empty.png", b"", "image/png")),
                     ("reference_files", ("brief.md", b"brief", "text/markdown")),
@@ -1147,7 +1148,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
             client = TestClient(app)
             first = client.post(
                 "/api/generate",
-                data={"prompt": "First", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "First", "codex_mode": "responses"}),
                 files={"reference_files": ("first.md", b"same bytes", "text/markdown")},
             )
             self.assertEqual(first.status_code, 200)
@@ -1155,11 +1156,11 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             second = client.post(
                 "/api/generate",
-                data={
+                data=canonical_form({
                     "prompt": "Reuse",
                     "codex_mode": "responses",
                     "reference_file_ids": asset_id,
-                },
+                }),
                 files={"reference_files": ("second.md", b"same bytes", "text/markdown")},
             )
 
@@ -1174,7 +1175,7 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Batch", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Batch", "codex_mode": "responses"}),
                 files=[
                     ("reference_files", ("valid.md", b"valid", "text/markdown")),
                     ("reference_files", ("invalid.ods", b"invalid", "application/vnd.oasis.opendocument.spreadsheet")),
@@ -1192,11 +1193,11 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
                 with self.subTest(asset_id=asset_id):
                     response = TestClient(app).post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": "Missing",
                             "codex_mode": "responses",
                             "reference_file_ids": asset_id,
-                        },
+                        }),
                     )
                     self.assertEqual(response.status_code, 404)
                     self.assertEqual(response.json()["detail"]["code"], "reference_file_missing")
@@ -1218,11 +1219,11 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
             with mock.patch.object(storage, "commit_batch", side_effect=delete_selected_then_commit):
                 response = TestClient(app).post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "Race",
                         "codex_mode": "responses",
                         "reference_file_ids": selected["id"],
-                    },
+                    }),
                     files={"reference_files": ("new.md", b"new upload", "text/markdown")},
                 )
 
@@ -1252,11 +1253,11 @@ class ReferenceFileSubmissionTests(unittest.TestCase):
             with mock.patch.object(storage, "_publish_staged", side_effect=fail_after_selected_metadata_publish):
                 response = TestClient(app).post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "Failure",
                         "codex_mode": "responses",
                         "reference_file_ids": selected["id"],
-                    },
+                    }),
                     files={"reference_files": ("new.md", b"new upload", "text/markdown")},
                 )
 
@@ -1374,7 +1375,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use the PDF", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use the PDF", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.pdf", b"%PDF-1.4\nbrief", "application/pdf")},
             ).json()["task"]
             app.state.queue_manager.channels = [QueueChannel("api:default:1", "api")]
@@ -1389,7 +1390,8 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             stored_request = json.loads(app.state.ctx.storage.request_path(created["task_id"]).read_text(encoding="utf-8"))
             self.assertEqual(stored_request["webui_requested_backend"], "codex_responses")
             self.assertNotIn("api_key", json.dumps(stored_request))
-            self.assertNotIn("file_data", json.dumps(stored_request))
+            # The file is stored as a reference; its bytes never reach the request record.
+            self.assertNotIn(base64.b64encode(b"%PDF-1.4\nbrief").decode(), json.dumps(stored_request))
 
     def test_completed_without_image_echo_never_reaches_queue_metadata(self) -> None:
         private_text = "QUEUE COMPLETED PRIVATE TEXT"
@@ -1425,7 +1427,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", private_text.encode(), "text/markdown")},
             ).json()["task"]
 
@@ -1462,7 +1464,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", private_text.encode("utf-8"), "text/markdown")},
             ).json()["task"]
 
@@ -1490,7 +1492,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
 
@@ -1520,7 +1522,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses", "n": "2"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses", "n": "2"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             )
             self.assertEqual(response.status_code, 200)
@@ -1546,7 +1548,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
             asset_id = created["reference_files"][0]["id"]
@@ -1577,7 +1579,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
                 )
                 created = TestClient(app).post(
                     "/api/generate",
-                    data={"prompt": "Use it", "codex_mode": "responses"},
+                    data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                     files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                 ).json()["task"]
                 metadata = app.state.ctx.storage.read_metadata(created["task_id"])
@@ -1610,7 +1612,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             response = TestClient(app).post(
                 "/api/edit",
-                data={"prompt": "Edit it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Edit it", "codex_mode": "responses"}),
                 files=[
                     ("images", ("input.png", png, "image/png")),
                     ("reference_files", ("brief.md", b"# Brief", "text/markdown")),
@@ -1638,7 +1640,7 @@ class ReferenceFileExecutionTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses", "n": "2"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses", "n": "2"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
             metadata = app.state.ctx.storage.read_metadata(created["task_id"])
@@ -1781,7 +1783,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
 
@@ -1815,7 +1817,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             )
 
@@ -1840,7 +1842,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses", "main_model": "   "},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses", "main_model": "   "}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             )
 
@@ -1863,7 +1865,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses", "main_model": "   "},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses", "main_model": "   "}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
 
@@ -1887,7 +1889,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
 
             response = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses", "main_model": "gpt-new"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses", "main_model": "gpt-new"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             )
 
@@ -1920,7 +1922,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                 )
                 created = TestClient(app).post(
                     "/api/generate",
-                    data={"prompt": "Use it", "codex_mode": "responses"},
+                    data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                     files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                 ).json()["task"]
 
@@ -1950,7 +1952,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
             )
             created = TestClient(first_app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
             first_app.state.ctx.responses_file_unsupported_keys.add(
@@ -2014,12 +2016,12 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
 
                 response = TestClient(app).post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "Use it",
                         "api_mode": "responses",
                         "api_provider_id": "provider-b",
                         "main_model": DEFAULT_MAIN_MODEL,
-                    },
+                    }),
                     files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                 )
 
@@ -2146,11 +2148,11 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                     )
                     created = TestClient(app).post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": "Use it",
                             "api_mode": "responses",
                             "api_provider_id": "provider-a",
-                        },
+                        }),
                         files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                     ).json()["task"]
                     failures: list[BaseException] = []
@@ -2185,11 +2187,11 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                     )
                     next_response = TestClient(app).post(
                         "/api/generate",
-                        data={
+                        data=canonical_form({
                             "prompt": "Use changed contract",
                             "api_mode": "responses",
                             "api_provider_id": next_provider_id,
-                        },
+                        }),
                         files={"reference_files": ("next.md", b"next", "text/markdown")},
                     )
 
@@ -2259,11 +2261,11 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                 )
                 first = TestClient(app).post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "Use it",
                         "api_mode": "responses",
                         "api_provider_id": "provider-a",
-                    },
+                    }),
                     files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                 ).json()["task"]
                 api_settings.write(
@@ -2290,11 +2292,11 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                 before = list(app.state.ctx.reference_file_root.glob("*/*.bin"))
                 second = TestClient(app).post(
                     "/api/generate",
-                    data={
+                    data=canonical_form({
                         "prompt": "Use another",
                         "api_mode": "responses",
                         "api_provider_id": "provider-b",
-                    },
+                    }),
                     files={"reference_files": ("another.md", b"another", "text/markdown")},
                 )
 
@@ -2335,7 +2337,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
             )
             created = TestClient(app).post(
                 "/api/generate",
-                data={"prompt": "Use it", "codex_mode": "responses"},
+                data=canonical_form({"prompt": "Use it", "codex_mode": "responses"}),
                 files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
             ).json()["task"]
 
@@ -2419,7 +2421,7 @@ class ReferenceFileCapabilityTests(unittest.TestCase):
                 )
                 created = TestClient(app).post(
                     "/api/generate",
-                    data={"prompt": "Use it", "api_mode": "responses", "n": "2"},
+                    data=canonical_form({"prompt": "Use it", "api_mode": "responses", "n": "2"}),
                     files={"reference_files": ("brief.md", b"# Brief", "text/markdown")},
                 ).json()["task"]
 

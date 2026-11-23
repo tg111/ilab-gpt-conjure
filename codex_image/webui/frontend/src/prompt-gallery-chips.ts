@@ -16,8 +16,6 @@ function legacyMethod(name: string, ...args: any[]): any {
   }
   return method(...args);
 }
-
-function escapeHtml(value: any): string { return legacyMethod("escapeHtml", value); }
 function categoryLabel(category: any): string { return legacyMethod("categoryLabel", category); }
 function categoryPromptRole(category: any): string { return legacyMethod("categoryPromptRole", category); }
 function findGalleryItem(itemId: any): any { return legacyMethod("findGalleryItem", itemId); }

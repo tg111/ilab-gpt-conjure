@@ -16,14 +16,22 @@ from .client_types import (
     DEFAULT_OPENAI_API_BASE_URL,
     OPENAI_COMPATIBLE_USER_AGENT,
     ImageResult,
+    OpenAISvgRequestState,
     image_model_supports_input_fidelity,
+    is_official_openai_api_url,
     normalize_openai_base_url,
 )
+from .generation.errors import OpenAISvgAuthorModelRejected
 from .http import HTTPResponse, Transport, UrllibTransport
-from .providers.result_assets import AssetLoadError
+from .providers.result_assets import AssetLoadError, LoadedAsset, load_response_asset
 
 
 _DIMENSION_SIZE_RE = re.compile(r"^\s*(\d{1,5})\s*[xX×]\s*(\d{1,5})\s*$")
+_SVG_MODEL_FIELDS = ("svg.model", "svg[model]")
+_MODEL_ACCESS_ERROR_CODES = (
+    "model_not_found", "model_not_allowed", "model_not_supported",
+    "insufficient_permissions", "permission_denied",
+)
 
 
 class PartialImageResultsError(RuntimeError):
@@ -59,8 +67,12 @@ def build_openai_images_payload(
     default_model: str = DEFAULT_IMAGE_MODEL,
     input_images: list[str] | None = None,
     mask_image: str | None = None,
+    markup_image: str | None = None,
     size: str | None = None,
     quality: str | None = None,
+    complexity: str | None = None,
+    frame_count: int | None = None,
+    frame_duration_ms: int | None = None,
     background: str | None = None,
     output_format: str = "png",
     input_fidelity: str | None = None,
@@ -87,10 +99,16 @@ def build_openai_images_payload(
         payload["moderation"] = moderation
     if output_compression is not None:
         payload["output_compression"] = output_compression
+    for key, value in (("complexity", complexity), ("frame_count", frame_count),
+                       ("frame_duration_ms", frame_duration_ms)):
+        if value is not None:
+            payload[key] = value
     if images:
         payload["images"] = [{"image_url": image_url} for image_url in images]
     if mask_image:
         payload["mask"] = {"image_url": mask_image}
+    if markup_image:
+        payload["markup"] = {"image_url": markup_image}
     return payload
 
 
@@ -131,6 +149,7 @@ class OpenAIImagesImageClient:
         base_url: str = DEFAULT_OPENAI_API_BASE_URL,
         image_model: str = DEFAULT_IMAGE_MODEL,
         transport: Transport | None = None,
+        svg_author_model: str = "",
     ) -> None:
         clean_key = str(api_key or "").strip()
         if not clean_key:
@@ -138,6 +157,7 @@ class OpenAIImagesImageClient:
         self.api_key = clean_key
         self.base_url = self._normalize_base_url(base_url)
         self.image_model = str(image_model or DEFAULT_IMAGE_MODEL).strip() or DEFAULT_IMAGE_MODEL
+        self.svg_author_model = svg_author_model.strip() or DEFAULT_MAIN_MODEL
         self.transport = transport or UrllibTransport()
         self.generations_url = f"{self.base_url}/images/generations"
         self.edits_url = f"{self.base_url}/images/edits"
@@ -317,42 +337,101 @@ class OpenAIImagesImageClient:
         return self._request_and_parse_many(payload)[0]
 
     def _request_and_parse_many(self, payload: dict[str, Any]) -> list[ImageResult]:
-        endpoint = str(payload.get("endpoint") or "/images/generations")
-        if endpoint == "/images/edits":
-            body, content_type = self._build_multipart_edit_body(payload)
-            url = self.edits_url
-            headers = self._build_headers(content_type=content_type)
-        else:
-            request_payload = self._json_request_payload(payload)
-            body = json.dumps(request_payload).encode("utf-8")
-            url = self.generations_url
-            headers = self._build_headers(content_type="application/json")
+        response = self.request_images(payload)
+        raise_for_openai_images_response(response)
+        return self.parse_response_json_items(response.body, request_payload=payload, url_fetcher=lambda url: self._fetch_image_url(url, allow_svg=payload.get("output_format") == "svg"))
 
-        response = self.transport.request(
-            method="POST",
-            url=url,
-            headers=headers,
+    def request_images(
+        self, payload: dict[str, Any], *, method: str = "POST", path: str | None = None,
+        multipart: bool = False,
+        svg_state: OpenAISvgRequestState | None = None,
+    ) -> HTTPResponse:
+        path = path or str(payload.get("endpoint") or "/images/generations")
+        select_svg_author = (
+            payload.get("output_format") == "svg"
+            and "svg" not in payload
+            and is_official_openai_api_url(self.base_url)
+        )
+        author_model = svg_state.author_model if select_svg_author and svg_state is not None else None
+        if author_model is not None:
+            payload = {**payload, "svg": {"model": author_model}}
+        response = self._send_images_request(payload, method=method, path=path, multipart=multipart)
+        if select_svg_author and author_model is None and self._requires_svg_model(response):
+            # Projects without SVG model selection require the initial request to omit this object.
+            author_model = self.svg_author_model
+            payload = {**payload, "svg": {"model": author_model}}
+            response = self._send_images_request(payload, method=method, path=path, multipart=multipart)
+            if svg_state is not None and 200 <= response.status < 300:
+                svg_state.author_model = author_model
+        if author_model is not None and self._svg_author_model_rejected(response, author_model):
+            raise OpenAISvgAuthorModelRejected()
+        return response
+
+    @staticmethod
+    def _response_error(response: HTTPResponse) -> dict[str, Any]:
+        try:
+            body = json.loads(response.body)
+        except ValueError:
+            return {}
+        error = body.get("error") if isinstance(body, dict) else None
+        return error if isinstance(error, dict) else {}
+
+    @classmethod
+    def _requires_svg_model(cls, response: HTTPResponse) -> bool:
+        if response.status != 400:
+            return False
+        error = cls._response_error(response)
+        return error.get("param") in _SVG_MODEL_FIELDS and error.get("code") == "missing_required_parameter"
+
+    @classmethod
+    def _svg_author_model_rejected(cls, response: HTTPResponse, model: str) -> bool:
+        if response.status not in (400, 403, 404):
+            return False
+        error = cls._response_error(response)
+        parameter = error.get("param")
+        code = error.get("code")
+        model_error = code in _MODEL_ACCESS_ERROR_CODES
+        if parameter in _SVG_MODEL_FIELDS:
+            return response.status in (403, 404) or model_error or code in ("invalid_value", "unsupported_value")
+        message = error.get("message")
+        return (
+            parameter is None and model_error and isinstance(message, str)
+            and re.search(rf"(?<![\w.:-]){re.escape(model)}(?![\w.:-])", message) is not None
+        )
+
+    def _send_images_request(
+        self, payload: dict[str, Any], *, method: str, path: str, multipart: bool,
+    ) -> HTTPResponse:
+        if multipart or path == "/images/edits":
+            body, content_type = self._build_multipart_edit_body(payload)
+        else:
+            body = json.dumps(self._json_request_payload(payload)).encode("utf-8")
+            content_type = "application/json"
+        return self.transport.request(
+            method=method,
+            url=f"{self.base_url}{path}",
+            headers=self._build_headers(content_type=content_type),
             body=body,
         )
-        raise_for_openai_images_response(response)
-        return self.parse_response_json_items(response.body, request_payload=payload, url_fetcher=self._fetch_image_url)
 
     def _build_headers(self, *, content_type: str) -> dict[str, str]:
         return build_openai_images_headers(self.api_key, content_type=content_type)
 
     @staticmethod
     def _json_request_payload(payload: dict[str, Any]) -> dict[str, Any]:
-        omitted = {"endpoint", "images", "mask"}
+        omitted = {"endpoint", "images", "mask", "markup"}
         return {key: value for key, value in payload.items() if key not in omitted and value is not None}
 
     @classmethod
     def _build_multipart_edit_body(cls, payload: dict[str, Any]) -> tuple[bytes, str]:
-        omitted = {"endpoint", "images", "mask"}
+        omitted = {"endpoint", "images", "mask", "markup", "svg"}
         form_fields = {
             key: value
             for key, value in payload.items()
             if key not in omitted and value is not None
         }
+        if svg := payload.get("svg"):
+            form_fields["svg[model]"] = svg["model"]
         files: list[tuple[str, str, str, bytes]] = []
 
         images = payload.get("images")
@@ -376,6 +455,10 @@ class OpenAIImagesImageClient:
             files.append(
                 ("mask", f"mask{cls._extension_for_mime_type(mime_type)}", mime_type, data)
             )
+        markup = payload.get("markup")
+        if isinstance(markup, dict) and markup.get("image_url"):
+            mime_type, data = cls._decode_data_url(str(markup["image_url"]))
+            files.append(("markup", "markup.png", mime_type, data))
         return build_multipart_body(form_fields, files)
 
     @staticmethod
@@ -399,7 +482,7 @@ class OpenAIImagesImageClient:
             return ".gif"
         return ".png"
 
-    def _fetch_image_url(self, url: str) -> bytes:
+    def _fetch_image_url(self, url: str, *, allow_svg: bool = False) -> bytes:
         from codex_image.providers.result_assets import AssetLoadError, download_asset_url
 
         try:
@@ -407,10 +490,11 @@ class OpenAIImagesImageClient:
                 url,
                 transport=self.transport,
                 provider_base_url=self.base_url,
+                allow_svg=allow_svg,
                 authorization=self._build_image_download_headers(include_auth=True).get("Authorization", ""),
             ).image_bytes
         except AssetLoadError as exc:
-            raise RuntimeError("OpenAI-compatible images returned an invalid image URL asset") from exc
+            raise RuntimeError(f"OpenAI-compatible images returned an invalid image URL asset: {exc}") from exc
 
     def _build_image_download_headers(self, *, include_auth: bool = False) -> dict[str, str]:
         headers = {
@@ -466,7 +550,8 @@ class OpenAIImagesImageClient:
                     completed_at.append(time.monotonic())
                 continue
             try:
-                image_bytes = OpenAIImagesImageClient._image_bytes_from_response_item(item, url_fetcher=url_fetcher)
+                asset = OpenAIImagesImageClient._asset_from_response_item(item, url_fetcher=url_fetcher, allow_svg=request_payload.get("output_format") == "svg")
+                image_bytes = asset.image_bytes
             except Exception as exc:
                 from concurrent.futures import CancelledError
                 if isinstance(exc, CancelledError) and results and asset_outcomes is not None:
@@ -478,29 +563,16 @@ class OpenAIImagesImageClient:
                 asset_outcomes.append(failure)
                 completed_at.append(time.monotonic())
                 continue
-            media_type = str(
-                item.get("media_type") or item.get("mime_type") or item.get("mimeType") or ""
-            ).split(";", 1)[0].strip().lower()
-            media_output_format = {
-                "image/jpeg": "jpeg",
-                "image/png": "png",
-                "image/webp": "webp",
-                "image/gif": "gif",
-                "image/avif": "avif",
-            }.get(media_type, "")
             results.append(
                 ImageResult(
                     image_bytes=image_bytes,
                     revised_prompt=str(item.get("revised_prompt", "")),
-                    output_format=str(
-                        item.get("output_format")
-                        or media_output_format
-                        or response.get("output_format")
-                        or request_payload.get("output_format")
-                        or ""
-                    ),
+                    # Persist the decoded format, even when provider/request
+                    # metadata names a different format or URL extension.
+                    output_format=("svg" if asset.mime_type == "image/svg+xml" else asset.mime_type.removeprefix("image/")),
                     size=OpenAIImagesImageClient._result_size(
                         image_bytes,
+                        f"{asset.width}x{asset.height}" if asset.width and asset.height else None,
                         item.get("size"),
                         response.get("size"),
                         request_payload.get("size"),
@@ -556,10 +628,12 @@ class OpenAIImagesImageClient:
 
     @staticmethod
     def _image_bytes_from_response_item(item: dict[str, Any], *, url_fetcher: Any | None = None) -> bytes:
-        from codex_image.providers.result_assets import AssetLoadError, load_response_asset
+        return OpenAIImagesImageClient._asset_from_response_item(item, url_fetcher=url_fetcher).image_bytes
 
+    @staticmethod
+    def _asset_from_response_item(item: dict[str, Any], *, url_fetcher: Any | None = None, allow_svg: bool = False) -> LoadedAsset:
         try:
-            return load_response_asset(item, url_loader=url_fetcher).image_bytes
+            return load_response_asset(item, url_loader=url_fetcher, allow_svg=allow_svg)
         except AssetLoadError as exc:
             raise RuntimeError("OpenAI-compatible images completed without valid image data") from exc
 

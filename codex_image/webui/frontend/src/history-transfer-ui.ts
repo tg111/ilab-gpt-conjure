@@ -1,5 +1,5 @@
 import { createHistoryBackupController, estimateHistoryBackup, historyBackupViewState, type HistoryBackupEstimate, type HistoryBackupFilters, type HistoryBackupJob, type HistoryBackupScope } from "./history-backup";
-import { createHistoryImportController, type HistoryImportPhase, type HistoryImportPreview, type HistoryImportResult, type HistoryImportSession, type HistoryImportTaskResult } from "./history-import";
+import { createHistoryImportController, type HistoryImportPhase, type HistoryImportPreview, type HistoryImportResult, type HistoryImportTaskResult } from "./history-import";
 import { escapeHtml, setText } from "./history-presentation";
 import { formatTranslation, translate } from "./i18n";
 
@@ -55,8 +55,6 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
   let currentImportResult: HistoryImportResult | null = null;
 
   let currentImportPhase: HistoryImportPhase = "idle";
-
-  let resumableImportSession: HistoryImportSession | null = null;
 
   let historyImportResumePending = false;
 
@@ -555,7 +553,6 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
   }
 
   function clearHistoryImportUI(): void {
-    resumableImportSession = null;
     historyImportResumePending = false;
     currentImportPreview = null;
     currentImportResult = null;
@@ -583,7 +580,6 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
   }
 
   async function chooseHistoryImport(file: File): Promise<void> {
-    const resumePending = historyImportResumePending;
     currentImportPreview = null;
     currentImportResult = null;
     renderHistoryImportPreview(null);
@@ -603,15 +599,6 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
       if (!(error instanceof DOMException && error.name === "AbortError")) {
         const activeSessionId = importController.activeSessionId();
         historyImportResumePending = Boolean(activeSessionId);
-        if (activeSessionId && !resumePending) {
-          resumableImportSession = {
-            session_id: activeSessionId,
-            filename: file.name,
-            size_bytes: file.size,
-            uploaded_bytes: 0,
-            status: "uploading",
-          };
-        }
         focusHistoryTransferError("import", translate("historyImport.reselect"));
         if (els.importFile) els.importFile.disabled = false;
       }
@@ -625,7 +612,6 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
     try {
       const result = await importController.restore();
       if (!result) return;
-      resumableImportSession = null;
       historyImportResumePending = false;
       renderHistoryImportResult(result);
       renderHistoryImportPreview(null);
@@ -648,16 +634,14 @@ export function createHistoryTransferUi(options: HistoryTransferOptions) {
     try {
       const session = await importController.resume();
       if (!session) return;
-      resumableImportSession = session;
       if ((session.status === "restored" || session.status === "failed") && session.result) {
         renderHistoryImportResult(session.result);
         renderHistoryImportPreview(null);
         renderHistoryImportPhase(session.status === "failed" ? "failed" : "restored");
-        const acknowledged = await importController.acknowledgeTerminalAfterRefresh(
+        await importController.acknowledgeTerminalAfterRefresh(
           session.session_id,
           options.refreshAfterImport,
         );
-        if (acknowledged) resumableImportSession = null;
       } else if (session.status === "uploaded" || session.status === "validated") {
         const preview = await importController.resumeValidate();
         if (preview) renderHistoryImportPreview(preview);

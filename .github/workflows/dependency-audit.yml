@@ -11,8 +11,6 @@ on:
       - 'requirements-*.txt'
       - 'package-lock.json'
       - '.node-version'
-      - 'launcher/Cargo.toml'
-      - 'launcher/Cargo.lock'
       - '.github/workflows/dependency-audit.yml'
 
 permissions:
@@ -45,23 +43,3 @@ jobs:
       - name: Audit complete npm lock, including build dependencies
         run: npm audit --package-lock-only
 
-  rust:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: cargo install cargo-audit --version 0.22.2 --locked
-      # Intentionally reports Linux-only and unmaintained dependencies as well.
-      # A documented reachability assessment is not a blanket advisory ignore.
-      - name: Audit complete Rust lock and retain warnings
-        run: cargo audit --json --file launcher/Cargo.lock > cargo-audit.json
-      - name: Retain audit findings
-        if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          name: rust-dependency-audit
-          path: cargo-audit.json
-          if-no-files-found: warn
-      - name: Explain deferred findings
-        if: always()
-        run: echo 'Rust findings are not suppressed. See docs/dependency-security.md for Linux reachability and unmaintained-package assessments; a successful job can still contain unsound or unmaintained warnings.' >> "$GITHUB_STEP_SUMMARY"

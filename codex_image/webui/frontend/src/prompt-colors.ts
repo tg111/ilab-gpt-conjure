@@ -127,12 +127,6 @@ function renderColorSuggest(match: any) {
   bindColorSuggestEvents();
 }
 
-function colorNameForHex(colorCode: any) {
-  const normalized = normalizeHexColor(colorCode);
-  if (!normalized) return "";
-  return favoriteColorsForDisplay().find((item: any) => item.hex === normalized)?.name || "";
-}
-
 function colorSwatchButton(color: any, label: any = "", { removable = false } = {}) {
   const normalized = normalizeHexColor(color) || DEFAULT_COLOR_CODE;
   const deleteLabel = escapeHtml(formatTranslation("colors.deleteFavorite", { name: label || normalized }));
@@ -453,8 +447,6 @@ export function initPromptColorsFeature(): void {
     positionColorSuggestAtCaret,
     openColorChipEditor,
     positionColorSuggestAtChip,
-    colorNameForHex,
-    colorSwatchButton,
     createColorChip,
     updateColorChip,
     readableTextColor,

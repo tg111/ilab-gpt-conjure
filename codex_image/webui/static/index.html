@@ -121,7 +121,8 @@
         });
       })();
     </script>
-    <link rel="stylesheet" href="/static/styles.css?v=runtime-922" />
+    <script src="/static/appearance-bootstrap.js?v=2"></script>
+    <link rel="stylesheet" href="/static/styles.css?v=runtime-934" />
   </head>
   <body>
     <div class="layout-container">
@@ -335,17 +336,9 @@
           <div class="sidebar-api-status-holder" aria-hidden="true">
             <div id="apiStatus" class="status-dot"></div>
           </div>
-          <button
-            id="versionInfo"
-            class="version-info"
-            type="button"
-            aria-label="版本信息"
-            title="版本信息"
-            data-i18n-attr="aria-label:footer.versionInfo;title:footer.versionInfo"
-          >
+          <span id="versionInfo" class="version-info">
             <span id="versionLabel" class="version-label" data-i18n="footer.versionLoading">版本 ...</span>
-            <span id="versionUpdateBadge" class="version-update-badge hidden" aria-hidden="true"></span>
-          </button>
+          </span>
         </div>
         <div id="taskQueueDragLayer" class="task-queue-drag-layer"></div>
         <div
@@ -377,7 +370,7 @@
               <button class="theme-option" data-theme-option="light" type="button" aria-pressed="false" data-i18n="theme.light">浅色</button>
               <button class="theme-option" data-theme-option="dark" type="button" aria-pressed="false" data-i18n="theme.dark">深色</button>
             </div>
-            <a id="githubLink" class="queue-button github-link" href="https://github.com/kadevin/ilab-conjure" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+            <a id="githubLink" class="queue-button github-link" href="https://github.com/tg111/ilab-gpt-conjure" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
               <svg class="github-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.4.7-4.1-1.5-4.1-1.5-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C16.8 4.7 17.8 5 17.8 5c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.8c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/>
               </svg>
@@ -408,7 +401,6 @@
         <main class="dashboard">
           <h1 class="sr-only">iLab CONJURE</h1>
           <div class="dashboard-col controls-col">
-            <input id="model" type="hidden" value="gpt-image-2" />
             <!-- Image Input -->
             <section class="panel image-panel" aria-label="参考输入（可选）" data-i18n-attr="aria-label:imageInput.referenceTitle">
               <div class="panel-heading">
@@ -571,6 +563,7 @@
               <div id="outputSettingsHeader" class="output-settings-header">
                 <h2 data-i18n="outputSettings.title">输出设置</h2>
                 <div id="compactExecutionSummary" class="compact-execution-summary"></div>
+                <div id="modelAdvancedSlot" class="model-advanced-slot hidden"></div>
                 <button
                   id="outputSettingsLockButton"
                   class="output-settings-lock-button"
@@ -601,14 +594,6 @@
                         <div id="mainModelField" class="field main-model-field">
                           <div class="output-field-heading">
                             <label for="mainModel" id="mainModelLabel" data-i18n="output.mainModel">主模型</label>
-                            <div id="webSearchField" class="field web-search-field">
-                              <label class="web-search-toggle" title="先联网搜索并用于本次生成" data-i18n-attr="title:output.webSearchTitle">
-
-                                <input id="webSearch" type="checkbox" aria-labelledby="webSearchLabel" />
-                                <span class="web-search-toggle-track" aria-hidden="true"></span>
-                                <span id="webSearchLabel" class="generation-option-label" data-i18n="output.webSearch">联网搜索</span>
-                              </label>
-                            </div>
                           </div>
                           <div
                             id="mainModelCombobox"
@@ -636,229 +621,13 @@
                             <div id="mainModelOptions" class="model-combobox-options hidden" role="listbox"></div>
                           </div>
                         </div>
+                        <div id="modelToolSlot" class="model-tool-slot hidden"></div>
                       </div>
                     </div>
                   </div>
 
                   <div id="modelParameterGrid" class="model-parameter-grid hidden full-width" aria-live="polite"></div>
 
-                  <div id="outputSizeSettings" class="output-size-settings full-width">
-                    <div class="field-group full-width custom-size-control">
-                      <div id="sizeModeGroup" class="radio-group size-mode-group" role="group" aria-label="尺寸模式" data-i18n-attr="aria-label:output.sizeMode">
-                        <button class="radio-btn active" data-custom-size-mode="auto" type="button" data-i18n="output.sizeAuto">自动尺寸</button>
-                        <button class="radio-btn" data-custom-size-mode="preset" type="button" data-i18n="output.sizePreset">预设尺寸</button>
-                        <button class="radio-btn" data-custom-size-mode="custom" type="button" data-i18n="output.sizeCustom">自定义尺寸</button>
-                      </div>
-                      <input type="checkbox" id="customSizeToggle" class="hidden" aria-hidden="true" />
-                    </div>
-                    <div id="sizeEditors" class="size-editors full-width">
-                      <div id="presetSizeFields" class="preset-size-fields" aria-hidden="false">
-                        <div class="field orientation-field">
-                          <span class="output-label-pair" data-i18n="output.orientation">方向</span>
-                          <div class="radio-group" id="orientationGroup" role="group" aria-label="方向" data-i18n-attr="aria-label:output.orientation">
-                            <button class="radio-btn active" data-val="square" type="button">
-                              <svg class="orientation-option-icon orientation-option-icon-square" data-ui-icon="square" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#square"/></svg>
-                              <span data-i18n="output.square">方形</span>
-                            </button>
-                            <button class="radio-btn" data-val="portrait" type="button">
-                              <svg class="orientation-option-icon orientation-option-icon-portrait" data-ui-icon="portrait" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#portrait"/></svg>
-                              <span data-i18n="output.portrait">竖图</span>
-                            </button>
-                            <button class="radio-btn" data-val="landscape" type="button">
-                              <svg class="orientation-option-icon orientation-option-icon-landscape" data-ui-icon="landscape" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#landscape"/></svg>
-                              <span data-i18n="output.landscape">横图</span>
-                            </button>
-                          </div>
-                          <select id="orientation" class="hidden">
-                            <option value="square" selected data-i18n="output.square">方形</option>
-                            <option value="portrait" data-i18n="output.portrait">竖图</option>
-                            <option value="landscape" data-i18n="output.landscape">横图</option>
-                          </select>
-                        </div>
-                        <div class="field resolution-field">
-                          <span data-i18n="output.resolution">分辨率</span>
-                          <div class="radio-group" id="resolutionGroup" role="group" aria-label="分辨率" data-i18n-attr="aria-label:output.resolution">
-                            <button class="radio-btn active" data-val="standard" type="button">1K</button>
-                            <button class="radio-btn" data-val="2k" type="button">2K</button>
-                            <button class="radio-btn" data-val="4k" type="button">4K</button>
-                          </div>
-                          <select id="resolution" class="hidden">
-                            <option value="standard" selected>1K</option>
-                            <option value="2k">2K</option>
-                            <option value="4k">4K</option>
-                          </select>
-                        </div>
-                        <div class="field full-width ratio-field">
-                          <span class="output-label-pair" data-i18n="output.ratio">比例</span>
-                          <div class="radio-group ratio-group" id="ratioGroup" role="group" aria-label="比例" data-i18n-attr="aria-label:output.ratio">
-                            <button class="radio-btn active" data-val="1:1" type="button">1:1</button>
-                            <button class="radio-btn" data-val="4:5" type="button">4:5</button>
-                            <button class="radio-btn" data-val="5:4" type="button">5:4</button>
-                            <button class="radio-btn" data-val="3:4" type="button">3:4</button>
-                            <button class="radio-btn" data-val="4:3" type="button">4:3</button>
-                            <button class="radio-btn" data-val="2:3" type="button">2:3</button>
-                            <button class="radio-btn" data-val="3:2" type="button">3:2</button>
-                            <button class="radio-btn" data-val="9:16" type="button">9:16</button>
-                            <button class="radio-btn" data-val="16:9" type="button">16:9</button>
-                            <button class="radio-btn" data-val="9:21" type="button">9:21</button>
-                            <button class="radio-btn" data-val="21:9" type="button">21:9</button>
-                          </div>
-                          <select id="ratio" class="hidden">
-                            <option value="1:1" selected>1:1</option>
-                            <option value="4:5">4:5</option>
-                            <option value="5:4">5:4</option>
-                            <option value="3:4">3:4</option>
-                            <option value="4:3">4:3</option>
-                            <option value="2:3">2:3</option>
-                            <option value="3:2">3:2</option>
-                            <option value="9:16">9:16</option>
-                            <option value="16:9">16:9</option>
-                            <option value="9:21">9:21</option>
-                            <option value="21:9">21:9</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div id="customSize" class="custom-size" inert aria-hidden="true">
-                        <div class="custom-size-main">
-                          <div class="custom-size-header">
-                            <span data-i18n="output.pixelSize">像素尺寸</span>
-                          </div>
-                          <div class="custom-measure-row custom-size-row">
-                            <label class="custom-measure-label output-label-pair" for="customWidth" data-i18n="output.width">宽度</label>
-                            <input id="customWidth" class="control custom-size-input" type="number" min="16" max="3840" step="16" value="1024" aria-label="宽度" data-i18n-attr="aria-label:output.width" />
-                            <button id="swapCustomSizeButton" class="custom-size-icon-button custom-size-swap" type="button" aria-label="交换宽高" title="交换宽高" data-i18n-attr="aria-label:output.swapSize;title:output.swapSize">
-                              <svg data-ui-icon="swap" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#swap"/></svg>
-                            </button>
-                            <label class="custom-measure-label output-label-pair" for="customHeight" data-i18n="output.height">高度</label>
-                            <input id="customHeight" class="control custom-size-input" type="number" min="16" max="3840" step="16" value="1024" aria-label="高度" data-i18n-attr="aria-label:output.height" />
-                          </div>
-                          <p id="customSizeHint" class="custom-size-hint" data-i18n="output.customSizeHint">单位 px · 16-3840 · 16倍数 · ≤3:1</p>
-                        </div>
-                        <div class="field custom-ratio-field">
-                          <div class="custom-ratio-header">
-                            <span data-i18n="output.ratioLock">比例锁定（可选）</span>
-                          </div>
-                          <div class="custom-measure-row custom-ratio-control" aria-label="自定义宽高比" data-i18n-attr="aria-label:output.customRatio">
-                            <label class="custom-measure-label sr-only" for="customRatioWidth" data-i18n="output.ratioWidth">宽</label>
-                            <input
-                              id="customRatioWidth"
-                              class="control custom-ratio-digit"
-                              type="text"
-                              inputmode="numeric"
-                              maxlength="1"
-                              pattern="[1-9]"
-                              autocomplete="off"
-                              aria-label="自定义宽高比宽度"
-                              data-i18n-attr="aria-label:output.ratioWidth"
-                              />
-                              <span class="custom-ratio-separator" aria-hidden="true">:</span>
-                              <label class="custom-measure-label sr-only" for="customRatioHeight" data-i18n="output.ratioHeight">高</label>
-                            <input
-                              id="customRatioHeight"
-                              class="control custom-ratio-digit"
-                              type="text"
-                              inputmode="numeric"
-                              maxlength="1"
-                              pattern="[1-9]"
-                              autocomplete="off"
-                              aria-label="自定义宽高比高度"
-                              data-i18n-attr="aria-label:output.ratioHeight"
-                              />
-                              <button id="customRatioFromImageButton" class="ghost-button custom-ratio-image-button" type="button" disabled aria-label="获取第一张参考图宽高比" title="获取第一张参考图宽高比" data-i18n-attr="aria-label:output.firstImageRatio;title:output.firstImageRatio">
-                              <svg class="button-icon" data-ui-icon="gallery" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#gallery"/></svg>
-                              <span data-i18n="output.useFirstImage">取首图</span>
-                            </button>
-                          </div>
-                          <p id="customRatioHint" class="custom-ratio-hint" data-i18n="output.ratioHint">留空则自由宽高 · 填满后同步</p>
-                        </div>
-                      </div>
-                    </div>
-                    <input type="text" id="size" class="hidden" value="1024x1024" />
-                  </div>
-                  <div id="outputFileSettings" class="output-file-settings full-width">
-                    <div class="field-pair full-width quantity-quality-row">
-                      <div class="field quality-field">
-                        <span class="output-label-pair" data-i18n="output.quality">质量</span>
-                        <div class="radio-group" id="qualityGroup" role="group" aria-label="质量" data-i18n-attr="aria-label:output.quality">
-                          <button class="radio-btn active" data-val="auto" type="button" data-i18n="output.qualityAuto">自动</button>
-                          <button class="radio-btn" data-val="low" type="button" data-i18n="output.qualityLow">低</button>
-                          <button class="radio-btn" data-val="medium" type="button" data-i18n="output.qualityMedium">中</button>
-                          <button class="radio-btn" data-val="high" type="button" data-i18n="output.qualityHigh">高</button>
-                        </div>
-                        <select id="quality" class="hidden">
-                          <option value="auto" data-i18n="output.qualityAuto">自动</option>
-                          <option value="low" data-i18n="output.qualityLow">低</option>
-                          <option value="medium" data-i18n="output.qualityMedium">中</option>
-                          <option value="high" data-i18n="output.qualityHigh">高</option>
-                        </select>
-                      </div>
-
-                      <div class="field quantity-field">
-                        <span class="output-label-pair" data-i18n="output.quantity">数量</span>
-                        <div class="radio-group quantity-group" id="quantityGroup" role="group" aria-label="数量" data-i18n-attr="aria-label:output.quantity">
-                          <button class="radio-btn active" data-val="1" type="button">1</button>
-                          <button class="radio-btn" data-val="2" type="button">2</button>
-                          <button class="radio-btn" data-val="3" type="button">3</button>
-                          <button class="radio-btn" data-val="4" type="button">4</button>
-                        </div>
-                        <select id="nInput" class="hidden">
-                          <option value="1" selected>1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div id="outputFormatField" class="field output-format-field">
-                      <div class="output-field-heading">
-                        <span class="output-label-pair" data-i18n="output.format">格式</span>
-                        <div class="output-format-options">
-                          <button id="outputCompressionButton" class="output-compression-button hidden" type="button" aria-label="压缩率设置" title="压缩率设置" aria-controls="compressionPopover" aria-haspopup="dialog" aria-expanded="false" data-i18n-attr="aria-label:output.compression;title:output.compression">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h8V4h4v2h6v2h-6v2h-4V8H3Zm0 10h4v-2h4v2h10v2H11v2H7v-2H3Z"/></svg>
-                            <span data-i18n="output.compression">压缩率</span>
-                          </button>
-                          <div id="transparentBackgroundField" class="field transparent-background-field">
-                            <label class="web-search-toggle">
-                              <input id="transparentBackground" type="checkbox" aria-labelledby="transparentBackgroundLabel" />
-                              <span class="web-search-toggle-track" aria-hidden="true"></span>
-                              <span id="transparentBackgroundLabel" class="generation-option-label" data-i18n="output.transparentBackground">透明背景</span>
-                            </label>
-                            <input id="background" type="hidden" value="auto" />
-                          </div>
-                        </div>
-                      </div>
-                      <div id="outputFormatGroup" class="radio-group" role="group" aria-label="输出格式" data-i18n-attr="aria-label:output.format">
-                        <button class="radio-btn active" data-val="png" type="button">png</button>
-                        <button class="radio-btn" data-val="jpeg" type="button">jpeg</button>
-                        <button class="radio-btn" data-val="webp" type="button">webp</button>
-                      </div>
-                      <select id="outputFormat" class="hidden">
-                        <option value="png">png</option>
-                        <option value="jpeg">jpeg</option>
-                        <option value="webp">webp</option>
-                      </select>
-                      <div id="compressionPopover" class="compression-popover hidden" role="dialog" tabindex="-1" aria-hidden="true" aria-label="压缩率设置" data-i18n-attr="aria-label:output.compression">
-                        <label id="compressionField" class="range-control compression-range">
-                          <div class="slider-header">
-                            <span data-i18n="output.compression">压缩率</span>
-                            <span class="range-value"><b id="compressionValue">80%</b></span>
-                          </div>
-                          <input id="compression" class="slider" type="range" min="50" max="100" step="1" value="80" />
-                        </label>
-                      </div>
-                    </div>
-                    <div class="field moderation-field">
-                      <span class="output-label-pair" data-i18n="output.moderation">审核</span>
-                      <div class="radio-group" id="moderationGroup" role="group" aria-label="审核" data-i18n-attr="aria-label:output.moderation">
-                        <button class="radio-btn" data-val="auto" type="button" data-i18n="ux.moderationAuto">自动</button>
-                        <button class="radio-btn active" data-val="low" type="button" data-i18n="ux.moderationLow">较宽松</button>
-                      </div>
-                      <select id="moderation" class="hidden">
-                        <option value="auto" data-i18n="ux.moderationAuto">自动</option>
-                        <option value="low" selected data-i18n="ux.moderationLow">较宽松</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
               </div>
             </section>
@@ -1066,6 +835,10 @@
                     </button>
                   </div>
                 </label>
+                <label id="apiSvgAuthorModelField" class="field api-svg-author-model-field hidden">
+                  <span data-i18n="apiSettings.svgAuthorModel">SVG 绘制模型</span>
+                  <input id="apiSvgAuthorModel" class="control" type="text" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="gpt-6-luna" />
+                </label>
                 <section class="provider-bindings-editor" aria-labelledby="providerBindingsTitle">
                   <div class="provider-bindings-header">
                     <div class="provider-bindings-title-row">
@@ -1255,6 +1028,10 @@
                 <input id="userConfigIncludeApiKeys" type="checkbox" />
                 <span><strong data-i18n="userConfigBackup.includeApiKeys">包含 API Key（敏感）</strong><small data-i18n="userConfigBackup.apiKeyWarning">备份包不加密，请妥善保存。</small></span>
               </label>
+              <label id="userConfigLegacyBackupRow" class="user-config-section-row hidden" hidden>
+                <input id="userConfigLegacyBackup" type="checkbox" />
+                <span data-i18n="userConfigBackup.legacyCompatible">兼容旧版（不包含配色）</span>
+              </label>
               <div id="userConfigBackupProgress" class="user-config-progress hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="备份进度" data-i18n-attr="aria-label:userConfigBackup.backupProgress">
                 <span></span>
               </div>
@@ -1309,49 +1086,6 @@
       </div>
     </div>
 
-    <div id="versionModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true" aria-label="版本与更新" data-i18n-attr="aria-label:version.title">
-      <div class="modal-panel version-modal-panel">
-        <div class="modal-heading">
-          <div>
-            <h2 data-i18n="version.title">版本与更新</h2>
-            <p id="versionModalStatus" data-i18n="version.loading">正在读取版本状态</p>
-          </div>
-          <button id="versionModalClose" class="ghost-button drawer-close-button" type="button" aria-label="关闭版本更新面板" title="关闭" data-i18n-attr="aria-label:close.version;title:action.close">
-            <svg class="drawer-close-icon" data-ui-icon="close" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg>
-          </button>
-        </div>
-        <div class="version-detail-grid">
-          <div class="version-detail-row">
-            <span data-i18n="version.current">当前版本</span>
-            <strong id="versionCurrent">...</strong>
-          </div>
-          <div class="version-detail-row">
-            <span data-i18n="version.latest">最新版本</span>
-            <strong id="versionLatest">...</strong>
-          </div>
-          <div class="version-detail-row">
-            <span data-i18n="version.source">运行方式</span>
-            <strong id="versionSource">...</strong>
-          </div>
-        </div>
-        <div id="versionOnboardingNotice" class="version-onboarding hidden" role="status">
-          <strong data-i18n="version.onboardingTitle">0.5.5 新增标准应用包</strong>
-          <p id="versionOnboardingBody" data-i18n="version.onboardingBody">这次更新新增了 macOS DMG 和 Windows App ZIP。新用户建议使用标准包；当前便携包仍可继续使用。</p>
-          <ul>
-            <li data-i18n="version.onboardingDataPortable">当前数据已保留在这个便携包的 data/ 目录。</li>
-            <li data-i18n="version.onboardingStandardData">标准 App 会把数据放到系统应用数据目录：macOS Application Support / Windows %APPDATA%。</li>
-            <li data-i18n="version.onboardingMigration">切换标准 App 时请使用迁移助手复制旧数据，不会移动或覆盖原数据。</li>
-          </ul>
-        </div>
-        <div class="version-modal-actions">
-          <a id="versionReleaseLink" class="ghost-button text-sm" href="https://github.com/kadevin/ilab-conjure/releases" target="_blank" rel="noreferrer" data-i18n="version.release">查看发布页</a>
-          <a id="versionStandardDownloadLink" class="run-button text-sm hidden" href="https://github.com/kadevin/ilab-conjure/releases" target="_blank" rel="noreferrer" data-i18n="version.standardDownload">下载标准版</a>
-          <button id="versionUpdateButton" class="run-button" type="button" disabled data-i18n="version.openUpdater">启动更新器</button>
-          <button id="versionContinuePortableButton" class="ghost-button text-sm hidden" type="button" data-i18n="version.continuePortable">继续使用便携版</button>
-          <button id="versionDismissOnboardingButton" class="ghost-button text-sm hidden" type="button" data-i18n="version.dismissOnboarding">不再提示</button>
-        </div>
-      </div>
-    </div>
 
     <div id="imageEditorModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="编辑输入图片" data-i18n-attr="aria-label:imageEditor.title">
       <div class="modal-panel image-editor-panel">
@@ -1363,6 +1097,10 @@
           <button id="imageEditorClose" class="ghost-button drawer-close-button" type="button" aria-label="关闭编辑输入图片面板" title="关闭" data-i18n-attr="aria-label:close.imageEditor;title:action.close">
             <svg class="drawer-close-icon" data-ui-icon="close" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg>
           </button>
+        </div>
+        <div id="imageEditorModeGroup" class="image-editor-mode-group hidden" role="group" aria-label="编辑输入图片" data-i18n-attr="aria-label:imageEditor.title">
+          <button class="ghost-button text-sm active" type="button" data-image-editor-mode="image" aria-pressed="true" data-i18n="imageEditor.image">图像</button>
+          <button class="ghost-button text-sm" type="button" data-image-editor-mode="markup" aria-pressed="false" data-i18n="imageEditor.markup">标注</button>
         </div>
         <div class="image-editor-toolbar" aria-label="图片编辑工具栏" data-i18n-attr="aria-label:imageEditor.toolbar">
           <div class="image-editor-tool-group" aria-label="工具" data-i18n-attr="aria-label:imageEditor.tools">
@@ -1552,7 +1290,7 @@
     </div>
 
     <div id="taskNotificationToastRegion" class="task-notification-toast-region" aria-live="polite"></div>
-  <script src="/static/app.js?v=runtime-905"></script>
+  <script src="/static/app.js?v=runtime-922"></script>
     <script>
       (() => {
         document.querySelectorAll(".radio-group").forEach((group) => {
