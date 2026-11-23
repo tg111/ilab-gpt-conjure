@@ -39,8 +39,8 @@ export interface CatalogObjectPreset {
 export interface CatalogParameterDefinition {
   id: string;
   label_key: string;
-  group: "model" | "canvas" | "generation" | "advanced";
-  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid" | "image_size";
+  group: "model" | "canvas" | "generation" | "tools" | "advanced";
+  control: "select" | "segmented" | "boolean_segmented" | "toggle" | "slider" | "number" | "text" | "notice" | "choice_grid" | "object_presets" | "aspect_ratio_grid" | "image_size" | "pixel_size";
   value_type: "string" | "integer" | "boolean" | "object";
   default: unknown;
   allowed_values: unknown[];
@@ -54,6 +54,7 @@ export interface CatalogParameterDefinition {
   object_choices?: CatalogObjectChoiceRow[];
   object_presets?: CatalogObjectPreset[];
   value_requirements?: CatalogValueRequirement[];
+  value_label_keys?: string[];
 }
 
 export interface CatalogValueRequirement {

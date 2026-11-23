@@ -879,7 +879,7 @@ select.themed-select-native {
 }
 
 /* Required input boundaries are stronger than decorative panel dividers. */
-.control, .custom-size-input, .custom-ratio-digit, .themed-select-trigger {
+.control, .themed-select-trigger {
   border-color: var(--control-border);
 }
 .controls-col .radio-group .segmented-indicator,

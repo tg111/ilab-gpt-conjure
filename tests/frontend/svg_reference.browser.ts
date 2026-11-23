@@ -75,7 +75,8 @@ async function run() {
   check("failed conversion has an actionable message", els.statusText.textContent.includes("PNG"));
 
   // Exercise the real request error boundary in both languages without running queued tasks.
-  input("#outputFormat", "gif"); methods.setPromptText("Synthetic GIF validation");
+  d.querySelector<HTMLButtonElement>('#modelParameterGrid [data-parameter-id="output.format"] [data-val="gif"]')!.click();
+  methods.setPromptText("Synthetic GIF validation");
   const originalFetch = w.fetch.bind(w);
   let inject = "", requests = 0;
   w.fetch = (async (request: RequestInfo | URL, init?: RequestInit) => {

@@ -728,7 +728,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "api_settings": Path("codex_image/webui/frontend/src/api-provider-settings.ts").read_text(encoding="utf-8"),
             "storage": Path("codex_image/webui/frontend/src/storage-settings.ts").read_text(encoding="utf-8"),
             "image_strip": Path("codex_image/webui/frontend/src/image-strip.ts").read_text(encoding="utf-8"),
-            "custom_size": Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8"),
+            "custom_size": Path("codex_image/webui/frontend/src/image-size-editor.ts").read_text(encoding="utf-8"),
             "batch": Path("codex_image/webui/frontend/src/task-batch-controls.ts").read_text(encoding="utf-8"),
             "form": Path("codex_image/webui/frontend/src/form-controls.ts").read_text(encoding="utf-8"),
             "recent_assets": Path("codex_image/webui/frontend/src/recent-assets.ts").read_text(encoding="utf-8"),
@@ -833,7 +833,6 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('translate("notifications.empty")', runtime_sources["notifications"])
         self.assertIn('translate("notifications.taskCompleted")', runtime_sources["notifications"])
         self.assertIn('formatTranslation("notifications.successCount"', runtime_sources["notifications"])
-        self.assertIn('translate("footer.historyLibrary")', runtime_sources["archive"])
         self.assertIn('translate("taskGroup.today")', runtime_sources["task_groups"])
         self.assertIn('translate("taskGroup.last7")', runtime_sources["task_groups"])
         self.assertIn('formatTranslation("templates.availableCount"', runtime_sources["templates"])
@@ -853,7 +852,8 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
         self.assertIn('translate("imageInput.uploadBadge")', runtime_sources["image_strip"])
         self.assertIn('translate("imageInput.addToGalleryShort")', runtime_sources["image_strip"])
         self.assertIn('translate("imageInput.removeImage")', runtime_sources["image_strip"])
-        self.assertIn('formatTranslation("output.customSizeHint"', runtime_sources["custom_size"])
+        self.assertIn('translate("output.customSizeHint")', runtime_sources["custom_size"])
+        self.assertIn('formatTranslation("output.useSuggestedSize"', runtime_sources["custom_size"])
         self.assertIn('formatTranslation("batch.selectedCount"', runtime_sources["batch"])
         self.assertIn('translate(mode === "edit" ? "prompt.runEdit" : "prompt.run")', runtime_sources["form"])
         self.assertIn('formatTranslation("recentAssets.use"', runtime_sources["recent_assets"])
@@ -888,7 +888,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "api-provider-settings.ts",
             "auth-source.ts",
             "color-palette.ts",
-            "custom-size-controls.ts",
+            "image-size-editor.ts",
             "gallery.ts",
             "gallery-categories.ts",
             "gallery-grid.ts",
@@ -906,7 +906,7 @@ class WebUIStaticI18nTests(WebUIStaticTestCase):
             "queue.ts",
             "runtime-feedback.ts",
             "shell-ui.ts",
-            "size-presets.ts",
+            "task-params.ts",
             "storage-settings.ts",
             "task-actions.ts",
             "task-archive-controls.ts",

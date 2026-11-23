@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { preserveComposerDraft, markComposerBaseline } from "./composer-draft";
 import { getLegacyBridge } from "./state";
-import { setBackgroundControl } from "./background-controls";
 import { formatTranslation, LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { webAppDocumentTitle } from "./web-app-title";
 import {
@@ -48,10 +47,7 @@ function revokeUploadPreviewUrls(sources) { legacyMethod("revokeUploadPreviewUrl
 function finishBatchMarqueeSelection() { legacyMethod("finishBatchMarqueeSelection"); }
 function setPromptText(value) { legacyMethod("setPromptText", value); }
 function setMode(mode) { legacyMethod("setMode", mode); }
-function updateSizeFromPreset() { legacyMethod("updateSizeFromPreset"); }
 function updatePromptCount() { legacyMethod("updatePromptCount"); }
-function updateQuantity() { legacyMethod("updateQuantity"); }
-function updateCompression() { legacyMethod("updateCompression"); }
 function renderImageStrip() { legacyMethod("renderImageStrip"); }
 function renderTasks() { legacyMethod("renderTasks"); }
 function renderPreview() { legacyMethod("renderPreview"); }
@@ -81,9 +77,6 @@ function bindShellUiEvents() {
   );
   bindSystemThemePreference(handleThemeSystemChange);
   document.addEventListener(LOCALE_CHANGE_EVENT, handleShellLocaleChange);
-  if (els.copyJsonButton) {
-    els.copyJsonButton.addEventListener("click", copyJson);
-  }
   els.newTaskButton?.addEventListener("click", resetForm);
   els.sidebarResizeHandle?.addEventListener("pointerdown", startSidebarResize);
   els.sidebarResizeHandle?.addEventListener("keydown", handleSidebarResizeKeydown);
@@ -324,27 +317,10 @@ function resetForm() {
   finishBatchMarqueeSelection();
   setPromptText("");
   if (!outputSettingsLocked) {
-    if (els.customSizeToggle) els.customSizeToggle.checked = false;
-    if (els.nInput) els.nInput.value = "1";
-    if (els.resolution) els.resolution.value = "standard";
-    if (els.ratio) els.ratio.value = "1:1";
-    if (els.orientation) els.orientation.value = "square";
-    els.size.value = "1024x1024";
-    els.quality.value = "auto";
-    els.outputFormat.value = "png";
-    setBackgroundControl("auto");
-    els.moderation.value = "low";
-    els.compression.value = "80";
-    if (els.webSearch) els.webSearch.checked = false;
-    [els.nInput, els.resolution, els.ratio, els.orientation, els.quality, els.outputFormat, els.moderation, els.webSearch].forEach((sel) => {
-      if (sel) sel.dispatchEvent(new Event("change"));
-    });
-    updateSizeFromPreset();
+    legacyMethod("resetCurrentModelParameters");
   }
   setMode("generate");
   updatePromptCount();
-  updateQuantity();
-  updateCompression();
   renderImageStrip();
   renderTasks();
   renderPreview();
@@ -352,12 +328,6 @@ function resetForm() {
   if (outputSettingsLocked) legacyMethod("showLockedOutputSettings");
   markComposerBaseline();
   setStatus(translate("status.waiting"), "");
-}
-
-async function copyJson() {
-  if (!els.requestJson) return;
-  if (!await copyTextToClipboard(els.requestJson.textContent)) return;
-  setStatus(translate("status.jsonCopied"), "ok");
 }
 
 export function initShellUiFeature() {
@@ -384,7 +354,6 @@ export function initShellUiFeature() {
     updateDocumentTitle,
     setStatus,
     resetForm,
-    copyJson,
   });
 }
 import { copyTextToClipboard } from "./clipboard-text";

@@ -6,7 +6,7 @@ import {
   activeParameterValuesFor,
   advancedParametersAreExpanded,
   initializeParameterDraft,
-  legacyParameterVisibility,
+  
   matchingObjectPreset,
   migrateParameterValues,
   nextObjectChoiceValue,
@@ -47,10 +47,13 @@ test("Image 2.6 GIF sizes survive parameter resolution and history migration", (
     official_model_id: "gpt-image-2.6-flare", version: 1, operations: ["generate"],
     input_constraints: { max_images: 16, supports_mask: true, supports_reference_files: false },
     parameters: [
-      { ...parameters[0], id: "canvas.size", default: "1024x1024", allowed_values: [] },
+      { ...parameters[0], id: "canvas.size", control: "pixel_size", default: "1024x1024", allowed_values: [] },
       { ...parameters[0], id: "output.format", default: "png", allowed_values: ["png", "gif"] },
     ],
-  };
+    size_spec: { modes: ["custom"], presets: {}, custom: {
+      min_edge: 16, max_edge: 3840, multiple: 16, max_aspect_ratio: 3, min_pixels: 655360, max_pixels: 8294400, relaxed_formats: ["gif"],
+    } },
+  } as CatalogModel;
   for (const size of ["512x512", "3840x3840", "256x1024"]) {
     const draft = { "canvas.size": size, "output.format": "gif" };
     assert.equal(activeParameterValuesFor(gifModel, "generate", draft)["canvas.size"], size);
@@ -178,7 +181,7 @@ test("adopting GPT history preserves the current version, provider and protocol 
 test("adopted GPT parameters reach the controls and request after provider selection", () => {
   for (const targetModelId of gptVersions) {
     for (const sourceModelId of ["model-a", targetModelId]) {
-      const { state, els, preview, restore } = installGptAdoptionBridge(sourceModelId);
+      const { state, preview, restore } = installGptAdoptionBridge(sourceModelId);
       const requested = { "canvas.size": "1536x1024", "gpt.quality": "high", "output.count": 3,
         "gpt.background": "transparent", "output.format": "png", "gpt.moderation": "low" };
       const task = { task_id: "historical", mode: "generate", generation_snapshot: {
@@ -188,13 +191,7 @@ test("adopted GPT parameters reach the controls and request after provider selec
       try {
         const report = adoptTaskParameters(task);
         assert.equal(state.selectedModelId, targetModelId);
-        assert.equal(els.quality.value, "high");
-        assert.equal(els.nInput.value, "3");
-        assert.equal(els.nInput.selectedValue, "3");
-        assert.equal(els.quality.selectedValue, "high");
-        assert.equal(els.size.value, "1536x1024");
-        assert.equal(els.background.value, "transparent");
-        assert.equal(els.moderation.value, "low");
+        assert.deepEqual(state.parameterDraftsByModel[targetModelId], requested);
         assert.deepEqual(preview()?.parameters, requested);
         assert.deepEqual(report.values, requested);
         assert.deepEqual(task.generation_snapshot.requested_parameters, requested);
@@ -204,7 +201,7 @@ test("adopted GPT parameters reach the controls and request after provider selec
 });
 
 test("adopting history while locked persists the new values through restore and unlock", () => {
-  const { els, restore } = installGptAdoptionBridge("gpt-image-2");
+  const { state, els, restore } = installGptAdoptionBridge("gpt-image-2");
   const previousStorage = globalThis.localStorage;
   const values = new Map<string, string>();
   let toggle = () => {};
@@ -219,28 +216,33 @@ test("adopting history while locked persists the new values through restore and 
     getItem: (key: string) => values.get(key) ?? null,
     removeItem: (key: string) => values.delete(key),
   };
+  const draft = () => state.parameterDraftsByModel["gpt-image-2"];
   Object.assign(bridge.methods, {
     currentAuthSource: () => "api", currentApiMode: () => "responses",
-    currentCanonicalParameters: () => currentGenerationSelection()?.parameters,
-    applyTaskOutputParams: ({ params }: any) => { els.size.value = params.size; els.nInput.value = String(params.n); },
+    currentTaskParams: () => ({}),
+    activeParameterValues: () => ({ ...draft() }),
+    applyTaskOutputParams: ({ generation_snapshot }: any) => {
+      state.parameterDraftsByModel["gpt-image-2"] = { ...generation_snapshot.requested_parameters };
+    },
   });
   try {
+    state.parameterDraftsByModel["gpt-image-2"] = { "canvas.size": "1024x1024", "output.count": 1 };
     initOutputSettingsLockFeature();
     toggle();
     adoptTaskParameters({ task_id: "historical", mode: "generate", generation_snapshot: {
       canonical_model_id: "gpt-image-2", requested_parameters: { "canvas.size": "1536x1024", "output.count": 4 },
     } } as any);
-    assert.equal(els.size.value, "1536x1024");
+    assert.equal(draft()["canvas.size"], "1536x1024");
     const saved = JSON.parse(values.get("codex-image-output-settings-lock-v1")!);
-    assert.equal(saved.snapshot.size, "1536x1024");
+    assert.equal(saved.snapshot.parameters["canvas.size"], "1536x1024");
     assert.equal(saved.snapshot.n, 4);
-    els.size.value = "1024x1024";
-    els.nInput.value = "1";
+    state.parameterDraftsByModel["gpt-image-2"] = { "canvas.size": "1024x1024", "output.count": 1 };
     restoreOutputSettingsLock();
-    assert.equal(els.size.value, "1536x1024");
+    assert.equal(draft()["canvas.size"], "1536x1024");
+    state.parameterDraftsByModel["gpt-image-2"] = { "canvas.size": "1024x1024", "output.count": 1 };
     toggle();
-    assert.equal(els.size.value, "1536x1024");
-    assert.equal(els.nInput.value, "4");
+    assert.equal(draft()["canvas.size"], "1536x1024");
+    assert.equal(draft()["output.count"], 4);
     assert.equal(values.size, 0);
   } finally { restore(); (globalThis as any).localStorage = previousStorage; }
 });
@@ -425,21 +427,6 @@ test("advanced parameter expansion is manifest driven and history remains expand
   assert.equal(advancedParametersAreExpanded({ ...model, expand_advanced_parameters: true }, false), true);
   assert.equal(advancedParametersAreExpanded({ ...model, expand_advanced_parameters: false }, false), false);
   assert.equal(advancedParametersAreExpanded({ ...model, expand_advanced_parameters: false }, true), true);
-});
-
-test("legacy GPT custom size is visible only for the GPT custom mode", () => {
-  assert.deepEqual(legacyParameterVisibility("gpt-image-2", "preset"), {
-    legacyGpt: true,
-    customSize: false,
-  });
-  assert.deepEqual(legacyParameterVisibility("gpt-image-2", "custom"), {
-    legacyGpt: true,
-    customSize: true,
-  });
-  assert.deepEqual(legacyParameterVisibility("nano-banana-2", "custom"), {
-    legacyGpt: false,
-    customSize: false,
-  });
 });
 
 test("migration has exact values, defaults, and dropped fields", () => {

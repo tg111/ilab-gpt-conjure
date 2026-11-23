@@ -84,14 +84,6 @@ class WebUIShortHeightContractTests(WebUIStaticTestCase):
         self.assertNotRegex(narrow_container, r"\.mode-specific-settings\s*\{[^}]*grid-template-columns")
         output_styles = Path("codex_image/webui/static/styles/70-output-settings.css").read_text(encoding="utf-8")
         self.assertRegex(output_styles, r"\.model-tool-row\s*\{[^}]*display:\s*flex[^}]*flex-wrap:\s*wrap")
-        self.assertRegex(
-            narrow_container,
-            r"\.settings-grid\.custom-size-mode\s*\{[^}]*--custom-size-mode-card-height:\s*clamp\(\s*105px",
-        )
-        self.assertRegex(
-            narrow_container,
-            r"--custom-size-mode-card-height:\s*clamp\(\s*105px,\s*calc\(14\.76dvh\s*-\s*8\.4px\),\s*154px",
-        )
         self.assertNotIn("--mode-settings-stable-height", narrow_container)
 
     def test_short_workspace_keeps_all_section_headings_visible(self) -> None:
@@ -273,22 +265,7 @@ class WebUIShortHeightContractTests(WebUIStaticTestCase):
             narrow,
             r"#promptFidelityField\s*\{[^}]*grid-column:\s*2\s*/\s*3",
         )
-        self.assertRegex(
-            narrow,
-            r"\.settings-grid\.custom-size-mode\s*\{[^}]*"
-            r"--custom-size-mode-card-height:\s*clamp\(\s*105px",
-        )
-        self.assertRegex(
-            narrow,
-            r"--custom-size-mode-card-height:\s*clamp\(\s*105px,\s*calc\(14\.76dvh\s*-\s*8\.4px\),\s*154px",
-        )
         self.assertNotIn("#pixelPreview", compact)
-        self.assertRegex(
-            compact,
-            r"\.settings-grid\.custom-size-mode\s*\{[^}]*"
-            r"--custom-size-mode-card-height:\s*clamp\(130px",
-        )
-        self.assertRegex(Path("codex_image/webui/static/styles/70-output-settings.css").read_text(encoding="utf-8"), r"\.custom-ratio-hint\s*\{[^}]*display:\s*none")
         self.assertNotIn(".api-direct-settings-grid", responsive)
 
 

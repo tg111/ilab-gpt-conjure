@@ -19,6 +19,7 @@ ParameterControl = Literal[
     "object_presets",
     "aspect_ratio_grid",
     "image_size",
+    "pixel_size",
 ]
 
 
@@ -67,7 +68,7 @@ class ObjectPreset:
 class ParameterDefinition:
     id: str
     label_key: str
-    group: Literal["model", "canvas", "generation", "advanced"]
+    group: Literal["model", "canvas", "generation", "tools", "advanced"]
     control: ParameterControl
     value_type: Literal["string", "integer", "boolean", "object"]
     default: Any
@@ -82,6 +83,8 @@ class ParameterDefinition:
     object_choices: tuple[ObjectChoiceRow, ...] = ()
     object_presets: tuple[ObjectPreset, ...] = ()
     value_requirements: tuple[ValueRequirement, ...] = ()
+    # Translation keys for allowed_values, in the same order; empty shows values as written.
+    value_label_keys: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -131,9 +134,6 @@ class ModelManifest:
     input_constraints: InputConstraints
     expand_advanced_parameters: bool = False
     size_spec: ImageSizeSpec | None = None
-    # Parameter definitions in the vocabulary the current WebUI form uses.
-    # Served by the catalog API until the unified form replaces that form.
-    legacy_parameters: tuple[ParameterDefinition, ...] = ()
 
     def parameter(self, parameter_id: str) -> ParameterDefinition:
         for definition in self.parameters:

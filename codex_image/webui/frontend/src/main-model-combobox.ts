@@ -1,5 +1,5 @@
 import { getLegacyBridge } from "./state";
-import { updateRequestPreview } from "./output-controls";
+import { updateRequestPreview } from "./request-preview";
 import { translate } from "./i18n";
 
 export const DEFAULT_MAIN_MODEL = "gpt-6-luna";

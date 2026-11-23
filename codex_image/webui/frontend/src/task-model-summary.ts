@@ -48,45 +48,6 @@ export function taskRequestedParameters(task: unknown): Record<string, unknown> 
   return { ...record(record(source.request).parameters) };
 }
 
-function preferredParameter(
-  parameters: Record<string, unknown>,
-  parameterId: string,
-  ...fallbacks: unknown[]
-): unknown {
-  if (parameters[parameterId] !== undefined && parameters[parameterId] !== null) {
-    return parameters[parameterId];
-  }
-  return fallbacks.find((value) => value !== undefined && value !== null);
-}
-
-export function taskOutputControlValues(task: unknown): Record<string, unknown> {
-  const source = record(task);
-  const params = record(source.params);
-  const request = record(source.request);
-  const parameters = taskRequestedParameters(task);
-  const values = {
-    size: preferredParameter(parameters, "canvas.size", params.size, request.size),
-    ratio: preferredParameter(parameters, "canvas.aspect_ratio", params.ratio, request.ratio),
-    resolution: preferredParameter(parameters, "canvas.resolution", params.resolution, request.resolution),
-    quality: preferredParameter(parameters, "gpt.quality", params.quality, request.quality),
-    complexity: preferredParameter(parameters, "gpt.complexity", params.complexity, request.complexity),
-    frame_count: preferredParameter(parameters, "gpt.frame_count", params.frame_count, request.frame_count),
-    frame_duration_ms: preferredParameter(parameters, "gpt.frame_duration_ms", params.frame_duration_ms, request.frame_duration_ms),
-    background: preferredParameter(parameters, "gpt.background", params.background, request.background),
-    moderation: preferredParameter(parameters, "gpt.moderation", params.moderation, request.moderation),
-    web_search: preferredParameter(parameters, "gpt.web_search", params.web_search, request.web_search),
-    n: preferredParameter(parameters, "output.count", params.n, request.n),
-    output_format: preferredParameter(parameters, "output.format", params.output_format, request.output_format),
-    output_compression: preferredParameter(
-      parameters,
-      "gpt.output_compression",
-      params.output_compression,
-      request.output_compression,
-    ),
-  };
-  return Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined && value !== null));
-}
-
 export function taskModelDisplayName(task: unknown, catalog: GenerationCatalog | null | undefined): string {
   const modelId = taskCanonicalModelId(task);
   return catalog?.models.find((model) => model.id === modelId)?.display_name || modelId;

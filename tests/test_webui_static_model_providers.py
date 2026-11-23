@@ -13,7 +13,7 @@ class WebUIStaticModelProviderTests(WebUIStaticTestCase):
         brand = html[html.index('<div class="brand"'):html.index('id="modelFamilyOptions"')]
         family_selector = html[html.index('id="modelFamilyOptions"'):html.index('<div class="sidebar-search">')]
         nav = html[html.index('<div class="nav-actions">'):html.index('<div id="taskNotificationCenter"')]
-        output = html[html.index('<div id="settingsGrid"'):html.index('<div class="field-group full-width custom-size-control">')]
+        output = html[html.index('<div id="settingsGrid"'):html.index('<div id="modeSettingsSlot"')]
         self.assertIn("iLab", brand)
         self.assertIn("CONJURE", brand)
         self.assertNotIn('modelFamilyButton', brand)
@@ -99,19 +99,6 @@ class WebUIStaticModelProviderTests(WebUIStaticTestCase):
         self.assertIn("saveCurrentModelParameterDraft", form_controls)
         self.assertIn('addEventListener("change"', form_controls)
         self.assertGreaterEqual(model_selection.count("restoreCurrentModelParameterDraft"), 2)
-        preset_block = form_controls[form_controls.index("[els.resolution, els.ratio, els.orientation]"):form_controls.index("els.sizeModeGroup")]
-        self.assertGreaterEqual(preset_block.count("saveCurrentModelParameterDraft"), 2)
-
-    def test_programmatic_size_actions_persist_the_active_model_draft(self) -> None:
-        source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
-        main = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
-        size_mode = source[source.index("export function setSizeMode"):source.index("export function swapCustomSizeDimensions")]
-        swap = source[source.index("export function swapCustomSizeDimensions"):source.index("export function sanitizeCustomRatioInput")]
-        first_image = source[source.index("export async function applyFirstReferenceImageAspectRatio"):source.index("export function handleCustomDimensionInput")]
-        for block in (size_mode, swap, first_image):
-            self.assertIn("saveCurrentModelParameterDraft", block)
-        self.assertIn('import { initModelParameterDraftFeature } from "./model-parameter-drafts";', main)
-        self.assertIn("initModelParameterDraftFeature();", main)
 
     def test_provider_settings_button_has_only_one_listener(self) -> None:
         bindings = Path("codex_image/webui/frontend/src/event-bindings.ts").read_text(encoding="utf-8")

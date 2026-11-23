@@ -460,7 +460,7 @@ class ReferenceFileFrontendContractTests(unittest.TestCase):
     def test_form_reset_clears_selection_without_recent_file_state(self) -> None:
         shell = (ROOT / "codex_image/webui/frontend/src/shell-ui.ts").read_text(encoding="utf-8")
         module = (ROOT / "codex_image/webui/frontend/src/reference-file-inputs.ts").read_text(encoding="utf-8")
-        reset = shell[shell.index("function resetForm()") : shell.index("async function copyJson()")]
+        reset = shell[shell.index("function resetForm()") : shell.index("export function initShellUiFeature()")]
         self.assertIn('legacyMethod("clearReferenceFiles", { silent: true })', reset)
         self.assertNotIn("recentReferenceFiles", reset)
         self.assertNotIn('els.clearImagesButton?.addEventListener("click", clearReferenceFiles)', module)

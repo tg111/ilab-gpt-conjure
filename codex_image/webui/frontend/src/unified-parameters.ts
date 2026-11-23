@@ -6,29 +6,18 @@ import type {
   GenerationCatalog,
 } from "./types";
 
-/**
- * Families whose form is rendered from the unified parameter vocabulary.
- * Other families keep the parameters of the current hand-written form until
- * they are moved over.
- */
-export const UNIFIED_FORM_FAMILIES: ReadonlySet<string> = new Set(["gemini-image"]);
-
-/** Swap in the unified parameters for families that already use the unified form. */
-export function adoptUnifiedParameters<T>(payload: T): T {
+/** Attach each family's earlier parameter names to its models, for upgrading stored values. */
+export function attachParameterRenames<T>(payload: T): T {
   if (!payload || typeof payload !== "object") return payload;
   const catalog = payload as unknown as Partial<GenerationCatalog>;
   if (!Array.isArray(catalog.models)) return payload;
   const renames = catalog.parameter_renames || {};
   return {
     ...catalog,
-    models: catalog.models.map((model) => {
-      if (!UNIFIED_FORM_FAMILIES.has(model?.family_id) || !Array.isArray(model.unified_parameters)) return model;
-      return {
-        ...model,
-        parameters: model.unified_parameters,
-        parameter_renames: { ...(renames[model.family_id] || {}) },
-      };
-    }),
+    models: catalog.models.map((model) => ({
+      ...model,
+      parameter_renames: { ...(renames[model?.family_id] || {}) },
+    })),
   } as unknown as T;
 }
 
@@ -109,10 +98,3 @@ export function valueRequirementReason(
   ));
   return failed ? failed.reason : "";
 }
-
-/** Labels for canvas.mode choices; other segmented values show as written. */
-export const SIZE_MODE_LABEL_KEYS: Readonly<Record<string, string>> = {
-  auto: "output.sizeAuto",
-  preset: "output.sizePreset",
-  custom: "output.sizeCustom",
-};

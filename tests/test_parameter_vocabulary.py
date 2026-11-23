@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -129,10 +128,10 @@ class CatalogVocabularyTests(unittest.TestCase):
                 mode = model.parameter("canvas.mode")
                 self.assertEqual(mode.control, "image_size")
                 self.assertEqual(mode.allowed_values, model.size_spec.modes)
-                self.assertTrue(model.legacy_parameters)
+                self.assertEqual(len(mode.value_label_keys), len(mode.allowed_values))
         self.assertEqual(get_model_manifest("nano-banana-pro").size_spec.modes, ("preset",))
 
-    def test_catalog_api_keeps_serving_the_current_form_unchanged(self) -> None:
+    def test_catalog_api_serves_the_unified_parameters(self) -> None:
         from fastapi.testclient import TestClient
 
         from codex_image.webui.app import create_app
@@ -140,17 +139,19 @@ class CatalogVocabularyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             app = create_app(output_root=Path(tmp), auth_checker=lambda: True, auto_start_queue=False)
             payload = TestClient(app).get("/api/generation-catalog").json()
-        current_form = [
-            {key: value for key, value in model.items() if key not in ("unified_parameters", "size_spec")}
-            for model in payload["models"]
-        ]
-        recorded = json.loads((Path(__file__).parent / "fixtures" / "generation_catalog_models_v1.json").read_text())
-        self.assertEqual(json.loads(json.dumps(current_form, sort_keys=True)), recorded)
         gpt = payload["models"][0]
+        ids = [parameter["id"] for parameter in gpt["parameters"]]
+        self.assertEqual(ids[:4], ["canvas.mode", "canvas.aspect_ratio", "canvas.resolution", "canvas.size"])
+        self.assertIn("tools.web_search", ids)
+        self.assertNotIn("gpt.web_search", ids)
+        self.assertNotIn("unified_parameters", gpt)
+        size = next(parameter for parameter in gpt["parameters"] if parameter["id"] == "canvas.size")
+        self.assertEqual(size["control"], "pixel_size")
+        quality = next(parameter for parameter in gpt["parameters"] if parameter["id"] == "gpt.quality")
+        self.assertEqual(quality["value_label_keys"][0], "output.qualityAuto")
         self.assertEqual(gpt["size_spec"]["modes"], ["auto", "preset", "custom"])
         self.assertEqual(gpt["size_spec"]["presets"]["4K"]["16:9"], [3840, 2160])
-        self.assertIn("tools.web_search", [parameter["id"] for parameter in gpt["unified_parameters"]])
-
+        self.assertEqual(payload["parameter_renames"]["gpt-image"], {"gpt.web_search": "tools.web_search"})
 
 if __name__ == "__main__":
     unittest.main()

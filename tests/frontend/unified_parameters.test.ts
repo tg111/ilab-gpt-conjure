@@ -3,7 +3,7 @@ import test from "node:test";
 
 import type { CatalogModel, CatalogParameterDefinition } from "../../codex_image/webui/frontend/src/types";
 import {
-  adoptUnifiedParameters,
+  attachParameterRenames,
   upgradeParameters,
   usesUnifiedParameters,
   valueRequirementReason,
@@ -53,19 +53,15 @@ test("upgrade mirrors the backend rules and is idempotent", () => {
   assert.deepEqual(upgradeParameters(legacy, { "canvas.size": "auto" }), { "canvas.size": "auto" });
 });
 
-test("only families on the unified form swap parameters", () => {
+test("every model gets its family's earlier parameter names", () => {
   const catalog = {
-    parameter_renames: { "gemini-image": { "gemini.google_search": "tools.web_search" } },
-    models: [
-      { id: "g", family_id: "gemini-image", parameters: [definition("old", {})], unified_parameters: [definition("canvas.mode", { control: "image_size", allowed_values: ["preset"], default: "preset" })] },
-      { id: "o", family_id: "gpt-image", parameters: [definition("old", {})], unified_parameters: [definition("canvas.mode", { control: "image_size", allowed_values: ["preset"], default: "preset" })] },
-    ],
+    parameter_renames: { "gemini-image": { "gemini.google_search": "tools.web_search" }, "gpt-image": { "gpt.web_search": "tools.web_search" } },
+    models: [{ id: "g", family_id: "gemini-image", parameters: [] }, { id: "o", family_id: "gpt-image", parameters: [] }],
   };
-  const adopted = adoptUnifiedParameters(catalog) as any;
-  assert.equal(adopted.models[0].parameters[0].id, "canvas.mode");
-  assert.deepEqual(adopted.models[0].parameter_renames, { "gemini.google_search": "tools.web_search" });
-  assert.equal(adopted.models[1].parameters[0].id, "old");
-  assert.equal(catalog.models[0].parameters[0].id, "old", "the payload itself is not mutated");
+  const attached = attachParameterRenames(catalog) as any;
+  assert.deepEqual(attached.models[0].parameter_renames, { "gemini.google_search": "tools.web_search" });
+  assert.deepEqual(attached.models[1].parameter_renames, { "gpt.web_search": "tools.web_search" });
+  assert.equal((catalog.models[0] as any).parameter_renames, undefined, "the payload itself is not mutated");
 });
 
 test("value requirements block a value until its condition holds", () => {

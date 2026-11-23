@@ -39,8 +39,6 @@ class ModelParameterFrontendContractTests(WebUIStaticTestCase):
         self.assertIn("model-parameter-segmented-multiline", source)
         self.assertIn("model-parameter-choice-grid", source)
         self.assertIn("advancedParametersAreExpanded", source)
-        self.assertIn("legacyParameterVisibility", source)
-        self.assertIn("state.customSizeTransitionSeq += 1", source)
         self.assertIn("parameterAffectsVisibility", source)
         self.assertIn("renderInteractiveParameterDefinitionsInto", source)
         self.assertIn("parameterRenderFingerprint", source)

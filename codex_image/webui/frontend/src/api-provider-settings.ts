@@ -440,16 +440,6 @@ export async function refreshApiSettings(options: { afterRestore?: boolean } = {
 
 export function populateApiSettingsForm(options: { preserveEditor?: boolean } = {}): void {
   const provider = activeApiProvider();
-  if (els.apiProviderQuick) {
-    els.apiProviderQuick.innerHTML = "";
-    state.apiSettings.providers.forEach((item: any) => {
-      const option = document.createElement("option");
-      option.value = item.id;
-      option.textContent = item.name || item.id;
-      els.apiProviderQuick.append(option);
-    });
-    els.apiProviderQuick.value = provider.id;
-  }
   if (els.apiProvider) {
     els.apiProvider.innerHTML = "";
     state.apiSettings.providers.forEach((item: any) => {

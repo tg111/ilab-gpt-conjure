@@ -42,7 +42,6 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
         self.assertIn("function clearImages", image_strip_source)
         self.assertIn("function addImages", image_strip_source)
         self.assertIn("function updateImageStripDensity", image_strip_source)
-        self.assertIn('legacyMethod("updateCustomRatioReferenceButtonState")', image_strip_source)
         self.assertIn("Object.assign(getLegacyBridge().methods", image_strip_source)
         for function_name in [
             "renderImageStrip",
@@ -313,67 +312,38 @@ class FrontendArchitectureTests(WebUIStaticTestCase):
 
     def test_form_controls_feature_has_typescript_source_contract(self) -> None:
         form_controls_source = self._form_controls_source()
-        size_source = Path("codex_image/webui/frontend/src/size-presets.ts").read_text(encoding="utf-8")
         task_submit_source = Path("codex_image/webui/frontend/src/task-submit.ts").read_text(encoding="utf-8")
         generation_request_source = Path("codex_image/webui/frontend/src/generation-request.ts").read_text(encoding="utf-8")
-        generation_route_source = Path("codex_image/webui/routes/generation.py").read_text(encoding="utf-8")
         main_model_source = Path("codex_image/webui/frontend/src/main-model-combobox.ts").read_text(encoding="utf-8")
-        custom_size_source = Path("codex_image/webui/frontend/src/custom-size-controls.ts").read_text(encoding="utf-8")
-        output_source = Path("codex_image/webui/frontend/src/output-controls.ts").read_text(encoding="utf-8")
-        legacy_source = self._bootstrap_source()
+        size_editor_source = Path("codex_image/webui/frontend/src/image-size-editor.ts").read_text(encoding="utf-8")
+        task_params_source = Path("codex_image/webui/frontend/src/task-params.ts").read_text(encoding="utf-8")
+        unified_source = Path("codex_image/webui/frontend/src/unified-parameters.ts").read_text(encoding="utf-8")
         main_source = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
 
-        for source in [form_controls_source, size_source, main_model_source, custom_size_source, output_source]:
+        for source in [form_controls_source, main_model_source, size_editor_source, task_params_source, unified_source]:
             self.assertNotIn("@ts-nocheck", source)
+        for removed in ("size-presets", "custom-size-controls", "output-controls", "gpt-model-controls", "background-controls", "output-size-layout", "size-suggestion"):
+            self.assertFalse(Path(f"codex_image/webui/frontend/src/{removed}.ts").exists(), removed)
         self.assertIn('import { initFormControlsFeature } from "./form-controls"', main_source)
-        self.assertLess(main_source.index('import { initPromptFeature } from "./prompt"'), main_source.index('import { initFormControlsFeature } from "./form-controls"'))
-        self.assertLess(main_source.index('import { initFormControlsFeature } from "./form-controls"'), main_source.index('import { initTaskListControlsFeature } from "./task-list-controls"'))
         self.assertLess(main_source.index("initPromptFeature()"), main_source.index("initFormControlsFeature()"))
         self.assertLess(main_source.index("initFormControlsFeature()"), main_source.index("initTaskListControlsFeature()"))
         self.assertIn("export function initFormControlsFeature", form_controls_source)
-        self.assertIn("function bindFormControlEvents()", form_controls_source)
         self.assertIn("function setMode(mode", form_controls_source)
-        self.assertIn("export function updateSizeFromPreset(event", custom_size_source)
-        self.assertIn("export function syncSizeControlsFromSize(size", custom_size_source)
-        self.assertIn("export function customSizeValidationMessage(width", size_source)
-        self.assertIn("export function currentTaskParams()", size_source)
-        self.assertIn("const presetMatch = automaticSize ? null : findPresetForSize(params.size)", size_source)
-        self.assertIn("params.resolution = presetMatch.resolution", size_source)
-        self.assertIn("params.ratio = presetMatch.ratio", size_source)
-        self.assertIn("params.orientation = presetMatch.orientation", size_source)
-        self.assertIn("const customRatio = currentCustomRatio()", size_source)
-        self.assertIn("params.ratio = customRatio", size_source)
+        # Sizes come from the catalog's size spec; the frontend mirrors the backend rules.
+        self.assertIn("export function customSizeError(rules", size_editor_source)
+        self.assertIn("export function suggestLegalSize(", size_editor_source)
+        self.assertIn("export function createPixelSizeEditor(", size_editor_source)
+        self.assertIn("export function currentTaskParams()", task_params_source)
+        self.assertIn("export function upgradeParameters(", unified_source)
+        # Submission carries the canonical parameters only.
         self.assertNotIn('form.append("resolution"', task_submit_source)
         self.assertNotIn('form.append("ratio"', task_submit_source)
-        self.assertNotIn('form.append("orientation"', task_submit_source)
+        self.assertNotIn('form.append("size"', task_submit_source)
         self.assertIn("appendCanonicalGenerationFields(form, currentGenerationSelection())", task_submit_source)
         self.assertIn('form.append("canonical_model_id", selection.canonicalModelId)', generation_request_source)
         self.assertIn('form.append("provider_id", selection.providerId)', generation_request_source)
         self.assertIn('form.append("parameters_json", JSON.stringify(sortedRecord(selection.parameters)))', generation_request_source)
-        self.assertIn("resolution: str | None = Form(None)", generation_route_source)
-        self.assertIn("ratio: str | None = Form(None)", generation_route_source)
-        self.assertIn("orientation: str | None = Form(None)", generation_route_source)
         self.assertIn("export function restoreMainModel()", main_model_source)
-        self.assertIn("export function updateCompression()", output_source)
-        self.assertIn("Object.assign(getLegacyBridge().methods", form_controls_source)
-        self.assertIn("updateSizeFromPreset,", form_controls_source)
-        for function_name in [
-            "updateQuantity",
-            "updateCompression",
-            "handleOutputFormatDoubleClick",
-            "updateSizeFromPreset",
-            "syncSizeControlsFromSize",
-            "customSizeValidationMessage",
-            "updateCustomSize",
-            "mainModelOptionsForQuery",
-            "restoreMainModel",
-            "persistMainModel",
-            "currentTaskParams",
-            "updateRequestPreview",
-        ]:
-            self.assertNotRegex(form_controls_source, rf"\nfunction {function_name}\(")
-            self.assertNotRegex(legacy_source, rf"\nfunction {function_name}\(")
-        self.assertIn('updateSizeFromPreset: proxy("updateSizeFromPreset")', legacy_source)
 
     def test_overlay_popovers_feature_has_typescript_source_contract(self) -> None:
         overlay_source = self._overlay_popovers_source()

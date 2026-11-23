@@ -222,14 +222,11 @@ class GenerationCatalogTests(unittest.TestCase):
                 if model_id != "nano-banana-2-lite":
                     self.assertEqual(parameter_ids[5:], ("tools.web_search",))
                     google_search = model.parameter("tools.web_search")
-                    self.assertEqual(google_search.group, "generation")
+                    self.assertEqual(google_search.group, "tools")
                     self.assertEqual(google_search.control, "boolean_segmented")
                     self.assertEqual(google_search.value_type, "boolean")
                     self.assertFalse(google_search.default)
                     self.assertFalse(google_search.full_width)
-                    # The current form keeps its own control until the unified form ships.
-                    legacy = {parameter.id: parameter for parameter in model.legacy_parameters}
-                    self.assertEqual(legacy["gemini.google_search"].control, "boolean_segmented")
                 else:
                     self.assertEqual(len(parameter_ids), 5)
 

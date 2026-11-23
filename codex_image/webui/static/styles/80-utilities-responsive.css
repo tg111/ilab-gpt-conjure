@@ -434,23 +434,6 @@ button:disabled {
     white-space: nowrap;
   }
 
-  .custom-size-control {
-    gap: var(--compact-field-gap);
-  }
-
-  .size-mode-group {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .quantity-quality-row {
-    gap: var(--compact-settings-gap);
-  }
-
-  .quantity-quality-row .field {
-    gap: var(--compact-field-gap);
-  }
-
   .ratio-group {
     grid-template-columns: repeat(6, minmax(0, 1fr));
     grid-template-rows: repeat(2, var(--compact-settings-segment-height));
@@ -481,38 +464,12 @@ button:disabled {
     transform: translateX(var(--compact-web-search-shift));
   }
 
-
-  .settings-grid.custom-size-mode {
-    --custom-size-mode-card-height: clamp(130px, calc(7.23dvh + 74.5px), 175px);
-  }
-
-  .custom-size-hint {
-    font-size: 11px;
-    line-height: 1.25;
-  }
-
 }
 
 /* Complete groups wrap only when their intrinsic widths actually need it. */
-@container output-settings (max-width: 360px) {
-  .custom-size-row {
-    grid-template-columns: var(--measure-input-width) var(--measure-mid-width) var(--measure-input-width);
-    row-gap: 4px;
-  }
-
-  .custom-size-row label { grid-row: 1; justify-self: start; }
-  .custom-size-row label[for="customWidth"], #customWidth { grid-column: 1; }
-  .custom-size-row label[for="customHeight"], #customHeight { grid-column: 3; }
-  #swapCustomSizeButton { grid-column: 2; }
-  .custom-size-input, #swapCustomSizeButton { grid-row: 2; }
-  .custom-size-hint { max-width: 232px; }
-}
 
 @media (max-height: 1100px) and (min-width: 900px) {
   @container workspace (max-width: 1180px) {
-    .settings-grid.custom-size-mode {
-      --custom-size-mode-card-height: clamp(105px, calc(14.76dvh - 8.4px), 154px);
-    }
 
     .mode-specific-settings {
       gap: clamp(6px, calc(0.32dvh + 3.5px), 8px);
@@ -890,10 +847,6 @@ button:disabled {
     min-height: 260px;
   }
 
-  .field-pair {
-    grid-template-columns: 1fr;
-  }
-
   .settings-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -944,7 +897,7 @@ button:disabled {
   .execution-summary { line-height: 1.5; }
   .status-text.error { white-space: normal; overflow-wrap: anywhere; }
 }
-#compactReferencesButton[hidden], #restoreComposerDraft[hidden], #promptValidationError[hidden], #customSizeSuggestion[hidden] { display: none !important; }
+#compactReferencesButton[hidden], #restoreComposerDraft[hidden], #promptValidationError[hidden] { display: none !important; }
 .prompt-heading, .prompt-template-row { flex-shrink: 0; }
 .compact-task-drawer .task-history-batch-button:not(.hidden) { display: inline-flex; }
 .compact-task-drawer .task-history-tools .status-text { width: auto; max-width: none; text-align: left; flex: 1; }
@@ -1005,7 +958,6 @@ button:disabled {
 /* Keep parameter labels and targets readable on short desktop viewports. */
 .output-panel .settings-grid { gap: var(--compact-settings-gap, 16px); }
 .output-panel .field { gap: 4px; min-width: 0; }
-.output-panel .custom-size-control { gap: 4px; }
 .output-panel .mode-specific-settings { --mode-settings-segment-height: 30px; gap: var(--compact-settings-gap, 16px); }
 .output-panel .model-tool-row { display: grid; grid-template-columns: minmax(0, 1fr); align-items: end; }
 .output-panel .mode-settings-slot:not(:has(> .mode-collapsed)) { padding-bottom: var(--compact-settings-gap, 16px); border-bottom: 1px solid var(--line); }
@@ -1013,17 +965,9 @@ button:disabled {
 /* Match the segmented control's button, padding, and two border edges. */
 .output-panel .main-model-field .control { height: calc(var(--mode-settings-segment-height) + 8px); }
 .output-panel .output-field-heading .web-search-toggle { min-height: 24px; padding: 0; font-size: 12px; gap: 7px; }
-.output-panel .output-field-heading .generation-option-label { font-size: 12px; }
 .output-panel .field > span { font-size: 13px; }
 .output-panel .control { min-height: 36px; }
 .output-panel .radio-group { --segmented-control-height: 30px; --segmented-control-padding: 3px; }
-.output-panel #ratioGroup { grid-template-rows: repeat(2, 36px); gap: 6px; padding: 0; border: 0; background: transparent; }
-.output-panel #ratioGroup .radio-btn { height: 36px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-soft); transform: none; }
-.output-panel #ratioGroup .radio-btn.active { background: var(--primary); border-color: var(--primary); }
-.output-panel #ratioGroup .radio-btn[data-val="1:1"] { height: 100%; }
-.output-panel .moderation-field > span { min-height: 24px; display: flex; align-items: center; }
-.output-panel .size-editors > .custom-size { min-height: 0; max-height: none; }
-.output-panel .custom-size-hint { font-size: 12px; }
 @container output-settings (max-width: 430px) {
   .output-panel .mode-specific-settings { grid-template-columns: minmax(0, 1fr); }
 }
@@ -1083,6 +1027,11 @@ button:disabled {
       grid-template-columns: auto minmax(0, 1fr) auto;
       gap: 12px;
     }
+    .controls-col[data-compact-composer] .output-settings-header:has(> .model-advanced-slot:not(.hidden)) {
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
+      gap: 8px 12px;
+    }
+    .controls-col[data-compact-composer] .model-advanced-slot:not(.hidden) + .output-settings-lock-button { margin-inline-start: 0; }
     .controls-col[data-compact-composer] .output-settings-header h2 { white-space: nowrap; }
     .controls-col[data-compact-composer] .compact-execution-summary { display: block; min-width: 0; }
     .controls-col[data-compact-composer] .output-settings-lock-button { position: static; transform: none; }
@@ -1118,17 +1067,12 @@ button:disabled {
       border-bottom: 0;
       padding-bottom: 0;
     }
-    .output-panel .output-file-settings {
-      border-top: 0;
-      padding-top: 0;
-    }
 
     .output-panel {
       --laptop-label-width: max-content;
       --compact-parameter-height: clamp(28px, calc((100dvh - var(--compact-shell-extra, 0px)) * 0.08 - 28px), 30px);
     }
     .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) { --laptop-label-width: 28px; }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) :is(.resolution-field, .quantity-field, .moderation-field) { --laptop-label-width: 36px; }
     .output-panel .output-settings-header h2 { font-weight: 500; }
     .output-panel :is(.field > span, .field > label, .output-field-heading > span, .output-field-heading > label, .radio-btn) {
       font-size: 12px;
@@ -1143,81 +1087,7 @@ button:disabled {
       min-height: calc(var(--compact-parameter-height) + 6px);
     }
     .output-panel .field { gap: 2px; }
-    .output-panel .output-size-settings { gap: var(--compact-settings-gap); }
-    .output-panel :is(.preset-size-fields, .quantity-quality-row, .output-file-settings) { gap: var(--compact-settings-gap) 12px; }
-    .output-panel #ratioGroup { grid-template-rows: repeat(2, calc(var(--compact-parameter-height) + 4px)); gap: 4px; }
-    .output-panel #ratioGroup .radio-btn { height: calc(var(--compact-parameter-height) + 4px); }
-    .output-panel #ratioGroup .radio-btn[data-val="1:1"] { height: 100%; }
-
-    .output-panel :is(.orientation-field, .resolution-field, .ratio-field, .quality-field, .quantity-field) {
-      display: grid;
-      grid-template-columns: var(--laptop-label-width) minmax(0, 1fr);
-      align-items: center;
-      gap: 6px;
-    }
-    .controls-col .output-panel :is(.orientation-field, .resolution-field, .ratio-field, .quality-field, .quantity-field) > :is(span) {
-      text-align: start;
-      padding-inline-start: 0;
-    }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) :is(.orientation-field, .resolution-field, .quality-field, .quantity-field) .radio-btn {
-      flex: 1 1 0;
-    }
 
     /* Longer translations keep their existing two-row file fields. */
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) .output-file-settings {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) #outputFormatField {
-      display: grid;
-      grid-template-columns: var(--laptop-label-width) minmax(100px, 1fr) max-content;
-      align-items: center;
-      gap: 6px;
-    }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) #outputFormatField .output-field-heading { display: contents; }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) #outputFormatField .output-field-heading > span {
-      grid-column: 1;
-      grid-row: 1;
-      text-align: start;
-    }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) #outputFormatGroup { grid-column: 2; grid-row: 1; }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) #outputFormatField .output-format-options { grid-column: 3; grid-row: 1; }
-    .output-panel:is(:lang(zh), :lang(ja), :lang(ko)) .moderation-field {
-      display: grid;
-      grid-template-columns: var(--laptop-label-width) minmax(0, 1fr);
-      align-items: center;
-      gap: 6px;
-    }
-    .output-panel .image26-controls .complexity-field {
-      display: grid;
-      grid-template-columns: max-content minmax(0, 1fr);
-      align-items: center;
-      gap: 6px;
-    }
-    .output-panel .image26-controls #outputFormatField > .themed-select {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    .output-panel .image26-controls .themed-select-trigger {
-      min-height: calc(var(--compact-parameter-height) + 6px);
-      height: calc(var(--compact-parameter-height) + 6px);
-      font-size: 12px;
-    }
-    .output-panel .output-compression-button > span { display: none; }
-
-    .output-panel .custom-size { padding: 8px 12px; gap: 12px 16px; }
-    .output-panel .custom-size-main,
-    .output-panel .custom-size > .field.custom-ratio-field { gap: 8px; }
-    .output-panel .custom-size .control { height: 32px; min-height: 32px; }
-    .output-panel .custom-ratio-control,
-    .output-panel .custom-ratio-control:has(.custom-ratio-image-button:not(:disabled)) {
-      grid-template-columns: 44px 16px 44px;
-      gap: 4px;
-    }
-    .output-panel .custom-ratio-image-button {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      height: 24px;
-      justify-self: start;
-    }
   }
 }

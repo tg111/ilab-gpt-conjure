@@ -68,12 +68,7 @@ function selectedTaskInputRestoreCurrent(taskId, restoreSeq) {
   return state.taskInputRestoreSeq === restoreSeq && String(state.selectedTaskId) === String(taskId);
 }
 
-function applySelectedTaskRequestPreview(task) {
-  const requestPayload = taskRequestPreviewPayload(task);
-  if (requestPayload && els.requestJson) {
-    els.requestJson.textContent = JSON.stringify(requestPayload, null, 2);
-  }
-}
+function applySelectedTaskRequestPreview(_task) {}
 
 function applyTaskInputRestoreSources(sources, taskId, restoreSeq) {
   if (!selectedTaskInputRestoreCurrent(taskId, restoreSeq)) {

@@ -68,10 +68,12 @@ class WebUIStaticBuildTests(WebUIStaticTestCase):
         self.assertIn("../frontend/src/system-settings.ts", sources)
         self.assertIn("../frontend/src/color-palette.ts", sources)
         self.assertIn("../frontend/src/form-controls.ts", sources)
-        self.assertIn("../frontend/src/size-presets.ts", sources)
+        self.assertIn("../frontend/src/image-size-editor.ts", sources)
+        self.assertIn("../frontend/src/unified-parameters.ts", sources)
+        self.assertIn("../frontend/src/task-params.ts", sources)
         self.assertIn("../frontend/src/main-model-combobox.ts", sources)
-        self.assertIn("../frontend/src/custom-size-controls.ts", sources)
-        self.assertIn("../frontend/src/output-controls.ts", sources)
+        for removed in ("size-presets", "custom-size-controls", "output-controls", "gpt-model-controls", "background-controls"):
+            self.assertNotIn(f"../frontend/src/{removed}.ts", sources)
         self.assertIn("../frontend/src/segmented-indicator.ts", sources)
         self.assertIn("../frontend/src/prompt-colors.ts", sources)
         self.assertIn("../frontend/src/prompt-snippets.ts", sources)
@@ -166,10 +168,6 @@ class WebUIStaticBuildTests(WebUIStaticTestCase):
         finally:
             generated_app.unlink(missing_ok=True)
             generated_map.unlink(missing_ok=True)
-    def test_javascript_declares_model_element(self) -> None:
-        script = self._frontend_script_source()
-
-        self.assertIn("model: document.querySelector", script)
     def test_webui_launchers_write_server_log(self) -> None:
         launcher_sources = [
             Path("Start WebUI.command").read_text(encoding="utf-8"),

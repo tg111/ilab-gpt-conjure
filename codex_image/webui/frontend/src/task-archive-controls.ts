@@ -120,10 +120,7 @@ async function migrateLegacyArchivedTasksOnce(): Promise<boolean> {
   return !hasFailure;
 }
 
-function renderArchiveButton() {
-  if (!els.archiveButton) return;
-  els.archiveButton.textContent = translate("footer.historyLibrary");
-}
+function renderArchiveButton() {}
 
 async function restoreArchivedTask(taskId: any) {
   try {

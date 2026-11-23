@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { suggestLegalSize } from "../../codex_image/webui/frontend/src/size-suggestion";
+import { suggestLegalSize as suggestWithRules } from "../../codex_image/webui/frontend/src/image-size-editor";
+
+const GPT_RULES = { min_edge: 16, max_edge: 3840, multiple: 16, max_aspect_ratio: 3, min_pixels: 655360, max_pixels: 8294400, relaxed_formats: ["gif"] };
+const suggestLegalSize = (width: number, height: number) => suggestWithRules(GPT_RULES, width, height);
 import { taskRecoveryKind } from "../../codex_image/webui/frontend/src/task-recovery";
 
 test("template creation records the current model and edits preserve the stored model hint", async () => {

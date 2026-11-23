@@ -254,7 +254,8 @@ export function selectGenerationProvider(selectionOrProviderId: string): void {
   getLegacyBridge().methods.persistModelSelection?.();
   renderProviderSelection();
   getLegacyBridge().methods.updateModeSpecificSettings?.();
-  getLegacyBridge().methods.updateCompression?.();
+  // Bindings differ in which parameters they can act on.
+  getLegacyBridge().methods.renderCurrentModelParameters?.();
   getLegacyBridge().methods.updateRequestPreview?.();
 }
 

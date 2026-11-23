@@ -15,6 +15,7 @@ const PREFERRED_RATIO_SLOTS = [
   ["3:4", "4:3"],
   ["2:3", "3:2"],
   ["9:16", "16:9"],
+  ["9:21", "21:9"],
   ["1:4", "4:1"],
   ["1:8", "8:1"],
   ["1:2", "2:1"],
@@ -43,7 +44,9 @@ export function aspectRatioSlots(values: string[]): AspectRatioSlot[] {
   const used = new Set<string>();
   const slots: AspectRatioSlot[] = [];
   PREFERRED_RATIO_SLOTS.forEach((preferred, index) => {
-    const matched: string[] = preferred.filter((value) => available.has(value) && !used.has(value));
+    // 21:9 shares the 1:1 slot only when its portrait counterpart is not offered.
+    const matched: string[] = preferred.filter((value) => available.has(value) && !used.has(value)
+      && !(index === 0 && value === "21:9" && available.has("9:21")));
     if (!matched.length) return;
     if (index === 0 && matched.length === 1 && matched[0] === "1:1" && available.has("auto")) {
       matched.push("auto");

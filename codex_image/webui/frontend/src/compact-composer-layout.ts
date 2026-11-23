@@ -1,5 +1,5 @@
 /** Move the existing metadata controls so their state and handlers stay intact. */
-export function initCompactComposerLayout(onDensityChange: () => void): void {
+export function initCompactComposerLayout(): void {
   const workspace = document.querySelector<HTMLElement>(".main-wrapper");
   const controls = document.querySelector<HTMLElement>(".controls-col");
   const summarySlot = document.getElementById("compactExecutionSummary");
@@ -37,7 +37,6 @@ export function initCompactComposerLayout(onDensityChange: () => void): void {
       origins.forEach(({ element, marker }) => marker.after(element));
     }
     controls.toggleAttribute("data-compact-composer", compact);
-    onDensityChange();
     if (movingFocus) focused.focus({ preventScroll: true });
     else if (restoreFocus) restore.focus({ preventScroll: true });
   };

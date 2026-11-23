@@ -1,12 +1,13 @@
 import { captureImageMentions, imageMentionPayload, imageMentionsValid } from "./prompt-image-mentions";
 import { composerFingerprint, markComposerSubmitted } from "./composer-draft";
-import { isGptImageModel } from "./gpt-image-models";
-import { setBackgroundControl } from "./background-controls";
+import { initializeParameterDraft, renderCurrentModelParameters } from "./model-parameters";
+import { snapshotFromTask } from "./task-parameter-inspector";
+import { currentTaskParams } from "./task-params";
+import { upgradeParameters } from "./unified-parameters";
 import { getLegacyBridge } from "./state";
 import { currentLocaleCode, translate } from "./i18n";
 import { selectedProviderBinding } from "./provider-selection";
 import { appendCanonicalGenerationFields, currentGenerationSelection } from "./generation-request";
-import { taskOutputControlValues } from "./task-model-summary";
 import { galleryPrompt } from "./prompt-model";
 
 const bridge = getLegacyBridge();
@@ -37,14 +38,8 @@ function setStatus(...args: any[]) { return legacyMethod("setStatus", ...args); 
 function setMode(...args: any[]) { return legacyMethod("setMode", ...args); }
 function setPromptWithGalleryRefs(...args: any[]) { return legacyMethod("setPromptWithGalleryRefs", ...args); }
 function persistMainModel(...args: any[]) { return legacyMethod("persistMainModel", ...args); }
-function syncSizeControlsFromSize(...args: any[]) { return legacyMethod("syncSizeControlsFromSize", ...args); }
 function updatePromptCount(...args: any[]) { return legacyMethod("updatePromptCount", ...args); }
-function updateQuantity(...args: any[]) { return legacyMethod("updateQuantity", ...args); }
-function syncRadioButtons(...args: any[]) { return legacyMethod("syncRadioButtons", ...args); }
-function updateCompression(...args: any[]) { return legacyMethod("updateCompression", ...args); }
-function updateCustomSize(...args: any[]) { return legacyMethod("updateCustomSize", ...args); }
 function updateRequestPreview(...args: any[]) { return legacyMethod("updateRequestPreview", ...args); }
-function currentTaskParams(...args: any[]) { return legacyMethod("currentTaskParams", ...args); }
 function uploadInputs(...args: any[]) { return legacyMethod("uploadInputs", ...args); }
 function galleryInputs(...args: any[]) { return legacyMethod("galleryInputs", ...args); }
 function referenceAssetInputs(...args: any[]) { return legacyMethod("referenceAssetInputs", ...args); }
@@ -57,7 +52,6 @@ function syncPromptFromEditor(...args: any[]) { return legacyMethod("syncPromptF
 function syncGalleryInputsFromPrompt(...args: any[]) { return legacyMethod("syncGalleryInputsFromPrompt", ...args); }
 function missingGalleryInputs(...args: any[]) { return legacyMethod("missingGalleryInputs", ...args); }
 function missingReferenceAssetInputs(...args: any[]) { return legacyMethod("missingReferenceAssetInputs", ...args); }
-function customSizeValidationMessage(...args: any[]) { return legacyMethod("customSizeValidationMessage", ...args); }
 function addPendingTask(...args: any[]) { return legacyMethod("addPendingTask", ...args); }
 function replacePendingTask(...args: any[]) { return legacyMethod("replacePendingTask", ...args); }
 function startRunFeedback(...args: any[]) { return legacyMethod("startRunFeedback", ...args); }
@@ -139,7 +133,6 @@ function referenceImageOrder() {
 export function applyTaskOutputParams(task: any): void {
   const params = task.params || {};
   const request = task.request || {};
-  const output = taskOutputControlValues(task);
   const usesResponses = params.api_mode === "responses"
     || params.codex_mode === "responses"
     || request.api_mode === "responses"
@@ -150,32 +143,17 @@ export function applyTaskOutputParams(task: any): void {
     els.mainModel.value = mainModel;
     persistMainModel();
   }
-  if (els.webSearch) {
-    els.webSearch.checked = Boolean(output.web_search);
-    els.webSearch.dispatchEvent(new Event("input"));
+  const model = state.generationCatalog?.models.find((item: any) => item.id === state.selectedModelId);
+  if (model) {
+    // The task may use earlier parameter names; upgrade before merging into the draft.
+    const previous = upgradeParameters(model, snapshotFromTask(task).requested_parameters);
+    state.parameterDraftsByModel[model.id] = initializeParameterDraft(model, {
+      ...(state.parameterDraftsByModel[model.id] || {}),
+      ...previous,
+    }).values;
+    bridge.methods.persistModelSelection?.();
+    renderCurrentModelParameters();
   }
-  if (params.model && els.model) els.model.value = params.model;
-  if (output.size) syncSizeControlsFromSize(output.size);
-  if (output.n && els.nInput) {
-    els.nInput.value = String(output.n);
-  }
-  if (output.quality && els.quality) els.quality.value = output.quality;
-  if (output.output_format && els.outputFormat) els.outputFormat.value = output.output_format;
-  if (els.complexity) els.complexity.value = String(output.complexity || "high");
-  if (els.frameCount) els.frameCount.value = String(output.frame_count ?? 9);
-  if (els.frameDuration) els.frameDuration.value = String(output.frame_duration_ms ?? 200);
-  setBackgroundControl(output.background);
-  if (output.moderation && els.moderation) els.moderation.value = output.moderation;
-  if (output.output_compression !== null && output.output_compression !== undefined && els.compression) {
-    els.compression.value = output.output_compression;
-  }
-  [els.complexity, els.quality, els.outputFormat, els.moderation].forEach((element: any) => {
-    element?.dispatchEvent(new Event("change"));
-  });
-  updateQuantity();
-  syncRadioButtons(els.nInput);
-  updateCompression();
-  updateCustomSize();
   updateRequestPreview();
 }
 
@@ -225,7 +203,6 @@ function buildPreviewRequest() {
     reference_files: fileUploads.map((source: any) => source.filename),
     reference_file_ids: storedFiles.map((source: any) => source.id),
   };
-  const usesGptPromptProcessing = !state.generationCatalog || isGptImageModel(state.selectedModelId);
   if (parameters["gpt.background"] === "transparent") {
     const binding = selectedProviderBinding();
     payload.output_requirements = {
@@ -242,7 +219,7 @@ function buildPreviewRequest() {
     payload.endpoint = selectedProviderBinding()?.protocol_profile || "";
   } else if (isCodex) {
     payload.codex_mode = codexMode;
-    if (usesGptPromptProcessing) payload.main_model = params.main_model;
+    if (params.main_model) payload.main_model = params.main_model;
   }
   return payload;
 }
@@ -294,10 +271,10 @@ async function runTask() {
   const assets = referenceAssetInputs();
   const fileUploads = referenceFileUploads();
   const storedFiles = storedReferenceFileInputs();
-  updateCompression();
-  if (els.outputFormat?.value === "gif" && [els.frameCount, els.frameDuration].some((input: HTMLInputElement) => input && !input.checkValidity())) {
-    getLegacyBridge().methods.openCompressionPopover?.();
-    [els.frameCount, els.frameDuration].find((input: HTMLInputElement) => input && !input.checkValidity())?.reportValidity();
+  const parameterErrors = Object.values(state.parameterValidationErrorsByModel[state.selectedModelId || ""] || {});
+  if (parameterErrors.length) {
+    setStatus(String(parameterErrors[0]), "error");
+    els.modelParameterGrid?.querySelector("[aria-invalid=\"true\"]")?.focus();
     return;
   }
   const marked = state.images.filter((source: any) => source.markupFile);
@@ -343,13 +320,6 @@ async function runTask() {
     setStatus(translate("status.editNeedsImage"), "error");
     return;
   }
-  const customSizeError = els.size?.value === "custom" ? customSizeValidationMessage() : "";
-  if (customSizeError) {
-    updateCustomSize();
-    els.customWidth?.focus();
-    setStatus(customSizeError, "error");
-    return;
-  }
 
   const form = new FormData();
   form.append("prompt", prompt);
@@ -360,7 +330,7 @@ async function runTask() {
   if (galleryContext) form.append("gallery_prompt", JSON.stringify(galleryContext));
   form.append("ui_language", currentLocaleCode());
   appendCanonicalGenerationFields(form, currentGenerationSelection());
-  if (!state.generationCatalog || isGptImageModel(state.selectedModelId)) {
+  if (selectedProviderBinding()?.capabilities?.uses_main_model) {
     form.append("main_model", currentMainModel());
   }
   galleries.forEach((source: any) => form.append("gallery_image_ids", source.id));
@@ -379,9 +349,6 @@ async function runTask() {
   const submittedComposer = composerFingerprint();
   const pendingTask = { ...createPendingTask(), prompt_image_mentions: captureImageMentions() };
   addPendingTask(pendingTask);
-  if (els.requestJson) {
-    els.requestJson.textContent = JSON.stringify(pendingTask.request, null, 2);
-  }
   startRunFeedback(pendingTask, translate("taskStatus.submitting"));
   taskSubmissionPending = true;
 
@@ -399,9 +366,6 @@ async function runTask() {
     }
     addQueuedTask(data.task);
     markComposerSubmitted(submittedComposer);
-    if (els.requestJson) {
-      els.requestJson.textContent = JSON.stringify(data.request || {}, null, 2);
-    }
     stopRunFeedback();
     setStatus(translate("taskSubmit.queued"), "ok");
     await window.refreshQueue?.();

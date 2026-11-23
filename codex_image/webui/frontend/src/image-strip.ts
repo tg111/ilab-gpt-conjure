@@ -94,6 +94,7 @@ function handleImageStripWheel(event: WheelEvent) {
 
 function renderImageStrip() {
   refreshImageMentionChips();
+  getLegacyBridge().methods.refreshFirstImageButtons?.();
   const state = getState();
   const els = getEls();
   const hasImages = Boolean(state.images.length);
@@ -102,7 +103,6 @@ function renderImageStrip() {
   if (!thumbItems) return;
   if (!hasImages) {
     thumbItems.innerHTML = "";
-    legacyMethod("updateCustomRatioReferenceButtonState");
     return;
   }
 
@@ -206,7 +206,6 @@ function renderImageStrip() {
     }
     thumbItems.append(wrapper);
   });
-  legacyMethod("updateCustomRatioReferenceButtonState");
 }
 
 function bindImageStripEvents() {

@@ -1,4 +1,4 @@
-import { adoptUnifiedParameters } from "./unified-parameters";
+import { attachParameterRenames } from "./unified-parameters";
 import type { GenerationCatalog, GenerationOperation } from "./types";
 import { getLegacyBridge } from "./state";
 import { isGptImageModel } from "./gpt-image-models";
@@ -112,8 +112,8 @@ export function isGenerationCatalog(value: unknown): value is GenerationCatalog 
       && item.object_presets.every((preset) => object(preset) && nonempty(preset.id)
         && nonempty(preset.label_key) && object(preset.value) && typeof preset.matches_empty === "boolean");
     return nonempty(item.id) && nonempty(item.label_key)
-      && ["model", "canvas", "generation", "advanced"].includes(String(item.group))
-      && ["select", "segmented", "boolean_segmented", "toggle", "slider", "number", "text", "notice", "choice_grid", "object_presets", "aspect_ratio_grid", "image_size"].includes(String(item.control))
+      && ["model", "canvas", "generation", "tools", "advanced"].includes(String(item.group))
+      && ["select", "segmented", "boolean_segmented", "toggle", "slider", "number", "text", "notice", "choice_grid", "object_presets", "aspect_ratio_grid", "image_size", "pixel_size"].includes(String(item.control))
       && valueType(item.value_type) && hasValueType(item.value_type, item.default)
       && Array.isArray(item.allowed_values) && item.allowed_values.every((value) => hasValueType(item.value_type, value))
       && (item.scope === "application" || item.scope === "model")
@@ -247,7 +247,7 @@ export async function refreshGenerationCatalog(): Promise<void> {
   let followedBindingModel = false;
   try {
     const response = await fetch("/api/generation-catalog", { headers: { Accept: "application/json" } });
-    const payload: unknown = adoptUnifiedParameters(await response.json());
+    const payload: unknown = attachParameterRenames(await response.json());
     if (!response.ok || !isGenerationCatalog(payload)) throw new Error("generation catalog unavailable");
     const previousBinding = selectedProviderBinding();
     const updatedBinding = payload.providers.find((provider) => provider.id === state.selectedProviderId)

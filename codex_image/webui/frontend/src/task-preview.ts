@@ -1,3 +1,4 @@
+import { currentTaskParams } from "./task-params";
 import { taskRecoveryKind, taskRecoveryMessage } from "./task-recovery";
 import { requestedTransparentBackground, submittedPromptForTask, transparencyStatus } from "./transparency-status";
 import { getLegacyBridge } from "./state";
@@ -23,7 +24,7 @@ function escapeHtml(...args: any[]) { return legacyMethod("escapeHtml", ...args)
 function isTaskArchived(...args: any[]) { return legacyMethod("isTaskArchived", ...args); }
 function updatePreviewElapsedDisplay(...args: any[]) { return legacyMethod("updatePreviewElapsedDisplay", ...args); }
 function closePromptPopover(...args: any[]) { return legacyMethod("closePromptPopover", ...args); }
-function currentSize(...args: any[]) { return legacyMethod("currentSize", ...args); }
+function currentSize(): string { return String(currentTaskParams().size || ""); }
 function syncActiveLightboxUrls(...args: any[]) { return legacyMethod("syncActiveLightboxUrls", ...args); }
 function collectReferenceOutput(...args: any[]) { return legacyMethod("collectReferenceOutput", ...args); }
 function openPromptPopover(...args: any[]) { return legacyMethod("openPromptPopover", ...args); }

@@ -1058,7 +1058,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertIn("function updateModeSpecificSettings(authSource = currentAuthSource())", script)
         self.assertIn('authSource === "api" && currentApiMode() !== "responses"', script)
         self.assertIn('authSource === "codex" && currentCodexMode() !== "responses"', script)
-        self.assertIn("setModeSettingsVariant(isDirectApi, resolveModeSettingsVisibility({", script)
+        self.assertIn("setModeSettingsVariant(isDirectApi, resolveModeSettingsVisibility(binding, isDirectApi))", script)
         self.assertNotIn("slot.style.height = `${fromHeight}px`;", script)
         self.assertNotIn("slot.style.height = `${targetHeight}px`;", script)
         self.assertNotIn("modeTransitionTimers", script)
@@ -1067,7 +1067,7 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
             r"async function applyAuthSource\(source[^)]*\)[^{]*\{[\s\S]*state\.pendingAuthSource = source;[\s\S]*applyAuthSourceSelection\(source\);[\s\S]*const response = await fetch",
         )
         self.assertIn("function resolveModeSettingsVisibility", script)
-        self.assertIn('if (!isGptImageModel(modelId))', script)
+        self.assertIn("binding.capabilities.uses_main_model", script)
         self.assertIn("setModeSpecificElementVisibility(els.modeSettingsSlot, showModeSettings);", script)
         self.assertIn("setModeSpecificElementVisibility(els.mainModelField, visibility.showMainModel);", script)
         self.assertNotIn('id="apiDirectSettingsNotice"', html)
@@ -1110,4 +1110,3 @@ console.log(cases.map((color) => readableTextColor(color)).join("\\n"));
         self.assertNotIn("input_fidelity: state.mode", script)
         self.assertNotIn('payload.input_fidelity', script)
         self.assertNotIn('form.append("input_fidelity"', script)
-        self.assertIn('els.size.value = "1024x1024"', script)

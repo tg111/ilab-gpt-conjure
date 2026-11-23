@@ -23,29 +23,47 @@ async function run() {
   methods.selectGenerationProvider("qa-image26");
   const input = (selector: string, value: string) => { const e = find<HTMLInputElement>(selector); e.value = value; e.dispatchEvent(new w.Event("input", {bubbles: true})); e.dispatchEvent(new w.Event("change", {bubbles: true})); };
   const params = () => methods.currentCanonicalParameters();
-  const button = find<HTMLButtonElement>("#outputCompressionButton"), popup = find("#compressionPopover");
+  // Controls are rendered from the catalog; address them by parameter id.
+  // Collapsed advanced options (GIF timing, compression) open from the output header on desktop.
+  const field = (id: string) => d.querySelector<HTMLElement>(`:is(#modelParameterGrid, #modelAdvancedSlot) [data-parameter-id="${id}"]`);
+  const choice = (id: string, value: string) => field(id)?.querySelector<HTMLButtonElement>(`[data-val="${value}"]`) || null;
+  const choose = (id: string, value: string) => { const button = choice(id, value); if (!button) throw new Error(`missing ${id}=${value}`); button.click(); };
+  const numberInput = (id: string) => field(id)!.querySelector<HTMLInputElement>('input[type="number"]')!;
+  const setNumber = async (id: string, value: string) => { const e = numberInput(id); e.value = value; e.dispatchEvent(new w.Event("input", {bubbles: true})); await pause(0); };
+  const fieldError = (id: string) => field(id)?.querySelector<HTMLElement>(".model-parameter-error:not(.hidden)")?.textContent || "";
+  const customInputs = () => [...field("canvas.size")!.querySelectorAll<HTMLInputElement>(".pixel-size-input")];
+  const setCustomSize = async (width: string, height: string) => {
+    const [widthInput, heightInput] = customInputs();
+    widthInput.value = width; widthInput.dispatchEvent(new w.Event("input", {bubbles: true}));
+    heightInput.value = height; heightInput.dispatchEvent(new w.Event("input", {bubbles: true}));
+    await pause(0);
+  };
+  const blocked = () => Object.keys(state.parameterValidationErrorsByModel?.[state.selectedModelId] || {});
   for (const theme of ["light", "dark"]) {
     find(`[data-theme-option="${theme}"]`).click();
     for (const [width, height] of [[1512, 773], [1280, 699], [375, 812]]) {
       frame.style.width = `${width}px`; frame.style.height = `${height}px`; await pause(250);
       if (d.body.classList.contains("mobile-ui")) { find(".mobile-parameters-button").click(); await pause(); }
       const name = `${theme} ${width}x${height}`;
-      input("#outputFormat", "gif"); input("#frameCount", "12"); input("#frameDuration", "100");
-      input("#quality", "max"); input("#complexity", "low");
-      button.scrollIntoView({ block: "center" }); await pause(); button.click(); await pause();
-      const box = popup.getBoundingClientRect();
-      check(`${name}: GIF options inside popover`, !popup.classList.contains("hidden") && popup.contains(find("#frameCount")) && d.activeElement === find("#frameCount"));
-      check(`${name}: popover contained`, box.left >= 0 && box.right <= w.innerWidth && box.top >= 0 && box.bottom <= w.innerHeight, { left: box.left, right: box.right, top: box.top, bottom: box.bottom });
-      check(`${name}: duration calculation`, find("#gifDuration").textContent === "1.2 s");
-      check(`${name}: no irrelevant controls`, find<HTMLInputElement>("#compression").disabled && find<HTMLInputElement>("#transparentBackground").disabled);
-      check(`${name}: canonical request`, params()["gpt.complexity"] === "low" && params()["gpt.quality"] === "max" && params()["gpt.frame_count"] === 12 && !("gpt.output_compression" in params()));
-      const quality = find(".quality-field").getBoundingClientRect(), row = find(".quantity-quality-row").getBoundingClientRect();
-      check(`${name}: quality spans row`, Math.abs(quality.width - row.width) < 1);
-      check(`${name}: no panel horizontal overflow`, find("#outputFileSettings").scrollWidth <= find("#outputFileSettings").clientWidth + 1);
-      find("#frameCount").dispatchEvent(new w.KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
-      check(`${name}: Escape returns focus`, popup.classList.contains("hidden") && d.activeElement === button);
-      input("#outputFormat", "png"); check(`${name}: animation fields omitted for PNG`, !("gpt.frame_count" in params()));
-      input("#outputFormat", "gif"); check(`${name}: GIF values retained`, params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100);
+      choose("output.format", "gif"); await setNumber("gpt.frame_count", "12"); await setNumber("gpt.frame_duration_ms", "100");
+      choose("gpt.quality", "max"); choose("gpt.complexity", "low");
+      check(`${name}: GIF timing fields appear`, !!field("gpt.frame_count") && !!field("gpt.frame_duration_ms"));
+      if (!d.body.classList.contains("mobile-ui")) {
+        const advanced = find<HTMLDetailsElement>("#modelAdvancedSlot > details"), trigger = advanced.querySelector<HTMLElement>("summary")!;
+        trigger.click(); await pause();
+        const box = advanced.querySelector(".model-parameter-advanced-grid")!.getBoundingClientRect();
+        check(`${name}: advanced options open from the header`, advanced.open && advanced.contains(field("gpt.frame_count")));
+        check(`${name}: advanced popover contained`, box.left >= 0 && box.right <= w.innerWidth && box.top >= 0 && box.bottom <= w.innerHeight, box.toJSON());
+        numberInput("gpt.frame_count").focus();
+        numberInput("gpt.frame_count").dispatchEvent(new w.KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
+        check(`${name}: Escape closes advanced options and returns focus`, !advanced.open && d.activeElement === trigger);
+      }
+      check(`${name}: no irrelevant controls`, !field("gpt.output_compression") && !!choice("gpt.background", "transparent")?.disabled);
+      check(`${name}: canonical request`, params()["gpt.complexity"] === "low" && params()["gpt.quality"] === "max" && params()["gpt.frame_count"] === 12 && !("gpt.output_compression" in params()), params());
+      const grid = find("#modelParameterGrid");
+      check(`${name}: no panel horizontal overflow`, grid.scrollWidth <= grid.clientWidth + 1, { scroll: grid.scrollWidth, client: grid.clientWidth });
+      choose("output.format", "png"); check(`${name}: animation fields omitted for PNG`, !("gpt.frame_count" in params()) && !field("gpt.frame_count"));
+      choose("output.format", "gif"); check(`${name}: GIF values retained`, params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100);
       if (d.body.classList.contains("mobile-ui")) find("#mobileParameters .drawer-close-button").click();
     }
   }
@@ -54,32 +72,35 @@ async function run() {
   find('#outputSettingsLockButton').click(); find('#outputSettingsLockButton').click();
   check("unlock preserves complexity and GIF timing", JSON.stringify(params()) === JSON.stringify(lockedParams), params());
   find('#outputSettingsLockButton').click();
-  find<HTMLInputElement>('#frameCount').value = '2'; find<HTMLInputElement>('#frameDuration').value = '200'; find<HTMLSelectElement>('#complexity').value = 'high';
+  state.parameterDraftsByModel[state.selectedModelId] = { ...state.parameterDraftsByModel[state.selectedModelId], "gpt.frame_count": 2, "gpt.frame_duration_ms": 200, "gpt.complexity": "high" };
   methods.restoreOutputSettingsLock();
   check("persisted lock restores complexity and GIF timing", JSON.stringify(params()) === JSON.stringify(lockedParams), params());
   find('#outputSettingsLockButton').click();
   const historical = { ...state.tasks[0], summary_only: false, mode: 'generate', prompt: 'Synthetic GIF history', input_sources: [], local_input_files: [], reference_files: [], generation_snapshot: {
     canonical_model_id: 'gpt-image-2.6-flare', provider_id: 'qa-image26', protocol_profile: 'openai_images',
-    requested_parameters: { ...lockedParams, 'canvas.size': '512x512' },
+    // Stored with the earlier single size field; adoption upgrades it.
+    requested_parameters: { ...lockedParams, 'canvas.mode': undefined, 'canvas.aspect_ratio': undefined, 'canvas.resolution': undefined, 'canvas.size': '512x512' },
   } };
+  for (const key of ['canvas.mode', 'canvas.aspect_ratio', 'canvas.resolution']) delete historical.generation_snapshot.requested_parameters[key];
   state.tasks[0] = historical;
   methods.selectConcreteModel('gpt-image-2');
   const olderParams = params();
   await methods.selectTask(historical.task_id);
   check("cross-version history opens the inspector", !find('#taskParameterInspector').classList.contains('hidden'));
   check("cross-version history preserves current request until adoption", JSON.stringify(params()) === JSON.stringify(olderParams));
-  find('#taskParameterInspector .task-parameter-adopt').click();
+  find('#taskParameterInspector .task-parameter-adopt').click(); await pause(0);
   check("adoption selects the compatible historical model", state.selectedModelId === 'gpt-image-2.6-flare' && state.selectedProviderId === 'qa-image26');
-  check("adoption preserves GIF format, dimensions and timing", params()['output.format'] === 'gif' && params()['canvas.size'] === '512x512' && params()['gpt.frame_count'] === 12 && params()['gpt.frame_duration_ms'] === 100 && params()['gpt.complexity'] === 'low', params());
-  find('[data-custom-size-mode="custom"]').click();
-  input("#customWidth", "512"); input("#customHeight", "512"); input("#frameCount", "64");
-  check("small GIF canvas allows 64 frames", params()["canvas.size"] === "512x512" && find<HTMLInputElement>("#frameCount").checkValidity(), {size: params()["canvas.size"], width: find<HTMLInputElement>("#customWidth").value, height: find<HTMLInputElement>("#customHeight").value, max: find<HTMLInputElement>("#frameCount").max});
-  input("#customWidth", "3840"); input("#customHeight", "3840");
-  check("GIF frame limit follows canvas pixel budget", Number(find<HTMLInputElement>("#frameCount").max) === 9 && !find<HTMLInputElement>("#frameCount").checkValidity());
-  check("invalid GIF frame count remains editable", find<HTMLInputElement>("#frameCount").value === "64");
-  input("#frameCount", "9");
-  check("GIF frame limit accepts a corrected value", find<HTMLInputElement>("#frameCount").checkValidity());
-  find('[data-custom-size-mode="preset"]').click(); input("#frameCount", "12");
+  check("adoption preserves GIF format, dimensions and timing", params()['output.format'] === 'gif' && params()['canvas.mode'] === 'custom' && params()['canvas.size'] === '512x512' && params()['gpt.frame_count'] === 12 && params()['gpt.frame_duration_ms'] === 100 && params()['gpt.complexity'] === 'low', params());
+  check("a small GIF canvas is accepted", customInputs().map(item => item.value).join("x") === "512x512" && !blocked().includes("canvas.size"), blocked());
+  await setNumber("gpt.frame_count", "64");
+  check("small GIF canvas allows 64 frames", params()["gpt.frame_count"] === 64 && !fieldError("gpt.frame_count"), { max: numberInput("gpt.frame_count").max });
+  await setCustomSize("3840", "3840");
+  check("GIF frame limit follows canvas pixel budget", numberInput("gpt.frame_count").max === "9" && !!fieldError("gpt.frame_count") && blocked().includes("gpt.frame_count"), { max: numberInput("gpt.frame_count").max, blocked: blocked() });
+  check("invalid GIF frame count remains editable", numberInput("gpt.frame_count").value === "64");
+  await setNumber("gpt.frame_count", "9");
+  check("GIF frame limit accepts a corrected value", !fieldError("gpt.frame_count") && !blocked().includes("gpt.frame_count"));
+  choose("canvas.mode", "preset"); await pause(0); await setNumber("gpt.frame_count", "12");
+  check("preset sizes keep the frame range", !fieldError("gpt.frame_count") && params()["gpt.frame_count"] === 12);
   const canvas = d.createElement("canvas"); canvas.width = 8192; canvas.height = 512;
   const ctx = canvas.getContext("2d")!; ctx.fillStyle = "#457b66"; ctx.fillRect(0, 0, 8192, 512);
   const blob = await new Promise<Blob>(resolve => canvas.toBlob(value => resolve(value!), "image/png"));
@@ -88,57 +109,42 @@ async function run() {
   check("upload switches to edit without losing GIF or timing", state.mode === "edit" && params()["output.format"] === "gif" && params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100, params());
   const relay = state.generationCatalog.providers.find((provider: any) => provider.id === "qa-image26");
   state.generationCatalog.providers.push({ ...relay, id: "qa-openai", name: "Synthetic OpenAI", gif_edit_max_frames: 16 });
-  input("#frameCount", "17");
-  methods.selectGenerationProvider("qa-openai");
-  const frames = find<HTMLInputElement>("#frameCount");
-  check("official reference GIF caps frames at 16 without changing the draft", frames.max === "16" && frames.value === "17" && !frames.checkValidity());
-  methods.selectGenerationProvider("qa-image26");
-  check("switching back to a relay restores its wider frame range", Number(frames.max) > 16 && frames.value === "17" && frames.checkValidity());
-  input("#frameCount", "12");
+  await setNumber("gpt.frame_count", "17");
+  methods.selectGenerationProvider("qa-openai"); await pause(0);
+  check("official reference GIF caps frames at 16 without changing the draft", numberInput("gpt.frame_count").max === "16" && numberInput("gpt.frame_count").value === "17" && !!fieldError("gpt.frame_count"));
+  methods.selectGenerationProvider("qa-image26"); await pause(0);
+  check("switching back to a relay restores its wider frame range", Number(numberInput("gpt.frame_count").max) > 16 && numberInput("gpt.frame_count").value === "17" && !fieldError("gpt.frame_count"));
+  await setNumber("gpt.frame_count", "12");
   for (const theme of ["light", "dark"]) {
     find(`[data-theme-option="${theme}"]`).click();
     for (const [width, height] of [[1280, 800], [375, 812]]) {
       frame.style.width = `${width}px`; frame.style.height = `${height}px`; await pause(250);
       if (d.body.classList.contains("mobile-ui")) { find(".mobile-parameters-button").click(); await pause(); }
       const name = `reference GIF ${theme} ${width}x${height}`;
-      const select = find<HTMLSelectElement>("#outputFormat");
-      check(`${name}: GIF and SVG enabled`, ["gif", "svg"].every(value => ![...select.options].find(option => option.value === value)!.disabled));
-      input("#outputFormat", "png");
+      check(`${name}: GIF and SVG enabled`, ["gif", "svg"].every(value => choice("output.format", value) && !choice("output.format", value)!.disabled));
+      choose("output.format", "png");
       check(`${name}: PNG omits animation fields`, !("gpt.frame_count" in params()) && !("gpt.frame_duration_ms" in params()));
-      const trigger = select.closest(".themed-select")!.querySelector<HTMLButtonElement>(".themed-select-trigger")!;
-      trigger.scrollIntoView({ block: "center" });
-      trigger.dispatchEvent(new w.KeyboardEvent("keydown", { key: "ArrowUp", bubbles: true }));
-      const option = d.activeElement as HTMLButtonElement;
-      check(`${name}: keyboard reaches GIF`, option.getAttribute("role") === "option" && option.textContent?.trim() === "gif" && !option.disabled);
-      option.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
-      check(`${name}: selection restores timing and focus`, params()["output.format"] === "gif" && params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100 && d.activeElement === trigger, params());
-      button.click(); await pause();
-      const box = popup.getBoundingClientRect();
-      check(`${name}: animation controls remain usable`, !popup.classList.contains("hidden") && !find<HTMLInputElement>("#frameCount").disabled && !find<HTMLInputElement>("#frameDuration").disabled && d.activeElement === find("#frameCount"));
-      check(`${name}: popover contained`, box.left >= 0 && box.right <= w.innerWidth && box.top >= 0 && box.bottom <= w.innerHeight);
-      input("#frameCount", "8"); input("#frameDuration", "150");
-      check(`${name}: edits reach canonical parameters`, params()["gpt.frame_count"] === 8 && params()["gpt.frame_duration_ms"] === 150 && !("gpt.output_compression" in params()) && find<HTMLInputElement>("#transparentBackground").disabled, params());
-      input("#frameCount", "12"); input("#frameDuration", "100");
-      find("#frameCount").dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-      check(`${name}: Escape restores focus`, popup.classList.contains("hidden") && d.activeElement === button);
-      trigger.dispatchEvent(new w.KeyboardEvent("keydown", { key: "ArrowUp", bubbles: true }));
-      d.activeElement!.dispatchEvent(new w.KeyboardEvent("keydown", { key: "ArrowUp", bubbles: true }));
-      const svgOption = d.activeElement as HTMLButtonElement;
-      check(`${name}: keyboard reaches SVG`, svgOption.getAttribute("role") === "option" && svgOption.textContent?.trim() === "svg" && !svgOption.disabled);
-      svgOption.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
-      check(`${name}: SVG selection restores focus`, params()["output.format"] === "svg" && d.activeElement === trigger);
-      check(`${name}: SVG omits GIF timing and compression`, !("gpt.frame_count" in params()) && !("gpt.frame_duration_ms" in params()) && !("gpt.output_compression" in params()) && find<HTMLInputElement>("#frameCount").disabled && find<HTMLInputElement>("#compression").disabled, params());
-      input("#outputFormat", "gif");
+      const gif = choice("output.format", "gif")!;
+      gif.focus(); check(`${name}: keyboard reaches GIF`, d.activeElement === gif && !gif.disabled);
+      gif.click(); await pause(0);
+      check(`${name}: selection restores timing`, params()["output.format"] === "gif" && params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100, params());
+      await setNumber("gpt.frame_count", "8"); await setNumber("gpt.frame_duration_ms", "150");
+      check(`${name}: edits reach canonical parameters`, params()["gpt.frame_count"] === 8 && params()["gpt.frame_duration_ms"] === 150 && !("gpt.output_compression" in params()) && !!choice("gpt.background", "transparent")?.disabled, params());
+      await setNumber("gpt.frame_count", "12"); await setNumber("gpt.frame_duration_ms", "100");
+      choose("output.format", "svg"); await pause(0);
+      check(`${name}: SVG omits GIF timing and compression`, !("gpt.frame_count" in params()) && !("gpt.frame_duration_ms" in params()) && !("gpt.output_compression" in params()) && !field("gpt.frame_count") && !field("gpt.output_compression"), params());
+      check(`${name}: SVG allows a transparent background`, !choice("gpt.background", "transparent")?.disabled);
+      choose("output.format", "gif"); await pause(0);
       check(`${name}: returning from SVG restores GIF timing`, params()["gpt.frame_count"] === 12 && params()["gpt.frame_duration_ms"] === 100, params());
       if (d.body.classList.contains("mobile-ui")) find("#mobileParameters .drawer-close-button").click();
     }
   }
   frame.style.width = "1280px"; frame.style.height = "800px"; await pause(250);
-  methods.setMode("generate"); input("#outputFormat", "svg");
+  methods.setMode("generate"); choose("output.format", "svg");
   const previousImageCount = state.images.length;
   methods.addImageFiles([new w.File([blob], "svg-reference.png", { type: "image/png" })]); await pause();
   check("upload preserves SVG when switching to edit", state.mode === "edit" && state.images.length === previousImageCount + 1 && params()["output.format"] === "svg", params());
-  input("#outputFormat", "gif");
+  choose("output.format", "gif");
   const original = state.images[0].file;
   await methods.openImageEditor(0);
   find('[data-image-editor-mode="markup"]').click(); await pause();
@@ -165,9 +171,9 @@ async function run() {
     check("reopened markup retains original wide coordinates", mount.style.getPropertyValue('--image-editor-stage-raw-width') === '8192px');
     find("#imageEditorClose").click();
   }
-  methods.selectConcreteModel("gpt-image-2");
-  check("Image 2 keeps its original controls", find("#complexityField").classList.contains("hidden") && find('#qualityGroup [data-val="max"]').classList.contains("hidden") && !find("#outputFormatGroup").classList.contains("hidden"));
-  check("Image 2 still excludes SVG and GIF", params()["output.format"] === "png" && [...find<HTMLSelectElement>("#outputFormat").options].filter(option => ["svg", "gif"].includes(option.value)).every(option => option.hidden && option.disabled));
+  methods.selectConcreteModel("gpt-image-2"); await pause(0);
+  check("Image 2 keeps its original controls", !field("gpt.complexity") && !!field("gpt.quality") && !choice("gpt.quality", "max") && !!field("output.format"));
+  check("Image 2 still excludes SVG and GIF", params()["output.format"] === "png" && !choice("output.format", "svg") && !choice("output.format", "gif"), params());
   return {passed: !failures.length && !errors.length, assertions, failures, errors};
 }
 void run().catch(error => ({passed: false, assertions, failures, errors: [...errors, String(error)]})).then(async report => { output.textContent = JSON.stringify(report); await fetch("/qa-results", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(report)}); });

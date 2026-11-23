@@ -271,7 +271,7 @@ MODEL_MANIFESTS = (
             _select(
                 "gpt.moderation",
                 "output.moderation",
-                "advanced",
+                "generation",
                 "low",
                 ("auto", "low"),
                 control="segmented",
@@ -462,8 +462,30 @@ TRANSPARENT_FORMATS = ("png", "webp", "svg")
 _PRESET_ONLY = (ParameterCondition("canvas.mode", "equals", "preset"),)
 
 
+_VALUE_LABEL_KEYS = {
+    "canvas.mode": {"auto": "output.sizeAuto", "preset": "output.sizePreset", "custom": "output.sizeCustom"},
+    "gpt.quality": {
+        "auto": "output.qualityAuto", "low": "output.qualityLow", "medium": "output.qualityMedium",
+        "high": "output.qualityHigh", "xhigh": "output.qualityXhigh", "max": "output.qualityMax",
+    },
+    "gpt.complexity": {"low": "output.qualityLow", "medium": "output.qualityMedium", "high": "output.qualityHigh"},
+    "gpt.moderation": {"auto": "ux.moderationAuto", "low": "ux.moderationLow"},
+    "gpt.background": {
+        "auto": "output.backgroundAuto", "transparent": "output.backgroundTransparent",
+        "opaque": "output.backgroundOpaque",
+    },
+}
+
+
+def _labelled(definition: ParameterDefinition) -> ParameterDefinition:
+    labels = _VALUE_LABEL_KEYS.get(definition.id)
+    if not labels:
+        return definition
+    return replace(definition, value_label_keys=tuple(labels[str(value)] for value in definition.allowed_values))
+
+
 def _canvas_mode(modes: tuple[str, ...]) -> ParameterDefinition:
-    return ParameterDefinition(
+    return _labelled(ParameterDefinition(
         id="canvas.mode",
         label_key="output.size",
         group="canvas",
@@ -472,12 +494,13 @@ def _canvas_mode(modes: tuple[str, ...]) -> ParameterDefinition:
         default="preset",
         allowed_values=modes,
         full_width=True,
-    )
+    ))
 
 
 def _web_search(label_key: str) -> ParameterDefinition:
-    # A segmented off/on control matches the height of its neighbours in the grid.
-    return _boolean_segmented("tools.web_search", label_key, group="generation")
+    # A segmented off/on control matches the height of its neighbours. Tools sit
+    # beside the main model when the binding uses one, as search always has.
+    return _boolean_segmented("tools.web_search", label_key, group="tools")
 
 
 def _unified_gpt_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[ParameterDefinition, ...]:
@@ -496,10 +519,11 @@ def _unified_gpt_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[Pa
                             tuple(GPT_SIZE_PRESETS), control="segmented"),
                     visible_when=_PRESET_ONLY,
                 ),
-                replace(definition, visible_when=(ParameterCondition("canvas.mode", "equals", "custom"),)),
+                replace(definition, control="pixel_size",
+                        visible_when=(ParameterCondition("canvas.mode", "equals", "custom"),)),
             ]
         elif definition.id == "gpt.background":
-            parameters.append(replace(definition, value_requirements=(
+            parameters.append(replace(_labelled(definition), value_requirements=(
                 ValueRequirement(
                     "transparent",
                     ParameterCondition("output.format", "in", TRANSPARENT_FORMATS),
@@ -508,9 +532,22 @@ def _unified_gpt_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[Pa
             )))
         elif definition.id == "gpt.web_search":
             parameters.append(_web_search(definition.label_key))
+        elif definition.id == "output.count":
+            # One count control for every family.
+            parameters.append(_output_count(control="segmented"))
         else:
-            parameters.append(definition)
-    return tuple(parameters)
+            parameters.append(_labelled(definition))
+    order = {parameter_id: index for index, parameter_id in enumerate(_GPT_PARAMETER_ORDER)}
+    return tuple(sorted(parameters, key=lambda definition: order.get(definition.id, len(order))))
+
+
+# Main-area fields first in reading order, then the advanced options.
+_GPT_PARAMETER_ORDER = (
+    "canvas.mode", "canvas.aspect_ratio", "canvas.resolution", "canvas.size",
+    "gpt.quality", "gpt.complexity", "output.count", "output.format", "gpt.background",
+    "gpt.moderation", "tools.web_search", "gpt.output_compression",
+    "gpt.frame_count", "gpt.frame_duration_ms",
+)
 
 
 def _unified_gemini_parameters(legacy: tuple[ParameterDefinition, ...]) -> tuple[ParameterDefinition, ...]:
@@ -531,7 +568,6 @@ def _unified_manifest(legacy: ModelManifest) -> ModelManifest:
         legacy,
         parameters=(_unified_gpt_parameters if gpt else _unified_gemini_parameters)(legacy.parameters),
         size_spec=GPT_SIZE_SPEC if gpt else PROVIDER_SIZED_SPEC,
-        legacy_parameters=legacy.parameters,
     )
 
 

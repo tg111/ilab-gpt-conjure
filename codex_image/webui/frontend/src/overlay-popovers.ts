@@ -35,7 +35,6 @@ function escapeHtml(value) { return legacyMethod("escapeHtml", value); }
 function closeGalleryEditPopover() { legacyMethod("closeGalleryEditPopover"); }
 function handlePromptDocumentClick(event) { legacyMethod("handlePromptDocumentClick", event); }
 function handleGalleryDocumentClick(event) { legacyMethod("handleGalleryDocumentClick", event); }
-function closeCompressionPopover() { legacyMethod("closeCompressionPopover"); }
 function handleImageEditorHistoryShortcut(event) { return legacyMethod("handleImageEditorHistoryShortcut", event); }
 function hideMentionSuggest() { legacyMethod("hideMentionSuggest"); }
 function hideColorSuggest() { legacyMethod("hideColorSuggest"); }
@@ -358,9 +357,6 @@ function handleDocumentClick(event) {
       closeConfirmPopover();
     }
   }
-  if (!els.compressionPopover || els.compressionPopover.classList.contains("hidden")) return;
-  if (els.compressionPopover.contains(target) || els.outputFormatField?.contains(target)) return;
-  closeCompressionPopover();
 }
 
 function handleDocumentKeydown(event) {
@@ -375,7 +371,6 @@ function handleDocumentKeydown(event) {
     hideColorSuggest();
     hidePromptSnippetSuggest();
     hidePromptSnippetSelectionButton();
-    closeCompressionPopover();
     closePromptPopover();
     closePromptSnippetPopover();
     closeGalleryEditPopover();

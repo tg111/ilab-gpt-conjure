@@ -253,11 +253,9 @@ function snapshotFromCurrentSelection(): OutputSettingsSnapshot {
   const bridge = getLegacyBridge();
   const legacy = legacyMethod("currentTaskParams");
   const model = bridge.state.generationCatalog?.models.find((item: any) => item.id === bridge.state.selectedModelId);
-    const parameters = model && !isGptImageModel(model.id) && typeof bridge.methods.activeParameterValues === "function"
+  const parameters = model && typeof bridge.methods.activeParameterValues === "function"
     ? bridge.methods.activeParameterValues(model)
-    : typeof bridge.methods.currentCanonicalParameters === "function"
-      ? bridge.methods.currentCanonicalParameters()
-      : {};
+    : {};
   return normalizeOutputSettingsSnapshot({
     ...legacy,
     canonical_model_id: model?.id || "gpt-image-2",

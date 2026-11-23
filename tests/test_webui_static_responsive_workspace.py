@@ -67,22 +67,19 @@ class WebUIResponsiveWorkspaceContractTests(unittest.TestCase):
             r"grid-template-columns:\s*minmax\(0,\s*1fr\)",
         )
         self.assertNotRegex(output, r"\.model-parameter-grid\s*\{[^}]*(?:height|max-height):")
+        # Every model shares the panel's compact rhythm, so the full GPT form fits short screens.
         self.assertRegex(
             output,
             r"#modelParameterGrid\.model-parameter-grid\s*\{[^}]*"
             r"align-content:\s*start[^}]*"
-            r"row-gap:\s*12px[^}]*"
-            r"padding-block:\s*12px",
+            r"row-gap:\s*var\(--compact-settings-gap,\s*12px\)",
         )
+        self.assertNotRegex(output, r"#modelParameterGrid\.model-parameter-grid\s*\{[^}]*padding-block")
+        # Desktop workspaces put labels beside their controls.
         self.assertRegex(
             output,
-            r"#modelParameterGrid\s+\.model-aspect-ratio-grid\s*\{[^}]*"
-            r"padding-block:\s*10px",
-        )
-        self.assertRegex(
-            output,
-            r'#modelParameterGrid\s*>\s*\.model-parameter-field:not\(\[data-parameter-id="canvas\.aspect_ratio"\]\)\s*\{[^}]*'
-            r"padding-block:\s*4px",
+            r"@container workspace \(min-width: 900px\)\s*\{\s*#modelParameterGrid\s*>\s*\.model-parameter-field\s*\{[^}]*"
+            r"grid-template-columns:\s*var\(--parameter-label-width,\s*max-content\)\s*minmax\(0,\s*1fr\)",
         )
         self.assertNotRegex(
             output,

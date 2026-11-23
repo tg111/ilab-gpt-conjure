@@ -27,7 +27,7 @@ export function notifyParameterMigration(report: ParameterMigrationReport): void
   );
 }
 
-function snapshotFromTask(task: WebUITask): GenerationSnapshotView {
+export function snapshotFromTask(task: WebUITask): GenerationSnapshotView {
   const raw = record(task.generation_snapshot);
   if (!Object.keys(raw).length) return legacyGenerationSnapshot(task);
   return {

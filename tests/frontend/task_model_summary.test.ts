@@ -8,7 +8,7 @@ import {
   taskModelFamilyId,
   taskModelDisplayName,
   taskOutputSettingsView,
-  taskOutputControlValues,
+  
   taskRequestedParameters,
   
 } from "../../codex_image/webui/frontend/src/task-model-summary";
@@ -49,41 +49,6 @@ test("canonical task summaries prefer frozen generation snapshots", () => {
     "canvas.aspect_ratio": "16:9",
     "canvas.resolution": "2K",
     "output.count": 3,
-  });
-});
-
-test("history output controls prefer frozen canonical parameters over stale legacy params", () => {
-  const task = {
-    generation_snapshot: {
-      requested_parameters: {
-        "canvas.size": "1024x1536",
-        "gpt.quality": "high",
-        "gpt.moderation": "low",
-        "gpt.web_search": true,
-        "output.count": 4,
-        "output.format": "png",
-        "gpt.output_compression": 90,
-      },
-    },
-    params: {
-      size: "auto",
-      quality: "low",
-      moderation: "auto",
-      web_search: false,
-      n: 1,
-      output_format: "jpeg",
-      output_compression: 55,
-    },
-  };
-
-  assert.deepEqual(taskOutputControlValues(task), {
-    size: "1024x1536",
-    quality: "high",
-    moderation: "low",
-    web_search: true,
-    n: 4,
-    output_format: "png",
-    output_compression: 90,
   });
 });
 
@@ -198,20 +163,4 @@ test("task channel summaries normalize provider protocol profiles", () => {
   assert.equal(taskChannelLabel({
     generation_snapshot: { protocol_profile: "gemini_generate_content" },
   }), "Gemini");
-});
-
-
-test("Image 2.6 history restores complexity and GIF timing from the frozen request", () => {
-  const values = taskOutputControlValues({
-    generation_snapshot: { requested_parameters: {
-      "gpt.complexity": "low", "gpt.quality": "max", "output.format": "gif",
-      "gpt.frame_count": 12, "gpt.frame_duration_ms": 100,
-    } },
-    params: { complexity: "high", frame_count: 9, frame_duration_ms: 200 },
-  });
-  assert.equal(values.complexity, "low");
-  assert.equal(values.quality, "max");
-  assert.equal(values.output_format, "gif");
-  assert.equal(values.frame_count, 12);
-  assert.equal(values.frame_duration_ms, 100);
 });

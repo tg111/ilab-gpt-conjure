@@ -179,7 +179,6 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         self.assertIn("export function buildOutputSettingsSummaryModel", source)
         self.assertIn("currentCodexMode", source)
         self.assertIn("currentApiMode", source)
-        self.assertIn('model && !isGptImageModel(model.id)', source)
         self.assertIn("bridge.methods.activeParameterValues(model)", source)
         self.assertIn("codex-image-output-settings-lock-v1", source)
         self.assertNotIn("data-output-settings-channel", source)
@@ -193,7 +192,7 @@ class OutputSettingsLockFrontendContractTests(WebUIStaticTestCase):
         self.assertIn('call(methods, "restoreOutputSettingsLock")', boot)
         self.assertGreater(
             boot.index('call(methods, "restoreOutputSettingsLock")'),
-            boot.index('call(methods, "updateCustomSize")'),
+            boot.index('call(methods, "restoreModelSelection")'),
         )
 
     def test_locked_task_selection_preserves_output_controls_and_offers_explicit_adoption(self) -> None:
