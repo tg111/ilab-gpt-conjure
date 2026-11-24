@@ -55,6 +55,12 @@ const els = {
   filtersBackdrop: document.querySelector<HTMLButtonElement>("#historyFiltersBackdrop"),
   selectionDock: document.querySelector<HTMLElement>("#historySelectionDock"),
   selectionDockCount: document.querySelector<HTMLElement>("#historySelectionDockCount"),
+  selectionDockSelectAll: document.querySelector<HTMLButtonElement>("#historySelectionDockSelectAll"),
+  selectionDockDelete: document.querySelector<HTMLButtonElement>("#historySelectionDockDelete"),
+  selectionDockDone: document.querySelector<HTMLButtonElement>("#historySelectionDockDone"),
+  selectionDockActions: document.querySelector<HTMLButtonElement>("#historySelectionDock [data-history-open-selection-actions]"),
+  selectModeButton: document.querySelector<HTMLButtonElement>("#historySelectModeButton"),
+  selectModeLabel: document.querySelector<HTMLElement>("#historySelectModeLabel"),
   taskList: document.querySelector<HTMLElement>("#historyTaskList"),
   detail: document.querySelector<HTMLElement>("#historyDetail"),
   refresh: document.querySelector<HTMLButtonElement>("#historyRefreshButton"),
@@ -135,11 +141,18 @@ function applyHistoryTaskSelection(
 }
 
 function reconcileHistoryTaskSelection(): void {
+  const keepSelectionMode = selection.snapshot().selectionMode;
   applyHistoryTaskSelection(
     [...selection.snapshot().selectedTaskIds],
     selection.snapshot().selectionAnchorTaskId,
     selection.snapshot().selectedTaskId,
   );
+  // Removing tasks (e.g. after a bulk delete) can empty the selection; stay in multi-select mode.
+  if (keepSelectionMode && !selection.snapshot().selectionMode) {
+    selection.dispatch({ type: "enter-touch" });
+    renderBulkToolbar();
+    details.syncHistorySelectionDetail();
+  }
   if (!selection.snapshot().selectedTaskId) {
     els.page?.classList.remove("history-detail-open");
   }
@@ -221,16 +234,60 @@ function handleHistorySelectAllShortcut(event: KeyboardEvent): boolean {
   return true;
 }
 
+function enterHistorySelectionMode(): void {
+  selection.dispatch({ type: "enter-touch" });
+  actions.clearHistoryDeleteConfirmation();
+  // Close the narrow-screen drawer so the grid stays tappable.
+  els.page?.classList.remove("history-detail-open");
+  updateTaskSelectionVisuals();
+  renderBulkToolbar();
+  details.syncHistorySelectionDetail();
+}
+
+function toggleAllVisibleHistoryTasks(): void {
+  const visibleIds = historySelectAllTaskIds(visibleHistoryTaskIds());
+  const selectedIds = selection.snapshot().selectedTaskIds;
+  const allSelected = visibleIds.length > 0 && visibleIds.every((taskId) => selectedIds.has(taskId));
+  applyHistoryTaskSelection(allSelected ? [] : visibleIds, visibleIds[0] || "", visibleIds[0] || "");
+  // An empty replace leaves multi-select mode; deselecting everything should not.
+  if (allSelected) enterHistorySelectionMode();
+}
+
 function renderBulkToolbar(): void {
   const count = selection.snapshot().selectedTaskIds.size;
+  const selectionMode = selection.snapshot().selectionMode;
+  const showDock = count > 0 || selectionMode;
   els.page?.classList.toggle("history-bulk-selecting", count > 1 || selection.snapshot().selectionMode);
   els.page?.classList.toggle("history-selection-mode", selection.snapshot().selectionMode);
-  els.selectionDock?.classList.toggle("hidden", count === 0);
-  els.selectionDock?.toggleAttribute("hidden", count === 0);
+  els.selectionDock?.classList.toggle("hidden", !showDock);
+  els.selectionDock?.toggleAttribute("hidden", !showDock);
   setText(
     els.selectionDockCount,
-    count ? formatTranslation("history.selectedCount", { count }) : "",
+    showDock ? formatTranslation("history.selectedCount", { count }) : "",
   );
+  els.selectModeButton?.setAttribute("aria-pressed", selectionMode ? "true" : "false");
+  els.selectModeButton?.classList.toggle("active", selectionMode);
+  setText(els.selectModeLabel, translate(selectionMode ? "history.multiSelectDone" : "history.multiSelect"));
+  const visibleIds = historySelectAllTaskIds(visibleHistoryTaskIds());
+  const allVisibleSelected = visibleIds.length > 0
+    && visibleIds.every((taskId) => selection.snapshot().selectedTaskIds.has(taskId));
+  if (els.selectionDockSelectAll) {
+    els.selectionDockSelectAll.hidden = !selectionMode;
+    els.selectionDockSelectAll.disabled = !visibleIds.length;
+    els.selectionDockSelectAll.textContent = translate(allVisibleSelected ? "history.deselectAll" : "history.selectAll");
+  }
+  if (els.selectionDockDelete) {
+    const confirming = actions.confirmations().deleteConfirming;
+    els.selectionDockDelete.hidden = !selectionMode;
+    els.selectionDockDelete.disabled = count === 0;
+    els.selectionDockDelete.classList.toggle("confirming", confirming);
+    els.selectionDockDelete.textContent = translate(confirming ? "history.confirmDelete" : "action.delete");
+  }
+  if (els.selectionDockDone) {
+    els.selectionDockDone.hidden = !selectionMode;
+    els.selectionDockDone.textContent = translate("history.multiSelectDone");
+  }
+  if (els.selectionDockActions) els.selectionDockActions.disabled = count === 0;
   if (!count) {
     details.resetActionPanel();
     organizer.closeHistoryOrganizePicker({ restoreFocus: false });
@@ -281,10 +338,17 @@ function bindEvents(): void {
     }
     const enterSelectionMode = target?.closest<HTMLElement>("[data-history-enter-selection-mode]");
     if (enterSelectionMode) {
-      selection.dispatch({ type: "enter-touch" });
-      renderBulkToolbar();
-      details.renderHistoryManagementDetail();
+      enterHistorySelectionMode();
       focusHistoryTaskButton(visibleHistoryTaskIds()[0] || "");
+      return;
+    }
+    if (target?.closest("[data-history-toggle-selection-mode]")) {
+      if (selection.snapshot().selectionMode) clearHistoryTaskSelection();
+      else enterHistorySelectionMode();
+      return;
+    }
+    if (target?.closest("[data-history-select-all]")) {
+      toggleAllVisibleHistoryTasks();
       return;
     }
     if (target?.closest("[data-history-exit-selection-mode]")) {

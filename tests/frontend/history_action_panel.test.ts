@@ -121,6 +121,21 @@ test("one selected task resolves to its detail while multiple tasks resolve to b
   }), "management");
 });
 
+test("multi-select mode keeps one selected task in the bulk panel instead of opening its detail", () => {
+  assert.equal(historySelectionDetailResolution({
+    selectedCount: 1,
+    selectionMode: true,
+    selectedTaskId: "task-a",
+    detailTaskId: "",
+  }), "selection");
+  assert.equal(historySelectionDetailResolution({
+    selectedCount: 0,
+    selectionMode: true,
+    selectedTaskId: "",
+    detailTaskId: "",
+  }), "management");
+});
+
 test("closing a viewed task clears it even when the detail pane is a narrow drawer", () => {
   assert.equal(historyDetailCloseEffect({ narrow: true, mode: "task" }), "clear-task");
   assert.equal(historyDetailCloseEffect({ narrow: true, mode: "empty" }), "clear-task");

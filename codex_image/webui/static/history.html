@@ -209,6 +209,10 @@
               <button class="history-sort-button" type="button" data-history-sort="oldest" aria-pressed="false" data-i18n="history.oldest">最早优先</button>
             </div>
           </div>
+          <button id="historySelectModeButton" class="ghost-button text-sm history-select-mode-button" type="button" data-history-toggle-selection-mode aria-pressed="false">
+            <svg class="history-toolbar-button-icon" data-ui-icon="check-square" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#check-square"/></svg>
+            <span id="historySelectModeLabel">多选</span>
+          </button>
           <div id="historyToolbarUtilities" class="history-toolbar-utilities">
             <button id="historyManagementButton" class="ghost-button history-toolbar-icon-button history-management-button" type="button" data-history-open-management aria-label="历史库管理" title="历史库管理">
               <svg class="history-toolbar-button-icon" data-ui-icon="archive" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#archive"/></svg>
@@ -234,10 +238,15 @@
       <div id="historyLoadSentinel" class="history-load-sentinel" data-history-load-more role="status" aria-live="polite" hidden></div>
       <div id="historySelectionDock" class="history-selection-dock hidden" hidden>
         <strong id="historySelectionDockCount"></strong>
-        <button class="history-selection-dock-action" type="button" data-history-open-selection-actions>
-          <span data-i18n="footer.batch">批量管理</span>
-          <svg class="history-action-row-arrow" data-ui-icon="chevron-right" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#chevron-right"/></svg>
-        </button>
+        <div class="history-selection-dock-buttons">
+          <button id="historySelectionDockSelectAll" class="history-selection-dock-button" type="button" data-history-select-all hidden>全选</button>
+          <button id="historySelectionDockDelete" class="history-selection-dock-button history-selection-dock-danger" type="button" data-history-bulk-delete hidden>删除</button>
+          <button class="history-selection-dock-action" type="button" data-history-open-selection-actions>
+            <span data-i18n="footer.batch">批量管理</span>
+            <svg class="history-action-row-arrow" data-ui-icon="chevron-right" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#chevron-right"/></svg>
+          </button>
+          <button id="historySelectionDockDone" class="history-selection-dock-button" type="button" data-history-exit-selection-mode hidden>完成</button>
+        </div>
       </div>
     </section>
     <div class="history-resize-hit-area history-resize-hit-area-right" role="separator" tabindex="0" aria-orientation="vertical" aria-valuemin="300" aria-valuemax="620" aria-valuenow="380" aria-label="调整详情栏宽度" data-history-resizer="right" data-i18n-attr="aria-label:history.resizeDetail"></div>

@@ -15033,7 +15033,161 @@ button:disabled {
 }
 
 .history-selection-dock {
+  position: absolute;
+  right: 16px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  left: 16px;
+  z-index: 12;
   display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 50px;
+  padding: 7px 8px 7px 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--primary-strong);
+  box-shadow: var(--shadow-popover);
+}
+
+/* Multi-select mode shows the dock at every width; narrow layouts also show it for modifier selections. */
+.history-page.history-selection-mode .history-selection-dock {
+  display: flex;
+}
+
+.history-page .history-selection-dock.hidden,
+.history-page .history-selection-dock[hidden] {
+  display: none;
+}
+
+.history-selection-dock strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-selection-dock-buttons {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.history-selection-dock-action,
+.history-selection-dock-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.history-selection-dock-action {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.history-selection-dock-button {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.history-selection-dock-button:hover,
+.history-selection-dock-button:focus-visible {
+  background: var(--primary-light);
+  color: var(--primary-strong);
+}
+
+.history-selection-dock-danger {
+  color: var(--danger, #c0392b);
+}
+
+.history-selection-dock-danger.confirming,
+.history-selection-dock-danger.confirming:hover,
+.history-selection-dock-danger.confirming:focus-visible {
+  background: var(--danger, #c0392b);
+  color: #fff;
+}
+
+.history-selection-dock-action:disabled,
+.history-selection-dock-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.history-selection-dock-button[hidden] {
+  display: none;
+}
+
+.history-page.history-selection-mode .history-task-list {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+.history-toolbar-actions .history-select-mode-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-toolbar-actions .history-select-mode-button.active,
+.history-toolbar-actions .history-select-mode-button.active:hover,
+.history-toolbar-actions .history-select-mode-button.active:focus-visible {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Check badge on each card, shown while choosing several tasks. */
+.history-task-check {
+  position: absolute;
+  z-index: 6;
+  top: 10px;
+  left: 10px;
+  display: none;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.history-task-check svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.history-page.history-selection-mode .history-task-check,
+.history-page.history-bulk-selecting .history-task-check {
+  display: grid;
+}
+
+.history-task-card.selected .history-task-check {
+  border-color: #fff;
+  background: var(--primary);
+}
+
+.history-task-card.selected .history-task-check svg {
+  opacity: 1;
 }
 
 .history-task-list {
@@ -17302,50 +17456,12 @@ body.history-lightbox-open {
   }
 
   .history-selection-dock {
-    position: absolute;
-    right: 16px;
-    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-    left: 16px;
-    z-index: 12;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    min-height: 50px;
-    padding: 7px 8px 7px 14px;
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--primary-strong);
-    box-shadow: var(--shadow-popover);
   }
 
   .history-selection-dock.hidden,
   .history-selection-dock[hidden] {
     display: none;
-  }
-
-  .history-selection-dock strong {
-    min-width: 0;
-    overflow: hidden;
-    font-size: 13px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .history-selection-dock-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    min-height: 36px;
-    padding: 0 11px;
-    border: 0;
-    border-radius: var(--radius);
-    background: var(--primary);
-    color: var(--primary-foreground);
-    cursor: pointer;
-    font: inherit;
-    font-size: 13px;
-    font-weight: 700;
   }
 
   .history-page.history-bulk-selecting .history-task-list {
@@ -17409,12 +17525,37 @@ body.history-lightbox-open {
   .history-toolbar-actions {
     display: grid;
     grid-template-areas:
-      "filter"
-      "browse"
-      "utilities";
-    grid-template-columns: minmax(0, 1fr);
+      "filter select"
+      "browse browse"
+      "utilities utilities";
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: stretch;
     width: 100%;
+  }
+
+  .history-toolbar-actions .history-select-mode-button {
+    grid-area: select;
+    justify-content: center;
+  }
+
+  /* The toolbar already shows "Done" on phones; keep the dock on one line. */
+  .history-selection-dock #historySelectionDockDone {
+    display: none;
+  }
+
+  .history-selection-dock {
+    gap: 8px;
+    padding-left: 12px;
+  }
+
+  .history-selection-dock-buttons {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+
+  .history-selection-dock-action,
+  .history-selection-dock-button {
+    padding: 0 9px;
   }
 
   .history-mobile-filter-button {

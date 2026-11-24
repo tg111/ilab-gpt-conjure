@@ -227,6 +227,7 @@ export function createHistoryDetailController(deps: {
     if (!els.detail) return;
     const resolution = historySelectionDetailResolution({
       selectedCount: deps.selection.snapshot().selectedTaskIds.size,
+      selectionMode: deps.selection.snapshot().selectionMode,
       selectedTaskId: deps.selection.snapshot().selectedTaskId,
       detailTaskId: String(detailTask?.task_id || ""),
     });

@@ -831,6 +831,37 @@ class WebUIStaticHistoryTests(unittest.TestCase):
             r"@media \(max-width: 760px\)[\s\S]*\.history-toolbar-utilities\s*\{[^}]*justify-content:\s*end",
         )
 
+    def test_history_multi_select_has_a_visible_entry_and_dock_actions(self) -> None:
+        html = Path("codex_image/webui/static/history.html").read_text(encoding="utf-8")
+        source = Path("codex_image/webui/frontend/src/history.ts").read_text(encoding="utf-8")
+        card = _history_source("history-card-view")
+        styles = Path("codex_image/webui/static/styles/90-history.css").read_text(encoding="utf-8")
+
+        toolbar = html[html.index('class="history-toolbar-actions"'):html.index('id="historyToolbarUtilities"')]
+        # Outside the utilities group, which phones fold into the "more" sheet.
+        self.assertIn('id="historySelectModeButton"', toolbar)
+        self.assertIn("data-history-toggle-selection-mode", toolbar)
+        dock = html[html.index('id="historySelectionDock"'):]
+        for marker in ("data-history-select-all", "data-history-bulk-delete", "data-history-exit-selection-mode"):
+            self.assertIn(marker, dock)
+        self.assertIn('class="history-task-check"', card)
+        self.assertIn('"[data-history-toggle-selection-mode]"', source)
+        self.assertIn('"[data-history-select-all]"', source)
+        self.assertRegex(
+            styles,
+            r"\.history-page\.history-selection-mode \.history-selection-dock\s*\{[^}]*display:\s*flex",
+        )
+        self.assertRegex(
+            styles,
+            r"@media \(max-width: 760px\)[\s\S]*\.history-select-mode-button\s*\{[^}]*grid-area:\s*select",
+        )
+        for locale in Path("codex_image/webui/frontend/src/i18n").glob("*.ts"):
+            if locale.name in {"types.ts", "dictionaries.ts"}:
+                continue
+            text = locale.read_text(encoding="utf-8")
+            for key in ("history.multiSelect", "history.multiSelectDone", "history.selectAll", "history.deselectAll"):
+                self.assertIn(f'"{key}"', text, f"{locale.name} lacks {key}")
+
     def test_history_active_filters_are_visible_and_clearable(self) -> None:
         html = Path("codex_image/webui/static/history.html").read_text(encoding="utf-8")
         source = Path("codex_image/webui/frontend/src/history.ts").read_text(encoding="utf-8")

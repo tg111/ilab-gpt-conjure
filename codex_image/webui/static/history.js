@@ -6,10 +6,12 @@
   // codex_image/webui/frontend/src/history-action-panel.ts
   function historySelectionDetailResolution({
     selectedCount,
+    selectionMode = false,
     selectedTaskId,
     detailTaskId
   }) {
     if (selectedCount > 1) return "selection";
+    if (selectionMode && selectedCount === 1) return "selection";
     if (!selectedTaskId) return "management";
     return detailTaskId === selectedTaskId ? "task" : "load-task";
   }
@@ -644,6 +646,10 @@
     "history.unfavoriteSelected": "Unfavorite",
     "history.organizeSelected": "Organize",
     "history.exitSelection": "Exit bulk selection",
+    "history.multiSelect": "Select",
+    "history.multiSelectDone": "Done",
+    "history.selectAll": "Select all",
+    "history.deselectAll": "Deselect all",
     "history.organizationFailed": "Could not update favorites or tags",
     "history.tagNameConflict": "This tag name already exists",
     "history.noTags": "No tags yet",
@@ -1866,6 +1872,10 @@
     "history.unfavoriteSelected": "Favorit entfernen",
     "history.organizeSelected": "Organisieren",
     "history.exitSelection": "Mehrfachauswahl beenden",
+    "history.multiSelect": "Ausw\xE4hlen",
+    "history.multiSelectDone": "Fertig",
+    "history.selectAll": "Alle ausw\xE4hlen",
+    "history.deselectAll": "Auswahl aufheben",
     "history.organizationFailed": "Favoriten oder Tags konnten nicht aktualisiert werden",
     "history.tagNameConflict": "Dieser Tag-Name ist bereits vorhanden",
     "history.noTags": "Noch keine Tags",
@@ -3145,6 +3155,10 @@
     "history.unfavoriteSelected": "Quitar favorito",
     "history.organizeSelected": "Organizar",
     "history.exitSelection": "Salir de la selecci\xF3n m\xFAltiple",
+    "history.multiSelect": "Seleccionar",
+    "history.multiSelectDone": "Listo",
+    "history.selectAll": "Seleccionar todo",
+    "history.deselectAll": "Deseleccionar todo",
     "history.organizationFailed": "No se pudieron actualizar favoritos o etiquetas",
     "history.tagNameConflict": "Este nombre de etiqueta ya existe",
     "history.noTags": "A\xFAn no hay etiquetas",
@@ -4424,6 +4438,10 @@
     "history.unfavoriteSelected": "Retirer des favoris",
     "history.organizeSelected": "Organiser",
     "history.exitSelection": "Quitter la s\xE9lection multiple",
+    "history.multiSelect": "S\xE9lectionner",
+    "history.multiSelectDone": "Termin\xE9",
+    "history.selectAll": "Tout s\xE9lectionner",
+    "history.deselectAll": "Tout d\xE9s\xE9lectionner",
     "history.organizationFailed": "Impossible de mettre \xE0 jour les favoris ou les \xE9tiquettes",
     "history.tagNameConflict": "Ce nom d\u2019\xE9tiquette existe d\xE9j\xE0",
     "history.noTags": "Aucune \xE9tiquette",
@@ -5703,6 +5721,10 @@
     "history.unfavoriteSelected": "\u304A\u6C17\u306B\u5165\u308A\u89E3\u9664",
     "history.organizeSelected": "\u6574\u7406",
     "history.exitSelection": "\u8907\u6570\u9078\u629E\u3092\u7D42\u4E86",
+    "history.multiSelect": "\u8907\u6570\u9078\u629E",
+    "history.multiSelectDone": "\u5B8C\u4E86",
+    "history.selectAll": "\u3059\u3079\u3066\u9078\u629E",
+    "history.deselectAll": "\u9078\u629E\u3092\u3059\u3079\u3066\u89E3\u9664",
     "history.organizationFailed": "\u304A\u6C17\u306B\u5165\u308A\u307E\u305F\u306F\u30BF\u30B0\u3092\u66F4\u65B0\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F",
     "history.tagNameConflict": "\u540C\u3058\u30BF\u30B0\u540D\u304C\u3059\u3067\u306B\u3042\u308A\u307E\u3059",
     "history.noTags": "\u30BF\u30B0\u306F\u307E\u3060\u3042\u308A\u307E\u305B\u3093",
@@ -6982,6 +7004,10 @@
     "history.unfavoriteSelected": "\uC990\uACA8\uCC3E\uAE30 \uD574\uC81C",
     "history.organizeSelected": "\uC815\uB9AC",
     "history.exitSelection": "\uB2E4\uC911 \uC120\uD0DD \uC885\uB8CC",
+    "history.multiSelect": "\uB2E4\uC911 \uC120\uD0DD",
+    "history.multiSelectDone": "\uC644\uB8CC",
+    "history.selectAll": "\uBAA8\uB450 \uC120\uD0DD",
+    "history.deselectAll": "\uBAA8\uB450 \uC120\uD0DD \uD574\uC81C",
     "history.organizationFailed": "\uC990\uACA8\uCC3E\uAE30 \uB610\uB294 \uD0DC\uADF8\uB97C \uC5C5\uB370\uC774\uD2B8\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4",
     "history.tagNameConflict": "\uAC19\uC740 \uD0DC\uADF8 \uC774\uB984\uC774 \uC774\uBBF8 \uC788\uC2B5\uB2C8\uB2E4",
     "history.noTags": "\uC544\uC9C1 \uD0DC\uADF8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
@@ -8261,6 +8287,10 @@
     "history.unfavoriteSelected": "Desfavoritar",
     "history.organizeSelected": "Organizar",
     "history.exitSelection": "Sair da sele\xE7\xE3o m\xFAltipla",
+    "history.multiSelect": "Selecionar",
+    "history.multiSelectDone": "Concluir",
+    "history.selectAll": "Selecionar tudo",
+    "history.deselectAll": "Desmarcar tudo",
     "history.organizationFailed": "N\xE3o foi poss\xEDvel atualizar favoritos ou etiquetas",
     "history.tagNameConflict": "Este nome de etiqueta j\xE1 existe",
     "history.noTags": "Ainda n\xE3o h\xE1 etiquetas",
@@ -9540,6 +9570,10 @@
     "history.unfavoriteSelected": "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u0438\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0433\u043E",
     "history.organizeSelected": "\u0423\u043F\u043E\u0440\u044F\u0434\u043E\u0447\u0438\u0442\u044C",
     "history.exitSelection": "\u0412\u044B\u0439\u0442\u0438 \u0438\u0437 \u043C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u0431\u043E\u0440\u0430",
+    "history.multiSelect": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C",
+    "history.multiSelectDone": "\u0413\u043E\u0442\u043E\u0432\u043E",
+    "history.selectAll": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435",
+    "history.deselectAll": "\u0421\u043D\u044F\u0442\u044C \u0432\u044B\u0431\u043E\u0440",
     "history.organizationFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0438\u0437\u0431\u0440\u0430\u043D\u043D\u043E\u0435 \u0438\u043B\u0438 \u0442\u0435\u0433\u0438",
     "history.tagNameConflict": "\u0422\u0430\u043A\u043E\u0435 \u0438\u043C\u044F \u0442\u0435\u0433\u0430 \u0443\u0436\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442",
     "history.noTags": "\u0422\u0435\u0433\u043E\u0432 \u043F\u043E\u043A\u0430 \u043D\u0435\u0442",
@@ -10819,6 +10853,10 @@
     "history.unfavoriteSelected": "Rimuovi dai preferiti",
     "history.organizeSelected": "Organizza",
     "history.exitSelection": "Esci dalla selezione multipla",
+    "history.multiSelect": "Seleziona",
+    "history.multiSelectDone": "Fine",
+    "history.selectAll": "Seleziona tutto",
+    "history.deselectAll": "Deseleziona tutto",
     "history.organizationFailed": "Impossibile aggiornare preferiti o tag",
     "history.tagNameConflict": "Questo nome di tag esiste gi\xE0",
     "history.noTags": "Nessun tag",
@@ -12098,6 +12136,10 @@
     "history.unfavoriteSelected": "\u092A\u0938\u0902\u0926\u0940\u0926\u093E \u0939\u091F\u093E\u090F\u0901",
     "history.organizeSelected": "\u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093F\u0924 \u0915\u0930\u0947\u0902",
     "history.exitSelection": "\u092C\u0939\u0941-\u091A\u092F\u0928 \u0938\u0947 \u092C\u093E\u0939\u0930 \u0928\u093F\u0915\u0932\u0947\u0902",
+    "history.multiSelect": "\u091A\u0941\u0928\u0947\u0902",
+    "history.multiSelectDone": "\u0939\u094B \u0917\u092F\u093E",
+    "history.selectAll": "\u0938\u092D\u0940 \u091A\u0941\u0928\u0947\u0902",
+    "history.deselectAll": "\u0938\u092D\u0940 \u0915\u093E \u091A\u092F\u0928 \u0939\u091F\u093E\u090F\u0901",
     "history.organizationFailed": "\u092A\u0938\u0902\u0926\u0940\u0926\u093E \u092F\u093E \u091F\u0948\u0917 \u0905\u092A\u0921\u0947\u091F \u0928\u0939\u0940\u0902 \u0939\u094B \u0938\u0915\u0947",
     "history.tagNameConflict": "\u092F\u0939 \u091F\u0948\u0917 \u0928\u093E\u092E \u092A\u0939\u0932\u0947 \u0938\u0947 \u092E\u094C\u091C\u0942\u0926 \u0939\u0948",
     "history.noTags": "\u0905\u092D\u0940 \u0915\u094B\u0908 \u091F\u0948\u0917 \u0928\u0939\u0940\u0902",
@@ -13434,6 +13476,10 @@
     "history.unfavoriteSelected": "B\u1ECF y\xEAu th\xEDch",
     "history.organizeSelected": "S\u1EAFp x\u1EBFp",
     "history.exitSelection": "Tho\xE1t ch\u1ECDn nhi\u1EC1u",
+    "history.multiSelect": "Ch\u1ECDn nhi\u1EC1u",
+    "history.multiSelectDone": "Xong",
+    "history.selectAll": "Ch\u1ECDn t\u1EA5t c\u1EA3",
+    "history.deselectAll": "B\u1ECF ch\u1ECDn t\u1EA5t c\u1EA3",
     "history.organizationFailed": "Kh\xF4ng th\u1EC3 c\u1EADp nh\u1EADt m\u1EE5c y\xEAu th\xEDch ho\u1EB7c nh\xE3n",
     "history.tagNameConflict": "T\xEAn nh\xE3n n\xE0y \u0111\xE3 t\u1ED3n t\u1EA1i",
     "history.noTags": "Ch\u01B0a c\xF3 nh\xE3n",
@@ -14713,6 +14759,10 @@
     "history.unfavoriteSelected": "\u53D6\u6D88\u6536\u85CF",
     "history.organizeSelected": "\u6574\u7406",
     "history.exitSelection": "\u9000\u51FA\u6279\u91CF\u9009\u62E9",
+    "history.multiSelect": "\u591A\u9009",
+    "history.multiSelectDone": "\u5B8C\u6210",
+    "history.selectAll": "\u5168\u9009",
+    "history.deselectAll": "\u53D6\u6D88\u5168\u9009",
     "history.organizationFailed": "\u6536\u85CF\u6216\u6807\u7B7E\u66F4\u65B0\u5931\u8D25",
     "history.tagNameConflict": "\u8FD9\u4E2A\u6807\u7B7E\u540D\u79F0\u5DF2\u5B58\u5728",
     "history.noTags": "\u8FD8\u6CA1\u6709\u6807\u7B7E",
@@ -15964,6 +16014,10 @@
     "history.unfavoriteSelected": "\u53D6\u6D88\u6536\u85CF",
     "history.organizeSelected": "\u6574\u7406",
     "history.exitSelection": "\u7D50\u675F\u6279\u91CF\u9078\u64C7",
+    "history.multiSelect": "\u591A\u9078",
+    "history.multiSelectDone": "\u5B8C\u6210",
+    "history.selectAll": "\u5168\u9078",
+    "history.deselectAll": "\u53D6\u6D88\u5168\u9078",
     "history.organizationFailed": "\u6536\u85CF\u6216\u6A19\u7C64\u66F4\u65B0\u5931\u6557",
     "history.tagNameConflict": "\u9019\u500B\u6A19\u7C64\u540D\u7A31\u5DF2\u5B58\u5728",
     "history.noTags": "\u9084\u6C92\u6709\u6A19\u7C64",
@@ -17243,6 +17297,10 @@
     "history.unfavoriteSelected": "\u53D6\u6D88\u6536\u85CF",
     "history.organizeSelected": "\u6574\u7406",
     "history.exitSelection": "\u7D50\u675F\u6279\u6B21\u9078\u53D6",
+    "history.multiSelect": "\u591A\u9078",
+    "history.multiSelectDone": "\u5B8C\u6210",
+    "history.selectAll": "\u5168\u9078",
+    "history.deselectAll": "\u53D6\u6D88\u5168\u9078",
     "history.organizationFailed": "\u6536\u85CF\u6216\u6A19\u7C64\u66F4\u65B0\u5931\u6557",
     "history.tagNameConflict": "\u9019\u500B\u6A19\u7C64\u540D\u7A31\u5DF2\u5B58\u5728",
     "history.noTags": "\u9084\u6C92\u6709\u6A19\u7C64",
@@ -19496,6 +19554,7 @@
     >
       ${favoriteButton}
       <button class="history-task-open" type="button" data-history-task-id="${taskId}" aria-label="${escapeHtml3(accessibleLabel)}" aria-pressed="${selected ? "true" : "false"}">
+        <span class="history-task-check" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
         <span class="history-task-thumb">
           ${stackLayers}
           <span class="history-task-thumb-frame">${thumb}</span>
@@ -20797,6 +20856,7 @@
       if (!els10.detail) return;
       const resolution = historySelectionDetailResolution({
         selectedCount: deps.selection.snapshot().selectedTaskIds.size,
+        selectionMode: deps.selection.snapshot().selectionMode,
         selectedTaskId: deps.selection.snapshot().selectedTaskId,
         detailTaskId: String(detailTask?.task_id || "")
       });
@@ -23885,7 +23945,7 @@
     }
     if (action.type === "context-delete") return { ...state6, selectedTaskIds: new Set(action.ids) };
     if (action.type === "failed") {
-      return { selectedTaskIds: new Set(action.ids), selectedTaskId: action.ids[0] || "", selectionAnchorTaskId: action.ids[0] || "", selectionMode: action.ids.length ? state6.selectionMode : false };
+      return { selectedTaskIds: new Set(action.ids), selectedTaskId: action.ids[0] || "", selectionAnchorTaskId: action.ids[0] || "", selectionMode: state6.selectionMode };
     }
     if (action.type === "replace") {
       const ids2 = new Set(action.ids.filter(Boolean));
@@ -35455,6 +35515,12 @@
     filtersBackdrop: document.querySelector("#historyFiltersBackdrop"),
     selectionDock: document.querySelector("#historySelectionDock"),
     selectionDockCount: document.querySelector("#historySelectionDockCount"),
+    selectionDockSelectAll: document.querySelector("#historySelectionDockSelectAll"),
+    selectionDockDelete: document.querySelector("#historySelectionDockDelete"),
+    selectionDockDone: document.querySelector("#historySelectionDockDone"),
+    selectionDockActions: document.querySelector("#historySelectionDock [data-history-open-selection-actions]"),
+    selectModeButton: document.querySelector("#historySelectModeButton"),
+    selectModeLabel: document.querySelector("#historySelectModeLabel"),
     taskList: document.querySelector("#historyTaskList"),
     detail: document.querySelector("#historyDetail"),
     refresh: document.querySelector("#historyRefreshButton"),
@@ -35519,11 +35585,17 @@
     details.syncHistorySelectionDetail();
   }
   function reconcileHistoryTaskSelection() {
+    const keepSelectionMode = selection.snapshot().selectionMode;
     applyHistoryTaskSelection(
       [...selection.snapshot().selectedTaskIds],
       selection.snapshot().selectionAnchorTaskId,
       selection.snapshot().selectedTaskId
     );
+    if (keepSelectionMode && !selection.snapshot().selectionMode) {
+      selection.dispatch({ type: "enter-touch" });
+      renderBulkToolbar();
+      details.syncHistorySelectionDetail();
+    }
     if (!selection.snapshot().selectedTaskId) {
       els9.page?.classList.remove("history-detail-open");
     }
@@ -35590,16 +35662,55 @@
     applyHistoryTaskSelection(taskIds, taskIds[0], taskIds[0]);
     return true;
   }
+  function enterHistorySelectionMode() {
+    selection.dispatch({ type: "enter-touch" });
+    actions.clearHistoryDeleteConfirmation();
+    els9.page?.classList.remove("history-detail-open");
+    updateTaskSelectionVisuals();
+    renderBulkToolbar();
+    details.syncHistorySelectionDetail();
+  }
+  function toggleAllVisibleHistoryTasks() {
+    const visibleIds = historySelectAllTaskIds(visibleHistoryTaskIds());
+    const selectedIds = selection.snapshot().selectedTaskIds;
+    const allSelected = visibleIds.length > 0 && visibleIds.every((taskId) => selectedIds.has(taskId));
+    applyHistoryTaskSelection(allSelected ? [] : visibleIds, visibleIds[0] || "", visibleIds[0] || "");
+    if (allSelected) enterHistorySelectionMode();
+  }
   function renderBulkToolbar() {
     const count = selection.snapshot().selectedTaskIds.size;
+    const selectionMode = selection.snapshot().selectionMode;
+    const showDock = count > 0 || selectionMode;
     els9.page?.classList.toggle("history-bulk-selecting", count > 1 || selection.snapshot().selectionMode);
     els9.page?.classList.toggle("history-selection-mode", selection.snapshot().selectionMode);
-    els9.selectionDock?.classList.toggle("hidden", count === 0);
-    els9.selectionDock?.toggleAttribute("hidden", count === 0);
+    els9.selectionDock?.classList.toggle("hidden", !showDock);
+    els9.selectionDock?.toggleAttribute("hidden", !showDock);
     setText(
       els9.selectionDockCount,
-      count ? formatTranslation("history.selectedCount", { count }) : ""
+      showDock ? formatTranslation("history.selectedCount", { count }) : ""
     );
+    els9.selectModeButton?.setAttribute("aria-pressed", selectionMode ? "true" : "false");
+    els9.selectModeButton?.classList.toggle("active", selectionMode);
+    setText(els9.selectModeLabel, translate(selectionMode ? "history.multiSelectDone" : "history.multiSelect"));
+    const visibleIds = historySelectAllTaskIds(visibleHistoryTaskIds());
+    const allVisibleSelected = visibleIds.length > 0 && visibleIds.every((taskId) => selection.snapshot().selectedTaskIds.has(taskId));
+    if (els9.selectionDockSelectAll) {
+      els9.selectionDockSelectAll.hidden = !selectionMode;
+      els9.selectionDockSelectAll.disabled = !visibleIds.length;
+      els9.selectionDockSelectAll.textContent = translate(allVisibleSelected ? "history.deselectAll" : "history.selectAll");
+    }
+    if (els9.selectionDockDelete) {
+      const confirming = actions.confirmations().deleteConfirming;
+      els9.selectionDockDelete.hidden = !selectionMode;
+      els9.selectionDockDelete.disabled = count === 0;
+      els9.selectionDockDelete.classList.toggle("confirming", confirming);
+      els9.selectionDockDelete.textContent = translate(confirming ? "history.confirmDelete" : "action.delete");
+    }
+    if (els9.selectionDockDone) {
+      els9.selectionDockDone.hidden = !selectionMode;
+      els9.selectionDockDone.textContent = translate("history.multiSelectDone");
+    }
+    if (els9.selectionDockActions) els9.selectionDockActions.disabled = count === 0;
     if (!count) {
       details.resetActionPanel();
       organizer.closeHistoryOrganizePicker({ restoreFocus: false });
@@ -35645,10 +35756,17 @@
       }
       const enterSelectionMode = target?.closest("[data-history-enter-selection-mode]");
       if (enterSelectionMode) {
-        selection.dispatch({ type: "enter-touch" });
-        renderBulkToolbar();
-        details.renderHistoryManagementDetail();
+        enterHistorySelectionMode();
         focusHistoryTaskButton(visibleHistoryTaskIds()[0] || "");
+        return;
+      }
+      if (target?.closest("[data-history-toggle-selection-mode]")) {
+        if (selection.snapshot().selectionMode) clearHistoryTaskSelection();
+        else enterHistorySelectionMode();
+        return;
+      }
+      if (target?.closest("[data-history-select-all]")) {
+        toggleAllVisibleHistoryTasks();
         return;
       }
       if (target?.closest("[data-history-exit-selection-mode]")) {

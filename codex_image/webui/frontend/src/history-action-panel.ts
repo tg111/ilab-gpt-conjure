@@ -4,14 +4,18 @@ export type HistorySelectionDetailResolution = "selection" | "task" | "load-task
 
 export function historySelectionDetailResolution({
   selectedCount,
+  selectionMode = false,
   selectedTaskId,
   detailTaskId,
 }: {
   selectedCount: number;
+  selectionMode?: boolean;
   selectedTaskId: string;
   detailTaskId: string;
 }): HistorySelectionDetailResolution {
   if (selectedCount > 1) return "selection";
+  // Multi-select mode never opens a task detail: on narrow screens that drawer would cover the grid.
+  if (selectionMode && selectedCount === 1) return "selection";
   if (!selectedTaskId) return "management";
   return detailTaskId === selectedTaskId ? "task" : "load-task";
 }

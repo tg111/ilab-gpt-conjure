@@ -57,6 +57,7 @@ export function historyTaskCardHtml(task: HistoryTask, selection: { selectedTask
     >
       ${favoriteButton}
       <button class="history-task-open" type="button" data-history-task-id="${taskId}" aria-label="${escapeHtml(accessibleLabel)}" aria-pressed="${selected ? "true" : "false"}">
+        <span class="history-task-check" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
         <span class="history-task-thumb">
           ${stackLayers}
           <span class="history-task-thumb-frame">${thumb}</span>

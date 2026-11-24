@@ -37,7 +37,7 @@ export function reduceHistorySelection(state: HistorySelectionState, action: His
   }
   if (action.type === "context-delete") return { ...state, selectedTaskIds: new Set(action.ids) };
   if (action.type === "failed") {
-    return { selectedTaskIds: new Set(action.ids), selectedTaskId: action.ids[0] || "", selectionAnchorTaskId: action.ids[0] || "", selectionMode: action.ids.length ? state.selectionMode : false };
+    return { selectedTaskIds: new Set(action.ids), selectedTaskId: action.ids[0] || "", selectionAnchorTaskId: action.ids[0] || "", selectionMode: state.selectionMode };
   }
   if (action.type === "replace") {
     const ids = new Set(action.ids.filter(Boolean));

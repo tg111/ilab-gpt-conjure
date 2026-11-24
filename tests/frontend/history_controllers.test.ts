@@ -55,6 +55,14 @@ test("touch mode survives toggling the last item off and exits on explicit reset
   assert.equal(model.snapshot().selectionMode, true); assert.equal(model.snapshot().selectedTaskIds.size, 0);
   model.dispatch({ type: "reset" }); assert.equal(model.snapshot().selectionMode, false);
 });
+test("multi-select mode survives a bulk delete that empties the selection", () => {
+  const model = createHistorySelectionModel(); model.dispatch({ type: "enter-touch" });
+  model.dispatch({ type: "replace", ids: ["a", "b"], anchor: "a", primary: "a" });
+  model.dispatch({ type: "failed", ids: [] });
+  assert.equal(model.snapshot().selectionMode, true); assert.equal(model.snapshot().selectedTaskIds.size, 0);
+  model.dispatch({ type: "failed", ids: ["b"] });
+  assert.deepEqual([...model.snapshot().selectedTaskIds], ["b"]); assert.equal(model.snapshot().selectionMode, true);
+});
 test("a stale list response cannot commit or clear the loading state of a newer query", async t => {
   environment(t); const a = deferred<Response>(), b = deferred<Response>(); let n = 0;
   t.mock.method(globalThis, "fetch", () => (++n === 1 ? a.promise : b.promise));
