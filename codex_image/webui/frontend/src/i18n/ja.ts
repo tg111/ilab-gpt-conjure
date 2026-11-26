@@ -1160,7 +1160,7 @@ export const JA_DICTIONARY: TranslationDictionary = {
     "lanAccess.copyAddress": "{address} をコピー",
     "lanAccess.copyManually": "アドレスを選択しました。手動でコピーしてください。",
     "lanAccess.failed": "アクセス設定を読み込みまたは保存できませんでした。再試行してください。",
-    "lanAccess.help": "ログイン不要です。同じネットワークの利用者はタスク、ギャラリー、プロバイダーを共有し、設定変更やタスク削除も行えます。",
+    "lanAccess.help": "アクセスパスワードでのログインが必要です。ログインした同じネットワークの利用者はタスク、ギャラリー、プロバイダーを共有し、設定変更やタスク削除も行えます。",
     "lanAccess.hostOverride": "起動時のホスト指定により、この端末のみアクセス可能です。--host を外して再起動してください。",
     "lanAccess.label": "LAN アクセスを許可",
     "lanAccess.loading": "アクセス設定を読み込み中…",

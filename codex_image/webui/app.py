@@ -84,6 +84,7 @@ from .recovery import (
 )
 from .schemas import (
     DEFAULT_WEBUI_AUTH_SETTINGS_PATH,
+    DEFAULT_WEBUI_LOGIN_SETTINGS_PATH,
     DEFAULT_WEBUI_API_SETTINGS_PATH,
     DEFAULT_WEBUI_COLOR_SETTINGS_PATH,
     DEFAULT_WEBUI_GALLERY_SUBDIR,
@@ -119,6 +120,7 @@ from .settings_store import (
     _parse_color_palette_import,
 )
 from .security import LocalWebUISecurityMiddleware
+from .login import LoginGateMiddleware, LoginStore, register_login_routes
 from .lan_access import LanAccessRuntime
 from .state_sync import StateSyncClock
 from .routes.lan_access import register_lan_access_routes
@@ -277,6 +279,8 @@ def create_app(
     auto_start_queue: bool = True,
     auto_retry: bool = False,
     enforce_single_instance: bool = False,
+    require_login: bool = False,
+    login_settings_path: Path | str = DEFAULT_WEBUI_LOGIN_SETTINGS_PATH,
 ) -> FastAPI:
     settings = WebUISettings(Path(webui_settings_path))
     configured_paths = settings.read_paths()
@@ -400,6 +404,13 @@ def create_app(
     app.state.webui_shutdown_coordinator = ShutdownCoordinator()
     app.state.state_sync_clock = StateSyncClock()
     app.state.lan_access = LanAccessRuntime(enabled=settings.read_lan_access_enabled())
+    login_page_path = static_path / "login.html"
+    if require_login:
+        login_store = LoginStore(Path(login_settings_path))
+        app.state.login_store = login_store
+        # Added before the security middleware so host/origin checks still run first.
+        app.add_middleware(LoginGateMiddleware, store=login_store, login_page=login_page_path)
+        register_login_routes(app, login_store, login_page_path)
     app.add_middleware(LocalWebUISecurityMiddleware, lan_access=app.state.lan_access)
     ctx = WebUIContext(
         app=app,
@@ -814,5 +825,5 @@ def __getattr__(name: str) -> Any:
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
     global _runtime_app
     if _runtime_app is None:
-        _runtime_app = create_app(enforce_single_instance=True)
+        _runtime_app = create_app(enforce_single_instance=True, require_login=True)
     return _runtime_app

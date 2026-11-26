@@ -51,7 +51,7 @@ export const VI_DICTIONARY: TranslationDictionary = {
     "mobile.manualCopy": "Nhấn giữ để sao chép",
     "mobile.copyHint": "Không thể tự động sao chép. Chọn văn bản bên dưới để sao chép.",
     "lanAccess.label": "Cho phép truy cập mạng LAN",
-    "lanAccess.help": "Không cần đăng nhập. Người dùng trong cùng mạng dùng chung tác vụ, thư viện và nhà cung cấp, đồng thời có thể sửa cài đặt và xóa tác vụ.",
+    "lanAccess.help": "Cần đăng nhập bằng mật khẩu truy cập. Người dùng đã đăng nhập trong cùng mạng dùng chung tác vụ, thư viện và nhà cung cấp, đồng thời có thể sửa cài đặt và xóa tác vụ.",
     "lanAccess.loading": "Đang đọc cài đặt truy cập…",
     "lanAccess.saving": "Đang lưu…",
     "lanAccess.localOnly": "Chỉ thiết bị này có thể truy cập WebUI.",

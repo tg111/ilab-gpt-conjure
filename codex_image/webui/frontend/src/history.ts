@@ -1,3 +1,4 @@
+import "./login-guard";
 import {
   shouldClearHistoryTaskFromBlankSurface,
   type HistoryDetailMode

@@ -3,6 +3,32 @@
   var __defNormalProp = (obj, key2, value) => key2 in obj ? __defProp(obj, key2, { enumerable: true, configurable: true, writable: true, value }) : obj[key2] = value;
   var __publicField = (obj, key2, value) => __defNormalProp(obj, typeof key2 !== "symbol" ? key2 + "" : key2, value);
 
+  // codex_image/webui/frontend/src/login-guard.ts
+  var LOGIN_REQUIRED_HEADER = "X-Conjure-Login";
+  var redirecting = false;
+  function returnToSignIn() {
+    if (redirecting) return;
+    redirecting = true;
+    window.location.reload();
+  }
+  function installLoginGuard() {
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = async (...args) => {
+      const response = await originalFetch(...args);
+      if (response.status === 401 && response.headers.get(LOGIN_REQUIRED_HEADER) === "required") {
+        returnToSignIn();
+      }
+      return response;
+    };
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "visible") return;
+      originalFetch("/api/login/status", { cache: "no-store", credentials: "same-origin" }).then((response) => response.ok ? response.json() : null).then((status) => {
+        if (status && status.configured && !status.authenticated) returnToSignIn();
+      }).catch(() => void 0);
+    });
+  }
+  installLoginGuard();
+
   // codex_image/webui/frontend/src/overlay-focus.ts
   var layerSelector = ".modal-overlay, .resource-sheet, .confirm-popover, .history-lightbox, .history-export-picker, .history-tag-picker, .history-organize-picker, .task-context-menu, .mobile-sheet, #compactTaskDrawer, #historyDetail";
   var focusSelector = 'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
@@ -209,7 +235,7 @@
     "mobile.manualCopy": "Touch and hold to copy",
     "mobile.copyHint": "Automatic copying is unavailable. Select the text below to copy it.",
     "lanAccess.label": "Allow LAN access",
-    "lanAccess.help": "No sign-in. People on the same network share tasks, the gallery and providers, including changing settings and deleting tasks.",
+    "lanAccess.help": "Sign-in uses the access password. Signed-in people on the same network share tasks, the gallery and providers, including changing settings and deleting tasks.",
     "lanAccess.loading": "Loading access settings\u2026",
     "lanAccess.saving": "Saving\u2026",
     "lanAccess.localOnly": "Only this device can access WebUI.",
@@ -2601,7 +2627,7 @@
     "lanAccess.copyAddress": "{address} kopieren",
     "lanAccess.copyManually": "Adresse ausgew\xE4hlt. Bitte manuell kopieren.",
     "lanAccess.failed": "Zugriffseinstellungen konnten nicht gelesen oder gespeichert werden. Erneut versuchen.",
-    "lanAccess.help": "Keine Anmeldung. Personen im selben Netzwerk teilen Aufgaben, Galerie und Anbieter und k\xF6nnen Einstellungen \xE4ndern sowie Aufgaben l\xF6schen.",
+    "lanAccess.help": "Anmeldung mit dem Zugangspasswort. Angemeldete Personen im selben Netzwerk teilen Aufgaben, Galerie und Anbieter und k\xF6nnen Einstellungen \xE4ndern sowie Aufgaben l\xF6schen.",
     "lanAccess.hostOverride": "Die Host-Startoption beschr\xE4nkt den Zugriff auf dieses Ger\xE4t. --host entfernen und neu starten.",
     "lanAccess.label": "LAN-Zugriff erlauben",
     "lanAccess.loading": "Zugriffseinstellungen werden geladen\u2026",
@@ -3884,7 +3910,7 @@
     "lanAccess.copyAddress": "Copiar {address}",
     "lanAccess.copyManually": "Direcci\xF3n seleccionada. C\xF3piala manualmente.",
     "lanAccess.failed": "No se pudieron leer o guardar los ajustes de acceso. Int\xE9ntalo de nuevo.",
-    "lanAccess.help": "Sin inicio de sesi\xF3n. Las personas de la misma red comparten tareas, galer\xEDa y proveedores, y pueden cambiar ajustes y borrar tareas.",
+    "lanAccess.help": "Se inicia sesi\xF3n con la contrase\xF1a de acceso. Las personas conectadas de la misma red comparten tareas, galer\xEDa y proveedores, y pueden cambiar ajustes y borrar tareas.",
     "lanAccess.hostOverride": "La opci\xF3n de host al iniciar limita el acceso a este dispositivo. Quita --host y reinicia.",
     "lanAccess.label": "Permitir acceso LAN",
     "lanAccess.loading": "Cargando ajustes de acceso\u2026",
@@ -5167,7 +5193,7 @@
     "lanAccess.copyAddress": "Copier {address}",
     "lanAccess.copyManually": "Adresse s\xE9lectionn\xE9e. Copiez-la manuellement.",
     "lanAccess.failed": "Impossible de lire ou d\u2019enregistrer les param\xE8tres d\u2019acc\xE8s. R\xE9essayez.",
-    "lanAccess.help": "Sans connexion. Les personnes du m\xEAme r\xE9seau partagent les t\xE2ches, la galerie et les fournisseurs, et peuvent modifier les param\xE8tres ou supprimer des t\xE2ches.",
+    "lanAccess.help": "Connexion avec le mot de passe d\u2019acc\xE8s. Les personnes connect\xE9es du m\xEAme r\xE9seau partagent les t\xE2ches, la galerie et les fournisseurs, et peuvent modifier les param\xE8tres ou supprimer des t\xE2ches.",
     "lanAccess.hostOverride": "L\u2019option de d\xE9marrage du serveur limite l\u2019acc\xE8s \xE0 cet appareil. Retirez --host et red\xE9marrez.",
     "lanAccess.label": "Autoriser l\u2019acc\xE8s LAN",
     "lanAccess.loading": "Chargement des param\xE8tres d\u2019acc\xE8s\u2026",
@@ -6450,7 +6476,7 @@
     "lanAccess.copyAddress": "{address} \u3092\u30B3\u30D4\u30FC",
     "lanAccess.copyManually": "\u30A2\u30C9\u30EC\u30B9\u3092\u9078\u629E\u3057\u307E\u3057\u305F\u3002\u624B\u52D5\u3067\u30B3\u30D4\u30FC\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "lanAccess.failed": "\u30A2\u30AF\u30BB\u30B9\u8A2D\u5B9A\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u305F\u306F\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-    "lanAccess.help": "\u30ED\u30B0\u30A4\u30F3\u4E0D\u8981\u3067\u3059\u3002\u540C\u3058\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u5229\u7528\u8005\u306F\u30BF\u30B9\u30AF\u3001\u30AE\u30E3\u30E9\u30EA\u30FC\u3001\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u5171\u6709\u3057\u3001\u8A2D\u5B9A\u5909\u66F4\u3084\u30BF\u30B9\u30AF\u524A\u9664\u3082\u884C\u3048\u307E\u3059\u3002",
+    "lanAccess.help": "\u30A2\u30AF\u30BB\u30B9\u30D1\u30B9\u30EF\u30FC\u30C9\u3067\u306E\u30ED\u30B0\u30A4\u30F3\u304C\u5FC5\u8981\u3067\u3059\u3002\u30ED\u30B0\u30A4\u30F3\u3057\u305F\u540C\u3058\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u5229\u7528\u8005\u306F\u30BF\u30B9\u30AF\u3001\u30AE\u30E3\u30E9\u30EA\u30FC\u3001\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u5171\u6709\u3057\u3001\u8A2D\u5B9A\u5909\u66F4\u3084\u30BF\u30B9\u30AF\u524A\u9664\u3082\u884C\u3048\u307E\u3059\u3002",
     "lanAccess.hostOverride": "\u8D77\u52D5\u6642\u306E\u30DB\u30B9\u30C8\u6307\u5B9A\u306B\u3088\u308A\u3001\u3053\u306E\u7AEF\u672B\u306E\u307F\u30A2\u30AF\u30BB\u30B9\u53EF\u80FD\u3067\u3059\u3002--host \u3092\u5916\u3057\u3066\u518D\u8D77\u52D5\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "lanAccess.label": "LAN \u30A2\u30AF\u30BB\u30B9\u3092\u8A31\u53EF",
     "lanAccess.loading": "\u30A2\u30AF\u30BB\u30B9\u8A2D\u5B9A\u3092\u8AAD\u307F\u8FBC\u307F\u4E2D\u2026",
@@ -7733,7 +7759,7 @@
     "lanAccess.copyAddress": "{address} \uBCF5\uC0AC",
     "lanAccess.copyManually": "\uC8FC\uC18C\uB97C \uC120\uD0DD\uD588\uC2B5\uB2C8\uB2E4. \uC9C1\uC811 \uBCF5\uC0AC\uD558\uC138\uC694.",
     "lanAccess.failed": "\uC811\uC18D \uC124\uC815\uC744 \uC77D\uAC70\uB098 \uC800\uC7A5\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
-    "lanAccess.help": "\uB85C\uADF8\uC778\uC774 \uD544\uC694 \uC5C6\uC2B5\uB2C8\uB2E4. \uAC19\uC740 \uB124\uD2B8\uC6CC\uD06C\uC758 \uC0AC\uC6A9\uC790\uB294 \uC791\uC5C5, \uAC24\uB7EC\uB9AC, \uACF5\uAE09\uC790\uB97C \uACF5\uC720\uD558\uBA70 \uC124\uC815 \uBCC0\uACBD\uACFC \uC791\uC5C5 \uC0AD\uC81C\uB3C4 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+    "lanAccess.help": "\uC811\uADFC \uBE44\uBC00\uBC88\uD638\uB85C \uB85C\uADF8\uC778\uD574\uC57C \uD569\uB2C8\uB2E4. \uB85C\uADF8\uC778\uD55C \uAC19\uC740 \uB124\uD2B8\uC6CC\uD06C\uC758 \uC0AC\uC6A9\uC790\uB294 \uC791\uC5C5, \uAC24\uB7EC\uB9AC, \uACF5\uAE09\uC790\uB97C \uACF5\uC720\uD558\uBA70 \uC124\uC815 \uBCC0\uACBD\uACFC \uC791\uC5C5 \uC0AD\uC81C\uB3C4 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
     "lanAccess.hostOverride": "\uC2DC\uC791 \uC2DC \uC9C0\uC815\uD55C \uD638\uC2A4\uD2B8\uAC00 \uC811\uC18D\uC744 \uC774 \uAE30\uAE30\uB85C \uC81C\uD55C\uD569\uB2C8\uB2E4. --host\uB97C \uC81C\uAC70\uD558\uACE0 \uB2E4\uC2DC \uC2DC\uC791\uD558\uC138\uC694.",
     "lanAccess.label": "LAN \uC811\uC18D \uD5C8\uC6A9",
     "lanAccess.loading": "\uC811\uC18D \uC124\uC815 \uBD88\uB7EC\uC624\uB294 \uC911\u2026",
@@ -9016,7 +9042,7 @@
     "lanAccess.copyAddress": "Copiar {address}",
     "lanAccess.copyManually": "Endere\xE7o selecionado. Copie manualmente.",
     "lanAccess.failed": "N\xE3o foi poss\xEDvel ler ou salvar as configura\xE7\xF5es de acesso. Tente novamente.",
-    "lanAccess.help": "Sem login. Pessoas na mesma rede compartilham tarefas, galeria e fornecedores e podem alterar configura\xE7\xF5es e excluir tarefas.",
+    "lanAccess.help": "Login com a senha de acesso. Pessoas conectadas na mesma rede compartilham tarefas, galeria e fornecedores e podem alterar configura\xE7\xF5es e excluir tarefas.",
     "lanAccess.hostOverride": "A op\xE7\xE3o de host na inicializa\xE7\xE3o restringe o acesso a este dispositivo. Remova --host e reinicie.",
     "lanAccess.label": "Permitir acesso LAN",
     "lanAccess.loading": "Carregando configura\xE7\xF5es de acesso\u2026",
@@ -10299,7 +10325,7 @@
     "lanAccess.copyAddress": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C {address}",
     "lanAccess.copyManually": "\u0410\u0434\u0440\u0435\u0441 \u0432\u044B\u0434\u0435\u043B\u0435\u043D. \u0421\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435 \u0435\u0433\u043E \u0432\u0440\u0443\u0447\u043D\u0443\u044E.",
     "lanAccess.failed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0438\u043B\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0434\u043E\u0441\u0442\u0443\u043F\u0430. \u041F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
-    "lanAccess.help": "\u0412\u0445\u043E\u0434 \u043D\u0435 \u0442\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F. \u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438 \u043E\u0434\u043D\u043E\u0439 \u0441\u0435\u0442\u0438 \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442 \u0437\u0430\u0434\u0430\u0447\u0438, \u0433\u0430\u043B\u0435\u0440\u0435\u044E \u0438 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u043E\u0432, \u043C\u043E\u0433\u0443\u0442 \u043C\u0435\u043D\u044F\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0438 \u0443\u0434\u0430\u043B\u044F\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0438.",
+    "lanAccess.help": "\u0412\u0445\u043E\u0434 \u043F\u043E \u043F\u0430\u0440\u043E\u043B\u044E \u0434\u043E\u0441\u0442\u0443\u043F\u0430. \u0412\u043E\u0448\u0435\u0434\u0448\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438 \u043E\u0434\u043D\u043E\u0439 \u0441\u0435\u0442\u0438 \u0441\u043E\u0432\u043C\u0435\u0441\u0442\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442 \u0437\u0430\u0434\u0430\u0447\u0438, \u0433\u0430\u043B\u0435\u0440\u0435\u044E \u0438 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u043E\u0432, \u043C\u043E\u0433\u0443\u0442 \u043C\u0435\u043D\u044F\u0442\u044C \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u0438 \u0443\u0434\u0430\u043B\u044F\u0442\u044C \u0437\u0430\u0434\u0430\u0447\u0438.",
     "lanAccess.hostOverride": "\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440 \u0445\u043E\u0441\u0442\u0430 \u043F\u0440\u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0438\u0432\u0430\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F \u044D\u0442\u0438\u043C \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u043E\u043C. \u0423\u0431\u0435\u0440\u0438\u0442\u0435 --host \u0438 \u043F\u0435\u0440\u0435\u0437\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0435.",
     "lanAccess.label": "\u0420\u0430\u0437\u0440\u0435\u0448\u0438\u0442\u044C \u0434\u043E\u0441\u0442\u0443\u043F \u043F\u043E LAN",
     "lanAccess.loading": "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u043E\u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0430\u2026",
@@ -11582,7 +11608,7 @@
     "lanAccess.copyAddress": "Copia {address}",
     "lanAccess.copyManually": "Indirizzo selezionato. Copialo manualmente.",
     "lanAccess.failed": "Impossibile leggere o salvare le impostazioni di accesso. Riprova.",
-    "lanAccess.help": "Nessun accesso richiesto. Le persone sulla stessa rete condividono attivit\xE0, galleria e fornitori e possono cambiare impostazioni ed eliminare attivit\xE0.",
+    "lanAccess.help": "Accesso con la password di accesso. Le persone collegate sulla stessa rete condividono attivit\xE0, galleria e fornitori e possono cambiare impostazioni ed eliminare attivit\xE0.",
     "lanAccess.hostOverride": "L'opzione host all'avvio limita l'accesso a questo dispositivo. Rimuovi --host e riavvia.",
     "lanAccess.label": "Consenti accesso LAN",
     "lanAccess.loading": "Caricamento impostazioni di accesso\u2026",
@@ -12865,7 +12891,7 @@
     "lanAccess.copyAddress": "{address} \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902",
     "lanAccess.copyManually": "\u092A\u0924\u093E \u091A\u0941\u0928\u093E \u0917\u092F\u093E\u0964 \u0907\u0938\u0947 \u092E\u0948\u0928\u094D\u092F\u0941\u0905\u0932 \u0930\u0942\u092A \u0938\u0947 \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902\u0964",
     "lanAccess.failed": "\u092A\u0939\u0941\u0901\u091A \u0938\u0947\u091F\u093F\u0902\u0917 \u092A\u0922\u093C\u0940 \u092F\u093E \u0938\u0939\u0947\u091C\u0940 \u0928\u0939\u0940\u0902 \u091C\u093E \u0938\u0915\u0940\u0902\u0964 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
-    "lanAccess.help": "\u0932\u0949\u0917\u093F\u0928 \u0906\u0935\u0936\u094D\u092F\u0915 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u090F\u0915 \u0939\u0940 \u0928\u0947\u091F\u0935\u0930\u094D\u0915 \u0915\u0947 \u0932\u094B\u0917 \u0915\u093E\u0930\u094D\u092F, \u0917\u0948\u0932\u0930\u0940 \u0914\u0930 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u093E\u091D\u093E \u0915\u0930\u0924\u0947 \u0939\u0948\u0902; \u0935\u0947 \u0938\u0947\u091F\u093F\u0902\u0917 \u092C\u0926\u0932 \u0914\u0930 \u0915\u093E\u0930\u094D\u092F \u0939\u091F\u093E \u092D\u0940 \u0938\u0915\u0924\u0947 \u0939\u0948\u0902\u0964",
+    "lanAccess.help": "\u090F\u0915\u094D\u0938\u0947\u0938 \u092A\u093E\u0938\u0935\u0930\u094D\u0921 \u0938\u0947 \u0932\u0949\u0917\u093F\u0928 \u0915\u0930\u0928\u093E \u0939\u094B\u0924\u093E \u0939\u0948\u0964 \u0932\u0949\u0917\u093F\u0928 \u0915\u093F\u090F \u0939\u0941\u090F, \u090F\u0915 \u0939\u0940 \u0928\u0947\u091F\u0935\u0930\u094D\u0915 \u0915\u0947 \u0932\u094B\u0917 \u0915\u093E\u0930\u094D\u092F, \u0917\u0948\u0932\u0930\u0940 \u0914\u0930 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u093E\u091D\u093E \u0915\u0930\u0924\u0947 \u0939\u0948\u0902; \u0935\u0947 \u0938\u0947\u091F\u093F\u0902\u0917 \u092C\u0926\u0932 \u0914\u0930 \u0915\u093E\u0930\u094D\u092F \u0939\u091F\u093E \u092D\u0940 \u0938\u0915\u0924\u0947 \u0939\u0948\u0902\u0964",
     "lanAccess.hostOverride": "\u0938\u094D\u091F\u093E\u0930\u094D\u091F\u0905\u092A \u0939\u094B\u0938\u094D\u091F \u0935\u093F\u0915\u0932\u094D\u092A \u092A\u0939\u0941\u0901\u091A \u0915\u094B \u0907\u0938 \u0921\u093F\u0935\u093E\u0907\u0938 \u0924\u0915 \u0938\u0940\u092E\u093F\u0924 \u0915\u0930\u0924\u093E \u0939\u0948\u0964 --host \u0939\u091F\u093E\u0915\u0930 \u092A\u0941\u0928\u0903 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902\u0964",
     "lanAccess.label": "LAN \u092A\u0939\u0941\u0901\u091A \u0915\u0940 \u0905\u0928\u0941\u092E\u0924\u093F \u0926\u0947\u0902",
     "lanAccess.loading": "\u092A\u0939\u0941\u0901\u091A \u0938\u0947\u091F\u093F\u0902\u0917 \u0932\u094B\u0921 \u0939\u094B \u0930\u0939\u0940 \u0939\u0948\u0902\u2026",
@@ -13039,7 +13065,7 @@
     "mobile.manualCopy": "Nh\u1EA5n gi\u1EEF \u0111\u1EC3 sao ch\xE9p",
     "mobile.copyHint": "Kh\xF4ng th\u1EC3 t\u1EF1 \u0111\u1ED9ng sao ch\xE9p. Ch\u1ECDn v\u0103n b\u1EA3n b\xEAn d\u01B0\u1EDBi \u0111\u1EC3 sao ch\xE9p.",
     "lanAccess.label": "Cho ph\xE9p truy c\u1EADp m\u1EA1ng LAN",
-    "lanAccess.help": "Kh\xF4ng c\u1EA7n \u0111\u0103ng nh\u1EADp. Ng\u01B0\u1EDDi d\xF9ng trong c\xF9ng m\u1EA1ng d\xF9ng chung t\xE1c v\u1EE5, th\u01B0 vi\u1EC7n v\xE0 nh\xE0 cung c\u1EA5p, \u0111\u1ED3ng th\u1EDDi c\xF3 th\u1EC3 s\u1EEDa c\xE0i \u0111\u1EB7t v\xE0 x\xF3a t\xE1c v\u1EE5.",
+    "lanAccess.help": "C\u1EA7n \u0111\u0103ng nh\u1EADp b\u1EB1ng m\u1EADt kh\u1EA9u truy c\u1EADp. Ng\u01B0\u1EDDi d\xF9ng \u0111\xE3 \u0111\u0103ng nh\u1EADp trong c\xF9ng m\u1EA1ng d\xF9ng chung t\xE1c v\u1EE5, th\u01B0 vi\u1EC7n v\xE0 nh\xE0 cung c\u1EA5p, \u0111\u1ED3ng th\u1EDDi c\xF3 th\u1EC3 s\u1EEDa c\xE0i \u0111\u1EB7t v\xE0 x\xF3a t\xE1c v\u1EE5.",
     "lanAccess.loading": "\u0110ang \u0111\u1ECDc c\xE0i \u0111\u1EB7t truy c\u1EADp\u2026",
     "lanAccess.saving": "\u0110ang l\u01B0u\u2026",
     "lanAccess.localOnly": "Ch\u1EC9 thi\u1EBFt b\u1ECB n\xE0y c\xF3 th\u1EC3 truy c\u1EADp WebUI.",
@@ -14322,7 +14348,7 @@
     "mobile.manualCopy": "\u957F\u6309\u590D\u5236",
     "mobile.copyHint": "\u6682\u65F6\u65E0\u6CD5\u81EA\u52A8\u590D\u5236\uFF0C\u8BF7\u957F\u6309\u4E0B\u65B9\u6587\u5B57\u590D\u5236\u3002",
     "lanAccess.label": "\u5141\u8BB8\u5C40\u57DF\u7F51\u8BBF\u95EE",
-    "lanAccess.help": "\u65E0\u9700\u767B\u5F55\u3002\u540C\u4E00\u7F51\u7EDC\u4E2D\u7684\u7528\u6237\u5171\u7528\u4EFB\u52A1\u3001\u56FE\u5E93\u548C\u4F9B\u5E94\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8BBE\u7F6E\u548C\u5220\u9664\u4EFB\u52A1\u3002",
+    "lanAccess.help": "\u9700\u8981\u7528\u8BBF\u95EE\u5BC6\u7801\u767B\u5F55\u3002\u767B\u5F55\u540E\uFF0C\u540C\u4E00\u7F51\u7EDC\u4E2D\u7684\u7528\u6237\u5171\u7528\u4EFB\u52A1\u3001\u56FE\u5E93\u548C\u4F9B\u5E94\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8BBE\u7F6E\u548C\u5220\u9664\u4EFB\u52A1\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8BFB\u53D6\u8BBF\u95EE\u8BBE\u7F6E\u2026",
     "lanAccess.saving": "\u6B63\u5728\u4FDD\u5B58\u2026",
     "lanAccess.localOnly": "\u5F53\u524D\u4EC5\u5141\u8BB8\u672C\u673A\u8BBF\u95EE\u3002",
@@ -15607,7 +15633,7 @@
     "mobile.manualCopy": "\u9577\u6309\u8907\u88FD",
     "mobile.copyHint": "\u66AB\u6642\u7121\u6CD5\u81EA\u52D5\u8907\u88FD\uFF0C\u8ACB\u9577\u6309\u4E0B\u65B9\u6587\u5B57\u8907\u88FD\u3002",
     "lanAccess.label": "\u5141\u8A31\u5340\u57DF\u7DB2\u7D61\u5B58\u53D6",
-    "lanAccess.help": "\u7121\u9700\u767B\u5165\u3002\u540C\u4E00\u7DB2\u7D61\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
+    "lanAccess.help": "\u9700\u8981\u7528\u5B58\u53D6\u5BC6\u78BC\u767B\u5165\u3002\u767B\u5165\u5F8C\uFF0C\u540C\u4E00\u7DB2\u7D61\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8B80\u53D6\u5B58\u53D6\u8A2D\u5B9A\u2026",
     "lanAccess.saving": "\u6B63\u5728\u5132\u5B58\u2026",
     "lanAccess.localOnly": "\u76EE\u524D\u50C5\u5141\u8A31\u672C\u6A5F\u5B58\u53D6\u3002",
@@ -16890,7 +16916,7 @@
     "mobile.manualCopy": "\u9577\u6309\u8907\u88FD",
     "mobile.copyHint": "\u66AB\u6642\u7121\u6CD5\u81EA\u52D5\u8907\u88FD\uFF0C\u8ACB\u9577\u6309\u4E0B\u65B9\u6587\u5B57\u8907\u88FD\u3002",
     "lanAccess.label": "\u5141\u8A31\u5340\u57DF\u7DB2\u8DEF\u5B58\u53D6",
-    "lanAccess.help": "\u7121\u9700\u767B\u5165\u3002\u540C\u4E00\u7DB2\u8DEF\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
+    "lanAccess.help": "\u9700\u8981\u7528\u5B58\u53D6\u5BC6\u78BC\u767B\u5165\u3002\u767B\u5165\u5F8C\uFF0C\u540C\u4E00\u7DB2\u8DEF\u4E2D\u7684\u4F7F\u7528\u8005\u5171\u7528\u4EFB\u52D9\u3001\u5716\u5EAB\u548C\u4F9B\u61C9\u5546\uFF0C\u4E5F\u53EF\u4EE5\u4FEE\u6539\u8A2D\u5B9A\u548C\u522A\u9664\u4EFB\u52D9\u3002",
     "lanAccess.loading": "\u6B63\u5728\u8B80\u53D6\u5B58\u53D6\u8A2D\u5B9A\u2026",
     "lanAccess.saving": "\u6B63\u5728\u5132\u5B58\u2026",
     "lanAccess.localOnly": "\u76EE\u524D\u50C5\u5141\u8A31\u672C\u6A5F\u5B58\u53D6\u3002",
@@ -23392,7 +23418,7 @@
     });
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Global.js
+  // node_modules/konva/lib/Global.js
   var PI_OVER_180 = Math.PI / 180;
   function detectBrowser() {
     return typeof window !== "undefined" && ({}.toString.call(window) === "[object Window]" || {}.toString.call(window) === "[object global]");
@@ -23453,7 +23479,7 @@
   };
   Konva._injectGlobal(Konva);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Util.js
+  // node_modules/konva/lib/Util.js
   var NODE_ERROR = `Konva.js unsupported environment.
 
 Looks like you are trying to use Konva.js in Node.js environment. because "document" object is undefined.
@@ -24335,7 +24361,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Context.js
+  // node_modules/konva/lib/Context.js
   function simplifyArray(arr) {
     const retArr = [], len = arr.length, util = Util;
     for (let n = 0; n < len; n++) {
@@ -24884,7 +24910,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Canvas.js
+  // node_modules/konva/lib/Canvas.js
   var _pixelRatio;
   function getDevicePixelRatio() {
     if (_pixelRatio) {
@@ -24981,7 +25007,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/DragAndDrop.js
+  // node_modules/konva/lib/DragAndDrop.js
   var DD = {
     get isDragging() {
       let flag = false;
@@ -25093,7 +25119,7 @@ js: import "konva/skia-backend";
     window.addEventListener("touchcancel", DD._endDragAfter, false);
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Validators.js
+  // node_modules/konva/lib/Validators.js
   function _formatValue(val) {
     if (Util._isString(val)) {
       return '"' + val + '"';
@@ -25215,7 +25241,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Factory.js
+  // node_modules/konva/lib/Factory.js
   var GET = "get";
   var SET = "set";
   var Factory = {
@@ -25331,7 +25357,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Node.js
+  // node_modules/konva/lib/Node.js
   function parseCSSFilters(cssFilter) {
     const filterRegex = /(\w+)\(([^)]+)\)/g;
     let match;
@@ -26836,7 +26862,7 @@ js: import "konva/skia-backend";
     getRotationDeg: "getRotation"
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Container.js
+  // node_modules/konva/lib/Container.js
   var Container = class extends Node2 {
     constructor() {
       super(...arguments);
@@ -27143,7 +27169,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Container, "clipHeight", void 0, getNumberValidator());
   Factory.addGetterSetter(Container, "clipFunc");
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/PointerEvents.js
+  // node_modules/konva/lib/PointerEvents.js
   var Captures = /* @__PURE__ */ new Map();
   var SUPPORT_POINTER_EVENTS = Konva._global["PointerEvent"] !== void 0;
   function getCapturedShape(pointerId) {
@@ -27181,7 +27207,7 @@ js: import "konva/skia-backend";
     }
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Stage.js
+  // node_modules/konva/lib/Stage.js
   var STAGE2 = "Stage";
   var STRING = "string";
   var PX = "px";
@@ -27895,7 +27921,7 @@ js: import "konva/skia-backend";
     });
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Shape.js
+  // node_modules/konva/lib/Shape.js
   var HAS_SHADOW = "hasShadow";
   var SHADOW_RGBA = "shadowRGBA";
   var patternImage = "patternImage";
@@ -28420,7 +28446,7 @@ js: import "konva/skia-backend";
     setDrawHitFunc: "setHitFunc"
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Layer.js
+  // node_modules/konva/lib/Layer.js
   var BEFORE_DRAW = "beforeDraw";
   var DRAW = "draw";
   var INTERSECTION_OFFSETS = [
@@ -28715,7 +28741,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Layer, "clearBeforeDraw", true);
   Factory.addGetterSetter(Layer, "hitGraphEnabled", true, getBooleanValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/FastLayer.js
+  // node_modules/konva/lib/FastLayer.js
   var FastLayer = class extends Layer {
     constructor(attrs) {
       super(attrs);
@@ -28726,7 +28752,7 @@ js: import "konva/skia-backend";
   FastLayer.prototype.nodeType = "FastLayer";
   _registerNode(FastLayer);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Group.js
+  // node_modules/konva/lib/Group.js
   var Group = class extends Container {
     _validateAdd(child) {
       const type = child.getType();
@@ -28738,7 +28764,7 @@ js: import "konva/skia-backend";
   Group.prototype.nodeType = "Group";
   _registerNode(Group);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Animation.js
+  // node_modules/konva/lib/Animation.js
   var now = (function() {
     if (glob.performance && glob.performance.now) {
       return function() {
@@ -28878,7 +28904,7 @@ js: import "konva/skia-backend";
   Animation.animIdCounter = 0;
   Animation.animRunning = false;
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/Tween.js
+  // node_modules/konva/lib/Tween.js
   var blacklist = {
     node: 1,
     duration: 1,
@@ -29357,7 +29383,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/_CoreInternals.js
+  // node_modules/konva/lib/_CoreInternals.js
   var Konva2 = Util._assign(Konva, {
     Util,
     Transform,
@@ -29378,7 +29404,7 @@ js: import "konva/skia-backend";
     Canvas
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arc.js
+  // node_modules/konva/lib/shapes/Arc.js
   var Arc = class extends Shape {
     _sceneFunc(context) {
       const angle = Konva.getAngle(this.angle()), clockwise = this.clockwise();
@@ -29435,7 +29461,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arc, "angle", 0, getNumberValidator());
   Factory.addGetterSetter(Arc, "clockwise", false, getBooleanValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Line.js
+  // node_modules/konva/lib/shapes/Line.js
   function getControlPoints(x0, y0, x1, y1, x2, y2, t) {
     const d01 = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)), d12 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)), fa = t * d01 / (d01 + d12), fb = t * d12 / (d01 + d12), p1x = x1 - fa * (x2 - x0), p1y = y1 - fa * (y2 - y0), p2x = x1 + fb * (x2 - x0), p2y = y1 + fb * (y2 - y0);
     return [p1x, p1y, p2x, p2y];
@@ -29614,7 +29640,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Line, "tension", 0, getNumberValidator());
   Factory.addGetterSetter(Line, "points", [], getNumberArrayValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/BezierFunctions.js
+  // node_modules/konva/lib/BezierFunctions.js
   var tValues = [
     [],
     [],
@@ -30402,7 +30428,7 @@ js: import "konva/skia-backend";
     return t;
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Path.js
+  // node_modules/konva/lib/shapes/Path.js
   var Path = class _Path extends Shape {
     constructor(config) {
       super(config);
@@ -31058,7 +31084,7 @@ js: import "konva/skia-backend";
   _registerNode(Path);
   Factory.addGetterSetter(Path, "data");
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Arrow.js
+  // node_modules/konva/lib/shapes/Arrow.js
   var Arrow = class extends Line {
     _sceneFunc(ctx) {
       super._sceneFunc(ctx);
@@ -31152,7 +31178,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Arrow, "pointerAtBeginning", false);
   Factory.addGetterSetter(Arrow, "pointerAtEnding", true);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Circle.js
+  // node_modules/konva/lib/shapes/Circle.js
   var Circle = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -31183,7 +31209,7 @@ js: import "konva/skia-backend";
   _registerNode(Circle);
   Factory.addGetterSetter(Circle, "radius", 0, getNumberValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ellipse.js
+  // node_modules/konva/lib/shapes/Ellipse.js
   var Ellipse = class extends Shape {
     _sceneFunc(context) {
       const rx = this.radiusX(), ry = this.radiusY();
@@ -31218,7 +31244,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ellipse, "radiusX", 0, getNumberValidator());
   Factory.addGetterSetter(Ellipse, "radiusY", 0, getNumberValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Image.js
+  // node_modules/konva/lib/shapes/Image.js
   var Image2 = class _Image extends Shape {
     constructor(attrs) {
       super(attrs);
@@ -31342,7 +31368,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Image2, "cropWidth", 0, getNumberValidator());
   Factory.addGetterSetter(Image2, "cropHeight", 0, getNumberValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Label.js
+  // node_modules/konva/lib/shapes/Label.js
   var ATTR_CHANGE_LIST = [
     "fontFamily",
     "fontSize",
@@ -31511,7 +31537,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Tag, "pointerHeight", 0, getNumberValidator());
   Factory.addGetterSetter(Tag, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Rect.js
+  // node_modules/konva/lib/shapes/Rect.js
   var Rect = class extends Shape {
     _sceneFunc(context) {
       const cornerRadius = this.cornerRadius(), width = this.width(), height = this.height();
@@ -31529,7 +31555,7 @@ js: import "konva/skia-backend";
   _registerNode(Rect);
   Factory.addGetterSetter(Rect, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/RegularPolygon.js
+  // node_modules/konva/lib/shapes/RegularPolygon.js
   var RegularPolygon = class extends Shape {
     _sceneFunc(context) {
       const points = this._getPoints(), radius = this.radius(), sides = this.sides(), cornerRadius = this.cornerRadius();
@@ -31597,7 +31623,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(RegularPolygon, "sides", 0, getNumberValidator());
   Factory.addGetterSetter(RegularPolygon, "cornerRadius", 0, getNumberOrArrayOfNumbersValidator(4));
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Ring.js
+  // node_modules/konva/lib/shapes/Ring.js
   var PIx2 = Math.PI * 2;
   var Ring = class extends Shape {
     _sceneFunc(context) {
@@ -31628,7 +31654,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Ring, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Ring, "outerRadius", 0, getNumberValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Sprite.js
+  // node_modules/konva/lib/shapes/Sprite.js
   var Sprite = class extends Shape {
     constructor(config) {
       super(config);
@@ -31730,7 +31756,7 @@ js: import "konva/skia-backend";
     setIndex: "setFrameIndex"
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Star.js
+  // node_modules/konva/lib/shapes/Star.js
   var Star = class extends Shape {
     _sceneFunc(context) {
       const innerRadius = this.innerRadius(), outerRadius = this.outerRadius(), numPoints = this.numPoints();
@@ -31766,7 +31792,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Star, "innerRadius", 0, getNumberValidator());
   Factory.addGetterSetter(Star, "outerRadius", 0, getNumberValidator());
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Text.js
+  // node_modules/konva/lib/shapes/Text.js
   function stringToArray(string) {
     return [...string].reduce((acc, char, index, array) => {
       if (/\p{Emoji}/u.test(char)) {
@@ -32241,7 +32267,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Text, "underlineOffset", void 0, getNumberValidator());
   Factory.addGetterSetter(Text, "charRenderFunc", void 0);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/TextPath.js
+  // node_modules/konva/lib/shapes/TextPath.js
   var EMPTY_STRING2 = "";
   var NORMAL2 = "normal";
   function _fillFunc3(context) {
@@ -32510,7 +32536,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(TextPath, "kerningFunc", void 0);
   Factory.addGetterSetter(TextPath, "direction", "inherit");
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Transformer.js
+  // node_modules/konva/lib/shapes/Transformer.js
   var EVENTS_NAME = "tr-konva";
   var ATTR_CHANGE_LIST3 = [
     "resizeEnabledChange",
@@ -33503,7 +33529,7 @@ js: import "konva/skia-backend";
     enabledHandlers: "enabledAnchors"
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/shapes/Wedge.js
+  // node_modules/konva/lib/shapes/Wedge.js
   var Wedge = class extends Shape {
     _sceneFunc(context) {
       context.beginPath();
@@ -33538,7 +33564,7 @@ js: import "konva/skia-backend";
     setAngleDeg: "setAngle"
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Blur.js
+  // node_modules/konva/lib/filters/Blur.js
   function BlurStack() {
     this.r = 0;
     this.g = 0;
@@ -34230,7 +34256,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "blurRadius", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Brighten.js
+  // node_modules/konva/lib/filters/Brighten.js
   var Brighten = function(imageData) {
     const brightness = this.brightness() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -34241,7 +34267,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "brightness", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Brightness.js
+  // node_modules/konva/lib/filters/Brightness.js
   var Brightness = function(imageData) {
     const brightness = this.brightness(), data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -34251,7 +34277,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Contrast.js
+  // node_modules/konva/lib/filters/Contrast.js
   var Contrast = function(imageData) {
     const adjust = Math.pow((this.contrast() + 100) / 100, 2);
     const data = imageData.data, nPixels = data.length;
@@ -34285,7 +34311,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "contrast", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Emboss.js
+  // node_modules/konva/lib/filters/Emboss.js
   var Emboss = function(imageData) {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;
     const data = imageData.data;
@@ -34384,7 +34410,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "embossDirection", "top-left", void 0, Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "embossBlend", false, void 0, Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Enhance.js
+  // node_modules/konva/lib/filters/Enhance.js
   function remap(fromValue, fromMin, fromMax, toMin, toMax) {
     const fromRange = fromMax - fromMin, toRange = toMax - toMin;
     if (fromRange === 0) {
@@ -34463,7 +34489,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "enhance", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Grayscale.js
+  // node_modules/konva/lib/filters/Grayscale.js
   var Grayscale = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -34474,7 +34500,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/HSL.js
+  // node_modules/konva/lib/filters/HSL.js
   Factory.addGetterSetter(Node2, "hue", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "luminance", 0, getNumberValidator(), Factory.afterSetFilter);
@@ -34497,7 +34523,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/HSV.js
+  // node_modules/konva/lib/filters/HSV.js
   var HSV = function(imageData) {
     const data = imageData.data, nPixels = data.length, v = Math.pow(2, this.value()), s = Math.pow(2, this.saturation()), h = Math.abs(this.hue() + 360) % 360;
     const vsu = v * s * Math.cos(h * Math.PI / 180), vsw = v * s * Math.sin(h * Math.PI / 180);
@@ -34519,7 +34545,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "saturation", 0, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "value", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Invert.js
+  // node_modules/konva/lib/filters/Invert.js
   var Invert = function(imageData) {
     const data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 4) {
@@ -34529,7 +34555,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Kaleidoscope.js
+  // node_modules/konva/lib/filters/Kaleidoscope.js
   var ToPolar = function(src, dst, opt) {
     const srcPixels = src.data, dstPixels = dst.data, xSize = src.width, ySize = src.height, xMid = opt.polarCenterX || xSize / 2, yMid = opt.polarCenterY || ySize / 2;
     let rMax = Math.sqrt(xMid * xMid + yMid * yMid);
@@ -34658,7 +34684,7 @@ js: import "konva/skia-backend";
   Factory.addGetterSetter(Node2, "kaleidoscopePower", 2, getNumberValidator(), Factory.afterSetFilter);
   Factory.addGetterSetter(Node2, "kaleidoscopeAngle", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Mask.js
+  // node_modules/konva/lib/filters/Mask.js
   function pixelAt(idata, x, y) {
     let idx = (y * idata.width + x) * 4;
     const d = [];
@@ -34803,7 +34829,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Noise.js
+  // node_modules/konva/lib/filters/Noise.js
   var Noise = function(imageData) {
     const amount = this.noise() * 255, data = imageData.data, nPixels = data.length, half = amount / 2;
     for (let i = 0; i < nPixels; i += 4) {
@@ -34814,7 +34840,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "noise", 0.2, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Pixelate.js
+  // node_modules/konva/lib/filters/Pixelate.js
   var Pixelate = function(imageData) {
     let pixelSize = Math.ceil(this.pixelSize()), width = imageData.width, height = imageData.height, nBinsX = Math.ceil(width / pixelSize), nBinsY = Math.ceil(height / pixelSize), data = imageData.data;
     if (pixelSize <= 0) {
@@ -34872,7 +34898,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "pixelSize", 8, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Posterize.js
+  // node_modules/konva/lib/filters/Posterize.js
   var Posterize = function(imageData) {
     const levels = Math.round(this.levels() * 254) + 1, data = imageData.data, len = data.length, scale = 255 / levels;
     for (let i = 0; i < len; i += 1) {
@@ -34881,7 +34907,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "levels", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/RGB.js
+  // node_modules/konva/lib/filters/RGB.js
   var RGB = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue();
     for (let i = 0; i < nPixels; i += 4) {
@@ -34914,7 +34940,7 @@ js: import "konva/skia-backend";
   });
   Factory.addGetterSetter(Node2, "blue", 0, RGBComponent, Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/RGBA.js
+  // node_modules/konva/lib/filters/RGBA.js
   var RGBA = function(imageData) {
     const data = imageData.data, nPixels = data.length, red = this.red(), green = this.green(), blue = this.blue(), alpha = this.alpha();
     for (let i = 0; i < nPixels; i += 4) {
@@ -34956,7 +34982,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Sepia.js
+  // node_modules/konva/lib/filters/Sepia.js
   var Sepia = function(imageData) {
     const data = imageData.data, nPixels = data.length;
     for (let i = 0; i < nPixels; i += 4) {
@@ -34969,7 +34995,7 @@ js: import "konva/skia-backend";
     }
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Solarize.js
+  // node_modules/konva/lib/filters/Solarize.js
   var Solarize = function(imageData) {
     const threshold = 128;
     const d = imageData.data;
@@ -34985,7 +35011,7 @@ js: import "konva/skia-backend";
     return imageData;
   };
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/filters/Threshold.js
+  // node_modules/konva/lib/filters/Threshold.js
   var Threshold = function(imageData) {
     const level = this.threshold() * 255, data = imageData.data, len = data.length;
     for (let i = 0; i < len; i += 1) {
@@ -34994,7 +35020,7 @@ js: import "konva/skia-backend";
   };
   Factory.addGetterSetter(Node2, "threshold", 0.5, getNumberValidator(), Factory.afterSetFilter);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/_FullInternals.js
+  // node_modules/konva/lib/_FullInternals.js
   var Konva3 = Konva2.Util._assign(Konva2, {
     Arc,
     Arrow,
@@ -35038,7 +35064,7 @@ js: import "konva/skia-backend";
     }
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/konva/lib/index.js
+  // node_modules/konva/lib/index.js
   var lib_default = Konva3;
 
   // codex_image/webui/frontend/src/image-editor-canvas.ts
@@ -44363,7 +44389,7 @@ ${hint}` : hint);
     Object.assign(methods, { refreshLanAccess });
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/_u64.js
+  // node_modules/@noble/hashes/_u64.js
   var fromNumH = (n) => n / 2 ** 32 | 0;
   var fromNumL = (n) => n >>> 0;
   function setU64FromNum(view, byteOffset, n, isLE) {
@@ -44373,7 +44399,7 @@ ${hint}` : hint);
     view.setUint32(byteOffset + 4, isLE ? h : l, isLE);
   }
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/utils.js
+  // node_modules/@noble/hashes/utils.js
   function isBytes(a) {
     return a instanceof Uint8Array || ArrayBuffer.isView(a) && a.constructor.name === "Uint8Array" && "BYTES_PER_ELEMENT" in a && a.BYTES_PER_ELEMENT === 1;
   }
@@ -44460,7 +44486,7 @@ ${hint}` : hint);
     oid: Uint8Array.from([6, 9, 96, 134, 72, 1, 101, 3, 4, 2, suffix])
   });
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/_md.js
+  // node_modules/@noble/hashes/_md.js
   function Chi(a, b, c) {
     return a & b ^ ~a & c;
   }
@@ -44573,7 +44599,7 @@ ${hint}` : hint);
     1541459225
   ]);
 
-  // D:/code/ai/ilab-gpt-conjure/node_modules/@noble/hashes/sha2.js
+  // node_modules/@noble/hashes/sha2.js
   var SHA256_K = /* @__PURE__ */ Uint32Array.from([
     1116352408,
     1899447441,

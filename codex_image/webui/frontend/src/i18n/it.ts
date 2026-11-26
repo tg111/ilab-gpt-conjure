@@ -1160,7 +1160,7 @@ export const IT_DICTIONARY: TranslationDictionary = {
     "lanAccess.copyAddress": "Copia {address}",
     "lanAccess.copyManually": "Indirizzo selezionato. Copialo manualmente.",
     "lanAccess.failed": "Impossibile leggere o salvare le impostazioni di accesso. Riprova.",
-    "lanAccess.help": "Nessun accesso richiesto. Le persone sulla stessa rete condividono attività, galleria e fornitori e possono cambiare impostazioni ed eliminare attività.",
+    "lanAccess.help": "Accesso con la password di accesso. Le persone collegate sulla stessa rete condividono attività, galleria e fornitori e possono cambiare impostazioni ed eliminare attività.",
     "lanAccess.hostOverride": "L'opzione host all'avvio limita l'accesso a questo dispositivo. Rimuovi --host e riavvia.",
     "lanAccess.label": "Consenti accesso LAN",
     "lanAccess.loading": "Caricamento impostazioni di accesso…",

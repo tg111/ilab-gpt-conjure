@@ -1,3 +1,4 @@
+import "./login-guard";
 import { initOverlayFocus } from "./overlay-focus";
 import { installThumbnailFallback } from "./image-fallback";
 import { initCompactWorkspace } from "./compact-workspace";

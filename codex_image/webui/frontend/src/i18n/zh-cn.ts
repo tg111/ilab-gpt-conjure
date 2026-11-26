@@ -51,7 +51,7 @@ export const ZH_CN_DICTIONARY: TranslationDictionary = {
     "mobile.manualCopy": "长按复制",
     "mobile.copyHint": "暂时无法自动复制，请长按下方文字复制。",
     "lanAccess.label": "允许局域网访问",
-    "lanAccess.help": "无需登录。同一网络中的用户共用任务、图库和供应商，也可以修改设置和删除任务。",
+    "lanAccess.help": "需要用访问密码登录。登录后，同一网络中的用户共用任务、图库和供应商，也可以修改设置和删除任务。",
     "lanAccess.loading": "正在读取访问设置…",
     "lanAccess.saving": "正在保存…",
     "lanAccess.localOnly": "当前仅允许本机访问。",

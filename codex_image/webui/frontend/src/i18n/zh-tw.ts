@@ -53,7 +53,7 @@ export const ZH_TW_DICTIONARY: TranslationDictionary = {
     "mobile.manualCopy": "長按複製",
     "mobile.copyHint": "暫時無法自動複製，請長按下方文字複製。",
     "lanAccess.label": "允許區域網路存取",
-    "lanAccess.help": "無需登入。同一網路中的使用者共用任務、圖庫和供應商，也可以修改設定和刪除任務。",
+    "lanAccess.help": "需要用存取密碼登入。登入後，同一網路中的使用者共用任務、圖庫和供應商，也可以修改設定和刪除任務。",
     "lanAccess.loading": "正在讀取存取設定…",
     "lanAccess.saving": "正在儲存…",
     "lanAccess.localOnly": "目前僅允許本機存取。",

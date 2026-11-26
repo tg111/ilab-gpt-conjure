@@ -1160,7 +1160,7 @@ export const KO_DICTIONARY: TranslationDictionary = {
     "lanAccess.copyAddress": "{address} 복사",
     "lanAccess.copyManually": "주소를 선택했습니다. 직접 복사하세요.",
     "lanAccess.failed": "접속 설정을 읽거나 저장하지 못했습니다. 다시 시도하세요.",
-    "lanAccess.help": "로그인이 필요 없습니다. 같은 네트워크의 사용자는 작업, 갤러리, 공급자를 공유하며 설정 변경과 작업 삭제도 할 수 있습니다.",
+    "lanAccess.help": "접근 비밀번호로 로그인해야 합니다. 로그인한 같은 네트워크의 사용자는 작업, 갤러리, 공급자를 공유하며 설정 변경과 작업 삭제도 할 수 있습니다.",
     "lanAccess.hostOverride": "시작 시 지정한 호스트가 접속을 이 기기로 제한합니다. --host를 제거하고 다시 시작하세요.",
     "lanAccess.label": "LAN 접속 허용",
     "lanAccess.loading": "접속 설정 불러오는 중…",

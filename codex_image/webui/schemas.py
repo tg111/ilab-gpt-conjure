@@ -15,6 +15,7 @@ DEFAULT_WEBUI_GALLERY_ROOT = DEFAULT_WEBUI_INPUT_ROOT / DEFAULT_WEBUI_GALLERY_SU
 DEFAULT_WEBUI_SOURCE_DATA_ROOT = DEFAULT_WEBUI_OUTPUT_ROOT / DEFAULT_WEBUI_SOURCE_DATA_SUBDIR
 DEFAULT_WEBUI_SETTINGS_PATH = Path("output") / "webui-settings.json"
 DEFAULT_WEBUI_AUTH_SETTINGS_PATH = Path("output") / "webui-auth-settings.json"
+DEFAULT_WEBUI_LOGIN_SETTINGS_PATH = Path("output") / "webui-login.json"
 DEFAULT_WEBUI_API_SETTINGS_PATH = Path("output") / "webui-api-settings.json"
 DEFAULT_WEBUI_COLOR_SETTINGS_PATH = Path("output") / "webui-color-settings.json"
 DEFAULT_WEBUI_NETWORK_EGRESS_SETTINGS_PATH = Path("output") / "webui-network-egress-settings.json"

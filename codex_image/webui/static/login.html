@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#457B66" />
+    <meta name="robots" content="noindex" />
+    <title>登录 - iLab CONJURE</title>
+    <link rel="icon" type="image/svg+xml" href="/static/brand/favicon.svg" />
+    <script>
+      (() => {
+        let preference = "system";
+        try {
+          const stored = localStorage.getItem("codex-image-theme-preference");
+          if (stored === "light" || stored === "dark" || stored === "system") preference = stored;
+        } catch {}
+        const systemDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+        document.documentElement.dataset.theme = preference === "system" ? (systemDark ? "dark" : "light") : preference;
+      })();
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f3f6f4;
+        --surface: #ffffff;
+        --surface-soft: #f8faf9;
+        --line: #e2e8e5;
+        --text: #1f352f;
+        --text-secondary: #4a635b;
+        --text-muted: #586e65;
+        --control-border: #83978e;
+        --primary: #457b66;
+        --primary-foreground: #ffffff;
+        --primary-strong: #335d4d;
+        --primary-light: #e6f0ec;
+        --danger: #a6463d;
+        --danger-soft: #fff4f2;
+        --shadow: 0 24px 80px rgba(24, 45, 39, 0.14);
+        --font: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #101815;
+        --surface: #17221e;
+        --surface-soft: #1e2b26;
+        --line: #31433b;
+        --text: #e7f0ec;
+        --text-secondary: #b9cac2;
+        --text-muted: #92a69d;
+        --control-border: #72877c;
+        --primary: #72b79b;
+        --primary-foreground: #10201b;
+        --primary-strong: #a6d8c5;
+        --primary-light: #243d34;
+        --danger: #e18479;
+        --danger-soft: #3a201d;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px 16px;
+        background:
+          radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--primary) 10%, transparent) 1px, transparent 1.6px) 0 0 / 18px 18px,
+          linear-gradient(135deg, color-mix(in srgb, var(--primary-light) 40%, transparent), transparent 55%),
+          var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      .login-card {
+        width: min(380px, 100%);
+        padding: 30px 28px 26px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+      }
+      .login-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .login-brand img { width: 34px; height: 34px; }
+      .login-brand span { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; }
+      h1 { margin: 0 0 6px; font-size: 20px; font-weight: 700; }
+      .login-lede { margin: 0 0 20px; color: var(--text-secondary); font-size: 13px; }
+      form { display: grid; gap: 14px; }
+      label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+      input {
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid var(--control-border);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: 15px;
+      }
+      input:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--primary) 76%, transparent);
+        outline-offset: 1px;
+        border-color: var(--primary);
+      }
+      button {
+        height: 44px;
+        margin-top: 4px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 140ms ease;
+      }
+      button:hover { background: var(--primary-strong); }
+      button:disabled { opacity: 0.6; cursor: progress; }
+      .login-error {
+        min-height: 0;
+        margin: 0;
+        padding: 9px 12px;
+        border-radius: 8px;
+        background: var(--danger-soft);
+        color: var(--danger);
+        font-size: 13px;
+      }
+      .login-error:empty { display: none; }
+      .login-note {
+        margin: 0;
+        padding: 12px;
+        border-radius: 8px;
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      [hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <main class="login-card" aria-live="polite">
+      <div class="login-brand">
+        <img src="/static/brand/rabbit-logo.svg" alt="" />
+        <span>iLab CONJURE</span>
+      </div>
+      <h1 id="loginTitle">登录</h1>
+      <p id="loginLede" class="login-lede"></p>
+
+      <form id="loginForm" hidden novalidate>
+        <label>
+          <span id="passwordLabel">密码</span>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <label id="confirmRow" hidden>
+          <span id="confirmLabel">再输入一次</span>
+          <input id="confirmPassword" name="confirm" type="password" autocomplete="new-password" />
+        </label>
+        <p id="loginError" class="login-error" role="alert"></p>
+        <button id="submitButton" type="submit">登录</button>
+      </form>
+      <p id="setupBlocked" class="login-note" hidden></p>
+    </main>
+    <script>
+      (() => {
+        const STRINGS = {
+          "zh-CN": {
+            signIn: "登录", signInLede: "输入访问密码继续。", setupTitle: "设置访问密码",
+            setupLede: "首次使用，请设置一个访问密码，以后打开 WebUI 时用它登录。", password: "密码",
+            newPassword: "新密码", confirm: "再输入一次", setupSubmit: "设置并进入", signingIn: "正在登录…",
+            saving: "正在保存…", empty: "请输入密码。", mismatch: "两次输入的密码不一致。",
+            wrong: "密码不正确。", tooMany: "尝试次数过多，请 5 分钟后再试。",
+            setupLocalOnly: "还没有设置访问密码。请在运行 WebUI 的这台电脑上打开本页面，先设置密码。",
+            failed: "请求失败，请稍后重试。"
+          },
+          "zh-TW": {
+            signIn: "登入", signInLede: "輸入存取密碼以繼續。", setupTitle: "設定存取密碼",
+            setupLede: "首次使用，請設定一個存取密碼，之後開啟 WebUI 時用它登入。", password: "密碼",
+            newPassword: "新密碼", confirm: "再輸入一次", setupSubmit: "設定並進入", signingIn: "正在登入…",
+            saving: "正在儲存…", empty: "請輸入密碼。", mismatch: "兩次輸入的密碼不一致。",
+            wrong: "密碼不正確。", tooMany: "嘗試次數過多，請 5 分鐘後再試。",
+            setupLocalOnly: "尚未設定存取密碼。請在執行 WebUI 的這台電腦上開啟本頁面，先設定密碼。",
+            failed: "請求失敗，請稍後重試。"
+          },
+          en: {
+            signIn: "Sign in", signInLede: "Enter the access password to continue.", setupTitle: "Set an access password",
+            setupLede: "First time here. Choose an access password; you'll use it to sign in to the WebUI from now on.",
+            password: "Password", newPassword: "New password", confirm: "Type it again", setupSubmit: "Save and continue",
+            signingIn: "Signing in…", saving: "Saving…", empty: "Enter a password.", mismatch: "The passwords don't match.",
+            wrong: "Wrong password.", tooMany: "Too many attempts. Try again in 5 minutes.",
+            setupLocalOnly: "No access password has been set yet. Open this page on the computer running the WebUI to set one first.",
+            failed: "Request failed. Try again shortly."
+          }
+        };
+        function pickLocale() {
+          let value = "";
+          try { value = localStorage.getItem("codex-image-locale-preference") || ""; } catch {}
+          if (!value) value = navigator.language || "zh-CN";
+          const lower = value.toLowerCase();
+          if (lower === "zh-tw" || lower === "zh-hk" || lower.startsWith("zh-hant") || lower.startsWith("zh-mo")) return "zh-TW";
+          if (lower.startsWith("zh")) return "zh-CN";
+          return "en";
+        }
+        const locale = pickLocale();
+        const t = STRINGS[locale];
+        document.documentElement.lang = locale;
+
+        const $ = (id) => document.getElementById(id);
+        const form = $("loginForm");
+        const password = $("password");
+        const confirm = $("confirmPassword");
+        const error = $("loginError");
+        const submit = $("submitButton");
+        let mode = "login";
+
+        const target = location.pathname === "/login" ? "/" : location.pathname + location.search + location.hash;
+        const enter = () => location.replace(target);
+
+        function render(status) {
+          if (status.authenticated) { enter(); return; }
+          const setup = !status.configured;
+          mode = setup ? "setup" : "login";
+          $("loginTitle").textContent = setup ? t.setupTitle : t.signIn;
+          document.title = (setup ? t.setupTitle : t.signIn) + " - iLab CONJURE";
+          if (setup && !status.setup_allowed) {
+            $("loginLede").textContent = "";
+            $("setupBlocked").textContent = t.setupLocalOnly;
+            $("setupBlocked").hidden = false;
+            form.hidden = true;
+            return;
+          }
+          $("loginLede").textContent = setup ? t.setupLede : t.signInLede;
+          $("passwordLabel").textContent = setup ? t.newPassword : t.password;
+          $("confirmLabel").textContent = t.confirm;
+          $("confirmRow").hidden = !setup;
+          password.autocomplete = setup ? "new-password" : "current-password";
+          submit.textContent = setup ? t.setupSubmit : t.signIn;
+          form.hidden = false;
+          password.focus();
+        }
+
+        async function loadStatus() {
+          try {
+            const response = await fetch("/api/login/status", { cache: "no-store", credentials: "same-origin" });
+            render(await response.json());
+          } catch {
+            render({ configured: true, authenticated: false, setup_allowed: false });
+            error.textContent = t.failed;
+          }
+        }
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          error.textContent = "";
+          const value = password.value;
+          if (!value) { error.textContent = t.empty; password.focus(); return; }
+          if (mode === "setup" && value !== confirm.value) { error.textContent = t.mismatch; confirm.focus(); return; }
+          const idleLabel = submit.textContent;
+          submit.disabled = true;
+          submit.textContent = mode === "setup" ? t.saving : t.signingIn;
+          try {
+            const response = await fetch(mode === "setup" ? "/api/login/setup" : "/api/login", {
+              method: "POST",
+              credentials: "same-origin",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ password: value })
+            });
+            if (response.ok) { enter(); return; }
+            const detail = (await response.json().catch(() => ({}))).detail;
+            if (detail === "already_configured" || detail === "setup_required") { await loadStatus(); return; }
+            error.textContent =
+              detail === "wrong_password" ? t.wrong :
+              detail === "too_many_attempts" ? t.tooMany :
+              detail === "setup_local_only" ? t.setupLocalOnly : t.failed;
+            password.select();
+          } catch {
+            error.textContent = t.failed;
+          } finally {
+            submit.disabled = false;
+            submit.textContent = idleLabel;
+          }
+        });
+
+        loadStatus();
+      })();
+    </script>
+  </body>
+</html>

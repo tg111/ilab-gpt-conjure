@@ -51,7 +51,7 @@ export const EN_DICTIONARY: TranslationDictionary = {
     "mobile.manualCopy": "Touch and hold to copy",
     "mobile.copyHint": "Automatic copying is unavailable. Select the text below to copy it.",
     "lanAccess.label": "Allow LAN access",
-    "lanAccess.help": "No sign-in. People on the same network share tasks, the gallery and providers, including changing settings and deleting tasks.",
+    "lanAccess.help": "Sign-in uses the access password. Signed-in people on the same network share tasks, the gallery and providers, including changing settings and deleting tasks.",
     "lanAccess.loading": "Loading access settings…",
     "lanAccess.saving": "Saving…",
     "lanAccess.localOnly": "Only this device can access WebUI.",
