@@ -2320,6 +2320,10 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             studio,
             r"body\[data-studio\] \.controls-col \.output-panel\s*\{[^}]*visibility:\s*hidden",
         )
+        # Clear / find / recent templates / template library stay reachable.
+        template_row = self._extract_css_block(studio, "body[data-studio] .prompt-panel .prompt-template-row")
+        self.assertNotIn("display: none", template_row)
+        self.assertRegex(studio, r"body\[data-studio\] \.compact-preview-jump\s*\{[^}]*display:\s*none")
         # Controls are moved back when leaving the desktop width.
         self.assertIn('document.createComment("studio-run-origin")', composer)
         self.assertIn("runMarker.replaceWith(runButton)", composer)

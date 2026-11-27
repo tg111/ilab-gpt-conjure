@@ -14586,8 +14586,29 @@ body[data-studio] .prompt-panel .prompt-run-wrap {
   display: none;
 }
 
-body[data-studio] .prompt-panel .prompt-template-row {
+/* The narrow-workspace "jump to preview" button: results are always on screen here. */
+body[data-studio] .compact-preview-jump {
   display: none;
+}
+
+/* Clear / find / recent templates / template library: kept, as a slim tool row. */
+body[data-studio] .prompt-panel .prompt-template-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 28px;
+  margin-top: 2px;
+}
+
+body[data-studio] .prompt-panel .prompt-template-recent-cell,
+body[data-studio] .prompt-panel .prompt-footer {
+  min-height: 28px;
+}
+
+body[data-studio] .prompt-panel .prompt-footer .ghost-button,
+body[data-studio] .prompt-panel .prompt-template-entry .prompt-template-button {
+  width: auto;
+  height: 28px;
+  min-height: 28px;
+  padding-inline: 8px;
 }
 
 /* Pill bar */
