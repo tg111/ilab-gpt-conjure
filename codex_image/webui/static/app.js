@@ -39,7 +39,7 @@
     const triggers = /* @__PURE__ */ new WeakMap();
     const narrowHistory = window.matchMedia("(max-width: 1100px)");
     const historyBackground = /* @__PURE__ */ new Map();
-    const visible = (element3) => element3.id === "historyDetail" ? narrowHistory.matches && Boolean(element3.closest(".history-detail-open")) : !element3.classList.contains("hidden") && !element3.hidden && (!element3.matches(".resource-sheet") || element3.classList.contains("open"));
+    const visible = (element5) => element5.id === "historyDetail" ? narrowHistory.matches && Boolean(element5.closest(".history-detail-open")) : !element5.classList.contains("hidden") && !element5.hidden && (!element5.matches(".resource-sheet") || element5.classList.contains("open"));
     const ownedPopovers = (root) => Array.from(root.querySelectorAll('[aria-controls][aria-expanded="true"]')).flatMap((trigger) => (trigger.getAttribute("aria-controls") || "").split(/\s+/).map((id) => document.getElementById(id))).filter((popover) => Boolean(popover && !root.contains(popover) && visible(popover) && popover.getClientRects().length));
     const containsFocus = (root, target) => root.contains(target) || ownedPopovers(root).some((popover) => popover.contains(target));
     const focusables = (root) => [root, ...ownedPopovers(root)].flatMap((layer) => Array.from(layer.querySelectorAll(focusSelector))).filter((item) => !item.closest('[inert], [hidden], .hidden, [aria-hidden="true"]') && item.getClientRects().length > 0);
@@ -260,6 +260,16 @@
     "ux.addingReference": "Adding reference\u2026",
     "ux.referenceAdded": "Added to this task\u2019s references",
     "ux.referenceFailed": "Reference could not be added. Please retry.",
+    "studio.moreParameters": "More options",
+    "studio.switchModel": "Switch model (Ctrl+M)",
+    "studio.manageProviders": "Manage providers and models",
+    "studio.recipes": "Recipes",
+    "studio.recipeEmpty": "No recipes yet. Save a model and its settings to reuse them in one click.",
+    "studio.recipeNamePlaceholder": "Recipe name, e.g. Square cover",
+    "studio.recipeSave": "Save current",
+    "studio.recipeDelete": "Delete recipe",
+    "studio.recipeDeleteNamed": "Delete recipe: {name}",
+    "studio.recipeUnavailable": "This recipe\u2019s model or provider is no longer available",
     "ux.execution": "Next generation",
     "ux.imageCount": "{count} image(s)",
     "ux.tasks": "Tasks",
@@ -2728,6 +2738,16 @@
     "ux.editInputs": "Eingaben und Einstellungen bearbeiten",
     "ux.editInputsReady": "Eingaben und Einstellungen geladen. Vor der erneuten Generierung bearbeiten.",
     "ux.errorDetails": "Fehlerdetails",
+    "studio.moreParameters": "Weitere Optionen",
+    "studio.switchModel": "Modell wechseln (Strg+M)",
+    "studio.manageProviders": "Anbieter und Modelle verwalten",
+    "studio.recipes": "Rezepte",
+    "studio.recipeEmpty": "Noch keine Rezepte. Speichere ein Modell mit seinen Einstellungen, um sie mit einem Klick wiederzuverwenden.",
+    "studio.recipeNamePlaceholder": "Rezeptname, z. B. Quadratisches Cover",
+    "studio.recipeSave": "Aktuelle speichern",
+    "studio.recipeDelete": "Rezept l\xF6schen",
+    "studio.recipeDeleteNamed": "Rezept l\xF6schen: {name}",
+    "studio.recipeUnavailable": "Modell oder Anbieter dieses Rezepts ist nicht mehr verf\xFCgbar",
     "ux.execution": "N\xE4chste Generierung",
     "ux.historyDraftRestoreFailed": "Entwurf konnte nicht wiederhergestellt werden. Die tempor\xE4re Kopie bleibt erhalten. Seite neu laden und erneut versuchen.",
     "ux.historyDraftSaveFailed": "Entwurf konnte nicht gesichert werden. Sie befinden sich weiterhin auf der Generierungsseite. Erneut versuchen.",
@@ -4011,6 +4031,16 @@
     "ux.editInputs": "Editar entradas y ajustes",
     "ux.editInputsReady": "Entradas y ajustes cargados. Ed\xEDtalos antes de volver a generar.",
     "ux.errorDetails": "Detalles del error",
+    "studio.moreParameters": "M\xE1s opciones",
+    "studio.switchModel": "Cambiar modelo (Ctrl+M)",
+    "studio.manageProviders": "Gestionar proveedores y modelos",
+    "studio.recipes": "Recetas",
+    "studio.recipeEmpty": "A\xFAn no hay recetas. Guarda un modelo y sus ajustes para reutilizarlos con un clic.",
+    "studio.recipeNamePlaceholder": "Nombre de la receta, p. ej. Portada cuadrada",
+    "studio.recipeSave": "Guardar actual",
+    "studio.recipeDelete": "Eliminar receta",
+    "studio.recipeDeleteNamed": "Eliminar receta: {name}",
+    "studio.recipeUnavailable": "El modelo o proveedor de esta receta ya no est\xE1 disponible",
     "ux.execution": "Pr\xF3xima generaci\xF3n",
     "ux.historyDraftRestoreFailed": "No se pudo restaurar el borrador. Se conserva la copia temporal. Recarga la p\xE1gina para reintentarlo.",
     "ux.historyDraftSaveFailed": "No se pudo guardar el borrador. Sigues en la p\xE1gina de generaci\xF3n. Int\xE9ntalo de nuevo.",
@@ -5294,6 +5324,16 @@
     "ux.editInputs": "Modifier les entr\xE9es et param\xE8tres",
     "ux.editInputsReady": "Entr\xE9es et param\xE8tres charg\xE9s. Modifiez-les avant de relancer la g\xE9n\xE9ration.",
     "ux.errorDetails": "D\xE9tails de l\u2019erreur",
+    "studio.moreParameters": "Plus d\u2019options",
+    "studio.switchModel": "Changer de mod\xE8le (Ctrl+M)",
+    "studio.manageProviders": "G\xE9rer les fournisseurs et les mod\xE8les",
+    "studio.recipes": "Recettes",
+    "studio.recipeEmpty": "Aucune recette pour l\u2019instant. Enregistrez un mod\xE8le et ses r\xE9glages pour les r\xE9utiliser en un clic.",
+    "studio.recipeNamePlaceholder": "Nom de la recette, ex. Couverture carr\xE9e",
+    "studio.recipeSave": "Enregistrer l\u2019actuel",
+    "studio.recipeDelete": "Supprimer la recette",
+    "studio.recipeDeleteNamed": "Supprimer la recette : {name}",
+    "studio.recipeUnavailable": "Le mod\xE8le ou le fournisseur de cette recette n\u2019est plus disponible",
     "ux.execution": "Prochaine g\xE9n\xE9ration",
     "ux.historyDraftRestoreFailed": "Impossible de restaurer le brouillon. La copie temporaire est conserv\xE9e. Actualisez pour r\xE9essayer.",
     "ux.historyDraftSaveFailed": "Impossible de conserver le brouillon. Vous \xEAtes toujours sur la page de g\xE9n\xE9ration. R\xE9essayez.",
@@ -6577,6 +6617,16 @@
     "ux.editInputs": "\u5165\u529B\u3068\u8A2D\u5B9A\u3092\u7DE8\u96C6",
     "ux.editInputsReady": "\u30BF\u30B9\u30AF\u306E\u5165\u529B\u3068\u8A2D\u5B9A\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u3057\u305F\u3002\u7DE8\u96C6\u3057\u3066\u304B\u3089\u518D\u751F\u6210\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.errorDetails": "\u30A8\u30E9\u30FC\u8A73\u7D30",
+    "studio.moreParameters": "\u305D\u306E\u4ED6\u306E\u8A2D\u5B9A",
+    "studio.switchModel": "\u30E2\u30C7\u30EB\u3092\u5207\u308A\u66FF\u3048\uFF08Ctrl+M\uFF09",
+    "studio.manageProviders": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3068\u30E2\u30C7\u30EB\u3092\u7BA1\u7406",
+    "studio.recipes": "\u30EC\u30B7\u30D4",
+    "studio.recipeEmpty": "\u30EC\u30B7\u30D4\u306F\u307E\u3060\u3042\u308A\u307E\u305B\u3093\u3002\u3088\u304F\u4F7F\u3046\u30E2\u30C7\u30EB\u3068\u8A2D\u5B9A\u3092\u4FDD\u5B58\u3059\u308B\u3068\u3001\u30EF\u30F3\u30AF\u30EA\u30C3\u30AF\u3067\u518D\u5229\u7528\u3067\u304D\u307E\u3059\u3002",
+    "studio.recipeNamePlaceholder": "\u30EC\u30B7\u30D4\u540D\uFF08\u4F8B\uFF1A\u6B63\u65B9\u5F62\u30AB\u30D0\u30FC\uFF09",
+    "studio.recipeSave": "\u73FE\u5728\u306E\u8A2D\u5B9A\u3092\u4FDD\u5B58",
+    "studio.recipeDelete": "\u30EC\u30B7\u30D4\u3092\u524A\u9664",
+    "studio.recipeDeleteNamed": "\u30EC\u30B7\u30D4\u3092\u524A\u9664\uFF1A{name}",
+    "studio.recipeUnavailable": "\u3053\u306E\u30EC\u30B7\u30D4\u306E\u30E2\u30C7\u30EB\u307E\u305F\u306F\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306F\u5229\u7528\u3067\u304D\u306A\u304F\u306A\u308A\u307E\u3057\u305F",
     "ux.execution": "\u4ECA\u56DE\u306E\u751F\u6210",
     "ux.historyDraftRestoreFailed": "\u4E0B\u66F8\u304D\u3092\u5FA9\u5143\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u4E00\u6642\u30B3\u30D4\u30FC\u306F\u4FDD\u6301\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u518D\u8AAD\u307F\u8FBC\u307F\u3057\u3066\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.historyDraftSaveFailed": "\u4E0B\u66F8\u304D\u3092\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u751F\u6210\u30DA\u30FC\u30B8\u306B\u7559\u307E\u3063\u3066\u3044\u307E\u3059\u3002\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
@@ -7860,6 +7910,16 @@
     "ux.editInputs": "\uC785\uB825 \uBC0F \uC124\uC815 \uD3B8\uC9D1",
     "ux.editInputsReady": "\uC791\uC5C5 \uC785\uB825\uACFC \uC124\uC815\uC744 \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4. \uD3B8\uC9D1 \uD6C4 \uB2E4\uC2DC \uC0DD\uC131\uD558\uC138\uC694.",
     "ux.errorDetails": "\uC624\uB958 \uC0C1\uC138",
+    "studio.moreParameters": "\uCD94\uAC00 \uC635\uC158",
+    "studio.switchModel": "\uBAA8\uB378 \uC804\uD658 (Ctrl+M)",
+    "studio.manageProviders": "\uACF5\uAE09\uC790 \uBC0F \uBAA8\uB378 \uAD00\uB9AC",
+    "studio.recipes": "\uB808\uC2DC\uD53C",
+    "studio.recipeEmpty": "\uC544\uC9C1 \uB808\uC2DC\uD53C\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4. \uC790\uC8FC \uC4F0\uB294 \uBAA8\uB378\uACFC \uC124\uC815\uC744 \uC800\uC7A5\uD558\uBA74 \uD55C \uBC88\uC5D0 \uB2E4\uC2DC \uC801\uC6A9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+    "studio.recipeNamePlaceholder": "\uB808\uC2DC\uD53C \uC774\uB984 (\uC608: \uC815\uC0AC\uAC01\uD615 \uCEE4\uBC84)",
+    "studio.recipeSave": "\uD604\uC7AC \uC124\uC815 \uC800\uC7A5",
+    "studio.recipeDelete": "\uB808\uC2DC\uD53C \uC0AD\uC81C",
+    "studio.recipeDeleteNamed": "\uB808\uC2DC\uD53C \uC0AD\uC81C: {name}",
+    "studio.recipeUnavailable": "\uC774 \uB808\uC2DC\uD53C\uC758 \uBAA8\uB378 \uB610\uB294 \uACF5\uAE09\uC790\uB97C \uB354 \uC774\uC0C1 \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4",
     "ux.execution": "\uC774\uBC88 \uC0DD\uC131",
     "ux.historyDraftRestoreFailed": "\uCD08\uC548\uC744 \uBCF5\uC6D0\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC784\uC2DC \uC0AC\uBCF8\uC740 \uC720\uC9C0\uB429\uB2C8\uB2E4. \uC0C8\uB85C\uACE0\uCE68 \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
     "ux.historyDraftSaveFailed": "\uCD08\uC548\uC744 \uBCF4\uAD00\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC0DD\uC131 \uD398\uC774\uC9C0\uC5D0 \uBA38\uBB3C\uB7EC \uC788\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
@@ -9143,6 +9203,16 @@
     "ux.editInputs": "Editar entradas e configura\xE7\xF5es",
     "ux.editInputsReady": "Entradas e configura\xE7\xF5es carregadas. Edite antes de gerar novamente.",
     "ux.errorDetails": "Detalhes do erro",
+    "studio.moreParameters": "Mais op\xE7\xF5es",
+    "studio.switchModel": "Trocar modelo (Ctrl+M)",
+    "studio.manageProviders": "Gerenciar provedores e modelos",
+    "studio.recipes": "Receitas",
+    "studio.recipeEmpty": "Ainda n\xE3o h\xE1 receitas. Salve um modelo e suas configura\xE7\xF5es para reutiliz\xE1-los com um clique.",
+    "studio.recipeNamePlaceholder": "Nome da receita, ex.: Capa quadrada",
+    "studio.recipeSave": "Salvar atual",
+    "studio.recipeDelete": "Excluir receita",
+    "studio.recipeDeleteNamed": "Excluir receita: {name}",
+    "studio.recipeUnavailable": "O modelo ou provedor desta receita n\xE3o est\xE1 mais dispon\xEDvel",
     "ux.execution": "Pr\xF3xima gera\xE7\xE3o",
     "ux.historyDraftRestoreFailed": "N\xE3o foi poss\xEDvel restaurar o rascunho. A c\xF3pia tempor\xE1ria foi mantida. Atualize para tentar novamente.",
     "ux.historyDraftSaveFailed": "N\xE3o foi poss\xEDvel preservar o rascunho. Voc\xEA continua na p\xE1gina de gera\xE7\xE3o. Tente novamente.",
@@ -10426,6 +10496,16 @@
     "ux.editInputs": "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0432\u0445\u043E\u0434\u043D\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435 \u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B",
     "ux.editInputsReady": "\u0414\u0430\u043D\u043D\u044B\u0435 \u0438 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0437\u0430\u0434\u0430\u0447\u0438 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043D\u044B. \u0418\u0437\u043C\u0435\u043D\u0438\u0442\u0435 \u0438\u0445 \u043F\u0435\u0440\u0435\u0434 \u043D\u043E\u0432\u043E\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0435\u0439.",
     "ux.errorDetails": "\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u043E\u0441\u0442\u0438 \u043E\u0448\u0438\u0431\u043A\u0438",
+    "studio.moreParameters": "\u0414\u0440\u0443\u0433\u0438\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B",
+    "studio.switchModel": "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043C\u043E\u0434\u0435\u043B\u044C (Ctrl+M)",
+    "studio.manageProviders": "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430\u043C\u0438 \u0438 \u043C\u043E\u0434\u0435\u043B\u044F\u043C\u0438",
+    "studio.recipes": "\u0420\u0435\u0446\u0435\u043F\u0442\u044B",
+    "studio.recipeEmpty": "\u0420\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u043F\u043E\u043A\u0430 \u043D\u0435\u0442. \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u043C\u043E\u0434\u0435\u043B\u044C \u0438 \u0435\u0451 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u0438\u043C\u0435\u043D\u044F\u0442\u044C \u0438\u0445 \u043E\u0434\u043D\u0438\u043C \u0449\u0435\u043B\u0447\u043A\u043E\u043C.",
+    "studio.recipeNamePlaceholder": "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0440\u0435\u0446\u0435\u043F\u0442\u0430, \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440: \u041A\u0432\u0430\u0434\u0440\u0430\u0442\u043D\u0430\u044F \u043E\u0431\u043B\u043E\u0436\u043A\u0430",
+    "studio.recipeSave": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0442\u0435\u043A\u0443\u0449\u0438\u0435",
+    "studio.recipeDelete": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442",
+    "studio.recipeDeleteNamed": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442: {name}",
+    "studio.recipeUnavailable": "\u041C\u043E\u0434\u0435\u043B\u044C \u0438\u043B\u0438 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u044D\u0442\u043E\u0433\u043E \u0440\u0435\u0446\u0435\u043F\u0442\u0430 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B",
     "ux.execution": "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F",
     "ux.historyDraftRestoreFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0447\u0435\u0440\u043D\u043E\u0432\u0438\u043A. \u0412\u0440\u0435\u043C\u0435\u043D\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0430. \u041E\u0431\u043D\u043E\u0432\u0438\u0442\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435.",
     "ux.historyDraftSaveFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0447\u0435\u0440\u043D\u043E\u0432\u0438\u043A. \u0412\u044B \u043E\u0441\u0442\u0430\u043B\u0438\u0441\u044C \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438. \u041F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
@@ -11709,6 +11789,16 @@
     "ux.editInputs": "Modifica input e impostazioni",
     "ux.editInputsReady": "Input e impostazioni caricati. Modificali prima di generare di nuovo.",
     "ux.errorDetails": "Dettagli errore",
+    "studio.moreParameters": "Altre opzioni",
+    "studio.switchModel": "Cambia modello (Ctrl+M)",
+    "studio.manageProviders": "Gestisci provider e modelli",
+    "studio.recipes": "Ricette",
+    "studio.recipeEmpty": "Nessuna ricetta. Salva un modello e le sue impostazioni per riutilizzarli con un clic.",
+    "studio.recipeNamePlaceholder": "Nome della ricetta, es. Copertina quadrata",
+    "studio.recipeSave": "Salva attuale",
+    "studio.recipeDelete": "Elimina ricetta",
+    "studio.recipeDeleteNamed": "Elimina ricetta: {name}",
+    "studio.recipeUnavailable": "Il modello o il provider di questa ricetta non \xE8 pi\xF9 disponibile",
     "ux.execution": "Prossima generazione",
     "ux.historyDraftRestoreFailed": "Impossibile ripristinare la bozza. La copia temporanea \xE8 conservata. Ricarica per riprovare.",
     "ux.historyDraftSaveFailed": "Impossibile salvare la bozza. Sei ancora nella pagina di generazione. Riprova.",
@@ -12992,6 +13082,16 @@
     "ux.editInputs": "\u0907\u0928\u092A\u0941\u091F \u0914\u0930 \u0938\u0947\u091F\u093F\u0902\u0917 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
     "ux.editInputsReady": "\u0915\u093E\u0930\u094D\u092F \u0915\u0947 \u0907\u0928\u092A\u0941\u091F \u0914\u0930 \u0938\u0947\u091F\u093F\u0902\u0917 \u0932\u094B\u0921 \u0939\u094B \u0917\u090F\u0964 \u0926\u094B\u092C\u093E\u0930\u093E \u092C\u0928\u093E\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u0907\u0928\u094D\u0939\u0947\u0902 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902\u0964",
     "ux.errorDetails": "\u0924\u094D\u0930\u0941\u091F\u093F \u0935\u093F\u0935\u0930\u0923",
+    "studio.moreParameters": "\u0914\u0930 \u0935\u093F\u0915\u0932\u094D\u092A",
+    "studio.switchModel": "\u092E\u0949\u0921\u0932 \u092C\u0926\u0932\u0947\u0902 (Ctrl+M)",
+    "studio.manageProviders": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0914\u0930 \u092E\u0949\u0921\u0932 \u092A\u094D\u0930\u092C\u0902\u0927\u093F\u0924 \u0915\u0930\u0947\u0902",
+    "studio.recipes": "\u0930\u0947\u0938\u093F\u092A\u0940",
+    "studio.recipeEmpty": "\u0905\u092D\u0940 \u0915\u094B\u0908 \u0930\u0947\u0938\u093F\u092A\u0940 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u0905\u0915\u094D\u0938\u0930 \u0907\u0938\u094D\u0924\u0947\u092E\u093E\u0932 \u0939\u094B\u0928\u0947 \u0935\u093E\u0932\u0947 \u092E\u0949\u0921\u0932 \u0914\u0930 \u0938\u0947\u091F\u093F\u0902\u0917\u094D\u0938 \u0938\u0939\u0947\u091C\u0947\u0902, \u092B\u093F\u0930 \u090F\u0915 \u0915\u094D\u0932\u093F\u0915 \u092E\u0947\u0902 \u0926\u094B\u092C\u093E\u0930\u093E \u0932\u093E\u0917\u0942 \u0915\u0930\u0947\u0902\u0964",
+    "studio.recipeNamePlaceholder": "\u0930\u0947\u0938\u093F\u092A\u0940 \u0915\u093E \u0928\u093E\u092E, \u091C\u0948\u0938\u0947: \u091A\u094C\u0915\u094B\u0930 \u0915\u0935\u0930",
+    "studio.recipeSave": "\u092E\u094C\u091C\u0942\u0926\u093E \u0938\u0939\u0947\u091C\u0947\u0902",
+    "studio.recipeDelete": "\u0930\u0947\u0938\u093F\u092A\u0940 \u0939\u091F\u093E\u090F\u0901",
+    "studio.recipeDeleteNamed": "\u0930\u0947\u0938\u093F\u092A\u0940 \u0939\u091F\u093E\u090F\u0901: {name}",
+    "studio.recipeUnavailable": "\u0907\u0938 \u0930\u0947\u0938\u093F\u092A\u0940 \u0915\u093E \u092E\u0949\u0921\u0932 \u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0905\u092C \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948",
     "ux.execution": "\u0905\u0917\u0932\u093E \u091C\u0928\u0930\u0947\u0936\u0928",
     "ux.historyDraftRestoreFailed": "\u0921\u094D\u0930\u093E\u092B\u093C\u094D\u091F \u092C\u0939\u093E\u0932 \u0928\u0939\u0940\u0902 \u0939\u0941\u0906\u0964 \u0905\u0938\u094D\u0925\u093E\u092F\u0940 \u092A\u094D\u0930\u0924\u093F \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0939\u0948\u0964 \u0930\u0940\u092B\u093C\u094D\u0930\u0947\u0936 \u0915\u0930\u0915\u0947 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
     "ux.historyDraftSaveFailed": "\u0921\u094D\u0930\u093E\u092B\u093C\u094D\u091F \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u0941\u0906\u0964 \u0906\u092A \u0905\u092D\u0940 \u091C\u0928\u0930\u0947\u0936\u0928 \u092A\u0943\u0937\u094D\u0920 \u092A\u0930 \u0939\u0948\u0902\u0964 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
@@ -13090,6 +13190,16 @@
     "ux.addingReference": "\u0110ang th\xEAm \u1EA3nh tham chi\u1EBFu\u2026",
     "ux.referenceAdded": "\u0110\xE3 th\xEAm v\xE0o tham chi\u1EBFu c\u1EE7a t\xE1c v\u1EE5 n\xE0y",
     "ux.referenceFailed": "Kh\xF4ng th\u1EC3 th\xEAm \u1EA3nh tham chi\u1EBFu. Vui l\xF2ng th\u1EED l\u1EA1i.",
+    "studio.moreParameters": "T\xF9y ch\u1ECDn kh\xE1c",
+    "studio.switchModel": "\u0110\u1ED5i m\xF4 h\xECnh (Ctrl+M)",
+    "studio.manageProviders": "Qu\u1EA3n l\xFD nh\xE0 cung c\u1EA5p v\xE0 m\xF4 h\xECnh",
+    "studio.recipes": "C\xF4ng th\u1EE9c",
+    "studio.recipeEmpty": "Ch\u01B0a c\xF3 c\xF4ng th\u1EE9c. L\u01B0u m\xF4 h\xECnh v\xE0 thi\u1EBFt l\u1EADp hay d\xF9ng \u0111\u1EC3 \xE1p d\u1EE5ng l\u1EA1i ch\u1EC9 v\u1EDBi m\u1ED9t l\u1EA7n nh\u1EA5p.",
+    "studio.recipeNamePlaceholder": "T\xEAn c\xF4ng th\u1EE9c, v\xED d\u1EE5: \u1EA2nh b\xECa vu\xF4ng",
+    "studio.recipeSave": "L\u01B0u hi\u1EC7n t\u1EA1i",
+    "studio.recipeDelete": "X\xF3a c\xF4ng th\u1EE9c",
+    "studio.recipeDeleteNamed": "X\xF3a c\xF4ng th\u1EE9c: {name}",
+    "studio.recipeUnavailable": "M\xF4 h\xECnh ho\u1EB7c nh\xE0 cung c\u1EA5p c\u1EE7a c\xF4ng th\u1EE9c n\xE0y kh\xF4ng c\xF2n kh\u1EA3 d\u1EE5ng",
     "ux.execution": "L\u1EA7n t\u1EA1o ti\u1EBFp theo",
     "ux.imageCount": "{count} \u1EA3nh",
     "ux.tasks": "T\xE1c v\u1EE5",
@@ -14373,6 +14483,16 @@
     "ux.addingReference": "\u6B63\u5728\u52A0\u5165\u53C2\u8003\u56FE\u2026",
     "ux.referenceAdded": "\u5DF2\u52A0\u5165\u672C\u6B21\u53C2\u8003\u8F93\u5165",
     "ux.referenceFailed": "\u672A\u80FD\u52A0\u5165\u53C2\u8003\u56FE\uFF0C\u8BF7\u91CD\u8BD5\u3002",
+    "studio.moreParameters": "\u66F4\u591A\u53C2\u6570",
+    "studio.switchModel": "\u5207\u6362\u6A21\u578B\uFF08Ctrl+M\uFF09",
+    "studio.manageProviders": "\u7BA1\u7406\u4F9B\u5E94\u5546\u4E0E\u6A21\u578B",
+    "studio.recipes": "\u914D\u65B9",
+    "studio.recipeEmpty": "\u8FD8\u6CA1\u6709\u914D\u65B9\u3002\u628A\u5E38\u7528\u7684\u6A21\u578B\u548C\u53C2\u6570\u5B58\u6210\u914D\u65B9\uFF0C\u4EE5\u540E\u4E00\u952E\u5957\u7528\u3002",
+    "studio.recipeNamePlaceholder": "\u914D\u65B9\u540D\u79F0\uFF0C\u5982\uFF1A\u5C0F\u7EA2\u4E66\u5C01\u9762",
+    "studio.recipeSave": "\u4FDD\u5B58\u5F53\u524D",
+    "studio.recipeDelete": "\u5220\u9664\u914D\u65B9",
+    "studio.recipeDeleteNamed": "\u5220\u9664\u914D\u65B9\uFF1A{name}",
+    "studio.recipeUnavailable": "\u8FD9\u4E2A\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u5E94\u5546\u5DF2\u4E0D\u53EF\u7528",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.imageCount": "{count} \u5F20",
     "ux.tasks": "\u4EFB\u52A1",
@@ -16844,6 +16964,16 @@
     "ux.editInputs": "\u4FEE\u6539\u8F38\u5165\u8207\u53C3\u6578",
     "ux.editInputsReady": "\u5DF2\u8F09\u5165\u4EFB\u52D9\u8F38\u5165\u8207\u53C3\u6578\uFF0C\u53EF\u4FEE\u6539\u5F8C\u91CD\u65B0\u751F\u6210\u3002",
     "ux.errorDetails": "\u932F\u8AA4\u8A73\u60C5",
+    "studio.moreParameters": "\u66F4\u591A\u53C3\u6578",
+    "studio.switchModel": "\u5207\u63DB\u6A21\u578B\uFF08Ctrl+M\uFF09",
+    "studio.manageProviders": "\u7BA1\u7406\u4F9B\u61C9\u5546\u8207\u6A21\u578B",
+    "studio.recipes": "\u914D\u65B9",
+    "studio.recipeEmpty": "\u9084\u6C92\u6709\u914D\u65B9\u3002\u628A\u5E38\u7528\u7684\u6A21\u578B\u548C\u53C3\u6578\u5B58\u6210\u914D\u65B9\uFF0C\u4E4B\u5F8C\u4E00\u9375\u5957\u7528\u3002",
+    "studio.recipeNamePlaceholder": "\u914D\u65B9\u540D\u7A31\uFF0C\u4F8B\u5982\uFF1A\u65B9\u5F62\u5C01\u9762",
+    "studio.recipeSave": "\u5132\u5B58\u76EE\u524D",
+    "studio.recipeDelete": "\u522A\u9664\u914D\u65B9",
+    "studio.recipeDeleteNamed": "\u522A\u9664\u914D\u65B9\uFF1A{name}",
+    "studio.recipeUnavailable": "\u9019\u500B\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u61C9\u5546\u5DF2\u7121\u6CD5\u4F7F\u7528",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.historyParametersHint": "\u4EE5\u4E0B\u662F\u6240\u9078\u4EFB\u52D9\u7684\u6B77\u53F2\u53C3\u6578\u3002\u672C\u6B21\u751F\u6210\u4EE5\u300C\u8F38\u51FA\u8A2D\u5B9A\u300D\u70BA\u6E96\u3002",
     "ux.imageCount": "{count} \u5F35",
@@ -18127,6 +18257,16 @@
     "ux.editInputs": "\u4FEE\u6539\u8F38\u5165\u8207\u53C3\u6578",
     "ux.editInputsReady": "\u5DF2\u8F09\u5165\u4EFB\u52D9\u8F38\u5165\u8207\u53C3\u6578\uFF0C\u53EF\u4FEE\u6539\u5F8C\u91CD\u65B0\u751F\u6210\u3002",
     "ux.errorDetails": "\u932F\u8AA4\u8A73\u60C5",
+    "studio.moreParameters": "\u66F4\u591A\u53C3\u6578",
+    "studio.switchModel": "\u5207\u63DB\u6A21\u578B\uFF08Ctrl+M\uFF09",
+    "studio.manageProviders": "\u7BA1\u7406\u4F9B\u61C9\u5546\u8207\u6A21\u578B",
+    "studio.recipes": "\u914D\u65B9",
+    "studio.recipeEmpty": "\u9084\u6C92\u6709\u914D\u65B9\u3002\u628A\u5E38\u7528\u7684\u6A21\u578B\u548C\u53C3\u6578\u5B58\u6210\u914D\u65B9\uFF0C\u4E4B\u5F8C\u4E00\u9375\u5957\u7528\u3002",
+    "studio.recipeNamePlaceholder": "\u914D\u65B9\u540D\u7A31\uFF0C\u5982\uFF1A\u65B9\u5F62\u5C01\u9762",
+    "studio.recipeSave": "\u5132\u5B58\u76EE\u524D",
+    "studio.recipeDelete": "\u522A\u9664\u914D\u65B9",
+    "studio.recipeDeleteNamed": "\u522A\u9664\u914D\u65B9\uFF1A{name}",
+    "studio.recipeUnavailable": "\u9019\u500B\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u61C9\u5546\u5DF2\u7121\u6CD5\u4F7F\u7528",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.historyParametersHint": "\u4EE5\u4E0B\u662F\u6240\u9078\u4EFB\u52D9\u7684\u6B77\u53F2\u53C3\u6578\u3002\u672C\u6B21\u751F\u6210\u4EE5\u300C\u8F38\u51FA\u8A2D\u5B9A\u300D\u70BA\u6E96\u3002",
     "ux.imageCount": "{count} \u5F35",
@@ -18601,12 +18741,12 @@
   function applyLocaleToDocument() {
     document.documentElement.lang = currentLocale;
     document.documentElement.dataset.locale = currentLocale;
-    document.querySelectorAll("[data-i18n]").forEach((element3) => {
-      element3.textContent = translate(element3.dataset.i18n || "");
+    document.querySelectorAll("[data-i18n]").forEach((element5) => {
+      element5.textContent = translate(element5.dataset.i18n || "");
     });
-    document.querySelectorAll("[data-i18n-attr]").forEach((element3) => {
-      translationPairs(element3.dataset.i18nAttr).forEach(([attribute, key2]) => {
-        element3.setAttribute(attribute, translate(key2));
+    document.querySelectorAll("[data-i18n-attr]").forEach((element5) => {
+      translationPairs(element5.dataset.i18nAttr).forEach(([attribute, key2]) => {
+        element5.setAttribute(attribute, translate(key2));
       });
     });
     updateLanguageSelect();
@@ -18706,8 +18846,8 @@
     const origins = /* @__PURE__ */ new Map();
     const hide = () => {
       const wasOpen = !drawer.classList.contains("hidden");
-      origins.forEach((placeholder, element3) => {
-        placeholder.replaceWith(element3);
+      origins.forEach((placeholder, element5) => {
+        placeholder.replaceWith(element5);
       });
       origins.clear();
       drawer.classList.add("hidden");
@@ -18717,12 +18857,12 @@
     const open = () => {
       if (!window.matchMedia("(max-width: 1180px)").matches) return;
       if (!drawer.classList.contains("hidden")) return;
-      sidebar.querySelectorAll(".sidebar-search, .task-history-shell, .sidebar-footer").forEach((element3) => {
-        if (element3.parentElement?.closest(".task-history-shell")) return;
+      sidebar.querySelectorAll(".sidebar-search, .task-history-shell, .sidebar-footer").forEach((element5) => {
+        if (element5.parentElement?.closest(".task-history-shell")) return;
         const placeholder = document.createComment("task-drawer-origin");
-        element3.before(placeholder);
-        origins.set(element3, placeholder);
-        drawer.append(element3);
+        element5.before(placeholder);
+        origins.set(element5, placeholder);
+        drawer.append(element5);
       });
       drawer.classList.remove("hidden");
       trigger.setAttribute("aria-expanded", "true");
@@ -18787,10 +18927,10 @@
     const count = document.getElementById("charCount");
     const restore = document.getElementById("restoreComposerDraft");
     if (!workspace || !controls || !summarySlot || !footer || !summary || !count || !restore) return;
-    const origins = [summary, count, restore].map((element3) => {
+    const origins = [summary, count, restore].map((element5) => {
       const marker = document.createComment("compact-composer-origin");
-      element3.before(marker);
-      return { element: element3, marker };
+      element5.before(marker);
+      return { element: element5, marker };
     });
     let compact = false;
     const isCompact = () => getComputedStyle(controls).getPropertyValue("--compact-composer").trim() === "1";
@@ -18802,7 +18942,7 @@
       const focused = document.activeElement;
       const next = isCompact();
       if (next === compact) return;
-      const movingFocus = focused instanceof HTMLElement && origins.some(({ element: element3 }) => element3.contains(focused));
+      const movingFocus = focused instanceof HTMLElement && origins.some(({ element: element5 }) => element5.contains(focused));
       const restoreFocus = restoreLostFocusDuringResize && focused === document.body;
       restoreLostFocusDuringResize = false;
       compact = next;
@@ -18810,7 +18950,7 @@
         summarySlot.append(summary);
         footer.append(count, restore);
       } else {
-        origins.forEach(({ element: element3, marker }) => marker.after(element3));
+        origins.forEach(({ element: element5, marker }) => marker.after(element5));
       }
       controls.toggleAttribute("data-compact-composer", compact);
       if (movingFocus) focused.focus({ preventScroll: true });
@@ -18825,6 +18965,416 @@
     window.addEventListener("resize", schedule);
     window.matchMedia("(pointer: fine)").addEventListener("change", schedule);
     sync2();
+  }
+
+  // codex_image/webui/frontend/src/image-size-editor.ts
+  var SIZE_PATTERN = /^(\d+)x(\d+)$/;
+  var CUSTOM_SIZE_ERROR_KEYS = {
+    custom_size_invalid_format: "output.customSizeRequired",
+    custom_size_out_of_bounds: "output.customSizeBounds",
+    custom_size_not_multiple: "output.customSizeMultiple",
+    custom_size_ratio_too_large: "output.customSizeRatio",
+    custom_size_pixels_out_of_range: "output.customSizePixels"
+  };
+  function parsePixelSize(value) {
+    const match = typeof value === "string" ? value.trim().match(SIZE_PATTERN) : null;
+    return match ? { width: Number(match[1]), height: Number(match[2]) } : null;
+  }
+  function customSizeError(rules, size, outputFormat) {
+    const dimensions2 = parsePixelSize(size);
+    if (!dimensions2) return "custom_size_invalid_format";
+    const { width, height } = dimensions2;
+    if (width < rules.min_edge || width > rules.max_edge || height < rules.min_edge || height > rules.max_edge) {
+      return "custom_size_out_of_bounds";
+    }
+    if (width % rules.multiple || height % rules.multiple) return "custom_size_not_multiple";
+    if (rules.relaxed_formats.includes(String(outputFormat))) return "";
+    if (Math.max(width, height) / Math.min(width, height) > rules.max_aspect_ratio) return "custom_size_ratio_too_large";
+    if (width * height < rules.min_pixels || width * height > rules.max_pixels) return "custom_size_pixels_out_of_range";
+    return "";
+  }
+  function customSizeErrorMessage(code) {
+    return code ? translate(CUSTOM_SIZE_ERROR_KEYS[code] || "modelParameters.invalidValue") : "";
+  }
+  function suggestLegalSize(rules, width, height) {
+    const step = rules.multiple;
+    const w = Number.isFinite(width) && width > 0 ? width : 1024;
+    const h = Number.isFinite(height) && height > 0 ? height : 1024;
+    const ratio = Math.min(rules.max_aspect_ratio, Math.max(1 / rules.max_aspect_ratio, w / h));
+    const pixels = Math.min(rules.max_pixels, Math.max(rules.min_pixels, w * h));
+    let best = { width: 1024, height: 1024, score: Infinity };
+    const first = Math.ceil(rules.min_edge / step) * step;
+    for (let x = first; x <= rules.max_edge; x += step) {
+      const low = Math.ceil(Math.max(rules.min_edge, x / rules.max_aspect_ratio, rules.min_pixels / x) / step) * step;
+      const high = Math.floor(Math.min(rules.max_edge, x * rules.max_aspect_ratio, rules.max_pixels / x) / step) * step;
+      for (let y = low; y <= high; y += step) {
+        const score = 8 * Math.abs(Math.log(x / y / ratio)) + Math.abs(Math.log(x * y / pixels));
+        if (score < best.score) best = { width: x, height: y, score };
+      }
+    }
+    return { width: best.width, height: best.height };
+  }
+  function requestedSize(model, parameters) {
+    const mode = parameters["canvas.mode"];
+    if (mode === "auto") return "auto";
+    if (mode === "custom") return String(parameters["canvas.size"] || "");
+    const pixels = model?.size_spec?.presets?.[String(parameters["canvas.resolution"])]?.[String(parameters["canvas.aspect_ratio"])];
+    return pixels ? `${pixels[0]}x${pixels[1]}` : "";
+  }
+  var GIF_FRAME_PIXEL_BUDGET = 128 * 1024 * 1024;
+  function gifFrameLimit(model, maximum, values, providerLimit) {
+    const limits = [maximum, providerLimit].filter((limit2) => typeof limit2 === "number");
+    const pixels = parsePixelSize(requestedSize(model, values));
+    if (pixels) limits.push(Math.floor(GIF_FRAME_PIXEL_BUDGET / (pixels.width * pixels.height)));
+    return limits.length ? Math.max(2, Math.min(...limits)) : null;
+  }
+  function firstReferenceImageUrl() {
+    const images = getLegacyBridge().state.images;
+    const source = (Array.isArray(images) ? images : []).find((item) => item && !item.missing && (item.kind === "upload" ? item.previewUrl : item.image_url || item.previewUrl));
+    if (!source) return "";
+    return String(source.kind === "upload" ? source.previewUrl : source.image_url || source.previewUrl);
+  }
+  function loadImageDimensions(url) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => {
+        const width = image.naturalWidth || image.width;
+        const height = image.naturalHeight || image.height;
+        if (width > 0 && height > 0) resolve({ width, height });
+        else reject(new Error(formatTranslation("output.imageSizeUnavailable")));
+      };
+      image.onerror = () => reject(new Error(formatTranslation("output.imageLoadFailed")));
+      image.src = url;
+    });
+  }
+  function refreshFirstImageButtons() {
+    if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
+    const available = Boolean(firstReferenceImageUrl());
+    document.querySelectorAll(".pixel-size-from-image").forEach((button) => {
+      button.disabled = button.dataset.readOnly === "true" || !available;
+    });
+  }
+  function createPixelSizeEditor(options) {
+    const { rules } = options;
+    const initial = parsePixelSize(options.value) || { width: 1024, height: 1024 };
+    const editor = document.createElement("div");
+    editor.className = "pixel-size-editor";
+    const row = document.createElement("div");
+    row.className = "pixel-size-inputs";
+    const input = (labelKey, value) => {
+      const element5 = document.createElement("input");
+      element5.type = "number";
+      element5.className = "control pixel-size-input";
+      element5.min = String(rules.min_edge);
+      element5.max = String(rules.max_edge);
+      element5.step = String(rules.multiple);
+      element5.inputMode = "numeric";
+      element5.value = String(value);
+      element5.setAttribute("aria-label", translate(labelKey));
+      element5.disabled = options.readOnly;
+      return element5;
+    };
+    const width = input("output.width", initial.width);
+    const height = input("output.height", initial.height);
+    const times = document.createElement("span");
+    times.className = "pixel-size-times";
+    times.textContent = "\xD7";
+    times.setAttribute("aria-hidden", "true");
+    const swap = document.createElement("button");
+    swap.type = "button";
+    swap.className = "ghost-button pixel-size-swap";
+    swap.textContent = "\u21C4";
+    swap.title = translate("output.swapSize");
+    swap.setAttribute("aria-label", translate("output.swapSize"));
+    swap.disabled = options.readOnly;
+    row.append(width, times, height, swap);
+    const tools = document.createElement("div");
+    tools.className = "pixel-size-tools";
+    const lockLabel = document.createElement("label");
+    lockLabel.className = "pixel-size-lock";
+    const lock = document.createElement("input");
+    lock.type = "checkbox";
+    lock.disabled = options.readOnly;
+    const lockText = document.createElement("span");
+    lockText.textContent = translate("output.ratioLock");
+    lockLabel.append(lock, lockText);
+    const fromImage = document.createElement("button");
+    fromImage.type = "button";
+    fromImage.className = "ghost-button text-sm pixel-size-from-image";
+    fromImage.textContent = translate("output.useFirstImage");
+    fromImage.title = translate("output.firstImageRatio");
+    fromImage.dataset.readOnly = String(options.readOnly);
+    fromImage.disabled = options.readOnly || !firstReferenceImageUrl();
+    tools.append(lockLabel, fromImage);
+    const hint = document.createElement("p");
+    hint.className = "pixel-size-hint";
+    hint.textContent = translate("output.customSizeHint");
+    const error = document.createElement("p");
+    error.className = "model-parameter-error hidden";
+    error.setAttribute("role", "alert");
+    const suggest = document.createElement("button");
+    suggest.type = "button";
+    suggest.className = "ghost-button text-sm pixel-size-suggest hidden";
+    let lockedRatio = initial.width / initial.height;
+    const current = () => `${Math.round(Number(width.value))}x${Math.round(Number(height.value))}`;
+    const validate = () => {
+      const code = customSizeError(rules, current(), options.outputFormat);
+      const message = customSizeErrorMessage(code);
+      error.textContent = message;
+      error.classList.toggle("hidden", !message);
+      width.setAttribute("aria-invalid", message ? "true" : "false");
+      height.setAttribute("aria-invalid", message ? "true" : "false");
+      if (message) {
+        const suggestion = suggestLegalSize(rules, Number(width.value), Number(height.value));
+        suggest.textContent = formatTranslation("output.useSuggestedSize", { size: `${suggestion.width} \xD7 ${suggestion.height}` });
+        suggest.dataset.size = `${suggestion.width}x${suggestion.height}`;
+      }
+      suggest.classList.toggle("hidden", !message);
+      options.reportError(message);
+      if (!message && current() !== options.value) options.commit(current());
+      return message;
+    };
+    const snap = (value) => Math.max(rules.min_edge, Math.round(value / rules.multiple) * rules.multiple);
+    const set = (next) => {
+      width.value = String(next.width);
+      height.value = String(next.height);
+      lockedRatio = next.width / next.height;
+      validate();
+    };
+    width.addEventListener("input", () => {
+      if (lock.checked && Number(width.value) > 0) height.value = String(snap(Number(width.value) / lockedRatio));
+      validate();
+    });
+    height.addEventListener("input", () => {
+      if (lock.checked && Number(height.value) > 0) width.value = String(snap(Number(height.value) * lockedRatio));
+      validate();
+    });
+    lock.addEventListener("change", () => {
+      if (Number(width.value) > 0 && Number(height.value) > 0) lockedRatio = Number(width.value) / Number(height.value);
+    });
+    swap.addEventListener("click", () => set({ width: Number(height.value), height: Number(width.value) }));
+    suggest.addEventListener("click", () => {
+      const size = parsePixelSize(suggest.dataset.size);
+      if (size) set(size);
+    });
+    fromImage.addEventListener("click", async () => {
+      const url = firstReferenceImageUrl();
+      if (!url) return;
+      try {
+        const image = await loadImageDimensions(url);
+        const pixels = Number(width.value) * Number(height.value) || 1024 * 1024;
+        const scale = Math.sqrt(pixels / (image.width * image.height));
+        set(suggestLegalSize(rules, image.width * scale, image.height * scale));
+      } catch (failure) {
+        error.textContent = failure instanceof Error ? failure.message : String(failure);
+        error.classList.remove("hidden");
+      }
+    });
+    editor.append(row, tools, hint, error, suggest);
+    if (!options.readOnly) queueMicrotask(validate);
+    return editor;
+  }
+
+  // codex_image/webui/frontend/src/aspect-ratio-controls.ts
+  var PREFERRED_RATIO_SLOTS = [
+    ["1:1", "21:9"],
+    ["4:5", "5:4"],
+    ["3:4", "4:3"],
+    ["2:3", "3:2"],
+    ["9:16", "16:9"],
+    ["9:21", "21:9"],
+    ["1:4", "4:1"],
+    ["1:8", "8:1"],
+    ["1:2", "2:1"],
+    ["9:19.5", "19.5:9"],
+    ["9:20", "20:9"]
+  ];
+  function parsedRatio(value) {
+    const match = value.trim().match(/^(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)$/);
+    if (!match) return null;
+    const width = Number(match[1]);
+    const height = Number(match[2]);
+    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return null;
+    return { width, height };
+  }
+  function reciprocal(left, right) {
+    const a = parsedRatio(left);
+    const b = parsedRatio(right);
+    if (!a || !b) return false;
+    return Math.abs(a.width * b.width - a.height * b.height) < 1e-9;
+  }
+  function aspectRatioSlots(values) {
+    const available = new Set(values);
+    const used = /* @__PURE__ */ new Set();
+    const slots = [];
+    PREFERRED_RATIO_SLOTS.forEach((preferred, index) => {
+      const matched = preferred.filter((value) => available.has(value) && !used.has(value) && !(index === 0 && value === "21:9" && available.has("9:21")));
+      if (!matched.length) return;
+      if (index === 0 && matched.length === 1 && matched[0] === "1:1" && available.has("auto")) {
+        matched.push("auto");
+      }
+      matched.forEach((value) => used.add(value));
+      slots.push({ values: [...matched] });
+    });
+    values.forEach((value) => {
+      if (used.has(value)) return;
+      used.add(value);
+      const pair = values.find((candidate) => !used.has(candidate) && reciprocal(value, candidate));
+      if (pair) used.add(pair);
+      slots.push({ values: pair ? [value, pair] : [value] });
+    });
+    return slots;
+  }
+  function aspectRatioRect(value) {
+    const ratio = parsedRatio(value);
+    if (!ratio) return null;
+    const maximum = 16;
+    const minimum = 2;
+    let width = maximum;
+    let height = maximum;
+    if (ratio.width > ratio.height) height = Math.max(minimum, maximum * ratio.height / ratio.width);
+    else if (ratio.height > ratio.width) width = Math.max(minimum, maximum * ratio.width / ratio.height);
+    return {
+      x: (20 - width) / 2,
+      y: (20 - height) / 2,
+      width,
+      height
+    };
+  }
+  var SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+  function createAspectRatioIcon(value) {
+    const geometry = aspectRatioRect(value);
+    if (!geometry) return null;
+    const svg = document.createElementNS(SVG_NAMESPACE, "svg");
+    svg.classList.add("aspect-ratio-icon");
+    svg.setAttribute("viewBox", "0 0 20 20");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const rect = document.createElementNS(SVG_NAMESPACE, "rect");
+    rect.setAttribute("x", String(geometry.x));
+    rect.setAttribute("y", String(geometry.y));
+    rect.setAttribute("width", String(geometry.width));
+    rect.setAttribute("height", String(geometry.height));
+    rect.setAttribute("rx", "1");
+    rect.setAttribute("fill", "currentColor");
+    rect.setAttribute("stroke", "none");
+    svg.append(rect);
+    return svg;
+  }
+  function decorateLegacyAspectRatioButtons(root = document) {
+    root.querySelectorAll("#ratioGroup .radio-btn[data-val]").forEach((button) => {
+      if (button.querySelector(".aspect-ratio-icon")) return;
+      const value = button.dataset.val || button.textContent?.trim() || "";
+      const icon = createAspectRatioIcon(value);
+      if (!icon) return;
+      const label = document.createElement("span");
+      label.className = "aspect-ratio-label";
+      label.textContent = value;
+      button.replaceChildren(icon, label);
+    });
+  }
+  function initAspectRatioControlsFeature() {
+    decorateLegacyAspectRatioButtons();
+  }
+
+  // codex_image/webui/frontend/src/segmented-indicator.ts
+  var HOST_SELECTORS = [
+    ".radio-group:not(.ratio-group):not(.model-parameter-segmented-multiline):not(.model-aspect-ratio-grid)",
+    "#authSourceGroup",
+    "#systemSettingsTabs",
+    ".network-egress-mode-selector",
+    ".history-view-toggle",
+    ".history-sort-toggle"
+  ];
+  var HOST_SELECTOR = HOST_SELECTORS.join(", ");
+  var BUTTON_SELECTOR = ".radio-btn, .auth-source-button, .system-settings-tab, .network-egress-mode-button, .history-view-button, .history-sort-button";
+  var INDICATOR_CLASS = "segmented-indicator";
+  var HOST_CLASS = "segmented-indicator-host";
+  var READY_CLASS = "segmented-indicator-ready";
+  var initializedHosts = /* @__PURE__ */ new WeakSet();
+  var scheduledFrames = /* @__PURE__ */ new WeakMap();
+  var segmentedIndicatorsInitialized = false;
+  var resizeObserver = null;
+  function activeSegment(host) {
+    return host.querySelector(".radio-btn.active, .auth-source-button.active, .system-settings-tab.active, .network-egress-mode-button.active, .history-view-button.active, .history-sort-button.active");
+  }
+  function ensureIndicator(host) {
+    const existing = Array.from(host.children).find((child) => child.classList.contains(INDICATOR_CLASS));
+    if (existing instanceof HTMLElement) return existing;
+    const indicator = document.createElement("span");
+    indicator.className = INDICATOR_CLASS;
+    indicator.setAttribute("aria-hidden", "true");
+    host.insertBefore(indicator, host.firstElementChild);
+    return indicator;
+  }
+  function updateIndicator(host) {
+    scheduledFrames.delete(host);
+    if (!host.isConnected) return false;
+    const indicator = ensureIndicator(host);
+    const active = activeSegment(host);
+    if (!active) {
+      host.classList.remove(READY_CLASS);
+      indicator.style.setProperty("--segmented-indicator-opacity", "0");
+      return false;
+    }
+    const hostRect = host.getBoundingClientRect();
+    const activeRect = active.getBoundingClientRect();
+    if (hostRect.width <= 0 || hostRect.height <= 0 || activeRect.width <= 0 || activeRect.height <= 0) {
+      host.classList.remove(READY_CLASS);
+      indicator.style.setProperty("--segmented-indicator-opacity", "0");
+      return false;
+    }
+    const hostStyle = window.getComputedStyle(host);
+    const borderLeft = Number.parseFloat(hostStyle.borderLeftWidth) || 0;
+    const borderTop = Number.parseFloat(hostStyle.borderTopWidth) || 0;
+    indicator.style.setProperty("--segmented-indicator-x", `${activeRect.left - hostRect.left - borderLeft}px`);
+    indicator.style.setProperty("--segmented-indicator-y", `${activeRect.top - hostRect.top - borderTop}px`);
+    indicator.style.setProperty("--segmented-indicator-width", `${activeRect.width}px`);
+    indicator.style.setProperty("--segmented-indicator-height", `${activeRect.height}px`);
+    indicator.style.setProperty("--segmented-indicator-opacity", "1");
+    return true;
+  }
+  function commitIndicatorUpdate(host) {
+    if (updateIndicator(host)) host.classList.add(READY_CLASS);
+  }
+  function scheduleIndicatorUpdate(host) {
+    if (scheduledFrames.has(host)) return;
+    scheduledFrames.set(host, window.requestAnimationFrame(() => commitIndicatorUpdate(host)));
+  }
+  function watchButtonClassChanges(host) {
+    const observer = new MutationObserver(() => scheduleIndicatorUpdate(host));
+    host.querySelectorAll(BUTTON_SELECTOR).forEach((button) => {
+      observer.observe(button, { attributes: true, attributeFilter: ["class"] });
+    });
+  }
+  function initHost(host) {
+    if (initializedHosts.has(host)) return false;
+    initializedHosts.add(host);
+    host.classList.add(HOST_CLASS);
+    ensureIndicator(host);
+    host.addEventListener("click", () => scheduleIndicatorUpdate(host));
+    watchButtonClassChanges(host);
+    if ("ResizeObserver" in window) {
+      resizeObserver || (resizeObserver = new ResizeObserver((entries) => {
+        entries.forEach((entry) => scheduleIndicatorUpdate(entry.target));
+      }));
+      resizeObserver.observe(host);
+    }
+    commitIndicatorUpdate(host);
+    return true;
+  }
+  function refreshSegmentedIndicators() {
+    document.querySelectorAll(HOST_SELECTOR).forEach((host) => {
+      if (!initHost(host)) scheduleIndicatorUpdate(host);
+    });
+  }
+  function initSegmentedIndicatorFeature() {
+    if (segmentedIndicatorsInitialized) return;
+    segmentedIndicatorsInitialized = true;
+    document.querySelectorAll(HOST_SELECTOR).forEach(initHost);
+    window.addEventListener("resize", refreshSegmentedIndicators, { passive: true });
+    document.fonts?.ready?.then(refreshSegmentedIndicators).catch(() => {
+    });
   }
 
   // codex_image/webui/frontend/src/mobile-shell.ts
@@ -18933,6 +19483,1752 @@
     window.visualViewport?.addEventListener("scroll", updateViewport);
     window.addEventListener("resize", updateViewport);
     updateViewport();
+  }
+
+  // codex_image/webui/frontend/src/mode-settings-visibility.ts
+  function resolveModeSettingsVisibility(binding, legacyDirectApi) {
+    if (!binding) return { showMainModel: !legacyDirectApi };
+    return {
+      showMainModel: binding.capabilities ? binding.capabilities.uses_main_model : binding.protocol_profile.endsWith("_responses")
+    };
+  }
+
+  // codex_image/webui/frontend/src/unified-parameters.ts
+  function attachParameterRenames(payload2) {
+    if (!payload2 || typeof payload2 !== "object") return payload2;
+    const catalog = payload2;
+    if (!Array.isArray(catalog.models)) return payload2;
+    const renames = catalog.parameter_renames || {};
+    return {
+      ...catalog,
+      models: catalog.models.map((model) => ({
+        ...model,
+        parameter_renames: { ...renames[model?.family_id] || {} }
+      }))
+    };
+  }
+  function usesUnifiedParameters(model) {
+    return model.parameters.some((definition) => definition.id === "canvas.mode");
+  }
+  function presetForSize(spec, size) {
+    for (const [resolution, ratios] of Object.entries(spec.presets)) {
+      for (const [ratio, [width, height]] of Object.entries(ratios)) {
+        if (`${width}x${height}` === size) return [ratio, resolution];
+      }
+    }
+    return null;
+  }
+  function upgradeParameters(model, parameters) {
+    if (!usesUnifiedParameters(model)) return { ...parameters };
+    const upgraded = { ...parameters };
+    const defined = new Set(model.parameters.map((definition) => definition.id));
+    for (const [previous, current] of Object.entries(model.parameter_renames || {})) {
+      if (previous in upgraded && defined.has(current) && !(current in upgraded)) {
+        upgraded[current] = upgraded[previous];
+        delete upgraded[previous];
+      }
+    }
+    const spec = model.size_spec;
+    if (spec && Object.keys(spec.presets).length && !("canvas.mode" in upgraded) && "canvas.size" in upgraded) {
+      const size = upgraded["canvas.size"];
+      delete upgraded["canvas.size"];
+      const text = typeof size === "string" ? size.trim() : "";
+      const preset = text ? presetForSize(spec, text) : null;
+      if (text === "auto") {
+        upgraded["canvas.mode"] = "auto";
+      } else if (preset) {
+        upgraded["canvas.mode"] = "preset";
+        upgraded["canvas.aspect_ratio"] = preset[0];
+        upgraded["canvas.resolution"] = preset[1];
+      } else {
+        upgraded["canvas.mode"] = "custom";
+        upgraded["canvas.size"] = size;
+      }
+    }
+    return upgraded;
+  }
+  function conditionHolds(condition, values, definitions) {
+    const actual = condition.parameter_id in values ? values[condition.parameter_id] : definitions.get(condition.parameter_id)?.default;
+    if (condition.operator === "equals") return actual === condition.value;
+    if (condition.operator === "not_equals") return actual !== condition.value;
+    return Array.isArray(condition.value) && condition.value.includes(actual);
+  }
+  function valueRequirementReason(model, definition, value, values) {
+    const definitions = new Map(model.parameters.map((item) => [item.id, item]));
+    const failed = (definition.value_requirements || []).find((requirement) => requirement.value === value && !conditionHolds(requirement.condition, values, definitions));
+    return failed ? failed.reason : "";
+  }
+
+  // codex_image/webui/frontend/src/model-parameters.ts
+  function cloneValue(value) {
+    if (Array.isArray(value)) return value.map(cloneValue);
+    if (value && typeof value === "object") {
+      return Object.fromEntries(Object.entries(value).map(([key2, item]) => [key2, cloneValue(item)]));
+    }
+    return value;
+  }
+  function parameterValueValid(definition, value) {
+    const typeValid = definition.value_type === "string" ? typeof value === "string" : definition.value_type === "integer" ? typeof value === "number" && Number.isInteger(value) : definition.value_type === "boolean" ? typeof value === "boolean" : definition.value_type === "object" ? Boolean(value) && typeof value === "object" && !Array.isArray(value) : false;
+    if (!typeValid) return false;
+    if (definition.object_choices?.length && value && typeof value === "object" && !Array.isArray(value)) {
+      const choices = new Map(definition.object_choices.map((row) => [row.key, row]));
+      for (const [key2, item] of Object.entries(value)) {
+        const row = choices.get(key2);
+        if (row && (typeof item !== "string" || !row.allowed_values.includes(item))) return false;
+      }
+    }
+    if (definition.allowed_values.length && !definition.allowed_values.includes(value)) return false;
+    if (typeof value === "number") {
+      if (definition.minimum !== null && value < definition.minimum) return false;
+      if (definition.maximum !== null && value > definition.maximum) return false;
+      if (definition.step !== null) {
+        const base = definition.minimum ?? 0;
+        const quotient = (value - base) / definition.step;
+        if (Math.abs(quotient - Math.round(quotient)) > 1e-9) return false;
+      }
+    }
+    return true;
+  }
+  function modelParameterValueValid(model, definition, value, values) {
+    if (definition.control === "pixel_size" && model.size_spec?.custom) {
+      const outputFormat = values["output.format"] ?? model.parameters.find((item) => item.id === "output.format")?.default;
+      return !customSizeError(model.size_spec.custom, value, outputFormat);
+    }
+    return parameterValueValid(definition, value) && !valueRequirementReason(model, definition, value, values);
+  }
+  var VALUE_REQUIREMENT_LABEL_KEYS = {
+    transparent_background_requires_png_webp_or_svg: "output.transparencyFormat"
+  };
+  function segmentLabel(definition, value) {
+    const key2 = definition.value_label_keys?.[definition.allowed_values.indexOf(value)];
+    return key2 ? translate(key2) : String(value);
+  }
+  function nextObjectChoiceValue(definition, value, key2, next) {
+    const row = definition.object_choices?.find((item) => item.key === key2);
+    if (!row || !row.allowed_values.includes(next)) return { ...value };
+    const updated = { ...value };
+    if (next === row.default) delete updated[key2];
+    else updated[key2] = next;
+    return updated;
+  }
+  function managedPresetKeys(definition) {
+    return new Set(definition.object_presets?.flatMap((preset) => Object.keys(preset.value)) || []);
+  }
+  function matchingObjectPreset(definition, value) {
+    const presets2 = definition.object_presets || [];
+    const managedKeys = managedPresetKeys(definition);
+    const presentManagedKeys = [...managedKeys].filter((key2) => key2 in value);
+    if (presentManagedKeys.length === 0) {
+      return presets2.find((preset) => preset.matches_empty) || null;
+    }
+    return presets2.find((preset) => [...managedKeys].every((key2) => key2 in value && key2 in preset.value && value[key2] === preset.value[key2])) || null;
+  }
+  function nextObjectPresetValue(definition, value, preset) {
+    if (!definition.object_presets?.some((item) => item.id === preset.id)) return { ...value };
+    const updated = { ...value };
+    managedPresetKeys(definition).forEach((key2) => delete updated[key2]);
+    Object.assign(updated, cloneValue(preset.value));
+    return updated;
+  }
+  function conditionMatches(condition, values) {
+    const actual = values[condition.parameter_id];
+    if (condition.operator === "equals") return actual === condition.value;
+    if (condition.operator === "not_equals") return actual !== condition.value;
+    return Array.isArray(condition.value) && condition.value.includes(actual);
+  }
+  function initializeParameterDraft(model, stored = {}) {
+    const previous = upgradeParameters(model, stored);
+    const values = {};
+    const defaulted = [];
+    const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
+    for (const definition of model.parameters) {
+      if (!(definition.id in previous)) {
+        values[definition.id] = cloneValue(definition.default);
+        continue;
+      }
+      const prior = previous[definition.id];
+      if (modelParameterValueValid(model, definition, prior, previous)) {
+        values[definition.id] = cloneValue(prior);
+      } else {
+        const replacement = cloneValue(definition.default);
+        values[definition.id] = replacement;
+        defaulted.push({ id: definition.id, previous: cloneValue(prior), replacement: cloneValue(replacement) });
+      }
+    }
+    const dropped = Object.entries(previous).filter(([id]) => !definitions.has(id)).map(([id, prior]) => ({ id, previous: cloneValue(prior) }));
+    return { values, defaulted, dropped };
+  }
+  function migrateParameterValues(model, previous) {
+    return initializeParameterDraft(model, previous);
+  }
+  function parameterAffectsVisibility(model, parameterId) {
+    return model.parameters.some((definition) => definition.visible_when.some(
+      (condition) => condition.parameter_id === parameterId
+    ));
+  }
+  function selectedBinding(modelId) {
+    const { state: state32 } = getLegacyBridge();
+    const binding = state32.generationCatalog?.providers.find((provider) => provider.id === state32.selectedProviderId)?.bindings.find((item) => item.id === state32.selectedProviderBindingId);
+    return binding?.canonical_model_id === modelId ? binding : null;
+  }
+  function selectedBindingParameterIds(modelId) {
+    const binding = selectedBinding(modelId);
+    if (!binding?.capabilities) return null;
+    return new Set(binding.capabilities.parameter_ids);
+  }
+  function activeParameterValuesFor(model, operation, draft2, supported = null) {
+    const values = Object.fromEntries(model.parameters.map((definition) => {
+      const value = draft2[definition.id];
+      return [definition.id, cloneValue(modelParameterValueValid(model, definition, value, draft2) ? value : definition.default)];
+    }));
+    return Object.fromEntries(model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => definition.control !== "notice").filter((definition) => !supported || supported.has(definition.id)).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values))).map((definition) => [definition.id, cloneValue(values[definition.id])]));
+  }
+  function activeParameterValues(model) {
+    const { state: state32 } = getLegacyBridge();
+    return activeParameterValuesFor(
+      model,
+      state32.mode,
+      state32.parameterDraftsByModel[model.id] || {},
+      selectedBindingParameterIds(model.id)
+    );
+  }
+  function fieldShell(definition) {
+    const field = document.createElement("div");
+    field.className = `field model-parameter-field${definition.full_width ? " full-width" : ""}`;
+    field.dataset.parameterId = definition.id;
+    field.dataset.parameterGroup = definition.group;
+    const label = document.createElement("span");
+    label.className = "model-parameter-label";
+    label.textContent = translate(definition.label_key);
+    label.classList.toggle("output-label-pair", /^\p{Script=Han}{2}$/u.test(label.textContent));
+    label.classList.toggle("output-label-quad", /^\p{Script=Han}{4}$/u.test(label.textContent));
+    field.append(label);
+    return field;
+  }
+  function setReadOnly(control, readOnly) {
+    if (!readOnly) return;
+    control.disabled = true;
+    control.tabIndex = -1;
+    control.setAttribute("aria-readonly", "true");
+  }
+  function interactiveModel(context) {
+    if (context.readOnly) return context.model;
+    const { state: state32 } = getLegacyBridge();
+    return state32.generationCatalog?.models.find((model) => model.id === state32.selectedModelId) || context.model;
+  }
+  function commitValue(context, definition, value, rerender = false) {
+    if (context.readOnly) return;
+    const model = interactiveModel(context);
+    const currentDefinition = model.parameters.find((item) => item.id === definition.id);
+    if (!currentDefinition) return;
+    setParameterValue(model.id, currentDefinition.id, value);
+    if (rerender) renderModelParameters(model, { readOnly: false });
+    else refreshDynamicLimits();
+  }
+  function renderSelect(definition, value, context) {
+    const field = fieldShell(definition);
+    const select = document.createElement("select");
+    select.className = "control";
+    select.setAttribute("aria-label", translate(definition.label_key));
+    definition.allowed_values.forEach((allowed) => {
+      const option2 = document.createElement("option");
+      option2.value = String(allowed);
+      option2.textContent = String(allowed);
+      select.append(option2);
+    });
+    select.value = String(value);
+    setReadOnly(select, context.readOnly);
+    select.addEventListener("change", () => commitValue(
+      context,
+      definition,
+      select.value,
+      parameterAffectsVisibility(interactiveModel(context), definition.id)
+    ));
+    field.append(select);
+    return field;
+  }
+  function renderSegmented(definition, value, context) {
+    const field = fieldShell(definition);
+    if (definition.allowed_values.length === 1) {
+      const staticValue = document.createElement("div");
+      staticValue.className = "control model-parameter-static-value";
+      staticValue.textContent = String(definition.allowed_values[0]);
+      staticValue.setAttribute("aria-label", translate(definition.label_key));
+      field.append(staticValue);
+      return field;
+    }
+    const group = document.createElement("div");
+    const multiline = definition.allowed_values.length > 4;
+    group.className = `radio-group model-parameter-segmented${multiline ? " model-parameter-segmented-multiline" : ""}`;
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", translate(definition.label_key));
+    definition.allowed_values.forEach((allowed) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `radio-btn${allowed === value ? " active" : ""}`;
+      button.dataset.val = String(allowed);
+      button.textContent = segmentLabel(definition, allowed);
+      const blockedReason = allowed === value ? "" : valueRequirementReason(context.model, definition, allowed, context.values);
+      if (blockedReason) button.title = translate(VALUE_REQUIREMENT_LABEL_KEYS[blockedReason] || blockedReason);
+      button.disabled = context.readOnly || Boolean(blockedReason);
+      button.tabIndex = context.readOnly ? -1 : 0;
+      button.setAttribute("aria-pressed", allowed === value ? "true" : "false");
+      button.addEventListener("click", () => {
+        if (context.readOnly || button.classList.contains("active")) return;
+        group.querySelectorAll(".radio-btn").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        commitValue(
+          context,
+          definition,
+          allowed,
+          parameterAffectsVisibility(interactiveModel(context), definition.id)
+        );
+        refreshSegmentedIndicators();
+      });
+      group.append(button);
+    });
+    field.append(group);
+    return field;
+  }
+  function renderBooleanSegmented(definition, value, context) {
+    const field = fieldShell(definition);
+    const group = document.createElement("div");
+    group.className = "radio-group model-parameter-segmented model-parameter-boolean-segmented";
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", translate(definition.label_key));
+    const choices = [
+      { value: false, label: translate("output.lock.disabled") },
+      { value: true, label: translate("output.lock.enabled") }
+    ];
+    choices.forEach((choice) => {
+      const button = document.createElement("button");
+      const active = choice.value === Boolean(value);
+      button.type = "button";
+      button.className = `radio-btn${active ? " active" : ""}`;
+      button.textContent = choice.label;
+      button.disabled = context.readOnly;
+      button.tabIndex = context.readOnly ? -1 : 0;
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+      button.addEventListener("click", () => {
+        if (context.readOnly || button.classList.contains("active")) return;
+        group.querySelectorAll(".radio-btn").forEach((item) => {
+          const isActive = item === button;
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+        commitValue(
+          context,
+          definition,
+          choice.value,
+          parameterAffectsVisibility(interactiveModel(context), definition.id)
+        );
+        refreshSegmentedIndicators();
+      });
+      group.append(button);
+    });
+    field.append(group);
+    return field;
+  }
+  function renderToggle(definition, value, context) {
+    const field = fieldShell(definition);
+    const label = document.createElement("label");
+    label.className = "web-search-toggle model-parameter-toggle";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = Boolean(value);
+    input.setAttribute("aria-label", translate(definition.label_key));
+    setReadOnly(input, context.readOnly);
+    const track = document.createElement("span");
+    track.className = "web-search-toggle-track";
+    track.setAttribute("aria-hidden", "true");
+    const text = document.createElement("span");
+    text.className = "web-search-toggle-text";
+    text.textContent = translate(input.checked ? "output.lock.enabled" : "output.lock.disabled");
+    input.addEventListener("change", () => {
+      text.textContent = translate(input.checked ? "output.lock.enabled" : "output.lock.disabled");
+      commitValue(
+        context,
+        definition,
+        input.checked,
+        parameterAffectsVisibility(interactiveModel(context), definition.id)
+      );
+    });
+    label.append(input, track, text);
+    field.append(label);
+    return field;
+  }
+  function renderNumeric(definition, value, context, slider) {
+    const field = fieldShell(definition);
+    const input = document.createElement("input");
+    input.className = slider ? "slider" : "control";
+    input.type = slider ? "range" : "number";
+    input.value = String(value);
+    input.setAttribute("aria-label", translate(definition.label_key));
+    if (definition.minimum !== null) input.min = String(definition.minimum);
+    if (definition.maximum !== null) input.max = String(definition.maximum);
+    if (definition.step !== null) input.step = String(definition.step);
+    setReadOnly(input, context.readOnly);
+    const output = document.createElement("output");
+    output.className = "model-parameter-number-value";
+    output.textContent = String(value);
+    const error = document.createElement("span");
+    error.className = "model-parameter-error hidden";
+    error.setAttribute("role", "alert");
+    const validate = (next, commit) => {
+      const limit2 = Number(input.dataset.limit || NaN);
+      const message = !parameterValueValid(definition, next) ? translate("modelParameters.invalidValue") : next > limit2 ? formatTranslation("output.frameCountLimit", { max: limit2 }) : "";
+      error.textContent = message;
+      error.classList.toggle("hidden", !message);
+      input.setAttribute("aria-invalid", message ? "true" : "false");
+      setValidationError(interactiveModel(context).id, definition.id, message);
+      if (!message && commit) commitValue(context, definition, next);
+    };
+    input.addEventListener("input", () => {
+      output.textContent = input.value;
+      validate(Number(input.value), true);
+    });
+    if (definition.id === GIF_FRAME_COUNT && !context.readOnly) {
+      const refresh = () => {
+        const draft2 = getLegacyBridge().state.parameterDraftsByModel?.[context.model.id] || {};
+        const limit2 = currentGifFrameLimit(context.model, definition, { ...context.values, ...draft2 });
+        if (limit2 === null) delete input.dataset.limit;
+        else input.dataset.limit = input.max = String(limit2);
+        validate(Number(input.value), false);
+      };
+      input.dataset.dynamicLimit = "gif-frames";
+      input.refreshLimit = refresh;
+      queueMicrotask(refresh);
+    }
+    if (slider) field.append(input, output, error);
+    else field.append(input, error);
+    return field;
+  }
+  var GIF_FRAME_COUNT = "gpt.frame_count";
+  function currentGifFrameLimit(model, definition, values) {
+    const { state: state32 } = getLegacyBridge();
+    const provider = state32.generationCatalog?.providers.find((item) => item.id === state32.selectedProviderId);
+    const providerLimit = state32.mode === "edit" ? provider?.gif_edit_max_frames ?? null : null;
+    return gifFrameLimit(model, definition.maximum, values, providerLimit);
+  }
+  function usesMobileWorkspace() {
+    return typeof window.matchMedia === "function" && window.matchMedia(MOBILE_WORKSPACE_QUERY).matches;
+  }
+  function placeAdvancedOptions(root, slot, wasOpen) {
+    const details = root.querySelector(":scope > details.model-parameter-advanced");
+    const inHeader = Boolean(details) && !usesMobileWorkspace();
+    slot.replaceChildren(...inHeader && details ? [details] : []);
+    slot.classList.toggle("hidden", !inHeader);
+    if (details && wasOpen) details.open = true;
+  }
+  function closeAdvancedPopover(event) {
+    const details = document.querySelector("#modelAdvancedSlot > details[open]");
+    if (!details) return;
+    if (event instanceof KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      details.open = false;
+      details.querySelector("summary")?.focus();
+      return;
+    }
+    if (!details.contains(event.target)) details.open = false;
+  }
+  function refreshDynamicLimits() {
+    if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
+    document.querySelectorAll("[data-dynamic-limit]").forEach((input) => input.refreshLimit?.());
+  }
+  function renderSlider(definition, value, context) {
+    return renderNumeric(definition, value, context, true);
+  }
+  function renderNumber(definition, value, context) {
+    return renderNumeric(definition, value, context, false);
+  }
+  function renderImageSize(definition, value, context) {
+    const field = renderSegmented(definition, value, context);
+    field.querySelector(".model-parameter-label")?.classList.add("sr-only");
+    return field;
+  }
+  function renderPixelSize(definition, value, context) {
+    const rules = context.model.size_spec?.custom;
+    if (!rules) return renderText(definition, value, context);
+    const field = fieldShell(definition);
+    field.append(createPixelSizeEditor({
+      label: translate(definition.label_key),
+      value,
+      rules,
+      outputFormat: context.values["output.format"],
+      readOnly: context.readOnly,
+      commit: (next) => commitValue(context, definition, next),
+      reportError: (message) => {
+        if (!context.readOnly) setValidationError(interactiveModel(context).id, definition.id, message);
+      }
+    }));
+    return field;
+  }
+  function setValidationError(modelId, parameterId, message) {
+    const { state: state32, els: els38 } = getLegacyBridge();
+    const errors = state32.parameterValidationErrorsByModel[modelId] || {};
+    if (message) errors[parameterId] = message;
+    else delete errors[parameterId];
+    state32.parameterValidationErrorsByModel[modelId] = errors;
+    if (els38.runButton) els38.runButton.disabled = !state32.authAvailable || Object.keys(errors).length > 0;
+  }
+  function renderText(definition, value, context) {
+    const field = fieldShell(definition);
+    const input = definition.value_type === "object" ? document.createElement("textarea") : document.createElement("input");
+    input.className = "control model-parameter-text";
+    input.setAttribute("aria-label", translate(definition.label_key));
+    if (input instanceof HTMLTextAreaElement) {
+      input.rows = 4;
+      input.value = JSON.stringify(value, null, 2);
+    } else {
+      input.type = "text";
+      input.value = String(value);
+    }
+    setReadOnly(input, context.readOnly);
+    const error = document.createElement("span");
+    error.className = "model-parameter-error hidden";
+    error.setAttribute("role", "alert");
+    const handle = () => {
+      if (context.readOnly) return;
+      if (definition.value_type !== "object") {
+        const message2 = parameterValueValid(definition, input.value) ? "" : translate("modelParameters.invalidValue");
+        error.textContent = message2;
+        error.classList.toggle("hidden", !message2);
+        setValidationError(interactiveModel(context).id, definition.id, message2);
+        if (!message2) commitValue(context, definition, input.value);
+        return;
+      }
+      let parsed;
+      let message = "";
+      try {
+        parsed = JSON.parse(input.value);
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) message = translate("modelParameters.objectRequired");
+      } catch {
+        message = translate("modelParameters.invalidJson");
+      }
+      error.textContent = message;
+      error.classList.toggle("hidden", !message);
+      setValidationError(interactiveModel(context).id, definition.id, message);
+      if (!message) commitValue(context, definition, parsed);
+    };
+    input.addEventListener("input", handle);
+    input.addEventListener("blur", handle);
+    field.append(input, error);
+    return field;
+  }
+  function renderNotice(definition, value, _context) {
+    const notice = document.createElement("p");
+    notice.className = `model-parameter-notice${definition.full_width ? " full-width" : ""}`;
+    notice.dataset.parameterId = definition.id;
+    notice.textContent = String(value || translate(definition.label_key));
+    return notice;
+  }
+  function renderChoiceGrid(definition, value, context) {
+    const field = fieldShell(definition);
+    field.classList.add("model-parameter-choice-grid");
+    const current = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+    definition.object_choices?.forEach((row) => {
+      const choiceRow = document.createElement("div");
+      choiceRow.className = "model-parameter-choice-row";
+      const label = document.createElement("span");
+      label.className = "model-parameter-choice-label";
+      label.textContent = translate(row.label_key);
+      const group = document.createElement("div");
+      group.className = "radio-group model-parameter-choice-options model-parameter-segmented-multiline";
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", translate(row.label_key));
+      const selected = typeof current[row.key] === "string" ? String(current[row.key]) : row.default;
+      row.allowed_values.forEach((allowed, index) => {
+        const button = document.createElement("button");
+        const active = selected === allowed;
+        button.type = "button";
+        button.className = `radio-btn${active ? " active" : ""}`;
+        button.textContent = translate(row.label_keys[index] || row.label_key);
+        button.title = allowed;
+        button.disabled = context.readOnly;
+        button.tabIndex = context.readOnly ? -1 : 0;
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+        button.addEventListener("click", () => {
+          if (context.readOnly || button.classList.contains("active")) return;
+          group.querySelectorAll(".radio-btn").forEach((item) => {
+            const isActive = item === button;
+            item.classList.toggle("active", isActive);
+            item.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+          const nextValue = nextObjectChoiceValue(definition, current, row.key, allowed);
+          Object.keys(current).forEach((key2) => delete current[key2]);
+          Object.assign(current, nextValue);
+          commitValue(context, definition, nextValue);
+        });
+        group.append(button);
+      });
+      choiceRow.append(label, group);
+      field.append(choiceRow);
+    });
+    return field;
+  }
+  function renderObjectPresets(definition, value, context) {
+    const field = fieldShell(definition);
+    const group = document.createElement("div");
+    group.className = "radio-group model-parameter-object-presets";
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", translate(definition.label_key));
+    let current = value && typeof value === "object" && !Array.isArray(value) ? { ...value } : {};
+    const selected = matchingObjectPreset(definition, current);
+    definition.object_presets?.forEach((preset) => {
+      const button = document.createElement("button");
+      const active = selected?.id === preset.id;
+      button.type = "button";
+      button.className = `radio-btn${active ? " active" : ""}`;
+      button.textContent = translate(preset.label_key);
+      button.disabled = context.readOnly;
+      button.tabIndex = context.readOnly ? -1 : 0;
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+      button.addEventListener("click", () => {
+        if (context.readOnly || button.classList.contains("active")) return;
+        group.querySelectorAll(".radio-btn").forEach((item) => {
+          const isActive = item === button;
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+        current = nextObjectPresetValue(definition, current, preset);
+        commitValue(context, definition, current);
+        refreshSegmentedIndicators();
+      });
+      group.append(button);
+    });
+    field.append(group);
+    return field;
+  }
+  function renderAspectRatioGrid(definition, value, context) {
+    const field = fieldShell(definition);
+    const group = document.createElement("div");
+    group.className = "radio-group model-aspect-ratio-grid";
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", translate(definition.label_key));
+    aspectRatioSlots(definition.allowed_values.map(String)).forEach((ratioSlot) => {
+      const slot = document.createElement("div");
+      slot.className = "aspect-ratio-slot";
+      ratioSlot.values.forEach((allowed) => {
+        const button = document.createElement("button");
+        const active = allowed === value;
+        button.type = "button";
+        button.className = `radio-btn${active ? " active" : ""}`;
+        button.dataset.val = allowed;
+        button.disabled = context.readOnly;
+        button.tabIndex = context.readOnly ? -1 : 0;
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+        const icon = createAspectRatioIcon(allowed);
+        const label = document.createElement("span");
+        label.className = "aspect-ratio-label";
+        label.textContent = allowed;
+        if (icon) button.append(icon, label);
+        else {
+          button.classList.add("aspect-ratio-no-icon");
+          button.append(label);
+        }
+        button.addEventListener("click", () => {
+          if (context.readOnly || button.classList.contains("active")) return;
+          group.querySelectorAll(".radio-btn").forEach((item) => {
+            const isActive = item === button;
+            item.classList.toggle("active", isActive);
+            item.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+          commitValue(context, definition, allowed);
+        });
+        slot.append(button);
+      });
+      group.append(slot);
+    });
+    field.append(group);
+    return field;
+  }
+  var PARAMETER_RENDERERS = {
+    select: renderSelect,
+    segmented: renderSegmented,
+    boolean_segmented: renderBooleanSegmented,
+    toggle: renderToggle,
+    slider: renderSlider,
+    number: renderNumber,
+    text: renderText,
+    notice: renderNotice,
+    choice_grid: renderChoiceGrid,
+    object_presets: renderObjectPresets,
+    aspect_ratio_grid: renderAspectRatioGrid,
+    image_size: renderImageSize,
+    pixel_size: renderPixelSize
+  };
+  function parameterHasChoice(definition) {
+    return definition.control !== "image_size" || definition.allowed_values.length > 1;
+  }
+  function advancedParametersAreExpanded(model, readOnly) {
+    return readOnly || model.expand_advanced_parameters === true;
+  }
+  function parameterTranslations(definition) {
+    return [
+      translate(definition.label_key),
+      ...(definition.object_choices || []).flatMap((choice) => [
+        translate(choice.label_key),
+        ...choice.label_keys.map((key2) => translate(key2))
+      ]),
+      ...(definition.object_presets || []).map((preset) => translate(preset.label_key))
+    ];
+  }
+  var FINGERPRINT_DEPENDENCIES = {
+    pixel_size: ["output.format"]
+  };
+  function parameterRenderFingerprint(definition, value, readOnly, values = {}) {
+    const dependencies = [
+      ...FINGERPRINT_DEPENDENCIES[definition.control] || [],
+      ...(definition.value_requirements || []).map((requirement) => requirement.condition.parameter_id)
+    ].map((id) => values[id]);
+    return JSON.stringify([definition, value, readOnly, parameterTranslations(definition), dependencies]);
+  }
+  function resolvedParameterValues(model, values) {
+    return Object.fromEntries(model.parameters.map((definition) => [
+      definition.id,
+      modelParameterValueValid(model, definition, values[definition.id], values) ? values[definition.id] : cloneValue(definition.default)
+    ]));
+  }
+  function visibleParameterDefinitions(model, values, operation, supported = null) {
+    return model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => !supported || supported.has(definition.id)).filter(parameterHasChoice).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
+  }
+  function renderParameterDefinitionsInto(root, model, values, options) {
+    const operation = options.operation || "generate";
+    const resolvedValues = resolvedParameterValues(model, values);
+    root.replaceChildren();
+    const context = { readOnly: options.readOnly, model, values: resolvedValues, root };
+    const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, options.supported || null);
+    visibleDefinitions.filter((definition) => definition.group !== "advanced").forEach((definition) => root.append(PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context)));
+    const advancedDefinitions = visibleDefinitions.filter((definition) => definition.group === "advanced");
+    if (advancedDefinitions.length) {
+      const content = document.createElement("div");
+      content.className = "model-parameter-advanced-grid";
+      advancedDefinitions.forEach((definition) => content.append(
+        PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context)
+      ));
+      if (advancedParametersAreExpanded(model, options.readOnly)) {
+        content.classList.add("model-parameter-advanced-grid-expanded", "full-width");
+        root.append(content);
+      } else {
+        const details = document.createElement("details");
+        details.className = "model-parameter-advanced full-width";
+        const summary = document.createElement("summary");
+        summary.textContent = translate("apiSettings.advancedSettings");
+        details.append(summary, content);
+        root.append(details);
+      }
+    }
+    refreshSegmentedIndicators();
+  }
+  function renderInteractiveParameterDefinitionsInto(root, model, values, operation) {
+    const resolvedValues = resolvedParameterValues(model, values);
+    const supported = selectedBindingParameterIds(model.id);
+    const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, supported);
+    if (visibleDefinitions.some((definition) => definition.group === "advanced")) {
+      renderParameterDefinitionsInto(root, model, values, { readOnly: false, operation, supported });
+      return;
+    }
+    const context = { readOnly: false, model, values: resolvedValues, root };
+    const existingFields = new Map(Array.from(root.children).flatMap((child) => {
+      const parameterId = child.dataset.parameterId;
+      return parameterId ? [[parameterId, child]] : [];
+    }));
+    const fields = visibleDefinitions.map((definition) => {
+      const fingerprint = parameterRenderFingerprint(definition, resolvedValues[definition.id], false, resolvedValues);
+      const existingField = existingFields.get(definition.id);
+      if (existingField?.dataset.renderFingerprint === fingerprint) return existingField;
+      const field = PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context);
+      field.dataset.renderFingerprint = fingerprint;
+      return field;
+    });
+    root.replaceChildren(...fields);
+    refreshSegmentedIndicators();
+  }
+  function ensureModelDraft(model) {
+    const { state: state32 } = getLegacyBridge();
+    const previous = state32.parameterDraftsByModel[model.id] || {};
+    const report = initializeParameterDraft(model, previous);
+    state32.parameterDraftsByModel[model.id] = report.values;
+    state32.parameterDraftVersionsByModel[model.id] = model.version;
+    return report;
+  }
+  function renderModelParameters(model, options = { readOnly: false }) {
+    const { state: state32, els: els38 } = getLegacyBridge();
+    const root = options.root || els38.modelParameterGrid;
+    if (!root) return;
+    if (options.readOnly) {
+      renderParameterDefinitionsInto(root, model, options.values || {}, { readOnly: true, operation: state32.mode });
+      return;
+    }
+    ensureModelDraft(model);
+    const draft2 = state32.parameterDraftsByModel[model.id] || {};
+    const visible = new Set(visibleParameterDefinitions(
+      model,
+      resolvedParameterValues(model, draft2),
+      state32.mode,
+      selectedBindingParameterIds(model.id)
+    ).map((definition) => definition.id));
+    const errors = state32.parameterValidationErrorsByModel[model.id] || {};
+    Object.keys(errors).filter((id) => !visible.has(id)).forEach((id) => setValidationError(model.id, id, ""));
+    root.classList.remove("hidden");
+    const toolSlot = els38.modelToolSlot;
+    if (toolSlot) root.append(...Array.from(toolSlot.children));
+    const advancedSlot = els38.modelAdvancedSlot;
+    const advancedWasOpen = Boolean(advancedSlot?.querySelector("details")?.open);
+    renderInteractiveParameterDefinitionsInto(root, model, draft2, state32.mode);
+    if (advancedSlot) placeAdvancedOptions(root, advancedSlot, advancedWasOpen);
+    if (toolSlot) {
+      const binding = selectedBinding(model.id);
+      const besideMainModel = Boolean(binding && resolveModeSettingsVisibility(binding, false).showMainModel);
+      toolSlot.replaceChildren(...besideMainModel ? Array.from(root.querySelectorAll(':scope > [data-parameter-group="tools"]')) : []);
+      toolSlot.classList.toggle("hidden", !toolSlot.children.length);
+    }
+    refreshDynamicLimits();
+  }
+  function setParameterValue(modelId, parameterId, value) {
+    const { state: state32 } = getLegacyBridge();
+    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
+    const definition = model?.parameters.find((item) => item.id === parameterId);
+    if (!model || !definition || !modelParameterValueValid(model, definition, value, state32.parameterDraftsByModel[modelId] || {})) return;
+    state32.parameterDraftsByModel[modelId] = {
+      ...state32.parameterDraftsByModel[modelId] || {},
+      [parameterId]: cloneValue(value)
+    };
+    if (definition.scope === "application") {
+      state32.generationCatalog?.models.forEach((item) => {
+        if (item.parameters.some((parameter) => parameter.id === parameterId)) {
+          state32.parameterDraftsByModel[item.id] = {
+            ...state32.parameterDraftsByModel[item.id] || {},
+            [parameterId]: cloneValue(value)
+          };
+        }
+      });
+    }
+    getLegacyBridge().methods.persistModelSelection?.();
+    getLegacyBridge().methods.updateRequestPreview?.();
+  }
+  function resetCurrentModelParameters() {
+    const { state: state32 } = getLegacyBridge();
+    if (!state32.selectedModelId) return;
+    state32.parameterDraftsByModel[state32.selectedModelId] = {};
+    getLegacyBridge().methods.persistModelSelection?.();
+    renderCurrentModelParameters();
+  }
+  function renderCurrentModelParameters() {
+    const { state: state32 } = getLegacyBridge();
+    const model = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
+    if (model) renderModelParameters(model, { readOnly: false });
+  }
+  function initModelParametersFeature() {
+    Object.assign(getLegacyBridge().methods, {
+      activeParameterValues,
+      refreshFirstImageButtons,
+      renderCurrentModelParameters,
+      renderModelParameters,
+      resetCurrentModelParameters,
+      setParameterValue
+    });
+    document.addEventListener(LOCALE_CHANGE_EVENT, renderCurrentModelParameters);
+    document.addEventListener("pointerdown", closeAdvancedPopover);
+    document.addEventListener("keydown", closeAdvancedPopover);
+    if (typeof window.matchMedia === "function") {
+      window.matchMedia(MOBILE_WORKSPACE_QUERY).addEventListener?.("change", renderCurrentModelParameters);
+    }
+  }
+
+  // codex_image/webui/frontend/src/gpt-image-models.ts
+  function isGptImageModel(modelId) {
+    return String(modelId || "").startsWith("gpt-image-");
+  }
+
+  // codex_image/webui/frontend/src/model-parameter-drafts.ts
+  function cloneValue2(value) {
+    if (Array.isArray(value)) return value.map(cloneValue2);
+    if (value && typeof value === "object") {
+      return Object.fromEntries(Object.entries(value).map(([key2, item]) => [key2, cloneValue2(item)]));
+    }
+    return value;
+  }
+  function parameterValueValid2(parameter, value) {
+    const typeValid = parameter.value_type === "string" ? typeof value === "string" : parameter.value_type === "integer" ? typeof value === "number" && Number.isInteger(value) : parameter.value_type === "boolean" ? typeof value === "boolean" : parameter.value_type === "object" ? Boolean(value) && typeof value === "object" && !Array.isArray(value) : false;
+    if (!typeValid) return false;
+    if (parameter.allowed_values.length && !parameter.allowed_values.includes(value)) return false;
+    if (typeof value === "number") {
+      if (parameter.minimum !== null && value < parameter.minimum) return false;
+      if (parameter.maximum !== null && value > parameter.maximum) return false;
+      if (parameter.step !== null) {
+        const base = parameter.minimum ?? 0;
+        const quotient = (value - base) / parameter.step;
+        if (Math.abs(quotient - Math.round(quotient)) > 1e-9) return false;
+      }
+    }
+    return true;
+  }
+  function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
+    const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
+    return Object.fromEntries(targetModel.parameters.map((definition) => {
+      if (sourceIds.has(definition.id)) {
+        const sourceValue = sourceDraft[definition.id];
+        return [definition.id, cloneValue2(
+          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
+        )];
+      }
+      const targetValue = targetDraft[definition.id];
+      return [definition.id, cloneValue2(
+        parameterValueValid2(definition, targetValue) ? targetValue : definition.default
+      )];
+    }));
+  }
+  function saveCurrentModelParameterDraft() {
+    getLegacyBridge().methods.persistModelSelection?.();
+  }
+  function restoreCurrentModelParameterDraft() {
+    renderCurrentModelParameters();
+  }
+  function initModelParameterDraftFeature() {
+    Object.assign(getLegacyBridge().methods, {
+      restoreCurrentModelParameterDraft,
+      saveCurrentModelParameterDraft
+    });
+  }
+
+  // codex_image/webui/frontend/src/model-family-icons.ts
+  var BRAND_MARKS = {
+    "gpt-image": {
+      asset: "/static/brand/model-marks/openai.svg",
+      className: "openai"
+    },
+    "gemini-image": {
+      asset: "/static/brand/model-marks/gemini.svg",
+      className: "gemini"
+    }
+  };
+  function fallbackMarkHtml(className) {
+    return `
+    <svg class="${className} model-family-brand-mark-fallback" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m12 4 8 8-8 8-8-8Z" />
+    </svg>`;
+  }
+  function modelFamilyBrandMarkHtml(familyId, className) {
+    const mark = BRAND_MARKS[familyId];
+    if (!mark) return fallbackMarkHtml(className);
+    return `<img class="${className} model-family-brand-mark-${mark.className}" src="${mark.asset}" alt="" aria-hidden="true" decoding="async" />`;
+  }
+
+  // codex_image/webui/frontend/src/model-selection.ts
+  function modelsForFamily(catalog, familyId) {
+    return catalog.models.filter((model) => model.family_id === familyId);
+  }
+  function usesExpandedConcreteModelOptions(models) {
+    return models.length > 1;
+  }
+  function familyOptionButtons() {
+    const options = getLegacyBridge().els.modelFamilyOptions;
+    return options ? Array.from(options.querySelectorAll("[data-family-id]")) : [];
+  }
+  function focusFamilyOption(familyId) {
+    window.requestAnimationFrame(() => {
+      familyOptionButtons().find((button) => button.dataset.familyId === familyId)?.focus();
+    });
+  }
+  function selectModelFamily(familyId) {
+    const { state: state32 } = getLegacyBridge();
+    const catalog = state32.generationCatalog;
+    const family = catalog?.families.find((item) => item.id === familyId);
+    if (!catalog || !family) return;
+    const models = modelsForFamily(catalog, familyId);
+    const remembered = state32.lastModelByFamily[familyId];
+    const model = models.find((item) => item.id === remembered) || models[0];
+    if (!model) return;
+    saveCurrentModelParameterDraft();
+    state32.selectedFamilyId = familyId;
+    state32.selectedModelId = model.id;
+    state32.lastModelByFamily[familyId] = model.id;
+    getLegacyBridge().methods.persistModelSelection?.();
+    renderModelSelectors();
+    renderProviderSelection();
+    restoreCurrentModelParameterDraft();
+    getLegacyBridge().methods.reconcileTaskParameterInspection?.();
+    getLegacyBridge().methods.updateModeSpecificSettings?.();
+    getLegacyBridge().methods.refreshOutputSettingsLock?.();
+    getLegacyBridge().methods.updateRequestPreview?.();
+    focusFamilyOption(familyId);
+  }
+  function selectConcreteModel(modelId) {
+    const { state: state32 } = getLegacyBridge();
+    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
+    if (!model) return;
+    const sourceModel = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
+    const familyChanged = sourceModel?.family_id !== model.family_id;
+    saveCurrentModelParameterDraft();
+    if (sourceModel?.family_id === model.family_id) {
+      state32.parameterDraftsByModel[model.id] = migratePortableModelDraft(
+        sourceModel,
+        model,
+        state32.parameterDraftsByModel[sourceModel.id] || {},
+        state32.parameterDraftsByModel[model.id] || {}
+      );
+    }
+    state32.selectedModelId = model.id;
+    state32.selectedFamilyId = model.family_id;
+    state32.lastModelByFamily[model.family_id] = model.id;
+    getLegacyBridge().methods.persistModelSelection?.();
+    if (familyChanged) renderModelSelectors();
+    else updateConcreteModelSelection(model.id);
+    renderProviderSelection();
+    restoreCurrentModelParameterDraft();
+    getLegacyBridge().methods.reconcileTaskParameterInspection?.();
+    getLegacyBridge().methods.updateModeSpecificSettings?.();
+    getLegacyBridge().methods.refreshOutputSettingsLock?.();
+    getLegacyBridge().methods.updateRequestPreview?.();
+  }
+  function updateConcreteModelSelection(modelId) {
+    const { state: state32, els: els38 } = getLegacyBridge();
+    const modelSelect = els38.concreteModelSelect;
+    const modelOptions = els38.concreteModelOptions;
+    if (modelSelect) modelSelect.value = modelId;
+    modelOptions?.querySelectorAll("[data-model-id]").forEach((button) => {
+      const active = button.dataset.modelId === modelId;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
+    if (modelSelect) modelSelect.title = model?.display_name || "";
+    refreshSegmentedIndicators();
+  }
+  function renderModelSelectors() {
+    const { state: state32, els: els38 } = getLegacyBridge();
+    const catalog = state32.generationCatalog;
+    const familyOptions = els38.modelFamilyOptions;
+    const modelSelect = els38.concreteModelSelect;
+    const modelOptions = els38.concreteModelOptions;
+    const modelField = modelSelect?.closest(".concrete-model-field");
+    if (!catalog) {
+      if (familyOptions) {
+        familyOptions.replaceChildren();
+        familyOptions.setAttribute("aria-disabled", "true");
+      }
+      if (modelSelect) modelSelect.disabled = true;
+      modelOptions?.replaceChildren();
+      modelOptions?.classList.add("hidden");
+      modelField?.classList.add("hidden");
+      return;
+    }
+    const selectedFamily = catalog.families.find((family) => family.id === state32.selectedFamilyId);
+    if (familyOptions) {
+      familyOptions.querySelectorAll("[data-family-id]").forEach((item) => item.remove());
+      familyOptions.removeAttribute("aria-disabled");
+      catalog.families.forEach((family) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.role = "radio";
+        const active = family.id === state32.selectedFamilyId;
+        item.className = `model-family-segment radio-btn${active ? " active" : ""}`;
+        item.dataset.familyId = family.id;
+        item.title = family.display_name;
+        item.setAttribute("aria-label", family.display_name);
+        item.setAttribute("aria-checked", active ? "true" : "false");
+        const icon = document.createElement("span");
+        icon.className = `model-family-segment-icon model-family-segment-icon-${family.id}`;
+        icon.setAttribute("aria-hidden", "true");
+        icon.innerHTML = modelFamilyBrandMarkHtml(family.id, "model-family-brand-mark");
+        const label = document.createElement("span");
+        label.className = "model-family-segment-label";
+        label.textContent = family.short_name || family.display_name;
+        item.append(icon, label);
+        familyOptions.append(item);
+      });
+    }
+    if (modelSelect && selectedFamily) {
+      const familyModels = modelsForFamily(catalog, selectedFamily.id).filter((model) => selectedFamily.id !== "gpt-image" || model.id === "gpt-image-2" || model.id === state32.selectedModelId || catalog.providers.some((provider) => provider.bindings.some((binding) => binding.canonical_model_id === model.id && binding.operations.includes(state32.mode))));
+      const gptVersions = selectedFamily.id === "gpt-image";
+      const expanded = !gptVersions && usesExpandedConcreteModelOptions(familyModels);
+      modelField?.classList.toggle("hidden", gptVersions || !expanded);
+      modelSelect.replaceChildren();
+      familyModels.forEach((model) => {
+        const option2 = document.createElement("option");
+        option2.value = model.id;
+        option2.textContent = model.display_name;
+        option2.title = model.display_name;
+        modelSelect.append(option2);
+      });
+      modelSelect.value = state32.selectedModelId || "";
+      modelSelect.disabled = modelSelect.options.length === 0;
+      modelSelect.title = catalog.models.find((model) => model.id === state32.selectedModelId)?.display_name || "";
+      modelSelect.classList.toggle("hidden", expanded);
+      if (modelOptions) {
+        modelOptions.replaceChildren();
+        modelOptions.classList.toggle("hidden", !expanded);
+        if (expanded) {
+          familyModels.forEach((model) => {
+            const button = document.createElement("button");
+            const active = model.id === state32.selectedModelId;
+            button.type = "button";
+            button.className = `radio-btn${active ? " active" : ""}`;
+            button.dataset.modelId = model.id;
+            button.textContent = model.display_name;
+            button.title = model.display_name;
+            button.setAttribute("aria-pressed", active ? "true" : "false");
+            button.addEventListener("click", () => {
+              if (!button.classList.contains("active")) selectConcreteModel(model.id);
+            });
+            modelOptions.append(button);
+          });
+        }
+      }
+    }
+    refreshSegmentedIndicators();
+  }
+  function handleModelFamilyOptionsKeydown(event) {
+    const buttons = familyOptionButtons();
+    const current = event.target?.closest?.("[data-family-id]");
+    const index = buttons.indexOf(current || document.activeElement);
+    const delta = event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : event.key === "ArrowUp" || event.key === "ArrowLeft" ? -1 : 0;
+    const targetIndex = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : delta && buttons.length ? (index + delta + buttons.length) % buttons.length : -1;
+    if (targetIndex < 0 || !buttons.length) return;
+    event.preventDefault();
+    const target = buttons[targetIndex];
+    const familyId = target?.dataset.familyId;
+    if (!familyId) return;
+    selectModelFamily(familyId);
+  }
+  function initModelSelectionFeature() {
+    Object.assign(getLegacyBridge().methods, {
+      handleModelFamilyOptionsKeydown,
+      renderModelSelectors,
+      selectConcreteModel,
+      selectModelFamily,
+      updateConcreteModelSelection
+    });
+  }
+
+  // codex_image/webui/frontend/src/provider-selection.ts
+  function providerBindingSelectionKey(providerId, bindingId) {
+    return `${providerId}::${bindingId}`;
+  }
+  function providerIsEligible(catalog, provider, modelId) {
+    if (!provider.available || !modelId) return false;
+    const model = catalog.models.find((item) => item.id === modelId);
+    return provider.id !== "codex" || catalog.codex.available && model?.family_id === "gpt-image" && model.id === "gpt-image-2";
+  }
+  function eligibleProviderBindings(catalog, modelId, operation) {
+    return eligibleBindingsForModels(catalog, modelId ? [modelId] : [], operation);
+  }
+  function eligibleBindingsForModels(catalog, modelIds, operation) {
+    return catalog.providers.flatMap((provider) => {
+      return provider.bindings.filter((binding) => modelIds.includes(binding.canonical_model_id) && providerIsEligible(catalog, provider, binding.canonical_model_id) && binding.operations.includes(operation) && binding.available !== false).map((binding) => ({
+        provider,
+        binding,
+        selectionKey: providerBindingSelectionKey(provider.id, binding.id)
+      }));
+    });
+  }
+  function providerMenuBindings(catalog, modelId, operation) {
+    const modelIds = isGptImageModel(modelId) ? catalog.models.filter((model) => isGptImageModel(model.id)).map((model) => model.id) : modelId ? [modelId] : [];
+    return eligibleBindingsForModels(catalog, modelIds, operation);
+  }
+  function eligibleProviders(catalog, modelId, operation) {
+    const providers = /* @__PURE__ */ new Map();
+    eligibleProviderBindings(catalog, modelId, operation).forEach(({ provider }) => {
+      providers.set(provider.id, provider);
+    });
+    return [...providers.values()];
+  }
+  function preferredProviderBinding(entries, providerId, codexMode) {
+    const providerEntries = entries.filter((entry) => entry.provider.id === providerId);
+    if (!providerEntries.length) return null;
+    if (providerId === "codex") {
+      return providerEntries.find((entry) => entry.binding.protocol_profile === `codex_${codexMode}`) || providerEntries[0] || null;
+    }
+    return providerEntries[0] || null;
+  }
+  function resolveProviderSelection(entries, lastSelectionKey, lastProviderId, defaultProviderId, codexMode) {
+    if (lastSelectionKey) {
+      const remembered = entries.find((entry) => entry.selectionKey === lastSelectionKey);
+      if (remembered) return remembered;
+    }
+    return preferredProviderBinding(entries, lastProviderId, codexMode) || preferredProviderBinding(entries, defaultProviderId, codexMode) || entries[0] || null;
+  }
+  function resolveProviderId(eligible, lastProviderId, defaultProviderId) {
+    const ids = new Set(eligible.map((provider) => provider.id));
+    if (lastProviderId && ids.has(lastProviderId)) return lastProviderId;
+    if (defaultProviderId && ids.has(defaultProviderId)) return defaultProviderId;
+    return eligible[0]?.id ?? null;
+  }
+  function selectedProviderBinding() {
+    const { state: state32 } = getLegacyBridge();
+    const provider = state32.generationCatalog?.providers.find((item) => item.id === state32.selectedProviderId);
+    const candidates2 = provider?.bindings.filter((binding) => binding.canonical_model_id === state32.selectedModelId && binding.operations.includes(state32.mode) && binding.available !== false) || [];
+    return candidates2.find((binding) => binding.id === state32.selectedProviderBindingId) || candidates2[0] || null;
+  }
+  function syncCodexCatalogMode(mode) {
+    const { state: state32 } = getLegacyBridge();
+    const catalog = state32.generationCatalog;
+    if (!catalog) return;
+    catalog.codex.mode = mode;
+    if (state32.selectedProviderId !== "codex") return;
+    const selected = preferredProviderBinding(
+      eligibleProviderBindings(catalog, state32.selectedModelId, state32.mode),
+      "codex",
+      mode
+    );
+    if (selected) state32.selectedProviderBindingId = selected.binding.id;
+    renderProviderSelection();
+  }
+  function settingsTabForProvider(_providerId) {
+    return "api";
+  }
+  function optionLabel(entry, entries, catalog) {
+    const label = entry.binding.display_name || entry.provider.name;
+    const multipleModels = entries.some((candidate) => candidate.provider.id === entry.provider.id && candidate.binding.canonical_model_id !== entry.binding.canonical_model_id);
+    const model = catalog.models.find((model2) => model2.id === entry.binding.canonical_model_id);
+    return multipleModels ? `${label} \xB7 ${model?.display_name || entry.binding.canonical_model_id}` : label;
+  }
+  function applyOptionIcon(option2, entry) {
+    if (entry.provider.id === "codex") {
+      option2.dataset.optionIcon = "/static/brand/codex-channel-mark.svg";
+      option2.dataset.optionIconKind = "image";
+      return;
+    }
+    if (entry.provider.icon_emoji) {
+      option2.dataset.optionIcon = entry.provider.icon_emoji;
+      option2.dataset.optionIconKind = "emoji";
+    }
+  }
+  function renderProviderSelection() {
+    const { state: state32, els: els38 } = getLegacyBridge();
+    const select = els38.generationProviderSelect;
+    const catalog = state32.generationCatalog;
+    const entries = catalog ? providerMenuBindings(catalog, state32.selectedModelId, state32.mode) : [];
+    const resolved = catalog ? resolveProviderSelection(
+      entries.filter((entry) => entry.binding.canonical_model_id === state32.selectedModelId),
+      state32.lastProviderSelectionByModel[state32.selectedModelId || ""],
+      state32.lastProviderByModel[state32.selectedModelId || ""],
+      catalog.default_provider_by_model[state32.selectedModelId || ""],
+      catalog.codex.mode
+    ) : null;
+    state32.selectedProviderId = resolved?.provider.id || null;
+    state32.selectedProviderBindingId = resolved?.binding.id || null;
+    state32.authAvailable = Boolean(resolved);
+    if (select) {
+      select.replaceChildren();
+      if (!resolved) {
+        const option2 = document.createElement("option");
+        option2.value = "";
+        option2.textContent = catalog ? translate("modelSelection.providerUnavailable") : translate("modelSelection.catalogUnavailable");
+        select.append(option2);
+      }
+      if (catalog) {
+        for (const entry of entries) {
+          const option2 = document.createElement("option");
+          option2.value = entry.selectionKey;
+          option2.textContent = optionLabel(entry, entries, catalog);
+          option2.title = optionLabel(entry, entries, catalog);
+          applyOptionIcon(option2, entry);
+          select.append(option2);
+        }
+      }
+      select.value = resolved?.selectionKey || "";
+      select.disabled = !entries.length;
+      select.title = resolved && catalog ? optionLabel(resolved, entries, catalog) : "";
+      select.setAttribute("aria-invalid", resolved ? "false" : "true");
+      syncThemedSelect(select);
+    }
+    if (catalog && els38.statusText?.dataset.statusSource === "codex-health") {
+      getLegacyBridge().methods.setStatus?.("", "");
+    }
+    if (els38.runButton) els38.runButton.disabled = !resolved;
+  }
+  function selectGenerationProvider(selectionOrProviderId) {
+    const { state: state32 } = getLegacyBridge();
+    const catalog = state32.generationCatalog;
+    if (!catalog || !state32.selectedModelId) return;
+    const entries = providerMenuBindings(catalog, state32.selectedModelId, state32.mode);
+    const selected = entries.find((entry) => entry.selectionKey === selectionOrProviderId) || preferredProviderBinding(entries.filter((entry) => entry.binding.canonical_model_id === state32.selectedModelId), selectionOrProviderId, catalog.codex.mode) || preferredProviderBinding(entries, selectionOrProviderId, catalog.codex.mode);
+    if (!selected) {
+      renderProviderSelection();
+      return;
+    }
+    const modelId = selected.binding.canonical_model_id;
+    state32.lastProviderByModel[modelId] = selected.provider.id;
+    state32.lastProviderSelectionByModel[modelId] = selected.selectionKey;
+    if (modelId !== state32.selectedModelId) {
+      selectConcreteModel(modelId);
+      return;
+    }
+    state32.selectedProviderId = selected.provider.id;
+    state32.selectedProviderBindingId = selected.binding.id;
+    getLegacyBridge().methods.persistModelSelection?.();
+    renderProviderSelection();
+    getLegacyBridge().methods.updateModeSpecificSettings?.();
+    getLegacyBridge().methods.renderCurrentModelParameters?.();
+    getLegacyBridge().methods.updateRequestPreview?.();
+  }
+  function initProviderSelectionFeature() {
+    Object.assign(getLegacyBridge().methods, {
+      eligibleProviders,
+      eligibleProviderBindings,
+      resolveProviderId,
+      resolveProviderSelection,
+      settingsTabForProvider,
+      renderProviderSelection,
+      selectedProviderBinding,
+      selectGenerationProvider,
+      syncCodexCatalogMode
+    });
+  }
+
+  // codex_image/webui/frontend/src/generation-request.ts
+  function sortedRecord(values) {
+    return Object.fromEntries(Object.keys(values).sort().map((key2) => [key2, values[key2]]));
+  }
+  function currentGenerationSelection() {
+    const { state: state32 } = getLegacyBridge();
+    const model = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
+    if (!model || !state32.selectedProviderId) {
+      return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
+    }
+    const draft2 = state32.parameterDraftsByModel[model.id] || {};
+    return {
+      canonicalModelId: model.id,
+      providerId: state32.selectedProviderId,
+      bindingId: selectedProviderBinding()?.id || "",
+      parameters: activeParameterValuesFor(model, state32.mode, draft2, selectedBindingParameterIds(model.id))
+    };
+  }
+  function appendCanonicalGenerationFields(form, selection) {
+    form.append("canonical_model_id", selection.canonicalModelId);
+    form.append("provider_id", selection.providerId);
+    form.append("binding_id", selection.bindingId);
+    form.append("parameters_json", JSON.stringify(sortedRecord(selection.parameters)));
+  }
+
+  // codex_image/webui/frontend/src/studio-recipes.ts
+  var STORAGE_KEY = "codex-image-studio-recipes-v1";
+  function parseRecipes(raw) {
+    try {
+      const value = JSON.parse(raw || "[]");
+      if (!Array.isArray(value)) return [];
+      return value.filter((item) => item && typeof item === "object" && typeof item.id === "string" && typeof item.name === "string" && typeof item.modelId === "string" && typeof item.providerSelectionKey === "string" && item.parameters && typeof item.parameters === "object" && !Array.isArray(item.parameters)).map((item) => ({ ...item, summary: typeof item.summary === "string" ? item.summary : "" }));
+    } catch {
+      return [];
+    }
+  }
+  function loadRecipes() {
+    try {
+      return parseRecipes(window.localStorage.getItem(STORAGE_KEY));
+    } catch {
+      return [];
+    }
+  }
+  function storeRecipes(recipes) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
+    } catch {
+    }
+  }
+  function element(tag, className, text = "") {
+    const node = document.createElement(tag);
+    node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+  function applyRecipe(recipe) {
+    const bridge38 = getLegacyBridge();
+    const { state: state32 } = bridge38;
+    const catalog = state32.generationCatalog;
+    if (!catalog) return false;
+    const entries = eligibleProviderBindings(catalog, recipe.modelId, state32.mode);
+    const entry = entries.find((item) => item.selectionKey === recipe.providerSelectionKey) || entries[0];
+    if (!entry) return false;
+    state32.lastProviderByModel[recipe.modelId] = entry.provider.id;
+    state32.lastProviderSelectionByModel[recipe.modelId] = entry.selectionKey;
+    if (recipe.modelId !== state32.selectedModelId) selectConcreteModel(recipe.modelId);
+    else selectGenerationProvider(entry.selectionKey);
+    state32.parameterDraftsByModel[recipe.modelId] = JSON.parse(JSON.stringify(recipe.parameters));
+    bridge38.methods.persistModelSelection?.();
+    bridge38.methods.renderCurrentModelParameters?.();
+    bridge38.methods.updateRequestPreview?.();
+    return true;
+  }
+  function createStudioRecipes(describeCurrent, onBeforeOpen) {
+    const button = element("button", "studio-pill studio-recipe-pill");
+    button.type = "button";
+    button.setAttribute("aria-haspopup", "dialog");
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", "studioRecipeMenu");
+    button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h12v18l-6-4-6 4z"/></svg>';
+    const label = element("span", "studio-pill-value");
+    button.append(label);
+    const menu = element("div", "studio-popover studio-recipe-menu");
+    menu.id = "studioRecipeMenu";
+    menu.setAttribute("role", "dialog");
+    menu.hidden = true;
+    const close = () => {
+      menu.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+    };
+    const render2 = () => {
+      label.textContent = translate("studio.recipes");
+      menu.setAttribute("aria-label", translate("studio.recipes"));
+      menu.replaceChildren();
+      const recipes = loadRecipes();
+      const list = element("div", "studio-recipe-list");
+      if (!recipes.length) list.append(element("p", "studio-recipe-empty", translate("studio.recipeEmpty")));
+      recipes.forEach((recipe) => {
+        const row = element("div", "studio-recipe-row");
+        const apply = element("button", "studio-recipe-apply");
+        apply.type = "button";
+        apply.append(element("span", "studio-recipe-name", recipe.name), element("span", "studio-recipe-summary", recipe.summary));
+        apply.addEventListener("click", () => {
+          if (applyRecipe(recipe)) {
+            close();
+            return;
+          }
+          apply.classList.add("is-unavailable");
+          apply.title = translate("studio.recipeUnavailable");
+          getLegacyBridge().methods.setStatus?.(translate("studio.recipeUnavailable"), "error");
+        });
+        const remove = element("button", "ghost-button studio-recipe-remove");
+        remove.type = "button";
+        remove.title = translate("studio.recipeDelete");
+        remove.setAttribute("aria-label", formatTranslation("studio.recipeDeleteNamed", { name: recipe.name }));
+        remove.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#close"/></svg>';
+        remove.addEventListener("click", () => {
+          storeRecipes(loadRecipes().filter((item) => item.id !== recipe.id));
+          render2();
+        });
+        row.append(apply, remove);
+        list.append(row);
+      });
+      const form = element("form", "studio-recipe-form");
+      const input = element("input", "control studio-recipe-input");
+      input.type = "text";
+      input.maxLength = 40;
+      input.placeholder = translate("studio.recipeNamePlaceholder");
+      input.setAttribute("aria-label", translate("studio.recipeNamePlaceholder"));
+      const save = element("button", "ghost-button studio-recipe-save", translate("studio.recipeSave"));
+      save.type = "submit";
+      form.append(input, save);
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = input.value.trim();
+        const { state: state32 } = getLegacyBridge();
+        const selection = currentGenerationSelection();
+        if (!name || !selection.canonicalModelId || !state32.selectedProviderId) {
+          input.focus();
+          return;
+        }
+        const recipe = {
+          id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+          name,
+          modelId: selection.canonicalModelId,
+          providerSelectionKey: providerBindingSelectionKey(state32.selectedProviderId, selection.bindingId),
+          parameters: JSON.parse(JSON.stringify(state32.parameterDraftsByModel[selection.canonicalModelId] || {})),
+          summary: describeCurrent()
+        };
+        storeRecipes([recipe, ...loadRecipes().filter((item) => item.name !== name)]);
+        render2();
+      });
+      menu.append(list, form);
+    };
+    const toggle = () => {
+      if (!menu.hidden) {
+        close();
+        return;
+      }
+      onBeforeOpen();
+      render2();
+      menu.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+      menu.querySelector(".studio-recipe-apply, .studio-recipe-input")?.focus({ preventScroll: true });
+    };
+    button.addEventListener("click", toggle);
+    render2();
+    return { button, menu, close, toggle };
+  }
+
+  // codex_image/webui/frontend/src/studio-composer.ts
+  var STUDIO_QUERY = "(min-width: 1181px)";
+  var PILL_PARAMETER_IDS = /* @__PURE__ */ new Set([
+    "canvas.mode",
+    "canvas.aspect_ratio",
+    "canvas.resolution",
+    "canvas.size",
+    "output.count",
+    "gpt.quality"
+  ]);
+  function element2(tag, className, text = "") {
+    const node = document.createElement(tag);
+    node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+  function sameValue(left, right) {
+    return JSON.stringify(left) === JSON.stringify(right);
+  }
+  function valueLabel(definition, value) {
+    if (definition.value_type === "boolean") return value ? translate(definition.label_key) : "";
+    if (definition.value_type === "object") return translate(definition.label_key);
+    const key2 = definition.value_label_keys?.[definition.allowed_values.indexOf(value)];
+    return key2 ? translate(key2) : String(value);
+  }
+  function currentModel() {
+    const { state: state32 } = getLegacyBridge();
+    return state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
+  }
+  function studioPillSpecs(model, parameters) {
+    if (!model) return [];
+    const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
+    const pills = [];
+    const mode = parameters["canvas.mode"];
+    if (mode === "auto") {
+      pills.push({ target: "size", label: "", value: translate("output.sizeAuto") });
+    } else if (mode === "custom") {
+      const size = requestedSize(model, parameters);
+      pills.push({ target: "size", label: "", value: size ? size.replace("x", " \xD7 ") : translate("output.sizeAuto") });
+    } else if (parameters["canvas.aspect_ratio"] !== void 0) {
+      pills.push({ target: "size", label: "", value: String(parameters["canvas.aspect_ratio"]) });
+    }
+    if (mode !== "custom" && mode !== "auto" && parameters["canvas.resolution"] !== void 0) {
+      pills.push({ target: "canvas.resolution", label: "", value: String(parameters["canvas.resolution"]) });
+    }
+    if (parameters["output.count"] !== void 0) {
+      pills.push({ target: "output.count", label: "", value: `\xD7 ${Number(parameters["output.count"]) || 1}` });
+    }
+    const quality = definitions.get("gpt.quality");
+    if (quality && parameters["gpt.quality"] !== void 0) {
+      pills.push({ target: "gpt.quality", label: translate(quality.label_key), value: valueLabel(quality, parameters["gpt.quality"]) });
+    }
+    const changed = Object.entries(parameters).filter(([id]) => !PILL_PARAMETER_IDS.has(id)).flatMap(([id, value]) => {
+      const definition = definitions.get(id);
+      if (!definition || sameValue(value, definition.default)) return [];
+      const label = valueLabel(definition, value);
+      return label ? [label] : [];
+    });
+    pills.push({
+      target: "more",
+      label: "",
+      value: changed.length ? changed.slice(0, 2).join(" \xB7 ") + (changed.length > 2 ? ` +${changed.length - 2}` : "") : translate("studio.moreParameters"),
+      changed: changed.length > 0
+    });
+    return pills;
+  }
+  function bindingLabel(entry) {
+    return entry.binding.display_name || entry.provider.name;
+  }
+  function initStudioComposer() {
+    const query = window.matchMedia(STUDIO_QUERY);
+    const controls = document.querySelector(".controls-col");
+    const promptPanel = document.querySelector(".prompt-panel");
+    const promptCompose = promptPanel?.querySelector(".prompt-compose");
+    const outputPanel = document.querySelector(".output-panel");
+    const runButton = document.getElementById("runButton");
+    const summary = document.getElementById("executionSummary");
+    const grid = document.getElementById("modelParameterGrid");
+    if (!controls || !promptPanel || !promptCompose || !outputPanel || !runButton || !summary || !grid) return;
+    const bar = element2("div", "studio-pill-bar");
+    bar.id = "studioPillBar";
+    const modelPill = element2("button", "studio-pill studio-model-pill");
+    modelPill.type = "button";
+    modelPill.id = "studioModelPill";
+    modelPill.setAttribute("aria-haspopup", "dialog");
+    modelPill.setAttribute("aria-expanded", "false");
+    modelPill.setAttribute("aria-controls", "studioModelMenu");
+    const parameterPills = element2("div", "studio-parameter-pills");
+    const runSlot = element2("div", "studio-run-slot");
+    const describeCurrent = () => {
+      const model = currentModel();
+      const selection = currentGenerationSelection();
+      const provider = getLegacyBridge().state.generationCatalog?.providers.find((item) => item.id === selection.providerId);
+      const values = studioPillSpecs(model, selection.parameters).filter((spec) => spec.target !== "more" || spec.changed).map((spec) => [spec.label, spec.value].filter(Boolean).join(" "));
+      return [model?.display_name, provider?.name, ...values].filter(Boolean).join(" \xB7 ");
+    };
+    const recipes = createStudioRecipes(describeCurrent, () => {
+      closeModelMenu();
+      closeParams();
+    });
+    bar.append(modelPill, parameterPills, recipes.button, runSlot);
+    const modelMenu = element2("div", "studio-popover studio-model-menu");
+    modelMenu.id = "studioModelMenu";
+    modelMenu.setAttribute("role", "dialog");
+    modelMenu.hidden = true;
+    const runMarker = document.createComment("studio-run-origin");
+    let active = false;
+    function closeModelMenu() {
+      modelMenu.hidden = true;
+      modelPill.setAttribute("aria-expanded", "false");
+    }
+    function closeParams() {
+      document.body.removeAttribute("data-studio-params-open");
+      parameterPills.querySelectorAll("[aria-expanded]").forEach((pill) => pill.setAttribute("aria-expanded", "false"));
+    }
+    const openParams = (target, pill) => {
+      closeModelMenu();
+      recipes.close();
+      const wasOpen = document.body.hasAttribute("data-studio-params-open");
+      const sameTarget = pill.getAttribute("aria-expanded") === "true";
+      closeParams();
+      if (wasOpen && sameTarget) return;
+      document.body.setAttribute("data-studio-params-open", "");
+      pill.setAttribute("aria-expanded", "true");
+      const id = target === "size" ? "canvas.mode" : target;
+      const field = target === "more" ? null : grid.querySelector(`[data-parameter-id="${CSS.escape(id)}"]`) || (target === "size" ? grid.querySelector('[data-parameter-id="canvas.aspect_ratio"]') : null);
+      grid.querySelectorAll(".studio-field-focus").forEach((node) => node.classList.remove("studio-field-focus"));
+      refreshSegmentedIndicators();
+      if (field) {
+        field.classList.add("studio-field-focus");
+        field.scrollIntoView({ block: "nearest" });
+      }
+    };
+    const renderPills = () => {
+      const model = currentModel();
+      const selection = currentGenerationSelection();
+      const { state: state32 } = getLegacyBridge();
+      const provider = state32.generationCatalog?.providers.find((item) => item.id === selection.providerId);
+      const family = state32.generationCatalog?.families.find((item) => item.id === model?.family_id);
+      modelPill.innerHTML = model ? modelFamilyBrandMarkHtml(family?.id || "", "studio-model-mark") : "";
+      const name = element2("span", "studio-model-name", model?.display_name || translate("modelSelection.catalogUnavailable"));
+      const via = element2("span", "studio-model-provider", provider?.name || translate("modelSelection.providerUnavailable"));
+      const caret = element2("span", "studio-pill-caret");
+      caret.setAttribute("aria-hidden", "true");
+      modelPill.append(name, via, caret);
+      modelPill.classList.toggle("is-unavailable", !provider);
+      modelPill.title = translate("studio.switchModel");
+      if (!/Mac|iPhone|iPad/.test(navigator.platform)) runButton.title = runButton.title.replace("Cmd", "Ctrl");
+      const openTarget = parameterPills.querySelector('[aria-expanded="true"]')?.dataset.studioTarget;
+      parameterPills.replaceChildren(...studioPillSpecs(model, selection.parameters).map((spec) => {
+        const pill = element2("button", `studio-pill${spec.target === "more" ? " studio-more-pill" : ""}${spec.changed ? " is-changed" : ""}`);
+        pill.type = "button";
+        pill.dataset.studioTarget = spec.target;
+        pill.setAttribute("aria-expanded", String(spec.target === openTarget && document.body.hasAttribute("data-studio-params-open")));
+        if (spec.label) pill.append(element2("span", "studio-pill-label", spec.label));
+        pill.append(element2("span", "studio-pill-value", spec.value));
+        pill.addEventListener("click", () => openParams(spec.target, pill));
+        return pill;
+      }));
+    };
+    const renderModelMenu = () => {
+      const { state: state32 } = getLegacyBridge();
+      const catalog = state32.generationCatalog;
+      modelMenu.replaceChildren();
+      if (!catalog) return;
+      const operation = state32.mode;
+      catalog.families.forEach((family) => {
+        const rows = catalog.models.filter((model) => model.family_id === family.id).flatMap((model) => eligibleProviderBindings(catalog, model.id, operation).map((entry) => ({ model, entry })));
+        if (!rows.length) return;
+        const group = element2("div", "studio-model-group");
+        const heading = element2("div", "studio-model-group-heading");
+        heading.innerHTML = modelFamilyBrandMarkHtml(family.id, "studio-model-mark");
+        heading.append(element2("span", "", family.display_name));
+        group.append(heading);
+        rows.forEach(({ model, entry }) => {
+          const selected = model.id === state32.selectedModelId && entry.provider.id === state32.selectedProviderId && entry.binding.id === state32.selectedProviderBindingId;
+          const row = element2("button", `studio-model-option${selected ? " is-selected" : ""}`);
+          row.type = "button";
+          row.setAttribute("aria-pressed", String(selected));
+          row.append(element2("span", "studio-model-option-name", model.display_name), element2("span", "studio-model-option-provider", bindingLabel(entry)));
+          row.addEventListener("click", () => {
+            state32.lastProviderByModel[model.id] = entry.provider.id;
+            state32.lastProviderSelectionByModel[model.id] = entry.selectionKey;
+            if (model.id !== state32.selectedModelId) selectConcreteModel(model.id);
+            else selectGenerationProvider(entry.selectionKey);
+            closeModelMenu();
+            renderPills();
+          });
+          group.append(row);
+        });
+        modelMenu.append(group);
+      });
+      if (!modelMenu.children.length) {
+        modelMenu.append(element2("p", "studio-model-empty", translate("modelSelection.providerUnavailable")));
+      }
+      const manage = element2("button", "ghost-button studio-model-manage", translate("studio.manageProviders"));
+      manage.type = "button";
+      manage.addEventListener("click", () => {
+        closeModelMenu();
+        document.getElementById("generationProviderSettingsButton")?.click();
+      });
+      modelMenu.append(manage);
+    };
+    const toggleModelMenu = () => {
+      if (!modelMenu.hidden) {
+        closeModelMenu();
+        return;
+      }
+      closeParams();
+      recipes.close();
+      renderModelMenu();
+      modelMenu.hidden = false;
+      modelPill.setAttribute("aria-expanded", "true");
+      modelMenu.querySelector(".is-selected, .studio-model-option")?.focus({ preventScroll: true });
+    };
+    const apply = () => {
+      const next = query.matches;
+      if (next === active) return;
+      active = next;
+      document.body.toggleAttribute("data-studio", active);
+      if (active) {
+        promptCompose.after(bar);
+        controls.append(modelMenu, recipes.menu);
+        runButton.before(runMarker);
+        runSlot.append(runButton);
+        renderPills();
+      } else {
+        closeParams();
+        closeModelMenu();
+        recipes.close();
+        runMarker.replaceWith(runButton);
+        bar.remove();
+        modelMenu.remove();
+        recipes.menu.remove();
+      }
+    };
+    modelPill.addEventListener("click", toggleModelMenu);
+    document.addEventListener("pointerdown", (event) => {
+      const target = event.target;
+      if (!target || !active) return;
+      if (!modelMenu.hidden && !modelMenu.contains(target) && !modelPill.contains(target)) closeModelMenu();
+      if (!recipes.menu.hidden && !recipes.menu.contains(target) && !recipes.button.contains(target)) recipes.close();
+      if (document.body.hasAttribute("data-studio-params-open") && !outputPanel.contains(target) && !parameterPills.contains(target) && !target.closest?.(".themed-select-menu, .model-combobox-options, [role='listbox']")) {
+        closeParams();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (!active) return;
+      if (event.key === "Escape") {
+        if (!modelMenu.hidden) {
+          closeModelMenu();
+          modelPill.focus();
+          event.stopPropagation();
+        } else if (!recipes.menu.hidden) {
+          recipes.close();
+          recipes.button.focus();
+          event.stopPropagation();
+        } else if (document.body.hasAttribute("data-studio-params-open")) {
+          closeParams();
+          event.stopPropagation();
+        }
+        return;
+      }
+      if (event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === "m") {
+        event.preventDefault();
+        toggleModelMenu();
+      }
+    }, true);
+    let pending = 0;
+    const schedule = () => {
+      if (!active) return;
+      window.clearTimeout(pending);
+      pending = window.setTimeout(renderPills, 0);
+    };
+    new MutationObserver(schedule).observe(summary, { attributes: true, childList: true, characterData: true, subtree: true });
+    document.addEventListener(LOCALE_CHANGE_EVENT, schedule);
+    query.addEventListener("change", apply);
+    apply();
   }
 
   // codex_image/webui/frontend/src/mobile-workspace.ts
@@ -19449,7 +21745,7 @@
     await call(methods, "refreshTasks");
   }
   function isRunTaskShortcut(event) {
-    return event.key === "Enter" && event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && !event.repeat && !event.isComposing;
+    return event.key === "Enter" && event.metaKey !== event.ctrlKey && !event.altKey && !event.shiftKey && !event.repeat && !event.isComposing;
   }
   function hasOpenShortcutBlockingLayer() {
     return Boolean(document.querySelector(
@@ -20091,8 +22387,8 @@
     if (task.local_pending) return true;
     return ELAPSED_TICK_STATUSES.has(String(task.status || ""));
   }
-  function setTextIfChanged(element3, text) {
-    if (element3.textContent !== text) element3.textContent = text;
+  function setTextIfChanged(element5, text) {
+    if (element5.textContent !== text) element5.textContent = text;
   }
   function updateTaskElapsedCard(card, task) {
     const statusElement = card.querySelector("[data-task-status-id]");
@@ -20112,8 +22408,8 @@
     if (runtimeElement) setTextIfChanged(runtimeElement, taskCardRuntimeText(task));
     const retryElement = card.querySelector("[data-task-retry-id]");
     if (retryElement) setTextIfChanged(retryElement, taskRetryStateText(task));
-    card.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
-      updateElapsedTimerElement(element3, elapsedMillisecondsSince(element3.dataset.previewStart));
+    card.querySelectorAll("[data-preview-elapsed]").forEach((element5) => {
+      updateElapsedTimerElement(element5, elapsedMillisecondsSince(element5.dataset.previewStart));
     });
   }
   function updateTaskElapsedDisplays() {
@@ -20135,34 +22431,34 @@
   function updatePreviewElapsedDisplay() {
     const { els: els38 } = getLegacyBridge();
     if (!els38.previewGrid) return;
-    els38.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element3) => {
-      updateElapsedTimerElement(element3, elapsedMillisecondsSince(element3.dataset.previewStart));
+    els38.previewGrid.querySelectorAll("[data-preview-elapsed]").forEach((element5) => {
+      updateElapsedTimerElement(element5, elapsedMillisecondsSince(element5.dataset.previewStart));
     });
   }
-  function updateElapsedTimerElement(element3, totalMilliseconds) {
+  function updateElapsedTimerElement(element5, totalMilliseconds) {
     const elapsed = formatDurationParts(totalMilliseconds);
-    element3.setAttribute("aria-label", elapsed.text);
-    const main = element3.querySelector(".elapsed-main");
-    const ms = element3.querySelector(".elapsed-ms");
+    element5.setAttribute("aria-label", elapsed.text);
+    const main = element5.querySelector(".elapsed-main");
+    const ms = element5.querySelector(".elapsed-ms");
     if (main && ms) {
       updateElapsedPartElement(main, elapsed.clock);
       updateElapsedPartElement(ms, elapsed.fraction);
       return;
     }
-    element3.innerHTML = elapsedTimerMarkup(totalMilliseconds);
+    element5.innerHTML = elapsedTimerMarkup(totalMilliseconds);
   }
-  function updateElapsedPartElement(element3, text) {
+  function updateElapsedPartElement(element5, text) {
     const chars = Array.from(text);
-    const charNodes = Array.from(element3.querySelectorAll("[data-elapsed-char]"));
+    const charNodes = Array.from(element5.querySelectorAll("[data-elapsed-char]"));
     if (charNodes.length !== chars.length) {
-      element3.innerHTML = elapsedPartMarkup(text);
+      element5.innerHTML = elapsedPartMarkup(text);
       return;
     }
     for (const [index, node] of charNodes.entries()) {
       const char = chars[index];
       if (node.dataset.elapsedCharValue === char) continue;
       if (!/^\d$/.test(char || "") || !node.classList.contains("elapsed-wheel")) {
-        element3.innerHTML = elapsedPartMarkup(text);
+        element5.innerHTML = elapsedPartMarkup(text);
         return;
       }
       node.dataset.elapsedCharValue = char;
@@ -21709,1712 +24005,6 @@
       addCollectedReferencesToInput,
       imageFileFromUrl,
       restoreHistoryReferenceHandoff
-    });
-  }
-
-  // codex_image/webui/frontend/src/gpt-image-models.ts
-  function isGptImageModel(modelId) {
-    return String(modelId || "").startsWith("gpt-image-");
-  }
-
-  // codex_image/webui/frontend/src/image-size-editor.ts
-  var SIZE_PATTERN = /^(\d+)x(\d+)$/;
-  var CUSTOM_SIZE_ERROR_KEYS = {
-    custom_size_invalid_format: "output.customSizeRequired",
-    custom_size_out_of_bounds: "output.customSizeBounds",
-    custom_size_not_multiple: "output.customSizeMultiple",
-    custom_size_ratio_too_large: "output.customSizeRatio",
-    custom_size_pixels_out_of_range: "output.customSizePixels"
-  };
-  function parsePixelSize(value) {
-    const match = typeof value === "string" ? value.trim().match(SIZE_PATTERN) : null;
-    return match ? { width: Number(match[1]), height: Number(match[2]) } : null;
-  }
-  function customSizeError(rules, size, outputFormat) {
-    const dimensions2 = parsePixelSize(size);
-    if (!dimensions2) return "custom_size_invalid_format";
-    const { width, height } = dimensions2;
-    if (width < rules.min_edge || width > rules.max_edge || height < rules.min_edge || height > rules.max_edge) {
-      return "custom_size_out_of_bounds";
-    }
-    if (width % rules.multiple || height % rules.multiple) return "custom_size_not_multiple";
-    if (rules.relaxed_formats.includes(String(outputFormat))) return "";
-    if (Math.max(width, height) / Math.min(width, height) > rules.max_aspect_ratio) return "custom_size_ratio_too_large";
-    if (width * height < rules.min_pixels || width * height > rules.max_pixels) return "custom_size_pixels_out_of_range";
-    return "";
-  }
-  function customSizeErrorMessage(code) {
-    return code ? translate(CUSTOM_SIZE_ERROR_KEYS[code] || "modelParameters.invalidValue") : "";
-  }
-  function suggestLegalSize(rules, width, height) {
-    const step = rules.multiple;
-    const w = Number.isFinite(width) && width > 0 ? width : 1024;
-    const h = Number.isFinite(height) && height > 0 ? height : 1024;
-    const ratio = Math.min(rules.max_aspect_ratio, Math.max(1 / rules.max_aspect_ratio, w / h));
-    const pixels = Math.min(rules.max_pixels, Math.max(rules.min_pixels, w * h));
-    let best = { width: 1024, height: 1024, score: Infinity };
-    const first = Math.ceil(rules.min_edge / step) * step;
-    for (let x = first; x <= rules.max_edge; x += step) {
-      const low = Math.ceil(Math.max(rules.min_edge, x / rules.max_aspect_ratio, rules.min_pixels / x) / step) * step;
-      const high = Math.floor(Math.min(rules.max_edge, x * rules.max_aspect_ratio, rules.max_pixels / x) / step) * step;
-      for (let y = low; y <= high; y += step) {
-        const score = 8 * Math.abs(Math.log(x / y / ratio)) + Math.abs(Math.log(x * y / pixels));
-        if (score < best.score) best = { width: x, height: y, score };
-      }
-    }
-    return { width: best.width, height: best.height };
-  }
-  function requestedSize(model, parameters) {
-    const mode = parameters["canvas.mode"];
-    if (mode === "auto") return "auto";
-    if (mode === "custom") return String(parameters["canvas.size"] || "");
-    const pixels = model?.size_spec?.presets?.[String(parameters["canvas.resolution"])]?.[String(parameters["canvas.aspect_ratio"])];
-    return pixels ? `${pixels[0]}x${pixels[1]}` : "";
-  }
-  var GIF_FRAME_PIXEL_BUDGET = 128 * 1024 * 1024;
-  function gifFrameLimit(model, maximum, values, providerLimit) {
-    const limits = [maximum, providerLimit].filter((limit2) => typeof limit2 === "number");
-    const pixels = parsePixelSize(requestedSize(model, values));
-    if (pixels) limits.push(Math.floor(GIF_FRAME_PIXEL_BUDGET / (pixels.width * pixels.height)));
-    return limits.length ? Math.max(2, Math.min(...limits)) : null;
-  }
-  function firstReferenceImageUrl() {
-    const images = getLegacyBridge().state.images;
-    const source = (Array.isArray(images) ? images : []).find((item) => item && !item.missing && (item.kind === "upload" ? item.previewUrl : item.image_url || item.previewUrl));
-    if (!source) return "";
-    return String(source.kind === "upload" ? source.previewUrl : source.image_url || source.previewUrl);
-  }
-  function loadImageDimensions(url) {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => {
-        const width = image.naturalWidth || image.width;
-        const height = image.naturalHeight || image.height;
-        if (width > 0 && height > 0) resolve({ width, height });
-        else reject(new Error(formatTranslation("output.imageSizeUnavailable")));
-      };
-      image.onerror = () => reject(new Error(formatTranslation("output.imageLoadFailed")));
-      image.src = url;
-    });
-  }
-  function refreshFirstImageButtons() {
-    if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
-    const available = Boolean(firstReferenceImageUrl());
-    document.querySelectorAll(".pixel-size-from-image").forEach((button) => {
-      button.disabled = button.dataset.readOnly === "true" || !available;
-    });
-  }
-  function createPixelSizeEditor(options) {
-    const { rules } = options;
-    const initial = parsePixelSize(options.value) || { width: 1024, height: 1024 };
-    const editor = document.createElement("div");
-    editor.className = "pixel-size-editor";
-    const row = document.createElement("div");
-    row.className = "pixel-size-inputs";
-    const input = (labelKey, value) => {
-      const element3 = document.createElement("input");
-      element3.type = "number";
-      element3.className = "control pixel-size-input";
-      element3.min = String(rules.min_edge);
-      element3.max = String(rules.max_edge);
-      element3.step = String(rules.multiple);
-      element3.inputMode = "numeric";
-      element3.value = String(value);
-      element3.setAttribute("aria-label", translate(labelKey));
-      element3.disabled = options.readOnly;
-      return element3;
-    };
-    const width = input("output.width", initial.width);
-    const height = input("output.height", initial.height);
-    const times = document.createElement("span");
-    times.className = "pixel-size-times";
-    times.textContent = "\xD7";
-    times.setAttribute("aria-hidden", "true");
-    const swap = document.createElement("button");
-    swap.type = "button";
-    swap.className = "ghost-button pixel-size-swap";
-    swap.textContent = "\u21C4";
-    swap.title = translate("output.swapSize");
-    swap.setAttribute("aria-label", translate("output.swapSize"));
-    swap.disabled = options.readOnly;
-    row.append(width, times, height, swap);
-    const tools = document.createElement("div");
-    tools.className = "pixel-size-tools";
-    const lockLabel = document.createElement("label");
-    lockLabel.className = "pixel-size-lock";
-    const lock = document.createElement("input");
-    lock.type = "checkbox";
-    lock.disabled = options.readOnly;
-    const lockText = document.createElement("span");
-    lockText.textContent = translate("output.ratioLock");
-    lockLabel.append(lock, lockText);
-    const fromImage = document.createElement("button");
-    fromImage.type = "button";
-    fromImage.className = "ghost-button text-sm pixel-size-from-image";
-    fromImage.textContent = translate("output.useFirstImage");
-    fromImage.title = translate("output.firstImageRatio");
-    fromImage.dataset.readOnly = String(options.readOnly);
-    fromImage.disabled = options.readOnly || !firstReferenceImageUrl();
-    tools.append(lockLabel, fromImage);
-    const hint = document.createElement("p");
-    hint.className = "pixel-size-hint";
-    hint.textContent = translate("output.customSizeHint");
-    const error = document.createElement("p");
-    error.className = "model-parameter-error hidden";
-    error.setAttribute("role", "alert");
-    const suggest = document.createElement("button");
-    suggest.type = "button";
-    suggest.className = "ghost-button text-sm pixel-size-suggest hidden";
-    let lockedRatio = initial.width / initial.height;
-    const current = () => `${Math.round(Number(width.value))}x${Math.round(Number(height.value))}`;
-    const validate = () => {
-      const code = customSizeError(rules, current(), options.outputFormat);
-      const message = customSizeErrorMessage(code);
-      error.textContent = message;
-      error.classList.toggle("hidden", !message);
-      width.setAttribute("aria-invalid", message ? "true" : "false");
-      height.setAttribute("aria-invalid", message ? "true" : "false");
-      if (message) {
-        const suggestion = suggestLegalSize(rules, Number(width.value), Number(height.value));
-        suggest.textContent = formatTranslation("output.useSuggestedSize", { size: `${suggestion.width} \xD7 ${suggestion.height}` });
-        suggest.dataset.size = `${suggestion.width}x${suggestion.height}`;
-      }
-      suggest.classList.toggle("hidden", !message);
-      options.reportError(message);
-      if (!message && current() !== options.value) options.commit(current());
-      return message;
-    };
-    const snap = (value) => Math.max(rules.min_edge, Math.round(value / rules.multiple) * rules.multiple);
-    const set = (next) => {
-      width.value = String(next.width);
-      height.value = String(next.height);
-      lockedRatio = next.width / next.height;
-      validate();
-    };
-    width.addEventListener("input", () => {
-      if (lock.checked && Number(width.value) > 0) height.value = String(snap(Number(width.value) / lockedRatio));
-      validate();
-    });
-    height.addEventListener("input", () => {
-      if (lock.checked && Number(height.value) > 0) width.value = String(snap(Number(height.value) * lockedRatio));
-      validate();
-    });
-    lock.addEventListener("change", () => {
-      if (Number(width.value) > 0 && Number(height.value) > 0) lockedRatio = Number(width.value) / Number(height.value);
-    });
-    swap.addEventListener("click", () => set({ width: Number(height.value), height: Number(width.value) }));
-    suggest.addEventListener("click", () => {
-      const size = parsePixelSize(suggest.dataset.size);
-      if (size) set(size);
-    });
-    fromImage.addEventListener("click", async () => {
-      const url = firstReferenceImageUrl();
-      if (!url) return;
-      try {
-        const image = await loadImageDimensions(url);
-        const pixels = Number(width.value) * Number(height.value) || 1024 * 1024;
-        const scale = Math.sqrt(pixels / (image.width * image.height));
-        set(suggestLegalSize(rules, image.width * scale, image.height * scale));
-      } catch (failure) {
-        error.textContent = failure instanceof Error ? failure.message : String(failure);
-        error.classList.remove("hidden");
-      }
-    });
-    editor.append(row, tools, hint, error, suggest);
-    if (!options.readOnly) queueMicrotask(validate);
-    return editor;
-  }
-
-  // codex_image/webui/frontend/src/aspect-ratio-controls.ts
-  var PREFERRED_RATIO_SLOTS = [
-    ["1:1", "21:9"],
-    ["4:5", "5:4"],
-    ["3:4", "4:3"],
-    ["2:3", "3:2"],
-    ["9:16", "16:9"],
-    ["9:21", "21:9"],
-    ["1:4", "4:1"],
-    ["1:8", "8:1"],
-    ["1:2", "2:1"],
-    ["9:19.5", "19.5:9"],
-    ["9:20", "20:9"]
-  ];
-  function parsedRatio(value) {
-    const match = value.trim().match(/^(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)$/);
-    if (!match) return null;
-    const width = Number(match[1]);
-    const height = Number(match[2]);
-    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return null;
-    return { width, height };
-  }
-  function reciprocal(left, right) {
-    const a = parsedRatio(left);
-    const b = parsedRatio(right);
-    if (!a || !b) return false;
-    return Math.abs(a.width * b.width - a.height * b.height) < 1e-9;
-  }
-  function aspectRatioSlots(values) {
-    const available = new Set(values);
-    const used = /* @__PURE__ */ new Set();
-    const slots = [];
-    PREFERRED_RATIO_SLOTS.forEach((preferred, index) => {
-      const matched = preferred.filter((value) => available.has(value) && !used.has(value) && !(index === 0 && value === "21:9" && available.has("9:21")));
-      if (!matched.length) return;
-      if (index === 0 && matched.length === 1 && matched[0] === "1:1" && available.has("auto")) {
-        matched.push("auto");
-      }
-      matched.forEach((value) => used.add(value));
-      slots.push({ values: [...matched] });
-    });
-    values.forEach((value) => {
-      if (used.has(value)) return;
-      used.add(value);
-      const pair = values.find((candidate) => !used.has(candidate) && reciprocal(value, candidate));
-      if (pair) used.add(pair);
-      slots.push({ values: pair ? [value, pair] : [value] });
-    });
-    return slots;
-  }
-  function aspectRatioRect(value) {
-    const ratio = parsedRatio(value);
-    if (!ratio) return null;
-    const maximum = 16;
-    const minimum = 2;
-    let width = maximum;
-    let height = maximum;
-    if (ratio.width > ratio.height) height = Math.max(minimum, maximum * ratio.height / ratio.width);
-    else if (ratio.height > ratio.width) width = Math.max(minimum, maximum * ratio.width / ratio.height);
-    return {
-      x: (20 - width) / 2,
-      y: (20 - height) / 2,
-      width,
-      height
-    };
-  }
-  var SVG_NAMESPACE = "http://www.w3.org/2000/svg";
-  function createAspectRatioIcon(value) {
-    const geometry = aspectRatioRect(value);
-    if (!geometry) return null;
-    const svg = document.createElementNS(SVG_NAMESPACE, "svg");
-    svg.classList.add("aspect-ratio-icon");
-    svg.setAttribute("viewBox", "0 0 20 20");
-    svg.setAttribute("aria-hidden", "true");
-    svg.setAttribute("focusable", "false");
-    const rect = document.createElementNS(SVG_NAMESPACE, "rect");
-    rect.setAttribute("x", String(geometry.x));
-    rect.setAttribute("y", String(geometry.y));
-    rect.setAttribute("width", String(geometry.width));
-    rect.setAttribute("height", String(geometry.height));
-    rect.setAttribute("rx", "1");
-    rect.setAttribute("fill", "currentColor");
-    rect.setAttribute("stroke", "none");
-    svg.append(rect);
-    return svg;
-  }
-  function decorateLegacyAspectRatioButtons(root = document) {
-    root.querySelectorAll("#ratioGroup .radio-btn[data-val]").forEach((button) => {
-      if (button.querySelector(".aspect-ratio-icon")) return;
-      const value = button.dataset.val || button.textContent?.trim() || "";
-      const icon = createAspectRatioIcon(value);
-      if (!icon) return;
-      const label = document.createElement("span");
-      label.className = "aspect-ratio-label";
-      label.textContent = value;
-      button.replaceChildren(icon, label);
-    });
-  }
-  function initAspectRatioControlsFeature() {
-    decorateLegacyAspectRatioButtons();
-  }
-
-  // codex_image/webui/frontend/src/segmented-indicator.ts
-  var HOST_SELECTORS = [
-    ".radio-group:not(.ratio-group):not(.model-parameter-segmented-multiline):not(.model-aspect-ratio-grid)",
-    "#authSourceGroup",
-    "#systemSettingsTabs",
-    ".network-egress-mode-selector",
-    ".history-view-toggle",
-    ".history-sort-toggle"
-  ];
-  var HOST_SELECTOR = HOST_SELECTORS.join(", ");
-  var BUTTON_SELECTOR = ".radio-btn, .auth-source-button, .system-settings-tab, .network-egress-mode-button, .history-view-button, .history-sort-button";
-  var INDICATOR_CLASS = "segmented-indicator";
-  var HOST_CLASS = "segmented-indicator-host";
-  var READY_CLASS = "segmented-indicator-ready";
-  var initializedHosts = /* @__PURE__ */ new WeakSet();
-  var scheduledFrames = /* @__PURE__ */ new WeakMap();
-  var segmentedIndicatorsInitialized = false;
-  var resizeObserver = null;
-  function activeSegment(host) {
-    return host.querySelector(".radio-btn.active, .auth-source-button.active, .system-settings-tab.active, .network-egress-mode-button.active, .history-view-button.active, .history-sort-button.active");
-  }
-  function ensureIndicator(host) {
-    const existing = Array.from(host.children).find((child) => child.classList.contains(INDICATOR_CLASS));
-    if (existing instanceof HTMLElement) return existing;
-    const indicator = document.createElement("span");
-    indicator.className = INDICATOR_CLASS;
-    indicator.setAttribute("aria-hidden", "true");
-    host.insertBefore(indicator, host.firstElementChild);
-    return indicator;
-  }
-  function updateIndicator(host) {
-    scheduledFrames.delete(host);
-    if (!host.isConnected) return false;
-    const indicator = ensureIndicator(host);
-    const active = activeSegment(host);
-    if (!active) {
-      host.classList.remove(READY_CLASS);
-      indicator.style.setProperty("--segmented-indicator-opacity", "0");
-      return false;
-    }
-    const hostRect = host.getBoundingClientRect();
-    const activeRect = active.getBoundingClientRect();
-    if (hostRect.width <= 0 || hostRect.height <= 0 || activeRect.width <= 0 || activeRect.height <= 0) {
-      host.classList.remove(READY_CLASS);
-      indicator.style.setProperty("--segmented-indicator-opacity", "0");
-      return false;
-    }
-    const hostStyle = window.getComputedStyle(host);
-    const borderLeft = Number.parseFloat(hostStyle.borderLeftWidth) || 0;
-    const borderTop = Number.parseFloat(hostStyle.borderTopWidth) || 0;
-    indicator.style.setProperty("--segmented-indicator-x", `${activeRect.left - hostRect.left - borderLeft}px`);
-    indicator.style.setProperty("--segmented-indicator-y", `${activeRect.top - hostRect.top - borderTop}px`);
-    indicator.style.setProperty("--segmented-indicator-width", `${activeRect.width}px`);
-    indicator.style.setProperty("--segmented-indicator-height", `${activeRect.height}px`);
-    indicator.style.setProperty("--segmented-indicator-opacity", "1");
-    return true;
-  }
-  function commitIndicatorUpdate(host) {
-    if (updateIndicator(host)) host.classList.add(READY_CLASS);
-  }
-  function scheduleIndicatorUpdate(host) {
-    if (scheduledFrames.has(host)) return;
-    scheduledFrames.set(host, window.requestAnimationFrame(() => commitIndicatorUpdate(host)));
-  }
-  function watchButtonClassChanges(host) {
-    const observer = new MutationObserver(() => scheduleIndicatorUpdate(host));
-    host.querySelectorAll(BUTTON_SELECTOR).forEach((button) => {
-      observer.observe(button, { attributes: true, attributeFilter: ["class"] });
-    });
-  }
-  function initHost(host) {
-    if (initializedHosts.has(host)) return false;
-    initializedHosts.add(host);
-    host.classList.add(HOST_CLASS);
-    ensureIndicator(host);
-    host.addEventListener("click", () => scheduleIndicatorUpdate(host));
-    watchButtonClassChanges(host);
-    if ("ResizeObserver" in window) {
-      resizeObserver || (resizeObserver = new ResizeObserver((entries) => {
-        entries.forEach((entry) => scheduleIndicatorUpdate(entry.target));
-      }));
-      resizeObserver.observe(host);
-    }
-    commitIndicatorUpdate(host);
-    return true;
-  }
-  function refreshSegmentedIndicators() {
-    document.querySelectorAll(HOST_SELECTOR).forEach((host) => {
-      if (!initHost(host)) scheduleIndicatorUpdate(host);
-    });
-  }
-  function initSegmentedIndicatorFeature() {
-    if (segmentedIndicatorsInitialized) return;
-    segmentedIndicatorsInitialized = true;
-    document.querySelectorAll(HOST_SELECTOR).forEach(initHost);
-    window.addEventListener("resize", refreshSegmentedIndicators, { passive: true });
-    document.fonts?.ready?.then(refreshSegmentedIndicators).catch(() => {
-    });
-  }
-
-  // codex_image/webui/frontend/src/mode-settings-visibility.ts
-  function resolveModeSettingsVisibility(binding, legacyDirectApi) {
-    if (!binding) return { showMainModel: !legacyDirectApi };
-    return {
-      showMainModel: binding.capabilities ? binding.capabilities.uses_main_model : binding.protocol_profile.endsWith("_responses")
-    };
-  }
-
-  // codex_image/webui/frontend/src/unified-parameters.ts
-  function attachParameterRenames(payload2) {
-    if (!payload2 || typeof payload2 !== "object") return payload2;
-    const catalog = payload2;
-    if (!Array.isArray(catalog.models)) return payload2;
-    const renames = catalog.parameter_renames || {};
-    return {
-      ...catalog,
-      models: catalog.models.map((model) => ({
-        ...model,
-        parameter_renames: { ...renames[model?.family_id] || {} }
-      }))
-    };
-  }
-  function usesUnifiedParameters(model) {
-    return model.parameters.some((definition) => definition.id === "canvas.mode");
-  }
-  function presetForSize(spec, size) {
-    for (const [resolution, ratios] of Object.entries(spec.presets)) {
-      for (const [ratio, [width, height]] of Object.entries(ratios)) {
-        if (`${width}x${height}` === size) return [ratio, resolution];
-      }
-    }
-    return null;
-  }
-  function upgradeParameters(model, parameters) {
-    if (!usesUnifiedParameters(model)) return { ...parameters };
-    const upgraded = { ...parameters };
-    const defined = new Set(model.parameters.map((definition) => definition.id));
-    for (const [previous, current] of Object.entries(model.parameter_renames || {})) {
-      if (previous in upgraded && defined.has(current) && !(current in upgraded)) {
-        upgraded[current] = upgraded[previous];
-        delete upgraded[previous];
-      }
-    }
-    const spec = model.size_spec;
-    if (spec && Object.keys(spec.presets).length && !("canvas.mode" in upgraded) && "canvas.size" in upgraded) {
-      const size = upgraded["canvas.size"];
-      delete upgraded["canvas.size"];
-      const text = typeof size === "string" ? size.trim() : "";
-      const preset = text ? presetForSize(spec, text) : null;
-      if (text === "auto") {
-        upgraded["canvas.mode"] = "auto";
-      } else if (preset) {
-        upgraded["canvas.mode"] = "preset";
-        upgraded["canvas.aspect_ratio"] = preset[0];
-        upgraded["canvas.resolution"] = preset[1];
-      } else {
-        upgraded["canvas.mode"] = "custom";
-        upgraded["canvas.size"] = size;
-      }
-    }
-    return upgraded;
-  }
-  function conditionHolds(condition, values, definitions) {
-    const actual = condition.parameter_id in values ? values[condition.parameter_id] : definitions.get(condition.parameter_id)?.default;
-    if (condition.operator === "equals") return actual === condition.value;
-    if (condition.operator === "not_equals") return actual !== condition.value;
-    return Array.isArray(condition.value) && condition.value.includes(actual);
-  }
-  function valueRequirementReason(model, definition, value, values) {
-    const definitions = new Map(model.parameters.map((item) => [item.id, item]));
-    const failed = (definition.value_requirements || []).find((requirement) => requirement.value === value && !conditionHolds(requirement.condition, values, definitions));
-    return failed ? failed.reason : "";
-  }
-
-  // codex_image/webui/frontend/src/model-parameters.ts
-  function cloneValue(value) {
-    if (Array.isArray(value)) return value.map(cloneValue);
-    if (value && typeof value === "object") {
-      return Object.fromEntries(Object.entries(value).map(([key2, item]) => [key2, cloneValue(item)]));
-    }
-    return value;
-  }
-  function parameterValueValid(definition, value) {
-    const typeValid = definition.value_type === "string" ? typeof value === "string" : definition.value_type === "integer" ? typeof value === "number" && Number.isInteger(value) : definition.value_type === "boolean" ? typeof value === "boolean" : definition.value_type === "object" ? Boolean(value) && typeof value === "object" && !Array.isArray(value) : false;
-    if (!typeValid) return false;
-    if (definition.object_choices?.length && value && typeof value === "object" && !Array.isArray(value)) {
-      const choices = new Map(definition.object_choices.map((row) => [row.key, row]));
-      for (const [key2, item] of Object.entries(value)) {
-        const row = choices.get(key2);
-        if (row && (typeof item !== "string" || !row.allowed_values.includes(item))) return false;
-      }
-    }
-    if (definition.allowed_values.length && !definition.allowed_values.includes(value)) return false;
-    if (typeof value === "number") {
-      if (definition.minimum !== null && value < definition.minimum) return false;
-      if (definition.maximum !== null && value > definition.maximum) return false;
-      if (definition.step !== null) {
-        const base = definition.minimum ?? 0;
-        const quotient = (value - base) / definition.step;
-        if (Math.abs(quotient - Math.round(quotient)) > 1e-9) return false;
-      }
-    }
-    return true;
-  }
-  function modelParameterValueValid(model, definition, value, values) {
-    if (definition.control === "pixel_size" && model.size_spec?.custom) {
-      const outputFormat = values["output.format"] ?? model.parameters.find((item) => item.id === "output.format")?.default;
-      return !customSizeError(model.size_spec.custom, value, outputFormat);
-    }
-    return parameterValueValid(definition, value) && !valueRequirementReason(model, definition, value, values);
-  }
-  var VALUE_REQUIREMENT_LABEL_KEYS = {
-    transparent_background_requires_png_webp_or_svg: "output.transparencyFormat"
-  };
-  function segmentLabel(definition, value) {
-    const key2 = definition.value_label_keys?.[definition.allowed_values.indexOf(value)];
-    return key2 ? translate(key2) : String(value);
-  }
-  function nextObjectChoiceValue(definition, value, key2, next) {
-    const row = definition.object_choices?.find((item) => item.key === key2);
-    if (!row || !row.allowed_values.includes(next)) return { ...value };
-    const updated = { ...value };
-    if (next === row.default) delete updated[key2];
-    else updated[key2] = next;
-    return updated;
-  }
-  function managedPresetKeys(definition) {
-    return new Set(definition.object_presets?.flatMap((preset) => Object.keys(preset.value)) || []);
-  }
-  function matchingObjectPreset(definition, value) {
-    const presets2 = definition.object_presets || [];
-    const managedKeys = managedPresetKeys(definition);
-    const presentManagedKeys = [...managedKeys].filter((key2) => key2 in value);
-    if (presentManagedKeys.length === 0) {
-      return presets2.find((preset) => preset.matches_empty) || null;
-    }
-    return presets2.find((preset) => [...managedKeys].every((key2) => key2 in value && key2 in preset.value && value[key2] === preset.value[key2])) || null;
-  }
-  function nextObjectPresetValue(definition, value, preset) {
-    if (!definition.object_presets?.some((item) => item.id === preset.id)) return { ...value };
-    const updated = { ...value };
-    managedPresetKeys(definition).forEach((key2) => delete updated[key2]);
-    Object.assign(updated, cloneValue(preset.value));
-    return updated;
-  }
-  function conditionMatches(condition, values) {
-    const actual = values[condition.parameter_id];
-    if (condition.operator === "equals") return actual === condition.value;
-    if (condition.operator === "not_equals") return actual !== condition.value;
-    return Array.isArray(condition.value) && condition.value.includes(actual);
-  }
-  function initializeParameterDraft(model, stored = {}) {
-    const previous = upgradeParameters(model, stored);
-    const values = {};
-    const defaulted = [];
-    const definitions = new Map(model.parameters.map((definition) => [definition.id, definition]));
-    for (const definition of model.parameters) {
-      if (!(definition.id in previous)) {
-        values[definition.id] = cloneValue(definition.default);
-        continue;
-      }
-      const prior = previous[definition.id];
-      if (modelParameterValueValid(model, definition, prior, previous)) {
-        values[definition.id] = cloneValue(prior);
-      } else {
-        const replacement = cloneValue(definition.default);
-        values[definition.id] = replacement;
-        defaulted.push({ id: definition.id, previous: cloneValue(prior), replacement: cloneValue(replacement) });
-      }
-    }
-    const dropped = Object.entries(previous).filter(([id]) => !definitions.has(id)).map(([id, prior]) => ({ id, previous: cloneValue(prior) }));
-    return { values, defaulted, dropped };
-  }
-  function migrateParameterValues(model, previous) {
-    return initializeParameterDraft(model, previous);
-  }
-  function parameterAffectsVisibility(model, parameterId) {
-    return model.parameters.some((definition) => definition.visible_when.some(
-      (condition) => condition.parameter_id === parameterId
-    ));
-  }
-  function selectedBinding(modelId) {
-    const { state: state32 } = getLegacyBridge();
-    const binding = state32.generationCatalog?.providers.find((provider) => provider.id === state32.selectedProviderId)?.bindings.find((item) => item.id === state32.selectedProviderBindingId);
-    return binding?.canonical_model_id === modelId ? binding : null;
-  }
-  function selectedBindingParameterIds(modelId) {
-    const binding = selectedBinding(modelId);
-    if (!binding?.capabilities) return null;
-    return new Set(binding.capabilities.parameter_ids);
-  }
-  function activeParameterValuesFor(model, operation, draft2, supported = null) {
-    const values = Object.fromEntries(model.parameters.map((definition) => {
-      const value = draft2[definition.id];
-      return [definition.id, cloneValue(modelParameterValueValid(model, definition, value, draft2) ? value : definition.default)];
-    }));
-    return Object.fromEntries(model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => definition.control !== "notice").filter((definition) => !supported || supported.has(definition.id)).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values))).map((definition) => [definition.id, cloneValue(values[definition.id])]));
-  }
-  function activeParameterValues(model) {
-    const { state: state32 } = getLegacyBridge();
-    return activeParameterValuesFor(
-      model,
-      state32.mode,
-      state32.parameterDraftsByModel[model.id] || {},
-      selectedBindingParameterIds(model.id)
-    );
-  }
-  function fieldShell(definition) {
-    const field = document.createElement("div");
-    field.className = `field model-parameter-field${definition.full_width ? " full-width" : ""}`;
-    field.dataset.parameterId = definition.id;
-    field.dataset.parameterGroup = definition.group;
-    const label = document.createElement("span");
-    label.className = "model-parameter-label";
-    label.textContent = translate(definition.label_key);
-    label.classList.toggle("output-label-pair", /^\p{Script=Han}{2}$/u.test(label.textContent));
-    label.classList.toggle("output-label-quad", /^\p{Script=Han}{4}$/u.test(label.textContent));
-    field.append(label);
-    return field;
-  }
-  function setReadOnly(control, readOnly) {
-    if (!readOnly) return;
-    control.disabled = true;
-    control.tabIndex = -1;
-    control.setAttribute("aria-readonly", "true");
-  }
-  function interactiveModel(context) {
-    if (context.readOnly) return context.model;
-    const { state: state32 } = getLegacyBridge();
-    return state32.generationCatalog?.models.find((model) => model.id === state32.selectedModelId) || context.model;
-  }
-  function commitValue(context, definition, value, rerender = false) {
-    if (context.readOnly) return;
-    const model = interactiveModel(context);
-    const currentDefinition = model.parameters.find((item) => item.id === definition.id);
-    if (!currentDefinition) return;
-    setParameterValue(model.id, currentDefinition.id, value);
-    if (rerender) renderModelParameters(model, { readOnly: false });
-    else refreshDynamicLimits();
-  }
-  function renderSelect(definition, value, context) {
-    const field = fieldShell(definition);
-    const select = document.createElement("select");
-    select.className = "control";
-    select.setAttribute("aria-label", translate(definition.label_key));
-    definition.allowed_values.forEach((allowed) => {
-      const option2 = document.createElement("option");
-      option2.value = String(allowed);
-      option2.textContent = String(allowed);
-      select.append(option2);
-    });
-    select.value = String(value);
-    setReadOnly(select, context.readOnly);
-    select.addEventListener("change", () => commitValue(
-      context,
-      definition,
-      select.value,
-      parameterAffectsVisibility(interactiveModel(context), definition.id)
-    ));
-    field.append(select);
-    return field;
-  }
-  function renderSegmented(definition, value, context) {
-    const field = fieldShell(definition);
-    if (definition.allowed_values.length === 1) {
-      const staticValue = document.createElement("div");
-      staticValue.className = "control model-parameter-static-value";
-      staticValue.textContent = String(definition.allowed_values[0]);
-      staticValue.setAttribute("aria-label", translate(definition.label_key));
-      field.append(staticValue);
-      return field;
-    }
-    const group = document.createElement("div");
-    const multiline = definition.allowed_values.length > 4;
-    group.className = `radio-group model-parameter-segmented${multiline ? " model-parameter-segmented-multiline" : ""}`;
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", translate(definition.label_key));
-    definition.allowed_values.forEach((allowed) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = `radio-btn${allowed === value ? " active" : ""}`;
-      button.dataset.val = String(allowed);
-      button.textContent = segmentLabel(definition, allowed);
-      const blockedReason = allowed === value ? "" : valueRequirementReason(context.model, definition, allowed, context.values);
-      if (blockedReason) button.title = translate(VALUE_REQUIREMENT_LABEL_KEYS[blockedReason] || blockedReason);
-      button.disabled = context.readOnly || Boolean(blockedReason);
-      button.tabIndex = context.readOnly ? -1 : 0;
-      button.setAttribute("aria-pressed", allowed === value ? "true" : "false");
-      button.addEventListener("click", () => {
-        if (context.readOnly || button.classList.contains("active")) return;
-        group.querySelectorAll(".radio-btn").forEach((item) => {
-          const active = item === button;
-          item.classList.toggle("active", active);
-          item.setAttribute("aria-pressed", active ? "true" : "false");
-        });
-        commitValue(
-          context,
-          definition,
-          allowed,
-          parameterAffectsVisibility(interactiveModel(context), definition.id)
-        );
-        refreshSegmentedIndicators();
-      });
-      group.append(button);
-    });
-    field.append(group);
-    return field;
-  }
-  function renderBooleanSegmented(definition, value, context) {
-    const field = fieldShell(definition);
-    const group = document.createElement("div");
-    group.className = "radio-group model-parameter-segmented model-parameter-boolean-segmented";
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", translate(definition.label_key));
-    const choices = [
-      { value: false, label: translate("output.lock.disabled") },
-      { value: true, label: translate("output.lock.enabled") }
-    ];
-    choices.forEach((choice) => {
-      const button = document.createElement("button");
-      const active = choice.value === Boolean(value);
-      button.type = "button";
-      button.className = `radio-btn${active ? " active" : ""}`;
-      button.textContent = choice.label;
-      button.disabled = context.readOnly;
-      button.tabIndex = context.readOnly ? -1 : 0;
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-      button.addEventListener("click", () => {
-        if (context.readOnly || button.classList.contains("active")) return;
-        group.querySelectorAll(".radio-btn").forEach((item) => {
-          const isActive = item === button;
-          item.classList.toggle("active", isActive);
-          item.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-        commitValue(
-          context,
-          definition,
-          choice.value,
-          parameterAffectsVisibility(interactiveModel(context), definition.id)
-        );
-        refreshSegmentedIndicators();
-      });
-      group.append(button);
-    });
-    field.append(group);
-    return field;
-  }
-  function renderToggle(definition, value, context) {
-    const field = fieldShell(definition);
-    const label = document.createElement("label");
-    label.className = "web-search-toggle model-parameter-toggle";
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.checked = Boolean(value);
-    input.setAttribute("aria-label", translate(definition.label_key));
-    setReadOnly(input, context.readOnly);
-    const track = document.createElement("span");
-    track.className = "web-search-toggle-track";
-    track.setAttribute("aria-hidden", "true");
-    const text = document.createElement("span");
-    text.className = "web-search-toggle-text";
-    text.textContent = translate(input.checked ? "output.lock.enabled" : "output.lock.disabled");
-    input.addEventListener("change", () => {
-      text.textContent = translate(input.checked ? "output.lock.enabled" : "output.lock.disabled");
-      commitValue(
-        context,
-        definition,
-        input.checked,
-        parameterAffectsVisibility(interactiveModel(context), definition.id)
-      );
-    });
-    label.append(input, track, text);
-    field.append(label);
-    return field;
-  }
-  function renderNumeric(definition, value, context, slider) {
-    const field = fieldShell(definition);
-    const input = document.createElement("input");
-    input.className = slider ? "slider" : "control";
-    input.type = slider ? "range" : "number";
-    input.value = String(value);
-    input.setAttribute("aria-label", translate(definition.label_key));
-    if (definition.minimum !== null) input.min = String(definition.minimum);
-    if (definition.maximum !== null) input.max = String(definition.maximum);
-    if (definition.step !== null) input.step = String(definition.step);
-    setReadOnly(input, context.readOnly);
-    const output = document.createElement("output");
-    output.className = "model-parameter-number-value";
-    output.textContent = String(value);
-    const error = document.createElement("span");
-    error.className = "model-parameter-error hidden";
-    error.setAttribute("role", "alert");
-    const validate = (next, commit) => {
-      const limit2 = Number(input.dataset.limit || NaN);
-      const message = !parameterValueValid(definition, next) ? translate("modelParameters.invalidValue") : next > limit2 ? formatTranslation("output.frameCountLimit", { max: limit2 }) : "";
-      error.textContent = message;
-      error.classList.toggle("hidden", !message);
-      input.setAttribute("aria-invalid", message ? "true" : "false");
-      setValidationError(interactiveModel(context).id, definition.id, message);
-      if (!message && commit) commitValue(context, definition, next);
-    };
-    input.addEventListener("input", () => {
-      output.textContent = input.value;
-      validate(Number(input.value), true);
-    });
-    if (definition.id === GIF_FRAME_COUNT && !context.readOnly) {
-      const refresh = () => {
-        const draft2 = getLegacyBridge().state.parameterDraftsByModel?.[context.model.id] || {};
-        const limit2 = currentGifFrameLimit(context.model, definition, { ...context.values, ...draft2 });
-        if (limit2 === null) delete input.dataset.limit;
-        else input.dataset.limit = input.max = String(limit2);
-        validate(Number(input.value), false);
-      };
-      input.dataset.dynamicLimit = "gif-frames";
-      input.refreshLimit = refresh;
-      queueMicrotask(refresh);
-    }
-    if (slider) field.append(input, output, error);
-    else field.append(input, error);
-    return field;
-  }
-  var GIF_FRAME_COUNT = "gpt.frame_count";
-  function currentGifFrameLimit(model, definition, values) {
-    const { state: state32 } = getLegacyBridge();
-    const provider = state32.generationCatalog?.providers.find((item) => item.id === state32.selectedProviderId);
-    const providerLimit = state32.mode === "edit" ? provider?.gif_edit_max_frames ?? null : null;
-    return gifFrameLimit(model, definition.maximum, values, providerLimit);
-  }
-  function usesMobileWorkspace() {
-    return typeof window.matchMedia === "function" && window.matchMedia(MOBILE_WORKSPACE_QUERY).matches;
-  }
-  function placeAdvancedOptions(root, slot, wasOpen) {
-    const details = root.querySelector(":scope > details.model-parameter-advanced");
-    const inHeader = Boolean(details) && !usesMobileWorkspace();
-    slot.replaceChildren(...inHeader && details ? [details] : []);
-    slot.classList.toggle("hidden", !inHeader);
-    if (details && wasOpen) details.open = true;
-  }
-  function closeAdvancedPopover(event) {
-    const details = document.querySelector("#modelAdvancedSlot > details[open]");
-    if (!details) return;
-    if (event instanceof KeyboardEvent) {
-      if (event.key !== "Escape") return;
-      details.open = false;
-      details.querySelector("summary")?.focus();
-      return;
-    }
-    if (!details.contains(event.target)) details.open = false;
-  }
-  function refreshDynamicLimits() {
-    if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
-    document.querySelectorAll("[data-dynamic-limit]").forEach((input) => input.refreshLimit?.());
-  }
-  function renderSlider(definition, value, context) {
-    return renderNumeric(definition, value, context, true);
-  }
-  function renderNumber(definition, value, context) {
-    return renderNumeric(definition, value, context, false);
-  }
-  function renderImageSize(definition, value, context) {
-    const field = renderSegmented(definition, value, context);
-    field.querySelector(".model-parameter-label")?.classList.add("sr-only");
-    return field;
-  }
-  function renderPixelSize(definition, value, context) {
-    const rules = context.model.size_spec?.custom;
-    if (!rules) return renderText(definition, value, context);
-    const field = fieldShell(definition);
-    field.append(createPixelSizeEditor({
-      label: translate(definition.label_key),
-      value,
-      rules,
-      outputFormat: context.values["output.format"],
-      readOnly: context.readOnly,
-      commit: (next) => commitValue(context, definition, next),
-      reportError: (message) => {
-        if (!context.readOnly) setValidationError(interactiveModel(context).id, definition.id, message);
-      }
-    }));
-    return field;
-  }
-  function setValidationError(modelId, parameterId, message) {
-    const { state: state32, els: els38 } = getLegacyBridge();
-    const errors = state32.parameterValidationErrorsByModel[modelId] || {};
-    if (message) errors[parameterId] = message;
-    else delete errors[parameterId];
-    state32.parameterValidationErrorsByModel[modelId] = errors;
-    if (els38.runButton) els38.runButton.disabled = !state32.authAvailable || Object.keys(errors).length > 0;
-  }
-  function renderText(definition, value, context) {
-    const field = fieldShell(definition);
-    const input = definition.value_type === "object" ? document.createElement("textarea") : document.createElement("input");
-    input.className = "control model-parameter-text";
-    input.setAttribute("aria-label", translate(definition.label_key));
-    if (input instanceof HTMLTextAreaElement) {
-      input.rows = 4;
-      input.value = JSON.stringify(value, null, 2);
-    } else {
-      input.type = "text";
-      input.value = String(value);
-    }
-    setReadOnly(input, context.readOnly);
-    const error = document.createElement("span");
-    error.className = "model-parameter-error hidden";
-    error.setAttribute("role", "alert");
-    const handle = () => {
-      if (context.readOnly) return;
-      if (definition.value_type !== "object") {
-        const message2 = parameterValueValid(definition, input.value) ? "" : translate("modelParameters.invalidValue");
-        error.textContent = message2;
-        error.classList.toggle("hidden", !message2);
-        setValidationError(interactiveModel(context).id, definition.id, message2);
-        if (!message2) commitValue(context, definition, input.value);
-        return;
-      }
-      let parsed;
-      let message = "";
-      try {
-        parsed = JSON.parse(input.value);
-        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) message = translate("modelParameters.objectRequired");
-      } catch {
-        message = translate("modelParameters.invalidJson");
-      }
-      error.textContent = message;
-      error.classList.toggle("hidden", !message);
-      setValidationError(interactiveModel(context).id, definition.id, message);
-      if (!message) commitValue(context, definition, parsed);
-    };
-    input.addEventListener("input", handle);
-    input.addEventListener("blur", handle);
-    field.append(input, error);
-    return field;
-  }
-  function renderNotice(definition, value, _context) {
-    const notice = document.createElement("p");
-    notice.className = `model-parameter-notice${definition.full_width ? " full-width" : ""}`;
-    notice.dataset.parameterId = definition.id;
-    notice.textContent = String(value || translate(definition.label_key));
-    return notice;
-  }
-  function renderChoiceGrid(definition, value, context) {
-    const field = fieldShell(definition);
-    field.classList.add("model-parameter-choice-grid");
-    const current = value && typeof value === "object" && !Array.isArray(value) ? value : {};
-    definition.object_choices?.forEach((row) => {
-      const choiceRow = document.createElement("div");
-      choiceRow.className = "model-parameter-choice-row";
-      const label = document.createElement("span");
-      label.className = "model-parameter-choice-label";
-      label.textContent = translate(row.label_key);
-      const group = document.createElement("div");
-      group.className = "radio-group model-parameter-choice-options model-parameter-segmented-multiline";
-      group.setAttribute("role", "group");
-      group.setAttribute("aria-label", translate(row.label_key));
-      const selected = typeof current[row.key] === "string" ? String(current[row.key]) : row.default;
-      row.allowed_values.forEach((allowed, index) => {
-        const button = document.createElement("button");
-        const active = selected === allowed;
-        button.type = "button";
-        button.className = `radio-btn${active ? " active" : ""}`;
-        button.textContent = translate(row.label_keys[index] || row.label_key);
-        button.title = allowed;
-        button.disabled = context.readOnly;
-        button.tabIndex = context.readOnly ? -1 : 0;
-        button.setAttribute("aria-pressed", active ? "true" : "false");
-        button.addEventListener("click", () => {
-          if (context.readOnly || button.classList.contains("active")) return;
-          group.querySelectorAll(".radio-btn").forEach((item) => {
-            const isActive = item === button;
-            item.classList.toggle("active", isActive);
-            item.setAttribute("aria-pressed", isActive ? "true" : "false");
-          });
-          const nextValue = nextObjectChoiceValue(definition, current, row.key, allowed);
-          Object.keys(current).forEach((key2) => delete current[key2]);
-          Object.assign(current, nextValue);
-          commitValue(context, definition, nextValue);
-        });
-        group.append(button);
-      });
-      choiceRow.append(label, group);
-      field.append(choiceRow);
-    });
-    return field;
-  }
-  function renderObjectPresets(definition, value, context) {
-    const field = fieldShell(definition);
-    const group = document.createElement("div");
-    group.className = "radio-group model-parameter-object-presets";
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", translate(definition.label_key));
-    let current = value && typeof value === "object" && !Array.isArray(value) ? { ...value } : {};
-    const selected = matchingObjectPreset(definition, current);
-    definition.object_presets?.forEach((preset) => {
-      const button = document.createElement("button");
-      const active = selected?.id === preset.id;
-      button.type = "button";
-      button.className = `radio-btn${active ? " active" : ""}`;
-      button.textContent = translate(preset.label_key);
-      button.disabled = context.readOnly;
-      button.tabIndex = context.readOnly ? -1 : 0;
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-      button.addEventListener("click", () => {
-        if (context.readOnly || button.classList.contains("active")) return;
-        group.querySelectorAll(".radio-btn").forEach((item) => {
-          const isActive = item === button;
-          item.classList.toggle("active", isActive);
-          item.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-        current = nextObjectPresetValue(definition, current, preset);
-        commitValue(context, definition, current);
-        refreshSegmentedIndicators();
-      });
-      group.append(button);
-    });
-    field.append(group);
-    return field;
-  }
-  function renderAspectRatioGrid(definition, value, context) {
-    const field = fieldShell(definition);
-    const group = document.createElement("div");
-    group.className = "radio-group model-aspect-ratio-grid";
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", translate(definition.label_key));
-    aspectRatioSlots(definition.allowed_values.map(String)).forEach((ratioSlot) => {
-      const slot = document.createElement("div");
-      slot.className = "aspect-ratio-slot";
-      ratioSlot.values.forEach((allowed) => {
-        const button = document.createElement("button");
-        const active = allowed === value;
-        button.type = "button";
-        button.className = `radio-btn${active ? " active" : ""}`;
-        button.dataset.val = allowed;
-        button.disabled = context.readOnly;
-        button.tabIndex = context.readOnly ? -1 : 0;
-        button.setAttribute("aria-pressed", active ? "true" : "false");
-        const icon = createAspectRatioIcon(allowed);
-        const label = document.createElement("span");
-        label.className = "aspect-ratio-label";
-        label.textContent = allowed;
-        if (icon) button.append(icon, label);
-        else {
-          button.classList.add("aspect-ratio-no-icon");
-          button.append(label);
-        }
-        button.addEventListener("click", () => {
-          if (context.readOnly || button.classList.contains("active")) return;
-          group.querySelectorAll(".radio-btn").forEach((item) => {
-            const isActive = item === button;
-            item.classList.toggle("active", isActive);
-            item.setAttribute("aria-pressed", isActive ? "true" : "false");
-          });
-          commitValue(context, definition, allowed);
-        });
-        slot.append(button);
-      });
-      group.append(slot);
-    });
-    field.append(group);
-    return field;
-  }
-  var PARAMETER_RENDERERS = {
-    select: renderSelect,
-    segmented: renderSegmented,
-    boolean_segmented: renderBooleanSegmented,
-    toggle: renderToggle,
-    slider: renderSlider,
-    number: renderNumber,
-    text: renderText,
-    notice: renderNotice,
-    choice_grid: renderChoiceGrid,
-    object_presets: renderObjectPresets,
-    aspect_ratio_grid: renderAspectRatioGrid,
-    image_size: renderImageSize,
-    pixel_size: renderPixelSize
-  };
-  function parameterHasChoice(definition) {
-    return definition.control !== "image_size" || definition.allowed_values.length > 1;
-  }
-  function advancedParametersAreExpanded(model, readOnly) {
-    return readOnly || model.expand_advanced_parameters === true;
-  }
-  function parameterTranslations(definition) {
-    return [
-      translate(definition.label_key),
-      ...(definition.object_choices || []).flatMap((choice) => [
-        translate(choice.label_key),
-        ...choice.label_keys.map((key2) => translate(key2))
-      ]),
-      ...(definition.object_presets || []).map((preset) => translate(preset.label_key))
-    ];
-  }
-  var FINGERPRINT_DEPENDENCIES = {
-    pixel_size: ["output.format"]
-  };
-  function parameterRenderFingerprint(definition, value, readOnly, values = {}) {
-    const dependencies = [
-      ...FINGERPRINT_DEPENDENCIES[definition.control] || [],
-      ...(definition.value_requirements || []).map((requirement) => requirement.condition.parameter_id)
-    ].map((id) => values[id]);
-    return JSON.stringify([definition, value, readOnly, parameterTranslations(definition), dependencies]);
-  }
-  function resolvedParameterValues(model, values) {
-    return Object.fromEntries(model.parameters.map((definition) => [
-      definition.id,
-      modelParameterValueValid(model, definition, values[definition.id], values) ? values[definition.id] : cloneValue(definition.default)
-    ]));
-  }
-  function visibleParameterDefinitions(model, values, operation, supported = null) {
-    return model.parameters.filter((definition) => definition.operations.includes(operation)).filter((definition) => !supported || supported.has(definition.id)).filter(parameterHasChoice).filter((definition) => definition.visible_when.every((condition) => conditionMatches(condition, values)));
-  }
-  function renderParameterDefinitionsInto(root, model, values, options) {
-    const operation = options.operation || "generate";
-    const resolvedValues = resolvedParameterValues(model, values);
-    root.replaceChildren();
-    const context = { readOnly: options.readOnly, model, values: resolvedValues, root };
-    const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, options.supported || null);
-    visibleDefinitions.filter((definition) => definition.group !== "advanced").forEach((definition) => root.append(PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context)));
-    const advancedDefinitions = visibleDefinitions.filter((definition) => definition.group === "advanced");
-    if (advancedDefinitions.length) {
-      const content = document.createElement("div");
-      content.className = "model-parameter-advanced-grid";
-      advancedDefinitions.forEach((definition) => content.append(
-        PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context)
-      ));
-      if (advancedParametersAreExpanded(model, options.readOnly)) {
-        content.classList.add("model-parameter-advanced-grid-expanded", "full-width");
-        root.append(content);
-      } else {
-        const details = document.createElement("details");
-        details.className = "model-parameter-advanced full-width";
-        const summary = document.createElement("summary");
-        summary.textContent = translate("apiSettings.advancedSettings");
-        details.append(summary, content);
-        root.append(details);
-      }
-    }
-    refreshSegmentedIndicators();
-  }
-  function renderInteractiveParameterDefinitionsInto(root, model, values, operation) {
-    const resolvedValues = resolvedParameterValues(model, values);
-    const supported = selectedBindingParameterIds(model.id);
-    const visibleDefinitions = visibleParameterDefinitions(model, resolvedValues, operation, supported);
-    if (visibleDefinitions.some((definition) => definition.group === "advanced")) {
-      renderParameterDefinitionsInto(root, model, values, { readOnly: false, operation, supported });
-      return;
-    }
-    const context = { readOnly: false, model, values: resolvedValues, root };
-    const existingFields = new Map(Array.from(root.children).flatMap((child) => {
-      const parameterId = child.dataset.parameterId;
-      return parameterId ? [[parameterId, child]] : [];
-    }));
-    const fields = visibleDefinitions.map((definition) => {
-      const fingerprint = parameterRenderFingerprint(definition, resolvedValues[definition.id], false, resolvedValues);
-      const existingField = existingFields.get(definition.id);
-      if (existingField?.dataset.renderFingerprint === fingerprint) return existingField;
-      const field = PARAMETER_RENDERERS[definition.control](definition, resolvedValues[definition.id], context);
-      field.dataset.renderFingerprint = fingerprint;
-      return field;
-    });
-    root.replaceChildren(...fields);
-    refreshSegmentedIndicators();
-  }
-  function ensureModelDraft(model) {
-    const { state: state32 } = getLegacyBridge();
-    const previous = state32.parameterDraftsByModel[model.id] || {};
-    const report = initializeParameterDraft(model, previous);
-    state32.parameterDraftsByModel[model.id] = report.values;
-    state32.parameterDraftVersionsByModel[model.id] = model.version;
-    return report;
-  }
-  function renderModelParameters(model, options = { readOnly: false }) {
-    const { state: state32, els: els38 } = getLegacyBridge();
-    const root = options.root || els38.modelParameterGrid;
-    if (!root) return;
-    if (options.readOnly) {
-      renderParameterDefinitionsInto(root, model, options.values || {}, { readOnly: true, operation: state32.mode });
-      return;
-    }
-    ensureModelDraft(model);
-    const draft2 = state32.parameterDraftsByModel[model.id] || {};
-    const visible = new Set(visibleParameterDefinitions(
-      model,
-      resolvedParameterValues(model, draft2),
-      state32.mode,
-      selectedBindingParameterIds(model.id)
-    ).map((definition) => definition.id));
-    const errors = state32.parameterValidationErrorsByModel[model.id] || {};
-    Object.keys(errors).filter((id) => !visible.has(id)).forEach((id) => setValidationError(model.id, id, ""));
-    root.classList.remove("hidden");
-    const toolSlot = els38.modelToolSlot;
-    if (toolSlot) root.append(...Array.from(toolSlot.children));
-    const advancedSlot = els38.modelAdvancedSlot;
-    const advancedWasOpen = Boolean(advancedSlot?.querySelector("details")?.open);
-    renderInteractiveParameterDefinitionsInto(root, model, draft2, state32.mode);
-    if (advancedSlot) placeAdvancedOptions(root, advancedSlot, advancedWasOpen);
-    if (toolSlot) {
-      const binding = selectedBinding(model.id);
-      const besideMainModel = Boolean(binding && resolveModeSettingsVisibility(binding, false).showMainModel);
-      toolSlot.replaceChildren(...besideMainModel ? Array.from(root.querySelectorAll(':scope > [data-parameter-group="tools"]')) : []);
-      toolSlot.classList.toggle("hidden", !toolSlot.children.length);
-    }
-    refreshDynamicLimits();
-  }
-  function setParameterValue(modelId, parameterId, value) {
-    const { state: state32 } = getLegacyBridge();
-    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
-    const definition = model?.parameters.find((item) => item.id === parameterId);
-    if (!model || !definition || !modelParameterValueValid(model, definition, value, state32.parameterDraftsByModel[modelId] || {})) return;
-    state32.parameterDraftsByModel[modelId] = {
-      ...state32.parameterDraftsByModel[modelId] || {},
-      [parameterId]: cloneValue(value)
-    };
-    if (definition.scope === "application") {
-      state32.generationCatalog?.models.forEach((item) => {
-        if (item.parameters.some((parameter) => parameter.id === parameterId)) {
-          state32.parameterDraftsByModel[item.id] = {
-            ...state32.parameterDraftsByModel[item.id] || {},
-            [parameterId]: cloneValue(value)
-          };
-        }
-      });
-    }
-    getLegacyBridge().methods.persistModelSelection?.();
-    getLegacyBridge().methods.updateRequestPreview?.();
-  }
-  function resetCurrentModelParameters() {
-    const { state: state32 } = getLegacyBridge();
-    if (!state32.selectedModelId) return;
-    state32.parameterDraftsByModel[state32.selectedModelId] = {};
-    getLegacyBridge().methods.persistModelSelection?.();
-    renderCurrentModelParameters();
-  }
-  function renderCurrentModelParameters() {
-    const { state: state32 } = getLegacyBridge();
-    const model = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
-    if (model) renderModelParameters(model, { readOnly: false });
-  }
-  function initModelParametersFeature() {
-    Object.assign(getLegacyBridge().methods, {
-      activeParameterValues,
-      refreshFirstImageButtons,
-      renderCurrentModelParameters,
-      renderModelParameters,
-      resetCurrentModelParameters,
-      setParameterValue
-    });
-    document.addEventListener(LOCALE_CHANGE_EVENT, renderCurrentModelParameters);
-    document.addEventListener("pointerdown", closeAdvancedPopover);
-    document.addEventListener("keydown", closeAdvancedPopover);
-    if (typeof window.matchMedia === "function") {
-      window.matchMedia(MOBILE_WORKSPACE_QUERY).addEventListener?.("change", renderCurrentModelParameters);
-    }
-  }
-
-  // codex_image/webui/frontend/src/model-parameter-drafts.ts
-  function cloneValue2(value) {
-    if (Array.isArray(value)) return value.map(cloneValue2);
-    if (value && typeof value === "object") {
-      return Object.fromEntries(Object.entries(value).map(([key2, item]) => [key2, cloneValue2(item)]));
-    }
-    return value;
-  }
-  function parameterValueValid2(parameter, value) {
-    const typeValid = parameter.value_type === "string" ? typeof value === "string" : parameter.value_type === "integer" ? typeof value === "number" && Number.isInteger(value) : parameter.value_type === "boolean" ? typeof value === "boolean" : parameter.value_type === "object" ? Boolean(value) && typeof value === "object" && !Array.isArray(value) : false;
-    if (!typeValid) return false;
-    if (parameter.allowed_values.length && !parameter.allowed_values.includes(value)) return false;
-    if (typeof value === "number") {
-      if (parameter.minimum !== null && value < parameter.minimum) return false;
-      if (parameter.maximum !== null && value > parameter.maximum) return false;
-      if (parameter.step !== null) {
-        const base = parameter.minimum ?? 0;
-        const quotient = (value - base) / parameter.step;
-        if (Math.abs(quotient - Math.round(quotient)) > 1e-9) return false;
-      }
-    }
-    return true;
-  }
-  function migratePortableModelDraft(sourceModel, targetModel, sourceDraft, targetDraft) {
-    const sourceIds = new Set(sourceModel.parameters.map((definition) => definition.id));
-    return Object.fromEntries(targetModel.parameters.map((definition) => {
-      if (sourceIds.has(definition.id)) {
-        const sourceValue = sourceDraft[definition.id];
-        return [definition.id, cloneValue2(
-          parameterValueValid2(definition, sourceValue) ? sourceValue : definition.default
-        )];
-      }
-      const targetValue = targetDraft[definition.id];
-      return [definition.id, cloneValue2(
-        parameterValueValid2(definition, targetValue) ? targetValue : definition.default
-      )];
-    }));
-  }
-  function saveCurrentModelParameterDraft() {
-    getLegacyBridge().methods.persistModelSelection?.();
-  }
-  function restoreCurrentModelParameterDraft() {
-    renderCurrentModelParameters();
-  }
-  function initModelParameterDraftFeature() {
-    Object.assign(getLegacyBridge().methods, {
-      restoreCurrentModelParameterDraft,
-      saveCurrentModelParameterDraft
-    });
-  }
-
-  // codex_image/webui/frontend/src/model-family-icons.ts
-  var BRAND_MARKS = {
-    "gpt-image": {
-      asset: "/static/brand/model-marks/openai.svg",
-      className: "openai"
-    },
-    "gemini-image": {
-      asset: "/static/brand/model-marks/gemini.svg",
-      className: "gemini"
-    }
-  };
-  function fallbackMarkHtml(className) {
-    return `
-    <svg class="${className} model-family-brand-mark-fallback" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="m12 4 8 8-8 8-8-8Z" />
-    </svg>`;
-  }
-  function modelFamilyBrandMarkHtml(familyId, className) {
-    const mark = BRAND_MARKS[familyId];
-    if (!mark) return fallbackMarkHtml(className);
-    return `<img class="${className} model-family-brand-mark-${mark.className}" src="${mark.asset}" alt="" aria-hidden="true" decoding="async" />`;
-  }
-
-  // codex_image/webui/frontend/src/model-selection.ts
-  function modelsForFamily(catalog, familyId) {
-    return catalog.models.filter((model) => model.family_id === familyId);
-  }
-  function usesExpandedConcreteModelOptions(models) {
-    return models.length > 1;
-  }
-  function familyOptionButtons() {
-    const options = getLegacyBridge().els.modelFamilyOptions;
-    return options ? Array.from(options.querySelectorAll("[data-family-id]")) : [];
-  }
-  function focusFamilyOption(familyId) {
-    window.requestAnimationFrame(() => {
-      familyOptionButtons().find((button) => button.dataset.familyId === familyId)?.focus();
-    });
-  }
-  function selectModelFamily(familyId) {
-    const { state: state32 } = getLegacyBridge();
-    const catalog = state32.generationCatalog;
-    const family = catalog?.families.find((item) => item.id === familyId);
-    if (!catalog || !family) return;
-    const models = modelsForFamily(catalog, familyId);
-    const remembered = state32.lastModelByFamily[familyId];
-    const model = models.find((item) => item.id === remembered) || models[0];
-    if (!model) return;
-    saveCurrentModelParameterDraft();
-    state32.selectedFamilyId = familyId;
-    state32.selectedModelId = model.id;
-    state32.lastModelByFamily[familyId] = model.id;
-    getLegacyBridge().methods.persistModelSelection?.();
-    renderModelSelectors();
-    renderProviderSelection();
-    restoreCurrentModelParameterDraft();
-    getLegacyBridge().methods.reconcileTaskParameterInspection?.();
-    getLegacyBridge().methods.updateModeSpecificSettings?.();
-    getLegacyBridge().methods.refreshOutputSettingsLock?.();
-    getLegacyBridge().methods.updateRequestPreview?.();
-    focusFamilyOption(familyId);
-  }
-  function selectConcreteModel(modelId) {
-    const { state: state32 } = getLegacyBridge();
-    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
-    if (!model) return;
-    const sourceModel = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
-    const familyChanged = sourceModel?.family_id !== model.family_id;
-    saveCurrentModelParameterDraft();
-    if (sourceModel?.family_id === model.family_id) {
-      state32.parameterDraftsByModel[model.id] = migratePortableModelDraft(
-        sourceModel,
-        model,
-        state32.parameterDraftsByModel[sourceModel.id] || {},
-        state32.parameterDraftsByModel[model.id] || {}
-      );
-    }
-    state32.selectedModelId = model.id;
-    state32.selectedFamilyId = model.family_id;
-    state32.lastModelByFamily[model.family_id] = model.id;
-    getLegacyBridge().methods.persistModelSelection?.();
-    if (familyChanged) renderModelSelectors();
-    else updateConcreteModelSelection(model.id);
-    renderProviderSelection();
-    restoreCurrentModelParameterDraft();
-    getLegacyBridge().methods.reconcileTaskParameterInspection?.();
-    getLegacyBridge().methods.updateModeSpecificSettings?.();
-    getLegacyBridge().methods.refreshOutputSettingsLock?.();
-    getLegacyBridge().methods.updateRequestPreview?.();
-  }
-  function updateConcreteModelSelection(modelId) {
-    const { state: state32, els: els38 } = getLegacyBridge();
-    const modelSelect = els38.concreteModelSelect;
-    const modelOptions = els38.concreteModelOptions;
-    if (modelSelect) modelSelect.value = modelId;
-    modelOptions?.querySelectorAll("[data-model-id]").forEach((button) => {
-      const active = button.dataset.modelId === modelId;
-      button.classList.toggle("active", active);
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-    });
-    const model = state32.generationCatalog?.models.find((item) => item.id === modelId);
-    if (modelSelect) modelSelect.title = model?.display_name || "";
-    refreshSegmentedIndicators();
-  }
-  function renderModelSelectors() {
-    const { state: state32, els: els38 } = getLegacyBridge();
-    const catalog = state32.generationCatalog;
-    const familyOptions = els38.modelFamilyOptions;
-    const modelSelect = els38.concreteModelSelect;
-    const modelOptions = els38.concreteModelOptions;
-    const modelField = modelSelect?.closest(".concrete-model-field");
-    if (!catalog) {
-      if (familyOptions) {
-        familyOptions.replaceChildren();
-        familyOptions.setAttribute("aria-disabled", "true");
-      }
-      if (modelSelect) modelSelect.disabled = true;
-      modelOptions?.replaceChildren();
-      modelOptions?.classList.add("hidden");
-      modelField?.classList.add("hidden");
-      return;
-    }
-    const selectedFamily = catalog.families.find((family) => family.id === state32.selectedFamilyId);
-    if (familyOptions) {
-      familyOptions.querySelectorAll("[data-family-id]").forEach((item) => item.remove());
-      familyOptions.removeAttribute("aria-disabled");
-      catalog.families.forEach((family) => {
-        const item = document.createElement("button");
-        item.type = "button";
-        item.role = "radio";
-        const active = family.id === state32.selectedFamilyId;
-        item.className = `model-family-segment radio-btn${active ? " active" : ""}`;
-        item.dataset.familyId = family.id;
-        item.title = family.display_name;
-        item.setAttribute("aria-label", family.display_name);
-        item.setAttribute("aria-checked", active ? "true" : "false");
-        const icon = document.createElement("span");
-        icon.className = `model-family-segment-icon model-family-segment-icon-${family.id}`;
-        icon.setAttribute("aria-hidden", "true");
-        icon.innerHTML = modelFamilyBrandMarkHtml(family.id, "model-family-brand-mark");
-        const label = document.createElement("span");
-        label.className = "model-family-segment-label";
-        label.textContent = family.short_name || family.display_name;
-        item.append(icon, label);
-        familyOptions.append(item);
-      });
-    }
-    if (modelSelect && selectedFamily) {
-      const familyModels = modelsForFamily(catalog, selectedFamily.id).filter((model) => selectedFamily.id !== "gpt-image" || model.id === "gpt-image-2" || model.id === state32.selectedModelId || catalog.providers.some((provider) => provider.bindings.some((binding) => binding.canonical_model_id === model.id && binding.operations.includes(state32.mode))));
-      const gptVersions = selectedFamily.id === "gpt-image";
-      const expanded = !gptVersions && usesExpandedConcreteModelOptions(familyModels);
-      modelField?.classList.toggle("hidden", gptVersions || !expanded);
-      modelSelect.replaceChildren();
-      familyModels.forEach((model) => {
-        const option2 = document.createElement("option");
-        option2.value = model.id;
-        option2.textContent = model.display_name;
-        option2.title = model.display_name;
-        modelSelect.append(option2);
-      });
-      modelSelect.value = state32.selectedModelId || "";
-      modelSelect.disabled = modelSelect.options.length === 0;
-      modelSelect.title = catalog.models.find((model) => model.id === state32.selectedModelId)?.display_name || "";
-      modelSelect.classList.toggle("hidden", expanded);
-      if (modelOptions) {
-        modelOptions.replaceChildren();
-        modelOptions.classList.toggle("hidden", !expanded);
-        if (expanded) {
-          familyModels.forEach((model) => {
-            const button = document.createElement("button");
-            const active = model.id === state32.selectedModelId;
-            button.type = "button";
-            button.className = `radio-btn${active ? " active" : ""}`;
-            button.dataset.modelId = model.id;
-            button.textContent = model.display_name;
-            button.title = model.display_name;
-            button.setAttribute("aria-pressed", active ? "true" : "false");
-            button.addEventListener("click", () => {
-              if (!button.classList.contains("active")) selectConcreteModel(model.id);
-            });
-            modelOptions.append(button);
-          });
-        }
-      }
-    }
-    refreshSegmentedIndicators();
-  }
-  function handleModelFamilyOptionsKeydown(event) {
-    const buttons = familyOptionButtons();
-    const current = event.target?.closest?.("[data-family-id]");
-    const index = buttons.indexOf(current || document.activeElement);
-    const delta = event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : event.key === "ArrowUp" || event.key === "ArrowLeft" ? -1 : 0;
-    const targetIndex = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : delta && buttons.length ? (index + delta + buttons.length) % buttons.length : -1;
-    if (targetIndex < 0 || !buttons.length) return;
-    event.preventDefault();
-    const target = buttons[targetIndex];
-    const familyId = target?.dataset.familyId;
-    if (!familyId) return;
-    selectModelFamily(familyId);
-  }
-  function initModelSelectionFeature() {
-    Object.assign(getLegacyBridge().methods, {
-      handleModelFamilyOptionsKeydown,
-      renderModelSelectors,
-      selectConcreteModel,
-      selectModelFamily,
-      updateConcreteModelSelection
-    });
-  }
-
-  // codex_image/webui/frontend/src/provider-selection.ts
-  function providerBindingSelectionKey(providerId, bindingId) {
-    return `${providerId}::${bindingId}`;
-  }
-  function providerIsEligible(catalog, provider, modelId) {
-    if (!provider.available || !modelId) return false;
-    const model = catalog.models.find((item) => item.id === modelId);
-    return provider.id !== "codex" || catalog.codex.available && model?.family_id === "gpt-image" && model.id === "gpt-image-2";
-  }
-  function eligibleProviderBindings(catalog, modelId, operation) {
-    return eligibleBindingsForModels(catalog, modelId ? [modelId] : [], operation);
-  }
-  function eligibleBindingsForModels(catalog, modelIds, operation) {
-    return catalog.providers.flatMap((provider) => {
-      return provider.bindings.filter((binding) => modelIds.includes(binding.canonical_model_id) && providerIsEligible(catalog, provider, binding.canonical_model_id) && binding.operations.includes(operation) && binding.available !== false).map((binding) => ({
-        provider,
-        binding,
-        selectionKey: providerBindingSelectionKey(provider.id, binding.id)
-      }));
-    });
-  }
-  function providerMenuBindings(catalog, modelId, operation) {
-    const modelIds = isGptImageModel(modelId) ? catalog.models.filter((model) => isGptImageModel(model.id)).map((model) => model.id) : modelId ? [modelId] : [];
-    return eligibleBindingsForModels(catalog, modelIds, operation);
-  }
-  function eligibleProviders(catalog, modelId, operation) {
-    const providers = /* @__PURE__ */ new Map();
-    eligibleProviderBindings(catalog, modelId, operation).forEach(({ provider }) => {
-      providers.set(provider.id, provider);
-    });
-    return [...providers.values()];
-  }
-  function preferredProviderBinding(entries, providerId, codexMode) {
-    const providerEntries = entries.filter((entry) => entry.provider.id === providerId);
-    if (!providerEntries.length) return null;
-    if (providerId === "codex") {
-      return providerEntries.find((entry) => entry.binding.protocol_profile === `codex_${codexMode}`) || providerEntries[0] || null;
-    }
-    return providerEntries[0] || null;
-  }
-  function resolveProviderSelection(entries, lastSelectionKey, lastProviderId, defaultProviderId, codexMode) {
-    if (lastSelectionKey) {
-      const remembered = entries.find((entry) => entry.selectionKey === lastSelectionKey);
-      if (remembered) return remembered;
-    }
-    return preferredProviderBinding(entries, lastProviderId, codexMode) || preferredProviderBinding(entries, defaultProviderId, codexMode) || entries[0] || null;
-  }
-  function resolveProviderId(eligible, lastProviderId, defaultProviderId) {
-    const ids = new Set(eligible.map((provider) => provider.id));
-    if (lastProviderId && ids.has(lastProviderId)) return lastProviderId;
-    if (defaultProviderId && ids.has(defaultProviderId)) return defaultProviderId;
-    return eligible[0]?.id ?? null;
-  }
-  function selectedProviderBinding() {
-    const { state: state32 } = getLegacyBridge();
-    const provider = state32.generationCatalog?.providers.find((item) => item.id === state32.selectedProviderId);
-    const candidates2 = provider?.bindings.filter((binding) => binding.canonical_model_id === state32.selectedModelId && binding.operations.includes(state32.mode) && binding.available !== false) || [];
-    return candidates2.find((binding) => binding.id === state32.selectedProviderBindingId) || candidates2[0] || null;
-  }
-  function syncCodexCatalogMode(mode) {
-    const { state: state32 } = getLegacyBridge();
-    const catalog = state32.generationCatalog;
-    if (!catalog) return;
-    catalog.codex.mode = mode;
-    if (state32.selectedProviderId !== "codex") return;
-    const selected = preferredProviderBinding(
-      eligibleProviderBindings(catalog, state32.selectedModelId, state32.mode),
-      "codex",
-      mode
-    );
-    if (selected) state32.selectedProviderBindingId = selected.binding.id;
-    renderProviderSelection();
-  }
-  function settingsTabForProvider(_providerId) {
-    return "api";
-  }
-  function optionLabel(entry, entries, catalog) {
-    const label = entry.binding.display_name || entry.provider.name;
-    const multipleModels = entries.some((candidate) => candidate.provider.id === entry.provider.id && candidate.binding.canonical_model_id !== entry.binding.canonical_model_id);
-    const model = catalog.models.find((model2) => model2.id === entry.binding.canonical_model_id);
-    return multipleModels ? `${label} \xB7 ${model?.display_name || entry.binding.canonical_model_id}` : label;
-  }
-  function applyOptionIcon(option2, entry) {
-    if (entry.provider.id === "codex") {
-      option2.dataset.optionIcon = "/static/brand/codex-channel-mark.svg";
-      option2.dataset.optionIconKind = "image";
-      return;
-    }
-    if (entry.provider.icon_emoji) {
-      option2.dataset.optionIcon = entry.provider.icon_emoji;
-      option2.dataset.optionIconKind = "emoji";
-    }
-  }
-  function renderProviderSelection() {
-    const { state: state32, els: els38 } = getLegacyBridge();
-    const select = els38.generationProviderSelect;
-    const catalog = state32.generationCatalog;
-    const entries = catalog ? providerMenuBindings(catalog, state32.selectedModelId, state32.mode) : [];
-    const resolved = catalog ? resolveProviderSelection(
-      entries.filter((entry) => entry.binding.canonical_model_id === state32.selectedModelId),
-      state32.lastProviderSelectionByModel[state32.selectedModelId || ""],
-      state32.lastProviderByModel[state32.selectedModelId || ""],
-      catalog.default_provider_by_model[state32.selectedModelId || ""],
-      catalog.codex.mode
-    ) : null;
-    state32.selectedProviderId = resolved?.provider.id || null;
-    state32.selectedProviderBindingId = resolved?.binding.id || null;
-    state32.authAvailable = Boolean(resolved);
-    if (select) {
-      select.replaceChildren();
-      if (!resolved) {
-        const option2 = document.createElement("option");
-        option2.value = "";
-        option2.textContent = catalog ? translate("modelSelection.providerUnavailable") : translate("modelSelection.catalogUnavailable");
-        select.append(option2);
-      }
-      if (catalog) {
-        for (const entry of entries) {
-          const option2 = document.createElement("option");
-          option2.value = entry.selectionKey;
-          option2.textContent = optionLabel(entry, entries, catalog);
-          option2.title = optionLabel(entry, entries, catalog);
-          applyOptionIcon(option2, entry);
-          select.append(option2);
-        }
-      }
-      select.value = resolved?.selectionKey || "";
-      select.disabled = !entries.length;
-      select.title = resolved && catalog ? optionLabel(resolved, entries, catalog) : "";
-      select.setAttribute("aria-invalid", resolved ? "false" : "true");
-      syncThemedSelect(select);
-    }
-    if (catalog && els38.statusText?.dataset.statusSource === "codex-health") {
-      getLegacyBridge().methods.setStatus?.("", "");
-    }
-    if (els38.runButton) els38.runButton.disabled = !resolved;
-  }
-  function selectGenerationProvider(selectionOrProviderId) {
-    const { state: state32 } = getLegacyBridge();
-    const catalog = state32.generationCatalog;
-    if (!catalog || !state32.selectedModelId) return;
-    const entries = providerMenuBindings(catalog, state32.selectedModelId, state32.mode);
-    const selected = entries.find((entry) => entry.selectionKey === selectionOrProviderId) || preferredProviderBinding(entries.filter((entry) => entry.binding.canonical_model_id === state32.selectedModelId), selectionOrProviderId, catalog.codex.mode) || preferredProviderBinding(entries, selectionOrProviderId, catalog.codex.mode);
-    if (!selected) {
-      renderProviderSelection();
-      return;
-    }
-    const modelId = selected.binding.canonical_model_id;
-    state32.lastProviderByModel[modelId] = selected.provider.id;
-    state32.lastProviderSelectionByModel[modelId] = selected.selectionKey;
-    if (modelId !== state32.selectedModelId) {
-      selectConcreteModel(modelId);
-      return;
-    }
-    state32.selectedProviderId = selected.provider.id;
-    state32.selectedProviderBindingId = selected.binding.id;
-    getLegacyBridge().methods.persistModelSelection?.();
-    renderProviderSelection();
-    getLegacyBridge().methods.updateModeSpecificSettings?.();
-    getLegacyBridge().methods.renderCurrentModelParameters?.();
-    getLegacyBridge().methods.updateRequestPreview?.();
-  }
-  function initProviderSelectionFeature() {
-    Object.assign(getLegacyBridge().methods, {
-      eligibleProviders,
-      eligibleProviderBindings,
-      resolveProviderId,
-      resolveProviderSelection,
-      settingsTabForProvider,
-      renderProviderSelection,
-      selectedProviderBinding,
-      selectGenerationProvider,
-      syncCodexCatalogMode
     });
   }
 
@@ -38593,9 +39183,9 @@ ${hint}` : hint);
     if (window.CSS?.escape) return window.CSS.escape(text);
     return text.replace(/["\\]/g, "\\$&");
   }
-  function measuredElementHeight(element3) {
-    if (!element3) return 0;
-    return Math.ceil(element3.getBoundingClientRect().height);
+  function measuredElementHeight(element5) {
+    if (!element5) return 0;
+    return Math.ceil(element5.getBoundingClientRect().height);
   }
   function renderGalleryGrid2(options = {}) {
     if (options.animateHeight) {
@@ -39543,35 +40133,10 @@ ${hint}` : hint);
     });
   }
 
-  // codex_image/webui/frontend/src/generation-request.ts
-  function sortedRecord(values) {
-    return Object.fromEntries(Object.keys(values).sort().map((key2) => [key2, values[key2]]));
-  }
-  function currentGenerationSelection() {
-    const { state: state32 } = getLegacyBridge();
-    const model = state32.generationCatalog?.models.find((item) => item.id === state32.selectedModelId);
-    if (!model || !state32.selectedProviderId) {
-      return { canonicalModelId: "", providerId: "", bindingId: "", parameters: {} };
-    }
-    const draft2 = state32.parameterDraftsByModel[model.id] || {};
-    return {
-      canonicalModelId: model.id,
-      providerId: state32.selectedProviderId,
-      bindingId: selectedProviderBinding()?.id || "",
-      parameters: activeParameterValuesFor(model, state32.mode, draft2, selectedBindingParameterIds(model.id))
-    };
-  }
-  function appendCanonicalGenerationFields(form, selection) {
-    form.append("canonical_model_id", selection.canonicalModelId);
-    form.append("provider_id", selection.providerId);
-    form.append("binding_id", selection.bindingId);
-    form.append("parameters_json", JSON.stringify(sortedRecord(selection.parameters)));
-  }
-
   // codex_image/webui/frontend/src/execution-summary.ts
   function updateExecutionSummary() {
-    const element3 = document.getElementById("executionSummary");
-    if (!element3) return;
+    const element5 = document.getElementById("executionSummary");
+    if (!element5) return;
     const selection = currentGenerationSelection();
     const { state: state32 } = getLegacyBridge();
     const model = state32.generationCatalog?.models.find((item) => item.id === selection.canonicalModelId);
@@ -39581,11 +40146,11 @@ ${hint}` : hint);
     const pixels = requested === "auto" ? translate("output.sizeAuto") : requested.replace(/^(\d+)x(\d+)$/, "$1 \xD7 $2");
     const size = pixels || String(p["canvas.aspect_ratio"] || "");
     const resolution = pixels ? "" : String(p["output.resolution"] || p["canvas.resolution"] || "");
-    element3.textContent = [translate("ux.execution"), model?.display_name || translate("modelSelection.providerUnavailable"), provider?.name, size, resolution, formatTranslation("ux.imageCount", { count: Number(p["output.count"] || 1) }), p["gpt.background"] === "transparent" ? translate("output.transparentBackground") : ""].filter(Boolean).join(" \xB7 ");
-    element3.title = element3.textContent;
-    element3.dataset.modelId = selection.canonicalModelId;
-    element3.dataset.providerId = selection.providerId;
-    element3.dataset.parameters = JSON.stringify(p);
+    element5.textContent = [translate("ux.execution"), model?.display_name || translate("modelSelection.providerUnavailable"), provider?.name, size, resolution, formatTranslation("ux.imageCount", { count: Number(p["output.count"] || 1) }), p["gpt.background"] === "transparent" ? translate("output.transparentBackground") : ""].filter(Boolean).join(" \xB7 ");
+    element5.title = element5.textContent;
+    element5.dataset.modelId = selection.canonicalModelId;
+    element5.dataset.providerId = selection.providerId;
+    element5.dataset.parameters = JSON.stringify(p);
   }
 
   // codex_image/webui/frontend/src/request-preview.ts
@@ -39762,16 +40327,16 @@ ${hint}` : hint);
   function currentCodexMode() {
     return legacyMethod13("currentCodexMode");
   }
-  function setModeSpecificElementVisibility(element3, visible) {
-    if (!element3) return;
-    element3.setAttribute("aria-hidden", visible ? "false" : "true");
+  function setModeSpecificElementVisibility(element5, visible) {
+    if (!element5) return;
+    element5.setAttribute("aria-hidden", visible ? "false" : "true");
     if (visible) {
-      element3.classList.remove("hidden");
-      element3.classList.remove("mode-collapsed");
+      element5.classList.remove("hidden");
+      element5.classList.remove("mode-collapsed");
       return;
     }
-    element3.classList.add("mode-collapsed");
-    element3.classList.add("hidden");
+    element5.classList.add("mode-collapsed");
+    element5.classList.add("hidden");
   }
   function applyModeSettingsVisibility(visibility) {
     const showModeSettings = visibility.showMainModel;
@@ -40354,11 +40919,11 @@ ${hint}` : hint);
     );
   }
   function option(value, label, selected) {
-    const element3 = document.createElement("option");
-    element3.value = value;
-    element3.textContent = label;
-    element3.selected = selected;
-    return element3;
+    const element5 = document.createElement("option");
+    element5.value = value;
+    element5.textContent = label;
+    element5.selected = selected;
+    return element5;
   }
   function openProviderBindingCard(container, bindingId, options = {}) {
     if (!container) return;
@@ -41043,8 +41608,8 @@ ${hint}` : hint);
     preview.removeAttribute("role");
     preview.style.width = `${rect.width}px`;
     preview.style.height = `${rect.height}px`;
-    preview.querySelectorAll("button, [tabindex]").forEach((element3) => {
-      element3.setAttribute("tabindex", "-1");
+    preview.querySelectorAll("button, [tabindex]").forEach((element5) => {
+      element5.setAttribute("tabindex", "-1");
     });
     layer.append(preview);
     document.body.append(layer);
@@ -41058,8 +41623,8 @@ ${hint}` : hint);
   }
   function rowAtPoint(clientX, clientY) {
     if (!providerList) return null;
-    for (const element3 of document.elementsFromPoint(clientX, clientY)) {
-      const row = element3.closest(".api-provider-sort-row[data-api-provider-id]");
+    for (const element5 of document.elementsFromPoint(clientX, clientY)) {
+      const row = element5.closest(".api-provider-sort-row[data-api-provider-id]");
       if (row && row.parentElement === providerList && row !== dragSession?.row) return row;
     }
     return null;
@@ -41615,21 +42180,21 @@ ${hint}` : hint);
     { id: "purple", color: "#8057B0", background: "neutral" },
     { id: "amber", color: "#A66D25", background: "warm" }
   ];
-  var element = (id) => document.getElementById(id);
+  var element3 = (id) => document.getElementById(id);
   function feedback(key2 = "") {
-    const status = element("appearanceStatus");
+    const status = element3("appearanceStatus");
     if (status) {
       status.dataset.message = key2;
       status.textContent = key2 ? translate(key2) : "";
     }
   }
   function sync() {
-    const hex = element("appearanceHex");
-    const picker = element("appearanceColor");
+    const hex = element3("appearanceHex");
+    const picker = element3("appearanceColor");
     if (!hex || !picker) return;
     hex.value = picker.value = draft.primary;
     hex.setAttribute("aria-invalid", "false");
-    element("appearanceApply").disabled = false;
+    element3("appearanceApply").disabled = false;
     document.querySelectorAll("[data-appearance-preset]").forEach((button) => {
       const preset = presets.find((p) => p.id === button.dataset.appearancePreset);
       button.setAttribute("aria-pressed", String(preset.id === "default" ? draft.preset === "default" : draft.preset === "custom" && draft.primary === preset.color && draft.background === preset.background));
@@ -41660,10 +42225,10 @@ ${hint}` : hint);
   }
   function closeAppearancePopover(restoreFocus = true) {
     openRequest++;
-    const popover = element("appearancePopover");
+    const popover = element3("appearancePopover");
     if (!popover || popover.hidden) return;
     popover.hidden = true;
-    element("appearanceTrigger")?.setAttribute("aria-expanded", "false");
+    element3("appearanceTrigger")?.setAttribute("aria-expanded", "false");
     restoreSavedAppearance();
     if (restoreFocus) {
       const target = returnFocus?.getClientRects().length && !returnFocus.closest(".hidden, [hidden], [inert]") ? returnFocus : document.querySelector(".mobile-more-button");
@@ -41672,9 +42237,9 @@ ${hint}` : hint);
     returnFocus = null;
   }
   function positionPopover() {
-    const popover = element("appearancePopover");
+    const popover = element3("appearancePopover");
     if (!popover || popover.hidden) return;
-    const trigger = element("appearanceTrigger");
+    const trigger = element3("appearanceTrigger");
     const anchor = trigger.getClientRects().length ? trigger : document.querySelector(".mobile-more-button");
     const viewport = window.visualViewport;
     const leftEdge = viewport?.offsetLeft || 0, topEdge = viewport?.offsetTop || 0;
@@ -41698,20 +42263,20 @@ ${hint}` : hint);
     requestAnimationFrame(() => {
       if (request !== openRequest) return;
       restoreSavedAppearance();
-      const trigger = element("appearanceTrigger");
+      const trigger = element3("appearanceTrigger");
       returnFocus = trigger.getClientRects().length ? trigger : document.querySelector(".mobile-more-button");
-      element("appearancePopover").hidden = false;
+      element3("appearancePopover").hidden = false;
       trigger.setAttribute("aria-expanded", "true");
       positionPopover();
-      element("appearancePopover").querySelector('[data-appearance-preset][aria-pressed="true"]')?.focus({ preventScroll: true });
-      if (!element("appearancePopover").contains(document.activeElement)) element("appearanceHex").focus({ preventScroll: true });
+      element3("appearancePopover").querySelector('[data-appearance-preset][aria-pressed="true"]')?.focus({ preventScroll: true });
+      if (!element3("appearancePopover").contains(document.activeElement)) element3("appearanceHex").focus({ preventScroll: true });
     });
   }
   function initAppearanceSettings(closeSettings) {
     if (initialized3) return;
-    const panel = element("systemSettingsLanguagePanel");
+    const panel = element3("systemSettingsLanguagePanel");
     const scroll = panel?.querySelector(".system-settings-scroll");
-    const switcher = element("themeSwitcher");
+    const switcher = element3("themeSwitcher");
     if (!panel || !scroll || !switcher) return;
     initialized3 = true;
     const trigger = document.createElement("button");
@@ -41775,11 +42340,11 @@ ${hint}` : hint);
       trigger.title = translate("appearance.open");
       trigger.setAttribute("aria-label", translate("appearance.open"));
       shortcut.textContent = translate("appearance.open");
-      element("appearanceColor").setAttribute("aria-label", translate("appearance.primary"));
-      element("appearanceClose").setAttribute("aria-label", translate("action.close"));
-      element("appearanceReset").setAttribute("aria-label", translate("appearance.reset"));
-      element("appearanceReset").title = translate("appearance.reset");
-      feedback(element("appearanceStatus")?.dataset.message);
+      element3("appearanceColor").setAttribute("aria-label", translate("appearance.primary"));
+      element3("appearanceClose").setAttribute("aria-label", translate("action.close"));
+      element3("appearanceReset").setAttribute("aria-label", translate("appearance.reset"));
+      element3("appearanceReset").title = translate("appearance.reset");
+      feedback(element3("appearanceStatus")?.dataset.message);
       positionPopover();
     };
     localize();
@@ -41797,7 +42362,7 @@ ${hint}` : hint);
     shortcut.addEventListener("click", () => {
       if (closeSettings()) openPopover();
     });
-    element("appearanceReset").addEventListener("click", () => {
+    element3("appearanceReset").addEventListener("click", () => {
       draft = { ...DEFAULT_APPEARANCE };
       preview();
     });
@@ -41812,16 +42377,16 @@ ${hint}` : hint);
       } else return;
       preview();
     });
-    element("appearanceColor").addEventListener("input", (event) => {
+    element3("appearanceColor").addEventListener("input", (event) => {
       draft = { ...draft, preset: "custom", primary: event.target.value.toUpperCase() };
       preview();
     });
-    element("appearanceHex").addEventListener("input", (event) => {
+    element3("appearanceHex").addEventListener("input", (event) => {
       draftEdited = true;
       const input = event.target;
       const valid = /^#[\da-f]{6}$/i.test(input.value);
       input.setAttribute("aria-invalid", String(!valid));
-      element("appearanceApply").disabled = !valid;
+      element3("appearanceApply").disabled = !valid;
       if (!valid) {
         feedback("appearance.invalid");
         return;
@@ -41829,9 +42394,9 @@ ${hint}` : hint);
       draft = { ...draft, preset: "custom", primary: input.value.toUpperCase() };
       preview();
     });
-    element("appearanceCancel").addEventListener("click", () => closeAppearancePopover());
-    element("appearanceClose").addEventListener("click", () => closeAppearancePopover());
-    element("appearanceApply").addEventListener("click", () => {
+    element3("appearanceCancel").addEventListener("click", () => closeAppearancePopover());
+    element3("appearanceClose").addEventListener("click", () => closeAppearancePopover());
+    element3("appearanceApply").addEventListener("click", () => {
       if (!persistAppearance(draft)) {
         feedback("appearance.saveFailed");
         return;
@@ -42249,8 +42814,8 @@ ${hint}` : hint);
     }
     return `${rootName} ${Date.now()}`;
   }
-  function setElementText(element3, value) {
-    if (element3) element3.textContent = String(value ?? "");
+  function setElementText(element5, value) {
+    if (element5) element5.textContent = String(value ?? "");
   }
   function setApiKeyRevealVisible(visible) {
     if (!els11.apiKey) return;
@@ -45188,31 +45753,31 @@ ${hint}` : hint);
     const value = getLegacyBridge().els[name];
     return value instanceof HTMLInputElement ? value : null;
   }
-  function setHidden(element3, hidden) {
-    if (!element3) return;
-    element3.classList.toggle("hidden", hidden);
-    element3.hidden = hidden;
-    element3.setAttribute("aria-hidden", hidden ? "true" : "false");
+  function setHidden(element5, hidden) {
+    if (!element5) return;
+    element5.classList.toggle("hidden", hidden);
+    element5.hidden = hidden;
+    element5.setAttribute("aria-hidden", hidden ? "true" : "false");
   }
   function setStatus11(name, message, state32 = "") {
-    const element3 = bridgeElement(name);
-    if (!element3) return;
-    element3.textContent = message;
-    element3.classList.toggle("ok", state32 === "ok");
-    element3.classList.toggle("error", state32 === "error");
-    element3.classList.toggle("running", state32 === "running");
+    const element5 = bridgeElement(name);
+    if (!element5) return;
+    element5.textContent = message;
+    element5.classList.toggle("ok", state32 === "ok");
+    element5.classList.toggle("error", state32 === "error");
+    element5.classList.toggle("running", state32 === "running");
   }
   function setProgress(name, value) {
-    const element3 = bridgeElement(name);
-    if (!element3) return;
+    const element5 = bridgeElement(name);
+    if (!element5) return;
     const visible = value !== null;
-    element3.classList.toggle("hidden", !visible);
-    element3.classList.toggle("is-indeterminate", value === -1);
+    element5.classList.toggle("hidden", !visible);
+    element5.classList.toggle("is-indeterminate", value === -1);
     if (!visible) return;
     const percent = value === -1 ? 0 : Math.max(0, Math.min(100, Math.round(value)));
-    element3.style.setProperty("--user-config-progress", `${percent}%`);
-    element3.setAttribute("aria-valuenow", String(percent));
-    element3.setAttribute("aria-busy", value === -1 ? "true" : "false");
+    element5.style.setProperty("--user-config-progress", `${percent}%`);
+    element5.setAttribute("aria-valuenow", String(percent));
+    element5.setAttribute("aria-busy", value === -1 ? "true" : "false");
   }
   function setActionPriority(button, priority) {
     if (!button) return;
@@ -48902,8 +49467,8 @@ ${hint}` : hint);
     els18.mentionSuggest.style.removeProperty("--mention-width");
     els18.mentionSuggest.style.removeProperty("--prompt-popover-max-height");
   }
-  function setCaretToEnd(element3) {
-    legacyMethod22("setCaretToEnd", element3);
+  function setCaretToEnd(element5) {
+    legacyMethod22("setCaretToEnd", element5);
   }
   function initPromptGalleryChipsFeature() {
     Object.assign(getLegacyBridge().methods, {
@@ -49389,10 +49954,10 @@ ${hint}` : hint);
       els20.promptEditor.textContent = "";
     }
   }
-  function setCaretToEnd2(element3) {
-    element3.focus();
+  function setCaretToEnd2(element5) {
+    element5.focus();
     const range = document.createRange();
-    range.selectNodeContents(element3);
+    range.selectNodeContents(element5);
     range.collapse(false);
     const selection = window.getSelection();
     if (!selection) return;
@@ -49623,8 +50188,8 @@ ${hint}` : hint);
     return Boolean(els22.promptFindPanel && !els22.promptFindPanel.classList.contains("hidden"));
   }
   function isNodeInsidePromptAtomicChip(node) {
-    const element3 = node.nodeType === PROMPT_FIND_ELEMENT_NODE ? node : node.parentElement || (node.parentNode?.nodeType === PROMPT_FIND_ELEMENT_NODE ? node.parentNode : null);
-    return Boolean(element3?.closest(".gallery-chip, .color-chip, .prompt-snippet-chip"));
+    const element5 = node.nodeType === PROMPT_FIND_ELEMENT_NODE ? node : node.parentElement || (node.parentNode?.nodeType === PROMPT_FIND_ELEMENT_NODE ? node.parentNode : null);
+    return Boolean(element5?.closest(".gallery-chip, .color-chip, .prompt-snippet-chip"));
   }
   function collectPromptFindMatchesFromNode(node, needle, matches) {
     if (isNodeInsidePromptAtomicChip(node)) return;
@@ -49943,7 +50508,7 @@ ${hint}` : hint);
   }
 
   // codex_image/webui/frontend/src/output-settings-lock.ts
-  var STORAGE_KEY = "codex-image-output-settings-lock-v1";
+  var STORAGE_KEY2 = "codex-image-output-settings-lock-v1";
   var initialized6 = false;
   var locked = false;
   var lockedSnapshot = null;
@@ -50114,10 +50679,10 @@ ${hint}` : hint);
     });
   }
   function createElement(tag, className, text = "") {
-    const element3 = document.createElement(tag);
-    element3.className = className;
-    if (text) element3.textContent = text;
-    return element3;
+    const element5 = document.createElement(tag);
+    element5.className = className;
+    if (text) element5.textContent = text;
+    return element5;
   }
   function createSummaryCard(label) {
     const card = createElement("div", "output-settings-summary-card");
@@ -50224,16 +50789,16 @@ ${hint}` : hint);
   function persistLockState() {
     try {
       if (!locked || !lockedSnapshot) {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(STORAGE_KEY2);
         return;
       }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ locked: true, snapshot: lockedSnapshot }));
+      localStorage.setItem(STORAGE_KEY2, JSON.stringify({ locked: true, snapshot: lockedSnapshot }));
     } catch {
     }
   }
   function readPersistedLockState() {
     try {
-      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      const value = JSON.parse(localStorage.getItem(STORAGE_KEY2) || "null");
       return value?.locked && value?.snapshot ? normalizeOutputSettingsSnapshot(value.snapshot) : null;
     } catch {
       return null;
@@ -51692,7 +52257,7 @@ ${hint}` : hint);
       if (existingCards.length > tasks.length) return false;
       const existingCardsMatch = existingCards.every((card, index) => String(card.dataset.taskId || "") === String(tasks[index]?.task_id || ""));
       if (!existingCardsMatch) return false;
-      body.querySelectorAll("[data-load-more-task-group]").forEach((element3) => element3.remove());
+      body.querySelectorAll("[data-load-more-task-group]").forEach((element5) => element5.remove());
       body.dataset.renderComplete = "false";
       scheduleExpandedTaskGroupItemsRender2(group, normalizedActiveGroupKey, {
         startIndex: existingCards.length,
@@ -52036,9 +52601,9 @@ ${hint}` : hint);
       els24.taskSearch.value = "";
       changed = true;
     }
-    [els24.taskStatusFilter, els24.taskRatioFilter, els24.taskOrientationFilter, els24.taskPromptFidelityFilter, els24.taskResolutionFilter].filter(Boolean).forEach((element3) => {
-      if (element3.value) {
-        element3.value = "";
+    [els24.taskStatusFilter, els24.taskRatioFilter, els24.taskOrientationFilter, els24.taskPromptFidelityFilter, els24.taskResolutionFilter].filter(Boolean).forEach((element5) => {
+      if (element5.value) {
+        element5.value = "";
         changed = true;
       }
     });
@@ -52138,7 +52703,7 @@ ${hint}` : hint);
   function taskGroupCount2(...args) {
     return legacyMethod30("taskGroupCount", ...args);
   }
-  function element2(node) {
+  function element4(node) {
     return node instanceof HTMLElement ? node : null;
   }
   function latestTaskNavigationTargetGroupKey(visibleGroupKeys) {
@@ -52196,7 +52761,7 @@ ${hint}` : hint);
     let remainingFrames = 4;
     const pinToTop = () => {
       if (token !== latestTaskNavigationPinToken || state19.latestTaskKeepAtTop !== true) return;
-      const sidebarContent = element2(els25.sidebarContent);
+      const sidebarContent = element4(els25.sidebarContent);
       if (sidebarContent) sidebarContent.scrollTop = 0;
       remainingFrames -= 1;
       if (remainingFrames > 0) {
@@ -52216,7 +52781,7 @@ ${hint}` : hint);
     latestTaskNavigationPinToken += 1;
   }
   function handleLatestTaskNavigationKeydown(event) {
-    const sidebarContent = element2(els25.sidebarContent);
+    const sidebarContent = element4(els25.sidebarContent);
     if (!sidebarContent || !(document.activeElement instanceof Node)) return;
     if (!sidebarContent.contains(document.activeElement)) return;
     if (!["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) return;
@@ -52304,7 +52869,7 @@ ${hint}` : hint);
     return true;
   }
   function scrollExpandedTaskGroupToTop2(behavior = "smooth") {
-    const sidebarContent = element2(els25.sidebarContent);
+    const sidebarContent = element4(els25.sidebarContent);
     if (!sidebarContent) return;
     sidebarContent.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : behavior });
   }
@@ -52327,10 +52892,10 @@ ${hint}` : hint);
     );
   }
   function latestTaskNavigationCurrentViewModel() {
-    const sidebarContent = element2(els25.sidebarContent);
+    const sidebarContent = element4(els25.sidebarContent);
     const renderInProgress = taskHistoryRenderInProgress();
     const currentGroupKey = currentTaskHistoryGroupKey();
-    const firstTask = element2(els25.taskList?.querySelector?.(".task-group-items-expanded .task-card[data-task-id]:not(.task-card-removing)"));
+    const firstTask = element4(els25.taskList?.querySelector?.(".task-group-items-expanded .task-card[data-task-id]:not(.task-card-removing)"));
     return latestTaskNavigationViewModel({
       scrollTop: sidebarContent?.scrollTop || 0,
       scrollHeight: sidebarContent?.scrollHeight || 0,
@@ -52359,8 +52924,8 @@ ${hint}` : hint);
     if (header instanceof HTMLElement) header.focus({ preventScroll: true });
   }
   function refreshLatestTaskNavigation() {
-    const button = element2(els25.taskLatestButton);
-    const badge = element2(els25.taskLatestBadge);
+    const button = element4(els25.taskLatestButton);
+    const badge = element4(els25.taskLatestBadge);
     if (!button) return;
     const viewModel = latestTaskNavigationCurrentViewModel();
     if (viewModel.shouldClearNotice && state19.latestTaskNoticeCount) {
@@ -52451,8 +53016,8 @@ ${hint}` : hint);
   `;
   }
   function renderTaskHistoryAnchors2(layout) {
-    const topAnchors = element2(els25.taskHistoryTopAnchors);
-    const bottomAnchors = element2(els25.taskHistoryBottomAnchors);
+    const topAnchors = element4(els25.taskHistoryTopAnchors);
+    const bottomAnchors = element4(els25.taskHistoryBottomAnchors);
     if (!topAnchors || !bottomAnchors) return;
     topAnchors.innerHTML = layout.top.map((group) => anchorRowHtml(group)).join("");
     bottomAnchors.innerHTML = layout.bottom.map((group) => anchorRowHtml(group)).join("");
@@ -52461,7 +53026,7 @@ ${hint}` : hint);
     applyImmediateAnchorSelection(layout.expandedKey || "");
   }
   function taskHistoryLayoutElements() {
-    const shell = element2(els25.taskHistoryShell);
+    const shell = element4(els25.taskHistoryShell);
     if (!shell) return [];
     return Array.from(
       shell.querySelectorAll(".task-history-anchor-row, .task-group-header-split")
@@ -54466,7 +55031,7 @@ ${hint}` : hint);
     return [els29.taskStatusFilter, els29.taskRatioFilter, els29.taskOrientationFilter, els29.taskPromptFidelityFilter, els29.taskResolutionFilter].filter(Boolean);
   }
   function activeTaskFilterCount() {
-    return taskFilterControls().filter((element3) => Boolean(element3.value)).length;
+    return taskFilterControls().filter((element5) => Boolean(element5.value)).length;
   }
   function taskSearchHasValue() {
     return Boolean(String(state24.taskSearchQuery || "").trim());
@@ -54524,9 +55089,9 @@ ${hint}` : hint);
   }
   function clearTaskFilters(options = {}) {
     let changed = false;
-    taskFilterControls().forEach((element3) => {
-      if (element3.value) {
-        element3.value = "";
+    taskFilterControls().forEach((element5) => {
+      if (element5.value) {
+        element5.value = "";
         changed = true;
       }
     });
@@ -54617,8 +55182,8 @@ ${hint}` : hint);
     els29.taskFilterButton?.addEventListener("click", toggleTaskFilterPopover);
     els29.taskFilterClearButton?.addEventListener("click", () => clearTaskFilters());
     document.addEventListener("keydown", handleTaskFilterKeydown);
-    taskFilterControls().forEach((element3) => {
-      element3.addEventListener("change", () => {
+    taskFilterControls().forEach((element5) => {
+      element5.addEventListener("change", () => {
         updateTaskFilterSummary();
         renderTasks6();
       });
@@ -60931,6 +61496,7 @@ ${hint}` : hint);
   initMobileWorkspace();
   initMobileShell();
   initCompactComposerLayout();
+  initStudioComposer();
   initOverlayFocus();
   window.__codexImageWebUI?.boot();
 })();

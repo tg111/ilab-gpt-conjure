@@ -2244,7 +2244,8 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.dashboard\s*\{[^}]*margin-inline:\s*auto")
         self.assertRegex(styles, r"\.dashboard\s*\{[^}]*grid-template-columns:\s*minmax\(520px,\s*760px\)\s+minmax\(520px,\s*1fr\)")
         self.assertRegex(styles, r"\.dashboard\s*\{[^}]*min-height:\s*0")
-        self.assertNotRegex(styles, r"\.dashboard\s*\{[^}]*grid-template-rows:")
+        # The two-column workspace has no rows; only the desktop studio layout stacks stage and composer.
+        self.assertNotRegex(layout, r"\.dashboard\s*\{[^}]*grid-template-rows:")
         self.assertRegex(styles, r"\.dashboard\s*\{[^}]*align-content:\s*safe center")
         self.assertRegex(styles, r"\.dashboard\s*\{[^}]*align-items:\s*stretch")
         self.assertRegex(styles, r"\.controls-col\s*\{[^}]*max-width:\s*760px")
@@ -2297,6 +2298,32 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertRegex(styles, r"\.preview-card img\s*\{[^}]*max-width:\s*100%")
         self.assertRegex(styles, r"\.preview-card img\s*\{[^}]*max-height:\s*100%")
         self.assertNotIn(".preview-col > .panel:last-child", styles)
+
+    def test_desktop_studio_layout_docks_composer_below_results(self) -> None:
+        manifest = json.loads(Path("codex_image/webui/static/styles/manifest.json").read_text(encoding="utf-8"))
+        studio = Path("codex_image/webui/static/styles/85-studio.css").read_text(encoding="utf-8")
+        composer = Path("codex_image/webui/frontend/src/studio-composer.ts").read_text(encoding="utf-8")
+        main = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
+
+        # The studio stylesheet must follow the responsive rules it overrides.
+        self.assertLess(manifest.index("80-utilities-responsive.css"), manifest.index("85-studio.css"))
+        self.assertIn('STUDIO_QUERY = "(min-width: 1181px)"', composer)
+        self.assertIn("initStudioComposer();", main)
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\] \.dashboard\s*\{[^}]*grid-template-rows:\s*minmax\(0,\s*1fr\)\s+auto",
+        )
+        self.assertRegex(studio, r"body\[data-studio\] \.preview-col\s*\{[^}]*grid-row:\s*1")
+        self.assertRegex(studio, r"body\[data-studio\] \.controls-col\s*\{[^}]*grid-row:\s*2")
+        # Parameters stay laid out while closed so segment indicators can measure.
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\] \.controls-col \.output-panel\s*\{[^}]*visibility:\s*hidden",
+        )
+        # Controls are moved back when leaving the desktop width.
+        self.assertIn('document.createComment("studio-run-origin")', composer)
+        self.assertIn("runMarker.replaceWith(runButton)", composer)
+
     def test_main_workspace_uses_theme_background_texture_only(self) -> None:
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")
         dashboard_block = self._extract_css_block(styles, ".dashboard")

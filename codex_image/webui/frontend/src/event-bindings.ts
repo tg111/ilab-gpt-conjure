@@ -14,9 +14,9 @@ async function handleRefreshButtonClick(methods: LegacyMethods): Promise<void> {
 }
 
 function isRunTaskShortcut(event: KeyboardEvent): boolean {
+  // Cmd+Enter on macOS, Ctrl+Enter elsewhere: exactly one of the two.
   return event.key === "Enter"
-    && event.metaKey
-    && !event.ctrlKey
+    && event.metaKey !== event.ctrlKey
     && !event.altKey
     && !event.shiftKey
     && !event.repeat

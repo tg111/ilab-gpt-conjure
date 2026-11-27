@@ -1855,8 +1855,8 @@ console.log(JSON.stringify({{
         for source in (event_source, script):
             self.assertIn("function isRunTaskShortcut", source)
             self.assertIn('event.key === "Enter"', source)
-            self.assertIn("event.metaKey", source)
-            self.assertIn("!event.ctrlKey", source)
+            # Cmd+Enter on macOS, Ctrl+Enter elsewhere; never both modifiers together.
+            self.assertIn("event.metaKey !== event.ctrlKey", source)
             self.assertIn("!event.altKey", source)
             self.assertIn("!event.shiftKey", source)
             self.assertIn("!event.repeat", source)
