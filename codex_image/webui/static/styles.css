@@ -14588,7 +14588,7 @@ body[data-studio] .controls-col {
   max-height: none;
   align-self: end;
   width: 100%;
-  max-width: 980px;
+  max-width: 1160px;
   margin-inline: auto;
   gap: 0;
   padding: 10px 12px 10px;
@@ -14899,12 +14899,14 @@ body[data-studio] .compact-preview-jump {
   display: none;
 }
 
-/* Clear / find / recent templates / template library: icon buttons inside the pill row. */
+/* Clear / find / recent templates / template library: icon buttons inside the pill row.
+   When the row runs short the recent-template chips give way first (whole chips,
+   never squeezed), then the parameter pills; the buttons themselves never shrink. */
 body[data-studio] .studio-pill-bar .prompt-template-row {
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 0 1 auto;
+  flex: 0 100 auto;
   min-width: 0;
   min-height: 0;
   margin: 0;
@@ -14923,6 +14925,18 @@ body[data-studio] .studio-pill-bar .prompt-footer {
   min-height: 0;
 }
 
+body[data-studio] .studio-pill-bar .prompt-footer,
+body[data-studio] .studio-pill-bar .prompt-footer > .ghost-button,
+body[data-studio] .studio-pill-bar .prompt-template-entry {
+  flex: 0 0 auto;
+}
+
+/* Never narrower than the buttons plus one chip, so nothing slides under. */
+body[data-studio] .studio-pill-bar .prompt-template-row,
+body[data-studio] .studio-pill-bar .prompt-template-recent-cell {
+  min-width: auto;
+}
+
 body[data-studio] .studio-pill-bar .prompt-footer > .ghost-button,
 body[data-studio] .studio-pill-bar .prompt-template-entry .prompt-template-button {
   width: 32px;
@@ -14937,11 +14951,39 @@ body[data-studio] .studio-pill-bar .prompt-template-button span {
   display: none;
 }
 
+/* Chips that do not fit wrap onto a second line, which the fixed height hides. */
 body[data-studio] .studio-pill-bar .prompt-template-recent-dock {
   flex: 0 1 auto;
-  min-width: 0;
-  max-width: 220px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  gap: 8px 4px;
+  /* Room for one whole chip at least; below that the bar hides the dock. */
+  min-width: 88px;
+  max-width: 280px;
+  height: 28px;
+  min-height: 0;
   overflow: hidden;
+}
+
+body[data-studio] .studio-pill-bar .prompt-template-recent-chip {
+  flex: 0 0 auto;
+  height: 28px;
+  min-height: 0;
+  max-width: 88px;
+  padding: 0 9px;
+  font-weight: 600;
+}
+
+/* Too narrow for even one readable chip: the template library keeps a "recent" filter. */
+.studio-pill-bar {
+  container: studio-pill-bar / inline-size;
+}
+
+@container studio-pill-bar (max-width: 900px) {
+  body[data-studio] .studio-pill-bar .prompt-template-recent-dock {
+    display: none;
+  }
 }
 
 /* Finding keeps the buttons; the find/replace fields open above the composer. */
@@ -14977,7 +15019,8 @@ body[data-studio] .studio-pill-bar .prompt-find-panel:not(.hidden) {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex: 1 1 auto;
+  /* Parameters are never cut: the model pill and recent templates give way instead. */
+  flex: 1 0 auto;
   min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
@@ -15029,7 +15072,10 @@ body[data-studio] .studio-pill-bar .prompt-find-panel:not(.hidden) {
   font-weight: 500;
 }
 
+/* Shrinks (the provider name truncates) before the parameter pills do. */
 .studio-model-pill {
+  flex: 0 3 auto;
+  min-width: 140px;
   max-width: 360px;
   padding-left: 8px;
   border-color: color-mix(in srgb, var(--primary) 45%, var(--line));

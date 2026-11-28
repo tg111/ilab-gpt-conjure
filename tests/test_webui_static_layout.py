@@ -2345,6 +2345,12 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("uploadSource.before(galleryButton)", composer)
         # One menu row per model; extra providers are chips on that row.
         self.assertIn('element("div", "studio-provider-chips")', composer)
+        # A short pill row drops whole recent-template chips instead of squeezing them.
+        dock = self._extract_css_block(studio, "body[data-studio] .studio-pill-bar .prompt-template-recent-dock")
+        self.assertIn("flex-wrap: wrap", dock)
+        self.assertIn("height: 28px", dock)
+        self.assertIn("min-width: 88px", dock)
+        self.assertRegex(studio, r"\.studio-parameter-pills \{[^}]*flex: 1 0 auto")
         self.assertIn("preferredEntry(entries", composer)
         self.assertIn("galleryButton.remove()", composer)
         # Controls are moved back when leaving the desktop width.
