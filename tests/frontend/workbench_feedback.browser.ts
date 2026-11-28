@@ -162,7 +162,7 @@ async function run() {
     }
     card.className = savedClass;
     methods.openApiSettingsModal!(); await pause();
-    for (const selector of ["#sortApiProvidersButton", "#editApiProviderButton", "#copyApiProviderButton", "#deleteApiProviderButton"]) {
+    for (const selector of ["#sortApiProvidersButton", "#copyApiProviderButton", "#deleteApiProviderButton"]) {
       check(`${theme} ${selector}: same opaque secondary surface`, buttonStates(selector) === common && w.getComputedStyle(find(selector)).opacity === "1");
     }
     find("#systemSettingsNetworkTab").click();

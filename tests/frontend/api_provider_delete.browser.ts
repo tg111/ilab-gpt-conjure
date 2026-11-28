@@ -104,10 +104,11 @@ async function run() {
   check("successful delete is persisted with complete defaults", ids(saved) === "b,c" && saved.default_provider_by_model["nano-banana-2"] === "b" && saved.default_provider_by_model["gpt-image-2"] === "b");
   check("remaining secrets stay saved and absent from browser inputs", saved.providers.every((p: any) => p.api_key_set && !p.api_key) && !find<HTMLInputElement>("#apiKey").value);
   check("generation selection moves off deleted supplier", state.selectedProviderId === "b");
+  const generatingBefore = state.selectedProviderId;
   methods.selectApiProvider!("c");
-  await until(() => find("#apiSettingsStatus").textContent === "" && state.apiSettings.active_provider_id === "c", "selection changed");
-  await until(async () => (await readSaved()).active_provider_id === "c" && !panel.hasAttribute("aria-busy"), "selection saved");
-  check("switching suppliers after deletion persists without mapping errors", (await readSaved()).active_provider_id === "c" && !find("#apiSettingsStatus").classList.contains("error"));
+  await until(() => state.apiSettings.active_provider_id === "c" && state.apiProviderEditingId === "c", "selection changed");
+  // Opening a provider's form neither saves nor switches the generation provider.
+  check("opening another supplier after deletion keeps generation and shows no error", state.selectedProviderId === generatingBefore && !find("#apiSettingsStatus").classList.contains("error"));
   await confirmDelete();
   await until(() => ids(state.apiSettings) === "b" && !panel.hasAttribute("aria-busy"), "second deletion committed");
   saved = await readSaved();

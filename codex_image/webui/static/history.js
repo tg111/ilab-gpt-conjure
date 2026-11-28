@@ -511,6 +511,8 @@
     "studio.recipeDelete": "Delete recipe",
     "studio.recipeDeleteNamed": "Delete recipe: {name}",
     "studio.recipeUnavailable": "This recipe\u2019s model or provider is no longer available",
+    "studio.collapseSidebar": "Collapse sidebar",
+    "studio.expandSidebar": "Expand sidebar",
     "ux.execution": "Next generation",
     "ux.imageCount": "{count} image(s)",
     "ux.tasks": "Tasks",
@@ -1525,6 +1527,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} is handled by more than one binding.",
     "apiSettings.newProviderAction": "New provider",
     "apiSettings.copyProvider": "Copy",
+    "apiSettings.revertChanges": "Revert changes",
+    "apiSettings.discardChangesTitle": "Discard unsaved changes?",
+    "apiSettings.discardChangesMessage": "This provider has unsaved changes. Continuing will lose them.",
+    "apiSettings.discardChanges": "Discard",
+    "apiSettings.discoverModels": "Fetch available models",
+    "apiSettings.addModelBindingManually": "Add manually",
+    "apiSettings.discoverySummary": "Connected. Found {count} models, {matched} recognized. Check the ones to use:",
+    "apiSettings.discoveryNoMatch": "Connected. Found {count} models, but none were recognized. Pick a model for any of them below.",
+    "apiSettings.discoveryAdded": "added",
+    "apiSettings.discoveryReplaces": "replaces current",
+    "apiSettings.discoveryOthers": "{count} other models",
+    "apiSettings.discoveryChooseModel": "Choose model",
+    "apiSettings.discoveryAddSelected": "Add selected ({count})",
+    "apiSettings.discoveryClose": "Close",
+    "apiSettings.discoveryFilter": "Filter models",
+    "apiSettings.discoveryApplied": "Added {count} models. Save to apply.",
     "apiSettings.copyProviderName": "{name} Copy",
     "apiSettings.copyProviderStatus": "Provider copied with its saved key. Edit the name, model, or replace the key before saving.",
     "apiSettings.copyProviderWithoutKeyStatus": "Provider copied. Edit the name, model, or add an API key before saving.",
@@ -1543,6 +1561,7 @@
     "apiSettings.keyNotSet": "API key not set",
     "apiSettings.showApiKey": "Show API key",
     "apiSettings.hideApiKey": "Hide API key",
+    "apiSettings.revealKeyFailed": "Couldn't load the saved API key. Try again.",
     "apiSettings.editProvider": "Edit provider",
     "apiSettings.newProviderTitle": "New provider",
     "ux.viewPreview": "View preview",
@@ -1553,7 +1572,7 @@
     "apiSettings.deleteProviderMessage": 'Delete "{provider}"?',
     "apiSettings.deleteProviderDetail": "This removes it from the provider list and autosaves it to the backend.",
     "apiSettings.loadFailed": "Failed to load API settings",
-    "apiSettings.savedKeyPlaceholder": "API key is saved on the backend. Enter a new key to replace it.",
+    "apiSettings.savedKeyPlaceholder": "API key saved. Click the eye to view it, or type a new key to replace it.",
     "apiSettings.apiKeyRequired": "Enter an API key before saving this provider.",
     "apiSettings.originChangeTitle": "\u26A0\uFE0F Base URL origin changed",
     "apiSettings.originChangeMessage": "Keeping the existing key will send it to the new address. A mistyped address could expose the key.",
@@ -2661,6 +2680,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} wird von mehreren Zuordnungen abgedeckt.",
     "apiSettings.newProviderAction": "Neuer Anbieter",
     "apiSettings.copyProvider": "Kopieren",
+    "apiSettings.revertChanges": "\xC4nderungen verwerfen",
+    "apiSettings.discardChangesTitle": "Ungespeicherte \xC4nderungen verwerfen?",
+    "apiSettings.discardChangesMessage": "Dieser Anbieter hat ungespeicherte \xC4nderungen. Wenn du fortf\xE4hrst, gehen sie verloren.",
+    "apiSettings.discardChanges": "Verwerfen",
+    "apiSettings.discoverModels": "Verf\xFCgbare Modelle abrufen",
+    "apiSettings.addModelBindingManually": "Manuell hinzuf\xFCgen",
+    "apiSettings.discoverySummary": "Verbunden. {count} Modelle gefunden, {matched} erkannt. W\xE4hle die gew\xFCnschten aus:",
+    "apiSettings.discoveryNoMatch": "Verbunden. {count} Modelle gefunden, aber keines erkannt. Unten kannst du ein Modell zuordnen.",
+    "apiSettings.discoveryAdded": "hinzugef\xFCgt",
+    "apiSettings.discoveryReplaces": "ersetzt vorhandenes",
+    "apiSettings.discoveryOthers": "{count} weitere Modelle",
+    "apiSettings.discoveryChooseModel": "Modell w\xE4hlen",
+    "apiSettings.discoveryAddSelected": "Auswahl hinzuf\xFCgen ({count})",
+    "apiSettings.discoveryClose": "Schlie\xDFen",
+    "apiSettings.discoveryFilter": "Modelle filtern",
+    "apiSettings.discoveryApplied": "{count} Modelle hinzugef\xFCgt. Zum \xDCbernehmen speichern.",
     "apiSettings.copyProviderName": "{name} Kopie",
     "apiSettings.copyProviderStatus": "Der Anbieter hat mit seinem gespeicherten Schl\xFCssel kopiert. Bearbeiten Sie vor dem Speichern den Namen, das Modell oder ersetzen Sie den Schl\xFCssel.",
     "apiSettings.copyProviderWithoutKeyStatus": "Anbieter kopiert. Bearbeiten Sie vor dem Speichern den Namen und das Modell oder f\xFCgen Sie einen API-Schl\xFCssel hinzu.",
@@ -2681,6 +2716,7 @@
     "apiSettings.keyNotSet": "Schl\xFCssel API nicht gesetzt",
     "apiSettings.showApiKey": "API-Key anzeigen",
     "apiSettings.hideApiKey": "API-Key ausblenden",
+    "apiSettings.revealKeyFailed": "Der gespeicherte API-Schl\xFCssel konnte nicht geladen werden. Bitte erneut versuchen.",
     "apiSettings.editProvider": "Anbieter bearbeiten",
     "apiSettings.newProviderTitle": "Neuer Anbieter",
     "apiSettings.finishEditFirst": "Speichern oder brechen Sie zun\xE4chst die aktuelle Anbieterbearbeitung ab",
@@ -2989,6 +3025,8 @@
     "studio.recipeDelete": "Rezept l\xF6schen",
     "studio.recipeDeleteNamed": "Rezept l\xF6schen: {name}",
     "studio.recipeUnavailable": "Modell oder Anbieter dieses Rezepts ist nicht mehr verf\xFCgbar",
+    "studio.collapseSidebar": "Seitenleiste einklappen",
+    "studio.expandSidebar": "Seitenleiste ausklappen",
     "ux.execution": "N\xE4chste Generierung",
     "ux.historyDraftRestoreFailed": "Entwurf konnte nicht wiederhergestellt werden. Die tempor\xE4re Kopie bleibt erhalten. Seite neu laden und erneut versuchen.",
     "ux.historyDraftSaveFailed": "Entwurf konnte nicht gesichert werden. Sie befinden sich weiterhin auf der Generierungsseite. Erneut versuchen.",
@@ -3954,6 +3992,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} est\xE1 asignado a m\xE1s de una vinculaci\xF3n.",
     "apiSettings.newProviderAction": "Nuevo proveedor",
     "apiSettings.copyProvider": "Copiar",
+    "apiSettings.revertChanges": "Deshacer cambios",
+    "apiSettings.discardChangesTitle": "\xBFDescartar los cambios sin guardar?",
+    "apiSettings.discardChangesMessage": "Este proveedor tiene cambios sin guardar. Si contin\xFAas, se perder\xE1n.",
+    "apiSettings.discardChanges": "Descartar",
+    "apiSettings.discoverModels": "Obtener modelos disponibles",
+    "apiSettings.addModelBindingManually": "A\xF1adir manualmente",
+    "apiSettings.discoverySummary": "Conectado. {count} modelos encontrados, {matched} reconocidos. Marca los que quieras usar:",
+    "apiSettings.discoveryNoMatch": "Conectado. {count} modelos encontrados, ninguno reconocido. Puedes asignar uno abajo.",
+    "apiSettings.discoveryAdded": "a\xF1adido",
+    "apiSettings.discoveryReplaces": "reemplaza el actual",
+    "apiSettings.discoveryOthers": "{count} modelos m\xE1s",
+    "apiSettings.discoveryChooseModel": "Elegir modelo",
+    "apiSettings.discoveryAddSelected": "A\xF1adir selecci\xF3n ({count})",
+    "apiSettings.discoveryClose": "Cerrar",
+    "apiSettings.discoveryFilter": "Filtrar modelos",
+    "apiSettings.discoveryApplied": "{count} modelos a\xF1adidos. Guarda para aplicar.",
     "apiSettings.copyProviderName": "{name} Copiar",
     "apiSettings.copyProviderStatus": "Proveedor copiado con su clave guardada. Edite el nombre, modelo o reemplace la clave antes de guardar.",
     "apiSettings.copyProviderWithoutKeyStatus": "Proveedor copiado. Edite el nombre, modelo o agregue una clave API antes de guardar.",
@@ -3974,6 +4028,7 @@
     "apiSettings.keyNotSet": "API clave no configurada",
     "apiSettings.showApiKey": "Mostrar API Key",
     "apiSettings.hideApiKey": "Ocultar API Key",
+    "apiSettings.revealKeyFailed": "No se pudo cargar la clave API guardada. Int\xE9ntalo de nuevo.",
     "apiSettings.editProvider": "Editar proveedor",
     "apiSettings.newProviderTitle": "Nuevo proveedor",
     "apiSettings.finishEditFirst": "Guarde o cancele primero la edici\xF3n del proveedor actual",
@@ -4282,6 +4337,8 @@
     "studio.recipeDelete": "Eliminar receta",
     "studio.recipeDeleteNamed": "Eliminar receta: {name}",
     "studio.recipeUnavailable": "El modelo o proveedor de esta receta ya no est\xE1 disponible",
+    "studio.collapseSidebar": "Contraer barra lateral",
+    "studio.expandSidebar": "Expandir barra lateral",
     "ux.execution": "Pr\xF3xima generaci\xF3n",
     "ux.historyDraftRestoreFailed": "No se pudo restaurar el borrador. Se conserva la copia temporal. Recarga la p\xE1gina para reintentarlo.",
     "ux.historyDraftSaveFailed": "No se pudo guardar el borrador. Sigues en la p\xE1gina de generaci\xF3n. Int\xE9ntalo de nuevo.",
@@ -5247,6 +5304,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} correspond \xE0 plusieurs associations.",
     "apiSettings.newProviderAction": "Nouveau fournisseur",
     "apiSettings.copyProvider": "Copier",
+    "apiSettings.revertChanges": "Annuler les modifications",
+    "apiSettings.discardChangesTitle": "Abandonner les modifications ?",
+    "apiSettings.discardChangesMessage": "Ce fournisseur a des modifications non enregistr\xE9es. Elles seront perdues.",
+    "apiSettings.discardChanges": "Abandonner",
+    "apiSettings.discoverModels": "R\xE9cup\xE9rer les mod\xE8les disponibles",
+    "apiSettings.addModelBindingManually": "Ajouter manuellement",
+    "apiSettings.discoverySummary": "Connect\xE9. {count} mod\xE8les trouv\xE9s, {matched} reconnus. Cochez ceux \xE0 utiliser :",
+    "apiSettings.discoveryNoMatch": "Connect\xE9. {count} mod\xE8les trouv\xE9s, aucun reconnu. Vous pouvez en associer ci-dessous.",
+    "apiSettings.discoveryAdded": "ajout\xE9",
+    "apiSettings.discoveryReplaces": "remplace l\u2019actuel",
+    "apiSettings.discoveryOthers": "{count} autres mod\xE8les",
+    "apiSettings.discoveryChooseModel": "Choisir un mod\xE8le",
+    "apiSettings.discoveryAddSelected": "Ajouter la s\xE9lection ({count})",
+    "apiSettings.discoveryClose": "Fermer",
+    "apiSettings.discoveryFilter": "Filtrer les mod\xE8les",
+    "apiSettings.discoveryApplied": "{count} mod\xE8les ajout\xE9s. Enregistrez pour appliquer.",
     "apiSettings.copyProviderName": "{name} Copie",
     "apiSettings.copyProviderStatus": "Fournisseur copi\xE9 avec sa cl\xE9 enregistr\xE9e. Modifiez le nom, le mod\xE8le ou remplacez la cl\xE9 avant de sauvegarder.",
     "apiSettings.copyProviderWithoutKeyStatus": "Fournisseur copi\xE9. Modifiez le nom, le mod\xE8le ou ajoutez une cl\xE9 API avant d'enregistrer.",
@@ -5267,6 +5340,7 @@
     "apiSettings.keyNotSet": "Cl\xE9 API non d\xE9finie",
     "apiSettings.showApiKey": "Afficher la cl\xE9 API",
     "apiSettings.hideApiKey": "Masquer la cl\xE9 API",
+    "apiSettings.revealKeyFailed": "Impossible de charger la cl\xE9 API enregistr\xE9e. R\xE9essayez.",
     "apiSettings.editProvider": "Modifier le fournisseur",
     "apiSettings.newProviderTitle": "Nouveau fournisseur",
     "apiSettings.finishEditFirst": "Enregistrez ou annulez d'abord la modification du fournisseur actuel",
@@ -5575,6 +5649,8 @@
     "studio.recipeDelete": "Supprimer la recette",
     "studio.recipeDeleteNamed": "Supprimer la recette : {name}",
     "studio.recipeUnavailable": "Le mod\xE8le ou le fournisseur de cette recette n\u2019est plus disponible",
+    "studio.collapseSidebar": "R\xE9duire la barre lat\xE9rale",
+    "studio.expandSidebar": "Afficher la barre lat\xE9rale",
     "ux.execution": "Prochaine g\xE9n\xE9ration",
     "ux.historyDraftRestoreFailed": "Impossible de restaurer le brouillon. La copie temporaire est conserv\xE9e. Actualisez pour r\xE9essayer.",
     "ux.historyDraftSaveFailed": "Impossible de conserver le brouillon. Vous \xEAtes toujours sur la page de g\xE9n\xE9ration. R\xE9essayez.",
@@ -6540,6 +6616,22 @@
     "apiSettings.bindingOverlap": "{model} \u306E {operation} \u304C\u8907\u6570\u306E\u30D0\u30A4\u30F3\u30C9\u306B\u91CD\u8907\u3057\u3066\u3044\u307E\u3059\u3002",
     "apiSettings.newProviderAction": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u65B0\u898F\u4F5C\u6210",
     "apiSettings.copyProvider": "\u30B3\u30D4\u30FC",
+    "apiSettings.revertChanges": "\u5909\u66F4\u3092\u5143\u306B\u623B\u3059",
+    "apiSettings.discardChangesTitle": "\u672A\u4FDD\u5B58\u306E\u5909\u66F4\u3092\u7834\u68C4\u3057\u307E\u3059\u304B\uFF1F",
+    "apiSettings.discardChangesMessage": "\u3053\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306B\u306F\u672A\u4FDD\u5B58\u306E\u5909\u66F4\u304C\u3042\u308A\u307E\u3059\u3002\u7D9A\u3051\u308B\u3068\u5931\u308F\u308C\u307E\u3059\u3002",
+    "apiSettings.discardChanges": "\u7834\u68C4",
+    "apiSettings.discoverModels": "\u5229\u7528\u53EF\u80FD\u306A\u30E2\u30C7\u30EB\u3092\u53D6\u5F97",
+    "apiSettings.addModelBindingManually": "\u624B\u52D5\u3067\u8FFD\u52A0",
+    "apiSettings.discoverySummary": "\u63A5\u7D9A\u3067\u304D\u307E\u3057\u305F\u3002{count} \u500B\u306E\u30E2\u30C7\u30EB\u304C\u898B\u3064\u304B\u308A\u3001{matched} \u500B\u3092\u81EA\u52D5\u8A8D\u8B58\u3057\u307E\u3057\u305F\u3002\u4F7F\u3046\u3082\u306E\u3092\u9078\u629E\uFF1A",
+    "apiSettings.discoveryNoMatch": "\u63A5\u7D9A\u3067\u304D\u307E\u3057\u305F\u3002{count} \u500B\u306E\u30E2\u30C7\u30EB\u304C\u898B\u3064\u304B\u308A\u307E\u3057\u305F\u304C\u3001\u81EA\u52D5\u8A8D\u8B58\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u4E0B\u3067\u30E2\u30C7\u30EB\u3092\u6307\u5B9A\u3067\u304D\u307E\u3059\u3002",
+    "apiSettings.discoveryAdded": "\u8FFD\u52A0\u6E08\u307F",
+    "apiSettings.discoveryReplaces": "\u65E2\u5B58\u3092\u7F6E\u304D\u63DB\u3048",
+    "apiSettings.discoveryOthers": "\u305D\u306E\u4ED6 {count} \u500B\u306E\u30E2\u30C7\u30EB",
+    "apiSettings.discoveryChooseModel": "\u30E2\u30C7\u30EB\u3092\u9078\u629E",
+    "apiSettings.discoveryAddSelected": "\u9078\u629E\u3092\u8FFD\u52A0\uFF08{count}\uFF09",
+    "apiSettings.discoveryClose": "\u9589\u3058\u308B",
+    "apiSettings.discoveryFilter": "\u30E2\u30C7\u30EB\u3092\u7D5E\u308A\u8FBC\u3080",
+    "apiSettings.discoveryApplied": "{count} \u500B\u306E\u30E2\u30C7\u30EB\u3092\u8FFD\u52A0\u3057\u307E\u3057\u305F\u3002\u4FDD\u5B58\u3059\u308B\u3068\u53CD\u6620\u3055\u308C\u307E\u3059\u3002",
     "apiSettings.copyProviderName": "{name} \u3092\u30B3\u30D4\u30FC",
     "apiSettings.copyProviderStatus": "\u4FDD\u5B58\u6E08\u307F\u306E\u30AD\u30FC\u3092\u542B\u3081\u3066\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F\u3002\u4FDD\u5B58\u3059\u308B\u524D\u306B\u3001\u540D\u524D\u3084\u30E2\u30C7\u30EB\u3092\u7DE8\u96C6\u3059\u308B\u304B\u3001\u30AD\u30FC\u3092\u7F6E\u304D\u63DB\u3048\u3066\u304F\u3060\u3055\u3044\u3002",
     "apiSettings.copyProviderWithoutKeyStatus": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F\u3002\u4FDD\u5B58\u3059\u308B\u524D\u306B\u3001\u540D\u524D\u3084\u30E2\u30C7\u30EB\u3092\u7DE8\u96C6\u3059\u308B\u304B\u3001API Key \u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
@@ -6560,6 +6652,7 @@
     "apiSettings.keyNotSet": "API Key\u304C\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u307E\u305B\u3093",
     "apiSettings.showApiKey": "API\u30AD\u30FC\u3092\u8868\u793A",
     "apiSettings.hideApiKey": "API\u30AD\u30FC\u3092\u96A0\u3059",
+    "apiSettings.revealKeyFailed": "\u4FDD\u5B58\u6E08\u307F\u306E API \u30AD\u30FC\u3092\u8AAD\u307F\u8FBC\u3081\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u3082\u3046\u4E00\u5EA6\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002",
     "apiSettings.editProvider": "\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u3092\u7DE8\u96C6",
     "apiSettings.newProviderTitle": "\u65B0\u3057\u3044\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC",
     "apiSettings.finishEditFirst": "\u307E\u305A\u73FE\u5728\u306E\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u7DE8\u96C6\u3092\u4FDD\u5B58\u307E\u305F\u306F\u30AD\u30E3\u30F3\u30BB\u30EB\u3057\u3066\u304F\u3060\u3055\u3044",
@@ -6868,6 +6961,8 @@
     "studio.recipeDelete": "\u30EC\u30B7\u30D4\u3092\u524A\u9664",
     "studio.recipeDeleteNamed": "\u30EC\u30B7\u30D4\u3092\u524A\u9664\uFF1A{name}",
     "studio.recipeUnavailable": "\u3053\u306E\u30EC\u30B7\u30D4\u306E\u30E2\u30C7\u30EB\u307E\u305F\u306F\u30D7\u30ED\u30D0\u30A4\u30C0\u30FC\u306F\u5229\u7528\u3067\u304D\u306A\u304F\u306A\u308A\u307E\u3057\u305F",
+    "studio.collapseSidebar": "\u30B5\u30A4\u30C9\u30D0\u30FC\u3092\u9589\u3058\u308B",
+    "studio.expandSidebar": "\u30B5\u30A4\u30C9\u30D0\u30FC\u3092\u958B\u304F",
     "ux.execution": "\u4ECA\u56DE\u306E\u751F\u6210",
     "ux.historyDraftRestoreFailed": "\u4E0B\u66F8\u304D\u3092\u5FA9\u5143\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u4E00\u6642\u30B3\u30D4\u30FC\u306F\u4FDD\u6301\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u518D\u8AAD\u307F\u8FBC\u307F\u3057\u3066\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
     "ux.historyDraftSaveFailed": "\u4E0B\u66F8\u304D\u3092\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3067\u3057\u305F\u3002\u751F\u6210\u30DA\u30FC\u30B8\u306B\u7559\u307E\u3063\u3066\u3044\u307E\u3059\u3002\u518D\u8A66\u884C\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
@@ -7833,6 +7928,22 @@
     "apiSettings.bindingOverlap": "{model}\uC758 {operation}\uC774 \uC5EC\uB7EC \uBC14\uC778\uB529\uC5D0 \uC911\uBCF5\uB429\uB2C8\uB2E4.",
     "apiSettings.newProviderAction": "\uACF5\uAE09\uC790 \uC0C8\uB85C \uB9CC\uB4E4\uAE30",
     "apiSettings.copyProvider": "\uBCF5\uC0AC",
+    "apiSettings.revertChanges": "\uBCC0\uACBD \uB418\uB3CC\uB9AC\uAE30",
+    "apiSettings.discardChangesTitle": "\uC800\uC7A5\uD558\uC9C0 \uC54A\uC740 \uBCC0\uACBD\uC744 \uBC84\uB9B4\uAE4C\uC694?",
+    "apiSettings.discardChangesMessage": "\uC774 \uACF5\uAE09\uC790\uC5D0 \uC800\uC7A5\uD558\uC9C0 \uC54A\uC740 \uBCC0\uACBD\uC774 \uC788\uC2B5\uB2C8\uB2E4. \uACC4\uC18D\uD558\uBA74 \uC0AC\uB77C\uC9D1\uB2C8\uB2E4.",
+    "apiSettings.discardChanges": "\uBC84\uB9AC\uAE30",
+    "apiSettings.discoverModels": "\uC0AC\uC6A9 \uAC00\uB2A5\uD55C \uBAA8\uB378 \uAC00\uC838\uC624\uAE30",
+    "apiSettings.addModelBindingManually": "\uC9C1\uC811 \uCD94\uAC00",
+    "apiSettings.discoverySummary": "\uC5F0\uACB0\uB428. \uBAA8\uB378 {count}\uAC1C\uB97C \uCC3E\uC558\uACE0 {matched}\uAC1C\uB97C \uC790\uB3D9 \uC778\uC2DD\uD588\uC2B5\uB2C8\uB2E4. \uC0AC\uC6A9\uD560 \uBAA8\uB378\uC744 \uC120\uD0DD\uD558\uC138\uC694:",
+    "apiSettings.discoveryNoMatch": "\uC5F0\uACB0\uB428. \uBAA8\uB378 {count}\uAC1C\uB97C \uCC3E\uC558\uC9C0\uB9CC \uC790\uB3D9 \uC778\uC2DD\uB41C \uAC83\uC774 \uC5C6\uC2B5\uB2C8\uB2E4. \uC544\uB798\uC5D0\uC11C \uBAA8\uB378\uC744 \uC9C0\uC815\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+    "apiSettings.discoveryAdded": "\uCD94\uAC00\uB428",
+    "apiSettings.discoveryReplaces": "\uAE30\uC874 \uD56D\uBAA9 \uAD50\uCCB4",
+    "apiSettings.discoveryOthers": "\uAE30\uD0C0 \uBAA8\uB378 {count}\uAC1C",
+    "apiSettings.discoveryChooseModel": "\uBAA8\uB378 \uC120\uD0DD",
+    "apiSettings.discoveryAddSelected": "\uC120\uD0DD \uD56D\uBAA9 \uCD94\uAC00 ({count})",
+    "apiSettings.discoveryClose": "\uB2EB\uAE30",
+    "apiSettings.discoveryFilter": "\uBAA8\uB378 \uD544\uD130",
+    "apiSettings.discoveryApplied": "\uBAA8\uB378 {count}\uAC1C\uB97C \uCD94\uAC00\uD588\uC2B5\uB2C8\uB2E4. \uC800\uC7A5\uD558\uBA74 \uC801\uC6A9\uB429\uB2C8\uB2E4.",
     "apiSettings.copyProviderName": "{name} \uBCF5\uC0AC",
     "apiSettings.copyProviderStatus": "\uC800\uC7A5\uB41C \uD0A4\uB97C \uD3EC\uD568\uD574 \uACF5\uAE09\uC790\uB97C \uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4. \uC800\uC7A5\uD558\uAE30 \uC804\uC5D0 \uC774\uB984\uC774\uB098 \uBAA8\uB378\uC744 \uD3B8\uC9D1\uD558\uAC70\uB098 \uD0A4\uB97C \uAD50\uCCB4\uD558\uC138\uC694.",
     "apiSettings.copyProviderWithoutKeyStatus": "\uACF5\uAE09\uC790\uAC00 \uBCF5\uC0AC\uB418\uC5C8\uC2B5\uB2C8\uB2E4. \uC800\uC7A5\uD558\uAE30 \uC804\uC5D0 \uC774\uB984, \uBAA8\uB378\uC744 \uD3B8\uC9D1\uD558\uAC70\uB098 API \uD0A4\uB97C \uCD94\uAC00\uD558\uC138\uC694.",
@@ -7853,6 +7964,7 @@
     "apiSettings.keyNotSet": "API Key\uAC00 \uC124\uC815\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
     "apiSettings.showApiKey": "API Key \uD45C\uC2DC",
     "apiSettings.hideApiKey": "API Key \uC228\uAE30\uAE30",
+    "apiSettings.revealKeyFailed": "\uC800\uC7A5\uB41C API \uD0A4\uB97C \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
     "apiSettings.editProvider": "\uACF5\uAE09\uC790 \uD3B8\uC9D1",
     "apiSettings.newProviderTitle": "\uC0C8 \uACF5\uAE09\uC790",
     "apiSettings.finishEditFirst": "\uBA3C\uC800 \uD604\uC7AC \uACF5\uAE09\uC790 \uD3B8\uC9D1 \uB0B4\uC6A9\uC744 \uC800\uC7A5\uD558\uAC70\uB098 \uCDE8\uC18C\uD558\uC138\uC694.",
@@ -8161,6 +8273,8 @@
     "studio.recipeDelete": "\uB808\uC2DC\uD53C \uC0AD\uC81C",
     "studio.recipeDeleteNamed": "\uB808\uC2DC\uD53C \uC0AD\uC81C: {name}",
     "studio.recipeUnavailable": "\uC774 \uB808\uC2DC\uD53C\uC758 \uBAA8\uB378 \uB610\uB294 \uACF5\uAE09\uC790\uB97C \uB354 \uC774\uC0C1 \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4",
+    "studio.collapseSidebar": "\uC0AC\uC774\uB4DC\uBC14 \uC811\uAE30",
+    "studio.expandSidebar": "\uC0AC\uC774\uB4DC\uBC14 \uD3BC\uCE58\uAE30",
     "ux.execution": "\uC774\uBC88 \uC0DD\uC131",
     "ux.historyDraftRestoreFailed": "\uCD08\uC548\uC744 \uBCF5\uC6D0\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC784\uC2DC \uC0AC\uBCF8\uC740 \uC720\uC9C0\uB429\uB2C8\uB2E4. \uC0C8\uB85C\uACE0\uCE68 \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
     "ux.historyDraftSaveFailed": "\uCD08\uC548\uC744 \uBCF4\uAD00\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC0DD\uC131 \uD398\uC774\uC9C0\uC5D0 \uBA38\uBB3C\uB7EC \uC788\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD558\uC138\uC694.",
@@ -9126,6 +9240,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} est\xE1 associado a mais de um v\xEDnculo.",
     "apiSettings.newProviderAction": "Novo provedor",
     "apiSettings.copyProvider": "Copiar",
+    "apiSettings.revertChanges": "Desfazer altera\xE7\xF5es",
+    "apiSettings.discardChangesTitle": "Descartar altera\xE7\xF5es n\xE3o salvas?",
+    "apiSettings.discardChangesMessage": "Este provedor tem altera\xE7\xF5es n\xE3o salvas. Continuar ir\xE1 descart\xE1-las.",
+    "apiSettings.discardChanges": "Descartar",
+    "apiSettings.discoverModels": "Buscar modelos dispon\xEDveis",
+    "apiSettings.addModelBindingManually": "Adicionar manualmente",
+    "apiSettings.discoverySummary": "Conectado. {count} modelos encontrados, {matched} reconhecidos. Marque os que deseja usar:",
+    "apiSettings.discoveryNoMatch": "Conectado. {count} modelos encontrados, nenhum reconhecido. Voc\xEA pode atribuir um abaixo.",
+    "apiSettings.discoveryAdded": "adicionado",
+    "apiSettings.discoveryReplaces": "substitui o atual",
+    "apiSettings.discoveryOthers": "Mais {count} modelos",
+    "apiSettings.discoveryChooseModel": "Escolher modelo",
+    "apiSettings.discoveryAddSelected": "Adicionar sele\xE7\xE3o ({count})",
+    "apiSettings.discoveryClose": "Fechar",
+    "apiSettings.discoveryFilter": "Filtrar modelos",
+    "apiSettings.discoveryApplied": "{count} modelos adicionados. Salve para aplicar.",
     "apiSettings.copyProviderName": "{name} Copiar",
     "apiSettings.copyProviderStatus": "Provedor copiado com sua chave salva. Edite o nome, modelo ou substitua a chave antes de salvar.",
     "apiSettings.copyProviderWithoutKeyStatus": "Provedor copiado. Edite o nome, modelo ou adicione uma chave API antes de salvar.",
@@ -9146,6 +9276,7 @@
     "apiSettings.keyNotSet": "Chave API n\xE3o definida",
     "apiSettings.showApiKey": "Mostrar API Key",
     "apiSettings.hideApiKey": "Ocultar API Key",
+    "apiSettings.revealKeyFailed": "N\xE3o foi poss\xEDvel carregar a chave de API salva. Tente novamente.",
     "apiSettings.editProvider": "Editar provedor",
     "apiSettings.newProviderTitle": "Novo provedor",
     "apiSettings.finishEditFirst": "Salve ou cancele a edi\xE7\xE3o do provedor atual primeiro",
@@ -9454,6 +9585,8 @@
     "studio.recipeDelete": "Excluir receita",
     "studio.recipeDeleteNamed": "Excluir receita: {name}",
     "studio.recipeUnavailable": "O modelo ou provedor desta receita n\xE3o est\xE1 mais dispon\xEDvel",
+    "studio.collapseSidebar": "Recolher barra lateral",
+    "studio.expandSidebar": "Expandir barra lateral",
     "ux.execution": "Pr\xF3xima gera\xE7\xE3o",
     "ux.historyDraftRestoreFailed": "N\xE3o foi poss\xEDvel restaurar o rascunho. A c\xF3pia tempor\xE1ria foi mantida. Atualize para tentar novamente.",
     "ux.historyDraftSaveFailed": "N\xE3o foi poss\xEDvel preservar o rascunho. Voc\xEA continua na p\xE1gina de gera\xE7\xE3o. Tente novamente.",
@@ -10419,6 +10552,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} \u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D\u043E \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u043C \u043F\u0440\u0438\u0432\u044F\u0437\u043A\u0430\u043C.",
     "apiSettings.newProviderAction": "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",
     "apiSettings.copyProvider": "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
+    "apiSettings.revertChanges": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F",
+    "apiSettings.discardChangesTitle": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u043D\u0435\u0441\u043E\u0445\u0440\u0430\u043D\u0451\u043D\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F?",
+    "apiSettings.discardChangesMessage": "\u0423 \u044D\u0442\u043E\u0433\u043E \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440\u0430 \u0435\u0441\u0442\u044C \u043D\u0435\u0441\u043E\u0445\u0440\u0430\u043D\u0451\u043D\u043D\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F. \u0415\u0441\u043B\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C, \u043E\u043D\u0438 \u043F\u0440\u043E\u043F\u0430\u0434\u0443\u0442.",
+    "apiSettings.discardChanges": "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C",
+    "apiSettings.discoverModels": "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u043C\u043E\u0434\u0435\u043B\u0438",
+    "apiSettings.addModelBindingManually": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432\u0440\u0443\u0447\u043D\u0443\u044E",
+    "apiSettings.discoverySummary": "\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043E. \u041D\u0430\u0439\u0434\u0435\u043D\u043E \u043C\u043E\u0434\u0435\u043B\u0435\u0439: {count}, \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u043E: {matched}. \u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435 \u043D\u0443\u0436\u043D\u044B\u0435:",
+    "apiSettings.discoveryNoMatch": "\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u043E. \u041D\u0430\u0439\u0434\u0435\u043D\u043E \u043C\u043E\u0434\u0435\u043B\u0435\u0439: {count}, \u043D\u043E \u043D\u0438 \u043E\u0434\u043D\u0430 \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430. \u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u043C\u043E\u0434\u0435\u043B\u044C \u043D\u0438\u0436\u0435.",
+    "apiSettings.discoveryAdded": "\u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E",
+    "apiSettings.discoveryReplaces": "\u0437\u0430\u043C\u0435\u043D\u0438\u0442 \u0442\u0435\u043A\u0443\u0449\u0443\u044E",
+    "apiSettings.discoveryOthers": "\u0415\u0449\u0451 \u043C\u043E\u0434\u0435\u043B\u0435\u0439: {count}",
+    "apiSettings.discoveryChooseModel": "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u043E\u0434\u0435\u043B\u044C",
+    "apiSettings.discoveryAddSelected": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0435 ({count})",
+    "apiSettings.discoveryClose": "\u0417\u0430\u043A\u0440\u044B\u0442\u044C",
+    "apiSettings.discoveryFilter": "\u0424\u0438\u043B\u044C\u0442\u0440 \u043C\u043E\u0434\u0435\u043B\u0435\u0439",
+    "apiSettings.discoveryApplied": "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u043C\u043E\u0434\u0435\u043B\u0435\u0439: {count}. \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C.",
     "apiSettings.copyProviderName": "{name} \u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
     "apiSettings.copyProviderStatus": "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043B \u0441\u0432\u043E\u0439 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447. \u041F\u0435\u0440\u0435\u0434 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u043C \u043E\u0442\u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u0443\u0439\u0442\u0435 \u0438\u043C\u044F, \u043C\u043E\u0434\u0435\u043B\u044C \u0438\u043B\u0438 \u0437\u0430\u043C\u0435\u043D\u0438\u0442\u0435 \u043A\u043B\u044E\u0447.",
     "apiSettings.copyProviderWithoutKeyStatus": "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043B. \u041F\u0435\u0440\u0435\u0434 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435\u043C \u043E\u0442\u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u0443\u0439\u0442\u0435 \u0438\u043C\u044F, \u043C\u043E\u0434\u0435\u043B\u044C \u0438\u043B\u0438 \u0434\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u043A\u043B\u044E\u0447 API.",
@@ -10439,6 +10588,7 @@
     "apiSettings.keyNotSet": "\u041A\u043B\u044E\u0447 API \u043D\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D",
     "apiSettings.showApiKey": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C API Key",
     "apiSettings.hideApiKey": "\u0421\u043A\u0440\u044B\u0442\u044C API Key",
+    "apiSettings.revealKeyFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0451\u043D\u043D\u044B\u0439 API-\u043A\u043B\u044E\u0447. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0435\u0449\u0451 \u0440\u0430\u0437.",
     "apiSettings.editProvider": "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430",
     "apiSettings.newProviderTitle": "\u041D\u043E\u0432\u044B\u0439 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",
     "apiSettings.finishEditFirst": "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u0435 \u0438\u043B\u0438 \u043E\u0442\u043C\u0435\u043D\u0438\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430.",
@@ -10747,6 +10897,8 @@
     "studio.recipeDelete": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442",
     "studio.recipeDeleteNamed": "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442: {name}",
     "studio.recipeUnavailable": "\u041C\u043E\u0434\u0435\u043B\u044C \u0438\u043B\u0438 \u043F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440 \u044D\u0442\u043E\u0433\u043E \u0440\u0435\u0446\u0435\u043F\u0442\u0430 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B",
+    "studio.collapseSidebar": "\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u0431\u043E\u043A\u043E\u0432\u0443\u044E \u043F\u0430\u043D\u0435\u043B\u044C",
+    "studio.expandSidebar": "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u0431\u043E\u043A\u043E\u0432\u0443\u044E \u043F\u0430\u043D\u0435\u043B\u044C",
     "ux.execution": "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F",
     "ux.historyDraftRestoreFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u0447\u0435\u0440\u043D\u043E\u0432\u0438\u043A. \u0412\u0440\u0435\u043C\u0435\u043D\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0430. \u041E\u0431\u043D\u043E\u0432\u0438\u0442\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u043F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435.",
     "ux.historyDraftSaveFailed": "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0447\u0435\u0440\u043D\u043E\u0432\u0438\u043A. \u0412\u044B \u043E\u0441\u0442\u0430\u043B\u0438\u0441\u044C \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438. \u041F\u043E\u0432\u0442\u043E\u0440\u0438\u0442\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0443.",
@@ -11712,6 +11864,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} \xE8 gestito da pi\xF9 associazioni.",
     "apiSettings.newProviderAction": "Nuovo fornitore",
     "apiSettings.copyProvider": "Copia",
+    "apiSettings.revertChanges": "Annulla modifiche",
+    "apiSettings.discardChangesTitle": "Scartare le modifiche non salvate?",
+    "apiSettings.discardChangesMessage": "Questo provider ha modifiche non salvate. Continuando andranno perse.",
+    "apiSettings.discardChanges": "Scarta",
+    "apiSettings.discoverModels": "Recupera modelli disponibili",
+    "apiSettings.addModelBindingManually": "Aggiungi manualmente",
+    "apiSettings.discoverySummary": "Connesso. Trovati {count} modelli, {matched} riconosciuti. Seleziona quelli da usare:",
+    "apiSettings.discoveryNoMatch": "Connesso. Trovati {count} modelli, nessuno riconosciuto. Puoi assegnarne uno qui sotto.",
+    "apiSettings.discoveryAdded": "aggiunto",
+    "apiSettings.discoveryReplaces": "sostituisce l\u2019attuale",
+    "apiSettings.discoveryOthers": "Altri {count} modelli",
+    "apiSettings.discoveryChooseModel": "Scegli modello",
+    "apiSettings.discoveryAddSelected": "Aggiungi selezionati ({count})",
+    "apiSettings.discoveryClose": "Chiudi",
+    "apiSettings.discoveryFilter": "Filtra modelli",
+    "apiSettings.discoveryApplied": "Aggiunti {count} modelli. Salva per applicare.",
     "apiSettings.copyProviderName": "{name} Copia",
     "apiSettings.copyProviderStatus": "Provider copiato con la chiave salvata. Modifica il nome, il modello o sostituisci la chiave prima di salvare.",
     "apiSettings.copyProviderWithoutKeyStatus": "Fornitore copiato. Modifica il nome, il modello o aggiungi una chiave API prima di salvare.",
@@ -11732,6 +11900,7 @@
     "apiSettings.keyNotSet": "Chiave API non impostata",
     "apiSettings.showApiKey": "Mostra API Key",
     "apiSettings.hideApiKey": "Nascondi API Key",
+    "apiSettings.revealKeyFailed": "Impossibile caricare la chiave API salvata. Riprova.",
     "apiSettings.editProvider": "Modifica fornitore",
     "apiSettings.newProviderTitle": "Nuovo fornitore",
     "apiSettings.finishEditFirst": "Prima salva o annulla la modifica del fornitore corrente",
@@ -12040,6 +12209,8 @@
     "studio.recipeDelete": "Elimina ricetta",
     "studio.recipeDeleteNamed": "Elimina ricetta: {name}",
     "studio.recipeUnavailable": "Il modello o il provider di questa ricetta non \xE8 pi\xF9 disponibile",
+    "studio.collapseSidebar": "Comprimi barra laterale",
+    "studio.expandSidebar": "Espandi barra laterale",
     "ux.execution": "Prossima generazione",
     "ux.historyDraftRestoreFailed": "Impossibile ripristinare la bozza. La copia temporanea \xE8 conservata. Ricarica per riprovare.",
     "ux.historyDraftSaveFailed": "Impossibile salvare la bozza. Sei ancora nella pagina di generazione. Riprova.",
@@ -13005,6 +13176,22 @@
     "apiSettings.bindingOverlap": "{model} {operation} \u090F\u0915 \u0938\u0947 \u0905\u0927\u093F\u0915 \u092C\u093E\u0907\u0902\u0921\u093F\u0902\u0917 \u092E\u0947\u0902 \u0939\u0948\u0964",
     "apiSettings.newProviderAction": "\u0928\u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.copyProvider": "\u0915\u0949\u092A\u0940",
+    "apiSettings.revertChanges": "\u092C\u0926\u0932\u093E\u0935 \u0935\u093E\u092A\u0938 \u0932\u0947\u0902",
+    "apiSettings.discardChangesTitle": "\u092C\u093F\u0928\u093E \u0938\u0939\u0947\u091C\u0947 \u092C\u0926\u0932\u093E\u0935 \u091B\u094B\u0921\u093C\u0947\u0902?",
+    "apiSettings.discardChangesMessage": "\u0907\u0938 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u092E\u0947\u0902 \u092C\u093F\u0928\u093E \u0938\u0939\u0947\u091C\u0947 \u092C\u0926\u0932\u093E\u0935 \u0939\u0948\u0902\u0964 \u0906\u0917\u0947 \u092C\u0922\u093C\u0928\u0947 \u092A\u0930 \u0935\u0947 \u0916\u094B \u091C\u093E\u090F\u0902\u0917\u0947\u0964",
+    "apiSettings.discardChanges": "\u091B\u094B\u0921\u093C\u0947\u0902",
+    "apiSettings.discoverModels": "\u0909\u092A\u0932\u092C\u094D\u0927 \u092E\u0949\u0921\u0932 \u0932\u093E\u090F\u0902",
+    "apiSettings.addModelBindingManually": "\u092E\u0948\u0928\u094D\u092F\u0941\u0905\u0932 \u0930\u0942\u092A \u0938\u0947 \u091C\u094B\u0921\u093C\u0947\u0902",
+    "apiSettings.discoverySummary": "\u0915\u0928\u0947\u0915\u094D\u091F \u0939\u0941\u0906\u0964 {count} \u092E\u0949\u0921\u0932 \u092E\u093F\u0932\u0947, {matched} \u092A\u0939\u091A\u093E\u0928\u0947 \u0917\u090F\u0964 \u091C\u093F\u0928\u094D\u0939\u0947\u0902 \u0907\u0938\u094D\u0924\u0947\u092E\u093E\u0932 \u0915\u0930\u0928\u093E \u0939\u0948 \u0909\u0928\u094D\u0939\u0947\u0902 \u091A\u0941\u0928\u0947\u0902:",
+    "apiSettings.discoveryNoMatch": "\u0915\u0928\u0947\u0915\u094D\u091F \u0939\u0941\u0906\u0964 {count} \u092E\u0949\u0921\u0932 \u092E\u093F\u0932\u0947, \u092A\u0930 \u0915\u094B\u0908 \u092A\u0939\u091A\u093E\u0928\u093E \u0928\u0939\u0940\u0902 \u0917\u092F\u093E\u0964 \u0928\u0940\u091A\u0947 \u092E\u0949\u0921\u0932 \u091A\u0941\u0928 \u0938\u0915\u0924\u0947 \u0939\u0948\u0902\u0964",
+    "apiSettings.discoveryAdded": "\u091C\u094B\u0921\u093C\u093E \u0917\u092F\u093E",
+    "apiSettings.discoveryReplaces": "\u092E\u094C\u091C\u0942\u0926\u093E \u0915\u094B \u092C\u0926\u0932\u0947\u0917\u093E",
+    "apiSettings.discoveryOthers": "{count} \u0905\u0928\u094D\u092F \u092E\u0949\u0921\u0932",
+    "apiSettings.discoveryChooseModel": "\u092E\u0949\u0921\u0932 \u091A\u0941\u0928\u0947\u0902",
+    "apiSettings.discoveryAddSelected": "\u091A\u0941\u0928\u0947 \u0939\u0941\u090F \u091C\u094B\u0921\u093C\u0947\u0902 ({count})",
+    "apiSettings.discoveryClose": "\u092C\u0902\u0926 \u0915\u0930\u0947\u0902",
+    "apiSettings.discoveryFilter": "\u092E\u0949\u0921\u0932 \u092B\u093C\u093F\u0932\u094D\u091F\u0930 \u0915\u0930\u0947\u0902",
+    "apiSettings.discoveryApplied": "{count} \u092E\u0949\u0921\u0932 \u091C\u094B\u0921\u093C\u0947 \u0917\u090F\u0964 \u0932\u093E\u0917\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u0938\u0939\u0947\u091C\u0947\u0902\u0964",
     "apiSettings.copyProviderName": "{name} \u0915\u0949\u092A\u0940",
     "apiSettings.copyProviderStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0905\u092A\u0928\u0940 \u0938\u0939\u0947\u091C\u0940 \u0917\u0908 \u0915\u0941\u0902\u091C\u0940 \u0915\u0947 \u0938\u093E\u0925 \u0915\u0949\u092A\u0940 \u0915\u093F\u092F\u093E \u0917\u092F\u093E\u0964 \u0938\u0939\u0947\u091C\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u0928\u093E\u092E, \u092E\u0949\u0921\u0932 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902 \u092F\u093E \u0915\u0941\u0902\u091C\u0940 \u092C\u0926\u0932\u0947\u0902\u0964",
     "apiSettings.copyProviderWithoutKeyStatus": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0915\u0949\u092A\u0940 \u0915\u093F\u092F\u093E \u0917\u092F\u093E. \u0938\u0939\u0947\u091C\u0928\u0947 \u0938\u0947 \u092A\u0939\u0932\u0947 \u0928\u093E\u092E, \u092E\u0949\u0921\u0932 \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902 \u092F\u093E API \u0915\u0941\u0902\u091C\u0940 \u091C\u094B\u0921\u093C\u0947\u0902\u0964",
@@ -13025,6 +13212,7 @@
     "apiSettings.keyNotSet": "API \u0915\u0941\u0902\u091C\u0940 \u0938\u0947\u091F \u0928\u0939\u0940\u0902 \u0939\u0948",
     "apiSettings.showApiKey": "API Key \u0926\u093F\u0916\u093E\u090F\u0902",
     "apiSettings.hideApiKey": "API Key \u091B\u093F\u092A\u093E\u090F\u0902",
+    "apiSettings.revealKeyFailed": "\u0938\u0939\u0947\u091C\u0940 \u0917\u0908 API \u0915\u0941\u0902\u091C\u0940 \u0932\u094B\u0921 \u0928\u0939\u0940\u0902 \u0939\u094B \u0938\u0915\u0940\u0964 \u092B\u093F\u0930 \u0938\u0947 \u0915\u094B\u0936\u093F\u0936 \u0915\u0930\u0947\u0902\u0964",
     "apiSettings.editProvider": "\u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0902\u092A\u093E\u0926\u093F\u0924 \u0915\u0930\u0947\u0902",
     "apiSettings.newProviderTitle": "\u0928\u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E",
     "apiSettings.finishEditFirst": "\u092A\u0939\u0932\u0947 \u0935\u0930\u094D\u0924\u092E\u093E\u0928 \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0938\u0902\u092A\u093E\u0926\u0928 \u0915\u094B \u0938\u0939\u0947\u091C\u0947\u0902 \u092F\u093E \u0930\u0926\u094D\u0926 \u0915\u0930\u0947\u0902",
@@ -13333,6 +13521,8 @@
     "studio.recipeDelete": "\u0930\u0947\u0938\u093F\u092A\u0940 \u0939\u091F\u093E\u090F\u0901",
     "studio.recipeDeleteNamed": "\u0930\u0947\u0938\u093F\u092A\u0940 \u0939\u091F\u093E\u090F\u0901: {name}",
     "studio.recipeUnavailable": "\u0907\u0938 \u0930\u0947\u0938\u093F\u092A\u0940 \u0915\u093E \u092E\u0949\u0921\u0932 \u092F\u093E \u092A\u094D\u0930\u0926\u093E\u0924\u093E \u0905\u092C \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948",
+    "studio.collapseSidebar": "\u0938\u093E\u0907\u0921\u092C\u093E\u0930 \u091B\u094B\u091F\u093E \u0915\u0930\u0947\u0902",
+    "studio.expandSidebar": "\u0938\u093E\u0907\u0921\u092C\u093E\u0930 \u092C\u0921\u093C\u093E \u0915\u0930\u0947\u0902",
     "ux.execution": "\u0905\u0917\u0932\u093E \u091C\u0928\u0930\u0947\u0936\u0928",
     "ux.historyDraftRestoreFailed": "\u0921\u094D\u0930\u093E\u092B\u093C\u094D\u091F \u092C\u0939\u093E\u0932 \u0928\u0939\u0940\u0902 \u0939\u0941\u0906\u0964 \u0905\u0938\u094D\u0925\u093E\u092F\u0940 \u092A\u094D\u0930\u0924\u093F \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0939\u0948\u0964 \u0930\u0940\u092B\u093C\u094D\u0930\u0947\u0936 \u0915\u0930\u0915\u0947 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
     "ux.historyDraftSaveFailed": "\u0921\u094D\u0930\u093E\u092B\u093C\u094D\u091F \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924 \u0928\u0939\u0940\u0902 \u0939\u0941\u0906\u0964 \u0906\u092A \u0905\u092D\u0940 \u091C\u0928\u0930\u0947\u0936\u0928 \u092A\u0943\u0937\u094D\u0920 \u092A\u0930 \u0939\u0948\u0902\u0964 \u092B\u093F\u0930 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964",
@@ -13441,6 +13631,8 @@
     "studio.recipeDelete": "X\xF3a c\xF4ng th\u1EE9c",
     "studio.recipeDeleteNamed": "X\xF3a c\xF4ng th\u1EE9c: {name}",
     "studio.recipeUnavailable": "M\xF4 h\xECnh ho\u1EB7c nh\xE0 cung c\u1EA5p c\u1EE7a c\xF4ng th\u1EE9c n\xE0y kh\xF4ng c\xF2n kh\u1EA3 d\u1EE5ng",
+    "studio.collapseSidebar": "Thu g\u1ECDn thanh b\xEAn",
+    "studio.expandSidebar": "M\u1EDF r\u1ED9ng thanh b\xEAn",
     "ux.execution": "L\u1EA7n t\u1EA1o ti\u1EBFp theo",
     "ux.imageCount": "{count} \u1EA3nh",
     "ux.tasks": "T\xE1c v\u1EE5",
@@ -14455,6 +14647,22 @@
     "apiSettings.bindingOverlap": "Thao t\xE1c {operation} c\u1EE7a {model} b\u1ECB nhi\u1EC1u li\xEAn k\u1EBFt x\u1EED l\xFD tr\xF9ng nhau.",
     "apiSettings.newProviderAction": "Provider m\u1EDBi",
     "apiSettings.copyProvider": "Sao ch\xE9p",
+    "apiSettings.revertChanges": "Ho\xE0n t\xE1c thay \u0111\u1ED5i",
+    "apiSettings.discardChangesTitle": "B\u1ECF c\xE1c thay \u0111\u1ED5i ch\u01B0a l\u01B0u?",
+    "apiSettings.discardChangesMessage": "Nh\xE0 cung c\u1EA5p n\xE0y c\xF3 thay \u0111\u1ED5i ch\u01B0a l\u01B0u. Ti\u1EBFp t\u1EE5c s\u1EBD l\xE0m m\u1EA5t ch\xFAng.",
+    "apiSettings.discardChanges": "B\u1ECF thay \u0111\u1ED5i",
+    "apiSettings.discoverModels": "L\u1EA5y danh s\xE1ch m\xF4 h\xECnh",
+    "apiSettings.addModelBindingManually": "Th\xEAm th\u1EE7 c\xF4ng",
+    "apiSettings.discoverySummary": "\u0110\xE3 k\u1EBFt n\u1ED1i. T\xECm th\u1EA5y {count} m\xF4 h\xECnh, nh\u1EADn di\u1EC7n \u0111\u01B0\u1EE3c {matched}. Ch\u1ECDn m\xF4 h\xECnh mu\u1ED1n d\xF9ng:",
+    "apiSettings.discoveryNoMatch": "\u0110\xE3 k\u1EBFt n\u1ED1i. T\xECm th\u1EA5y {count} m\xF4 h\xECnh nh\u01B0ng kh\xF4ng nh\u1EADn di\u1EC7n \u0111\u01B0\u1EE3c. C\xF3 th\u1EC3 ch\u1EC9 \u0111\u1ECBnh b\xEAn d\u01B0\u1EDBi.",
+    "apiSettings.discoveryAdded": "\u0111\xE3 th\xEAm",
+    "apiSettings.discoveryReplaces": "thay th\u1EBF hi\u1EC7n c\xF3",
+    "apiSettings.discoveryOthers": "{count} m\xF4 h\xECnh kh\xE1c",
+    "apiSettings.discoveryChooseModel": "Ch\u1ECDn m\xF4 h\xECnh",
+    "apiSettings.discoveryAddSelected": "Th\xEAm m\u1EE5c \u0111\xE3 ch\u1ECDn ({count})",
+    "apiSettings.discoveryClose": "\u0110\xF3ng",
+    "apiSettings.discoveryFilter": "L\u1ECDc m\xF4 h\xECnh",
+    "apiSettings.discoveryApplied": "\u0110\xE3 th\xEAm {count} m\xF4 h\xECnh. L\u01B0u \u0111\u1EC3 \xE1p d\u1EE5ng.",
     "apiSettings.copyProviderName": "B\u1EA3n sao {name}",
     "apiSettings.copyProviderStatus": "\u0110\xE3 sao ch\xE9p provider c\xF9ng key \u0111\xE3 l\u01B0u. Ch\u1EC9nh t\xEAn, m\xF4 h\xECnh ho\u1EB7c thay key tr\u01B0\u1EDBc khi l\u01B0u.",
     "apiSettings.copyProviderWithoutKeyStatus": "\u0110\xE3 sao ch\xE9p provider. Ch\u1EC9nh t\xEAn, m\xF4 h\xECnh ho\u1EB7c th\xEAm API key tr\u01B0\u1EDBc khi l\u01B0u.",
@@ -14473,6 +14681,7 @@
     "apiSettings.keyNotSet": "Kh\xF3a API ch\u01B0a \u0111\u01B0\u1EE3c \u0111\u1EB7t",
     "apiSettings.showApiKey": "Hi\u1EC3n th\u1ECB kh\xF3a API",
     "apiSettings.hideApiKey": "\u1EA8n kh\xF3a API",
+    "apiSettings.revealKeyFailed": "Kh\xF4ng t\u1EA3i \u0111\u01B0\u1EE3c API key \u0111\xE3 l\u01B0u. H\xE3y th\u1EED l\u1EA1i.",
     "apiSettings.editProvider": "Ch\u1EC9nh s\u1EEDa provider",
     "apiSettings.newProviderTitle": "Provider m\u1EDBi",
     "ux.viewPreview": "Xem tr\u01B0\u1EDBc",
@@ -14734,6 +14943,8 @@
     "studio.recipeDelete": "\u5220\u9664\u914D\u65B9",
     "studio.recipeDeleteNamed": "\u5220\u9664\u914D\u65B9\uFF1A{name}",
     "studio.recipeUnavailable": "\u8FD9\u4E2A\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u5E94\u5546\u5DF2\u4E0D\u53EF\u7528",
+    "studio.collapseSidebar": "\u6536\u8D77\u4FA7\u680F",
+    "studio.expandSidebar": "\u5C55\u5F00\u4FA7\u680F",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.imageCount": "{count} \u5F20",
     "ux.tasks": "\u4EFB\u52A1",
@@ -15748,6 +15959,22 @@
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u5E94\u5546",
     "apiSettings.copyProvider": "\u590D\u5236",
+    "apiSettings.revertChanges": "\u8FD8\u539F\u4FEE\u6539",
+    "apiSettings.discardChangesTitle": "\u653E\u5F03\u672A\u4FDD\u5B58\u7684\u4FEE\u6539\uFF1F",
+    "apiSettings.discardChangesMessage": "\u8FD9\u4E2A\u4F9B\u5E94\u5546\u8FD8\u6709\u6CA1\u4FDD\u5B58\u7684\u4FEE\u6539\uFF0C\u7EE7\u7EED\u4F1A\u4E22\u6389\u5B83\u4EEC\u3002",
+    "apiSettings.discardChanges": "\u653E\u5F03\u4FEE\u6539",
+    "apiSettings.discoverModels": "\u83B7\u53D6\u53EF\u7528\u6A21\u578B",
+    "apiSettings.addModelBindingManually": "\u624B\u52A8\u6DFB\u52A0",
+    "apiSettings.discoverySummary": "\u8FDE\u63A5\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u4E2A\u6A21\u578B\uFF0C\u5176\u4E2D {matched} \u4E2A\u80FD\u81EA\u52A8\u8BC6\u522B\u3002\u52FE\u9009\u8981\u7528\u7684\uFF1A",
+    "apiSettings.discoveryNoMatch": "\u8FDE\u63A5\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u4E2A\u6A21\u578B\uFF0C\u4F46\u90FD\u6CA1\u80FD\u81EA\u52A8\u8BC6\u522B\uFF0C\u53EF\u4EE5\u5728\u4E0B\u9762\u624B\u52A8\u6307\u5B9A\u578B\u53F7\u3002",
+    "apiSettings.discoveryAdded": "\u5DF2\u6DFB\u52A0",
+    "apiSettings.discoveryReplaces": "\u66FF\u6362\u73B0\u6709",
+    "apiSettings.discoveryOthers": "\u5176\u4ED6 {count} \u4E2A\u6A21\u578B",
+    "apiSettings.discoveryChooseModel": "\u9009\u62E9\u578B\u53F7",
+    "apiSettings.discoveryAddSelected": "\u6DFB\u52A0\u6240\u9009\uFF08{count}\uFF09",
+    "apiSettings.discoveryClose": "\u6536\u8D77",
+    "apiSettings.discoveryFilter": "\u7B5B\u9009\u6A21\u578B",
+    "apiSettings.discoveryApplied": "\u5DF2\u52A0\u5165 {count} \u4E2A\u6A21\u578B\uFF0C\u4FDD\u5B58\u540E\u751F\u6548\u3002",
     "apiSettings.copyProviderName": "{name} \u526F\u672C",
     "apiSettings.copyProviderStatus": "\u5DF2\u590D\u5236\u914D\u7F6E\u548C\u5DF2\u4FDD\u5B58 Key\uFF0C\u53EF\u4FEE\u6539\u540D\u79F0\u3001\u6A21\u578B\u6216\u66FF\u6362 Key \u540E\u4FDD\u5B58",
     "apiSettings.copyProviderWithoutKeyStatus": "\u5DF2\u590D\u5236\u914D\u7F6E\uFF0C\u53EF\u4FEE\u6539\u540D\u79F0\u3001\u6A21\u578B\u6216\u586B\u5199 API Key \u540E\u4FDD\u5B58",
@@ -15766,6 +15993,7 @@
     "apiSettings.keyNotSet": "\u672A\u8BBE\u7F6E API Key",
     "apiSettings.showApiKey": "\u663E\u793A API Key",
     "apiSettings.hideApiKey": "\u9690\u85CF API Key",
+    "apiSettings.revealKeyFailed": "\u8BFB\u53D6\u5DF2\u4FDD\u5B58\u7684 API Key \u5931\u8D25\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5\u3002",
     "apiSettings.editProvider": "\u7F16\u8F91\u4F9B\u5E94\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u5E94\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9884\u89C8",
@@ -15776,7 +16004,7 @@
     "apiSettings.deleteProviderMessage": "\u786E\u5B9A\u5220\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u4F1A\u4ECE\u5F53\u524D\u4F9B\u5E94\u5546\u5217\u8868\u79FB\u9664\uFF0C\u5E76\u81EA\u52A8\u4FDD\u5B58\u5230\u540E\u7AEF\u3002",
     "apiSettings.loadFailed": "API \u8BBE\u7F6E\u8BFB\u53D6\u5931\u8D25",
-    "apiSettings.savedKeyPlaceholder": "\u540E\u7AEF\u5DF2\u4FDD\u5B58 API Key\uFF0C\u8F93\u5165\u65B0 key \u53EF\u8986\u76D6",
+    "apiSettings.savedKeyPlaceholder": "\u5DF2\u4FDD\u5B58 API Key\uFF0C\u70B9\u53F3\u4FA7\u773C\u775B\u53EF\u67E5\u770B\uFF0C\u8F93\u5165\u65B0 key \u53EF\u8986\u76D6",
     "apiSettings.apiKeyRequired": "\u8BF7\u586B\u5199 API Key \u540E\u518D\u4FDD\u5B58\u4F9B\u5E94\u5546\u3002",
     "apiSettings.originChangeTitle": "\u26A0\uFE0F Base URL \u57DF\u540D\u5DF2\u66F4\u6539",
     "apiSettings.originChangeMessage": "\u4FDD\u7559\u539F Key \u540E\uFF0C\u5B83\u4F1A\u968F\u8BF7\u6C42\u53D1\u9001\u5230\u65B0\u5730\u5740\u3002\u82E5\u65B0\u5730\u5740\u586B\u5199\u9519\u8BEF\uFF0CKey \u53EF\u80FD\u6CC4\u9732\u3002",
@@ -16939,6 +17167,22 @@
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u61C9\u5546",
     "apiSettings.copyProvider": "\u8907\u88FD",
+    "apiSettings.revertChanges": "\u9084\u539F\u4FEE\u6539",
+    "apiSettings.discardChangesTitle": "\u653E\u68C4\u672A\u5132\u5B58\u7684\u4FEE\u6539\uFF1F",
+    "apiSettings.discardChangesMessage": "\u9019\u500B\u4F9B\u61C9\u5546\u9084\u6709\u672A\u5132\u5B58\u7684\u4FEE\u6539\uFF0C\u7E7C\u7E8C\u6703\u907A\u5931\u3002",
+    "apiSettings.discardChanges": "\u653E\u68C4\u4FEE\u6539",
+    "apiSettings.discoverModels": "\u53D6\u5F97\u53EF\u7528\u6A21\u578B",
+    "apiSettings.addModelBindingManually": "\u624B\u52D5\u65B0\u589E",
+    "apiSettings.discoverySummary": "\u9023\u7DDA\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u500B\u6A21\u578B\uFF0C\u5176\u4E2D {matched} \u500B\u53EF\u81EA\u52D5\u8FA8\u8B58\u3002\u52FE\u9078\u8981\u7528\u7684\uFF1A",
+    "apiSettings.discoveryNoMatch": "\u9023\u7DDA\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u500B\u6A21\u578B\uFF0C\u4F46\u90FD\u7121\u6CD5\u81EA\u52D5\u8FA8\u8B58\uFF0C\u53EF\u5728\u4E0B\u65B9\u624B\u52D5\u6307\u5B9A\u578B\u865F\u3002",
+    "apiSettings.discoveryAdded": "\u5DF2\u65B0\u589E",
+    "apiSettings.discoveryReplaces": "\u53D6\u4EE3\u73FE\u6709",
+    "apiSettings.discoveryOthers": "\u5176\u4ED6 {count} \u500B\u6A21\u578B",
+    "apiSettings.discoveryChooseModel": "\u9078\u64C7\u578B\u865F",
+    "apiSettings.discoveryAddSelected": "\u65B0\u589E\u6240\u9078\uFF08{count}\uFF09",
+    "apiSettings.discoveryClose": "\u6536\u8D77",
+    "apiSettings.discoveryFilter": "\u7BE9\u9078\u6A21\u578B",
+    "apiSettings.discoveryApplied": "\u5DF2\u52A0\u5165 {count} \u500B\u6A21\u578B\uFF0C\u5132\u5B58\u5F8C\u751F\u6548\u3002",
     "apiSettings.copyProviderName": "{name}\u526F\u672C",
     "apiSettings.copyProviderStatus": "\u5DF2\u8907\u88FD\u914D\u7F6E\u548C\u5DF2\u5132\u5B58 Key\uFF0C\u53EF\u4FEE\u6539\u540D\u7A31\u3001\u6A21\u578B\u6216\u66FF\u63DB Key \u5F8C\u5132\u5B58",
     "apiSettings.copyProviderWithoutKeyStatus": "\u5DF2\u8907\u88FD\u914D\u7F6E\uFF0C\u53EF\u4FEE\u6539\u540D\u7A31\u3001\u6A21\u578B\u6216\u586B\u5BEBAPI Key\u5F8C\u5132\u5B58",
@@ -16957,6 +17201,7 @@
     "apiSettings.keyNotSet": "\u672A\u8A2D\u5B9AAPI Key",
     "apiSettings.showApiKey": "\u986F\u793A API Key",
     "apiSettings.hideApiKey": "\u96B1\u85CF API Key",
+    "apiSettings.revealKeyFailed": "\u8B80\u53D6\u5DF2\u5132\u5B58\u7684 API Key \u5931\u6557\uFF0C\u8ACB\u7A0D\u5F8C\u518D\u8A66\u3002",
     "apiSettings.editProvider": "\u7DE8\u8F2F\u4F9B\u61C9\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u61C9\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9810\u89BD",
@@ -16967,7 +17212,7 @@
     "apiSettings.deleteProviderMessage": "\u78BA\u5B9A\u522A\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u6703\u5F9E\u76EE\u524D\u4F9B\u61C9\u5546\u6E05\u55AE\u79FB\u9664\uFF0C\u4E26\u81EA\u52D5\u5132\u5B58\u5230\u5F8C\u7AEF\u3002",
     "apiSettings.loadFailed": "API\u8A2D\u5B9A\u8B80\u53D6\u5931\u6557",
-    "apiSettings.savedKeyPlaceholder": "\u5F8C\u7AEF\u5DF2\u5132\u5B58API Key\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
+    "apiSettings.savedKeyPlaceholder": "\u5DF2\u5132\u5B58 API Key\uFF0C\u9EDE\u53F3\u5074\u773C\u775B\u53EF\u67E5\u770B\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
     "apiSettings.apiKeyRequired": "\u8ACB\u586B\u5BEB API Key \u5F8C\u518D\u5132\u5B58\u4F9B\u61C9\u5546\u3002",
     "apiSettings.originChangeTitle": "\u26A0\uFE0F Base URL \u7DB2\u57DF\u5DF2\u8B8A\u66F4",
     "apiSettings.originChangeMessage": "\u4FDD\u7559\u539F Key \u5F8C\uFF0C\u5B83\u6703\u96A8\u8ACB\u6C42\u50B3\u9001\u5230\u65B0\u5730\u5740\u3002\u82E5\u65B0\u5730\u5740\u586B\u5BEB\u932F\u8AA4\uFF0CKey \u53EF\u80FD\u6D29\u6F0F\u3002",
@@ -17215,6 +17460,8 @@
     "studio.recipeDelete": "\u522A\u9664\u914D\u65B9",
     "studio.recipeDeleteNamed": "\u522A\u9664\u914D\u65B9\uFF1A{name}",
     "studio.recipeUnavailable": "\u9019\u500B\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u61C9\u5546\u5DF2\u7121\u6CD5\u4F7F\u7528",
+    "studio.collapseSidebar": "\u6536\u5408\u5074\u6B04",
+    "studio.expandSidebar": "\u5C55\u958B\u5074\u6B04",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.historyParametersHint": "\u4EE5\u4E0B\u662F\u6240\u9078\u4EFB\u52D9\u7684\u6B77\u53F2\u53C3\u6578\u3002\u672C\u6B21\u751F\u6210\u4EE5\u300C\u8F38\u51FA\u8A2D\u5B9A\u300D\u70BA\u6E96\u3002",
     "ux.imageCount": "{count} \u5F35",
@@ -18232,6 +18479,22 @@
     "apiSettings.bindingOverlap": "{model} \u7684 {operation} \u64CD\u4F5C\u88AB\u591A\u6761\u7ED1\u5B9A\u91CD\u590D\u5904\u7406",
     "apiSettings.newProviderAction": "\u65B0\u5EFA\u4F9B\u61C9\u5546",
     "apiSettings.copyProvider": "\u8907\u88FD",
+    "apiSettings.revertChanges": "\u9084\u539F\u4FEE\u6539",
+    "apiSettings.discardChangesTitle": "\u653E\u68C4\u672A\u5132\u5B58\u7684\u4FEE\u6539\uFF1F",
+    "apiSettings.discardChangesMessage": "\u9019\u500B\u4F9B\u61C9\u5546\u9084\u6709\u672A\u5132\u5B58\u7684\u4FEE\u6539\uFF0C\u7E7C\u7E8C\u6703\u907A\u5931\u3002",
+    "apiSettings.discardChanges": "\u653E\u68C4\u4FEE\u6539",
+    "apiSettings.discoverModels": "\u53D6\u5F97\u53EF\u7528\u6A21\u578B",
+    "apiSettings.addModelBindingManually": "\u624B\u52D5\u65B0\u589E",
+    "apiSettings.discoverySummary": "\u9023\u7DDA\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u500B\u6A21\u578B\uFF0C\u5176\u4E2D {matched} \u500B\u53EF\u81EA\u52D5\u8FA8\u8B58\u3002\u52FE\u9078\u8981\u7528\u7684\uFF1A",
+    "apiSettings.discoveryNoMatch": "\u9023\u7DDA\u6B63\u5E38\uFF0C\u627E\u5230 {count} \u500B\u6A21\u578B\uFF0C\u4F46\u90FD\u7121\u6CD5\u81EA\u52D5\u8FA8\u8B58\uFF0C\u53EF\u5728\u4E0B\u65B9\u624B\u52D5\u6307\u5B9A\u578B\u865F\u3002",
+    "apiSettings.discoveryAdded": "\u5DF2\u65B0\u589E",
+    "apiSettings.discoveryReplaces": "\u53D6\u4EE3\u73FE\u6709",
+    "apiSettings.discoveryOthers": "\u5176\u4ED6 {count} \u500B\u6A21\u578B",
+    "apiSettings.discoveryChooseModel": "\u9078\u64C7\u578B\u865F",
+    "apiSettings.discoveryAddSelected": "\u65B0\u589E\u6240\u9078\uFF08{count}\uFF09",
+    "apiSettings.discoveryClose": "\u6536\u8D77",
+    "apiSettings.discoveryFilter": "\u7BE9\u9078\u6A21\u578B",
+    "apiSettings.discoveryApplied": "\u5DF2\u52A0\u5165 {count} \u500B\u6A21\u578B\uFF0C\u5132\u5B58\u5F8C\u751F\u6548\u3002",
     "apiSettings.copyProviderName": "{name}\u526F\u672C",
     "apiSettings.copyProviderStatus": "\u5DF2\u8907\u88FD\u914D\u7F6E\u548C\u5DF2\u5132\u5B58 Key\uFF0C\u53EF\u4FEE\u6539\u540D\u7A31\u3001\u6A21\u578B\u6216\u66FF\u63DB Key \u5F8C\u5132\u5B58",
     "apiSettings.copyProviderWithoutKeyStatus": "\u5DF2\u8907\u88FD\u914D\u7F6E\uFF0C\u53EF\u4FEE\u6539\u540D\u7A31\u3001\u6A21\u578B\u6216\u586B\u5BEBAPI Key\u5F8C\u5132\u5B58",
@@ -18250,6 +18513,7 @@
     "apiSettings.keyNotSet": "\u672A\u8A2D\u5B9AAPI Key",
     "apiSettings.showApiKey": "\u986F\u793A API Key",
     "apiSettings.hideApiKey": "\u96B1\u85CF API Key",
+    "apiSettings.revealKeyFailed": "\u8B80\u53D6\u5DF2\u5132\u5B58\u7684 API Key \u5931\u6557\uFF0C\u8ACB\u7A0D\u5F8C\u518D\u8A66\u3002",
     "apiSettings.editProvider": "\u7DE8\u8F2F\u4F9B\u61C9\u5546",
     "apiSettings.newProviderTitle": "\u65B0\u589E\u4F9B\u61C9\u5546",
     "ux.viewPreview": "\u67E5\u770B\u9810\u89BD",
@@ -18260,7 +18524,7 @@
     "apiSettings.deleteProviderMessage": "\u78BA\u5B9A\u522A\u9664\u300C{provider}\u300D\uFF1F",
     "apiSettings.deleteProviderDetail": "\u6703\u5F9E\u76EE\u524D\u4F9B\u61C9\u5546\u6E05\u55AE\u79FB\u9664\uFF0C\u4E26\u81EA\u52D5\u5132\u5B58\u5230\u5F8C\u7AEF\u3002",
     "apiSettings.loadFailed": "API\u8A2D\u5B9A\u8B80\u53D6\u5931\u6557",
-    "apiSettings.savedKeyPlaceholder": "\u5F8C\u7AEF\u5DF2\u5132\u5B58API Key\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
+    "apiSettings.savedKeyPlaceholder": "\u5DF2\u5132\u5B58 API Key\uFF0C\u9EDE\u53F3\u5074\u773C\u775B\u53EF\u67E5\u770B\uFF0C\u8F38\u5165\u65B0 key \u53EF\u8986\u84CB",
     "apiSettings.apiKeyRequired": "\u8ACB\u586B\u5BEB API Key \u5F8C\u518D\u5132\u5B58\u4F9B\u61C9\u5546\u3002",
     "apiSettings.originChangeTitle": "\u26A0\uFE0F Base URL \u7DB2\u57DF\u5DF2\u8B8A\u66F4",
     "apiSettings.originChangeMessage": "\u4FDD\u7559\u539F Key \u5F8C\uFF0C\u5B83\u6703\u96A8\u8ACB\u6C42\u50B3\u9001\u5230\u65B0\u4F4D\u5740\u3002\u82E5\u65B0\u4F4D\u5740\u586B\u5BEB\u932F\u8AA4\uFF0CKey \u53EF\u80FD\u5916\u6D29\u3002",
@@ -18508,6 +18772,8 @@
     "studio.recipeDelete": "\u522A\u9664\u914D\u65B9",
     "studio.recipeDeleteNamed": "\u522A\u9664\u914D\u65B9\uFF1A{name}",
     "studio.recipeUnavailable": "\u9019\u500B\u914D\u65B9\u7684\u6A21\u578B\u6216\u4F9B\u61C9\u5546\u5DF2\u7121\u6CD5\u4F7F\u7528",
+    "studio.collapseSidebar": "\u6536\u5408\u5074\u6B04",
+    "studio.expandSidebar": "\u5C55\u958B\u5074\u6B04",
     "ux.execution": "\u672C\u6B21\u751F\u6210",
     "ux.historyParametersHint": "\u4EE5\u4E0B\u662F\u6240\u9078\u4EFB\u52D9\u7684\u6B77\u53F2\u53C3\u6578\u3002\u672C\u6B21\u751F\u6210\u4EE5\u300C\u8F38\u51FA\u8A2D\u5B9A\u300D\u70BA\u6E96\u3002",
     "ux.imageCount": "{count} \u5F35",
@@ -19085,11 +19351,11 @@
   };
   var ICON_SPECS = new Map(
     Object.entries(FAMILY_EXTENSIONS).flatMap(
-      ([family, extensions]) => extensions.map((extension) => [extension, Object.freeze({
+      ([family2, extensions]) => extensions.map((extension) => [extension, Object.freeze({
         extension,
         label: LABEL_OVERRIDES[extension] || extension.toUpperCase(),
-        family,
-        color: FAMILY_COLORS[family]
+        family: family2,
+        color: FAMILY_COLORS[family2]
       })])
     )
   );
@@ -19366,10 +19632,10 @@
     if (sizeBytes < 1024 * 1024) return `${(sizeBytes / 1024).toFixed(sizeBytes < 10 * 1024 ? 1 : 0)} KB`;
     return `${(sizeBytes / (1024 * 1024)).toFixed(sizeBytes < 10 * 1024 * 1024 ? 1 : 0)} MB`;
   }
-  function referenceFileFamilyLabel(family) {
-    if (family === "pdf") return translate("referenceFiles.familyPdf");
-    if (family === "spreadsheet") return translate("referenceFiles.familySpreadsheet");
-    if (family === "document") return translate("referenceFiles.familyDocument");
+  function referenceFileFamilyLabel(family2) {
+    if (family2 === "pdf") return translate("referenceFiles.familyPdf");
+    if (family2 === "spreadsheet") return translate("referenceFiles.familySpreadsheet");
+    if (family2 === "document") return translate("referenceFiles.familyDocument");
     return translate("referenceFiles.familyText");
   }
   function referenceFileDownloadUrl(taskId, index) {
@@ -24499,9 +24765,8 @@
       if (event.target?.closest?.("[data-api-provider-sort-handle]")) return;
       const button = event.target?.closest?.("[data-api-provider-id]");
       if (!button) return;
-      call(methods, "selectApiProvider", button.dataset.apiProviderId);
+      call(methods, "selectApiProvider", button.dataset.apiProviderId, button);
     });
-    els10.editApiProviderButton?.addEventListener("click", () => call(methods, "editApiProvider"));
     els10.copyApiProviderButton?.addEventListener("click", () => call(methods, "copyApiProvider"));
     els10.addApiProviderButton?.addEventListener("click", () => call(methods, "addApiProvider"));
     els10.sortApiProvidersButton?.addEventListener("click", () => call(methods, "toggleApiProviderSortMode"));
@@ -24514,15 +24779,7 @@
       if (button?.dataset.removeProviderBinding) call(methods, "removeProviderBinding", button.dataset.removeProviderBinding);
     });
     els10.apiProviderBindings?.addEventListener("change", (event) => call(methods, "handleProviderBindingEditorChange", event));
-    els10.apiKeyRevealButton?.addEventListener("pointerdown", (event) => call(methods, "revealApiKeyWhilePressed", event));
-    els10.apiKeyRevealButton?.addEventListener("pointerup", () => call(methods, "hideApiKeyReveal"));
-    els10.apiKeyRevealButton?.addEventListener("pointercancel", () => call(methods, "hideApiKeyReveal"));
-    els10.apiKeyRevealButton?.addEventListener("pointerleave", () => call(methods, "hideApiKeyReveal"));
-    els10.apiKeyRevealButton?.addEventListener("blur", () => call(methods, "hideApiKeyReveal"));
-    els10.apiKeyRevealButton?.addEventListener("keydown", (event) => {
-      if (event.key === " " || event.key === "Enter") call(methods, "revealApiKeyWhilePressed", event);
-    });
-    els10.apiKeyRevealButton?.addEventListener("keyup", () => call(methods, "hideApiKeyReveal"));
+    els10.apiKeyRevealButton?.addEventListener("click", () => call(methods, "toggleApiKeyReveal"));
     els10.apiKey?.addEventListener("input", () => call(methods, "updateApiKeyRevealButton"));
     call(methods, "bindOverlayPopoverEvents");
   }
@@ -24745,16 +25002,10 @@
       apiProviderCount: document.querySelector("#apiProviderCount"),
       apiProviderSearch: document.querySelector("#apiProviderSearch"),
       apiProviderList: document.querySelector("#apiProviderList"),
-      apiProviderDetail: document.querySelector("#apiProviderDetail"),
-      apiProviderDetailName: document.querySelector("#apiProviderDetailName"),
-      apiProviderDetailBaseUrl: document.querySelector("#apiProviderDetailBaseUrl"),
-      apiProviderDetailKey: document.querySelector("#apiProviderDetailKey"),
-      apiProviderDetailConcurrency: document.querySelector("#apiProviderDetailConcurrency"),
       apiProviderEditor: document.querySelector("#apiProviderEditor"),
       apiProviderEditorTitle: document.querySelector("#apiProviderEditorTitle"),
       apiProviderName: document.querySelector("#apiProviderName"),
       apiProviderIconEmoji: document.querySelector("#apiProviderIconEmoji"),
-      editApiProviderButton: document.querySelector("#editApiProviderButton"),
       copyApiProviderButton: document.querySelector("#copyApiProviderButton"),
       addApiProviderButton: document.querySelector("#addApiProviderButton"),
       sortApiProvidersButton: document.querySelector("#sortApiProvidersButton"),
@@ -26895,27 +27146,27 @@
       modelField?.classList.add("hidden");
       return;
     }
-    const selectedFamily = catalog.families.find((family) => family.id === state6.selectedFamilyId);
+    const selectedFamily = catalog.families.find((family2) => family2.id === state6.selectedFamilyId);
     if (familyOptions) {
       familyOptions.querySelectorAll("[data-family-id]").forEach((item) => item.remove());
       familyOptions.removeAttribute("aria-disabled");
-      catalog.families.forEach((family) => {
+      catalog.families.forEach((family2) => {
         const item = document.createElement("button");
         item.type = "button";
         item.role = "radio";
-        const active = family.id === state6.selectedFamilyId;
+        const active = family2.id === state6.selectedFamilyId;
         item.className = `model-family-segment radio-btn${active ? " active" : ""}`;
-        item.dataset.familyId = family.id;
-        item.title = family.display_name;
-        item.setAttribute("aria-label", family.display_name);
+        item.dataset.familyId = family2.id;
+        item.title = family2.display_name;
+        item.setAttribute("aria-label", family2.display_name);
         item.setAttribute("aria-checked", active ? "true" : "false");
         const icon2 = document.createElement("span");
-        icon2.className = `model-family-segment-icon model-family-segment-icon-${family.id}`;
+        icon2.className = `model-family-segment-icon model-family-segment-icon-${family2.id}`;
         icon2.setAttribute("aria-hidden", "true");
-        icon2.innerHTML = modelFamilyBrandMarkHtml(family.id, "model-family-brand-mark");
+        icon2.innerHTML = modelFamilyBrandMarkHtml(family2.id, "model-family-brand-mark");
         const label = document.createElement("span");
         label.className = "model-family-segment-label";
-        label.textContent = family.short_name || family.display_name;
+        label.textContent = family2.short_name || family2.display_name;
         item.append(icon2, label);
         familyOptions.append(item);
       });
@@ -28653,8 +28904,8 @@
     };
     if (candidate.schema_version !== 1 || !Number.isInteger(candidate.manifest_version) || candidate.manifest_version <= 0 || !Array.isArray(candidate.families) || candidate.families.length === 0 || !Array.isArray(candidate.models) || candidate.models.length === 0 || !Array.isArray(candidate.providers) || candidate.providers.length === 0 || !object(candidate.default_provider_by_model) || !object(candidate.codex)) return false;
     const families = candidate.families;
-    if (!families.every((family) => object(family) && nonempty(family.id) && nonempty(family.display_name) && nonempty(family.short_name) && nonempty(family.label_key))) return false;
-    const familyIds = new Set(families.map((family) => family.id));
+    if (!families.every((family2) => object(family2) && nonempty(family2.id) && nonempty(family2.display_name) && nonempty(family2.short_name) && nonempty(family2.label_key))) return false;
+    const familyIds = new Set(families.map((family2) => family2.id));
     if (familyIds.size !== families.length) return false;
     const models = candidate.models;
     if (!models.every((model) => object(model) && nonempty(model.id) && nonempty(model.family_id) && familyIds.has(model.family_id) && nonempty(model.display_name) && nonempty(model.official_model_id) && Number.isInteger(model.version) && model.version > 0 && operations(model.operations) && Array.isArray(model.parameters) && model.parameters.every(parameter) && new Set(model.parameters.map((item) => item.id)).size === model.parameters.length && model.parameters.every((item) => item.visible_when.every((condition) => model.parameters.some((candidate2) => candidate2.id === condition.parameter_id))) && object(model.input_constraints) && Number.isInteger(model.input_constraints.max_images) && model.input_constraints.max_images >= 0 && typeof model.input_constraints.supports_mask === "boolean" && typeof model.input_constraints.supports_reference_files === "boolean" && (model.expand_advanced_parameters === void 0 || typeof model.expand_advanced_parameters === "boolean"))) return false;
@@ -28801,6 +29052,229 @@
       refreshGenerationCatalog,
       restoreModelSelection
     });
+  }
+
+  // codex_image/webui/frontend/src/provider-discovery-panel.ts
+  function discoveryProtocolForBaseUrl(baseUrl) {
+    try {
+      const url = new URL(baseUrl);
+      const path = url.pathname.replace(/\/+$/, "");
+      if (path.endsWith("/openai")) return "openai_images";
+      if (path.endsWith("/v1beta") || url.hostname === "generativelanguage.googleapis.com") return "gemini";
+    } catch {
+    }
+    return "openai_images";
+  }
+  function matchCatalogModel(remoteId, models) {
+    const id = String(remoteId || "").trim().toLowerCase().split("/").pop() || "";
+    let best = "";
+    let bestLength = 0;
+    for (const model of models) {
+      if (!availableProtocolsForModel(model.id).length) continue;
+      for (const raw of [model.id, model.official_model_id]) {
+        const key2 = String(raw || "").toLowerCase();
+        if (!key2 || key2.length <= bestLength) continue;
+        if (id === key2 || id.startsWith(key2) && /[-:@_]/.test(id.charAt(key2.length))) {
+          best = model.id;
+          bestLength = key2.length;
+        }
+      }
+    }
+    return best;
+  }
+  function family(modelId) {
+    return modelId.startsWith("nano-banana") ? "nano-banana" : "gpt-image";
+  }
+  function templateForDiscoveredModel(modelId, baseUrl, bindings) {
+    const protocols = availableProtocolsForModel(modelId);
+    const sibling = bindings.find((binding) => family(binding.canonical_model_id) === family(modelId) && protocols.includes(protocolForBinding(binding)));
+    if (sibling) {
+      const match = Object.keys(BINDING_TEMPLATES).find((id) => BINDING_TEMPLATES[id].protocol_profile === sibling.protocol_profile && BINDING_TEMPLATES[id].parameter_codec === sibling.parameter_codec);
+      if (match) return match;
+    }
+    const preferred = discoveryProtocolForBaseUrl(baseUrl);
+    return bindingTemplateForProtocol(modelId, protocols.includes(preferred) ? preferred : protocols[0]);
+  }
+  function el(tag, className = "", text = "") {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+  function initProviderDiscoveryPanel(context) {
+    const { button, status, results } = context;
+    if (!button || !status || !results) return { clear() {
+    } };
+    let controller = null;
+    const setStatus7 = (message, error = false) => {
+      status.textContent = message;
+      status.hidden = !message;
+      status.classList.toggle("error", error);
+    };
+    const setBusy = (busy) => {
+      button.disabled = busy;
+      button.setAttribute("aria-busy", String(busy));
+      button.textContent = translate(busy ? "apiSettings.fetchingModels" : "apiSettings.discoverModels");
+    };
+    const clear = () => {
+      controller?.abort();
+      controller = null;
+      setBusy(false);
+      setStatus7("");
+      results.hidden = true;
+      results.replaceChildren();
+    };
+    const selectedCount = () => results.querySelectorAll("input[data-discovery-remote]:checked:not(:disabled)").length;
+    const syncAddButton = () => {
+      const add = results.querySelector("[data-discovery-add]");
+      if (!add) return;
+      const count = selectedCount();
+      add.disabled = count === 0;
+      add.textContent = formatTranslation("apiSettings.discoveryAddSelected", { count: String(count) });
+    };
+    const modelName = (modelId) => context.getModels().find((model) => model.id === modelId)?.display_name || modelId;
+    const item = (remote, modelId, bindings, models) => {
+      const row = modelId ? el("label", "provider-discovery-item") : el("div", "provider-discovery-item");
+      row.dataset.discoveryText = remote.toLowerCase();
+      const checkbox = el("input");
+      checkbox.type = "checkbox";
+      checkbox.dataset.discoveryRemote = remote;
+      checkbox.dataset.discoveryModel = modelId;
+      row.append(checkbox, el("code", "provider-discovery-remote", remote));
+      if (modelId) {
+        const existing = bindings.find((binding) => binding.canonical_model_id === modelId);
+        const target = el("span", "provider-discovery-target", modelName(modelId));
+        if (existing?.remote_model_id === remote) {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+          target.textContent = `${modelName(modelId)} \xB7 ${translate("apiSettings.discoveryAdded")}`;
+        } else if (existing) {
+          target.textContent = `${modelName(modelId)} \xB7 ${translate("apiSettings.discoveryReplaces")}`;
+          target.title = existing.remote_model_id;
+        }
+        row.append(target);
+      } else {
+        const select = el("select", "control provider-discovery-model");
+        select.append(new Option(translate("apiSettings.discoveryChooseModel"), ""));
+        models.filter((model) => availableProtocolsForModel(model.id).length).forEach((model) => select.append(new Option(model.display_name, model.id)));
+        select.addEventListener("change", () => {
+          checkbox.dataset.discoveryModel = select.value;
+          checkbox.checked = Boolean(select.value);
+          checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+        row.append(select);
+      }
+      return row;
+    };
+    const render2 = (remotes) => {
+      const models = context.getModels();
+      const bindings = context.getBindings();
+      const matched = remotes.map((remote) => ({ remote, modelId: matchCatalogModel(remote, models) }));
+      const known = matched.filter((entry) => entry.modelId);
+      const others = matched.filter((entry) => !entry.modelId);
+      results.replaceChildren();
+      if (remotes.length > 12) {
+        const filter = el("input", "control provider-discovery-filter");
+        filter.type = "search";
+        filter.placeholder = translate("apiSettings.discoveryFilter");
+        filter.setAttribute("aria-label", translate("apiSettings.discoveryFilter"));
+        filter.addEventListener("input", () => {
+          const query = filter.value.trim().toLowerCase();
+          results.querySelectorAll("[data-discovery-text]").forEach((row) => {
+            row.hidden = Boolean(query) && !row.dataset.discoveryText.includes(query);
+          });
+          if (query && others.length) results.querySelector("details")?.setAttribute("open", "");
+        });
+        results.append(filter);
+      }
+      if (known.length) {
+        const list2 = el("div", "provider-discovery-list");
+        const claimed = new Set(bindings.map((binding) => binding.canonical_model_id));
+        known.forEach((entry) => {
+          const row = item(entry.remote, entry.modelId, bindings, models);
+          const checkbox = row.querySelector("input[data-discovery-remote]");
+          if (checkbox && !checkbox.disabled && !claimed.has(entry.modelId)) {
+            checkbox.checked = true;
+            claimed.add(entry.modelId);
+          }
+          list2.append(row);
+        });
+        results.append(list2);
+      }
+      if (others.length) {
+        const details2 = el("details", "provider-discovery-others");
+        if (!known.length) details2.open = true;
+        details2.append(el("summary", "", formatTranslation("apiSettings.discoveryOthers", { count: String(others.length) })));
+        const list2 = el("div", "provider-discovery-list");
+        others.forEach((entry) => list2.append(item(entry.remote, "", bindings, models)));
+        details2.append(list2);
+        results.append(details2);
+      }
+      const footer = el("div", "provider-discovery-footer");
+      const add = el("button", "run-button provider-discovery-add");
+      add.type = "button";
+      add.dataset.discoveryAdd = "";
+      const close = el("button", "ghost-button", translate("apiSettings.discoveryClose"));
+      close.type = "button";
+      close.addEventListener("click", clear);
+      footer.append(close, add);
+      results.append(footer);
+      results.hidden = false;
+      syncAddButton();
+      setStatus7(known.length ? formatTranslation("apiSettings.discoverySummary", { count: String(remotes.length), matched: String(known.length) }) : formatTranslation("apiSettings.discoveryNoMatch", { count: String(remotes.length) }));
+    };
+    results.addEventListener("change", (event) => {
+      const checkbox = event.target;
+      if (!checkbox?.matches("input[data-discovery-remote]")) return;
+      if (checkbox.checked && checkbox.dataset.discoveryModel) {
+        results.querySelectorAll("input[data-discovery-remote]:checked:not(:disabled)").forEach((other) => {
+          if (other !== checkbox && other.dataset.discoveryModel === checkbox.dataset.discoveryModel) other.checked = false;
+        });
+      }
+      if (checkbox.checked && !checkbox.dataset.discoveryModel) {
+        checkbox.checked = false;
+        checkbox.parentElement?.querySelector("select")?.focus();
+      }
+      syncAddButton();
+    });
+    results.addEventListener("click", (event) => {
+      const add = event.target?.closest("[data-discovery-add]");
+      if (!add || add.disabled) return;
+      const choices = [...results.querySelectorAll("input[data-discovery-remote]:checked:not(:disabled)")].map((checkbox) => ({ remote: checkbox.dataset.discoveryRemote || "", modelId: checkbox.dataset.discoveryModel || "" })).filter((choice) => choice.remote && choice.modelId);
+      const count = context.addChoices(choices);
+      clear();
+      if (count) setStatus7(formatTranslation("apiSettings.discoveryApplied", { count: String(count) }));
+    });
+    button.addEventListener("click", async () => {
+      if (button.disabled) return;
+      clear();
+      const current = new AbortController();
+      controller = current;
+      setBusy(true);
+      setStatus7(translate("apiSettings.fetchingModels"));
+      const connection = context.getConnection();
+      try {
+        const remotes = await fetchProviderModels(connection, discoveryProtocolForBaseUrl(connection.base_url), current.signal);
+        if (controller !== current) return;
+        if (!remotes.length) {
+          setStatus7(translate("apiSettings.modelsEmpty"));
+          return;
+        }
+        render2(remotes);
+      } catch (error) {
+        if (controller !== current || current.signal.aborted) return;
+        const key2 = error instanceof Error && error.message.startsWith("apiSettings.") ? error.message : "apiSettings.modelsFetchFailed";
+        setStatus7(translate(key2), true);
+      } finally {
+        if (controller === current) {
+          controller = null;
+          setBusy(false);
+        }
+      }
+    });
+    context.connectionInputs.forEach((input) => input?.addEventListener("input", clear));
+    document.addEventListener(LOCALE_CHANGE_EVENT, clear);
+    return { clear };
   }
 
   // codex_image/webui/frontend/src/appearance.ts
@@ -29289,13 +29763,13 @@
     panel.style.removeProperty("--system-settings-section-height");
     panel.style.height = "";
   }
-  function positionSystemSettingsModal() {
+  function positionSystemSettingsModal(height) {
     const { els: els10 } = getLegacyBridge();
     const modal = els10.systemSettingsModal;
     const panel = systemSettingsPanel();
     if (!modal || !panel || modal.classList.contains("hidden")) return;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-    const panelHeight = panel.getBoundingClientRect().height;
+    const panelHeight = height ?? panel.getBoundingClientRect().height;
     const centeredTop = Math.floor((viewportHeight - panelHeight) / 2);
     const top = Math.max(MIN_SYSTEM_SETTINGS_MODAL_EDGE, centeredTop);
     modal.style.setProperty("--system-settings-modal-top", `${top}px`);
@@ -29381,6 +29855,9 @@
       maybeCall("updateModeSpecificSettings");
     }
     refreshSegmentedIndicators();
+    if (panel && !els10.systemSettingsModal?.classList.contains("hidden")) {
+      positionSystemSettingsModal(systemSettingsTargetHeight(panel));
+    }
     if (animateHeight && panel) animateSystemSettingsPanelHeight(panel, beforeHeight);
   }
   function userConfigBackupViewIsOpen() {
@@ -29452,6 +29929,7 @@
     setSystemSettingsTab(tab);
     modal?.classList.remove("hidden");
     modal?.setAttribute("aria-hidden", "false");
+    if (normalizedTab(tab) === "api") maybeCall("resumeApiProviderEditor");
     if (wasHidden) positionSystemSettingsModal();
     refreshSegmentedIndicators();
   }
@@ -29471,6 +29949,7 @@
       if (modal.contains(document.activeElement)) activeElement.blur();
     }
     systemSettingsReturnFocus = null;
+    maybeCall("releaseCleanApiProviderEditor");
     modal?.classList.add("hidden");
     modal?.setAttribute("aria-hidden", "true");
     modal?.style.removeProperty("--system-settings-modal-top");
@@ -29592,10 +30071,6 @@
   function providerHasApiKey(provider) {
     return Boolean(provider?.api_key || provider?.api_key_set);
   }
-  function providerKeyLabel(provider) {
-    if (!providerHasApiKey(provider)) return translate("apiSettings.keyNotSet");
-    return provider.api_key_masked || translate("apiSettings.keySaved");
-  }
   function providerMetaLabel(provider) {
     return `${translate("apiSettings.modelBindings")} (${provider?.bindings?.length || 0})`;
   }
@@ -29638,20 +30113,62 @@
   function hideApiKeyReveal() {
     setApiKeyRevealVisible(false);
   }
+  var revealedSavedKey = "";
+  var revealRequest = 0;
+  function enteredApiKey() {
+    const value = String(els5.apiKey?.value || "");
+    return value && value === revealedSavedKey ? "" : value;
+  }
+  function savedKeyProviderId() {
+    const draft2 = state4.apiProviderDraft;
+    if (!apiProviderEditorActive() || !draft2?.api_key_set) return "";
+    if (state4.apiProviderDraftIsNew) return String(draft2.api_key_source_provider_id || "");
+    return String(draft2.id || "");
+  }
   function updateApiKeyRevealButton() {
     if (!els5.apiKeyRevealButton) return;
-    const canReveal = Boolean(els5.apiKey?.value);
-    if (canReveal) els5.apiKey?.removeAttribute("aria-invalid");
-    if (!canReveal) hideApiKeyReveal();
-    els5.apiKeyRevealButton.disabled = !canReveal;
-    const label = translate("apiSettings.showApiKey");
+    const hasValue = Boolean(els5.apiKey?.value);
+    if (hasValue) els5.apiKey?.removeAttribute("aria-invalid");
+    if (!hasValue) hideApiKeyReveal();
+    els5.apiKeyRevealButton.disabled = !hasValue && !savedKeyProviderId();
+    const label = translate(els5.apiKey?.type === "text" ? "apiSettings.hideApiKey" : "apiSettings.showApiKey");
     els5.apiKeyRevealButton.setAttribute("aria-label", label);
     els5.apiKeyRevealButton.setAttribute("title", label);
   }
-  function revealApiKeyWhilePressed(event) {
-    if (!els5.apiKey?.value || els5.apiKeyRevealButton?.disabled) return;
-    event?.preventDefault();
+  async function fetchSavedApiKey(providerId) {
+    const response = await fetch("/api/api-settings/reveal-key", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ provider_id: providerId }),
+      cache: "no-store"
+    });
+    const payload = await response.json().catch(() => null);
+    if (!response.ok || typeof payload?.api_key !== "string") throw new Error("apiSettings.revealKeyFailed");
+    return payload.api_key;
+  }
+  async function toggleApiKeyReveal() {
+    if (!els5.apiKey || els5.apiKeyRevealButton?.disabled) return;
+    if (els5.apiKey.type === "text") {
+      hideApiKeyReveal();
+      return;
+    }
+    if (!els5.apiKey.value) {
+      const providerId = savedKeyProviderId();
+      if (!providerId) return;
+      const request = ++revealRequest;
+      const editingId = state4.apiProviderEditingId;
+      try {
+        const key2 = await fetchSavedApiKey(providerId);
+        if (request !== revealRequest || state4.apiProviderEditingId !== editingId || els5.apiKey.value) return;
+        revealedSavedKey = key2;
+        els5.apiKey.value = key2;
+      } catch {
+        setApiSettingsFeedback(translate("apiSettings.revealKeyFailed"), "error");
+        return;
+      }
+    }
     setApiKeyRevealVisible(true);
+    updateApiKeyRevealButton();
   }
   function scrollApiProviderEditorIntoView() {
     window.requestAnimationFrame(() => {
@@ -29659,26 +30176,94 @@
     });
   }
   function setApiProviderEditorVisible(visible) {
-    els5.apiProviderSection?.classList.toggle("editing", visible);
-    els5.apiProviderSection?.setAttribute("aria-hidden", visible ? "true" : "false");
-    if (visible) els5.apiProviderSection?.setAttribute("inert", "");
-    else els5.apiProviderSection?.removeAttribute("inert");
     els5.apiProviderEditor?.classList.toggle("hidden", !visible);
     els5.apiProviderEditor?.setAttribute("aria-hidden", visible ? "false" : "true");
-    els5.apiProviderDetail?.classList.toggle("hidden", visible);
-    els5.apiSettingsActions?.classList.toggle("hidden", visible);
-    els5.apiSettingsActions?.setAttribute("aria-hidden", visible ? "true" : "false");
-    if (els5.editApiProviderButton) els5.editApiProviderButton.disabled = visible;
-    if (els5.addApiProviderButton) els5.addApiProviderButton.disabled = visible;
-    if (els5.copyApiProviderButton) els5.copyApiProviderButton.disabled = visible;
-    if (els5.sortApiProvidersButton) els5.sortApiProvidersButton.disabled = visible;
-    if (els5.deleteApiProviderButton) {
-      els5.deleteApiProviderButton.disabled = visible || normalizeApiSettings(state4.apiSettings).providers.length <= 1;
-    }
     if (!visible) hideApiKeyReveal();
   }
   function apiProviderEditorActive() {
     return Boolean(state4.apiProviderEditingId && state4.apiProviderDraft);
+  }
+  var draftBaseline = "";
+  var PROVIDER_FORM_LOADED_EVENT = "provider-form-loaded";
+  function draftSnapshot() {
+    try {
+      return JSON.stringify(draftProviderFromForm());
+    } catch {
+      return "";
+    }
+  }
+  function apiProviderDraftDirty() {
+    return apiProviderEditorActive() && draftSnapshot() !== draftBaseline;
+  }
+  function apiSettingsPanelOpen() {
+    const modal = els5.systemSettingsModal;
+    const panel = els5.systemSettingsApiPanel;
+    return Boolean(modal && panel && !modal.classList.contains("hidden") && !panel.hidden);
+  }
+  function listedProviderId(settings) {
+    if (state4.apiProviderDraftIsNew) return "";
+    if (apiProviderEditorActive()) return state4.apiProviderEditingId;
+    return settings.active_provider_id;
+  }
+  function refreshApiProviderEditorControls() {
+    const editing = apiProviderEditorActive();
+    const isNew = Boolean(state4.apiProviderDraftIsNew);
+    const dirty = apiProviderDraftDirty();
+    const cancel = els5.cancelApiProviderEditButton;
+    if (cancel) {
+      const key2 = isNew ? "action.cancel" : "apiSettings.revertChanges";
+      cancel.dataset.i18n = key2;
+      cancel.textContent = translate(key2);
+      cancel.disabled = !editing || !isNew && !dirty;
+    }
+    if (els5.copyApiProviderButton) els5.copyApiProviderButton.disabled = !editing || isNew;
+    if (els5.deleteApiProviderButton) {
+      els5.deleteApiProviderButton.disabled = !editing || isNew || normalizeApiSettings(state4.apiSettings).providers.length <= 1;
+    }
+    if (els5.sortApiProvidersButton && !state4.apiProviderSortMode) {
+      els5.sortApiProvidersButton.disabled = dirty || isNew || normalizeApiSettings(state4.apiSettings).providers.length <= 1;
+    }
+  }
+  function confirmDiscardThen(anchor, action) {
+    if (!apiProviderDraftDirty()) {
+      action();
+      return;
+    }
+    openConfirmPopover(anchor || els5.saveApiProviderEditButton, {
+      title: translate("apiSettings.discardChangesTitle"),
+      message: translate("apiSettings.discardChangesMessage"),
+      confirmText: translate("apiSettings.discardChanges"),
+      focusCancel: true,
+      onConfirm: action
+    });
+  }
+  function beginEditingProvider(providerId, options = {}) {
+    const settings = normalizeApiSettings(state4.apiSettings);
+    const provider = settings.providers.find((item) => item.id === providerId) || settings.providers.find((item) => item.id === settings.active_provider_id) || settings.providers[0];
+    if (!provider) return;
+    state4.apiSettings = normalizeApiSettings({ ...settings, active_provider_id: provider.id });
+    persistApiSettings();
+    state4.apiProviderSortMode = false;
+    state4.apiProviderEditingId = provider.id;
+    state4.apiProviderDraftIsNew = false;
+    state4.apiProviderDraft = normalizeApiProvider({
+      ...provider,
+      default_model_ids: Object.keys(state4.apiSettings.default_provider_by_model || {}).filter((modelId) => state4.apiSettings.default_provider_by_model[modelId] === provider.id)
+    }, 0);
+    populateApiSettingsForm();
+    if (!options.keepFeedback) setApiSettingsFeedback("", "");
+  }
+  function resumeApiProviderEditor(providerId) {
+    if (apiSettingsSaving || state4.apiProviderSortMode || apiProviderEditorActive()) return;
+    if (!apiSettingsPanelOpen()) return;
+    beginEditingProvider(providerId, { keepFeedback: true });
+  }
+  function releaseCleanApiProviderEditor() {
+    if (!apiProviderEditorActive() || apiProviderDraftDirty()) return;
+    state4.apiProviderEditingId = null;
+    state4.apiProviderDraft = null;
+    state4.apiProviderDraftIsNew = false;
+    setApiProviderEditorVisible(false);
   }
   function syncSvgAuthorModelVisibility() {
     let official = false;
@@ -29698,7 +30283,7 @@
       icon_emoji: els5.apiProviderIconEmoji ? els5.apiProviderIconEmoji.value : draft2.icon_emoji,
       base_url: els5.apiBaseUrl?.value || DEFAULT_API_BASE_URL,
       svg_author_model: els5.apiSvgAuthorModel?.value ?? draft2.svg_author_model,
-      api_key: els5.apiKey?.value || "",
+      api_key: enteredApiKey(),
       concurrency: normalizeApiImagesConcurrency(els5.apiImagesConcurrency?.value),
       bindings: bindingCards,
       default_model_ids: bindingCards.filter((binding) => binding.is_default).map((binding) => binding.canonical_model_id),
@@ -29714,6 +30299,8 @@
     if (els5.apiSvgAuthorModel) els5.apiSvgAuthorModel.value = provider.svg_author_model || "";
     syncSvgAuthorModelVisibility();
     if (els5.apiImagesConcurrency) els5.apiImagesConcurrency.value = String(normalizeApiImagesConcurrency(provider.concurrency ?? provider.images_concurrency));
+    revealedSavedKey = "";
+    revealRequest += 1;
     if (els5.apiKey) {
       els5.apiKey.value = provider.api_key || "";
       els5.apiKey.placeholder = provider.api_key_set && !provider.api_key ? translate("apiSettings.savedKeyPlaceholder") : "sk-...";
@@ -29753,18 +30340,18 @@
       const canSort = settings.providers.length > 1;
       els5.sortApiProvidersButton.classList.toggle("hidden", !canSort);
       els5.sortApiProvidersButton.classList.toggle("active", sorting);
-      els5.sortApiProvidersButton.disabled = apiProviderEditorActive() || !canSort;
+      els5.sortApiProvidersButton.disabled = !canSort || !sorting && (apiProviderDraftDirty() || Boolean(state4.apiProviderDraftIsNew));
       els5.sortApiProvidersButton.textContent = translate(sorting ? "apiSettings.finishSortProviders" : "apiSettings.sortProviders");
       els5.sortApiProvidersButton.setAttribute("aria-pressed", sorting ? "true" : "false");
     }
-    els5.addApiProviderButton?.classList.toggle("hidden", sorting || apiProviderEditorActive());
+    els5.addApiProviderButton?.classList.toggle("hidden", sorting);
     if (!els5.apiProviderList) return;
     els5.apiProviderList.classList.toggle("is-sorting", sorting);
     els5.apiProviderList.setAttribute("role", sorting ? "list" : "listbox");
     if (sorting) {
       const rows = settings.providers.map((provider) => {
         const row = document.createElement("div");
-        row.className = `api-provider-sort-row${provider.id === settings.active_provider_id ? " active" : ""}`;
+        row.className = `api-provider-sort-row${provider.id === listedProviderId(settings) ? " active" : ""}`;
         row.dataset.apiProviderId = provider.id;
         row.setAttribute("role", "listitem");
         const content = document.createElement("div");
@@ -29801,7 +30388,7 @@
     const visibleProviders = settings.providers.filter((provider) => apiProviderMatchesSearch(provider, searchQuery));
     const buttons = visibleProviders.map((provider) => {
       const button = document.createElement("button");
-      const active = provider.id === settings.active_provider_id;
+      const active = provider.id === listedProviderId(settings);
       button.type = "button";
       button.className = `api-provider-choice${active ? " active" : ""}`;
       button.dataset.apiProviderId = provider.id;
@@ -29833,16 +30420,7 @@
       return;
     }
     els5.apiProviderList.replaceChildren(...buttons);
-    if (!searchQuery) scrollActiveApiProviderCardIntoView(settings.active_provider_id, "center");
-  }
-  function renderApiProviderDetail() {
-    const provider = activeApiProvider();
-    setElementText(els5.apiProviderDetailName, provider.name || provider.id);
-    setElementText(els5.apiProviderDetailBaseUrl, provider.base_url || DEFAULT_API_BASE_URL);
-    if (els5.apiProviderDetailName) els5.apiProviderDetailName.title = provider.name || provider.id;
-    if (els5.apiProviderDetailBaseUrl) els5.apiProviderDetailBaseUrl.title = provider.base_url || DEFAULT_API_BASE_URL;
-    setElementText(els5.apiProviderDetailKey, providerKeyLabel(provider));
-    setElementText(els5.apiProviderDetailConcurrency, normalizeApiImagesConcurrency(provider.concurrency ?? provider.images_concurrency));
+    if (!searchQuery) scrollActiveApiProviderCardIntoView(listedProviderId(settings), "center");
   }
   function renderApiProviderEditor() {
     const editing = apiProviderEditorActive();
@@ -29851,6 +30429,9 @@
     const isNew = Boolean(state4.apiProviderDraftIsNew);
     setElementText(els5.apiProviderEditorTitle, translate(isNew ? "apiSettings.newProviderTitle" : "apiSettings.editProvider"));
     writeProviderForm(state4.apiProviderDraft);
+    draftBaseline = draftSnapshot();
+    refreshApiProviderEditorControls();
+    els5.apiProviderEditor?.dispatchEvent(new Event(PROVIDER_FORM_LOADED_EVENT));
   }
   function activeApiProvider() {
     const settings = normalizeApiSettings(state4.apiSettings);
@@ -29921,9 +30502,10 @@
       els5.apiProvider.value = provider.id;
     }
     renderApiProviderList();
-    renderApiProviderDetail();
     if (!options.preserveEditor || !apiProviderEditorActive()) renderApiProviderEditor();
+    else refreshApiProviderEditorControls();
     updateModeSpecificSettings();
+    resumeApiProviderEditor();
   }
   function readApiSettingsForm(options = {}) {
     const settings = normalizeApiSettings(state4.apiSettings);
@@ -29942,10 +30524,9 @@
   }
   function addApiProvider() {
     if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) {
-      setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
-      return;
-    }
+    confirmDiscardThen(els5.addApiProviderButton, startNewApiProvider);
+  }
+  function startNewApiProvider() {
     state4.apiProviderSortMode = false;
     const id = `provider-${Date.now()}`;
     state4.apiProviderEditingId = id;
@@ -29963,13 +30544,12 @@
     els5.apiProviderName?.focus();
   }
   function copyApiProvider() {
-    if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) {
-      setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
-      return;
-    }
+    if (apiSettingsSaving || state4.apiProviderDraftIsNew) return;
+    confirmDiscardThen(els5.copyApiProviderButton, startProviderCopy);
+  }
+  function startProviderCopy() {
     state4.apiProviderSortMode = false;
-    const provider = activeApiProvider();
+    const provider = providerById(state4.apiProviderEditingId || activeApiProvider().id);
     const copiesSavedKey = providerHasApiKey(provider);
     const id = uniqueCopiedProviderId(provider);
     state4.apiProviderEditingId = id;
@@ -29990,15 +30570,15 @@
     els5.apiProviderName?.focus();
   }
   async function deleteApiProvider() {
-    if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) {
-      setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
-      return;
-    }
-    const activeId = state4.apiSettings.active_provider_id;
+    if (apiSettingsSaving || state4.apiProviderDraftIsNew) return;
+    const activeId = state4.apiProviderEditingId || state4.apiSettings.active_provider_id;
     const candidate = withoutApiProvider(state4.apiSettings, activeId);
     if (!candidate) return;
+    state4.apiProviderEditingId = null;
+    state4.apiProviderDraft = null;
+    state4.apiProviderDraftIsNew = false;
     if (!await saveApiSettings({ auto: true, candidateSettings: candidate })) {
+      resumeApiProviderEditor(activeId);
       els5.deleteApiProviderButton?.focus({ preventScroll: true });
       return;
     }
@@ -30016,13 +30596,9 @@
     els5.apiProviderList?.querySelector("[aria-selected='true']")?.focus({ preventScroll: true });
   }
   function confirmDeleteApiProvider(anchor = els5.deleteApiProviderButton) {
-    if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) {
-      setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
-      return;
-    }
+    if (apiSettingsSaving || state4.apiProviderDraftIsNew) return;
     if (state4.apiSettings.providers.length <= 1) return;
-    const provider = activeApiProvider();
+    const provider = providerById(state4.apiProviderEditingId || activeApiProvider().id);
     openConfirmPopover(anchor || els5.deleteApiProviderButton, {
       title: translate("apiSettings.deleteProviderTitle"),
       message: formatTranslation("apiSettings.deleteProviderMessage", {
@@ -30034,7 +30610,7 @@
     });
   }
   function openApiSettingsModal() {
-    if (apiProviderEditorActive()) {
+    if (apiProviderDraftDirty() || state4.apiProviderDraftIsNew) {
       openSystemSettingsModal("api");
       return;
     }
@@ -30042,10 +30618,15 @@
     state4.apiProviderEditingId = null;
     state4.apiProviderDraft = null;
     state4.apiProviderDraftIsNew = false;
+    state4.apiProviderSortMode = false;
     if (els5.apiProviderSearch) els5.apiProviderSearch.value = "";
-    populateApiSettingsForm();
+    const generating = state4.selectedProviderId;
+    if ((state4.apiSettings.providers || []).some((provider) => provider.id === generating)) {
+      state4.apiSettings = normalizeApiSettings({ ...state4.apiSettings, active_provider_id: generating });
+    }
     setApiSettingsFeedback("", "");
     openSystemSettingsModal("api");
+    resumeApiProviderEditor(activeApiProvider().id);
     scrollActiveApiProviderCardIntoView(activeApiProvider().id, "center");
   }
   function openGenerationProviderSettings() {
@@ -30055,62 +30636,31 @@
     closeSystemSettingsModal();
   }
   function selectApiProvider(providerId, anchor) {
-    if (apiSettingsSaving) return;
+    if (apiSettingsSaving || state4.apiProviderSortMode) return;
     const id = String(providerId || "").trim();
     if (!id) return;
-    if (apiProviderEditorActive()) {
-      setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
-      return;
-    }
-    if (state4.apiProviderSortMode) return;
-    const provider = providerById(id);
-    const providerChanged = provider.id !== activeApiProvider().id;
-    if (!providerChanged && provider.id === currentApiProviderId()) return;
-    const continueSwitch = () => {
-      state4.apiSettings = normalizeApiSettings({
-        ...state4.apiSettings,
-        active_provider_id: provider.id
-      });
-      populateApiSettingsForm();
-      scrollActiveApiProviderCardIntoView(provider.id, "nearest");
-      persistApiSettings();
-      legacyMethod4("selectGenerationProvider", provider.id);
-      renderAuthSourceAfterProviderChange();
-      if (providerChanged) queueApiSettingsAutosave({ silent: true });
-    };
-    void anchor;
-    continueSwitch();
+    if (apiProviderEditorActive() && !state4.apiProviderDraftIsNew && state4.apiProviderEditingId === id) return;
+    confirmDiscardThen(anchor, () => {
+      beginEditingProvider(id);
+      scrollActiveApiProviderCardIntoView(id, "nearest");
+    });
   }
   function editApiProvider() {
-    if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) return;
-    state4.apiProviderSortMode = false;
-    const provider = activeApiProvider();
-    state4.apiProviderEditingId = provider.id;
-    state4.apiProviderDraftIsNew = false;
-    state4.apiProviderDraft = normalizeApiProvider({
-      ...provider,
-      default_model_ids: Object.keys(state4.apiSettings.default_provider_by_model || {}).filter((modelId) => state4.apiSettings.default_provider_by_model[modelId] === provider.id)
-    }, 0);
-    populateApiSettingsForm();
-    setApiSettingsFeedback(translate("apiSettings.editDraftStatus"), "running");
-    scrollApiProviderEditorIntoView();
+    if (apiSettingsSaving || apiProviderEditorActive()) return;
+    beginEditingProvider(activeApiProvider().id);
     els5.apiProviderName?.focus();
   }
   function cancelApiProviderEdit() {
     if (apiSettingsSaving) return;
     if (!apiProviderEditorActive()) return;
     els5.systemSettingsApiTab?.focus({ preventScroll: true });
-    state4.apiProviderEditingId = null;
-    state4.apiProviderDraft = null;
-    state4.apiProviderDraftIsNew = false;
-    populateApiSettingsForm();
-    setApiSettingsFeedback("", "");
+    const providerId = state4.apiProviderDraftIsNew ? activeApiProvider().id : state4.apiProviderEditingId;
+    beginEditingProvider(providerId);
     scrollActiveApiProviderCardIntoView(activeApiProvider().id, "center");
   }
   function toggleApiProviderSortMode() {
     if (apiSettingsSaving) return;
-    if (apiProviderEditorActive()) {
+    if (!state4.apiProviderSortMode && (apiProviderDraftDirty() || state4.apiProviderDraftIsNew)) {
       setApiSettingsFeedback(translate("apiSettings.finishEditFirst"), "error");
       return;
     }
@@ -30118,9 +30668,18 @@
     if (settings.providers.length <= 1) return;
     cancelApiProviderSortInteraction(true);
     state4.apiProviderSortMode = !state4.apiProviderSortMode;
+    if (state4.apiProviderSortMode) {
+      state4.apiProviderEditingId = null;
+      state4.apiProviderDraft = null;
+      state4.apiProviderDraftIsNew = false;
+      setApiProviderEditorVisible(false);
+    }
     renderApiProviderList();
-    if (!state4.apiProviderSortMode) scrollActiveApiProviderCardIntoView(settings.active_provider_id, "center");
     setApiSettingsFeedback(state4.apiProviderSortMode ? translate("apiSettings.sortProviderModeStatus") : "", state4.apiProviderSortMode ? "running" : "");
+    if (!state4.apiProviderSortMode) {
+      resumeApiProviderEditor(settings.active_provider_id);
+      scrollActiveApiProviderCardIntoView(settings.active_provider_id, "center");
+    }
   }
   function focusedApiProviderSortId() {
     if (!state4.apiProviderSortMode) return "";
@@ -30199,6 +30758,47 @@
     );
     openProviderBindingCard(els5.apiProviderBindings, bindingId, { focus: true });
     updateProviderBindingCount();
+    refreshApiProviderEditorControls();
+  }
+  function withoutPlaceholderBinding(draftId, bindings) {
+    const placeholder = bindings[0];
+    return state4.apiProviderDraftIsNew && bindings.length === 1 && placeholder && placeholder.id === `${draftId}-gpt-image-2` && placeholder.remote_model_id === DEFAULT_API_IMAGE_MODEL ? [] : bindings;
+  }
+  function discoveryBaseBindings() {
+    if (!apiProviderEditorActive()) return [];
+    return withoutPlaceholderBinding(state4.apiProviderDraft.id, readProviderBindingCards(els5.apiProviderBindings));
+  }
+  function addDiscoveredBindings(choices) {
+    if (!apiProviderEditorActive() || !choices.length) return 0;
+    const draft2 = draftProviderFromForm();
+    const models = state4.generationCatalog?.models || [];
+    let bindings = withoutPlaceholderBinding(draft2.id, [...draft2.bindings]);
+    let changed = 0;
+    const stamp = Date.now();
+    choices.forEach((choice, index) => {
+      const model = models.find((item) => item.id === choice.modelId);
+      if (!model) return;
+      const existing = bindings.find((binding) => binding.canonical_model_id === model.id);
+      if (existing) {
+        if (existing.remote_model_id === choice.remote) return;
+        existing.remote_model_id = choice.remote;
+        changed += 1;
+        return;
+      }
+      const template = templateForDiscoveredModel(model.id, els5.apiBaseUrl?.value || "", bindings);
+      bindings.push(bindingFromTemplate(`${draft2.id}-${model.id}-${stamp}-${index}`, model.id, choice.remote, template, [...model.operations]));
+      if (!state4.apiSettings.default_provider_by_model?.[model.id]) {
+        draft2.default_model_ids = [.../* @__PURE__ */ new Set([...draft2.default_model_ids || [], model.id])];
+      }
+      changed += 1;
+    });
+    if (!changed) return 0;
+    draft2.bindings = bindings;
+    state4.apiProviderDraft = draft2;
+    renderProviderBindingCards(els5.apiProviderBindings, bindings, models, draft2.id, defaultsForProviderDraft(draft2));
+    updateProviderBindingCount();
+    refreshApiProviderEditorControls();
+    return changed;
   }
   function removeProviderBinding(bindingId) {
     if (!apiProviderEditorActive()) return;
@@ -30217,6 +30817,7 @@
       defaultsForProviderDraft(draft2)
     );
     updateProviderBindingCount();
+    refreshApiProviderEditorControls();
   }
   function renderAuthSourceAfterProviderChange() {
     legacyMethod4("renderAuthSource", state4.authStatus);
@@ -30279,7 +30880,7 @@
     return true;
   }
   function queueApiSettingsAutosave(options = {}) {
-    if (apiSettingsSaving || apiProviderEditorActive()) return;
+    if (apiSettingsSaving || apiProviderDraftDirty() || state4.apiProviderDraftIsNew) return;
     if (apiSettingsAutosaveTimerId !== null) {
       window.clearTimeout(apiSettingsAutosaveTimerId);
     }
@@ -30343,7 +30944,7 @@
     if (apiSettingsSaving) return false;
     const autoSave = Boolean(options.auto);
     const silent = autoSave && Boolean(options.silent);
-    if (autoSave && apiProviderEditorActive()) return true;
+    if (autoSave && (apiProviderDraftDirty() || state4.apiProviderDraftIsNew)) return true;
     if (apiSettingsAutosaveTimerId !== null) {
       window.clearTimeout(apiSettingsAutosaveTimerId);
       apiSettingsAutosaveTimerId = null;
@@ -30440,6 +31041,10 @@
       state4.apiProviderEditingId = null;
       state4.apiProviderDraft = null;
       state4.apiProviderDraftIsNew = false;
+      const reopenId = previousDraft?.id || previousEditingId;
+      if (reopenId && state4.apiSettings.providers.some((provider) => provider.id === reopenId)) {
+        state4.apiSettings = normalizeApiSettings({ ...state4.apiSettings, active_provider_id: reopenId });
+      }
       persistApiSettings();
       populateApiSettingsForm();
       focusApiProviderSortHandle(sortFocusId);
@@ -30476,6 +31081,7 @@
       apiSettingsSaving = false;
       panel?.removeAttribute("inert");
       panel?.removeAttribute("aria-busy");
+      resumeApiProviderEditor(state4.apiSettings.active_provider_id);
       if (!autoSave) setSaveButtonsDisabled(false);
       if (previousFocus?.isConnected && panel?.contains(previousFocus) && !previousFocus.closest("[inert], .hidden")) previousFocus.focus({ preventScroll: true });
       if (!autoSave && !state4.apiSettingsSaveTimerId && els5.saveApiProviderEditButton?.textContent !== translate("action.save")) {
@@ -30509,16 +31115,30 @@
     apiSettingsFeatureInitialized = true;
     const { els: els10, state: state6 } = getLegacyBridge();
     els10.apiBaseUrl?.addEventListener("input", syncSvgAuthorModelVisibility);
+    els10.apiProviderEditor?.addEventListener("input", refreshApiProviderEditorControls);
+    els10.apiProviderEditor?.addEventListener("change", refreshApiProviderEditorControls);
+    const discoveryConnection = () => ({
+      provider_id: String(state6.apiProviderDraft?.id || ""),
+      api_key_source_provider_id: String(state6.apiProviderDraft?.api_key_source_provider_id || ""),
+      base_url: String(els10.apiBaseUrl?.value || "").trim(),
+      api_key: enteredApiKey().trim()
+    });
     initProviderModelDiscovery({
       container: els10.apiProviderBindings,
       connectionInputs: [els10.apiBaseUrl, els10.apiKey],
-      getConnection: () => ({
-        provider_id: String(state6.apiProviderDraft?.id || ""),
-        api_key_source_provider_id: String(state6.apiProviderDraft?.api_key_source_provider_id || ""),
-        base_url: String(els10.apiBaseUrl?.value || "").trim(),
-        api_key: String(els10.apiKey?.value || "").trim()
-      })
+      getConnection: discoveryConnection
     });
+    const discovery = initProviderDiscoveryPanel({
+      button: document.querySelector("#discoverProviderModelsButton"),
+      status: document.querySelector("#providerDiscoveryStatus"),
+      results: document.querySelector("#providerDiscoveryResults"),
+      connectionInputs: [els10.apiBaseUrl, els10.apiKey],
+      getConnection: discoveryConnection,
+      getModels: () => state6.generationCatalog?.models || [],
+      getBindings: discoveryBaseBindings,
+      addChoices: addDiscoveredBindings
+    });
+    els10.apiProviderEditor?.addEventListener(PROVIDER_FORM_LOADED_EVENT, discovery.clear);
     document.addEventListener(LOCALE_CHANGE_EVENT, () => {
       const bridge8 = getLegacyBridge();
       renderAuthSource(bridge8.state.authStatus);
@@ -30562,11 +31182,13 @@
       setApiKeyRevealVisible,
       updateApiKeyRevealButton,
       updateProviderBindingCount,
-      revealApiKeyWhilePressed,
+      toggleApiKeyReveal,
       renderApiProviderList,
       reorderApiProviders,
       removeProviderBinding,
       toggleApiProviderSortMode,
+      releaseCleanApiProviderEditor,
+      resumeApiProviderEditor,
       openGenerationProviderSettings,
       openApiSettingsModal,
       closeApiSettingsModal,

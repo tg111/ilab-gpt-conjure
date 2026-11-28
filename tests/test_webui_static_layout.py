@@ -1738,7 +1738,7 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('id="addProviderBindingButton"', html)
         self.assertNotIn('id="saveApiSettingsButton"', html)
         self.assertNotIn('id="saveCodexSettingsButton"', html)
-        self.assertIn('class="settings-modal-actions settings-status-only"', html)
+        self.assertIn('class="settings-modal-actions settings-status-only', html)
         self.assertNotIn('id="apiMode"', html)
         self.assertIn('id="generationProviderSettingsButton"', html)
         self.assertNotIn('id="apiDirectSettingsButton"', html)
@@ -1752,11 +1752,9 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('data-i18n-attr="placeholder:apiSettings.searchProviders;aria-label:apiSettings.searchProviders"', html)
         self.assertIn('id="apiProviderList"', html)
         self.assertIn('id="apiProviderSection"', html)
-        self.assertIn('id="apiProviderDetail"', html)
-        self.assertIn('id="apiProviderDetailName"', html)
-        self.assertNotIn('id="apiProviderDetailMeta"', html)
-        self.assertIn('id="apiProviderDetailBaseUrl"', html)
-        self.assertIn('id="apiProviderDetailKey"', html)
+        # Choosing a provider opens its form; there is no read-only summary step.
+        self.assertNotIn('id="apiProviderDetail"', html)
+        self.assertNotIn('id="editApiProviderButton"', html)
         self.assertIn('id="apiProviderEditor"', html)
         self.assertIn('id="apiProviderName"', html)
         self.assertIn('class="api-key-input-wrap"', html)
@@ -1771,7 +1769,6 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn('id="apiKeyRevealButton"', html)
         self.assertIn('aria-pressed="false"', html)
         self.assertIn('data-i18n-attr="aria-label:apiSettings.showApiKey;title:apiSettings.showApiKey"', html)
-        self.assertIn('id="editApiProviderButton"', html)
         self.assertIn('id="copyApiProviderButton"', html)
         self.assertIn('id="addApiProviderButton"', html)
         self.assertIn('id="sortApiProvidersButton"', html)
@@ -1788,14 +1785,14 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertLess(html.index('id="languageSelect"'), html.index('id="languageSettingsStatus"'))
         self.assertLess(html.index('id="settingsStatus"'), html.index('id="saveSettingsButton"'))
         self.assertLess(html.index('id="addApiProviderButton"'), html.index('id="apiProviderList"'))
-        self.assertLess(html.index('id="apiProviderDetailConcurrency"'), html.index('id="editApiProviderButton"'))
-        self.assertLess(html.index('id="editApiProviderButton"'), html.index('id="copyApiProviderButton"'))
         self.assertLess(html.index('id="copyApiProviderButton"'), html.index('id="deleteApiProviderButton"'))
+        self.assertLess(html.index('id="deleteApiProviderButton"'), html.index('id="saveApiProviderEditButton"'))
         self.assertLess(html.index('id="apiProviderCount"'), html.index('id="sortApiProvidersButton"'))
         self.assertLess(html.index('id="sortApiProvidersButton"'), html.index('id="apiProviderSearchField"'))
         self.assertLess(html.index('id="apiProviderSearchField"'), html.index('class="api-provider-choice-grid"'))
-        self.assertLess(html.index('id="apiProviderList"'), html.index('id="apiProviderDetail"'))
-        self.assertLess(html.index('id="apiProviderDetail"'), html.index('id="apiProviderEditor"'))
+        self.assertLess(html.index('id="apiProviderList"'), html.index('id="apiProviderEditor"'))
+        self.assertIn('id="discoverProviderModelsButton"', html)
+        self.assertLess(html.index('id="providerDiscoveryResults"'), html.index('id="apiProviderBindings"'))
         self.assertIn('api-settings-feedback settings-action-status', html)
         self.assertEqual(html.count('id="mainModel"'), 1)
         self.assertNotIn('id="apiMainModel"', html)
@@ -1839,9 +1836,9 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("apiProviderSection: document.querySelector", script)
         self.assertIn("apiProviderSearch: document.querySelector", script)
         self.assertIn("apiProviderList: document.querySelector", script)
-        self.assertIn("apiProviderDetail: document.querySelector", script)
+        self.assertNotIn("apiProviderDetail: document.querySelector", script)
         self.assertIn("apiProviderEditor: document.querySelector", script)
-        self.assertIn("editApiProviderButton: document.querySelector", script)
+        self.assertNotIn("editApiProviderButton: document.querySelector", script)
         self.assertIn("copyApiProviderButton: document.querySelector", script)
         self.assertIn("sortApiProvidersButton: document.querySelector", script)
         self.assertIn("cancelApiProviderEditButton: document.querySelector", script)
@@ -1871,19 +1868,19 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn("scrollIntoView", provider_list_source)
         self.assertIn("apiProviderMatchesSearch(provider, searchQuery)", provider_source)
         self.assertIn('translate("apiSettings.noProviderSearchResults")', provider_source)
-        self.assertIn('if (!searchQuery) scrollActiveApiProviderCardIntoView(settings.active_provider_id, "center")', provider_source)
+        self.assertIn('if (!searchQuery) scrollActiveApiProviderCardIntoView(listedProviderId(settings), "center")', provider_source)
         self.assertIn('scrollActiveApiProviderCardIntoView(activeApiProvider().id, "center")', provider_source)
-        self.assertIn("function renderApiProviderDetail", script)
+        self.assertNotIn("function renderApiProviderDetail", script)
         self.assertIn("function renderApiProviderEditor", script)
-        self.assertIn('apiProviderSection?.setAttribute("aria-hidden", visible ? "true" : "false")', script)
-        self.assertIn('apiProviderSection?.setAttribute("inert", "")', script)
-        self.assertIn('apiProviderSection?.removeAttribute("inert")', script)
+        # The list stays usable beside the open form.
+        self.assertNotIn('apiProviderSection?.setAttribute("inert", "")', script)
         self.assertIn("function updateProviderBindingCount", script)
         self.assertIn("readProviderBindingCards(els.apiProviderBindings)", script)
         self.assertIn('setElementText(els.providerBindingsCount, `(${count})`)', script)
         self.assertIn("function setApiKeyRevealVisible", script)
         self.assertIn("function updateApiKeyRevealButton", script)
-        self.assertIn("function revealApiKeyWhilePressed", script)
+        self.assertIn("function toggleApiKeyReveal", script)
+        self.assertIn('fetch("/api/api-settings/reveal-key"', script)
         self.assertIn("function hideApiKeyReveal", script)
         self.assertIn("function addApiProvider", script)
         self.assertIn("function deleteApiProvider", script)
@@ -1902,7 +1899,11 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertIn("function selectCodexMode", script)
         self.assertIn("function queueApiSettingsAutosave", script)
         self.assertRegex(provider_source, r"async function deleteApiProvider\(\)[\s\S]*await saveApiSettings\(\{ auto: true, candidateSettings: candidate \}\)")
-        self.assertRegex(provider_source, r"function selectApiProvider\(providerId[^)]*\)[\s\S]*queueApiSettingsAutosave\(\{ silent: true \}\);[\s\S]*function editApiProvider")
+        # Browsing providers in settings never switches the generation provider.
+        select_body = re.search(r"export function selectApiProvider\([\s\S]*?\n}\n", provider_source).group(0)
+        self.assertNotIn("selectGenerationProvider", select_body)
+        self.assertIn("confirmDiscardThen(anchor", select_body)
+        self.assertIn("beginEditingProvider(id)", select_body)
         self.assertRegex(provider_source, r"function reorderApiProviders\(orderedIds[^)]*\)[\s\S]*queueApiSettingsAutosave\(\);[\s\S]*async function saveApiProviderEdit")
         self.assertIn("const sortFocusId = autoSave ? focusedApiProviderSortId()", provider_source)
         self.assertRegex(provider_source, r"populateApiSettingsForm\(\);\s*focusApiProviderSortHandle\(sortFocusId\);")
@@ -1943,17 +1944,15 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
         self.assertNotIn("dataTransfer", provider_sort_source)
         self.assertNotIn("draggable = true", provider_sort_source)
         self.assertIn('call(methods, "selectApiProvider"', script)
-        self.assertIn('editApiProviderButton?.addEventListener("click", () => call(methods, "editApiProvider"))', script)
+        self.assertNotIn('editApiProviderButton?.addEventListener', script)
         self.assertIn('copyApiProviderButton?.addEventListener("click", () => call(methods, "copyApiProvider"))', script)
         self.assertIn('sortApiProvidersButton?.addEventListener("click", () => call(methods, "toggleApiProviderSortMode"))', script)
         self.assertIn('deleteApiProviderButton?.addEventListener("click", () => call(methods, "confirmDeleteApiProvider", els.deleteApiProviderButton))', script)
         self.assertIn('cancelApiProviderEditButton?.addEventListener("click", () => call(methods, "cancelApiProviderEdit"))', script)
         self.assertIn('saveApiProviderEditButton?.addEventListener("click", () => call(methods, "saveApiProviderEdit"))', script)
-        self.assertIn('apiKeyRevealButton?.addEventListener("pointerdown"', script)
-        self.assertIn('apiKeyRevealButton?.addEventListener("pointerup"', script)
-        self.assertIn('apiKeyRevealButton?.addEventListener("pointerleave"', script)
-        self.assertIn('apiKeyRevealButton?.addEventListener("keydown"', script)
-        self.assertIn('apiKeyRevealButton?.addEventListener("keyup"', script)
+        # A click toggles the key; it no longer hides when the pointer leaves.
+        self.assertIn('apiKeyRevealButton?.addEventListener("click", () => call(methods, "toggleApiKeyReveal"))', script)
+        self.assertNotIn('apiKeyRevealButton?.addEventListener("pointerleave"', script)
         self.assertIn('apiKey?.addEventListener("input"', script)
         self.assertNotIn("updateApiRequestEndpointPreview", script)
         self.assertIn('addProviderBindingButton?.addEventListener("click"', script)
@@ -2320,13 +2319,68 @@ class WebUIStaticLayoutTests(WebUIStaticTestCase):
             studio,
             r"body\[data-studio\] \.controls-col \.output-panel\s*\{[^}]*visibility:\s*hidden",
         )
-        # Clear / find / recent templates / template library stay reachable.
-        template_row = self._extract_css_block(studio, "body[data-studio] .prompt-panel .prompt-template-row")
+        # Clear / find / recent templates / template library stay reachable, inside the pill row.
+        template_row = self._extract_css_block(studio, "body[data-studio] .studio-pill-bar .prompt-template-row")
         self.assertNotIn("display: none", template_row)
+        self.assertIn("recipes.button.before(toolRow)", composer)
+        self.assertIn("toolMarker.replaceWith(toolRow)", composer)
+        # The prompt shows two lines until focused.
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\] \.prompt-panel \.prompt-editor:not\(:focus-within\)\s*\{[^}]*max-height:\s*calc\(2lh",
+        )
+        # Google search sources stay visible but take a single row.
+        grounding = self._extract_css_block(studio, "body[data-studio] .preview-col .grounding-attribution")
+        self.assertIn("height: 52px", grounding)
+        self.assertNotIn("display: none", grounding)
         self.assertRegex(studio, r"body\[data-studio\] \.compact-preview-jump\s*\{[^}]*display:\s*none")
+        # The quick gallery (saved reference images) opens as a popover instead of being dropped.
+        gallery = self._extract_css_block(studio, "body[data-studio] .image-panel .image-gallery-column")
+        self.assertNotIn("display: none", gallery)
+        self.assertIn("visibility: hidden", gallery)
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\]\[data-studio-gallery-open\] \.image-panel \.image-gallery-column\s*\{[^}]*visibility:\s*visible",
+        )
+        self.assertIn("uploadSource.before(galleryButton)", composer)
+        # One menu row per model; extra providers are chips on that row.
+        self.assertIn('element("div", "studio-provider-chips")', composer)
+        self.assertIn("preferredEntry(entries", composer)
+        self.assertIn("galleryButton.remove()", composer)
         # Controls are moved back when leaving the desktop width.
         self.assertIn('document.createComment("studio-run-origin")', composer)
         self.assertIn("runMarker.replaceWith(runButton)", composer)
+
+    def test_desktop_studio_shell_moves_top_bar_into_collapsible_sidebar(self) -> None:
+        studio = Path("codex_image/webui/static/styles/85-studio.css").read_text(encoding="utf-8")
+        shell = Path("codex_image/webui/frontend/src/studio-shell.ts").read_text(encoding="utf-8")
+        main = Path("codex_image/webui/frontend/src/main.ts").read_text(encoding="utf-8")
+
+        self.assertIn("initStudioShell();", main)
+        self.assertIn('import { STUDIO_QUERY } from "./studio-composer";', shell)
+        # The top bar's controls move into the sidebar footer and come back on leaving.
+        for control in ("queueButton", "taskNotificationButton", "generationProviderSettingsButton",
+                        "themeSwitcher", "taskNotificationCenter"):
+            self.assertIn(f'move("{control}"', shell)
+        self.assertIn("origins.forEach((marker, node) => marker.replaceWith(node));", shell)
+        self.assertRegex(studio, r"body\[data-studio\] \.top-nav\s*\{[^}]*display:\s*none")
+        # Moved controls keep the sizing variables they had in .nav-actions.
+        self.assertRegex(studio, r"\.studio-sidebar-tools\s*\{[^}]*--top-nav-control-height:")
+        # A dragged sidebar width wins over the narrower studio default.
+        self.assertIn('const STUDIO_SIDEBAR_WIDTH = "280px";', shell)
+        self.assertIn("!readStorage(SIDEBAR_WIDTH_STORAGE_KEY)", shell)
+        # Ctrl+B (Cmd+B on macOS) collapses the sidebar and stops bold formatting in the prompt.
+        self.assertIn('event.key.toLowerCase() === "b"', shell)
+        self.assertIn("event.preventDefault();", shell)
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\]\[data-studio-sidebar-collapsed\] \.sidebar,[^{]*\{[^}]*display:\s*none",
+        )
+        # Completion toasts no longer cover the composer's run button.
+        self.assertRegex(
+            studio,
+            r"body\[data-studio\] \.task-notification-toast-region\s*\{[^}]*top:\s*16px;[^}]*bottom:\s*auto",
+        )
 
     def test_main_workspace_uses_theme_background_texture_only(self) -> None:
         styles = Path("codex_image/webui/static/styles.css").read_text(encoding="utf-8")

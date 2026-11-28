@@ -50,13 +50,14 @@ function clearSystemSettingsHeightAnimation(panel: HTMLElement): void {
   panel.style.height = "";
 }
 
-function positionSystemSettingsModal(): void {
+/** Centres the panel vertically; `height` is the size it is about to take. */
+function positionSystemSettingsModal(height?: number): void {
   const { els } = getLegacyBridge();
   const modal = els.systemSettingsModal as HTMLElement | null;
   const panel = systemSettingsPanel();
   if (!modal || !panel || modal.classList.contains("hidden")) return;
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-  const panelHeight = panel.getBoundingClientRect().height;
+  const panelHeight = height ?? panel.getBoundingClientRect().height;
   const centeredTop = Math.floor((viewportHeight - panelHeight) / 2);
   const top = Math.max(MIN_SYSTEM_SETTINGS_MODAL_EDGE, centeredTop);
   modal.style.setProperty("--system-settings-modal-top", `${top}px`);
@@ -146,6 +147,10 @@ export function setSystemSettingsTab(tab: any, options: { refresh?: boolean } = 
     maybeCall("updateModeSpecificSettings");
   }
   refreshSegmentedIndicators();
+  // Tabs differ in width and height (the API tab is the largest): stay centred.
+  if (panel && !els.systemSettingsModal?.classList.contains("hidden")) {
+    positionSystemSettingsModal(systemSettingsTargetHeight(panel));
+  }
   if (animateHeight && panel) animateSystemSettingsPanelHeight(panel, beforeHeight);
 }
 
@@ -230,6 +235,8 @@ export function openSystemSettingsModal(tab: any = "api"): void {
   setSystemSettingsTab(tab);
   modal?.classList.remove("hidden");
   modal?.setAttribute("aria-hidden", "false");
+  // The provider form appears only once the modal is visible; measure after it.
+  if (normalizedTab(tab) === "api") maybeCall("resumeApiProviderEditor");
   if (wasHidden) positionSystemSettingsModal();
   refreshSegmentedIndicators();
 }
@@ -252,6 +259,7 @@ export function closeSystemSettingsModal(options: { force?: boolean } = {}): voi
     if (modal.contains(document.activeElement)) activeElement.blur();
   }
   systemSettingsReturnFocus = null;
+  maybeCall("releaseCleanApiProviderEditor");
   modal?.classList.add("hidden");
   modal?.setAttribute("aria-hidden", "true");
   modal?.style.removeProperty("--system-settings-modal-top");

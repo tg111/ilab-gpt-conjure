@@ -9,7 +9,7 @@ import { getLegacyBridge } from "./state";
 import { LOCALE_CHANGE_EVENT, translate } from "./i18n";
 import { currentGenerationSelection } from "./generation-request";
 import { requestedSize } from "./image-size-editor";
-import { eligibleProviderBindings, selectGenerationProvider, type EligibleProviderBinding } from "./provider-selection";
+import { eligibleProviderBindings, providerBindingSelectionKey, selectGenerationProvider, type EligibleProviderBinding } from "./provider-selection";
 import { selectConcreteModel } from "./model-selection";
 import { modelFamilyBrandMarkHtml } from "./model-family-icons";
 import { refreshSegmentedIndicators } from "./segmented-indicator";
@@ -102,6 +102,27 @@ function bindingLabel(entry: EligibleProviderBinding): string {
   return entry.binding.display_name || entry.provider.name;
 }
 
+function providerLabel(entry: EligibleProviderBinding, className: string): HTMLElement {
+  const label = element("span", className);
+  const emoji = String(entry.provider.icon_emoji || "").trim();
+  if (emoji) label.append(element("span", "studio-provider-emoji", emoji));
+  label.append(element("span", "studio-provider-name", bindingLabel(entry)));
+  return label;
+}
+
+/** The provider a model would use if picked now: current, remembered, default, first. */
+function preferredEntry(
+  entries: EligibleProviderBinding[],
+  selectionKey: string | undefined,
+  lastProviderId: string | undefined,
+  defaultProviderId: string | undefined,
+): EligibleProviderBinding {
+  return entries.find((entry) => entry.selectionKey === selectionKey)
+    || entries.find((entry) => entry.provider.id === lastProviderId)
+    || entries.find((entry) => entry.provider.id === defaultProviderId)
+    || entries[0]!;
+}
+
 export function initStudioComposer(): void {
   const query = window.matchMedia(STUDIO_QUERY);
   const controls = document.querySelector<HTMLElement>(".controls-col");
@@ -111,7 +132,12 @@ export function initStudioComposer(): void {
   const runButton = document.getElementById("runButton");
   const summary = document.getElementById("executionSummary");
   const grid = document.getElementById("modelParameterGrid");
-  if (!controls || !promptPanel || !promptCompose || !outputPanel || !runButton || !summary || !grid) return;
+  const galleryColumn = document.querySelector<HTMLElement>(".image-gallery-column");
+  const uploadSource = document.getElementById("imageUploadSource");
+  // Clear / find / recent templates / template library join the pill row.
+  const toolRow = promptPanel?.querySelector<HTMLElement>(".prompt-template-row");
+  if (!controls || !promptPanel || !promptCompose || !outputPanel || !runButton || !summary || !grid
+    || !galleryColumn || !uploadSource || !toolRow) return;
 
   const bar = element("div", "studio-pill-bar");
   bar.id = "studioPillBar";
@@ -135,6 +161,7 @@ export function initStudioComposer(): void {
   const recipes = createStudioRecipes(describeCurrent, () => {
     closeModelMenu();
     closeParams();
+    closeGallery();
   });
   bar.append(modelPill, parameterPills, recipes.button, runSlot);
 
@@ -144,12 +171,27 @@ export function initStudioComposer(): void {
   modelMenu.hidden = true;
 
 
+  // The quick gallery column (人像 / 角色 / 产品 + 管理公用库) opens as a popover
+  // from a tile next to the upload button.
+  const galleryButton = element("button", "studio-gallery-toggle");
+  galleryButton.type = "button";
+  galleryButton.id = "studioGalleryToggle";
+  galleryButton.setAttribute("aria-expanded", "false");
+  galleryButton.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/static/icons/ui.svg?v=1#gallery"/></svg>';
+  const galleryLabel = element("span", "studio-gallery-toggle-label");
+  galleryButton.append(galleryLabel);
+
   const runMarker = document.createComment("studio-run-origin");
+  const toolMarker = document.createComment("studio-tools-origin");
   let active = false;
 
   function closeModelMenu() {
     modelMenu.hidden = true;
     modelPill.setAttribute("aria-expanded", "false");
+  }
+  function closeGallery() {
+    document.body.removeAttribute("data-studio-gallery-open");
+    galleryButton.setAttribute("aria-expanded", "false");
   }
   function closeParams() {
     document.body.removeAttribute("data-studio-params-open");
@@ -159,6 +201,7 @@ export function initStudioComposer(): void {
   const openParams = (target: PillTarget, pill: HTMLElement) => {
     closeModelMenu();
     recipes.close();
+    closeGallery();
     const wasOpen = document.body.hasAttribute("data-studio-params-open");
     const sameTarget = pill.getAttribute("aria-expanded") === "true";
     closeParams();
@@ -193,6 +236,11 @@ export function initStudioComposer(): void {
     modelPill.append(name, via, caret);
     modelPill.classList.toggle("is-unavailable", !provider);
     modelPill.title = translate("studio.switchModel");
+    galleryLabel.textContent = translate("gallery.title");
+    // Icon-only in the pill row, so they need a tooltip.
+    document.getElementById("clearPromptButton")?.setAttribute("title", translate("action.clear"));
+    document.getElementById("promptFindButton")?.setAttribute("title", translate("action.find"));
+    galleryButton.title = translate("gallery.quick");
     if (!/Mac|iPhone|iPad/.test(navigator.platform)) runButton.title = runButton.title.replace("Cmd", "Ctrl");
 
     const openTarget = parameterPills.querySelector<HTMLElement>('[aria-expanded="true"]')?.dataset.studioTarget;
@@ -214,32 +262,55 @@ export function initStudioComposer(): void {
     modelMenu.replaceChildren();
     if (!catalog) return;
     const operation = state.mode as GenerationOperation;
+    const choose = (model: CatalogModel, entry: EligibleProviderBinding) => {
+      state.lastProviderByModel[model.id] = entry.provider.id;
+      state.lastProviderSelectionByModel[model.id] = entry.selectionKey;
+      if (model.id !== state.selectedModelId) selectConcreteModel(model.id);
+      else selectGenerationProvider(entry.selectionKey);
+      closeModelMenu();
+      renderPills();
+    };
+    // One row per model; a model served by several providers shows them as
+    // chips on its row instead of repeating the model once per provider.
     catalog.families.forEach((family) => {
       const rows = catalog.models
         .filter((model) => model.family_id === family.id)
-        .flatMap((model) => eligibleProviderBindings(catalog, model.id, operation).map((entry) => ({ model, entry })));
+        .map((model) => ({ model, entries: eligibleProviderBindings(catalog, model.id, operation) }))
+        .filter((row) => row.entries.length);
       if (!rows.length) return;
       const group = element("div", "studio-model-group");
       const heading = element("div", "studio-model-group-heading");
       heading.innerHTML = modelFamilyBrandMarkHtml(family.id, "studio-model-mark");
       heading.append(element("span", "", family.display_name));
       group.append(heading);
-      rows.forEach(({ model, entry }) => {
-        const selected = model.id === state.selectedModelId
-          && entry.provider.id === state.selectedProviderId
-          && entry.binding.id === state.selectedProviderBindingId;
-        const row = element("button", `studio-model-option${selected ? " is-selected" : ""}`);
-        row.type = "button";
-        row.setAttribute("aria-pressed", String(selected));
-        row.append(element("span", "studio-model-option-name", model.display_name), element("span", "studio-model-option-provider", bindingLabel(entry)));
-        row.addEventListener("click", () => {
-          state.lastProviderByModel[model.id] = entry.provider.id;
-          state.lastProviderSelectionByModel[model.id] = entry.selectionKey;
-          if (model.id !== state.selectedModelId) selectConcreteModel(model.id);
-          else selectGenerationProvider(entry.selectionKey);
-          closeModelMenu();
-          renderPills();
-        });
+      rows.forEach(({ model, entries }) => {
+        const isCurrentModel = model.id === state.selectedModelId;
+        const preferred = preferredEntry(entries, isCurrentModel
+          ? providerBindingSelectionKey(state.selectedProviderId || "", state.selectedProviderBindingId || "")
+          : state.lastProviderSelectionByModel[model.id],
+        state.lastProviderByModel[model.id], catalog.default_provider_by_model[model.id]);
+        const row = element("div", `studio-model-option${isCurrentModel ? " is-selected" : ""}`);
+        const main = element("button", "studio-model-option-main");
+        main.type = "button";
+        main.setAttribute("aria-pressed", String(isCurrentModel));
+        main.append(element("span", "studio-model-option-name", model.display_name));
+        if (entries.length === 1) main.append(providerLabel(entries[0]!, "studio-model-option-provider"));
+        main.addEventListener("click", () => choose(model, preferred));
+        row.append(main);
+        if (entries.length > 1) {
+          const chips = element("div", "studio-provider-chips");
+          entries.forEach((entry) => {
+            const current = entry === preferred;
+            const chip = element("button", `studio-provider-chip${current ? " is-current" : ""}`);
+            chip.type = "button";
+            chip.title = bindingLabel(entry);
+            chip.setAttribute("aria-pressed", String(isCurrentModel && current));
+            chip.append(providerLabel(entry, "studio-provider-chip-label"));
+            chip.addEventListener("click", () => choose(model, entry));
+            chips.append(chip);
+          });
+          row.append(chips);
+        }
         group.append(row);
       });
       modelMenu.append(group);
@@ -263,10 +334,23 @@ export function initStudioComposer(): void {
     }
     closeParams();
     recipes.close();
+    closeGallery();
     renderModelMenu();
     modelMenu.hidden = false;
     modelPill.setAttribute("aria-expanded", "true");
-    modelMenu.querySelector<HTMLElement>(".is-selected, .studio-model-option")?.focus({ preventScroll: true });
+    modelMenu.querySelector<HTMLElement>(".is-selected .studio-model-option-main, .studio-model-option-main")?.focus({ preventScroll: true });
+  };
+
+  const toggleGallery = () => {
+    if (document.body.hasAttribute("data-studio-gallery-open")) {
+      closeGallery();
+      return;
+    }
+    closeModelMenu();
+    closeParams();
+    recipes.close();
+    document.body.setAttribute("data-studio-gallery-open", "");
+    galleryButton.setAttribute("aria-expanded", "true");
   };
 
   const apply = () => {
@@ -279,12 +363,18 @@ export function initStudioComposer(): void {
       controls.append(modelMenu, recipes.menu);
       runButton.before(runMarker);
       runSlot.append(runButton);
+      uploadSource.before(galleryButton);
+      toolRow.before(toolMarker);
+      recipes.button.before(toolRow);
       renderPills();
     } else {
       closeParams();
       closeModelMenu();
       recipes.close();
+      closeGallery();
+      galleryButton.remove();
       runMarker.replaceWith(runButton);
+      toolMarker.replaceWith(toolRow);
       bar.remove();
       modelMenu.remove();
       recipes.menu.remove();
@@ -292,11 +382,16 @@ export function initStudioComposer(): void {
   };
 
   modelPill.addEventListener("click", toggleModelMenu);
+  galleryButton.addEventListener("click", toggleGallery);
+  // The library drawer takes over from the quick picker.
+  document.getElementById("galleryManageButton")?.addEventListener("click", closeGallery);
   document.addEventListener("pointerdown", (event) => {
     const target = event.target as Node | null;
     if (!target || !active) return;
     if (!modelMenu.hidden && !modelMenu.contains(target) && !modelPill.contains(target)) closeModelMenu();
     if (!recipes.menu.hidden && !recipes.menu.contains(target) && !recipes.button.contains(target)) recipes.close();
+    if (document.body.hasAttribute("data-studio-gallery-open")
+      && !galleryColumn.contains(target) && !galleryButton.contains(target)) closeGallery();
     if (document.body.hasAttribute("data-studio-params-open")
       && !outputPanel.contains(target) && !parameterPills.contains(target)
       && !(target as Element).closest?.(".themed-select-menu, .model-combobox-options, [role='listbox']")) {
@@ -309,6 +404,7 @@ export function initStudioComposer(): void {
       if (!modelMenu.hidden) { closeModelMenu(); modelPill.focus(); event.stopPropagation(); }
       else if (!recipes.menu.hidden) { recipes.close(); recipes.button.focus(); event.stopPropagation(); }
       else if (document.body.hasAttribute("data-studio-params-open")) { closeParams(); event.stopPropagation(); }
+      else if (document.body.hasAttribute("data-studio-gallery-open")) { closeGallery(); galleryButton.focus(); event.stopPropagation(); }
       return;
     }
     if (event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === "m") {

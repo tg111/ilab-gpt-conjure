@@ -306,6 +306,15 @@ class WebUIStaticProviderBindingTests(unittest.TestCase):
             r"\.system-settings-section\s*\{[^}]*position:\s*relative[^}]*z-index:\s*1[^}]*overflow:\s*hidden",
         )
 
+    def test_side_by_side_layout_never_shows_a_hidden_api_tab(self) -> None:
+        # An id selector outranks `.system-settings-section[hidden]`, so every
+        # layout rule on the API panel must exclude the hidden state itself.
+        self.assertNotRegex(self.styles, r"#systemSettingsApiPanel:has\(")
+        self.assertRegex(
+            self.styles,
+            r"#systemSettingsApiPanel:not\(\[hidden\]\):has\(\.api-provider-editor:not\(\.hidden\)\)\s*\{[^}]*display:\s*grid",
+        )
+
     def test_provider_editor_moves_focus_before_hiding_the_focused_form(self) -> None:
         cancel_start = self.provider_editor.index(
             "export function cancelApiProviderEdit()"
@@ -318,7 +327,7 @@ class WebUIStaticProviderBindingTests(unittest.TestCase):
         focus = cancel_source.index(
             "els.systemSettingsApiTab?.focus({ preventScroll: true })"
         )
-        rerender = cancel_source.index("populateApiSettingsForm()")
+        rerender = cancel_source.index("beginEditingProvider(")
         self.assertLess(focus, rerender)
 
 

@@ -272,15 +272,16 @@ async function run() {
   check("last binding cannot be removed", cards().length === 1);
   input("#apiBaseUrl", "https://api.openai.com/v1");
   await methods.saveApiProviderEdit!();
-  await until(() => find("#apiProviderEditor").classList.contains("hidden"), "save completes");
-  find("#editApiProviderButton").click(); await pause();
+  // Saving keeps the provider's form open with what was saved.
+  await until(() => !find("#apiProviderEditor").classList.contains("hidden") && !state.apiProviderDraftIsNew
+    && !find<HTMLButtonElement>("#saveApiProviderEditButton").disabled, "save completes");
   check("saved advanced settings survive reopening", JSON.stringify(settingsValues()) === JSON.stringify(before));
   check("saved key is not returned to input", find<HTMLInputElement>("#apiKey").value === "");
   advanced = cards()[0].querySelector<HTMLDetailsElement>(".provider-binding-advanced")!;
   advanced.querySelector<HTMLElement>("summary")!.click(); await pause();
   input("[data-binding-transparency]", "native");
-  find("#cancelApiProviderEditButton").click(); find("#editApiProviderButton").click(); await pause();
-  check("cancel discards advanced edits", JSON.stringify(settingsValues()) === JSON.stringify(before));
+  find("#cancelApiProviderEditButton").click(); await pause();
+  check("revert discards advanced edits", JSON.stringify(settingsValues()) === JSON.stringify(before));
 
   for (const locale of ["zh-CN", "en"]) {
     w.__codexImageI18n.setLocale(locale);
@@ -373,34 +374,34 @@ async function run() {
         await resize(width, height);
         const name = `${locale} ${theme} ${width}x${height} browse`;
         const section = find("#apiProviderSection"), scroll = visibleScroll(section);
-        const header = find(".api-provider-section-header"), detail = find("#apiProviderDetail");
+        const header = find(".api-provider-section-header"), detail = find(".api-provider-editor-actions");
         scroll.scrollTop = 0; await pause();
         const headerBefore = header.getBoundingClientRect(), detailBefore = detail.getBoundingClientRect();
         scroll.scrollTop = scroll.scrollHeight; await pause();
         const headerAfter = header.getBoundingClientRect(), detailAfter = detail.getBoundingClientRect();
         const box = modal.getBoundingClientRect(), listBox = scroll.getBoundingClientRect();
         check(`${name}: list really scrolls`, scroll.scrollTop > 0 && scroll.clientHeight >= 64);
-        check(`${name}: header and detail stay fixed`, Math.abs(headerBefore.top - headerAfter.top) <= 1 && Math.abs(detailBefore.top - detailAfter.top) <= 1);
-        check(`${name}: scrollbar contained between search and detail`, listBox.top >= find("#apiProviderSearchField").getBoundingClientRect().bottom && listBox.bottom <= detailAfter.top);
-        check(`${name}: detail and new action visible inside viewport`, detailAfter.bottom <= box.bottom && box.bottom <= height && headerAfter.top >= box.top);
+        check(`${name}: header and footer stay fixed`, Math.abs(headerBefore.top - headerAfter.top) <= 1 && Math.abs(detailBefore.top - detailAfter.top) <= 1);
+        check(`${name}: scrollbar contained between search and footer`, listBox.top >= find("#apiProviderSearchField").getBoundingClientRect().bottom && listBox.bottom <= detailAfter.top);
+        check(`${name}: footer and new action visible inside viewport`, detailAfter.bottom <= box.bottom && box.bottom <= height && headerAfter.top >= box.top);
         check(`${name}: no outer or horizontal overflow`, section.scrollHeight <= section.clientHeight + 1 && scroll.scrollWidth <= scroll.clientWidth + 1 && modal.scrollWidth <= modal.clientWidth + 1);
         const buttons = [...detail.querySelectorAll<HTMLButtonElement>("button")];
-        const first = buttons[0].getBoundingClientRect(), last = buttons[2].getBoundingClientRect();
-        check(`${name}: detail actions centered with equal height and corners`, Math.abs((first.left + last.right) / 2 - (detailAfter.left + detailAfter.right) / 2) <= 1 && buttons.every(button => button.getBoundingClientRect().height === first.height && w.getComputedStyle(button).borderRadius === "8px"));
+        const first = buttons[0].getBoundingClientRect();
+        check(`${name}: footer actions share height and corners`, buttons.every(button => button.getBoundingClientRect().height === first.height && w.getComputedStyle(button).borderRadius === "8px"));
         const add = find("#addApiProviderButton"), sort = find("#sortApiProvidersButton");
         check(`${name}: top actions align`, add.getBoundingClientRect().height === sort.getBoundingClientRect().height && w.getComputedStyle(add).borderRadius === w.getComputedStyle(sort).borderRadius);
         check(`${name}: new action has distinct solid fill and filled icon`, w.getComputedStyle(add).backgroundColor !== w.getComputedStyle(sort).backgroundColor && w.getComputedStyle(add.querySelector("svg")!).stroke === "none" && !!add.querySelector("svg path"));
-        check(`${name}: footer identifies the selected provider`, find("#apiProviderDetailName").textContent === state.apiSettings.providers.find((provider: any) => provider.id === state.apiSettings.active_provider_id)?.name);
+        check(`${name}: form shows the selected provider`, find<HTMLInputElement>("#apiProviderName").value === state.apiSettings.providers.find((provider: any) => provider.id === state.apiSettings.active_provider_id)?.name);
       }
     }
   }
   const lastProvider = state.apiSettings.providers.at(-1)!;
   find<HTMLButtonElement>(`[data-api-provider-id="${lastProvider.id}"]`).click(); await pause(500);
-  check("selection updates fixed details", find("#apiProviderDetailName").textContent === lastProvider.name
-    && find("#apiProviderDetailBaseUrl").textContent === lastProvider.base_url
-    && find("#apiProviderDetailConcurrency").textContent === String(lastProvider.concurrency));
+  check("selection opens that provider's form", find<HTMLInputElement>("#apiProviderName").value === lastProvider.name
+    && find<HTMLInputElement>("#apiBaseUrl").value === lastProvider.base_url
+    && find<HTMLInputElement>("#apiImagesConcurrency").value === String(lastProvider.concurrency));
   input("#apiProviderSearch", "no-provider-matches-this"); await pause();
-  check("empty search retains current details and new action", !!find(".api-provider-search-empty") && find("#apiProviderDetail").getBoundingClientRect().height > 0 && !find("#addApiProviderButton").classList.contains("hidden"));
+  check("empty search retains current form and new action", !!find(".api-provider-search-empty") && find("#apiProviderEditor").getBoundingClientRect().height > 0 && !find("#addApiProviderButton").classList.contains("hidden"));
   input("#apiProviderSearch", lastProvider.name); await pause();
   check("search isolates requested supplier", find("#apiProviderList").children.length === 1);
   input("#apiProviderSearch", ""); await pause();
@@ -411,12 +412,12 @@ async function run() {
   handle.focus(); handle.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Home", bubbles: true }));
   await until(() => state.apiSettings.providers[0].id === lastProvider.id, "keyboard sort moves last supplier to first");
   await pause(400);
-  check("sorting remains within the list scroller", sortScroll.getBoundingClientRect().bottom <= find("#apiProviderDetail").getBoundingClientRect().top);
+  check("sorting remains within the list scroller", sortScroll.getBoundingClientRect().bottom <= find("#systemSettingsApiPanel").getBoundingClientRect().bottom);
   find("#sortApiProvidersButton").click(); await pause();
   find("#addApiProviderButton").focus();
   check("new action is keyboard focusable", d.activeElement === find("#addApiProviderButton"));
   find("#addApiProviderButton").click(); await pause();
-  check("editing hides the entire browsing shell", find("#apiProviderSection").getBoundingClientRect().height === 0 && find("#apiProviderSection").hasAttribute("inert") && find("#apiProviderDetail").getBoundingClientRect().height === 0);
+  check("a new provider keeps the list beside its form", find("#apiProviderSection").getBoundingClientRect().height > 0 && !find("#apiProviderSection").hasAttribute("inert") && !find("#apiProviderEditor").classList.contains("hidden"));
   await checkFooter("new provider from a long list", find("#systemSettingsApiPanel"), ".api-provider-editor-actions");
   find("#cancelApiProviderEditButton").click(); await pause();
   const selectedCard = find<HTMLElement>(`.api-provider-choice[data-api-provider-id="${lastProvider.id}"]`).getBoundingClientRect();

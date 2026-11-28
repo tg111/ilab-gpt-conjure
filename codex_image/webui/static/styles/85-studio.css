@@ -82,9 +82,86 @@ body[data-studio] .controls-col .image-panel {
 }
 
 body[data-studio] .image-panel .panel-heading,
-body[data-studio] .image-panel .image-gallery-column,
 body[data-studio] .image-panel .image-input-actions {
   display: none;
+}
+
+/* Quick gallery: the original column, opened as a popover above the composer. */
+.studio-gallery-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 52px;
+  height: 52px;
+  padding: 0 2px;
+  border: 1px solid var(--control-border, var(--line));
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.studio-gallery-toggle:hover,
+.studio-gallery-toggle[aria-expanded="true"] {
+  border-color: var(--primary);
+  color: var(--primary-strong);
+}
+
+.studio-gallery-toggle-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+/* Anchored to .image-input-workspace, which sits inside the card's 10px/12px padding. */
+body[data-studio] .image-panel .image-gallery-column {
+  --quick-gallery-height: 220px;
+  position: absolute;
+  bottom: calc(100% + 18px);
+  left: -12px;
+  z-index: 40;
+  display: grid;
+  grid-template-rows: var(--quick-gallery-height) auto;
+  gap: 8px;
+  width: 300px;
+  height: auto;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
+  /* Kept laid out while closed so the list can measure its items. */
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body[data-studio][data-studio-gallery-open] .image-panel .image-gallery-column {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body[data-studio] .image-panel .gallery-manage-panel {
+  height: auto;
+  min-height: 0;
+}
+
+/* The popover hugs the left edge, so the hover preview opens to its right. */
+body[data-studio] .image-panel .quick-gallery-preview {
+  right: auto;
+  left: calc(100% + 12px);
+  transform: translate(-8px, -50%) scale(0.98);
+}
+
+body[data-studio] .image-panel .quick-gallery-preview.visible {
+  transform: translate(0, -50%) scale(1);
 }
 
 body[data-studio] .image-panel .image-input-workspace {
@@ -270,6 +347,12 @@ body[data-studio] .prompt-panel .prompt-editor {
   overflow-y: auto;
 }
 
+/* Two lines while not typing; the full box (up to 28vh) once focused. */
+body[data-studio] .prompt-panel .prompt-editor:not(:focus-within) {
+  max-height: calc(2lh + 12px);
+  overflow-y: hidden;
+}
+
 body[data-studio] .prompt-panel .prompt-editor:focus,
 body[data-studio] .prompt-panel .prompt-editor:focus-visible {
   outline: none;
@@ -285,28 +368,73 @@ body[data-studio] .compact-preview-jump {
   display: none;
 }
 
-/* Clear / find / recent templates / template library: kept, as a slim tool row. */
-body[data-studio] .prompt-panel .prompt-template-row {
-  grid-template-columns: minmax(0, 1fr) auto;
-  min-height: 28px;
-  margin-top: 2px;
+/* Clear / find / recent templates / template library: icon buttons inside the pill row. */
+body[data-studio] .studio-pill-bar .prompt-template-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding-left: 6px;
+  border-left: 1px solid var(--line);
 }
 
-body[data-studio] .prompt-panel .prompt-template-recent-cell,
-body[data-studio] .prompt-panel .prompt-footer {
-  min-height: 28px;
+body[data-studio] .studio-pill-bar .prompt-template-recent-cell,
+body[data-studio] .studio-pill-bar .prompt-footer {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
 }
 
-body[data-studio] .prompt-panel .prompt-footer .ghost-button,
-body[data-studio] .prompt-panel .prompt-template-entry .prompt-template-button {
-  width: auto;
-  height: 28px;
-  min-height: 28px;
-  padding-inline: 8px;
+body[data-studio] .studio-pill-bar .prompt-footer > .ghost-button,
+body[data-studio] .studio-pill-bar .prompt-template-entry .prompt-template-button {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+body[data-studio] .studio-pill-bar .prompt-footer > .icon-text-button span,
+body[data-studio] .studio-pill-bar .prompt-template-button span {
+  display: none;
+}
+
+body[data-studio] .studio-pill-bar .prompt-template-recent-dock {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 220px;
+  overflow: hidden;
+}
+
+/* Finding keeps the buttons; the find/replace fields open above the composer. */
+body[data-studio] .studio-pill-bar .prompt-template-recent-cell.find-active .prompt-footer > .ghost-button {
+  display: inline-flex;
+}
+
+body[data-studio] .studio-pill-bar .prompt-find-panel:not(.hidden) {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 40;
+  width: min(440px, 100%);
+  flex-wrap: wrap;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
 }
 
 /* Pill bar */
 .studio-pill-bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -443,8 +571,9 @@ body[data-studio] .controls-col .output-panel {
 
 .studio-model-menu {
   left: 0;
-  width: 380px;
+  width: 480px;
   max-height: min(60vh, 520px);
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 8px;
 }
@@ -466,11 +595,28 @@ body[data-studio] .controls-col .output-panel {
 
 .studio-model-option {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px 2px 0;
+  border-radius: var(--radius);
+}
+
+.studio-model-option:hover {
+  background: var(--surface-soft);
+}
+
+.studio-model-option.is-selected {
+  background: var(--primary-light);
+}
+
+.studio-model-option-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  width: 100%;
-  padding: 7px 10px;
+  padding: 6px 10px;
   border: 0;
   border-radius: var(--radius);
   background: none;
@@ -481,22 +627,92 @@ body[data-studio] .controls-col .output-panel {
   cursor: pointer;
 }
 
-.studio-model-option:hover,
-.studio-model-option:focus-visible {
-  background: var(--surface-soft);
-  outline: none;
+.studio-model-option-main:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
 }
 
-.studio-model-option.is-selected {
-  background: var(--primary-light);
+.studio-model-option.is-selected .studio-model-option-main {
   color: var(--primary-strong);
   font-weight: 500;
+}
+
+.studio-model-option-name {
+  flex: 0 0 auto;
+}
+
+.studio-model-option-provider,
+.studio-provider-chip-label {
+  min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .studio-model-option-provider {
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 400;
+}
+
+.studio-provider-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-model-option-provider .studio-provider-name {
+  max-width: 200px;
+}
+
+.studio-model-option:has(.studio-provider-chips) .studio-model-option-main {
+  flex: 0 0 132px;
+  align-self: stretch;
+}
+
+.studio-provider-chips {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-block: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+.studio-provider-chip {
+  min-width: 0;
+  max-width: 124px;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.studio-provider-chip:hover {
+  border-color: var(--primary);
+  color: var(--text);
+}
+
+.studio-provider-chip.is-current {
+  border-color: var(--primary);
+  color: var(--primary-strong);
+  font-weight: 500;
+}
+
+.studio-model-option.is-selected .studio-provider-chip.is-current {
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .studio-model-empty {
@@ -523,6 +739,7 @@ body[data-studio] .controls-col .output-panel {
   right: 120px;
   width: 360px;
   max-height: min(60vh, 520px);
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 8px;
 }
@@ -671,4 +888,157 @@ body[data-studio] #refreshButton {
 
 body[data-studio] .generation-provider-control {
   order: 10;
+}
+
+/* Google search sources: one row (suggestions + links stay visible, as Google requires). */
+body[data-studio] .preview-col .grounding-attribution {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-height: none;
+  height: 52px;
+  padding: 6px 10px;
+  overflow: hidden;
+}
+
+body[data-studio] .preview-col .grounding-attribution-header {
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+body[data-studio] .preview-col .grounding-search-entry-frame {
+  flex: 1 1 280px;
+  min-width: 0;
+  height: 40px;
+  min-height: 0;
+}
+
+body[data-studio] .preview-col .grounding-source-list {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  max-width: 45%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+body[data-studio] .preview-col .grounding-source-link {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Shell: the top bar's controls live in the sidebar footer. */
+body[data-studio] .top-nav {
+  display: none;
+}
+
+.studio-sidebar-tools {
+  --top-nav-control-height: 32px;
+  --top-nav-control-padding: 3px;
+  --top-nav-control-radius: 999px;
+  --top-nav-segment-height: 26px;
+  --top-nav-control-font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.studio-sidebar-tool-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.studio-sidebar-tool-row > * {
+  order: 0;
+}
+
+.studio-sidebar-tool-row .queue-status-chip {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-inline: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studio-sidebar-tool-row .task-notification-button,
+.studio-sidebar-tool-row .auth-source-settings-button {
+  flex: 0 0 auto;
+  width: var(--top-nav-control-height);
+  height: var(--top-nav-control-height);
+  padding: 0;
+}
+
+.studio-sidebar-tools .theme-switcher {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.studio-sidebar-tools .theme-option {
+  flex: 1 1 auto;
+}
+
+.studio-sidebar-tools .theme-option.appearance-trigger {
+  flex: 0 0 auto;
+}
+
+/* Opens beside the sidebar instead of under the old top bar. */
+body[data-studio] .studio-sidebar-tools .task-notification-center {
+  position: fixed;
+  top: auto;
+  right: auto;
+  bottom: 12px;
+  left: calc(clamp(var(--sidebar-min-width), var(--sidebar-width), var(--sidebar-max-width)) + 12px);
+  max-height: min(520px, calc(100vh - 24px));
+}
+
+/* Collapsible sidebar (Ctrl+B). */
+.studio-sidebar-collapse,
+.studio-sidebar-expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  color: var(--text-secondary);
+}
+
+.studio-sidebar-expand {
+  display: none;
+}
+
+body[data-studio][data-studio-sidebar-collapsed] .sidebar,
+body[data-studio][data-studio-sidebar-collapsed] .sidebar-resize-shield {
+  display: none;
+}
+
+body[data-studio][data-studio-sidebar-collapsed] .main-wrapper {
+  position: relative;
+}
+
+body[data-studio][data-studio-sidebar-collapsed] .studio-sidebar-expand {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 30;
+  display: inline-flex;
+  background: var(--surface);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+body[data-studio][data-studio-sidebar-collapsed] .dashboard {
+  padding-left: 56px;
+}
+
+/* Completion toasts: top right, clear of the composer's run button. */
+body[data-studio] .task-notification-toast-region {
+  top: 16px;
+  bottom: auto;
 }

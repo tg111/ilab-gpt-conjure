@@ -294,6 +294,22 @@ def register_settings_routes(app: FastAPI, ctx: WebUIContext) -> None:
         except ValueError as exc:
             raise HTTPException(status_code=400, detail="invalid_base_url") from exc
 
+    # POST only: the security middleware rejects cross-origin writes, and the
+    # settings list itself keeps returning masked keys.
+    @app.post("/api/api-settings/reveal-key")
+    def reveal_provider_api_key(payload: dict[str, Any] = Body(...)) -> Response:
+        try:
+            api_key = ctx.api_settings.saved_api_key(str(payload.get("provider_id") or ""))
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="provider_not_found") from exc
+        if not api_key:
+            raise HTTPException(status_code=404, detail="api_key_not_set")
+        return Response(
+            json.dumps({"api_key": api_key}),
+            media_type="application/json",
+            headers={"Cache-Control": "no-store"},
+        )
+
     @app.post("/api/api-settings")
     @app.patch("/api/api-settings")
     def update_api_settings(payload: dict[str, Any] = Body(...)) -> dict[str, Any]:

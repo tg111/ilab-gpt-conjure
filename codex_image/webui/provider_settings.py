@@ -205,6 +205,16 @@ class ProviderSettings(StoreLockMixin):
             )
         return connections
 
+    def saved_api_key(self, provider_id: str) -> str:
+        """The stored key of exactly this provider, for showing it to its owner."""
+        target_id = str(provider_id or "").strip()
+        provider = next(
+            (item for item in self.read()["providers"] if item["id"] == target_id), None
+        )
+        if provider is None:
+            raise KeyError("provider_not_found")
+        return str(provider.get("api_key") or "")
+
     def has_api_credentials(self) -> bool:
         provider = self.provider_settings()
         return bool(provider["base_url"] and provider["api_key"])

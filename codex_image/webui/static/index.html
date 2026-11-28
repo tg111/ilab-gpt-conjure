@@ -771,28 +771,6 @@
               </div>
             </div>
             <select id="apiProvider" class="hidden" aria-hidden="true"></select>
-            <div id="apiProviderDetail" class="api-provider-detail-panel">
-              <strong id="apiProviderDetailName" class="api-provider-detail-name"></strong>
-              <dl class="api-provider-detail-grid">
-                <div>
-                  <dt>Base URL</dt>
-                  <dd id="apiProviderDetailBaseUrl">https://api.openai.com/v1</dd>
-                </div>
-                <div>
-                  <dt>API Key</dt>
-                  <dd id="apiProviderDetailKey" data-i18n="apiSettings.keyNotSet">未设置 API Key</dd>
-                </div>
-                <div>
-                  <dt data-i18n="apiSettings.concurrencyShort">并发</dt>
-                  <dd id="apiProviderDetailConcurrency">4</dd>
-                </div>
-              </dl>
-              <div class="api-provider-detail-actions">
-                <button id="editApiProviderButton" class="ghost-button" type="button" data-i18n="action.edit">编辑</button>
-                <button id="copyApiProviderButton" class="ghost-button" type="button" data-i18n="apiSettings.copyProvider">复制</button>
-                <button id="deleteApiProviderButton" class="ghost-button danger-button" type="button" data-i18n="action.delete">删除</button>
-              </div>
-            </div>
           </div>
           <div class="system-settings-scroll api-provider-editor-scroll">
             <div id="apiProviderEditor" class="api-provider-editor hidden" aria-hidden="true">
@@ -843,21 +821,29 @@
                   <div class="provider-bindings-header">
                     <div class="provider-bindings-title-row">
                       <strong id="providerBindingsTitle"><span data-i18n="apiSettings.modelBindings">模型</span> <span id="providerBindingsCount"></span></strong>
-                      <button id="addProviderBindingButton" class="ghost-button provider-binding-add" type="button">
-                        <span data-i18n="apiSettings.addModelBinding">添加模型</span>
-                      </button>
+                      <div class="provider-bindings-actions">
+                        <button id="discoverProviderModelsButton" class="ghost-button provider-discovery-button" type="button" data-i18n="apiSettings.discoverModels">获取可用模型</button>
+                        <button id="addProviderBindingButton" class="ghost-button provider-binding-add" type="button">
+                          <span data-i18n="apiSettings.addModelBindingManually">手动添加</span>
+                        </button>
+                      </div>
                     </div>
+                    <p id="providerDiscoveryStatus" class="provider-discovery-status" role="status" aria-live="polite" hidden></p>
                   </div>
+                  <div id="providerDiscoveryResults" class="provider-discovery-results" hidden></div>
                   <div id="apiProviderBindings" class="provider-bindings-list"></div>
                 </section>
               </div>
             </div>
           </div>
-          <div id="apiSettingsActions" class="settings-modal-actions settings-status-only">
-            <p id="apiSettingsStatus" class="api-settings-feedback settings-action-status" aria-live="polite"></p>
-          </div>
+          <div id="apiSettingsActions" class="settings-modal-actions settings-status-only hidden" aria-hidden="true"></div>
           <div class="api-provider-editor-actions settings-save-actions">
-            <button id="cancelApiProviderEditButton" class="ghost-button" type="button" data-i18n="action.cancel">取消</button>
+            <p id="apiSettingsStatus" class="api-settings-feedback settings-action-status" aria-live="polite"></p>
+            <div class="api-provider-manage-actions">
+              <button id="copyApiProviderButton" class="ghost-button" type="button" data-i18n="apiSettings.copyProvider">复制</button>
+              <button id="deleteApiProviderButton" class="ghost-button danger-button" type="button" data-i18n="action.delete">删除</button>
+            </div>
+            <button id="cancelApiProviderEditButton" class="ghost-button" type="button" data-i18n="apiSettings.revertChanges">还原修改</button>
             <button id="saveApiProviderEditButton" class="run-button" type="button" data-i18n="action.save">保存</button>
           </div>
         </section>

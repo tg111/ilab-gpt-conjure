@@ -39,7 +39,8 @@ import {
   openApiSettingsModal,
   persistApiSettings,
   populateApiSettingsForm,
-  revealApiKeyWhilePressed,
+  enteredApiKey,
+  toggleApiKeyReveal,
   renderApiProviderList,
   refreshApiSettings,
   restoreApiSettings,
@@ -57,11 +58,18 @@ import {
   reorderApiProviders,
   removeProviderBinding,
   toggleApiProviderSortMode,
+  addDiscoveredBindings,
+  discoveryBaseBindings,
+  PROVIDER_FORM_LOADED_EVENT,
+  refreshApiProviderEditorControls,
+  releaseCleanApiProviderEditor,
+  resumeApiProviderEditor,
   updateApiKeyRevealButton,
   updateProviderBindingCount,
 } from "./api-provider-settings";
 import { initApiProviderSortFeature } from "./api-provider-sort";
 import { initProviderModelDiscovery } from "./provider-model-discovery";
+import { initProviderDiscoveryPanel } from "./provider-discovery-panel";
 
 let apiSettingsFeatureInitialized = false;
 
@@ -70,16 +78,32 @@ export function initApiSettingsFeature(): void {
   apiSettingsFeatureInitialized = true;
   const { els, state } = getLegacyBridge();
   els.apiBaseUrl?.addEventListener("input", syncSvgAuthorModelVisibility);
+  // Revert / sort availability follows unsaved edits as they happen.
+  els.apiProviderEditor?.addEventListener("input", refreshApiProviderEditorControls);
+  els.apiProviderEditor?.addEventListener("change", refreshApiProviderEditorControls);
+  const discoveryConnection = () => ({
+    provider_id: String(state.apiProviderDraft?.id || ""),
+    api_key_source_provider_id: String(state.apiProviderDraft?.api_key_source_provider_id || ""),
+    base_url: String(els.apiBaseUrl?.value || "").trim(),
+    api_key: enteredApiKey().trim(),
+  });
   initProviderModelDiscovery({
     container: els.apiProviderBindings,
     connectionInputs: [els.apiBaseUrl, els.apiKey],
-    getConnection: () => ({
-      provider_id: String(state.apiProviderDraft?.id || ""),
-      api_key_source_provider_id: String(state.apiProviderDraft?.api_key_source_provider_id || ""),
-      base_url: String(els.apiBaseUrl?.value || "").trim(),
-      api_key: String(els.apiKey?.value || "").trim(),
-    }),
+    getConnection: discoveryConnection,
   });
+  const discovery = initProviderDiscoveryPanel({
+    button: document.querySelector<HTMLButtonElement>("#discoverProviderModelsButton"),
+    status: document.querySelector<HTMLElement>("#providerDiscoveryStatus"),
+    results: document.querySelector<HTMLElement>("#providerDiscoveryResults"),
+    connectionInputs: [els.apiBaseUrl, els.apiKey],
+    getConnection: discoveryConnection,
+    getModels: () => state.generationCatalog?.models || [],
+    getBindings: discoveryBaseBindings,
+    addChoices: addDiscoveredBindings,
+  });
+  // A newly loaded form must not show the previous provider's model list.
+  els.apiProviderEditor?.addEventListener(PROVIDER_FORM_LOADED_EVENT, discovery.clear);
   document.addEventListener(LOCALE_CHANGE_EVENT, () => {
     const bridge = getLegacyBridge();
     renderAuthSource(bridge.state.authStatus);
@@ -123,11 +147,13 @@ export function initApiSettingsFeature(): void {
     setApiKeyRevealVisible,
     updateApiKeyRevealButton,
     updateProviderBindingCount,
-    revealApiKeyWhilePressed,
+    toggleApiKeyReveal,
     renderApiProviderList,
     reorderApiProviders,
     removeProviderBinding,
     toggleApiProviderSortMode,
+    releaseCleanApiProviderEditor,
+    resumeApiProviderEditor,
     openGenerationProviderSettings,
     openApiSettingsModal,
     closeApiSettingsModal,

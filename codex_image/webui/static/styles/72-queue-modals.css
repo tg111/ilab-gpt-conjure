@@ -231,6 +231,13 @@
   align-items: flex-start;
   overflow: auto;
   padding-block: var(--system-settings-modal-top, 30px) 30px;
+  transition: padding-top var(--motion-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #systemSettingsModal {
+    transition: none;
+  }
 }
 
 .modal-panel {
